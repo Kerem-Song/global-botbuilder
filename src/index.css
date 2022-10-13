@@ -1,0 +1,46 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: row;
+}
+
+#layout {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+aside {
+  width: 50px;
+  height: 100%;
+  padding: 10px;
+  background-color: black;
+}
+
+.aside-open {
+  width: 250px;
+}
+
+main {
+  flex: auto;
+  text-align: center;
+  padding: 0 10px 0 0;
+}
+
+footer {
+  height: 25px;
+  border-top: 1px solid #ccc;
+}

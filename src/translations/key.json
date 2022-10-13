@@ -1,0 +1,12 @@
+{
+  "dashboard": {
+    "HELLO": "안녕하세요.",
+    "WELCOME": "{{who}}님 반갑습니다.",
+    "TITLE": "홈페이지",
+    "YES": "네"
+  },
+  "common": { "SAVE": "저장" },
+  "scenarios": { "TITLE": "시나리오" },
+  "scenario": { "TITLE": "시나리오" },
+  "test": { "TITLE": "TITLE" }
+}

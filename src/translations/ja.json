@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "HELLO": "こんにちは。",
+    "WELCOME": "{{who}}は嬉しいです。",
+    "TITLE": "ホームページ",
+    "YES": "네"
+  },
+  "common": { "SAVE": "セーブ" },
+  "scenarios": { "TITLE": "scenarios" },
+  "test": { "TITLE": "test page" }
+}
