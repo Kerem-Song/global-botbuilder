@@ -5,7 +5,6 @@ import usePage from '../../hooks/usePage';
 
 export const TitleHelmet = () => {
   const { pageName } = usePage();
-  console.log(pageName);
   const { t } = useI18n(pageName);
   return (
     <Helmet>
