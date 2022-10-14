@@ -15,7 +15,7 @@ const finalRoutes = [
         children: [
           ...routes,
           { path: '', element: <Navigate to="/dashboard" replace={true} /> },
-          { path: '*', element: <>404</> },
+          { path: '*', element: <>404</>, handle: true },
         ],
       };
     }),
