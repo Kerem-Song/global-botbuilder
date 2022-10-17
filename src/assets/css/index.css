@@ -35,11 +35,26 @@ aside {
 
 main {
   flex: auto;
-  text-align: center;
-  padding: 0 10px 0 0;
+  padding: 1rem;
 }
 
 footer {
   height: 25px;
   border-top: 1px solid #ccc;
+}
+
+.border-radius2 {
+  border-radius: 2px;
+}
+
+.border-radius5 {
+  border-radius: 5px;
+}
+
+.border-radius10 {
+  border-radius: 10px;
+}
+
+.border-radius20 {
+  border-radius: 20px;
 }

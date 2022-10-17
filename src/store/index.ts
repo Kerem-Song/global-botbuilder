@@ -12,9 +12,9 @@ const persistConfig = {
   transforms: [
     encryptTransform({
       secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
-      onError: function (error) {
-        // Handle the error.
-      },
+      //onError: function (error) {
+      // Handle the error.
+      //},
     }),
   ],
 };

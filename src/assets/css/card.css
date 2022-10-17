@@ -1,0 +1,27 @@
+.luna-card {
+  background: #fff;
+}
+
+.luna-card-hoverable {
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.luna-card-hoverable:hover {
+  border-color: transparent;
+  box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+}
+
+.luna-card-head {
+  padding: 1rem;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.luna-card-body {
+  padding: 1rem;
+}
+
+.luna-card-bordered {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}

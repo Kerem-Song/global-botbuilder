@@ -1,4 +1,5 @@
-import './index.css';
+import './assets/css/index.css';
+import './assets/css/card.css';
 import './modules/i18next';
 
 import i18next from 'i18next';
