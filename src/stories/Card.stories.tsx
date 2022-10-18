@@ -1,3 +1,4 @@
+import '../assets/css/common.css';
 import '../assets/css/card.css';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
@@ -21,11 +22,25 @@ export const Default = Template.bind({});
 export const Hoverable = Template.bind({});
 export const NoBorder = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = { title: '제목', children: '카드 내용', bordered: true };
+Default.args = {
+  title: '제목',
+  children: '카드 내용',
+  bordered: true,
+  radius: 'none',
+  style: { width: '250px' },
+};
 Hoverable.args = {
   title: '제목',
   children: '카드 내용',
   bordered: true,
   hoverable: true,
+  radius: 'none',
+  style: { width: '250px' },
 };
-NoBorder.args = { title: '제목', children: '카드 내용', bordered: false };
+NoBorder.args = {
+  title: '제목',
+  children: '카드 내용',
+  bordered: false,
+  radius: 'none',
+  style: { width: '250px' },
+};

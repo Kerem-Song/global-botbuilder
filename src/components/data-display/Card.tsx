@@ -19,12 +19,12 @@ export const Card: FC<CardProps> = ({
   title,
   bordered = true,
   hoverable,
-  radius,
+  radius = 'none',
 }) => {
   const wrapClass = classNames(className, 'luna-card', {
     'luna-card-bordered': bordered,
     'luna-card-hoverable': hoverable,
-    [`border-radius-${radius}`]: radius !== undefined,
+    [`border-radius-${radius}`]: radius !== 'none',
   });
 
   const titleClass = classNames('luna-card-head');

@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
+import Hamburger from '../general/Hamburger';
 
 export const Aside = () => {
   const { i18n } = useI18n();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState<boolean>();
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const css = classNames({ 'aside-open': isOpen });
   const handleToggleOpen = () => {
     setIsOpen(!isOpen);
@@ -26,7 +27,7 @@ export const Aside = () => {
   return (
     <aside className={css}>
       <div>
-        <button onClick={handleToggleOpen}>TG</button>
+        <Hamburger onToggle={handleToggleOpen} isOpen={isOpen} dark />
       </div>
       <select
         value={i18n.language}
