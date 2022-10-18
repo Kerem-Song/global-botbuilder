@@ -6,7 +6,7 @@ export const DashboardComponent = () => {
   const { pageName, t, tc } = usePage();
   return (
     <>
-      <Card title={pageName} style={{ width: '200px' }} radius={20}>
+      <Card title={pageName} style={{ width: '200px' }} radius="x-large">
         <div>{t('HELLO')}</div>
         <div>{t('WELCOME', { who: '가인' })}</div>
         <div>{tc('SAVE')}</div>

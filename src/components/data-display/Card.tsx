@@ -3,13 +3,13 @@ import { FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
-import { RadiusType } from '../../models/types/RadiusType';
+import { SizeType } from '../../models/types/SizeType';
 
 export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
-  radius?: RadiusType;
+  radius?: SizeType;
 }
 
 export const Card: FC<CardProps> = ({
@@ -24,7 +24,7 @@ export const Card: FC<CardProps> = ({
   const wrapClass = classNames(className, 'luna-card', {
     'luna-card-bordered': bordered,
     'luna-card-hoverable': hoverable,
-    [`border-radius${radius}`]: radius !== undefined,
+    [`border-radius-${radius}`]: radius !== undefined,
   });
 
   const titleClass = classNames('luna-card-head');

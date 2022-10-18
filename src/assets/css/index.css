@@ -43,18 +43,22 @@ footer {
   border-top: 1px solid #ccc;
 }
 
-.border-radius2 {
+.border-radius-x-small {
   border-radius: 2px;
 }
 
-.border-radius5 {
+.border-radius-small {
   border-radius: 5px;
 }
 
-.border-radius10 {
+.border-radius-default {
   border-radius: 10px;
 }
 
-.border-radius20 {
+.border-radius-large {
+  border-radius: 15px;
+}
+
+.border-radius-x-large {
   border-radius: 20px;
 }
