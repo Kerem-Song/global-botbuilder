@@ -17,6 +17,7 @@ export const DashboardComponent = () => {
       <Card>
         <Button href="https://www.lunasoft.co.kr">{tc('SAVE')}</Button>
         <Button>{tc('SAVE')}</Button>
+        <Button shape="circle">S</Button>
       </Card>
     </>
   );
