@@ -1,0 +1,10 @@
+@use "sass:math";
+
+$defaultSize: 16;
+
+@function rem($px) {
+  $x: $defaultSize;
+  $result: (math.div(1, $x) * $px) + rem;
+  @return $result;
+}
+

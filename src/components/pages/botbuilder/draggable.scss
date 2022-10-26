@@ -1,0 +1,60 @@
+.react-draggable-dragging {
+  z-index: 2000 !important;
+}
+
+.react-draggable-dragged {
+  z-index: 1000;
+
+}
+
+.react-draggable-dragged svg {
+  /* z-index: -1 !important; */
+}
+
+.react-draggable-dragged svg path {
+  /* z-index: -3 !important; */
+}
+
+.card {
+  position: relative;
+  padding: rem(16);
+  width: 100%;
+  border: rem(2) solid black;
+  background-color: lavender;
+  cursor: grab;
+}
+
+.react-draggable {
+  cursor: grab;
+  & :hover {
+    border-color: red;
+  }
+}
+// .react-draggable :hover {
+  
+// }
+
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: rem(8);
+}
+
+.buttons  {
+  .button {
+    width: 100%;
+    padding: rem(16);
+  }
+
+  .plusBtn{
+    margin: rem(8);
+    padding: rem(1.6);
+    border-radius: rem(32);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+}
+

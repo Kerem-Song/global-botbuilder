@@ -11,7 +11,8 @@ const persistConfig = {
   whitelist: ['authReducer'],
   transforms: [
     encryptTransform({
-      secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
+      // secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
+      secretKey: 'my-super-secret-key',
       onError: function (error) {
         // Handle the error.
       },
