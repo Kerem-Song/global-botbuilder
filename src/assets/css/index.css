@@ -29,10 +29,6 @@ aside {
   background-color: black;
 }
 
-.aside-open {
-  width: 250px;
-}
-
 main {
   flex: auto;
   padding: 1rem;
@@ -41,4 +37,8 @@ main {
 footer {
   height: 25px;
   border-top: 1px solid #ccc;
+}
+
+a {
+  text-decoration: none;
 }

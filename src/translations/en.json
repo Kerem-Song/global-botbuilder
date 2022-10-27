@@ -1,1 +1,21 @@
-{"dashboard":{"HELLO":"hello.","WELCOME":"Nice to meet you, {{who}}","TITLE":"Home Page","YES":"yes."},"common":{"SAVE":"save"},"scenarios":{"TITLE":"scenarios"},"test":{"TITLE":"test page"}}
+{
+  "dashboard": {
+    "HELLO": "hello.",
+    "WELCOME": "Nice to meet you, {{who}}",
+    "TITLE": "Home Page",
+    "YES": "yes."
+  },
+  "common": {
+    "SAVE": "save"
+  },
+  "scenarios": {
+    "TITLE": "scenarios"
+  },
+  "test": {
+    "TITLE": "test page"
+  },
+  "sidebar": {
+    "HOME": "Home",
+    "BOTBUILDER": "Bot Builder"
+  }
+}

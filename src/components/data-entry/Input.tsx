@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, FocusEvent, forwardRef } from 'react';
+import { ChangeEvent, FocusEvent, forwardRef, KeyboardEvent } from 'react';
 
 export interface InputProps {
   disabled?: boolean;

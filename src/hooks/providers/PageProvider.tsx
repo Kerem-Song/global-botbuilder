@@ -9,6 +9,7 @@ export const PageContext = createContext<
       pageName: string;
       t: TFunction<string, undefined>;
       tc: TFunction<string, undefined>;
+      ts: TFunction<string, undefined>;
       i18n: i18n;
     }
   | undefined
@@ -17,8 +18,9 @@ export const PageContext = createContext<
 export const PageProvider: FC<IPageProps> = ({ pageName, children }) => {
   const { t } = useTranslation(pageName);
   const { t: tc, i18n } = useTranslation('common');
+  const { t: ts } = useTranslation('sidebar');
   return (
-    <PageContext.Provider value={{ t, tc, i18n, pageName }}>
+    <PageContext.Provider value={{ t, tc, ts, i18n, pageName }}>
       {children}
     </PageContext.Provider>
   );

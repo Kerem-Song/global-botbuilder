@@ -1,0 +1,33 @@
+aside {
+  width: 50px;
+  height: 100%;
+  background-color: black;
+
+  .desc {
+    display: none
+  }
+}
+
+nav {
+  ul {
+    list-style: none;
+    padding-left: rem(5);
+  }
+  li {
+    display: flex;
+    align-items: center;
+    padding: rem(5) rem(5) rem(5) 0;
+  }
+
+
+}
+
+.aside-open {
+  width: 250px;
+
+  .desc {
+    display: inline-block;
+    padding-left: rem(5);
+    color: white
+  }
+}

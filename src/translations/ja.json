@@ -5,7 +5,17 @@
     "TITLE": "ホームページ",
     "YES": "네"
   },
-  "common": { "SAVE": "セーブ" },
-  "scenarios": { "TITLE": "scenarios" },
-  "test": { "TITLE": "test page" }
+  "common": {
+    "SAVE": "セーブ"
+  },
+  "scenarios": {
+    "TITLE": "scenarios"
+  },
+  "test": {
+    "TITLE": "test page"
+  },
+  "sidebar": {
+    "HOME": "ホーム",
+    "BOTBUILDER": "ボット·ビルダー"
+  }
 }

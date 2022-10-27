@@ -5,8 +5,20 @@
     "TITLE": "TITLE",
     "YES": "YES"
   },
-  "common": { "SAVE": "SAVE" },
-  "scenarios": { "TITLE": "TITLE" },
-  "scenario": { "TITLE": "TITLE" },
-  "test": { "TITLE": "TITLE" }
+  "common": {
+    "SAVE": "SAVE"
+  },
+  "scenarios": {
+    "TITLE": "TITLE"
+  },
+  "scenario": {
+    "TITLE": "TITLE"
+  },
+  "test": {
+    "TITLE": "TITLE"
+  },
+  "sidebar": {
+    "HOME": "HOME",
+    "BOTBUILDER": "BOTBUILDER"
+  }
 }
