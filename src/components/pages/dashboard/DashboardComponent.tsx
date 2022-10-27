@@ -10,7 +10,7 @@ interface FormData {
 
 export const DashboardComponent = () => {
   const { pageName, t, tc } = usePage();
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, watch } = useForm<FormData>();
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
@@ -28,6 +28,7 @@ export const DashboardComponent = () => {
         </form>
       </Card>
       <Card>
+        {watch('name')}
         <Button href="https://www.lunasoft.co.kr">{tc('SAVE')}</Button>
         <Button>{tc('SAVE')}</Button>
         <Button shape="circle">S</Button>
