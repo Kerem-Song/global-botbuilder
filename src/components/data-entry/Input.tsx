@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, FocusEvent, forwardRef } from 'react';
+import { ChangeEvent, FocusEvent, forwardRef, KeyboardEvent } from 'react';
 
 export interface InputProps {
   disabled?: boolean;
@@ -27,3 +27,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     />
   );
 });
+
+Input.displayName = 'luna-input';
