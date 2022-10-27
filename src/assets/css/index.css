@@ -19,14 +19,21 @@ body,
 }
 
 header {
+  padding-left: 50px;
   height: 30px;
   border-bottom: 1px solid #ccc;
 }
 
 aside {
+  position: absolute;
   width: 50px;
   height: 100%;
   background-color: black;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+  z-index: 1;
 }
 
 .aside-open {
@@ -35,7 +42,8 @@ aside {
 
 main {
   flex: auto;
-  padding: 1rem;
+  padding: 20px;
+  padding-left: 70px;
 }
 
 footer {
