@@ -4,7 +4,10 @@ aside {
   background-color: black;
 
   .desc {
-    display: none
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s linear;
+    height: 0;
   }
 }
 
@@ -18,16 +21,16 @@ nav {
     align-items: center;
     padding: rem(5) rem(5) rem(5) 0;
   }
-
-
 }
 
 .aside-open {
   width: 250px;
 
   .desc {
-    display: inline-block;
+    visibility: visible;
+    opacity: 1;
+    height: rem(20);
     padding-left: rem(5);
-    color: white
+    color: white;
   }
 }
