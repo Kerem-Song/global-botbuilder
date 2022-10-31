@@ -1,11 +1,12 @@
 import 'react-image-crop/dist/ReactCrop.css';
+import '../../styles/imgeditor.scss';
 
+import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import ReactCrop, { centerCrop, Crop, makeAspectCrop, PixelCrop } from 'react-image-crop';
 
 import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
-
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper consts = .
 const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: number) => {
@@ -26,13 +27,15 @@ const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: numbe
 
 export const ImageEditorComponent = () => {
   const [imgSrc, setImgSrc] = useState('');
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1.51 / 1);
+  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const imgSrcClassName = classNames('imgWrapper', { imgSrc: imgSrc });
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -93,32 +96,31 @@ export const ImageEditorComponent = () => {
 
   return (
     <div className="imageEditor">
-      <div className="cropControls">
-        <input type="file" accept="image/*" onChange={onSelectFile} />
-        <div>
-          <label htmlFor="scaleInput">Scale: </label>
-          <input
-            id="scaleInput"
-            type="number"
-            step="0.1"
-            value={scale}
-            disabled={!imgSrc}
-            onChange={(e) => setScale(Number(e.target.value))}
-          />
+      <div className="imageEditorWrapper">
+        <div className="cropControls">
+          <input type="file" accept="image/*" onChange={onSelectFile} />
         </div>
-        {/* <div>
-          <label htmlFor="rotate-input">Rotate: </label>
-          <input
-            id="rotate-input"
-            type="number"
-            value={rotate}
-            disabled={!imgSrc}
-            onChange={(e) =>
-              setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
-            }
-          />
-        </div> */}
-        <div>
+        <div className={imgSrcClassName}>
+          {imgSrc ? (
+            <ReactCrop
+              crop={crop}
+              onChange={(_, percentCrop) => setCrop(percentCrop)}
+              onComplete={(c) => setCompletedCrop(c)}
+              aspect={aspect}
+            >
+              <img
+                ref={imgRef}
+                alt="Crop me"
+                src={imgSrc}
+                style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+                onLoad={onImageLoad}
+              />
+            </ReactCrop>
+          ) : (
+            <div className="skeleton">img upload</div>
+          )}
+        </div>
+        <div className="aspectBtnWrapper">
           <button onClick={handleToggleAspectClick}>
             Toggle aspect {aspect ? 'off' : 'on'}
           </button>
@@ -127,24 +129,28 @@ export const ImageEditorComponent = () => {
           <button onClick={() => handleAspect(4, 3)}>4:3</button>
           <button onClick={() => handleAspect(16, 9)}>16:9</button>
         </div>
-      </div>
-      {!!imgSrc && (
-        <ReactCrop
-          crop={crop}
-          onChange={(_, percentCrop) => setCrop(percentCrop)}
-          onComplete={(c) => setCompletedCrop(c)}
-          aspect={aspect}
-        >
-          <img
-            ref={imgRef}
-            alt="Crop me"
-            src={imgSrc}
-            style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-            onLoad={onImageLoad}
+        <div>
+          <input
+            className="range"
+            type="range"
+            name=""
+            min="1"
+            max="5"
+            value={scale}
+            disabled={!imgSrc}
+            onChange={(e) => setScale(Number(e.target.value))}
           />
-        </ReactCrop>
-      )}
-      <div>
+          <div className="ratioBtnWrapper">
+            <span>x1</span>
+            <span>x2</span>
+            <span>x3</span>
+            <span>x4</span>
+            <span>x5</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="result">
         {!!completedCrop && (
           <canvas
             ref={previewCanvasRef}

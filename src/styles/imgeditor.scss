@@ -1,0 +1,49 @@
+.imageEditor {
+  max-width: 30%;
+  max-height: 30%;
+  // height: 100%;
+
+  .imageEditorWrapper {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .cropcontrols {
+      grid-template-rows: auto;
+    }
+  }
+
+  .imgWrapper {
+    border: 1px solid black;
+    
+    .ReactCrop {
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  .aspectBtnWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(30);
+  }
+
+  .result {
+    canvas {
+      border: none;
+    }
+  }
+
+  .range {
+      width: 100%;
+  }
+
+  .ratioBtnWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+}
+
