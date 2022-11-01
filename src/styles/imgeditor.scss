@@ -15,10 +15,13 @@
 
   .imgWrapper {
     border: 1px solid black;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     .ReactCrop {
-      width: 50%;
-      height: 50%;
+      width: 80%;
+      height: 80%;
     }
   }
 
