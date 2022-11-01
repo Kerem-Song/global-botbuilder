@@ -1,11 +1,18 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
+import { PersistConfig, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 
 import authReducer from './authSlice';
 
-const persistConfig = {
+const rootReducer = combineReducers({
+  authReducer,
+});
+
+type ReducerType = typeof rootReducer;
+type CombinedStateType = ReturnType<ReducerType>;
+
+const persistConfig: PersistConfig<CombinedStateType> = {
   key: 'root',
   storage,
   whitelist: ['authReducer'],
@@ -18,9 +25,5 @@ const persistConfig = {
     }),
   ],
 };
-
-const rootReducer = combineReducers({
-  authReducer,
-});
 
 export default persistReducer(persistConfig, rootReducer);
