@@ -1,12 +1,16 @@
 import '../../styles/aside.scss';
 
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { ISidebarStatus } from 'src/models/interfaces/ISidebarStatus';
 
 import icBotbuilder from '../../assets/ic_botbuilder.png';
 import icHome from '../../assets/ic_home.png';
 import useI18n from '../../hooks/useI18n';
+import { useRootState } from '../../hooks/useRootState';
+import { setSidebarStatus } from '../../store/sidebarStatusSlice';
 import Hamburger from '../general/Hamburger';
 
 export const Aside = () => {
@@ -14,15 +18,14 @@ export const Aside = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-  const css = classNames({ 'aside-open': isOpen });
-  const handleToggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
+  const dispatch = useDispatch();
+  const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
+  const css = classNames({ 'aside-open': sidebarStatus });
   const menu = [
     {
       id: 1,
-      url: '/dashboard',
+      url: `/${i18n.language}/dashboard`,
       icon: icHome,
       selectedListIcon: '',
       exact: true,
@@ -31,11 +34,19 @@ export const Aside = () => {
     },
     {
       id: 2,
-      url: '/scenario',
+      url: `/${i18n.language}/scenario`,
       icon: icBotbuilder,
       selectedListIcon: '',
       alt: 'Chatbot builder',
       desc: ts('BOTBUILDER'),
+    },
+    {
+      id: 3,
+      url: `/${i18n.language}/imgedit`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Image Editor',
+      desc: ts('IMAGEEDITOR'),
     },
   ];
 
@@ -50,7 +61,7 @@ export const Aside = () => {
   return (
     <aside className={css}>
       <div>
-        <Hamburger onToggle={handleToggleOpen} isOpen={isOpen} dark />
+        <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} dark />
       </div>
       <select
         value={i18n.language}

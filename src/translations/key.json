@@ -19,6 +19,7 @@
   },
   "sidebar": {
     "HOME": "HOME",
-    "BOTBUILDER": "BOTBUILDER"
+    "BOTBUILDER": "BOTBUILDER",
+    "IMAGEEDITOR": "IMAGEEDITOR"
   }
 }
