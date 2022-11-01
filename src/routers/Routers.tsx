@@ -1,9 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import routes from '~react-pages';
-
 import { DefaultLayout } from '../components/layout/DefaultLayout';
 import { supportedLngs } from '../modules/constants';
+import DashboardPage from '../pages/dashboard';
+import ImageEditorPage from '../pages/imgedit';
+import ScenarioPage from '../pages/scenario';
 import { LocaleNavigate } from './LocaleNavigate';
 
 const finalRoutes = [
@@ -13,7 +14,9 @@ const finalRoutes = [
       return {
         path: lang,
         children: [
-          ...routes,
+          { path: 'dashboard', element: <DashboardPage /> },
+          { path: 'imgedit', element: <ImageEditorPage /> },
+          { path: 'scenario', element: <ScenarioPage /> },
           { path: '', element: <Navigate to="/dashboard" replace={true} /> },
           { path: '*', element: <>404</>, handle: true },
         ],
