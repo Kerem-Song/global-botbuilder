@@ -1,4 +1,4 @@
-// import { createBrowserHistory } from 'history';
+import { createBrowserHistory } from 'history';
 import React, { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import { systemModalClose } from '../../store/systemModalSlice';
 const SystemModal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
   const modalStatus = useRootState((state) => state.systemModalReducer.modalStatus);
-  // const history = createBrowserHistory();
+  const history = createBrowserHistory();
   const dispatch = useDispatch();
   const handleSystemModalClose = useCallback(
     () => dispatch(systemModalClose()),
@@ -33,13 +33,13 @@ const SystemModal = () => {
     handleSystemModalClose();
   };
 
-  // useEffect(() => {
-  //   history.listen(() => {
-  //     if (history.action === 'POP') {
-  //       handleSystemModalClose();
-  //     }
-  //   });
-  // }, [history]);
+  useEffect(() => {
+    history.listen(() => {
+      if (history.action === 'POP') {
+        handleSystemModalClose();
+      }
+    });
+  }, [history]);
 
   return (
     <>
