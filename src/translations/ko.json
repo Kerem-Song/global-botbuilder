@@ -19,7 +19,17 @@
   },
   "sidebar": {
     "HOME": "홈",
-    "BOTBUILDER": "봇 빌더",
-    "IMAGEEDITOR": "이미지 에디터"
+    "SCENARIO": "시나리오",
+    "IMAGEEDITOR": "이미지 에디터",
+    "UTTERANCE": "발화",
+    "SKILL": "스킬",
+    "DEPLOYMENT": "배포",
+    "HISTORY": "히스토리",
+    "STATISTICS": "통계",
+    "HELP": "도움말",
+    "SETTING": "설정"
+  },
+  "imgeditor": {
+    "TITLE": "이미지 편집"
   }
 }

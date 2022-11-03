@@ -16,7 +16,17 @@
   },
   "sidebar": {
     "HOME": "ホーム",
-    "BOTBUILDER": "ボット·ビルダー",
-    "IMAGEEDITOR": "イメージ·エディタ"
+    "SCENARIO": "シナリオ",
+    "IMAGEEDITOR": "イメージ·エディタ",
+    "UTTERANCE": "発話",
+    "SKILL": "スキル",
+    "DEPLOYMENT": "展開",
+    "HISTORY": "来歴",
+    "STATISTICS": "統計",
+    "HELP": "ヘルプ",
+    "SETTING": "設定"
+  },
+  "imgeditor": {
+    "TITLE": "イメージ·エディト"
   }
 }

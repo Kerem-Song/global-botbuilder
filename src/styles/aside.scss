@@ -1,7 +1,22 @@
 aside {
-  width: 50px;
+  display: grid;
+  grid-template-rows: repeat(12, 1fr);
+  align-items: center;
+  width: rem(50);
   height: 100%;
   background-color: black;
+
+  .chatbotName {
+    color: white
+  }
+
+  .subMenu {
+    grid-row: 12/12;
+  }
+
+  .luna-hamburger {
+    padding: rem(10);
+  }
 
   .desc {
     visibility: hidden;

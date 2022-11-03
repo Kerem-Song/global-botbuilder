@@ -1,10 +1,9 @@
-import '../../styles/aside.scss';
+import '@styles/aside.scss';
 
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { ISidebarStatus } from 'src/models/interfaces/ISidebarStatus';
+import { NavLink } from 'react-router-dom';
 
 import icBotbuilder from '../../assets/ic_botbuilder.png';
 import icHome from '../../assets/ic_home.png';
@@ -15,8 +14,6 @@ import Hamburger from '../general/Hamburger';
 
 export const Aside = () => {
   const { i18n, t, ts } = useI18n();
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const dispatch = useDispatch();
@@ -37,8 +34,8 @@ export const Aside = () => {
       url: `/${i18n.language}/scenario`,
       icon: icBotbuilder,
       selectedListIcon: '',
-      alt: 'Chatbot builder',
-      desc: ts('BOTBUILDER'),
+      alt: 'Scenario',
+      desc: ts('SCENARIO'),
     },
     {
       id: 3,
@@ -48,32 +45,76 @@ export const Aside = () => {
       alt: 'Image Editor',
       desc: ts('IMAGEEDITOR'),
     },
+    {
+      id: 4,
+      url: `/${i18n.language}/utterance`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Utterance',
+      desc: ts('UTTERANCE'),
+    },
+    {
+      id: 5,
+      url: `/${i18n.language}/skill`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Skill',
+      desc: ts('SKILL'),
+    },
+    {
+      id: 6,
+      url: `/${i18n.language}/deployment`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Deployment',
+      desc: ts('DEPLOYMENT'),
+    },
+    {
+      id: 7,
+      url: `/${i18n.language}/history`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'History',
+      desc: ts('HISTORY'),
+    },
+    {
+      id: 8,
+      url: `/${i18n.language}/statistics`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Statistics',
+      desc: ts('STATISTICS'),
+    },
   ];
 
-  const changeLanguageHandler = (lang: string) => {
-    i18n.changeLanguage(lang, () => {
-      const paths = location.pathname.split('/');
-      paths[1] = lang;
-      navigate(paths.join('/'));
-    });
-  };
+  const subMenu = [
+    {
+      id: 1,
+      url: `/${i18n.language}/help`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Help',
+      desc: ts('HELP'),
+    },
+    {
+      id: 2,
+      url: `/${i18n.language}/help`,
+      icon: icBotbuilder,
+      selectedListIcon: '',
+      alt: 'Setting',
+      desc: ts('SETTING'),
+    },
+  ];
 
+  const chatbotName = 'Chatbot Name';
   return (
     <aside className={css}>
       <div>
         <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} dark />
       </div>
-      <select
-        value={i18n.language}
-        onChange={(e) => {
-          changeLanguageHandler(e.target.value);
-        }}
-      >
-        <option value="ko">한국어</option>
-        <option value="en">ENGLISH</option>
-        <option value="ja">日本語</option>
-        <option value="key">키확인</option>
-      </select>
+      <div>
+        <p className="chatbotName">{chatbotName}</p>
+      </div>
       <nav className="nav">
         <ul>
           {menu.map((item) => {
@@ -81,6 +122,22 @@ export const Aside = () => {
               <NavLink key={item.id} to={`${item.url}`}>
                 <li className="">
                   <span className="menuImg">
+                    <img src={item.icon} alt={item.alt} />
+                  </span>
+                  <span className="desc">{item.desc}</span>
+                </li>
+              </NavLink>
+            );
+          })}
+        </ul>
+      </nav>
+      <nav className="subMenu">
+        <ul>
+          {subMenu.map((item) => {
+            return (
+              <NavLink key={item.id} to={`${item.url}`}>
+                <li className="">
+                  <span className="subMenuImg">
                     <img src={item.icon} alt={item.alt} />
                   </span>
                   <span className="desc">{item.desc}</span>

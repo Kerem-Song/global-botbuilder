@@ -19,7 +19,17 @@
   },
   "sidebar": {
     "HOME": "HOME",
-    "BOTBUILDER": "BOTBUILDER",
-    "IMAGEEDITOR": "IMAGEEDITOR"
+    "SCENARIO": "SCENARIO",
+    "IMAGEEDITOR": "IMAGEEDITOR",
+    "UTTERANCE": "UTTERANCE",
+    "SKILL": "SKILL",
+    "DEPLOYMENT": "DEPLOYMENT",
+    "HISTORY": "HISTORY",
+    "STATISTICS": "STATISTICS",
+    "HELP": "HELP",
+    "SETTING": "SETTING"
+  },
+  "imgeditor": {
+    "TITLE": "TITLE"
   }
 }

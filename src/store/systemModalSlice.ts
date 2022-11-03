@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SystemModalStatusType = {
-  modalStatus?: 'open' | 'close';
+  isOpen?: boolean;
   message?: string;
   description?: string;
   confirmButton: string;
@@ -11,7 +11,7 @@ export type SystemModalStatusType = {
 };
 
 const initialState: SystemModalStatusType = {
-  modalStatus: 'close',
+  isOpen: false,
   confirmButton: '확인',
 };
 
@@ -29,7 +29,7 @@ export const systemModalSlice = createSlice({
         cancelFunc,
       } = action.payload;
 
-      state.modalStatus = 'open';
+      state.isOpen = true;
       state.message = message && message;
       state.description = description && description;
       state.confirmButton = confirmButton && confirmButton;
@@ -39,7 +39,7 @@ export const systemModalSlice = createSlice({
     },
 
     systemModalClose: (state) => {
-      state.modalStatus = 'close';
+      state.isOpen = false;
     },
   },
 });

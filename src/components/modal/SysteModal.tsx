@@ -8,7 +8,7 @@ import { systemModalClose } from '../../store/systemModalSlice';
 
 const SystemModal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const modalStatus = useRootState((state) => state.systemModalReducer.modalStatus);
+  const isOpen = useRootState((state) => state.systemModalReducer.isOpen);
   const history = createBrowserHistory();
   const dispatch = useDispatch();
   const handleSystemModalClose = useCallback(
@@ -43,11 +43,11 @@ const SystemModal = () => {
 
   return (
     <>
-      {modalStatus && (
+      {isOpen && (
         <div
           className="modal"
           ref={modalRef}
-          style={modalStatus === 'close' ? { display: 'none' } : { display: 'block' }}
+          style={!isOpen ? { display: 'none' } : { display: 'block' }}
         >
           <div className="modal-backdrop"></div>
           <div

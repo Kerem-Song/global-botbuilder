@@ -16,7 +16,17 @@
   },
   "sidebar": {
     "HOME": "Home",
-    "BOTBUILDER": "Bot Builder",
-    "IMAGEEDITOR": "Image Editor"
+    "SCENARIO": "Scenario",
+    "IMAGEEDITOR": "Image Editor",
+    "UTTERANCE": "Utterance",
+    "SKILL": "Skill",
+    "DEPLOYMENT": "Deployment",
+    "HISTORY": "History",
+    "STATISTICS": "Statistics",
+    "HELP": "Help",
+    "SETTING": "Setting"
+  },
+  "imgeditor": {
+    "TITLE": "Image Edit"
   }
 }
