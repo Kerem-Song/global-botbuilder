@@ -1,7 +1,8 @@
 import { Card } from '@components/data-display/Card';
 import { Title } from '@components/general/Title';
-import usePage from '../../../hooks/usePage';
+
 import icHome from '../../../assets/ic_home.png';
+import usePage from '../../../hooks/usePage';
 
 export const BotCard = () => {
   const { navigate } = usePage();
@@ -22,7 +23,7 @@ export const BotCard = () => {
               textAlign: 'center',
             }}
           >
-            <img src={icHome} />
+            <img src={icHome} alt="" />
           </div>
         </div>
         <div style={{ flex: 'auto' }}>

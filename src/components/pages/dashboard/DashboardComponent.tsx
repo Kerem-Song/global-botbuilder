@@ -1,24 +1,30 @@
-import { Card } from '@components/data-display/Card';
 import { Input } from '@components/data-entry/Input';
 import { Title } from '@components/general/Title';
+
 import usePage from '../../../hooks/usePage';
+import { useRootState } from '../../../hooks/useRootState';
 import { BotCard } from './BotCard';
 
 export const DashboardComponent = () => {
+  const { t } = usePage();
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+
   return (
     <>
-      <Title>브랜드이름</Title>
+      <Title>{brandName}</Title>
       <div style={{ display: 'flex' }}>
-        <div>내 챗봇 : 0</div>
+        <div>{t('CHATBOT_COUNT', { count: 100 })}</div>
         <div style={{ flex: 'auto' }}></div>
         <div>
-          <Input placeholder="봇 이름을 검색하세요." />
+          <Input placeholder={t('SEARCH_PLACEHOLDER')} />
         </div>
       </div>
-      <BotCard />
-      <BotCard />
-      <BotCard />
-      <BotCard />
+      <div style={{ gap: '10px', display: 'flex', flexDirection: 'column' }}>
+        <BotCard />
+        <BotCard />
+        <BotCard />
+        <BotCard />
+      </div>
     </>
   );
 };
