@@ -1,38 +1,30 @@
-import { useForm } from 'react-hook-form';
-import usePage from '../../../hooks/usePage';
-import { Card } from '../../data-display/Card';
-import { Input } from '../../data-entry/Input';
-import { Button } from '../../general/Button';
+import { Input } from '@components/data-entry/Input';
+import { Title } from '@components/general/Title';
 
-interface FormData {
-  name: string;
-}
+import usePage from '../../../hooks/usePage';
+import { useRootState } from '../../../hooks/useRootState';
+import { BotCard } from './BotCard';
 
 export const DashboardComponent = () => {
-  const { pageName, t, tc } = usePage();
-  const { register, handleSubmit, watch } = useForm<FormData>();
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  const { t } = usePage();
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+
   return (
     <>
-      <Card title={pageName} style={{ width: '200px' }} radius="x-large">
-        <div>{t('HELLO')}</div>
-        <div>{t('WELCOME', { who: '가인' })}</div>
-        <div>{tc('SAVE')}</div>
-        <div>길이가 길면 어떻게 나오는지 보고 싶어.</div>
-        <div className="capitalize">{tc('SAVE')}</div>
-        <div className="uppercase">{tc('SAVE')}</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register('name')} />
-        </form>
-      </Card>
-      <Card>
-        {watch('name')}
-        <Button href="https://www.lunasoft.co.kr">{tc('SAVE')}</Button>
-        <Button>{tc('SAVE')}</Button>
-        <Button shape="circle">S</Button>
-      </Card>
+      <Title>{brandName}</Title>
+      <div style={{ display: 'flex' }}>
+        <div>{t('CHATBOT_COUNT', { count: 100 })}</div>
+        <div style={{ flex: 'auto' }}></div>
+        <div>
+          <Input placeholder={t('SEARCH_PLACEHOLDER')} />
+        </div>
+      </div>
+      <div style={{ gap: '10px', display: 'flex', flexDirection: 'column' }}>
+        <BotCard />
+        <BotCard />
+        <BotCard />
+        <BotCard />
+      </div>
     </>
   );
 };

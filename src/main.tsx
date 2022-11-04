@@ -1,5 +1,3 @@
-import './assets/css/index.css';
-import './assets/css/common.css';
 import './assets/css/card.css';
 import './assets/css/button.css';
 import './assets/css/hamburger.css';

@@ -1,0 +1,43 @@
+.switch {
+  display: flex;
+
+  input {
+    appearance: none;
+    min-width: rem(48);
+    min-height: rem(22);
+    margin: 0;
+
+    position: relative;
+    background-color: #a1a1a1;
+    border-radius: 32px;
+    border: 1px solid #a1a1a1;
+
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    &:checked {
+      background-color: #2a57d6;
+      border-color: #2a57d6;
+
+      &::before {
+        left: unset;
+        transform: translateX(calc(100% + rem(12)));
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: rem(16);
+      width: rem(16);
+      top: rem(2);
+      left: rem(2);
+      bottom: rem(2);
+      background-color: white;
+      transition: all 0.3s;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1;
+    }
+  }
+}

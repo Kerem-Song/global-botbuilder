@@ -1,14 +1,10 @@
-import { ChangeEvent, FocusEvent, forwardRef, KeyboardEvent } from 'react';
+import { forwardRef, KeyboardEvent } from 'react';
 
-export interface InputProps {
-  disabled?: boolean;
-  id?: string;
-  name?: string;
+import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
+
+export interface InputProps extends IDataEntryProp {
   maxLength?: number;
-  value?: string;
   placeholder?: string;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onPressEnter?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
@@ -28,4 +24,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   );
 });
 
-Input.displayName = 'luna-input';
+Input.displayName = 'luna_input';

@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 
 import authReducer from './authSlice';
+import brandInfoReducer from './brandInfoSlice';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   authReducer,
   systemModalReducer,
   sideBarStatusReducer,
+  brandInfoReducer,
 });
 
 type ReducerType = typeof rootReducer;
