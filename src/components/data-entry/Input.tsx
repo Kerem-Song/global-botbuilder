@@ -24,4 +24,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   );
 });
 
-Input.displayName = 'luna-input';
+Input.displayName = 'luna_input';

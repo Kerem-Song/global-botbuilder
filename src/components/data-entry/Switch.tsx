@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
-const Switch = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
+export const Switch = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
   return (
     <label htmlFor={args.id} className="switch">
       <input {...args} type="checkbox" role="switch" ref={ref} />
@@ -12,6 +12,4 @@ const Switch = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
   );
 });
 
-Switch.displayName = 'luna-switch';
-
-export default Switch;
+Switch.displayName = 'luna_switch';

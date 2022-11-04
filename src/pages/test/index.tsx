@@ -1,4 +1,4 @@
-import Switch from '@components/data-entry/Switch';
+import { Switch } from '@components/data-entry/Switch';
 import { Button } from '@components/general/Button';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
