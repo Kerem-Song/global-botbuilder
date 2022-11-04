@@ -18,7 +18,7 @@
     "TITLE": "테스트페이지"
   },
   "sidebar": {
-    "HOME": "홈",
+    "DASHBOARD": "대시보드",
     "SCENARIO": "시나리오",
     "IMAGEEDITOR": "이미지 에디터",
     "UTTERANCE": "발화",

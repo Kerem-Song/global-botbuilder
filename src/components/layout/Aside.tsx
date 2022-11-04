@@ -19,94 +19,37 @@ export const Aside = () => {
   const dispatch = useDispatch();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
+
+  const getMenuItem = (id: number, url: string, icon: string, selectedIcon: string) => {
+    return {
+      id,
+      url: `/${i18n.language}/${url}`,
+      icon,
+      selectedIcon,
+      alt: url.replace(/^./, url[0].toUpperCase()),
+      desc: ts(`${url.toUpperCase()}`),
+    };
+  };
+
   const menu = [
-    {
-      id: 1,
-      url: `/${i18n.language}/dashboard`,
-      icon: icHome,
-      selectedListIcon: '',
-      exact: true,
-      alt: 'Home',
-      desc: ts('HOME'),
-    },
-    {
-      id: 2,
-      url: `/${i18n.language}/scenario`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Scenario',
-      desc: ts('SCENARIO'),
-    },
-    {
-      id: 3,
-      url: `/${i18n.language}/imgedit`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Image Editor',
-      desc: ts('IMAGEEDITOR'),
-    },
-    {
-      id: 4,
-      url: `/${i18n.language}/utterance`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Utterance',
-      desc: ts('UTTERANCE'),
-    },
-    {
-      id: 5,
-      url: `/${i18n.language}/skill`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Skill',
-      desc: ts('SKILL'),
-    },
-    {
-      id: 6,
-      url: `/${i18n.language}/deployment`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Deployment',
-      desc: ts('DEPLOYMENT'),
-    },
-    {
-      id: 7,
-      url: `/${i18n.language}/history`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'History',
-      desc: ts('HISTORY'),
-    },
-    {
-      id: 8,
-      url: `/${i18n.language}/statistics`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Statistics',
-      desc: ts('STATISTICS'),
-    },
+    getMenuItem(1, 'dashboard', icHome, ''),
+    getMenuItem(2, 'scenario', icBotbuilder, ''),
+    getMenuItem(3, 'imageeditor', icBotbuilder, ''),
+    getMenuItem(4, 'utterance', icBotbuilder, ''),
+    getMenuItem(5, 'skill', icBotbuilder, ''),
+    getMenuItem(6, 'deployment', icBotbuilder, ''),
+    getMenuItem(7, 'history', icBotbuilder, ''),
+    getMenuItem(8, 'statistics', icBotbuilder, ''),
   ];
 
   const subMenu = [
-    {
-      id: 1,
-      url: `/${i18n.language}/help`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Help',
-      desc: ts('HELP'),
-    },
-    {
-      id: 2,
-      url: `/${i18n.language}/help`,
-      icon: icBotbuilder,
-      selectedListIcon: '',
-      alt: 'Setting',
-      desc: ts('SETTING'),
-    },
+    getMenuItem(1, 'help', icBotbuilder, ''),
+    getMenuItem(2, 'setting', icBotbuilder, ''),
   ];
 
-  const chatbotName = 'Chatbot Name';
+  const name = 'Chatbot Name';
+  const chatbotName = sidebarStatus ? name : name.slice(0, 1);
+
   return (
     <aside className={css}>
       <div>

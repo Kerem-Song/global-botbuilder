@@ -15,7 +15,7 @@
     "TITLE": "test page"
   },
   "sidebar": {
-    "HOME": "Home",
+    "DASHBOARD": "Dashboard",
     "SCENARIO": "Scenario",
     "IMAGEEDITOR": "Image Editor",
     "UTTERANCE": "Utterance",

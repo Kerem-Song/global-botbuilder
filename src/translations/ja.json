@@ -15,7 +15,7 @@
     "TITLE": "test page"
   },
   "sidebar": {
-    "HOME": "ホーム",
+    "DASHBOARD": "ダッシュボード",
     "SCENARIO": "シナリオ",
     "IMAGEEDITOR": "イメージ·エディタ",
     "UTTERANCE": "発話",
