@@ -5,6 +5,7 @@ import { supportedLngs } from '../modules/constants';
 import DashboardPage from '../pages/dashboard';
 import ImageEditorPage from '../pages/imgedit';
 import ScenarioPage from '../pages/scenario';
+import TestPage from '../pages/test';
 import { LocaleNavigate } from './LocaleNavigate';
 
 const finalRoutes = [
@@ -17,6 +18,7 @@ const finalRoutes = [
           { path: 'dashboard', element: <DashboardPage /> },
           { path: 'imgedit', element: <ImageEditorPage /> },
           { path: 'scenario', element: <ScenarioPage /> },
+          { path: 'test', element: <TestPage /> },
           { path: '', element: <Navigate to="/dashboard" replace={true} /> },
           { path: '*', element: <>404</>, handle: true },
         ],

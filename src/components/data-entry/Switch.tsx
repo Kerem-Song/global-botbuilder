@@ -1,29 +1,17 @@
 import '../../styles/switch.scss';
 
-import { ChangeEvent, FC } from 'react';
+import { forwardRef } from 'react';
 
-interface SwitchProperties {
-  id: string;
-  onChange: (isChecked: boolean) => void;
-  isChecked: boolean;
-}
+import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
-const Switch: FC<SwitchProperties> = (props) => {
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onChange && props.onChange(e.target.checked);
-  };
-
+const Switch = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
   return (
-    <label htmlFor={props.id} className="switch">
-      <input
-        id={props.id}
-        type="checkbox"
-        role="switch"
-        checked={props.isChecked}
-        onChange={onChange}
-      />
+    <label htmlFor={args.id} className="switch">
+      <input {...args} type="checkbox" role="switch" ref={ref} />
     </label>
   );
-};
+});
+
+Switch.displayName = 'luna-switch';
 
 export default Switch;
