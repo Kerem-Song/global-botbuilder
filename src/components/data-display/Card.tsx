@@ -10,6 +10,7 @@ export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   bordered?: boolean;
   hoverable?: boolean;
   radius?: SizeType;
+  onClick?: () => void;
 }
 
 export const Card: FC<CardProps> = ({
@@ -20,6 +21,7 @@ export const Card: FC<CardProps> = ({
   bordered = true,
   hoverable,
   radius = 'none',
+  onClick,
 }) => {
   const wrapClass = classNames(className, 'luna-card', {
     'luna-card-bordered': bordered,
@@ -31,7 +33,13 @@ export const Card: FC<CardProps> = ({
 
   const bodyClass = classNames('luna-card-body');
   return (
-    <div className={wrapClass} style={style}>
+    <div
+      className={wrapClass}
+      style={style}
+      onClick={() => {
+        onClick?.();
+      }}
+    >
       {title ? <div className={titleClass}>{title}</div> : undefined}
       {children ? <div className={bodyClass}>{children}</div> : undefined}
     </div>

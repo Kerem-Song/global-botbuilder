@@ -7,6 +7,10 @@ body,
   padding: 0;
 }
 
+body {
+  font-size: 14px;
+}
+
 #root {
   display: flex;
   flex-direction: row;
@@ -40,6 +44,7 @@ main {
   flex: auto;
   padding: 20px;
   padding-left: 70px;
+  background-color: #efefef;
 }
 
 footer {

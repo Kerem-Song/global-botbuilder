@@ -1,38 +1,24 @@
-import { useForm } from 'react-hook-form';
+import { Card } from '@components/data-display/Card';
+import { Input } from '@components/data-entry/Input';
+import { Title } from '@components/general/Title';
 import usePage from '../../../hooks/usePage';
-import { Card } from '../../data-display/Card';
-import { Input } from '../../data-entry/Input';
-import { Button } from '../../general/Button';
-
-interface FormData {
-  name: string;
-}
+import { BotCard } from './BotCard';
 
 export const DashboardComponent = () => {
-  const { pageName, t, tc } = usePage();
-  const { register, handleSubmit, watch } = useForm<FormData>();
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
   return (
     <>
-      <Card title={pageName} style={{ width: '200px' }} radius="x-large">
-        <div>{t('HELLO')}</div>
-        <div>{t('WELCOME', { who: '가인' })}</div>
-        <div>{tc('SAVE')}</div>
-        <div>길이가 길면 어떻게 나오는지 보고 싶어.</div>
-        <div className="capitalize">{tc('SAVE')}</div>
-        <div className="uppercase">{tc('SAVE')}</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register('name')} />
-        </form>
-      </Card>
-      <Card>
-        {watch('name')}
-        <Button href="https://www.lunasoft.co.kr">{tc('SAVE')}</Button>
-        <Button>{tc('SAVE')}</Button>
-        <Button shape="circle">S</Button>
-      </Card>
+      <Title>브랜드이름</Title>
+      <div style={{ display: 'flex' }}>
+        <div>내 챗봇 : 0</div>
+        <div style={{ flex: 'auto' }}></div>
+        <div>
+          <Input placeholder="봇 이름을 검색하세요." />
+        </div>
+      </div>
+      <BotCard />
+      <BotCard />
+      <BotCard />
+      <BotCard />
     </>
   );
 };
