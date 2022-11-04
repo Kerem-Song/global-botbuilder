@@ -50,4 +50,8 @@ nav {
     padding-left: rem(5);
     color: white;
   }
+
+  .chatbotName {
+    transition: width 0.5s ease-in-out;;
+  }
 }

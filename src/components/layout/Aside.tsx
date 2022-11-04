@@ -56,7 +56,7 @@ export const Aside = () => {
         <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} dark />
       </div>
       <div>
-        <p className="chatbotName">{chatbotName}</p>
+        <p className={`chatbotName ${css}`}>{chatbotName}</p>
       </div>
       <nav className="nav">
         <ul>
