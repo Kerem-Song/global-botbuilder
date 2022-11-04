@@ -1,4 +1,3 @@
-import '../assets/css/common.css';
 import '../assets/css/card.css';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
