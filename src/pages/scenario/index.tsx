@@ -1,3 +1,4 @@
+import { ScenarioComponent } from '@components/pages/scenario/ScenarioComponent';
 import { useNavigate } from 'react-router-dom';
 
 import { TitleHelmet } from '../../components/common/TitleHelmet';
@@ -11,8 +12,9 @@ export const ScenarioPage = () => {
   return (
     <PageProvider pageName="scenario">
       <TitleHelmet />
-      <div>{t('TITLE')}</div>
-      <button onClick={() => navigate(`/${i18n.language}/test`)}>GO</button>
+      {/* <div>{t('TITLE')}</div>
+      <button onClick={() => navigate(`/${i18n.language}/test`)}>GO</button> */}
+      <ScenarioComponent />
     </PageProvider>
   );
 };

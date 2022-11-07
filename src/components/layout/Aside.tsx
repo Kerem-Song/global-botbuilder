@@ -34,12 +34,11 @@ export const Aside = () => {
   const menu = [
     getMenuItem(1, 'dashboard', icHome, ''),
     getMenuItem(2, 'scenario', icBotbuilder, ''),
-    getMenuItem(3, 'imageeditor', icBotbuilder, ''),
-    getMenuItem(4, 'utterance', icBotbuilder, ''),
-    getMenuItem(5, 'skill', icBotbuilder, ''),
-    getMenuItem(6, 'deployment', icBotbuilder, ''),
-    getMenuItem(7, 'history', icBotbuilder, ''),
-    getMenuItem(8, 'statistics', icBotbuilder, ''),
+    getMenuItem(3, 'utterance', icBotbuilder, ''),
+    getMenuItem(4, 'skill', icBotbuilder, ''),
+    getMenuItem(5, 'deployment', icBotbuilder, ''),
+    getMenuItem(6, 'history', icBotbuilder, ''),
+    getMenuItem(7, 'statistics', icBotbuilder, ''),
   ];
 
   const subMenu = [

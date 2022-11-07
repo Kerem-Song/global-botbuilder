@@ -16,7 +16,6 @@ const finalRoutes = [
         path: lang,
         children: [
           { path: 'dashboard', element: <DashboardPage /> },
-          { path: 'imgedit', element: <ImageEditorPage /> },
           { path: 'scenario', element: <ScenarioPage /> },
           { path: 'test', element: <TestPage /> },
           { path: '', element: <Navigate to="/dashboard" replace={true} /> },
