@@ -47,8 +47,8 @@ export const Aside = () => {
     getMenuItem(2, 'setting', icBotbuilder, ''),
   ];
 
-  const name = 'Chatbot Name';
-  const chatbotName = sidebarStatus ? name : name.slice(0, 1);
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const chatbotName = sidebarStatus ? brandName : brandName.slice(0, 1);
 
   return (
     <aside className={css}>

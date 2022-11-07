@@ -3,6 +3,7 @@ import '@styles/header.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
+import { useRootState } from '../../hooks/useRootState';
 
 export const Header = () => {
   const { i18n, t, ts } = useI18n();
@@ -15,8 +16,10 @@ export const Header = () => {
       navigate(paths.join('/'));
     });
   };
-  const brandName = 'BrandName';
+
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const user = 'UserName';
+
   return (
     <header>
       <span>{brandName}</span>
