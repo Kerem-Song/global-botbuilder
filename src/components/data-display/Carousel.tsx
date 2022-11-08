@@ -52,7 +52,7 @@ export const Carousel: FC<CarouselProps> = ({
     >
       {title ? <p className={titleClass}>{title}</p> : undefined}
       {cards ? (
-        <div className={bodyClass} style={{ display: 'flex' }}>
+        <div className={bodyClass}>
           {cards.map((item, i) => (
             <Card
               key={i}
