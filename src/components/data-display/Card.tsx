@@ -39,6 +39,7 @@ export const Card: FC<CardProps> = ({
       onClick={() => {
         onClick?.();
       }}
+      role="presentation"
     >
       {title ? <div className={titleClass}>{title}</div> : undefined}
       {children ? <div className={bodyClass}>{children}</div> : undefined}

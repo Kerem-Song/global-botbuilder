@@ -1,0 +1,37 @@
+.luna-carousel {
+  border: 1px solid black;
+  border-radius: rem(10);
+}
+
+.luna-carousel-head {
+  padding: rem(10);
+}
+
+.luna-carousel-body {
+  .luna-card {
+    margin: rem(10);
+    width: rem(200);
+    height: rem(260);
+    
+    .luna-card-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: rem(14);
+
+      .thumbnail {
+        text-align: center;
+      }
+
+      & div {
+        width: 100%;
+      }
+    }
+  }
+
+  .buttonWrapper {
+    & button {
+      display: block;
+      width: 100%;
+    }
+  }
+}

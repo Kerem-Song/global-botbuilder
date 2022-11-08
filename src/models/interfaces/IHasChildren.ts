@@ -1,3 +1,3 @@
 export interface IHasChildren {
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
 }
