@@ -2,6 +2,7 @@ import '@styles/carousel.scss';
 
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
+import { useState } from 'react';
 import { FC } from 'react';
 import { IBasicCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
@@ -31,15 +32,20 @@ export const Carousel: FC<CarouselProps> = ({
   onClick,
 }) => {
   const { tc } = useI18n();
-
+  const [isFolded, setIsFolded] = useState<boolean>(false);
   const wrapClass = classNames(className, 'luna-carousel', {
     'luna-carousel-bordered': bordered,
     'luna-carousel-hoverble': hoverable,
     [`border-radious-${radius}`]: radius !== 'none',
+    'luna-carousel-fold': isFolded,
   });
 
   const titleClass = classNames('luna-carousel-head');
   const bodyClass = classNames('luna-carousel-body');
+
+  const handleFoldCarousel = () => {
+    setIsFolded(!isFolded);
+  };
 
   return (
     <div
@@ -53,24 +59,32 @@ export const Carousel: FC<CarouselProps> = ({
       {title ? <p className={titleClass}>{title}</p> : undefined}
       {cards ? (
         <div className={bodyClass}>
-          {cards.map((item, i) => (
-            <Card
-              key={i}
-              title={item.title}
-              hoverable
-              onClick={() => console.log('card click')}
-            >
-              <div className="thumbnail">
-                <img src={item.thumbnail?.imageUrl} alt="" />
-              </div>
-              <div>{item.description}</div>
-              <div className="buttonWrapper">
-                {item.buttons?.map((button, i) => {
-                  return <Button key={i}>{button.label}</Button>;
-                })}
-              </div>
-            </Card>
-          ))}
+          <div className="cards">
+            {cards.map((item, i) => (
+              <Card
+                key={i}
+                title={item.title}
+                hoverable
+                onClick={() => console.log('card click')}
+              >
+                <div className="thumbnail">
+                  <img src={item.thumbnail?.imageUrl} alt="" />
+                </div>
+                <div>{item.description}</div>
+                <div className="buttonWrapper">
+                  {item.buttons?.map((button, i) => {
+                    return <Button key={i}>{button.label}</Button>;
+                  })}
+                </div>
+              </Card>
+            ))}
+          </div>
+          <div className="addCardBtn">
+            <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
+          </div>
+          <div className="dropBtn">
+            <Button onClick={handleFoldCarousel}>*</Button>
+          </div>
         </div>
       ) : undefined}
     </div>

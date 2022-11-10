@@ -9,41 +9,61 @@
       border-color: blue;
       box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
     }
-}
 
-.luna-carousel-head {
-  padding: rem(10);
-}
+    &-head {
+      padding: rem(10);
+    }
+    &-fold {
+      width: rem(350);
+      overflow: hidden;
+    }
 
-.luna-carousel-body {
-  display: flex;
-  padding: rem(10);
-  
-  .luna-card {
-    // margin: rem(10);
-    width: rem(200);
-    height: rem(260);
-    gap: rem(10);
-    
-    .luna-card-body {
+    &-body {
       display: flex;
-      flex-wrap: wrap;
-      gap: rem(14);
+      padding: rem(10);
+      
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        overflow: scroll;
+        gap: rem(14);
 
-      .thumbnail {
-        text-align: center;
+        .luna-card {
+          width: rem(153);
+
+          &-body { 
+            .thumbnail {
+              text-align: center;
+            }
+      
+            & div {
+              width: 100%;
+            }
+          }
       }
-
-      & div {
-        width: 100%;
+      
+    
+    
+      }
+    
+      .addCardBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: rem(10);
+      }
+    
+      .buttonWrapper {
+        & button {
+          display: block;
+          width: 100%;
+        }
+      }
+      
+      .dropBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
-  }
-
-  .buttonWrapper {
-    & button {
-      display: block;
-      width: 100%;
-    }
-  }
 }
