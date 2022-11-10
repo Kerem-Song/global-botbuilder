@@ -2,7 +2,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import './common';
 
 $defaultSize: 16;
 
@@ -14,4 +13,24 @@ $defaultSize: 16;
 
 p {
   margin: rem(0);
+}
+
+a {
+  text-decoration: none;
+}
+
+.border-radius-x-small {
+  border-radius: 2px;
+}
+
+.border-radius-small {
+  border-radius: 5px;
+}
+
+.border-radius-large {
+  border-radius: 10px;
+}
+
+.border-radius-x-large {
+  border-radius: 20px;
 }
