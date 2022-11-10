@@ -1,5 +1,4 @@
-import '../styles/common.scss';
-import '../assets/css/card.css';
+import '../styles.scss';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -17,7 +16,11 @@ export default {
 } as ComponentMeta<typeof Card>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Card> = (args: CardProps) => <Card {...args} />;
+const Template: ComponentStory<typeof Card> = (args: CardProps) => (
+  <div>
+    <Card {...args} />
+  </div>
+);
 export const Default = Template.bind({});
 export const Hoverable = Template.bind({});
 export const NoBorder = Template.bind({});
