@@ -1,6 +1,4 @@
-import './assets/css/card.css';
-import './assets/css/button.css';
-import './assets/css/hamburger.css';
+import './styles.scss';
 import './modules/i18next';
 
 import i18next from 'i18next';
