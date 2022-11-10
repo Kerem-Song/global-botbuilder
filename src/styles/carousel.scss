@@ -16,7 +16,13 @@
     &-fold {
       width: rem(350);
       overflow: hidden;
-    }
+
+      .luna-carousel-body {
+        .cards {
+          overflow: hidden;
+        }
+      }
+   }
 
     &-body {
       display: flex;
