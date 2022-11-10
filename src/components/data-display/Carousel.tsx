@@ -47,6 +47,10 @@ export const Carousel: FC<CarouselProps> = ({
     setIsFolded(!isFolded);
   };
 
+  const handleCardSettingBtn = () => {
+    console.log('handle card setting');
+  };
+
   return (
     <div
       className={wrapClass}
@@ -56,7 +60,10 @@ export const Carousel: FC<CarouselProps> = ({
         onClick?.();
       }}
     >
-      {title ? <p className={titleClass}>{title}</p> : undefined}
+      <div className={titleClass}>
+        {title ? <p className={titleClass}>{title}</p> : undefined}
+        <Button onClick={handleCardSettingBtn}>:</Button>
+      </div>
       {cards ? (
         <div className={bodyClass}>
           <div className="cards">
@@ -70,7 +77,9 @@ export const Carousel: FC<CarouselProps> = ({
                 <div className="thumbnail">
                   <img src={item.thumbnail?.imageUrl} alt="" />
                 </div>
-                <div>{item.description}</div>
+                <div>
+                  <p>{item.description}</p>
+                </div>
                 <div className="buttonWrapper">
                   {item.buttons?.map((button, i) => {
                     return <Button key={i}>{button.label}</Button>;

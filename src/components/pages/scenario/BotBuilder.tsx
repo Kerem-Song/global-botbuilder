@@ -1,4 +1,8 @@
+import '../../../styles/builderCard.scss';
+
+import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
+import { Button } from '@components/general/Button';
 import { IBasicCard } from 'src/models/interfaces/ICard';
 
 import img from '../../../assets/react.svg';
@@ -15,7 +19,8 @@ export const Botbuilder = () => {
     {
       title: 'title2',
       thumbnail: { imageUrl: img },
-      description: '설명2',
+      description:
+        '설명2asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadfasdfasdfasdfasdfasdfasdfasdfsd',
       buttons: [
         { label: '버튼1', action: 'message' },
         { label: '버튼1', action: 'message' },
@@ -38,6 +43,25 @@ export const Botbuilder = () => {
       <div>Bot builder</div>
       <div>
         <Carousel title={title} cards={cards} />
+        <Card
+          className="builderCard"
+          title={title}
+          hoverable
+          onClick={() => console.log('card click')}
+        >
+          <div className="thumbnail">
+            <img src={img} alt="" />
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div className="buttonWrapper">
+            {/* {buttons?.map((button, i) => {
+              return <Button key={i}>{button.label}</Button>;
+            })} */}
+            <Button>버튼2</Button>
+          </div>
+        </Card>
       </div>
     </>
   );

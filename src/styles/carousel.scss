@@ -11,8 +11,12 @@
     }
 
     &-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: rem(10);
     }
+
     &-fold {
       width: rem(350);
       overflow: hidden;
@@ -30,8 +34,8 @@
       
       .cards {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        overflow: scroll;
+        grid-template-columns: repeat(10, 1fr);
+        overflow-x: scroll;
         gap: rem(14);
 
         .luna-card {
@@ -41,15 +45,17 @@
             .thumbnail {
               text-align: center;
             }
+
+            p {
+              white-space: normal;
+              word-break: break-all;
+            }
       
             & div {
               width: 100%;
             }
           }
-      }
-      
-    
-    
+        } 
       }
     
       .addCardBtn {
