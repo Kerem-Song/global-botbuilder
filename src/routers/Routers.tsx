@@ -9,21 +9,27 @@ import TestPage from '../pages/test';
 import { LocaleNavigate } from './LocaleNavigate';
 
 const finalRoutes = [
-  {
-    element: <DefaultLayout />,
-    children: supportedLngs.map((lang) => {
-      return {
-        path: lang,
-        children: [
-          { path: 'dashboard', element: <DashboardPage /> },
-          { path: 'scenario', element: <ScenarioPage /> },
-          { path: 'test', element: <TestPage /> },
-          { path: '', element: <Navigate to="/dashboard" replace={true} /> },
-          { path: '*', element: <>404</>, handle: true },
-        ],
-      };
-    }),
-  },
+  ...supportedLngs.map((lang) => {
+    return {
+      path: lang,
+      children: [
+        {
+          element: <DefaultLayout />,
+          children: [
+            {
+              path: 'dashboard',
+              element: <DashboardPage />,
+              handle: true,
+            },
+            { path: 'scenario', element: <ScenarioPage /> },
+            { path: 'test', element: <TestPage /> },
+            { path: '', element: <Navigate to="/dashboard" replace={true} /> },
+          ],
+        },
+        { path: '*', element: <>404</>, handle: true },
+      ],
+    };
+  }),
   {
     path: '*',
     element: <LocaleNavigate />,

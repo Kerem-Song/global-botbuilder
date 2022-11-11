@@ -1,21 +1,30 @@
 header {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: black;
+  padding-left: rem($asideSize + 22);
+  border-bottom: #ededf0 solid rem(2);
+  background-color: $background;
+  div {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-content: center;
+    align-items: center;
+    height: rem(46);
+    .brandName {
+      color: #222222;
+      font-weight: 700;
+      font-size: rem(16);
+    }
 
-  .language {
-    grid-column: 11/12;
-  }
+    .language {
+      grid-column: 11/12;
+    }
 
-  .userName {
-    grid-column: 12/12;
-    text-align: center;
-    color: black;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: rem(5);
+    .userName {
+      grid-column: 12/12;
+      text-align: center;
+      color: black;
+      background-color: white;
+      border: 1px solid black;
+      border-radius: rem(5);
+    }
   }
 }

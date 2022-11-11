@@ -1,14 +1,26 @@
 @use 'sass:math';
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
 
 $defaultSize: 16;
+$asideSize: 56;
+$background: #f7f7fa;
+$primaryColor: #2a57d6;
 
 @function rem($px) {
   $x: $defaultSize;
   $result: (math.div(1, $x) * $px) + rem;
   @return $result;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 p {
@@ -17,6 +29,13 @@ p {
 
 a {
   text-decoration: none;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='number'],
+textarea {
+  -webkit-appearance: none;
 }
 
 .border-radius-x-small {

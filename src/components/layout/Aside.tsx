@@ -1,9 +1,8 @@
-import '@styles/aside.scss';
-
+import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useMatches } from 'react-router-dom';
 
 import icBotbuilder from '../../assets/ic_botbuilder.png';
 import icHome from '../../assets/ic_home.png';
@@ -11,9 +10,13 @@ import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 import { setSidebarStatus } from '../../store/sidebarStatusSlice';
 import Hamburger from '../general/Hamburger';
+import { Divider } from './Divider';
 
 export const Aside = () => {
   const { i18n, t, ts } = useI18n();
+  const matches = useMatches();
+  const location = useLocation();
+  const isDashboard = matches.find((x) => x.pathname === location.pathname)?.handle;
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const dispatch = useDispatch();
@@ -52,43 +55,77 @@ export const Aside = () => {
   return (
     <aside className={css}>
       <div>
-        <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} dark />
+        <div style={{ paddingLeft: '10px' }}>
+          <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} />
+        </div>
+        {isDashboard ? (
+          <div style={{ paddingLeft: '10px' }}>
+            <a>
+              <Button shape="circle">&lt;</Button>
+              {sidebarStatus ? <p>파트너스 센터</p> : <p>파</p>}
+            </a>
+          </div>
+        ) : (
+          <div style={{ padding: '10px' }}>
+            <NavLink to="dashboard">
+              <Button shape="circle">&lt;</Button>
+              {sidebarStatus && <span> {brandName} 챗봇 목록</span>}
+            </NavLink>
+          </div>
+        )}
+        <Divider />
+        <div>
+          <p className={classNames('chatbotName', css)}>{chatbotName}</p>
+        </div>
+        <Divider />
+        {isDashboard ? (
+          <></>
+        ) : (
+          <nav className="nav">
+            <ul>
+              {menu.map((item) => {
+                return (
+                  <NavLink key={item.id} to={`${item.url}`}>
+                    <li className="">
+                      <span className="menuImg">
+                        <img
+                          src={item.icon}
+                          alt={item.alt}
+                          style={{ filter: 'invert(1)' }}
+                        />
+                      </span>
+                      <span className="desc">{item.desc}</span>
+                    </li>
+                  </NavLink>
+                );
+              })}
+            </ul>
+          </nav>
+        )}
       </div>
+      <div style={{ flex: 'auto' }}></div>
       <div>
-        <p className={`chatbotName ${css}`}>{chatbotName}</p>
+        <nav className="subMenu">
+          <ul>
+            {subMenu.map((item) => {
+              return (
+                <NavLink key={item.id} to={`${item.url}`}>
+                  <li className="">
+                    <span className="subMenuImg">
+                      <img
+                        src={item.icon}
+                        alt={item.alt}
+                        style={{ filter: 'invert(1)' }}
+                      />
+                    </span>
+                    <span className="desc">{item.desc}</span>
+                  </li>
+                </NavLink>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
-      <nav className="nav">
-        <ul>
-          {menu.map((item) => {
-            return (
-              <NavLink key={item.id} to={`${item.url}`}>
-                <li className="">
-                  <span className="menuImg">
-                    <img src={item.icon} alt={item.alt} />
-                  </span>
-                  <span className="desc">{item.desc}</span>
-                </li>
-              </NavLink>
-            );
-          })}
-        </ul>
-      </nav>
-      <nav className="subMenu">
-        <ul>
-          {subMenu.map((item) => {
-            return (
-              <NavLink key={item.id} to={`${item.url}`}>
-                <li className="">
-                  <span className="subMenuImg">
-                    <img src={item.icon} alt={item.alt} />
-                  </span>
-                  <span className="desc">{item.desc}</span>
-                </li>
-              </NavLink>
-            );
-          })}
-        </ul>
-      </nav>
     </aside>
   );
 };

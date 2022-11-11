@@ -17,6 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
 
   return (
     <input
+      className="luna-input"
       {...args}
       onKeyDown={args.onPressEnter ? handleKeyDown : undefined}
       ref={ref}
