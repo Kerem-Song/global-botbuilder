@@ -1,21 +1,22 @@
+import { BasicCard } from '@components/cards/BasicCard';
+import { CommerceCard } from '@components/cards/CommerceCard';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { FC } from 'react';
-import { IBasicCard } from 'src/models/interfaces/ICard';
+import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 import { SizeType } from 'src/models/types/SizeType';
 
+import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
-import { Card } from './Card';
-
 export interface CarouselProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
   radius?: SizeType;
-  cards?: IBasicCard[];
+  cards?: IBasicCard[] | ICommerceCard[];
   onClick?: () => void;
 }
 
@@ -64,28 +65,8 @@ export const Carousel: FC<CarouselProps> = ({
       </div>
       {cards ? (
         <div className={bodyClass}>
-          <div className="cards">
-            {cards.map((item, i) => (
-              <Card
-                key={i}
-                title={item.title}
-                hoverable
-                onClick={() => console.log('card click')}
-              >
-                <div className="thumbnail">
-                  <img src={item.thumbnail?.imageUrl} alt="" />
-                </div>
-                <div>
-                  <p>{item.description}</p>
-                </div>
-                <div className="buttonWrapper">
-                  {item.buttons?.map((button, i) => {
-                    return <Button key={i}>{button.label}</Button>;
-                  })}
-                </div>
-              </Card>
-            ))}
-          </div>
+          {/* <BasicCard cards={cards} /> */}
+          <CommerceCard cards={dummy2} />
           <div className="addCardBtn">
             <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
           </div>

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { SizeType } from 'src/models/types/SizeType';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
-import { DirectionType } from '../../models/types/directionType';
+import { DirectionType } from '../../models/types/DirectionType';
 
 export interface ISpaceProp extends IHasChildren {
   direction?: DirectionType;

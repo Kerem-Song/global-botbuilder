@@ -1,18 +1,21 @@
+import { CommerceCard } from '@components/cards/CommerceCard';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
 import { Button } from '@components/general/Button';
 import { IBasicCard } from 'src/models/interfaces/ICard';
 
 import img from '../../../assets/react.svg';
+import { dummy2 } from '../../../dummy';
 
 export const Botbuilder = () => {
   const title = '캐로셀1';
+  const cardTitle = '카드 타이틀';
   const cards: IBasicCard[] = [
     {
-      title: 'title1',
+      title: '',
       thumbnail: { imageUrl: img },
-      description: '설명1',
-      buttons: [{ label: '버튼1', action: 'message' }],
+      description: 'asdfasdfasfasdfasdfasdfasdf',
+      // buttons: [{ label: '버튼1', action: 'message' }],
     },
     {
       title: 'title2',
@@ -26,6 +29,73 @@ export const Botbuilder = () => {
       ],
     },
     { title: 'title3', thumbnail: { imageUrl: img }, description: '설명3' },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+    {
+      title: 'title4',
+      thumbnail: { imageUrl: img },
+      description: '설명4',
+      buttons: [
+        { label: '버튼1', action: 'message' },
+        { label: '버튼1', action: 'message' },
+      ],
+    },
+  ];
+
+  const testCard: IBasicCard[] = [
     {
       title: 'title4',
       thumbnail: { imageUrl: img },

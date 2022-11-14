@@ -43,6 +43,7 @@
 
           &-body { 
             .thumbnail {
+              padding: rem(20) 0 rem(20) 0;
               text-align: center;
             }
 
@@ -53,6 +54,45 @@
       
             & div {
               width: 100%;
+            }
+
+            // Commerce Card Profile
+            .profile {
+              display: flex;
+              justify-content: start;
+              align-items: center;
+              overflow: hidden;
+          
+              & img {
+                width: rem(15);
+              }
+           
+              & span {
+                padding-left: rem(5)
+              }
+            }
+
+            // Commerce Card priceWrapper
+            .priceWrapper {
+              display: flex;
+              justify-content: start;
+              align-items: center;
+
+              .discountPrice {
+                padding-left: rem(5);  
+              }
+
+              .discounted {
+                font-size: rem(1);
+                color: gray;
+                text-decoration : line-through;
+              }
+            }
+
+            // Commerce Card discount
+            .discount {
+              font-size: rem(10);
+              color: red;
             }
           }
         } 

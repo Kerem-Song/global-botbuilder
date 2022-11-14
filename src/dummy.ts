@@ -1,3 +1,6 @@
+import img from './assets/react.svg';
+import { ICommerceCard } from './models/interfaces/ICard';
+
 export const dummy = [
   {
     id: 'template1',
@@ -105,6 +108,64 @@ export const dummy = [
     buttons: [
       { buttonId: '9', name: '버튼1', endPoint: 'template3' },
       { buttonId: '10', name: '버튼2', endPoint: 'template2' },
+    ],
+  },
+];
+
+export const dummy2: ICommerceCard[] = [
+  {
+    description: '상품 입니다',
+    price: 10000,
+    currency: 'krw',
+    discount: 1000,
+    discountPrice: 9000,
+    thumbnail: {
+      imageUrl: img,
+    },
+    profile: {
+      nickname: 'nickname',
+      imageUrl: img,
+    },
+    buttons: [
+      { label: '버튼1', action: 'message' },
+      { label: '버튼1', action: 'message' },
+    ],
+  },
+  {
+    description: '상품2 입니다',
+    price: 8000,
+    currency: 'krw',
+    discount: 1000,
+    discountPrice: 7000,
+    thumbnail: {
+      imageUrl: img,
+    },
+    profile: {
+      nickname: 'nickname2asdf',
+      imageUrl: img,
+    },
+    buttons: [
+      { label: '버튼1', action: 'message' },
+      { label: '버튼1', action: 'message' },
+    ],
+  },
+  {
+    description: '상품3 입니다asdfasdfasdfasdfasdfasdf입니다asdfasdfasdfasdfasdfasdf',
+    price: 8000,
+    currency: 'krw',
+    // discount: 1000,
+    // discountPrice: 7000,
+    thumbnail: {
+      imageUrl: img,
+    },
+    profile: {
+      nickname: 'nickname2asdf',
+      imageUrl: img,
+    },
+    buttons: [
+      { label: '버튼1', action: 'message' },
+      { label: '버튼1', action: 'message' },
+      { label: '버튼1', action: 'message' },
     ],
   },
 ];
