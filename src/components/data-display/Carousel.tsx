@@ -65,8 +65,8 @@ export const Carousel: FC<CarouselProps> = ({
       </div>
       {cards ? (
         <div className={bodyClass}>
-          {/* <BasicCard cards={cards} /> */}
-          <CommerceCard cards={dummy2} />
+          <BasicCard cards={cards} />
+          {/* <CommerceCard cards={dummy2} /> */}
           <div className="addCardBtn">
             <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
           </div>

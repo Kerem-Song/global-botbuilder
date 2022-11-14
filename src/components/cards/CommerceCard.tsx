@@ -25,32 +25,33 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
             <img src={item.profile.imageUrl} alt="" />
             <span>{item.profile.nickname}</span>
           </div>
-
           <div className="priceWrapper">
-            {item.discountPrice && (
-              <p>
-                {item.discountPrice}
-                {item.currency}
-              </p>
-            )}
-
-            <p
-              className={classNames(
-                'discountPrice',
-                item.discountPrice ? 'discounted' : '',
+            <div className="prices">
+              {item.discountPrice && (
+                <p>
+                  {item.discountPrice}
+                  {item.currency}
+                </p>
               )}
-            >
-              {item.price}
-            </p>
-          </div>
-          {item.discount && (
-            <div>
-              <p className="discount">
-                {item.discount}
-                discount
+
+              <p
+                className={classNames(
+                  'discountPrice',
+                  item.discountPrice ? 'discounted' : '',
+                )}
+              >
+                {item.price}
               </p>
             </div>
-          )}
+            {item.discount && (
+              <div>
+                <p className="discount">
+                  {item.discount}
+                  discount
+                </p>
+              </div>
+            )}
+          </div>
           <Divider />
           <div className="description">
             <p>{item.description}</p>

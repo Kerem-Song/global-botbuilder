@@ -74,6 +74,10 @@
 
             // Commerce Card priceWrapper
             .priceWrapper {
+              padding: rem(10) 0 rem(10) 0;
+              height: rem(40);
+            }
+            .prices {
               display: flex;
               justify-content: start;
               align-items: center;
