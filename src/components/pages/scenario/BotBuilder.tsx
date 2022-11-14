@@ -1,5 +1,3 @@
-import '../../../styles/builderCard.scss';
-
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
 import { Button } from '@components/general/Button';

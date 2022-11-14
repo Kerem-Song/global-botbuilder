@@ -1,5 +1,3 @@
-import '@styles/carousel.scss';
-
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { useState } from 'react';
