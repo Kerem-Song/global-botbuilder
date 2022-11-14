@@ -22,20 +22,22 @@ export const Header = () => {
 
   return (
     <header>
-      <span>{brandName}</span>
-      <select
-        className="language"
-        value={i18n.language}
-        onChange={(e) => {
-          changeLanguageHandler(e.target.value);
-        }}
-      >
-        <option value="ko">한국어</option>
-        <option value="en">ENGLISH</option>
-        <option value="ja">日本語</option>
-        <option value="key">키확인</option>
-      </select>
-      <span className="userName">{user}</span>
+      <div>
+        <span className="brandName">{brandName}</span>
+        <select
+          className="language"
+          value={i18n.language}
+          onChange={(e) => {
+            changeLanguageHandler(e.target.value);
+          }}
+        >
+          <option value="ko">한국어</option>
+          <option value="en">ENGLISH</option>
+          <option value="ja">日本語</option>
+          <option value="key">키확인</option>
+        </select>
+        <span className="userName">{user}</span>
+      </div>
     </header>
   );
 };

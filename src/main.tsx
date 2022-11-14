@@ -1,6 +1,7 @@
-import './styles.scss';
 import './modules/i18next';
+import './styles.scss';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import i18next from 'i18next';
 import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
@@ -10,8 +11,11 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { HttpProvider } from './hooks/providers/HttpProvider';
 import { persistor, store } from './modules/store';
 import { Routers } from './routers/Routers';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -19,9 +23,13 @@ root.render(
     <HelmetProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Suspense fallback={'...loading'}>
-            <RouterProvider router={Routers} />
-          </Suspense>
+          <QueryClientProvider client={queryClient}>
+            <HttpProvider>
+              <Suspense fallback={'...loading'}>
+                <RouterProvider router={Routers} />
+              </Suspense>
+            </HttpProvider>
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </HelmetProvider>

@@ -7,7 +7,7 @@ const initialState: IBrandInfo = {
 };
 
 export const BrandInfoSlice = createSlice({
-  name: 'sidebarStatus',
+  name: 'brandInfo',
   initialState,
   reducers: {
     setBrandInfo: (state, action: PayloadAction<IBrandInfo>) => {

@@ -9,8 +9,8 @@ body,
 
 body {
   font-size: 14px;
-  font-family: 'Montserrat', 'Noto Sans KR', 'AppleSDGothicNeo', 'Apple SD Gothic Neo',
-    'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif';
+  font-family: 'Montserrat', 'Pretendard-Regular', 'AppleSDGothicNeo',
+    'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif';
 }
 
 #root {
@@ -24,32 +24,47 @@ body {
   flex-direction: column;
 }
 
-header {
-  padding-left: 50px;
-  height: 30px;
-  border-bottom: 1px solid #ccc;
-}
-
-aside {
-  position: absolute;
-  width: 50px;
-  height: 100%;
-  background-color: black;
-  -webkit-transition: width 0.3s ease-in-out;
-  -moz-transition: width 0.3s ease-in-out;
-  -o-transition: width 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out;
-  z-index: 1;
-}
-
 main {
   flex: auto;
-  padding: 20px;
-  padding-left: 70px;
-  background-color: #efefef;
+  padding: rem(20);
+  padding-left: rem($asideSize + 20);
+  background-color: $background;
+  overflow-y: auto;
 }
 
 footer {
   height: 25px;
   border-top: 1px solid #ccc;
+}
+
+/*Space*/
+.luna-space {
+  display: inline-flex;
+}
+
+.luna-space-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+/*Divider*/
+.luna-divider {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.luna-divider-horizontal {
+  display: flex;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  margin: rem(12) 0;
 }
