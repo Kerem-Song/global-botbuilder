@@ -61,15 +61,14 @@ export const Aside = () => {
         {isDashboard ? (
           <div style={{ paddingLeft: '10px' }}>
             <a>
-              <Button shape="circle">&lt;</Button>
+              &lt;
               {sidebarStatus ? <p>파트너스 센터</p> : <p>파</p>}
             </a>
           </div>
         ) : (
           <div style={{ padding: '10px' }}>
             <NavLink to="dashboard">
-              <Button shape="circle">&lt;</Button>
-              {sidebarStatus && <span> {brandName} 챗봇 목록</span>}
+              &lt;{sidebarStatus && <span> {brandName} 챗봇 목록</span>}
             </NavLink>
           </div>
         )}
