@@ -1,5 +1,3 @@
-import '@styles/scenario.scss';
-
 import { Botbuilder } from './BotBuilder';
 import { BotBuilderHeader } from './BotBuilderHeader';
 import { BotTester } from './BotTester';

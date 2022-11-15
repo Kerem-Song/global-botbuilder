@@ -19,6 +19,55 @@ $primaryColor: #2a57d6;
   @return $result;
 }
 
+/*****#####===== Background =====#####*****/
+@mixin bg {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*****#####===== Transition =====#####*****/
+@mixin transition( $property, $duration, $timing-function, $delay: null ) {
+  -webkit-transition: $property $duration $timing-function $delay;
+  -ms-transition: $property $duration $timing-function $delay;
+  transition: $property $duration $timing-function $delay;
+}
+
+/*****#####===== Ratio box set =====#####*****/
+@mixin ratioBox( $x: 1, $y: 1 ) {
+  display: block;
+  position: relative;
+
+  width: 100% !important;
+
+  overflow: hidden;
+
+  &:before{
+    content: "";
+    display: block;
+    padding-top: math.div($y, $x) * 100%;
+  }
+
+  &:hover .layer{
+    opacity: 1;
+  }
+}
+
+@mixin ratioContent {
+  position:  absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+@mixin ratioLayer {
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+
+  @include transition( all, 0.5s, ease-in-out );
+}
+
 * {
   box-sizing: border-box;
 }

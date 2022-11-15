@@ -1,0 +1,16 @@
+.builderCard {
+  width: rem(153);
+
+  .thumbnail {
+    text-align: center;
+  }
+
+  p {
+    white-space: normal;
+    word-break: break-all;
+  }
+
+  & div {
+    width: 100%;
+  }
+}
