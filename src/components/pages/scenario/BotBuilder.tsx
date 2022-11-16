@@ -6,10 +6,14 @@ import { IBasicCard } from 'src/models/interfaces/ICard';
 
 import img from '../../../assets/react.svg';
 import { dummy2 } from '../../../dummy';
+import { useCardList } from '../../../hooks/client/cardList';
 
 export const Botbuilder = () => {
   const title = '캐로셀1';
   const cardTitle = '카드 타이틀';
+  const { getCardListQuery } = useCardList();
+  const { data } = getCardListQuery;
+
   const cards: IBasicCard[] = [
     {
       title: '',

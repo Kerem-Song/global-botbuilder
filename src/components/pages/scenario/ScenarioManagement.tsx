@@ -1,18 +1,18 @@
 import { Input } from '@components/data-entry/Input';
 import { Switch } from '@components/data-entry/Switch';
 import { Title } from '@components/general/Title';
+import { Divider } from '@components/layout/Divider';
 
+import { useScenarioList } from '../../../hooks/client/scenario';
 import usePage from '../../../hooks/usePage';
 
 export const ScenarioManagement = () => {
   const { t } = usePage();
 
-  const scenarioName = '시나리오 이름';
-  const scenarioList = [
-    { id: 1, scenarioName: '시나리오 1' },
-    { id: 2, scenarioName: '시나리오 2' },
-  ];
+  const { getScenarioList } = useScenarioList();
 
+  const scenarioName = '시나리오 이름';
+  const { data } = getScenarioList;
   const handleSwitch = () => {
     console.log('switch toggle');
   };
@@ -22,21 +22,25 @@ export const ScenarioManagement = () => {
       <div className="scenarioName">
         <p>{scenarioName}</p>
       </div>
+      <Divider />
       <div className="openedScenarioOption">
         <p>활성 시나리오만 보기</p>
       </div>
+      <Divider />
       <div className="basicScenarioListWrapper">
-        <div className="desc">
-          <p>기본 제공 시나리오 목록 영역</p>
-          <br />
-          <p>(웰컴, 챗봇 도움말, 탈출, FAQ, 상담 연결 카테고리 선택 등)</p>
+        <div className="basicScenario">
+          <div>챗봇 도움말</div>
+          <div>탈출</div>
+          <div>FAQ 생성</div>
         </div>
+        <Divider />
         <div className="startBtn">
           <span>시작</span>
           <button className="newScenarioBtn">+ 새 시나리오</button>
         </div>
+        <Divider />
         <div className="scenarioListWrapper">
-          {scenarioList.map((item) => (
+          {data?.map((item) => (
             <div className="scenarioList" key={item.id}>
               <Switch onChange={handleSwitch} />
               <span>{item.scenarioName}</span>

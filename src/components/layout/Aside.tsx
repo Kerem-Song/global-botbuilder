@@ -55,11 +55,11 @@ export const Aside = () => {
   return (
     <aside className={css}>
       <div>
-        <div style={{ paddingLeft: '10px' }}>
+        <div>
           <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} />
         </div>
         {isDashboard ? (
-          <div style={{ paddingLeft: '10px' }}>
+          <div>
             <a>
               &lt;
               {sidebarStatus ? <p>파트너스 센터</p> : <p>파</p>}
