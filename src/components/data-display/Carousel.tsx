@@ -61,7 +61,9 @@ export const Carousel: FC<CarouselProps> = ({
     >
       <div className={titleClass}>
         {title ? <p className={titleClass}>{title}</p> : undefined}
-        <Button onClick={handleCardSettingBtn}>:</Button>
+        <Button onClick={handleCardSettingBtn}>
+          <i className="fa-solid fa-ellipsis-vertical" />
+        </Button>
       </div>
       {cards ? (
         <div className={bodyClass}>
