@@ -27,30 +27,30 @@ export const ScenarioManagement = () => {
         <p>활성 시나리오만 보기</p>
       </div>
       {/* <Divider /> */}
-      <div className="basicScenarioListWrapper">
-        <div className="basicScenario">
-          <div>챗봇 도움말</div>
-          <div>탈출</div>
-          <div>FAQ 생성</div>
-        </div>
-        {/* <Divider /> */}
-        <div className="startBtn">
-          <span>시작</span>
-          <button className="newScenarioBtn">+ 새 시나리오</button>
-        </div>
-        {/* <Divider /> */}
-        <div className="scenarioListWrapper">
-          {data?.map((item) => (
-            <div className="scenarioList" key={item.id}>
-              <Switch onChange={handleSwitch} />
-              <span>{item.scenarioName}</span>
-              <button>
-                <i className="fa-solid fa-ellipsis-vertical" />
-              </button>
-            </div>
-          ))}
-        </div>
+
+      <div className="basicScenario">
+        <div>챗봇 도움말</div>
+        <div>탈출</div>
+        <div>FAQ 생성</div>
       </div>
+      {/* <Divider /> */}
+      <div className="startBtn">
+        <span>시작</span>
+        <button className="newScenarioBtn">+ 새 시나리오</button>
+      </div>
+      {/* <Divider /> */}
+      <div className="scenarioListWrapper">
+        {data?.map((item) => (
+          <div className="scenarioList" key={item.id}>
+            <Switch onChange={handleSwitch} />
+            <span>{item.scenarioName}</span>
+            <button>
+              <i className="fa-solid fa-ellipsis-vertical" />
+            </button>
+          </div>
+        ))}
+      </div>
+
       <div className="search">
         <Input placeholder="시나리오명을 입력해주세요. " />
       </div>
