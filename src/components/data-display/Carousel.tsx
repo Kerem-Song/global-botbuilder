@@ -73,7 +73,13 @@ export const Carousel: FC<CarouselProps> = ({
             <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
           </div>
           <div className="dropBtn">
-            <Button onClick={handleFoldCarousel}>*</Button>
+            <Button onClick={handleFoldCarousel}>
+              {isFolded ? (
+                <i className="fa-solid fa-chevron-right"></i>
+              ) : (
+                <i className="fa-solid fa-chevron-left"></i>
+              )}
+            </Button>
           </div>
         </div>
       ) : undefined}
