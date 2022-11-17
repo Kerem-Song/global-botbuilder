@@ -18,11 +18,19 @@
 
     .scenarioName {
       display: flex;
+      justify-content: space-between;
       align-items: center;
+
+      .scenarioNameTabs {
+        & i {
+          padding-right: rem(5);
+        }
+      }
     }
 
     .openedScenarioOption {
       display: flex;
+      justify-content: right;
       align-items: center;
     }
 

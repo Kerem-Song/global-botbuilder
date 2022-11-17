@@ -1,6 +1,6 @@
+import { Checkbox } from '@components/data-entry/Checkbox';
 import { Input } from '@components/data-entry/Input';
 import { Switch } from '@components/data-entry/Switch';
-import { Title } from '@components/general/Title';
 import { Divider } from '@components/layout/Divider';
 
 import { useScenarioList } from '../../../hooks/client/scenario';
@@ -21,9 +21,14 @@ export const ScenarioManagement = () => {
     <div className="scenarioManagementWrapper">
       <div className="scenarioName">
         <p>{scenarioName}</p>
+        <div className="scenarioNameTabs">
+          <i className="fa-solid fa-bars" />
+          <i className="fa-solid fa-code" />
+        </div>
       </div>
       {/* <Divider /> */}
       <div className="openedScenarioOption">
+        <input type="checkbox" className="" />
         <p>활성 시나리오만 보기</p>
       </div>
       {/* <Divider /> */}
