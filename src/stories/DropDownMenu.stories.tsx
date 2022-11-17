@@ -1,4 +1,4 @@
-import '../styles/dropdownMenu.scss';
+import '../styles.scss';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 

@@ -1,4 +1,4 @@
-import '../styles/inputTextarea.scss';
+import '../styles.scss';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
