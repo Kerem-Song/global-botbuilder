@@ -13,9 +13,17 @@ aside {
   background-color: $background;
   border-right: #ededf0 solid rem(2);
 
+  .mainMenuWrapper {
+    flex-grow: 20;
+  }
+  
   .chatbotName {
     padding-left: rem(12);
     color: #000000;
+  }
+
+  .subMenuWrapper {
+    flex-grow: 1;
   }
 
   .subMenu {
@@ -48,6 +56,7 @@ nav {
 
 .aside-open {
   width: rem(194);
+  height: 100%;
 
   .desc {
     visibility: visible;
