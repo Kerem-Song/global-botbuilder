@@ -73,9 +73,7 @@ export const Aside = () => {
           </div>
         )}
         <Divider />
-        <div>
-          <p className={classNames('chatbotName', css)}>{chatbotName}</p>
-        </div>
+        <div>{/* <p className={classNames('chatbotName', css)}>{chatbotName}</p> */}</div>
         <Divider />
         {isDashboard ? (
           <></>
@@ -93,7 +91,7 @@ export const Aside = () => {
                           style={{ filter: 'invert(1)' }}
                         />
                       </span>
-                      <span className="desc">{item.desc}</span>
+                      {sidebarStatus && <span className="desc">{item.desc}</span>}
                     </li>
                   </NavLink>
                 );
@@ -117,7 +115,7 @@ export const Aside = () => {
                         style={{ filter: 'invert(1)' }}
                       />
                     </span>
-                    <span className="desc">{item.desc}</span>
+                    {sidebarStatus && <span className="desc">{item.desc}</span>}
                   </li>
                 </NavLink>
               );

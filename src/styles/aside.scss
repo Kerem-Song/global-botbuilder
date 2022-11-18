@@ -15,7 +15,7 @@ aside {
   overflow: hidden;
 
   .mainMenuWrapper {
-    flex-grow: 20;
+    flex-grow: 45;
   }
 
   .chatbotName {
@@ -25,10 +25,6 @@ aside {
 
   .subMenuWrapper {
     flex-grow: 1;
-  }
-
-  .subMenu {
-    grid-row: 11/12;
   }
 
   .luna-hamburger {
