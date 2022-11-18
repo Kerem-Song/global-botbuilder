@@ -37,6 +37,45 @@ footer {
   border-top: 1px solid #ccc;
 }
 
+.portal {
+  z-index: 200;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: rem(0);
+}
+
+a {
+  text-decoration: none;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='number'],
+textarea {
+  -webkit-appearance: none;
+}
+
+.border-radius-x-small {
+  border-radius: rem(2);
+}
+
+.border-radius-small {
+  border-radius: rem(5);
+}
+
+.border-radius-large {
+  border-radius: rem(10);
+}
+
+.border-radius-x-large {
+  border-radius: rem(20);
+}
+
 /*Space*/
 .luna-space {
   display: inline-flex;

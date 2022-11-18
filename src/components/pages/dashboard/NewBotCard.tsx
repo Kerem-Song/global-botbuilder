@@ -5,10 +5,10 @@ import { FC } from 'react';
 import icHome from '../../../assets/ic_home.png';
 import usePage from '../../../hooks/usePage';
 
-export const NewBotCard: FC = () => {
-  const { navigate, t } = usePage();
+export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
+  const { t } = usePage();
   return (
-    <Card hoverable onClick={() => navigate('/scenario')}>
+    <Card hoverable onClick={onClick}>
       <div style={{ display: 'flex' }}>
         <div style={{ paddingRight: '20px' }}>
           <div

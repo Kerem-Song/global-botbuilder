@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use 'sass:color';
 
 @font-face {
   font-family: 'Pretendard-Regular';
@@ -19,6 +20,10 @@ $primaryColor: #2a57d6;
   @return $result;
 }
 
+@function setAlpha($hex, $aValue) {
+  @return color.change($hex, $alpha: $aValue);
+}
+
 /*****#####===== Background =====#####*****/
 @mixin bg {
   background-size: cover;
@@ -27,14 +32,14 @@ $primaryColor: #2a57d6;
 }
 
 /*****#####===== Transition =====#####*****/
-@mixin transition( $property, $duration, $timing-function, $delay: null ) {
+@mixin transition($property, $duration, $timing-function, $delay: null) {
   -webkit-transition: $property $duration $timing-function $delay;
   -ms-transition: $property $duration $timing-function $delay;
   transition: $property $duration $timing-function $delay;
 }
 
 /*****#####===== Ratio box set =====#####*****/
-@mixin ratioBox( $x: 1, $y: 1 ) {
+@mixin ratioBox($x: 1, $y: 1) {
   display: block;
   position: relative;
 
@@ -42,63 +47,34 @@ $primaryColor: #2a57d6;
 
   overflow: hidden;
 
-  &:before{
-    content: "";
+  &:before {
+    content: '';
     display: block;
     padding-top: math.div($y, $x) * 100%;
   }
 
-  &:hover .layer{
+  &:hover .layer {
     opacity: 1;
   }
 }
 
 @mixin ratioContent {
-  position:  absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 @mixin ratioLayer {
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   color: #fff;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
 
-  @include transition( all, 0.5s, ease-in-out );
-}
-
-* {
-  box-sizing: border-box;
-}
-
-p {
-  margin: rem(0);
-}
-
-a {
-  text-decoration: none;
-}
-
-input[type='text'],
-input[type='password'],
-input[type='number'],
-textarea {
-  -webkit-appearance: none;
-}
-
-.border-radius-x-small {
-  border-radius: 2px;
-}
-
-.border-radius-small {
-  border-radius: 5px;
-}
-
-.border-radius-large {
-  border-radius: 10px;
-}
-
-.border-radius-x-large {
-  border-radius: 20px;
+  @include transition(all, 0.5s, ease-in-out);
 }
