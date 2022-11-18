@@ -1,11 +1,12 @@
 import { Botbuilder } from './BotBuilder';
 import { BotBuilderHeader } from './BotBuilderHeader';
 import { BotTester } from './BotTester';
-import { ScenarioManagement } from './ScenarioManagement';
+import { ManagementComponent } from './ManagementComponent';
+
 export const ScenarioComponent = () => {
   return (
     <div className="scenarioWrapper">
-      <ScenarioManagement />
+      <ManagementComponent />
       <div className="botBuilderWrapper">
         <BotBuilderHeader />
         <Botbuilder />
