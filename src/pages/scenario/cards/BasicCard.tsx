@@ -1,7 +1,8 @@
 import { Card } from '@components/data-display/Card';
 import { Button } from '@components/general/Button';
 import { FC } from 'react';
-import { IBasicCard } from 'src/models/interfaces/ICard';
+
+import { IBasicCard } from '../../../models/interfaces/ICard';
 
 interface BasicCard {
   cards: IBasicCard[];

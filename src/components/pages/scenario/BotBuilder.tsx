@@ -1,8 +1,8 @@
-import { CommerceCard } from '@components/cards/CommerceCard';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
 import { Button } from '@components/general/Button';
 import { IBasicCard } from 'src/models/interfaces/ICard';
+import { CommerceCard } from 'src/pages/scenario/cards/CommerceCard';
 
 import img from '../../../assets/react.svg';
 import { dummy2 } from '../../../dummy';

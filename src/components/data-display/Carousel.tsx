@@ -1,5 +1,3 @@
-import { BasicCard } from '@components/cards/BasicCard';
-import { CommerceCard } from '@components/cards/CommerceCard';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { useState } from 'react';
@@ -9,8 +7,10 @@ import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 import { SizeType } from 'src/models/types/SizeType';
 
+import { CommerceCard } from '../..//pages/scenario/cards/CommerceCard';
 import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
+import { BasicCard } from '../../pages/scenario/cards/BasicCard';
 export interface CarouselProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
