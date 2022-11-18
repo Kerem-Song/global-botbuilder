@@ -14,14 +14,22 @@ aside {
   border-right: #ededf0 solid rem(2);
   overflow: hidden;
 
+  .mainMenuWrapper {
+    flex-grow: 20;
+  }
+
   .chatbotName {
     padding-left: rem(12);
     color: #000000;
   }
 
-  // .subMenu {
-  //   grid-row: 11/12;
-  // }
+  .subMenuWrapper {
+    flex-grow: 1;
+  }
+
+  .subMenu {
+    grid-row: 11/12;
+  }
 
   .luna-hamburger {
     padding: rem(10);
@@ -49,6 +57,7 @@ nav {
 
 .aside-open {
   width: rem(194);
+  height: 100%;
 
   .desc {
     visibility: visible;

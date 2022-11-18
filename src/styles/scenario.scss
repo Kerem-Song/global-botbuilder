@@ -7,11 +7,10 @@
 
   justify-content: center;
 
-  .scenarioManagementWrapper {
+  .managementWrapper {
     grid-column: 1/3;
     display: grid;
-    grid-template-rows: auto;
-    justify-content: space-around;
+    grid-template-rows: 1fr 11fr;
     width: 100%;
     height: 100%;
 
@@ -36,6 +35,14 @@
       }
     }
 
+    .scenarioTabWrapper {
+      display: grid;
+      grid-template-rows: auto;
+      width: 100%;
+      height: 100%;
+    }
+
+    // 시나리오 탭
     .openedScenarioOption {
       display: flex;
       justify-content: right;
@@ -65,7 +72,7 @@
     .scenarioListWrapper {
       padding: rem(10);
       max-height: rem(400);
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     .scenarioList {
@@ -86,7 +93,71 @@
       padding: rem(10);
     }
 
+    // 변수 탭
+    .variableTabWrapper {
+      width: 100%;
+      height: 100%;
+    }
 
+    .addVariableBtn {
+      padding: rem(10);
+
+      & button {
+        width: 100%;
+        border: 1px solid rgb(78, 132, 239);
+        border-radius: rem(5);
+        color: rgb(78, 132, 239);
+      }
+    }
+
+    .variableWrapper {
+      padding: rem(10);
+      border-bottom: 1px solid #EDEDF0;
+
+      & p {
+        padding-bottom: rem(15);
+        font-size: rem(20);
+      }
+    }
+
+    .variableListWrapper {
+      border-top: 1px solid #EDEDF0;
+      padding-top: rem(10);
+
+      .variableListHeader {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 5fr 5fr 1fr;
+        padding-bottom: rem(10);
+        border-bottom: 1px solid #EDEDF0;
+
+        .variableName {
+          grid-column: 1/1;
+        }
+
+        .varibleType {
+          grid-column: 2 / span 2;
+        }
+      }
+
+      .variableLists {
+        max-height: rem(400);
+        overflow-y: auto;
+      
+        .variableList {
+          padding-top: rem(10);
+          display: grid;
+          grid-template-columns: 5fr 5fr 1fr;
+          align-items: center;
+          word-break:break-all;
+
+          & i {
+            text-align: center;
+          }
+        }
+      }
+
+    }
   }
 
   .botBuilderWrapper {

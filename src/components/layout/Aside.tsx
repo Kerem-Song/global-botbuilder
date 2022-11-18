@@ -54,7 +54,7 @@ export const Aside = () => {
 
   return (
     <aside className={css}>
-      <div>
+      <div className="mainMenuWrapper">
         <div>
           <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} />
         </div>
@@ -102,8 +102,8 @@ export const Aside = () => {
           </nav>
         )}
       </div>
-      <div style={{ flex: 'auto' }}></div>
-      <div>
+      {/* <div style={{ flex: 'auto' }}></div> */}
+      <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
             {subMenu.map((item) => {
