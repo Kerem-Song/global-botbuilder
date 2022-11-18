@@ -7,16 +7,17 @@ aside {
   z-index: 100;
   display: flex;
   flex-direction: column;
-  padding-left: rem(10) ;
+  padding-left: rem(10);
   width: rem($asideSize);
   height: 100%;
   background-color: $background;
   border-right: #ededf0 solid rem(2);
+  overflow: hidden;
 
   .mainMenuWrapper {
     flex-grow: 20;
   }
-  
+
   .chatbotName {
     padding-left: rem(12);
     color: #000000;

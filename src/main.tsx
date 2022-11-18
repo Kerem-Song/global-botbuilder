@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
+import Modal from 'react-modal';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -16,6 +17,8 @@ import { persistor, store } from './modules/store';
 import { Routers } from './routers/Routers';
 
 const queryClient = new QueryClient();
+
+Modal.setAppElement('#root');
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

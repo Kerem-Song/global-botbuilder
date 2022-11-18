@@ -27,7 +27,7 @@
 .luna-input:focus,
 .luna-input-focused {
   border-color: $primaryColor;
-  box-shadow: 0 0 0 2px $primaryColor;
+  box-shadow: 0 0 0 2px setAlpha($primaryColor, 0.5);
   border-right-width: 1px;
   outline: 0;
 }
