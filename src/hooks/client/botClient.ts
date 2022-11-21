@@ -3,7 +3,7 @@ import { IBotModel } from 'src/models/interfaces/IBotModel';
 
 import useHttp from '../useHttp';
 
-export const useBotClient = (saveSuccessCallback?: () => void) => {
+export const useBotClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
 

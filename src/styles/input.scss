@@ -70,3 +70,17 @@
     }
   }
 }
+
+.luna-input-error {
+  border: 1px solid #f00;
+  &:focus-within {
+    border-color: #f00;
+    box-shadow: 0 0 0 2px setAlpha(#f00, 0.2);
+    border-right-width: 1px;
+    outline: 0;
+  }
+  &:hover {
+    border-color: #f00;
+    border-right-width: 1px;
+  }
+}

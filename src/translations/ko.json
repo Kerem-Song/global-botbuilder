@@ -4,9 +4,11 @@
     "SEARCH_PLACEHOLDER": "봇 이름을 검색하세요.",
     "CHATBOT_COUNT": "내 챗봇 : {{count}}",
     "NEW_BOT_TITLE": "새 봇 만들기",
-    "NEW_BOT_DESCRIPTION": "클릭해서 새 봇을 만들어보세요."
+    "NEW_BOT_DESCRIPTION": "클릭해서 새 봇을 만들어보세요.",
+    "NEW_BOT_OK_MESSAGE": "새로운 챗봇을 만들었습니다!"
   },
   "common": {
+    "intlDateTime": "{{val, datetime}}",
     "SAVE": "저장"
   },
   "scenarios": {

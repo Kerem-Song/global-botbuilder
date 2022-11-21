@@ -7,14 +7,8 @@ import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import icHome from '../../../assets/ic_home.png';
 import usePage from '../../../hooks/usePage';
 
-export const BotCard: FC<IBotModel> = ({
-  id,
-  name,
-  prodChannel,
-  testChannel,
-  updateDate,
-}) => {
-  const { navigate } = usePage();
+export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
+  const { navigate, t, tc } = usePage();
   return (
     <Card hoverable onClick={() => navigate('/scenario')}>
       <div style={{ display: 'flex' }}>
@@ -37,10 +31,15 @@ export const BotCard: FC<IBotModel> = ({
         </div>
         <div style={{ flex: 'auto' }}>
           <div>
-            <Title level={3}>{name}</Title>
+            <Title level={3}>{model.botName}</Title>
+            <span>
+              | 운영채널: {model.prodChannel} | 테스트채널: {model.testChannel}
+            </span>
           </div>
           <div>
-            <span style={{ fontSize: '10px' }}>{`${updateDate}`}</span>
+            <span style={{ fontSize: '10px' }}>{`${tc('intlDateTime', {
+              val: model.updateDate ? new Date(model.updateDate) : '',
+            })}`}</span>
           </div>
         </div>
       </div>
