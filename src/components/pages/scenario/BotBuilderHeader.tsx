@@ -9,7 +9,7 @@ export const BotBuilderHeader = () => {
           말풍선 <span>{cardNum}</span>
         </span>
         <div className="makingBtn">
-          <span>단일</span>
+          <span className="btnCategory">단일</span>
           <Button>
             <i className="fa-solid fa-t"></i>
           </Button>
@@ -28,7 +28,7 @@ export const BotBuilderHeader = () => {
           </Button>
         </div>
         <div className="makingBtn">
-          <span>캐로셀</span>
+          <span className="btnCategory">캐로셀</span>
           <Button>
             <i className="fa-solid fa-images"></i>
           </Button>
@@ -40,7 +40,7 @@ export const BotBuilderHeader = () => {
           </Button>
         </div>
         <div className="makingBtn">
-          <span>버튼</span>
+          <span className="btnCategory">버튼</span>
           <Button>
             <i className="fa-solid fa-toggle-on"></i>
           </Button>
