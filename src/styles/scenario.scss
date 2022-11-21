@@ -162,8 +162,11 @@
 
   .botBuilderWrapper {
     grid-column: 3/12;
-    padding: rem(10);
+
+    background-image: linear-gradient(0deg, transparent rem(4), #333 rem(5)), linear-gradient(90deg,  transparent rem(4), #333 rem(5));
+    background-size: rem(5) rem(5);
   }
+
 
   .botTesterWrapper {
     grid-column: 12/12;
