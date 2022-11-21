@@ -1,4 +1,4 @@
-import { ComputeRange, IHasChildren, IHasClassNameNStyle } from '@moels/index';
+import { ComputeRange, IHasChildren, IHasClassNameNStyle } from '@models/index';
 import { FC } from 'react';
 
 export interface ColProps extends IHasChildren, IHasClassNameNStyle {

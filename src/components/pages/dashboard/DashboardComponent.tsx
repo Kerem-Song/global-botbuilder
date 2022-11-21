@@ -1,5 +1,5 @@
 import { Col, Divider, Input, Row, Space, Title } from '@components/index';
-import { IBotModel } from '@moels/interfaces';
+import { IBotModel } from '@models/interfaces';
 import { toast } from 'react-toastify';
 
 import { useBotClient } from '../../../hooks/client/botClient';

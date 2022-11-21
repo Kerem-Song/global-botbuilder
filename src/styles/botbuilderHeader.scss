@@ -9,12 +9,32 @@
     justify-content: left;
     align-items: center;
     gap: rem(20);
+
+    .cardNumWrapper {
+      position: relative;
+      padding-right: rem(20);
+
+      &::after {
+        display: inline-block;
+        position: absolute;
+        content: "";
+        right: 0;
+        width: rem(1);
+        height: rem(16);
+        background-color:black;
+      }
+    }
+   
   
     .makingBtn {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: rem(3)
+      gap: rem(3);
+
+      .btnCategory {
+        padding-right: rem(20);
+      }
     }
   }
 
