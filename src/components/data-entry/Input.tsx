@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
@@ -6,13 +8,14 @@ export interface InputProps extends IDataEntryProp {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
+  isError?: boolean;
   onPressEnter?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const [value, setValue] = useState('');
 
-  const { showCount, ...inputProps } = args;
+  const { showCount, isError, ...inputProps } = args;
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
@@ -21,23 +24,30 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   };
   const isWrapping = false || showCount;
 
+  const inputClassName = classNames('luna-input', { 'luna-input-error': isError });
+  const inputWrapClassName = classNames('luna-input-wrap', {
+    'luna-input-error': isError,
+  });
+
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+    args.onChange?.(e);
   };
   const input = (
     <input
-      className="luna-input"
+      className={inputClassName}
       {...inputProps}
       value={value}
       onChange={onChangeHandler}
       onKeyDown={args.onPressEnter ? handleKeyDown : undefined}
       ref={ref}
+      aria-invalid={isError}
     />
   );
 
   if (isWrapping) {
     return (
-      <span className="luna-input-wrap">
+      <span className={inputWrapClassName}>
         {input}
         {showCount ? (
           <span>

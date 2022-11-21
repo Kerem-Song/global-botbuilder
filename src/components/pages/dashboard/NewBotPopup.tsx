@@ -1,4 +1,4 @@
-import { Button, Divider, Input, Row, Space, Title } from '@components/index';
+import { Button, Divider, FormItem, Input, Row, Space, Title } from '@components/index';
 import { Col } from '@components/layout/Col';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IBotModel } from '@models/interfaces';
@@ -8,12 +8,12 @@ import ReactModal from 'react-modal';
 import * as yup from 'yup';
 
 const defaultValues = {
-  name: '',
+  botName: '',
 };
 
 const schema = yup
   .object({
-    name: yup.string().required(),
+    botName: yup.string().required('봇 이름은 필수입니다.'),
   })
   .required();
 
@@ -32,6 +32,7 @@ export const NewBotPopup: FC<{
     defaultValues,
     resolver: yupResolver(schema),
   });
+
   const onSubmit = async (data: IBotModel) => {
     await handleSave(data);
     reset(defaultValues);
@@ -50,7 +51,7 @@ export const NewBotPopup: FC<{
       }}
       isOpen={isOpen}
       onAfterOpen={() => {
-        setFocus('name');
+        setFocus('botName');
       }}
     >
       <Title level={4}>새 봇 만들기</Title>
@@ -59,13 +60,15 @@ export const NewBotPopup: FC<{
         <Row align="center">
           <Col span={6}>봇 이름</Col>
           <Col span={18}>
-            <Input
-              placeholder="봇 이름을 입력해주세요."
-              {...register('name')}
-              maxLength={20}
-              showCount
-              aria-invalid={errors.name ? 'true' : 'false'}
-            />
+            <FormItem error={errors.botName}>
+              <Input
+                placeholder="봇 이름을 입력해주세요."
+                {...register('botName')}
+                maxLength={20}
+                showCount
+                isError={errors.botName !== undefined}
+              />
+            </FormItem>
           </Col>
         </Row>
         <Divider />

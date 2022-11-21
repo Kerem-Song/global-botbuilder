@@ -1,6 +1,6 @@
 export interface IBotModel {
   id?: string;
-  name: string;
+  botName: string;
   prodChannel?: string;
   testChannel?: string;
   updateDate?: Date;

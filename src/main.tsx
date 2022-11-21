@@ -1,5 +1,6 @@
 import './modules/i18next';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './styles.scss';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -20,6 +21,9 @@ import { Routers } from './routers/Routers';
 const queryClient = new QueryClient();
 
 Modal.setAppElement('#root');
+if (Modal.defaultStyles.overlay) {
+  Modal.defaultStyles.overlay.backgroundColor = '#00000033';
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
