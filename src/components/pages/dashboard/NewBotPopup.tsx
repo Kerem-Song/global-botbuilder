@@ -1,10 +1,10 @@
 import { Button, Divider, Input, Row, Space, Title } from '@components/index';
 import { Col } from '@components/layout/Col';
-import { IBotModel } from '@moels/interfaces';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { IBotModel } from '@models/interfaces';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const defaultValues = {
