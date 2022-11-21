@@ -1,4 +1,5 @@
 import './modules/i18next';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

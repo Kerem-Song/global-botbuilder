@@ -1,16 +1,32 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IBotModel } from 'src/models/interfaces/IBotModel';
 
 import useHttp from '../useHttp';
 
-export const useBotClient = () => {
+export const useBotClient = (saveSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
   const http = useHttp();
 
-  const getBotListQuery = useQuery<IBotModel[]>(['bot-list'], () =>
-    http
-      .get('https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list')
-      .then((res) => res.data),
+  const getBotListQuery = useQuery<IBotModel[]>(
+    ['bot-list'],
+    () =>
+      http
+        .get('https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list')
+        .then((res) => res.data),
+    { refetchOnWindowFocus: false, refetchOnMount: true },
   );
 
-  return { getBotListQuery };
+  const botSaveMutate = useMutation(async (botModel: IBotModel) => {
+    const res = await http.post(
+      'https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list',
+      botModel,
+    );
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-list']);
+      return res;
+    }
+  });
+
+  return { getBotListQuery, botSaveMutate };
 };

@@ -100,7 +100,6 @@ export const Aside = () => {
           </nav>
         )}
       </div>
-      {/* <div style={{ flex: 'auto' }}></div> */}
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>

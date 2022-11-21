@@ -1,48 +1,46 @@
-import { Input } from '@components/data-entry/Input';
-import { Title } from '@components/general/Title';
-import { Space } from '@components/layout/Space';
-import { useState } from 'react';
-import ReactModal from 'react-modal';
+import { Col, Divider, Input, Row, Space, Title } from '@components/index';
+import { IBotModel } from '@moels/interfaces';
+import { toast } from 'react-toastify';
 
 import { useBotClient } from '../../../hooks/client/botClient';
+import { useModalOpen } from '../../../hooks/useModalOpen';
 import usePage from '../../../hooks/usePage';
 import { useRootState } from '../../../hooks/useRootState';
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
+import { NewBotPopup } from './NewBotPopup';
 
 export const DashboardComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
 
-  const { getBotListQuery } = useBotClient();
-  const { data } = getBotListQuery;
-
+  const { getBotListQuery, botSaveMutate } = useBotClient();
+  const { data, isFetching } = getBotListQuery;
+  const handleSave = async (model: IBotModel) => {
+    const result = await botSaveMutate.mutateAsync(model);
+    if (result) {
+      handleIsOpen(false);
+      toast('새로운 챗봇을 만들었습니다!', { position: 'bottom-right' });
+    }
+  };
   return (
     <>
       <Title>{brandName}</Title>
-      <div style={{ display: 'flex', paddingBottom: '10px' }}>
-        <div>{t('CHATBOT_COUNT', { count: data?.length })}</div>
-        <div style={{ flex: 'auto' }}></div>
-        <div style={{ width: '300px' }}>
+      <Row align="flex-end" justify="space-between">
+        <Col>{t('CHATBOT_COUNT', { count: data?.length })}</Col>
+        <Col style={{ width: '300px' }}>
           <Input placeholder={t('SEARCH_PLACEHOLDER')} />
-        </div>
-      </div>
+        </Col>
+      </Row>
+      <Divider />
       <Space direction="vertical">
-        <NewBotCard onClick={() => setIsOpen(true)} />
+        <NewBotCard onClick={() => handleIsOpen(true)} />
         {data?.map((bot) => {
           return <BotCard key={bot.id} name={bot.name} updateDate={bot.updateDate} />;
         })}
       </Space>
-      <ReactModal
-        style={{
-          overlay: { zIndex: 200 },
-          content: { width: '600px', height: '400px', margin: 'auto' },
-        }}
-        isOpen={isOpen}
-      >
-        가나다라
-      </ReactModal>
+      <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} handleSave={handleSave} />
     </>
   );
 };

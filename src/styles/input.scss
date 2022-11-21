@@ -17,17 +17,56 @@
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   transition: all 0.3s;
+  &:hover {
+    border-color: $primaryColor;
+    border-right-width: 1px;
+  }
+  &:focus {
+    border-color: $primaryColor;
+    box-shadow: 0 0 0 2px setAlpha($primaryColor, 0.2);
+    border-right-width: 1px;
+    outline: 0;
+  }
 }
 
-.luna-input:hover {
-  border-color: $primaryColor;
-  border-right-width: 1px;
-}
-
-.luna-input:focus,
-.luna-input-focused {
-  border-color: $primaryColor;
-  box-shadow: 0 0 0 2px setAlpha($primaryColor, 0.5);
-  border-right-width: 1px;
-  outline: 0;
+.luna-input-wrap {
+  box-sizing: border-box;
+  margin: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: #000000d9;
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
+  &:hover {
+    border-color: $primaryColor;
+    border-right-width: 1px;
+  }
+  &:focus-within {
+    border-color: $primaryColor;
+    box-shadow: 0 0 0 2px setAlpha($primaryColor, 0.2);
+    border-right-width: 1px;
+    outline: 0;
+  }
+  .luna-input {
+    padding: 0;
+    font-size: inherit;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    flex: auto;
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }

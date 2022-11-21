@@ -11,6 +11,7 @@ export interface ButtonProps extends IHasChildren {
   label?: string;
   disabled?: boolean;
   href?: string;
+  htmlType?: string;
   onClick?: () => void;
 }
 
@@ -20,6 +21,7 @@ export const Button: FC<ButtonProps> = ({
   label,
   disabled,
   href,
+  htmlType = 'button',
   onClick,
   shape = 'default',
 }) => {
@@ -37,7 +39,13 @@ export const Button: FC<ButtonProps> = ({
 
   const control = createElement(
     href ? 'a' : 'button',
-    { className: controlCss, disabled: disabled && !href, href: href, onClick },
+    {
+      className: controlCss,
+      disabled: disabled && !href,
+      href: href,
+      onClick,
+      type: htmlType,
+    },
     buttonLabel,
   );
 
