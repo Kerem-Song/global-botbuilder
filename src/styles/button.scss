@@ -20,22 +20,21 @@
   padding: rem(12) rem(16);
   font-size: 12px;
   border-radius: 8px;
-  color: #636364;
-  border-color: #dcdcdc;
+  color: $gray500;
+  border-color: $gray200;
   background: #fff;
   &:hover {
-    background: #f0f0f0;
+    background: $gray500;
   }
-  &:focus {
-    border-color: #dcdcdc;
-    box-shadow: 0 0 0 2px setAlpha(#dcdcdc, 0.2);
-    border-right-width: 1px;
-    outline: 0;
+  &:focus-visible {
+    outline: 4px solid $gray300;
+    outline-offset: 1px;
+    transition: outline-offset 0s, outline 0s;
   }
   &:disabled {
-    background: #f5f5f5;
+    background: $gray100;
     border: 0;
-    color: #dcdcdc;
+    color: $gray200;
     cursor: not-allowed;
   }
 }
@@ -56,38 +55,33 @@ a.luna-btn {
 
 .luna-btn-primary {
   border: 0;
-  background: $primaryColor;
+  background: $primary500;
   color: #ffffff;
   &:hover {
-    background: $primaryHoverColor;
+    background: $primary700;
     color: #ffffff;
-  }
-  &:focus {
-    color: #ffffff;
-    background: $primaryHoverColor;
-    box-shadow: 0 0 0 2px setAlpha($primaryHoverColor, 0.2);
   }
   &:disabled {
-    background: $primaryDisabledColor;
+    background: $primary200;
     color: #ffffff;
   }
 }
 
 .luna-btn-secondary {
   border: 0;
-  background: $secondaryColor;
+  background: $gray500;
   color: #ffffff;
   &:hover {
-    background: $secondaryHoverColor;
-    color: #636364;
-  }
-  &:focus {
-    color: #636364;
-    background: $secondaryHoverColor;
-    box-shadow: 0 0 0 2px setAlpha(#929292, 0.2);
+    background: $gray300;
+    color: $gray500;
   }
   &:disabled {
-    background: $secondaryDisabledColor;
-    color: #dcdcdc;
+    background: $gray150;
+    color: $gray200;
   }
+}
+
+.luna-btn-small {
+  padding: rem(8) rem(10);
+  height: rem(30);
 }
