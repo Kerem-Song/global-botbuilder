@@ -68,8 +68,8 @@ aside {
   }
 
   .subMenuWrapper {
-    padding-left: rem(5);
-    padding-top: rem(20);
+    // padding-left: rem(5);
+    padding: rem(20) rem(5) rem(15) rem(5);
     border-top: 1px solid $gray300;
   }
 
@@ -108,12 +108,10 @@ aside {
 }
 
 nav {
-  padding-top: rem(12);
-  
   ul {
     list-style: none;
- 
   }
+
   li {
     display: flex;
     align-items: center;

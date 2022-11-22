@@ -22,6 +22,7 @@ import {
   icUtteranceSelected,
 } from '@assets/index';
 import classNames from 'classnames';
+import { useState } from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, NavLink, useLocation, useMatches } from 'react-router-dom';
@@ -32,6 +33,7 @@ import { setSidebarStatus } from '../../store/sidebarStatusSlice';
 import { Divider } from './Divider';
 
 export const Aside = () => {
+  const [page, setPage] = useState<string>('');
   const { i18n, t, ts } = useI18n();
   const matches = useMatches();
   const location = useLocation();
@@ -103,8 +105,6 @@ export const Aside = () => {
           </div>
         )}
 
-        <div>{/* <p className={classNames('chatbotName', css)}>{chatbotName}</p> */}</div>
-        {/* <Divider /> */}
         {isDashboard ? (
           <></>
         ) : (
@@ -112,10 +112,14 @@ export const Aside = () => {
             <ul>
               {menu.map((item) => {
                 return (
-                  <NavLink key={item.id} to={`${item.url}`}>
+                  <NavLink
+                    key={item.id}
+                    to={`${item.url}`}
+                    onClick={() => setPage(item.url)}
+                  >
                     <li className="">
                       <span className="menuImg">
-                        {sidebarStatus ? (
+                        {page === item.url ? (
                           <img src={item.selectedIcon} alt={item.alt} />
                         ) : (
                           <img src={item.icon} alt={item.alt} />
@@ -130,16 +134,20 @@ export const Aside = () => {
           </nav>
         )}
       </div>
-      {/* <div style={{ flex: 'auto' }}></div> */}
+
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
             {subMenu.map((item) => {
               return (
-                <NavLink key={item.id} to={`${item.url}`}>
+                <NavLink
+                  key={item.id}
+                  to={`${item.url}`}
+                  onClick={() => setPage(item.url)}
+                >
                   <li className="">
                     <span className="subMenuImg">
-                      {sidebarStatus ? (
+                      {page === item.url ? (
                         <img src={item.selectedIcon} alt={item.alt} />
                       ) : (
                         <img src={item.icon} alt={item.alt} />
