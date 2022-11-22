@@ -49,6 +49,12 @@ $orange: #ff8a00;
 $red: #ff4975;
 $green: #03bf4e;
 
+@mixin focusVisible {
+  outline: 4px solid $gray300;
+  outline-offset: 1px;
+  transition: outline-offset 0s, outline 0s;
+}
+
 /*****#####===== Background =====#####*****/
 @mixin bg {
   background-size: cover;

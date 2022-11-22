@@ -27,9 +27,7 @@
     background: $gray200;
   }
   &:focus-visible {
-    outline: 4px solid $gray300;
-    outline-offset: 1px;
-    transition: outline-offset 0s, outline 0s;
+    @include focusVisible;
   }
   &:disabled {
     background: $gray100;
