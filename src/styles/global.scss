@@ -24,6 +24,33 @@ $primaryColor: #2a57d6;
   @return color.change($hex, $alpha: $aValue);
 }
 
+/*****#####===== Color =====#####*****/
+// Gray/Black
+$grayblack: #222222;
+$gray100: #EDEDF0;
+$gray150: #EDEDF0;
+$gray200: #DCDCDC;
+$gray250: #B5B4B4;
+$gray300: #929292;
+$gray500: #636364;
+$gray700: #323232;
+$grayDim: rgba(0, 0, 0, 0.5);
+$grayBG: #F7F7FA;
+
+// Primary
+$primary100: #ECF2FF;
+$primary150: #DFE8FF;
+$primary200: #A1BBFF;
+$primary300: #6993FF;
+$primary500: #4478FF;
+$primary700: #2659DE;
+
+// Sub
+$orange: #FF8A00;
+$red: #FF4975;
+$green: #03BF4E;
+
+
 /*****#####===== Background =====#####*****/
 @mixin bg {
   background-size: cover;

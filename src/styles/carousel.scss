@@ -2,7 +2,9 @@
   display: inline-block;
   border: 1px solid black;
   border-radius: rem(10);
-
+  background-color: white;
+  max-width: rem(680);
+  
     cursor: pointer;
     transition: box-shadow 0.3s, border-color 0.3s;
 
