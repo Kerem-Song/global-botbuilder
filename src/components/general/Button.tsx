@@ -14,6 +14,7 @@ export interface ButtonProps extends IHasChildren {
   disabled?: boolean;
   href?: string;
   htmlType?: string;
+  icon?: string;
   onClick?: () => void;
 }
 
@@ -28,12 +29,13 @@ export const Button: FC<ButtonProps> = ({
   htmlType = 'button',
   onClick,
   shape = 'default',
+  icon,
 }) => {
   if (children && label) {
     throw new Error('children과 label은 동시에 설정할 수 없다.');
   }
 
-  const buttonLabel = <span>{label || children}</span>;
+  const labelNode = <span>{label || children}</span>;
 
   const controlCss = classNames('luna-btn', {
     'luna-btn-disabled': disabled,
@@ -44,6 +46,12 @@ export const Button: FC<ButtonProps> = ({
     'luna-btn-small': small,
   });
 
+  const iconNode = icon ? (
+    <span role="img" className="icon">
+      <img src={icon} alt="icon" />
+    </span>
+  ) : undefined;
+
   const control = createElement(
     href ? 'a' : 'button',
     {
@@ -53,7 +61,8 @@ export const Button: FC<ButtonProps> = ({
       onClick,
       type: htmlType,
     },
-    buttonLabel,
+    iconNode,
+    labelNode,
   );
 
   return control;

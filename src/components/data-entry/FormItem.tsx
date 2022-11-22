@@ -1,9 +1,9 @@
-import { IHasChildren } from '@models/interfaces';
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import { FieldError } from 'react-hook-form';
 
-export interface IFormItemProps extends IHasChildren {
+export interface IFormItemProps {
   error?: FieldError;
+  children: ReactElement;
 }
 
 export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
@@ -16,3 +16,15 @@ export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
     </div>
   );
 };
+// export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
+//   const ref = React.createRef<HTMLInputElement>();
+//   const clone = React.cloneElement(children, { ref });
+//   useEffect(() => {
+//     if (ref.current) {
+//       if (error) {
+//         ref.current.required = true;
+//       }
+//     }
+//   }, [error]);
+//   return <>{clone}</>;
+// };

@@ -17,7 +17,6 @@ export const DashboardComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
-  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
 
   const { getBotListQuery, botSaveMutate } = useBotClient();
   const { data, isFetching } = getBotListQuery;
@@ -33,7 +32,6 @@ export const DashboardComponent = () => {
   console.log(data);
   return (
     <>
-      <Title>{brandName}</Title>
       <Row align="flex-end" justify="space-between">
         <Col>{t('CHATBOT_COUNT', { count: data?.length })}</Col>
         <Col style={{ width: '300px' }}>
