@@ -8,9 +8,8 @@ import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 export const Checkboxes = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
   const [checkedBox, setCheckedBox] = useState<Array<string>>([]);
   const checkBoxList = [
-    { id: 1, name: 'option1' },
-    { id: 2, name: 'option2' },
-    { id: 3, name: 'option3' },
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
   ];
 
   const onCheckedAll = useCallback(
@@ -39,22 +38,25 @@ export const Checkboxes = forwardRef<HTMLInputElement, IDataEntryProp>((args, re
 
   return (
     <div className="checkboxContainer">
-      <input
-        {...args}
-        type="checkbox"
-        onChange={(e) => onCheckedAll(e.target.checked)}
-        checked={
-          checkedBox.length === 0
-            ? false
-            : checkedBox.length === checkBoxList.length
-            ? true
-            : false
-        }
-        ref={ref}
-      />
+      <div>
+        <input
+          {...args}
+          className="checkbox"
+          type="checkbox"
+          onChange={(e) => onCheckedAll(e.target.checked)}
+          checked={
+            checkedBox.length === 0
+              ? false
+              : checkedBox.length === checkBoxList.length
+              ? true
+              : false
+          }
+          ref={ref}
+        />
+      </div>
       {checkBoxList.map((option) => {
         return (
-          <p key={option.id}>
+          <div key={option.id}>
             <input
               {...args}
               className="checkbox"
@@ -65,10 +67,8 @@ export const Checkboxes = forwardRef<HTMLInputElement, IDataEntryProp>((args, re
               checked={checkedBox.includes(option.name) ? true : false}
               ref={ref}
             />
-            <label htmlFor={option.name} className="customCheckbox">
-              {option.name}
-            </label>
-          </p>
+            <label htmlFor={option.name}>{option.name}</label>
+          </div>
         );
       })}
     </div>

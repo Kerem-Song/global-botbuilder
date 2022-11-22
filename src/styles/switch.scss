@@ -8,16 +8,16 @@
     margin: 0;
 
     position: relative;
-    background-color: #a1a1a1;
-    border-radius: 32px;
-    border: 1px solid #a1a1a1;
+    background-color: $gray200;
+    border-radius: rem(32);
+    border: rem(1) solid $gray200;
 
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 
     &:checked {
-      background-color: #2a57d6;
-      border-color: #2a57d6;
+      background-color: $primary500;
+      border-color: $primary500;
 
       &::before {
         left: unset;

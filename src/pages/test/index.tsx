@@ -1,3 +1,4 @@
+import { Checkboxes, Radio } from '@components/data-entry';
 import { Checkbox } from '@components/data-entry/Checkbox';
 import { ReactSelect } from '@components/data-entry/ReactSelect';
 import { Switch } from '@components/data-entry/Switch';
@@ -30,7 +31,10 @@ export const TestPage = () => {
       {/* <Menu /> */}
       {/* <DropDown /> */}
       {/* <DropDownMenu /> */}
-      {/* <Checkbox /> */}
+      <Checkbox disabled />
+      <Checkbox />
+      {/* <Checkboxes /> */}
+      <Radio />
       {/* <ReactSelect /> */}
     </PageProvider>
   );

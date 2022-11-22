@@ -21,7 +21,7 @@ export const Checkbox = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref)
 
   return (
     <div className="checkboxContainer">
-      <p>
+      <div>
         <input
           {...args}
           className="checkbox"
@@ -30,10 +30,8 @@ export const Checkbox = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref)
           onChange={(e) => onCheckedOption(e.target.checked, e.target.id)}
           ref={ref}
         />
-        <label htmlFor="option1" className="customCheckbox">
-          option1
-        </label>
-      </p>
+        <label htmlFor="option1">option1</label>
+      </div>
     </div>
   );
 });
