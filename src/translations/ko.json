@@ -5,11 +5,15 @@
     "CHATBOT_COUNT": "내 챗봇 : {{count}}",
     "NEW_BOT_TITLE": "새 봇 만들기",
     "NEW_BOT_DESCRIPTION": "클릭해서 새 봇을 만들어보세요.",
-    "NEW_BOT_OK_MESSAGE": "새로운 챗봇을 만들었습니다!"
+    "NEW_BOT_OK_MESSAGE": "새로운 챗봇을 만들었습니다!",
+    "BOT_NAME_PLACEHOLDER": "봇 이름을 입력해주세요.",
+    "BOT_NAME_LABEL": "봇 이름"
   },
   "common": {
     "intlDateTime": "{{val, datetime}}",
-    "SAVE": "저장"
+    "SAVE": "저장",
+    "OK": "확인",
+    "CANCEL": "취소"
   },
   "scenarios": {
     "TITLE": "시나리오"

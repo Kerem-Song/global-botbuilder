@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import * as yup from 'yup';
 
-import icPlus from '../../../assets/icons/ic_plus.svg';
+import usePage from '../../../hooks/usePage';
 
 const defaultValues = {
   botName: '',
@@ -24,6 +24,7 @@ export const NewBotPopup: FC<{
   handleIsOpen: (value: boolean) => void;
   handleSave: (model: IBotModel) => Promise<void>;
 }> = ({ isOpen, handleIsOpen, handleSave }) => {
+  const { t, tc } = usePage();
   const {
     register,
     handleSubmit,
@@ -56,15 +57,15 @@ export const NewBotPopup: FC<{
         setFocus('botName');
       }}
     >
-      <Title level={4}>새 봇 만들기</Title>
+      <Title level={4}>{t('NEW_BOT_TITLE')}</Title>
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row align="center">
-          <Col span={6}>봇 이름</Col>
+          <Col span={6}>{t('BOT_NAME_LABEL')}</Col>
           <Col span={18}>
             <FormItem error={errors.botName}>
               <Input
-                placeholder="봇 이름을 입력해주세요."
+                placeholder={t('BOT_NAME_PLACEHOLDER')}
                 {...register('botName')}
                 maxLength={20}
                 showCount
@@ -76,8 +77,8 @@ export const NewBotPopup: FC<{
         <Divider />
         <Row justify="flex-end">
           <Space>
-            <Button onClick={handleClose}>취소</Button>
-            <Button htmlType="submit">확인</Button>
+            <Button onClick={handleClose}>{tc('CANCEL')}</Button>
+            <Button htmlType="submit">{tc('OK')}</Button>
           </Space>
         </Row>
       </form>

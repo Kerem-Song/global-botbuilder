@@ -1,5 +1,6 @@
 import { Card } from '@components/data-display/Card';
 import { Title } from '@components/general/Title';
+import { Col, Row, Space } from '@components/index';
 import { FC } from 'react';
 
 import icHome from '../../../assets/ic_home.png';
@@ -9,8 +10,8 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = usePage();
   return (
     <Card hoverable onClick={onClick}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ paddingRight: '20px' }}>
+      <Row gap={20}>
+        <Col>
           <div
             style={{
               boxSizing: 'border-box',
@@ -26,16 +27,14 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
           >
             <img src={icHome} alt="" />
           </div>
-        </div>
-        <div style={{ flex: 'auto' }}>
-          <div>
-            <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
-          </div>
-          <div>
-            <span style={{ fontSize: '10px' }}>{t('NEW_BOT_DESCRIPTION')}</span>
-          </div>
-        </div>
-      </div>
+        </Col>
+        <Space direction="vertical" gap={20}>
+          <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
+          <span style={{ fontSize: '10px', color: '#A1A1A1' }}>
+            {t('NEW_BOT_DESCRIPTION')}
+          </span>
+        </Space>
+      </Row>
     </Card>
   );
 };
