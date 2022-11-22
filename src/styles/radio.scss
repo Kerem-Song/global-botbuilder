@@ -4,11 +4,17 @@
 }
 
 .radioContainer {
-  p {
-    .radio {
+  .radio {
+    appearance: none;
+    width: rem(13);
+    height: rem(13);
+    background-image: url('/src/assets/icons/ic_radio_default.svg');
+
+    &:checked {
+      background-image: url('/src/assets/icons/ic_radio_enabled.svg');
     }
-    .radioOption {
-      padding-left: rem(3);
-    }
+  }
+  .radioOption {
+    padding-left: rem(3);
   }
 }

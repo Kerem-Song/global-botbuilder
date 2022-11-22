@@ -7,6 +7,7 @@ export type ButtonShape = 'default' | 'circle' | 'round';
 
 export interface ButtonProps extends IHasChildren {
   type?: 'default' | 'primary' | 'secondary';
+  small?: boolean;
   shape?: ButtonShape;
   block?: boolean;
   label?: string;
@@ -17,7 +18,8 @@ export interface ButtonProps extends IHasChildren {
 }
 
 export const Button: FC<ButtonProps> = ({
-  type,
+  type = 'default',
+  small,
   block,
   children,
   label,
@@ -39,6 +41,7 @@ export const Button: FC<ButtonProps> = ({
     'luna-btn-circle': shape === 'circle',
     'luna-btn-primary': type === 'primary',
     'luna-btn-secondary': type === 'secondary',
+    'luna-btn-small': small,
   });
 
   const control = createElement(

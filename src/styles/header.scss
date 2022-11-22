@@ -1,7 +1,8 @@
 header {
   padding-left: rem($asideSize + 22);
   border-bottom: #ededf0 solid rem(2);
-  background-color: $background;
+  background-color: $gray700;
+
   div {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -9,7 +10,7 @@ header {
     align-items: center;
     height: rem(46);
     .brandName {
-      color: #222222;
+      color: $grayWhite;
       font-weight: 700;
       font-size: rem(16);
     }

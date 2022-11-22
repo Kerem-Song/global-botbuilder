@@ -24,7 +24,7 @@ import {
 import classNames from 'classnames';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink, useLocation, useMatches } from 'react-router-dom';
+import { Link, NavLink, useLocation, useMatches } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -77,29 +77,34 @@ export const Aside = () => {
           onClick={handleSidebar}
           data-sidebarStatus={sidebarStatus}
         >
-          {/* {sidebarStatus ? (
-            <img src={icLnbShow} alt="icLnbShow" />
-          ) : (
+          {sidebarStatus ? (
             <img src={icLnbHide} alt="icLnbHide" />
-          )} */}
+          ) : (
+            <img src={icLnbShow} alt="icLnbShow" />
+          )}
         </button>
         {isDashboard ? (
-          <div>
-            <a>
-              &lt;
-              {sidebarStatus ? <p>파트너스 센터</p> : <p>파</p>}
-            </a>
+          <div className="lnbHeader partnerLnbHeader" data-sidebar={sidebarStatus}>
+            <Link to="">
+              {sidebarStatus ? <p className="headerName">파트너스 센터</p> : <p>파</p>}
+            </Link>
           </div>
         ) : (
-          <div style={{ padding: '10px' }}>
+          <div className="lnbHeader">
             <NavLink to="dashboard">
-              &lt;{sidebarStatus && <span> {brandName} 챗봇 목록</span>}
+              {sidebarStatus ? (
+                <p className="headerName"> {brandName} 챗봇 목록</p>
+              ) : (
+                <div>
+                  <img src={icChatbot} alt="icChatbot" />
+                </div>
+              )}
             </NavLink>
           </div>
         )}
 
         <div>{/* <p className={classNames('chatbotName', css)}>{chatbotName}</p> */}</div>
-        <Divider />
+        {/* <Divider /> */}
         {isDashboard ? (
           <></>
         ) : (

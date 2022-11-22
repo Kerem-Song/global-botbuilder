@@ -11,21 +11,71 @@ aside {
   padding: rem(12);
   width: rem($asideSize);
   height: 100%;
-  color: $grayAsidetFont;
+  color: $grayWhite;
   background-color: $grayAside;
   overflow: hidden;
 
   .mainMenuWrapper {
     padding-left: rem(5);
   }
+
+  .lnbHeader {
+    margin-top: rem(12);
+    height: rem(43);
   
+
+    &[data-sidebar="true"] {
+      display: grid;
+      align-items: center;
+      padding: rem(8) rem(12);
+      border: 1px solid $gray500;
+      border-radius: rem(4);
+  
+      &:hover {
+        a {
+          color: $gray300;
+        }       
+      }
+    }
+
+    &[data-sidebar="false"] {
+      padding-top: rem(8);
+      padding-left: rem(5); 
+    }
+
+    & a {
+      color: $grayWhite;
+      
+      .headerName {
+        position: relative;
+
+        &::after {
+          display: inline-block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          content: url('@assets/icons/ic_show.svg');
+          width: rem(12);
+        }
+      }
+
+      .headerName {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
   .subMenuWrapper {
     padding-left: rem(5);
+    padding-top: rem(20);
+    border-top: 1px solid $gray300;
   }
 
   .chatbotName {
     padding-left: rem(12);
-    color: $grayAsidetFont;;
+    color: $grayWhite;;
   }
 
   .lnbBtn {
@@ -35,13 +85,16 @@ aside {
     border: 0;
     border-radius: rem(4);
     background-color: $grayAside;
-    background-image: url('@assets/icons/ic_lnb_show.png');
-    @include bg;
-    
-    &[data-sidebarStatus='false'] {
+    // background-image: url('@assets/icons/ic_lnb_show.svg');
+    // @include bg;
+
+    &:hover {
       background-color: $graySelected;
-      background-image: url('@assets/icons/ic_lnb_hide.png');
-      @include bg;
+    }
+
+    &[data-sidebarStatus='false'] {
+      // background-image: url('@assets/icons/ic_lnb_hide.svg');
+      // @include bg;
     }
   }
 
@@ -50,11 +103,13 @@ aside {
     opacity: 0;
     transition: opacity 0.5s linear;
     height: 0;
-    color: $grayAsidetFont;;
+    color: $grayWhite;;
   }
 }
 
 nav {
+  padding-top: rem(12);
+  
   ul {
     list-style: none;
  

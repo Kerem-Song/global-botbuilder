@@ -13,14 +13,6 @@ $defaultSize: 16;
 $asideSize: 56;
 $background: #f7f7fa;
 
-$primaryColor: #4478ff;
-$primaryHoverColor: #2659de;
-$primaryDisabledColor: #b4c9ff;
-
-$secondaryColor: #636364;
-$secondaryHoverColor: #929292;
-$secondaryDisabledColor: #f1f1f1;
-
 @function rem($px) {
   $x: $defaultSize;
   $result: (math.div(1, $x) * $px) + rem;
@@ -34,10 +26,10 @@ $secondaryDisabledColor: #f1f1f1;
 /*****#####===== Color =====#####*****/
 // Gray/Black
 $grayblack: #222222;
-$gray100: #EDEDF0;
-$gray150: #EDEDF0;
-$gray200: #DCDCDC;
-$gray250: #B5B4B4;
+$gray100: #ededf0;
+$gray150: #ededf0;
+$gray200: #dcdcdc;
+$gray250: #b5b4b4;
 $gray300: #929292;
 $gray500: #636364;
 $gray700: #323232;
@@ -45,21 +37,26 @@ $grayDim: rgba(0, 0, 0, 0.5);
 $grayBG: #F7F7FA;
 $grayAside: #282828;
 $graySelected: #151515;
-$grayAsidetFont: #FFFFFF;
+$grayWhite: #FFFFFF;
 
 // Primary
-$primary100: #ECF2FF;
-$primary150: #DFE8FF;
-$primary200: #A1BBFF;
-$primary300: #6993FF;
-$primary500: #4478FF;
-$primary700: #2659DE;
+$primary100: #ecf2ff;
+$primary150: #dfe8ff;
+$primary200: #a1bbff;
+$primary300: #6993ff;
+$primary500: #4478ff;
+$primary700: #2659de;
 
 // Sub
-$orange: #FF8A00;
-$red: #FF4975;
-$green: #03BF4E;
+$orange: #ff8a00;
+$red: #ff4975;
+$green: #03bf4e;
 
+@mixin focusVisible {
+  outline: 4px solid $gray300;
+  outline-offset: 1px;
+  transition: outline-offset 0s, outline 0s;
+}
 
 /*****#####===== Background =====#####*****/
 @mixin bg {

@@ -7,9 +7,8 @@ import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 export const Radio = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
   const radioOptionList = [
-    { id: 1, name: 'option1' },
-    { id: 2, name: 'option2' },
-    { id: 3, name: 'option3' },
+    { id: 1, name: '' },
+    { id: 2, name: '' },
   ];
 
   const [selectedOption, setSelectedOption] = useState<boolean>(false);
@@ -25,9 +24,10 @@ export const Radio = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) =>
     <div className="radioContainer">
       {radioOptionList.map((option) => {
         return (
-          <p key={option.id}>
+          <>
             <input
               {...args}
+              key={option.id}
               className="radio"
               type="radio"
               name="option"
@@ -37,7 +37,7 @@ export const Radio = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) =>
             <label htmlFor={args.name} className="radioOption">
               {option.name}
             </label>
-          </p>
+          </>
         );
       })}
     </div>
