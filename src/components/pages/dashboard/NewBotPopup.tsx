@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import * as yup from 'yup';
 
+import icPlus from '../../../assets/icons/ic_plus.svg';
+
 const defaultValues = {
   botName: '',
 };
