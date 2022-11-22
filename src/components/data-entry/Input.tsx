@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
@@ -33,6 +32,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     setValue(e.target.value);
     args.onChange?.(e);
   };
+
   const input = (
     <input
       className={inputClassName}
