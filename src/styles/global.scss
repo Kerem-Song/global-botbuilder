@@ -12,7 +12,14 @@
 $defaultSize: 16;
 $asideSize: 56;
 $background: #f7f7fa;
-$primaryColor: #2a57d6;
+
+$primaryColor: #4478ff;
+$primaryHoverColor: #2659de;
+$primaryDisabledColor: #b4c9ff;
+
+$secondaryColor: #636364;
+$secondaryHoverColor: #929292;
+$secondaryDisabledColor: #f1f1f1;
 
 @function rem($px) {
   $x: $defaultSize;

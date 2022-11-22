@@ -6,6 +6,7 @@ import { IHasChildren } from '../../models/interfaces/IHasChildren';
 export type ButtonShape = 'default' | 'circle' | 'round';
 
 export interface ButtonProps extends IHasChildren {
+  type?: 'default' | 'primary' | 'secondary';
   shape?: ButtonShape;
   block?: boolean;
   label?: string;
@@ -16,6 +17,7 @@ export interface ButtonProps extends IHasChildren {
 }
 
 export const Button: FC<ButtonProps> = ({
+  type,
   block,
   children,
   label,
@@ -35,6 +37,8 @@ export const Button: FC<ButtonProps> = ({
     'luna-btn-disabled': disabled,
     'luna-btn-block': block,
     'luna-btn-circle': shape === 'circle',
+    'luna-btn-primary': type === 'primary',
+    'luna-btn-secondary': type === 'secondary',
   });
 
   const control = createElement(
