@@ -1,15 +1,34 @@
-import { Button } from '@components/general/Button';
+import {
+  icChatbot,
+  icDataApi,
+  icDataApiSelcted,
+  icDeploy,
+  icDeploySelected,
+  icHelp,
+  icHelpSelected,
+  icHide,
+  icHistory,
+  icHistorySelected,
+  icLnbHide,
+  icLnbShow,
+  icScenario,
+  icScenarioSelected,
+  icSetting,
+  icSettingSelected,
+  icShow,
+  icStatistics,
+  icStatisticsSelected,
+  icUtterance,
+  icUtteranceSelected,
+} from '@assets/index';
 import classNames from 'classnames';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useMatches } from 'react-router-dom';
 
-import icBotbuilder from '../../assets/ic_botbuilder.png';
-import icHome from '../../assets/ic_home.png';
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 import { setSidebarStatus } from '../../store/sidebarStatusSlice';
-import Hamburger from '../general/Hamburger';
 import { Divider } from './Divider';
 
 export const Aside = () => {
@@ -35,29 +54,35 @@ export const Aside = () => {
   };
 
   const menu = [
-    getMenuItem(1, 'dashboard', icHome, ''),
-    getMenuItem(2, 'scenario', icBotbuilder, ''),
-    getMenuItem(3, 'utterance', icBotbuilder, ''),
-    getMenuItem(4, 'skill', icBotbuilder, ''),
-    getMenuItem(5, 'deployment', icBotbuilder, ''),
-    getMenuItem(6, 'history', icBotbuilder, ''),
-    getMenuItem(7, 'statistics', icBotbuilder, ''),
+    getMenuItem(1, 'scenario', icScenario, icScenarioSelected),
+    getMenuItem(2, 'utterance', icUtterance, icUtteranceSelected),
+    getMenuItem(3, 'skill', icDataApi, icDataApiSelcted),
+    getMenuItem(4, 'deployment', icDeploy, icDeploySelected),
+    getMenuItem(5, 'history', icHistory, icHistorySelected),
+    getMenuItem(6, 'statistics', icStatistics, icStatisticsSelected),
   ];
 
   const subMenu = [
-    getMenuItem(1, 'help', icBotbuilder, ''),
-    getMenuItem(2, 'setting', icBotbuilder, ''),
+    getMenuItem(1, 'help', icHelp, icHelpSelected),
+    getMenuItem(2, 'setting', icSetting, icSettingSelected),
   ];
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
-  const chatbotName = sidebarStatus ? brandName : brandName.slice(0, 1);
 
   return (
     <aside className={css}>
       <div className="mainMenuWrapper">
-        <div>
-          <Hamburger onToggle={handleSidebar} isOpen={sidebarStatus} />
-        </div>
+        <button
+          className="lnbBtn"
+          onClick={handleSidebar}
+          data-sidebarStatus={sidebarStatus}
+        >
+          {/* {sidebarStatus ? (
+            <img src={icLnbShow} alt="icLnbShow" />
+          ) : (
+            <img src={icLnbHide} alt="icLnbHide" />
+          )} */}
+        </button>
         {isDashboard ? (
           <div>
             <a>
@@ -72,7 +97,7 @@ export const Aside = () => {
             </NavLink>
           </div>
         )}
-        <Divider />
+
         <div>{/* <p className={classNames('chatbotName', css)}>{chatbotName}</p> */}</div>
         <Divider />
         {isDashboard ? (
@@ -85,11 +110,11 @@ export const Aside = () => {
                   <NavLink key={item.id} to={`${item.url}`}>
                     <li className="">
                       <span className="menuImg">
-                        <img
-                          src={item.icon}
-                          alt={item.alt}
-                          style={{ filter: 'invert(1)' }}
-                        />
+                        {sidebarStatus ? (
+                          <img src={item.selectedIcon} alt={item.alt} />
+                        ) : (
+                          <img src={item.icon} alt={item.alt} />
+                        )}
                       </span>
                       {sidebarStatus && <span className="desc">{item.desc}</span>}
                     </li>
@@ -100,6 +125,7 @@ export const Aside = () => {
           </nav>
         )}
       </div>
+      {/* <div style={{ flex: 'auto' }}></div> */}
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
@@ -108,11 +134,11 @@ export const Aside = () => {
                 <NavLink key={item.id} to={`${item.url}`}>
                   <li className="">
                     <span className="subMenuImg">
-                      <img
-                        src={item.icon}
-                        alt={item.alt}
-                        style={{ filter: 'invert(1)' }}
-                      />
+                      {sidebarStatus ? (
+                        <img src={item.selectedIcon} alt={item.alt} />
+                      ) : (
+                        <img src={item.icon} alt={item.alt} />
+                      )}
                     </span>
                     {sidebarStatus && <span className="desc">{item.desc}</span>}
                   </li>

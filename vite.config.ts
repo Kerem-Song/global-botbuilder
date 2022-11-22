@@ -11,6 +11,7 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@models': path.resolve(__dirname, './src/models'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@assets': path.resolve(__dirname, './src/assets'),
     },
   },
   css: {

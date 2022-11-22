@@ -8,20 +8,41 @@ aside {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: rem(10);
+  padding: rem(12);
   width: rem($asideSize);
   height: 100%;
-  background-color: $background;
-  border-right: #ededf0 solid rem(2);
+  color: $grayAsidetFont;
+  background-color: $grayAside;
   overflow: hidden;
+
+  .mainMenuWrapper {
+    padding-left: rem(5);
+  }
+  
+  .subMenuWrapper {
+    padding-left: rem(5);
+  }
 
   .chatbotName {
     padding-left: rem(12);
-    color: #000000;
+    color: $grayAsidetFont;;
   }
 
-  .luna-hamburger {
-    padding: rem(10);
+  .lnbBtn {
+    width: rem(24);
+    height: rem(24);
+    padding: rem(4);
+    border: 0;
+    border-radius: rem(4);
+    background-color: $grayAside;
+    background-image: url('@assets/icons/ic_lnb_show.png');
+    @include bg;
+    
+    &[data-sidebarStatus='false'] {
+      background-color: $graySelected;
+      background-image: url('@assets/icons/ic_lnb_hide.png');
+      @include bg;
+    }
   }
 
   .desc {
@@ -29,13 +50,14 @@ aside {
     opacity: 0;
     transition: opacity 0.5s linear;
     height: 0;
+    color: $grayAsidetFont;;
   }
 }
 
 nav {
   ul {
     list-style: none;
-    padding-left: rem(5);
+ 
   }
   li {
     display: flex;
@@ -45,15 +67,14 @@ nav {
 }
 
 .aside-open {
-  width: rem(194);
+  width: rem(172);
   height: 100%;
-
+  
   .desc {
     visibility: visible;
     opacity: 1;
     height: rem(20);
     padding-left: rem(5);
-    color: #000000;
   }
 
   .chatbotName {
