@@ -1,5 +1,6 @@
 header {
   padding-left: rem($asideSize + 22);
+  padding-right: rem(12);
   border-bottom: #ededf0 solid rem(2);
   background-color: $gray700;
 
@@ -21,11 +22,25 @@ header {
 
     .userName {
       grid-column: 12/12;
+      position: relative;
+      padding: rem(8) rem(12) rem(8) rem(25);
       text-align: center;
-      color: black;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: rem(5);
+      color: $grayWhite;
+      background-color: $grayBlack;
+      border: 1px solid $grayBlack;
+      border-radius: rem(6);
+
+      &::before {
+        position: absolute;
+        display: inline-block;
+        top: 30%;
+        left: 14%;
+        content: url('@assets/icons/ic_user.svg');
+      }
+
+      &:hover {
+        color: $gray300;
+      }
     }
   }
 }
