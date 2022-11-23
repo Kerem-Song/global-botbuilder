@@ -1,3 +1,4 @@
+import { SystemModalContainer } from '@components/modal/SystemModalContainer';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -17,6 +18,7 @@ export const DefaultLayout = () => {
         </main>
       </div>
       <ToastContainer />
+      <SystemModalContainer />
     </>
   );
 };

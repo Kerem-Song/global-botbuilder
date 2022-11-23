@@ -21,7 +21,7 @@ type CombinedStateType = ReturnType<ReducerType>;
 const persistConfig: PersistConfig<CombinedStateType> = {
   key: 'root',
   storage,
-  whitelist: ['authReducer', 'systemModalReducer'],
+  whitelist: ['authReducer'],
   transforms: [
     encryptTransform({
       secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
