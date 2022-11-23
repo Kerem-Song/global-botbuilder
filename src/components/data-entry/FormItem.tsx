@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { FieldError } from 'react-hook-form';
 
 export interface IFormItemProps {
@@ -7,24 +7,13 @@ export interface IFormItemProps {
 }
 
 export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
+  const clone = React.cloneElement(children, { isError: error !== undefined });
   return (
     <div>
-      {children}
+      {clone}
       <div style={{ color: 'red', padding: '5px 5px 0 5px', height: '21px' }}>
         {error?.message}
       </div>
     </div>
   );
 };
-// export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
-//   const ref = React.createRef<HTMLInputElement>();
-//   const clone = React.cloneElement(children, { ref });
-//   useEffect(() => {
-//     if (ref.current) {
-//       if (error) {
-//         ref.current.required = true;
-//       }
-//     }
-//   }, [error]);
-//   return <>{clone}</>;
-// };

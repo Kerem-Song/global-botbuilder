@@ -7,7 +7,6 @@ export interface InputProps extends IDataEntryProp {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
-  isError?: boolean;
   onPressEnter?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 

@@ -4,6 +4,8 @@ export interface IDataEntryProp {
   id?: string;
   name?: string;
   value?: string;
+  isError?: boolean;
+  required?: boolean;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
