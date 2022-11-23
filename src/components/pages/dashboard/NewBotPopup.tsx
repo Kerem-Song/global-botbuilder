@@ -9,7 +9,7 @@ import * as yup from 'yup';
 
 import usePage from '../../../hooks/usePage';
 
-const defaultValues = {
+const defaultValues: IBotModel = {
   botName: '',
 };
 
@@ -69,7 +69,6 @@ export const NewBotPopup: FC<{
                 {...register('botName')}
                 maxLength={20}
                 showCount
-                isError={errors.botName !== undefined}
               />
             </FormItem>
           </Col>

@@ -7,14 +7,13 @@ export interface InputProps extends IDataEntryProp {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
-  isError?: boolean;
   onPressEnter?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const [value, setValue] = useState('');
 
-  const { showCount, isError, ...inputProps } = args;
+  const { showCount, isError, required, ...inputProps } = args;
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
@@ -42,6 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       onKeyDown={args.onPressEnter ? handleKeyDown : undefined}
       ref={ref}
       aria-invalid={isError}
+      aria-required={required}
     />
   );
 
