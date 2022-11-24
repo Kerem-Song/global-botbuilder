@@ -1,12 +1,11 @@
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
 
-Modal.setAppElement('#root');
-
-if (Modal.defaultStyles.overlay) {
-  Modal.defaultStyles.overlay.zIndex = 200;
-  Modal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.5)';
+ReactModal.setAppElement('#root');
+if (ReactModal.defaultStyles.overlay) {
+  ReactModal.defaultStyles.overlay.zIndex = 200;
+  ReactModal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.5)';
 }
 
-if (Modal.defaultStyles.content) {
-  Modal.defaultStyles.content.borderRadius = '16px';
+if (ReactModal.defaultStyles.content) {
+  ReactModal.defaultStyles.content.borderRadius = '16px';
 }

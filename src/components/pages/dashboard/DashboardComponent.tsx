@@ -1,4 +1,5 @@
-import { Button, Col, Divider, Input, Row, Space } from '@components/index';
+import { Skeleton } from '@components/feedback/Skeleton';
+import { Button, Card, Col, Divider, Input, Row, Space } from '@components/index';
 import { IBotModel } from '@models/interfaces';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,7 +10,6 @@ import { useModalOpen } from '../../../hooks/useModalOpen';
 import usePage from '../../../hooks/usePage';
 import { systemModalOpen } from '../../../store/systemModalSlice';
 import { BotCard } from './BotCard';
-import { BotSkeleton } from './BotSkeleton';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
 
@@ -57,7 +57,9 @@ export const DashboardComponent = () => {
       <Space direction="vertical">
         <NewBotCard onClick={() => handleIsOpen(true)} />
         {isFetching ? (
-          <BotSkeleton />
+          <Card>
+            <Skeleton />
+          </Card>
         ) : (
           data
             ?.filter((x) => x.botName?.includes(searchKeyword))
