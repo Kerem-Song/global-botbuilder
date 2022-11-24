@@ -3,7 +3,7 @@ import { createElement, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-export type ButtonShape = 'default' | 'circle' | 'round';
+export type ButtonShape = 'default' | 'circle' | 'round' | 'ghost';
 
 export interface ButtonProps extends IHasChildren {
   type?: 'default' | 'primary' | 'secondary';
@@ -44,6 +44,7 @@ export const Button: FC<ButtonProps> = ({
     'luna-btn-primary': type === 'primary',
     'luna-btn-secondary': type === 'secondary',
     'luna-btn-small': small,
+    'luna-btn-ghost': shape === 'ghost',
   });
 
   const iconNode = icon ? (

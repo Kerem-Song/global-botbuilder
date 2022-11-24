@@ -49,7 +49,6 @@ export const NewBotPopup: FC<{
   return (
     <ReactModal
       style={{
-        overlay: { zIndex: 200 },
         content: { width: '600px', height: 'fit-content', margin: 'auto' },
       }}
       isOpen={isOpen}

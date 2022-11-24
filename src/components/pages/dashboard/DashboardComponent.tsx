@@ -1,15 +1,15 @@
-import { Card, Col, Divider, Input, Row, Space, Title } from '@components/index';
+import { Skeleton } from '@components/feedback/Skeleton';
+import { Button, Card, Col, Divider, Input, Row, Space } from '@components/index';
 import { IBotModel } from '@models/interfaces';
 import { useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { useBotClient } from '../../../hooks/client/botClient';
 import { useModalOpen } from '../../../hooks/useModalOpen';
 import usePage from '../../../hooks/usePage';
-import { useRootState } from '../../../hooks/useRootState';
+import { systemModalOpen } from '../../../store/systemModalSlice';
 import { BotCard } from './BotCard';
-import { BotSkeleton } from './BotSkeleton';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
 
@@ -28,12 +28,23 @@ export const DashboardComponent = () => {
       toast(message, { position: 'bottom-right' });
     }
   };
-
-  console.log(data);
+  const dispatch = useDispatch();
+  const handleTest = () => {
+    dispatch(
+      systemModalOpen({
+        message: 'This page cannot be found.',
+        description: 'This page is no longer available.',
+        confirmButton: 'Confirm',
+      }),
+    );
+  };
   return (
     <>
       <Row align="flex-end" justify="space-between">
-        <Col>{t('CHATBOT_COUNT', { count: data?.length })}</Col>
+        <Col>
+          {t('CHATBOT_COUNT', { count: data?.length })}
+          <Button onClick={handleTest}>테스트</Button>
+        </Col>
         <Col style={{ width: '300px' }}>
           <Input
             placeholder={t('SEARCH_PLACEHOLDER')}
@@ -46,7 +57,9 @@ export const DashboardComponent = () => {
       <Space direction="vertical">
         <NewBotCard onClick={() => handleIsOpen(true)} />
         {isFetching ? (
-          <BotSkeleton />
+          <Card>
+            <Skeleton />
+          </Card>
         ) : (
           data
             ?.filter((x) => x.botName?.includes(searchKeyword))

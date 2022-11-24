@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SystemModalStatusType = {
-  isOpen?: boolean;
+  isOpen: boolean;
   message?: string;
   description?: string;
   confirmButton: string;
@@ -19,7 +19,10 @@ export const systemModalSlice = createSlice({
   name: 'modal',
   initialState: initialState,
   reducers: {
-    systemModalOpen: (state, action: PayloadAction<SystemModalStatusType>) => {
+    systemModalOpen: (
+      state,
+      action: PayloadAction<Omit<SystemModalStatusType, 'isOpen'>>,
+    ) => {
       const {
         message,
         description,

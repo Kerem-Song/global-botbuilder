@@ -101,3 +101,19 @@ a.luna-btn {
   padding: rem(8) rem(10);
   height: rem(30);
 }
+
+.luna-btn-block {
+  width: 100%;
+}
+
+.luna-btn-ghost {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  &:hover {
+    background: transparent;
+  }
+  &:disabled {
+    background: transparent;
+  }
+}
