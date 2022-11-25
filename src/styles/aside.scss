@@ -44,6 +44,7 @@ aside {
       
       .headerName {
         position: relative;
+        padding-right: rem(12) ;
 
         &::after {
           display: inline-block;
@@ -64,7 +65,7 @@ aside {
   }
 
   .subMenuWrapper {
-    padding: rem(20) rem(5) rem(15) rem(5);
+    padding: rem(20) 0 rem(15) 0;
     border-top: 1px solid $gray300;
   }
 
