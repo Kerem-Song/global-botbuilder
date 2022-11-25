@@ -40,7 +40,6 @@ aside {
 
     &[data-sidebar="false"] {
       padding-top: rem(8);
-      padding-left: rem(5); 
     }
 
     & a {
@@ -68,7 +67,6 @@ aside {
   }
 
   .subMenuWrapper {
-    // padding-left: rem(5);
     padding: rem(20) rem(5) rem(15) rem(5);
     border-top: 1px solid $gray300;
   }
@@ -92,7 +90,7 @@ aside {
       background-color: $graySelected;
     }
 
-    &[data-sidebarStatus='false'] {
+    &[data-sidebarstatus='false'] {
       // background-image: url('@assets/icons/ic_lnb_hide.svg');
       // @include bg;
     }
@@ -101,9 +99,7 @@ aside {
   .desc {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.5s linear;
-    height: 0;
-    color: $grayWhite;;
+    height: 0;   
   }
 }
 
@@ -128,6 +124,9 @@ nav {
     opacity: 1;
     height: rem(20);
     padding-left: rem(5);
+    overflow: hidden;
+    transition: opacity 0.3s linear;
+    color: $grayWhite;;
   }
 
   .chatbotName {
