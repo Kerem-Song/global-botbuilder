@@ -6,8 +6,9 @@ export type SystemModalStatusType = {
   description?: string;
   confirmButton?: string;
   cancelButton?: string;
-  callbackFunc?: () => any;
-  cancelFunc?: () => any;
+  callbackFunc?: () => void;
+  cancelFunc?: () => void;
+  closeFunc?: () => void;
 };
 
 const initialState: SystemModalStatusType = {
@@ -30,6 +31,7 @@ export const systemModalSlice = createSlice({
         cancelButton,
         callbackFunc,
         cancelFunc,
+        closeFunc,
       } = action.payload;
 
       state.isOpen = true;
@@ -39,6 +41,7 @@ export const systemModalSlice = createSlice({
       state.cancelButton = cancelButton && cancelButton;
       state.callbackFunc = callbackFunc && callbackFunc;
       state.cancelFunc = cancelFunc && cancelFunc;
+      state.closeFunc = closeFunc && closeFunc;
     },
 
     systemModalClose: (state) => {

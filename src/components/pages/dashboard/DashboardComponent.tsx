@@ -16,7 +16,7 @@ export const DashboardComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
-  const { info } = useSystemModal();
+  const { confirm } = useSystemModal();
 
   const { getBotListQuery, botSaveMutate } = useBotClient();
   const { data, isFetching } = getBotListQuery;
@@ -28,11 +28,17 @@ export const DashboardComponent = () => {
       toast(message, { position: 'bottom-right' });
     }
   };
-  const handleTest = () => {
-    info({
+  const handleTest = async () => {
+    const result = await confirm({
       title: 'This page cannot be found.',
       description: 'This page is no longer available.',
     });
+
+    if (result) {
+      console.log('confirm');
+    } else {
+      console.log('cancel');
+    }
   };
   return (
     <>

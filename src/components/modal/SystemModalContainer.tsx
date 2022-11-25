@@ -11,6 +11,7 @@ export const SystemModalContainer = () => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
+    modalInfo.cancelFunc?.();
     dispatch(systemModalClose());
   };
 
@@ -21,6 +22,7 @@ export const SystemModalContainer = () => {
 
   const keyEvent = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
+      modalInfo.closeFunc?.();
       dispatch(systemModalClose());
     }
   };
