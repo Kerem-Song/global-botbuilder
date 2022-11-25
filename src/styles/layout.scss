@@ -26,8 +26,7 @@ body {
 
 main {
   flex: auto;
-  padding: rem(20);
-  padding-left: rem($asideSize + 20);
+  padding-left: rem($asideSize);
   background-color: $background;
   overflow-y: auto;
 }
