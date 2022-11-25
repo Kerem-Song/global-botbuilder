@@ -69,6 +69,10 @@ export const Aside = () => {
     getMenuItem(2, 'setting', icSetting, icSettingSelected),
   ];
 
+  if (isDashboard) {
+    const changedSubMenu = subMenu.slice(0, 1);
+  }
+
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
 
   return (
@@ -135,36 +139,32 @@ export const Aside = () => {
         )}
       </div>
 
-      {isDashboard ? (
-        <></>
-      ) : (
-        <div className="subMenuWrapper">
-          <nav className="subMenu">
-            <ul>
-              {subMenu.map((item) => {
-                return (
-                  <NavLink
-                    key={item.id}
-                    to={`${item.url}`}
-                    onClick={() => setPage(item.url)}
-                  >
-                    <li className="">
-                      <span className="subMenuImg">
-                        {page === item.url ? (
-                          <img src={item.selectedIcon} alt={item.alt} />
-                        ) : (
-                          <img src={item.icon} alt={item.alt} />
-                        )}
-                      </span>
-                      {sidebarStatus && <span className="desc">{item.desc}</span>}
-                    </li>
-                  </NavLink>
-                );
-              })}
-            </ul>
-          </nav>
-        </div>
-      )}
+      <div className="subMenuWrapper">
+        <nav className="subMenu">
+          <ul>
+            {(isDashboard ? subMenu.slice(0, 1) : subMenu).map((item) => {
+              return (
+                <NavLink
+                  key={item.id}
+                  to={`${item.url}`}
+                  onClick={() => setPage(item.url)}
+                >
+                  <li className="">
+                    <span className="subMenuImg">
+                      {page === item.url ? (
+                        <img src={item.selectedIcon} alt={item.alt} />
+                      ) : (
+                        <img src={item.icon} alt={item.alt} />
+                      )}
+                    </span>
+                    {sidebarStatus && <span className="desc">{item.desc}</span>}
+                  </li>
+                </NavLink>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </aside>
   );
 };
