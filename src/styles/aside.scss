@@ -15,12 +15,9 @@ aside {
   background-color: $grayAside;
   overflow: hidden;
 
-  .mainMenuWrapper {
-    padding-left: rem(5);
-  }
-
   .lnbHeader {
     margin-top: rem(12);
+    padding-left: rem(5);
     height: rem(43);
   
 
@@ -79,6 +76,7 @@ aside {
   .lnbBtn {
     width: rem(24);
     height: rem(24);
+    margin-left: rem(5); 
     padding: rem(4);
     border: 0;
     border-radius: rem(4);
@@ -111,7 +109,12 @@ nav {
   li {
     display: flex;
     align-items: center;
-    padding: rem(5) rem(5) rem(5) 0;
+    padding: rem(5) rem(5) rem(5) rem(5);
+    
+    &:hover {
+      background-color: $graySelected;
+      border-radius: rem(4);
+    }
   }
 }
 
