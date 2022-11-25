@@ -15,12 +15,9 @@ aside {
   background-color: $grayAside;
   overflow: hidden;
 
-  .mainMenuWrapper {
-    padding-left: rem(5);
-  }
-
   .lnbHeader {
     margin-top: rem(12);
+    padding-left: rem(5);
     height: rem(43);
   
 
@@ -40,7 +37,6 @@ aside {
 
     &[data-sidebar="false"] {
       padding-top: rem(8);
-      padding-left: rem(5); 
     }
 
     & a {
@@ -48,6 +44,7 @@ aside {
       
       .headerName {
         position: relative;
+        padding-right: rem(12) ;
 
         &::after {
           display: inline-block;
@@ -68,8 +65,7 @@ aside {
   }
 
   .subMenuWrapper {
-    // padding-left: rem(5);
-    padding: rem(20) rem(5) rem(15) rem(5);
+    padding: rem(20) 0 rem(15) 0;
     border-top: 1px solid $gray300;
   }
 
@@ -81,6 +77,7 @@ aside {
   .lnbBtn {
     width: rem(24);
     height: rem(24);
+    margin-left: rem(5); 
     padding: rem(4);
     border: 0;
     border-radius: rem(4);
@@ -92,7 +89,7 @@ aside {
       background-color: $graySelected;
     }
 
-    &[data-sidebarStatus='false'] {
+    &[data-sidebarstatus='false'] {
       // background-image: url('@assets/icons/ic_lnb_hide.svg');
       // @include bg;
     }
@@ -101,9 +98,7 @@ aside {
   .desc {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.5s linear;
-    height: 0;
-    color: $grayWhite;;
+    height: 0;   
   }
 }
 
@@ -115,7 +110,12 @@ nav {
   li {
     display: flex;
     align-items: center;
-    padding: rem(5) rem(5) rem(5) 0;
+    padding: rem(5) rem(5) rem(5) rem(5);
+    
+    &:hover {
+      background-color: $graySelected;
+      border-radius: rem(4);
+    }
   }
 }
 
@@ -128,6 +128,9 @@ nav {
     opacity: 1;
     height: rem(20);
     padding-left: rem(5);
+    overflow: hidden;
+    transition: opacity 0.3s linear;
+    color: $grayWhite;;
   }
 
   .chatbotName {

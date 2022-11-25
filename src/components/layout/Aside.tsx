@@ -6,7 +6,6 @@ import {
   icDeploySelected,
   icHelp,
   icHelpSelected,
-  icHide,
   icHistory,
   icHistorySelected,
   icLnbHide,
@@ -15,7 +14,6 @@ import {
   icScenarioSelected,
   icSetting,
   icSettingSelected,
-  icShow,
   icStatistics,
   icStatisticsSelected,
   icUtterance,
@@ -30,13 +28,13 @@ import { Link, NavLink, useLocation, useMatches } from 'react-router-dom';
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 import { setSidebarStatus } from '../../store/sidebarStatusSlice';
-import { Divider } from './Divider';
 
 export const Aside = () => {
-  const [page, setPage] = useState<string>('');
+  const location = useLocation();
+  const [page, setPage] = useState<string>(location.pathname);
+
   const { i18n, t, ts } = useI18n();
   const matches = useMatches();
-  const location = useLocation();
   const isDashboard = matches.find((x) => x.pathname === location.pathname)?.handle;
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
@@ -69,10 +67,6 @@ export const Aside = () => {
     getMenuItem(2, 'setting', icSetting, icSettingSelected),
   ];
 
-  if (isDashboard) {
-    const changedSubMenu = subMenu.slice(0, 1);
-  }
-
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
 
   return (
@@ -81,7 +75,7 @@ export const Aside = () => {
         <button
           className="lnbBtn"
           onClick={handleSidebar}
-          data-sidebarStatus={sidebarStatus}
+          data-sidebarstatus={sidebarStatus}
         >
           {sidebarStatus ? (
             <img src={icLnbHide} alt="icLnbHide" />
@@ -92,7 +86,11 @@ export const Aside = () => {
         {isDashboard ? (
           <div className="lnbHeader partnerLnbHeader" data-sidebar={sidebarStatus}>
             <Link to="">
-              {sidebarStatus ? <p className="headerName">파트너스 센터</p> : <p>파</p>}
+              {sidebarStatus ? (
+                <p className="headerName">파트너스 센터</p>
+              ) : (
+                <img src={icChatbot} alt="icChatbot" />
+              )}
             </Link>
           </div>
         ) : (
@@ -129,7 +127,8 @@ export const Aside = () => {
                           <img src={item.icon} alt={item.alt} />
                         )}
                       </span>
-                      {sidebarStatus && <span className="desc">{item.desc}</span>}
+                      {/* {sidebarStatus && <span className="desc">{item.desc}</span>} */}
+                      {<span className="desc">{item.desc}</span>}
                     </li>
                   </NavLink>
                 );
