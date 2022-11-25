@@ -8,6 +8,8 @@ import icHelpSelected from '@assets/icons/ic_help_select.svg';
 import icHide from '@assets/icons/ic_hide.svg';
 import icHistory from '@assets/icons/ic_history_default.svg';
 import icHistorySelected from '@assets/icons/ic_history_select.svg';
+import icListMenu from '@assets/icons/ic_list_menu.svg';
+import icListMenuHover from '@assets/icons/ic_list_menu_hover.svg';
 import icLnbHide from '@assets/icons/ic_lnb_hide.svg';
 import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icScenario from '@assets/icons/ic_scenario_default.svg';
@@ -31,6 +33,8 @@ export {
   icHide,
   icHistory,
   icHistorySelected,
+  icListMenu,
+  icListMenuHover,
   icLnbHide,
   icLnbShow,
   icScenario,

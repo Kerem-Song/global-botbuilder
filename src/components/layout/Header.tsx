@@ -20,7 +20,7 @@ export const Header = () => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const pageName = location.pathname.slice(4);
-  console.log('pageName', pageName);
+
   const user = 'UserName';
 
   return (

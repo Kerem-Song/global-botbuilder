@@ -1,39 +1,56 @@
+import { icListMenu, icListMenuHover } from '@assets/index';
 import { Input } from '@components/data-entry/Input';
 import { Switch } from '@components/data-entry/Switch';
+import { Button } from '@components/index';
 
 import { useScenarioList } from '../../../hooks/client/scenario';
 
 export const ScenarioManagement = () => {
   const { getScenarioList } = useScenarioList();
   const { data } = getScenarioList;
+  const basicScenarioList = [{ name: 'Welcome' }, { name: 'FAQ' }, { name: 'Help' }];
 
   const handleSwitch = () => {
     console.log('switch toggle');
   };
 
+  const handleNewScenario = () => {
+    console.log('handle new scenario');
+  };
+
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">
-        <input type="checkbox" className="" />
         <p>활성 시나리오만 보기</p>
+        <Switch onChange={handleSwitch} />
       </div>
 
-      <div className="basicScenario">
-        <div>챗봇 도움말</div>
-        <div>탈출</div>
-        <div>FAQ 생성</div>
+      <div className="basicScenarioWrapper">
+        <p>기본 제공 시나리오</p>
+        <div className="basicScenarioList">
+          {basicScenarioList.map((item, i) => {
+            return (
+              <div key={i} className="basicScenario">
+                <span>{item.name}</span>
+                <Switch onChange={handleSwitch} />
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="startBtn">
-        <span>시작</span>
-        <button className="newScenarioBtn">+ 새 시나리오</button>
+      <div className="newScenarioBtn">
+        {/* <button className="newScenarioBtn">+ 새 시나리오</button> */}
+        <Button block shape="round" onClick={handleNewScenario}>
+          + 새 시나리오
+        </Button>
       </div>
 
       <div className="scenarioListWrapper">
         {data?.map((item) => (
           <div className="scenarioList" key={item.id}>
-            <Switch onChange={handleSwitch} />
             <span>{item.scenarioName}</span>
+            <Switch onChange={handleSwitch} />
             <button>
               <i className="fa-solid fa-ellipsis-vertical" />
             </button>

@@ -1,29 +1,35 @@
 .scenarioWrapper {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: white;
-
-  justify-content: center;
+  background-color: $background;
+  text-transform: capitalize;
 
   .managementWrapper {
     grid-column: 1/3;
     display: grid;
-    grid-template-rows: 1fr 14fr;
+    grid-template-rows: rem(51) 14fr;
     width: 100%;
     height: 100%;
 
     &:first-child {
-      border: 1px solid #EDEDF0;
+      border: 1px solid $gray200;
     }
     
     .scenarioName {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 rem(10) 0 rem(10);
-      border-bottom: 1px solid #EDEDF0;
+      padding: 0 rem(12) 0 rem(12);
+      border-bottom: 1px solid $gray200;
+
+      & span {
+        padding-left: rem(4);
+        color: $primary700;
+        font-weight: 700;
+      }
 
       .scenarioNameTabs {
         & i {
@@ -37,7 +43,7 @@
 
     .scenarioTabWrapper {
       display: grid;
-      grid-template-rows: auto;
+      grid-template-rows: rem(32) rem(173) rem(47) auto rem(45);
       width: 100%;
       height: 100%;
     }
@@ -45,47 +51,74 @@
     // 시나리오 탭
     .openedScenarioOption {
       display: flex;
-      justify-content: right;
-      align-items: center;
-      padding: 0 rem(10) 0 rem(10);
-      border-bottom: 1px solid #EDEDF0;
-    }
-
-    .basicScenario {
-      display: grid;
-      align-items: center;
-      border-bottom: 1px solid #EDEDF0;
-
-      div {
-        padding: rem(10);
-      }    
-    }
-    
-    .startBtn {
-      display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 rem(12);
+      height: rem(32);
+      border-bottom: 1px solid $gray200;
+      font-size: rem(13);
+    }
+
+    .basicScenarioWrapper {
+      display: grid;
+      grid-template-rows: rem(42) auto;
+      align-items: center;
+
+      & p {
+        padding: rem(16) rem(12);
+        font-weight: 700;
+        font-size: rem(12);
+        color: $gray500;
+      }
+      
+      .basicScenarioList {
+        margin: 0 rem(12);
+        border: 1px solid $gray200;
+        border-radius: rem(8);
+        background-color: $grayWhite;
+
+        .basicScenario {
+          display: flex;
+          justify-content: space-between;
+          padding: rem(12);
+          height: rem(40)
+        }
+      }
+    }
+    
+    .newScenarioBtn {
+      display: flex;
+      align-items: center;
       padding: 0 rem(10) 0 rem(10);
-      border-bottom: 1px solid #EDEDF0;
+      font-size: rem(12);
+
+      & button {
+        color: $grayWhite;
+        background-color: $primary500;
+      }
     }
 
     .scenarioListWrapper {
-      padding: rem(10);
+      padding: rem(8) rem(10) 0 rem(10);
       max-height: rem(400);
       overflow-y: auto;
     }
 
     .scenarioList {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: rem(116) rem(20) rem(20);
       justify-content: space-between;
       align-items: center;
       padding: rem(2);
 
-      span {
-        grid-column: 2/5;
-        padding: 0 rem(5);
-        text-align: left;
+      & span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .switch {
+
       }
     }
 
@@ -112,7 +145,7 @@
 
     .variableWrapper {
       padding: rem(10);
-      border-bottom: 1px solid #EDEDF0;
+      border-bottom: 1px solid $gray200;
 
       & p {
         padding-bottom: rem(15);
@@ -121,7 +154,7 @@
     }
 
     .variableListWrapper {
-      border-top: 1px solid #EDEDF0;
+      border-top: 1px solid $gray200;
       padding-top: rem(10);
 
       .variableListHeader {
@@ -129,7 +162,7 @@
         align-items: center;
         grid-template-columns: 5fr 5fr 1fr;
         padding-bottom: rem(10);
-        border-bottom: 1px solid #EDEDF0;
+        border-bottom: 1px solid $gray200;
 
         .variableName {
           grid-column: 1/1;
