@@ -127,7 +127,6 @@ export const Aside = () => {
                           <img src={item.icon} alt={item.alt} />
                         )}
                       </span>
-                      {/* {sidebarStatus && <span className="desc">{item.desc}</span>} */}
                       {<span className="desc">{item.desc}</span>}
                     </li>
                   </NavLink>

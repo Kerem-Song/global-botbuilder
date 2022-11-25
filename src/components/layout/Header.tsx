@@ -19,39 +19,18 @@ export const Header = () => {
   };
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const pageName = location.pathname.slice(4);
+  console.log('pageName', pageName);
   const user = 'UserName';
-
-  const languageOptionss = [
-    { value: 'ko', label: '한국어' },
-    { value: 'ja', label: '日本語' },
-    { value: 'en', label: 'English' },
-  ];
-
-  const selectStyles: StylesConfig = {
-    control: (provided, state) => ({
-      ...provided,
-      width: '21px',
-      height: '14px',
-      fontSize: '12px',
-      color: '#FFFFFF',
-      backgroundColor: '#282828',
-      border: '1px solid #222222',
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      width: '152px',
-      height: '112px',
-      backgroundColor: '#FFFFFF',
-      border: '1px solid #DCDCDC',
-      boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.25)',
-      borderRadius: '12px',
-    }),
-  };
 
   return (
     <header>
-      <div>
-        <span className="brandName">{brandName}</span>
+      <div className="headerWapper">
+        <div className="brandPage">
+          <span className="brandName">{brandName}</span>
+          <span className="pageName">{pageName}</span>
+        </div>
+
         <select
           className="language"
           value={i18n.language}
@@ -64,13 +43,7 @@ export const Header = () => {
           <option value="ja">日本語</option>
           <option value="key">키확인</option>
         </select>
-        {/* <Select
-          options={languageOptionss}
-          onChange={(options: any) => {
-            changeLanguageHandler(options.value);
-          }}
-          styles={selectStyles}
-        /> */}
+
         <span className="userName">{user}</span>
       </div>
     </header>
