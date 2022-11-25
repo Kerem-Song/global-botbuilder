@@ -4,7 +4,7 @@ export type SystemModalStatusType = {
   isOpen: boolean;
   message?: string;
   description?: string;
-  confirmButton: string;
+  confirmButton?: string;
   cancelButton?: string;
   callbackFunc?: () => any;
   cancelFunc?: () => any;

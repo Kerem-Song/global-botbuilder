@@ -2,13 +2,12 @@ import { Skeleton } from '@components/feedback/Skeleton';
 import { Button, Card, Col, Divider, Input, Row, Space } from '@components/index';
 import { IBotModel } from '@models/interfaces';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { useBotClient } from '../../../hooks/client/botClient';
 import { useModalOpen } from '../../../hooks/useModalOpen';
 import usePage from '../../../hooks/usePage';
-import { systemModalOpen } from '../../../store/systemModalSlice';
+import { useSystemModal } from '../../../hooks/useSystemModal';
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
@@ -17,6 +16,7 @@ export const DashboardComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
+  const { info } = useSystemModal();
 
   const { getBotListQuery, botSaveMutate } = useBotClient();
   const { data, isFetching } = getBotListQuery;
@@ -28,15 +28,11 @@ export const DashboardComponent = () => {
       toast(message, { position: 'bottom-right' });
     }
   };
-  const dispatch = useDispatch();
   const handleTest = () => {
-    dispatch(
-      systemModalOpen({
-        message: 'This page cannot be found.',
-        description: 'This page is no longer available.',
-        confirmButton: 'Confirm',
-      }),
-    );
+    info({
+      title: 'This page cannot be found.',
+      description: 'This page is no longer available.',
+    });
   };
   return (
     <>
