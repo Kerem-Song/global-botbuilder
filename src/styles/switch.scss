@@ -3,37 +3,40 @@
 
   input {
     appearance: none;
-    min-width: rem(48);
-    min-height: rem(22);
+    width: rem(20);
+    height: rem(8);
     margin: 0;
 
     position: relative;
     background-color: $gray200;
-    border-radius: rem(32);
-    border: rem(1) solid $gray200;
+    border-radius: rem(100);
+    border: 1px solid #d3d3d3;
 
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 
     &:checked {
-      background-color: $primary500;
-      border-color: $primary500;
+      background-color: #b8e9cc;
+      border-color: #ade0c1;
 
       &::before {
+        background-color: $green;
+        border: 1px solid $green;
         left: unset;
-        transform: translateX(calc(100% + rem(12)));
+        transform: translateX(calc(100% + rem(-6)));
       }
     }
 
     &::before {
       content: '';
       position: absolute;
-      height: rem(16);
-      width: rem(16);
-      top: rem(2);
-      left: rem(2);
-      bottom: rem(2);
-      background-color: white;
+      width: rem(12);
+      height: rem(12);
+      top: rem(-4);
+      left: rem(-3);
+      bottom: rem(0);
+      background-color: $grayWhite;
+      border: 1px solid $gray200;
       transition: all 0.3s;
       border-radius: 50%;
       cursor: pointer;
