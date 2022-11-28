@@ -56,7 +56,7 @@ export const Aside = () => {
   const menu = [
     getMenuItem(1, 'scenario', icScenario, icScenarioSelected),
     getMenuItem(2, 'utterance', icUtterance, icUtteranceSelected),
-    getMenuItem(3, 'skill', icDataApi, icDataApiSelcted),
+    getMenuItem(3, 'data-api', icDataApi, icDataApiSelcted),
     getMenuItem(4, 'deployment', icDeploy, icDeploySelected),
     getMenuItem(5, 'history', icHistory, icHistorySelected),
     getMenuItem(6, 'statistics', icStatistics, icStatisticsSelected),
@@ -72,29 +72,33 @@ export const Aside = () => {
   return (
     <aside className={css}>
       <div className="mainMenuWrapper">
-        <button
-          className="lnbBtn"
-          onClick={handleSidebar}
-          data-sidebarstatus={sidebarStatus}
-        >
-          {sidebarStatus ? (
-            <img src={icLnbHide} alt="icLnbHide" />
-          ) : (
-            <img src={icLnbShow} alt="icLnbShow" />
-          )}
-        </button>
+        <div className="expand">
+          <button
+            className="lnbBtn"
+            onClick={handleSidebar}
+            data-sidebarstatus={sidebarStatus}
+          >
+            {sidebarStatus ? (
+              <img src={icLnbHide} alt="icLnbHide" />
+            ) : (
+              <img src={icLnbShow} alt="icLnbShow" />
+            )}
+          </button>
+        </div>
         {isDashboard ? (
-          <div className="lnbHeader partnerLnbHeader" data-sidebar={sidebarStatus}>
+          <div className="partnerLnbHeader" data-sidebar={sidebarStatus}>
             <Link to="">
               {sidebarStatus ? (
                 <p className="headerName">파트너스 센터</p>
               ) : (
-                <img src={icChatbot} alt="icChatbot" />
+                <div>
+                  <img src={icChatbot} alt="icChatbot" />
+                </div>
               )}
             </Link>
           </div>
         ) : (
-          <div className="lnbHeader">
+          <div className="lnbHeader" data-sidebar={sidebarStatus}>
             <NavLink to="dashboard">
               {sidebarStatus ? (
                 <p className="headerName"> {brandName} 챗봇 목록</p>
@@ -110,7 +114,7 @@ export const Aside = () => {
         {isDashboard ? (
           <></>
         ) : (
-          <nav className="nav">
+          <nav className="mainNav">
             <ul>
               {menu.map((item) => {
                 return (
@@ -119,7 +123,7 @@ export const Aside = () => {
                     to={`${item.url}`}
                     onClick={() => setPage(item.url)}
                   >
-                    <li className="">
+                    <li className={page === item.url ? 'selected' : ''}>
                       <span className="menuImg">
                         {page === item.url ? (
                           <img src={item.selectedIcon} alt={item.alt} />
@@ -147,8 +151,8 @@ export const Aside = () => {
                   to={`${item.url}`}
                   onClick={() => setPage(item.url)}
                 >
-                  <li className="">
-                    <span className="subMenuImg">
+                  <li className={page === item.url ? 'selected' : ''}>
+                    <span className="menuImg">
                       {page === item.url ? (
                         <img src={item.selectedIcon} alt={item.alt} />
                       ) : (

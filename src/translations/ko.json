@@ -7,7 +7,9 @@
     "NEW_BOT_DESCRIPTION": "클릭해서 새 봇을 만들어보세요.",
     "NEW_BOT_OK_MESSAGE": "새로운 챗봇을 만들었습니다!",
     "BOT_NAME_PLACEHOLDER": "봇 이름을 입력해주세요.",
-    "BOT_NAME_LABEL": "봇 이름"
+    "BOT_NAME_LABEL": "봇 이름",
+    "PROD_CHANNEL": "운영채널",
+    "TEST_CHANNEL": "테스트채널"
   },
   "common": {
     "intlDateTime": "{{val, datetime}}",

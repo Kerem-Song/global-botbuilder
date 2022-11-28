@@ -1,10 +1,8 @@
-import { Card } from '@components/data-display/Card';
-import { Title } from '@components/general/Title';
-import { Col, Row, Space } from '@components/index';
+import { Card, Col, Row, Space, Title } from '@components';
+import { usePage } from '@hooks';
 import { FC } from 'react';
 
 import icHome from '../../../assets/ic_home.png';
-import usePage from '../../../hooks/usePage';
 
 export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = usePage();

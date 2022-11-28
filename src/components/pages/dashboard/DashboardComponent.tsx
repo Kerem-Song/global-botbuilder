@@ -1,13 +1,9 @@
-import { Skeleton } from '@components/feedback/Skeleton';
-import { Button, Card, Col, Divider, Input, Row, Space } from '@components/index';
-import { IBotModel } from '@models/interfaces';
+import { Button, Card, Col, Divider, Input, Row, Skeleton, Space } from '@components';
+import { useBotClient, useModalOpen, usePage, useSystemModal } from '@hooks';
+import { IBotModel } from '@models';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useBotClient } from '../../../hooks/client/botClient';
-import { useModalOpen } from '../../../hooks/useModalOpen';
-import usePage from '../../../hooks/usePage';
-import { useSystemModal } from '../../../hooks/useSystemModal';
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
@@ -18,8 +14,8 @@ export const DashboardComponent = () => {
   const { t } = usePage();
   const { confirm } = useSystemModal();
 
-  const { getBotListQuery, botSaveMutate } = useBotClient();
-  const { data, isFetching } = getBotListQuery;
+  const { data, isFetching, botSaveMutate } = useBotClient();
+
   const handleSave = async (model: IBotModel) => {
     const result = await botSaveMutate.mutateAsync(model);
     if (result) {
@@ -41,13 +37,13 @@ export const DashboardComponent = () => {
     }
   };
   return (
-    <>
+    <div className="p-20">
       <Row align="flex-end" justify="space-between">
         <Col>
           {t('CHATBOT_COUNT', { count: data?.length })}
           <Button onClick={handleTest}>테스트</Button>
         </Col>
-        <Col style={{ width: '300px' }}>
+        <Col className="w-300">
           <Input
             placeholder={t('SEARCH_PLACEHOLDER')}
             value={searchKeyword}
@@ -71,6 +67,6 @@ export const DashboardComponent = () => {
         )}
       </Space>
       <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} handleSave={handleSave} />
-    </>
+    </div>
   );
 };

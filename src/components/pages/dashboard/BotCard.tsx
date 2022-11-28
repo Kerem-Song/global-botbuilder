@@ -1,11 +1,9 @@
-import { Card } from '@components/data-display/Card';
-import { Title } from '@components/general/Title';
-import { Col, Row } from '@components/index';
+import { Card, Col, Row, Title } from '@components';
+import { usePage } from '@hooks';
+import { IBotModel } from '@models';
 import { FC } from 'react';
-import { IBotModel } from 'src/models/interfaces/IBotModel';
 
 import icHome from '../../../assets/ic_home.png';
-import usePage from '../../../hooks/usePage';
 
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
   const { navigate, t, tc } = usePage();
@@ -36,7 +34,8 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
             </Col>
             <Col>
               <span style={{ color: '#A1A1A1' }}>
-                | 운영채널: {model.prodChannel} | 테스트채널: {model.testChannel}
+                | {t('PROD_CHANNEL')}: {model.prodChannel} | {t('TEST_CHANNEL')}:{' '}
+                {model.testChannel}
               </span>
             </Col>
           </Row>

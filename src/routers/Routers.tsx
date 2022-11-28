@@ -1,11 +1,16 @@
+import { DefaultLayout } from '@components';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { DefaultLayout } from '../components/layout/DefaultLayout';
 import { supportedLngs } from '../modules/constants';
-import DashboardPage from '../pages/dashboard';
-import ImageEditorPage from '../pages/imgedit';
+import DashboardPage from '../pages/DashboardPage';
+import DataApiPage from '../pages/DataApiPage';
+import DeploymentPage from '../pages/DeploymentPage';
+import HelpPage from '../pages/HelpPage';
+import HistoryPage from '../pages/HistoryPage';
 import ScenarioPage from '../pages/scenario';
-import TestPage from '../pages/test';
+import SettingPage from '../pages/SettingPage';
+import StatisticsPage from '../pages/StatisticsPage';
+import UtterancePage from '../pages/UtterancePage';
 import { LocaleNavigate } from './LocaleNavigate';
 
 const finalRoutes = [
@@ -22,7 +27,13 @@ const finalRoutes = [
               handle: true,
             },
             { path: 'scenario', element: <ScenarioPage /> },
-            { path: 'test', element: <TestPage /> },
+            { path: 'utterance', element: <UtterancePage /> },
+            { path: 'data-api', element: <DataApiPage /> },
+            { path: 'deployment', element: <DeploymentPage /> },
+            { path: 'history', element: <HistoryPage /> },
+            { path: 'statistics', element: <StatisticsPage /> },
+            { path: 'help', element: <HelpPage /> },
+            { path: 'setting', element: <SettingPage /> },
             { path: '', element: <Navigate to="/dashboard" replace={true} /> },
           ],
         },

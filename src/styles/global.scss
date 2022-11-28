@@ -10,7 +10,7 @@
 }
 
 $defaultSize: 16;
-$asideSize: 56;
+$asideSize: 54;
 $background: #f7f7fa;
 
 @function rem($px) {
@@ -26,7 +26,7 @@ $background: #f7f7fa;
 /*****#####===== Color =====#####*****/
 // Gray/Black
 $grayBlack: #222222;
-$gray100: #F7F7FA;
+$gray100: #f7f7fa;
 $gray150: #ededf0;
 $gray200: #dcdcdc;
 $gray250: #b5b4b4;
@@ -34,10 +34,10 @@ $gray300: #929292;
 $gray500: #636364;
 $gray700: #323232;
 $grayDim: rgba(0, 0, 0, 0.5);
-$grayBG: #F7F7FA;
+$grayBG: #f7f7fa;
 $grayAside: #282828;
 $graySelected: #151515;
-$grayWhite: #FFFFFF;
+$grayWhite: #ffffff;
 
 // Primary
 $primary100: #ecf2ff;
@@ -111,4 +111,38 @@ $green: #03bf4e;
   opacity: 0;
 
   @include transition(all, 0.5s, ease-in-out);
+}
+
+$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100);
+$sides: (top, bottom, left, right);
+
+@each $space in $spaceamounts {
+  .m-#{$space} {
+    margin: #{$space}px !important;
+  }
+
+  .p-#{$space} {
+    padding: #{$space}px !important;
+  }
+
+  @each $side in $sides {
+    .m-#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px !important;
+    }
+
+    .p-#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px !important;
+    }
+  }
+}
+
+$widthamounts: (100, 150, 200, 300, 500, 1000);
+@each $width in $widthamounts {
+  .w-#{$width} {
+    width: #{$width}px !important;
+  }
+
+  .min-w-#{$width} {
+    min-width: #{$width}px !important;
+  }
 }

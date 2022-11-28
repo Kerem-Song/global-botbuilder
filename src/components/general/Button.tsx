@@ -1,3 +1,4 @@
+import { IHasClassNameNStyle } from '@models';
 import * as classNames from 'classnames';
 import { createElement, FC } from 'react';
 
@@ -5,7 +6,7 @@ import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
 export type ButtonShape = 'default' | 'circle' | 'round' | 'ghost';
 
-export interface ButtonProps extends IHasChildren {
+export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
   type?: 'default' | 'primary' | 'secondary';
   small?: boolean;
   shape?: ButtonShape;
@@ -30,6 +31,8 @@ export const Button: FC<ButtonProps> = ({
   onClick,
   shape = 'default',
   icon,
+  style,
+  className,
 }) => {
   if (children && label) {
     throw new Error('children과 label은 동시에 설정할 수 없다.');
@@ -37,15 +40,19 @@ export const Button: FC<ButtonProps> = ({
 
   const labelNode = <span>{label || children}</span>;
 
-  const controlCss = classNames('luna-btn', {
-    'luna-btn-disabled': disabled,
-    'luna-btn-block': block,
-    'luna-btn-circle': shape === 'circle',
-    'luna-btn-primary': type === 'primary',
-    'luna-btn-secondary': type === 'secondary',
-    'luna-btn-small': small,
-    'luna-btn-ghost': shape === 'ghost',
-  });
+  const controlCss = classNames(
+    'luna-btn',
+    {
+      'luna-btn-disabled': disabled,
+      'luna-btn-block': block,
+      'luna-btn-circle': shape === 'circle',
+      'luna-btn-primary': type === 'primary',
+      'luna-btn-secondary': type === 'secondary',
+      'luna-btn-small': small,
+      'luna-btn-ghost': shape === 'ghost',
+    },
+    className,
+  );
 
   const iconNode = icon ? (
     <span role="img" className="icon">
@@ -61,6 +68,7 @@ export const Button: FC<ButtonProps> = ({
       href: href,
       onClick,
       type: htmlType,
+      style: style,
     },
     iconNode,
     labelNode,

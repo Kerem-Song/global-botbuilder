@@ -1,13 +1,11 @@
-import { Button, Divider, FormItem, Input, Row, Space, Title } from '@components/index';
-import { Col } from '@components/layout/Col';
+import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IBotModel } from '@models/interfaces';
+import { usePage } from '@hooks';
+import { IBotModel } from '@models';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import * as yup from 'yup';
-
-import usePage from '../../../hooks/usePage';
 
 const defaultValues: IBotModel = {
   botName: '',
@@ -49,17 +47,24 @@ export const NewBotPopup: FC<{
   return (
     <ReactModal
       style={{
-        content: { width: '600px', height: 'fit-content', margin: 'auto' },
+        content: {
+          width: '600px',
+          height: 'fit-content',
+          margin: 'auto',
+          padding: 0,
+        },
       }}
       isOpen={isOpen}
       onAfterOpen={() => {
         setFocus('botName');
       }}
     >
-      <Title level={4}>{t('NEW_BOT_TITLE')}</Title>
+      <div style={{ padding: '14px 20px 0 20px' }}>
+        <Title level={4}>{t('NEW_BOT_TITLE')}</Title>
+      </div>
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row align="center">
+        <Row align="center" style={{ padding: '20px' }}>
           <Col span={6}>{t('BOT_NAME_LABEL')}</Col>
           <Col span={18}>
             <FormItem error={errors.botName}>
@@ -72,11 +77,15 @@ export const NewBotPopup: FC<{
             </FormItem>
           </Col>
         </Row>
-        <Divider />
-        <Row justify="flex-end">
+
+        <Row justify="flex-end" style={{ padding: '0 20px 20px 20px' }}>
           <Space>
-            <Button onClick={handleClose}>{tc('CANCEL')}</Button>
-            <Button htmlType="submit">{tc('OK')}</Button>
+            <Button className="min-w-100" onClick={handleClose}>
+              {tc('CANCEL')}
+            </Button>
+            <Button className="min-w-100" htmlType="submit" type="primary">
+              {tc('OK')}
+            </Button>
           </Space>
         </Row>
       </form>

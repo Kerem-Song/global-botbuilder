@@ -28,5 +28,9 @@ export const useBotClient = () => {
     }
   });
 
-  return { getBotListQuery, botSaveMutate };
+  return {
+    data: getBotListQuery.data,
+    isFetching: getBotListQuery.isFetching,
+    botSaveMutate,
+  };
 };
