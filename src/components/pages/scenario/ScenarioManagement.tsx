@@ -1,7 +1,7 @@
 import { icListMenu, icListMenuHover } from '@assets/index';
 import { Input } from '@components/data-entry/Input';
 import { Switch } from '@components/data-entry/Switch';
-import { Button } from '@components/index';
+import { Button, Card, Col, Row, Space } from '@components/index';
 
 import { useScenarioList } from '../../../hooks/client/scenario';
 
@@ -41,23 +41,32 @@ export const ScenarioManagement = () => {
 
       <div className="newScenarioBtn">
         {/* <button className="newScenarioBtn">+ 새 시나리오</button> */}
-        <Button block shape="round" onClick={handleNewScenario}>
+        <Button block shape="round" type="primary" onClick={handleNewScenario}>
           + 새 시나리오
         </Button>
       </div>
 
       <div className="scenarioListWrapper">
-        {data?.map((item) => (
-          <div className="scenarioList" key={item.id}>
-            <span>{item.scenarioName}</span>
-            <Switch onChange={handleSwitch} />
-            <button>
-              <i className="fa-solid fa-ellipsis-vertical" />
-            </button>
-          </div>
-        ))}
+        <Space gap="small" direction="vertical">
+          {data?.map((item) => (
+            <Card key={item.id} radius="small" bodyStyle={{ padding: '2px 12px' }}>
+              <Row align="center">
+                <Col flex="auto" style={{ fontSize: '13px' }}>
+                  {item.scenarioName}
+                </Col>
+                <Col>
+                  <Switch onChange={handleSwitch} />
+                </Col>
+                <Col>
+                  <Button small shape="ghost">
+                    <i className="fa-solid fa-ellipsis-vertical" />
+                  </Button>
+                </Col>
+              </Row>
+            </Card>
+          ))}
+        </Space>
       </div>
-
       <div className="search">
         <Input placeholder="시나리오명을 입력해주세요. " />
       </div>

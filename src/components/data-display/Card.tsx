@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import { CSSProperties, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
@@ -10,28 +10,36 @@ export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   bordered?: boolean;
   hoverable?: boolean;
   radius?: SizeType;
+  bodyClassName?: string;
+  bodyStyle?: CSSProperties;
   onClick?: () => void;
 }
 
 export const Card: FC<CardProps> = ({
   children,
   className,
+  bodyClassName,
   style,
+  bodyStyle,
   title,
   bordered = true,
   hoverable,
   radius = 'none',
   onClick,
 }) => {
-  const wrapClass = classNames(className, 'luna-card', {
-    'luna-card-bordered': bordered,
-    'luna-card-hoverable': hoverable,
-    [`border-radius-${radius}`]: radius !== 'none',
-  });
+  const wrapClass = classNames(
+    'luna-card',
+    {
+      'luna-card-bordered': bordered,
+      'luna-card-hoverable': hoverable,
+      [`border-radius-${radius}`]: radius !== 'none',
+    },
+    className,
+  );
 
   const titleClass = classNames('luna-card-head');
 
-  const bodyClass = classNames('luna-card-body');
+  const bodyClass = classNames('luna-card-body', bodyClassName);
   return (
     <div
       className={wrapClass}
@@ -42,7 +50,11 @@ export const Card: FC<CardProps> = ({
       role="presentation"
     >
       {title ? <div className={titleClass}>{title}</div> : undefined}
-      {children ? <div className={bodyClass}>{children}</div> : undefined}
+      {children ? (
+        <div className={bodyClass} style={bodyStyle}>
+          {children}
+        </div>
+      ) : undefined}
     </div>
   );
 };

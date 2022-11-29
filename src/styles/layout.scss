@@ -64,7 +64,7 @@ textarea {
 }
 
 .border-radius-small {
-  border-radius: rem(5);
+  border-radius: rem(4);
 }
 
 .border-radius-large {
@@ -105,4 +105,20 @@ textarea {
   width: 100%;
   min-width: 100%;
   margin: rem(12) 0;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $gray200;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $gray200;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $gray200;
 }
