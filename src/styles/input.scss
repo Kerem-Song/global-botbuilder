@@ -39,7 +39,6 @@
   position: relative;
   display: flex;
   width: 100%;
-  height: rem(34);
   min-width: 0;
   padding: 4px 11px;
   color: $grayBlack;
@@ -62,6 +61,7 @@
   }
   .luna-input {
     padding: 0;
+    height: rem(26);
     font-size: inherit;
     border: none;
     border-radius: 0;
@@ -70,6 +70,9 @@
     &:focus {
       box-shadow: none;
     }
+  }
+  span {
+    line-height: 2;
   }
 }
 
