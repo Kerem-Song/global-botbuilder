@@ -8,7 +8,7 @@ import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { PopperListItem } from './PopperListItem';
 
 export interface IPopperItem {
-  id: number;
+  id: string;
   name: string;
   showBullet?: boolean;
   type?: ItemType;
@@ -23,15 +23,16 @@ export interface IPopperProps extends IHasChildren, IHasClassNameNStyle {
   showBullet?: boolean;
   popup?: boolean;
   popupList?: boolean;
+  offset?: [number, number];
 }
 
 const Item: IPopperItem[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Rename',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Delete',
   },
 ];
@@ -44,8 +45,10 @@ export const Popper: FC<IPopperProps> = ({
   popupList,
   showBullet,
   popperItems = Item,
+  offset,
 }) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
+  let mouseOver = false;
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
 
@@ -54,6 +57,7 @@ export const Popper: FC<IPopperProps> = ({
     popperElement.current,
     {
       placement: placement,
+      modifiers: [{ name: 'offset', options: { offset } }],
     },
   );
 
@@ -61,12 +65,26 @@ export const Popper: FC<IPopperProps> = ({
     setShowPopper(!showPopper);
   };
 
-  const outsideClickRef = useRef(null);
+  const outsideClickRef = useRef<HTMLDivElement>(null);
   useOutsideClick(outsideClickRef, () => {
     if (showPopper) {
       handlePopper();
     }
   });
+
+  const handleMouseOver = () => {
+    mouseOver = true;
+  };
+
+  const handleLazyHide = () => {
+    mouseOver = false;
+    console.log(mouseOver);
+    setTimeout(() => {
+      if (!mouseOver) {
+        setShowPopper(false);
+      }
+    }, 100);
+  };
 
   const popperContainer = classNames(className, 'luna-chatbot-container', {
     'luna-popup-container': popup,
@@ -81,6 +99,8 @@ export const Popper: FC<IPopperProps> = ({
         onClick={() => {
           handlePopper();
         }}
+        onMouseLeave={handleLazyHide}
+        onMouseEnter={handleMouseOver}
       >
         {children}
       </div>
@@ -88,6 +108,8 @@ export const Popper: FC<IPopperProps> = ({
         className={popperContainer}
         ref={popperElement}
         style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
+        onMouseLeave={handleLazyHide}
+        onMouseEnter={handleMouseOver}
         {...attributes.popper}
       >
         {popperItems?.map((item) => (
