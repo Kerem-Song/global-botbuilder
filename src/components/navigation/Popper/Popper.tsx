@@ -19,23 +19,13 @@ export type ItemType = 'button' | 'icon-front';
 
 export interface IPopperProps extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
-  popperItems?: IPopperItem[];
+  popperItems: IPopperItem[];
   showBullet?: boolean;
+  onChange?: (item: IPopperItem) => void;
   popup?: boolean;
   popupList?: boolean;
   offset?: [number, number];
 }
-
-const Item: IPopperItem[] = [
-  {
-    id: '1',
-    name: 'Rename',
-  },
-  {
-    id: '2',
-    name: 'Delete',
-  },
-];
 
 export const Popper: FC<IPopperProps> = ({
   className,
@@ -44,8 +34,9 @@ export const Popper: FC<IPopperProps> = ({
   popup,
   popupList,
   showBullet,
-  popperItems = Item,
+  popperItems,
   offset,
+  onChange,
 }) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const referenceElement = useRef<HTMLDivElement>(null);
@@ -60,6 +51,11 @@ export const Popper: FC<IPopperProps> = ({
     },
   );
 
+  const handleSelect = (item: IPopperItem) => {
+    setShowPopper(false);
+    onChange?.(item);
+  };
+
   const handlePopper = () => {
     setShowPopper(!showPopper);
   };
@@ -72,13 +68,13 @@ export const Popper: FC<IPopperProps> = ({
   });
 
   const handleMouseOver = () => {
-    outsideClickRef.current?.setAttribute('mouse-over', 'true');
+    outsideClickRef.current?.setAttribute('data-mouse-over', 'true');
   };
 
   const handleLazyHide = () => {
-    outsideClickRef.current?.removeAttribute('mouse-over');
+    outsideClickRef.current?.removeAttribute('data-mouse-over');
     setTimeout(() => {
-      if (!outsideClickRef.current?.hasAttribute('mouse-over')) {
+      if (!outsideClickRef.current?.hasAttribute('data-mouse-over')) {
         setShowPopper(false);
       }
     }, 100);
@@ -116,7 +112,7 @@ export const Popper: FC<IPopperProps> = ({
             item={item}
             showBullet={showBullet}
             popupList={popupList}
-            handlePopper={handlePopper}
+            handleSelect={handleSelect}
           />
         ))}
       </div>

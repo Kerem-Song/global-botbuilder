@@ -9,7 +9,7 @@ export interface IPopperListItem extends IHasClassNameNStyle {
   item: IPopperItem;
   showBullet?: boolean;
   popupList?: boolean;
-  handlePopper?: () => void;
+  handleSelect?: (item: IPopperItem) => void;
 }
 
 export const PopperListItem: FC<IPopperListItem> = ({
@@ -17,7 +17,7 @@ export const PopperListItem: FC<IPopperListItem> = ({
   item,
   showBullet,
   popupList,
-  handlePopper,
+  handleSelect,
 }) => {
   const popperList = classNames(className, 'luna-chatbot-list', {
     'luna-popup-list': popupList,
@@ -27,7 +27,7 @@ export const PopperListItem: FC<IPopperListItem> = ({
     switch (item.type) {
       case 'button':
         return (
-          <button className="list-view-btn" onClick={handlePopper}>
+          <button className="list-view-btn" onClick={() => handleSelect?.(item)}>
             {item.name}
           </button>
         );
@@ -35,7 +35,11 @@ export const PopperListItem: FC<IPopperListItem> = ({
         return (
           <div className={popperList}>
             {item.icon && <img src={item.icon} alt="icon" />}
-            <div className="items-name" role="presentation" onClick={handlePopper}>
+            <div
+              className="items-name"
+              role="presentation"
+              onClick={() => handleSelect?.(item)}
+            >
               {item.name}
             </div>
           </div>
@@ -43,11 +47,13 @@ export const PopperListItem: FC<IPopperListItem> = ({
       }
       default:
         return (
-          <div className={popperList}>
+          <div
+            className={popperList}
+            role="presentation"
+            onClick={() => handleSelect?.(item)}
+          >
             {showBullet && <Radio />}
-            <div className="items-name" role="presentation" onClick={handlePopper}>
-              {item.name}
-            </div>
+            <div className="items-name">{item.name}</div>
             {item.icon && <img className="social-icon" src={item.icon} alt="icon" />}
           </div>
         );
