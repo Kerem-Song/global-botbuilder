@@ -1,5 +1,4 @@
-import { Button, Card, Col, Input, Row, Switch } from '@components';
-import { Popper } from '@components/navigation/Popper/Popper';
+import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
