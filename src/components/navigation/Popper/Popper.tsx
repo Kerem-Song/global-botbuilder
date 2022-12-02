@@ -48,7 +48,6 @@ export const Popper: FC<IPopperProps> = ({
   offset,
 }) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
-  let mouseOver = false;
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
 
@@ -73,14 +72,13 @@ export const Popper: FC<IPopperProps> = ({
   });
 
   const handleMouseOver = () => {
-    mouseOver = true;
+    outsideClickRef.current?.setAttribute('mouse-over', 'true');
   };
 
   const handleLazyHide = () => {
-    mouseOver = false;
-    console.log(mouseOver);
+    outsideClickRef.current?.removeAttribute('mouse-over');
     setTimeout(() => {
-      if (!mouseOver) {
+      if (!outsideClickRef.current?.hasAttribute('mouse-over')) {
         setShowPopper(false);
       }
     }, 100);
