@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 
-import { useScenarioList } from '../../../hooks/client/scenario';
+import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import usePage from '../../../hooks/usePage';
 import { ScenarioManagement } from './ScenarioManagement';
 import { VariablesManagement } from './VariablesManagement';
@@ -10,7 +10,7 @@ export const ManagementComponent = () => {
   const { t } = usePage();
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오 이름';
-  const { getScenarioList } = useScenarioList();
+  const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList;
   console.log('data', data?.length);
   const handleScenarioNameTags = () => {

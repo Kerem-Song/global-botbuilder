@@ -6,5 +6,6 @@ export * from './IDataEntryProp';
 export * from './IHasChildren';
 export * from './IHasStyle';
 export * from './IPageProps';
+export * from './IScenarioModel';
 export * from './IScenarioVariable';
 export * from './ISidebarStatus';

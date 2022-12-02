@@ -7,27 +7,29 @@ import { usePopper } from 'react-popper';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { PopperListItem } from './PopperListItem';
 
-export interface IPopperItem {
+export interface IPopperItem<T> {
   id: string;
   name: string;
   showBullet?: boolean;
   type?: ItemType;
   icon?: string;
+  data?: T;
 }
 
 export type ItemType = 'button' | 'icon-front';
 
-export interface IPopperProps extends IHasChildren, IHasClassNameNStyle {
+export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
-  popperItems: IPopperItem[];
+  popperItems: IPopperItem<T>[];
   showBullet?: boolean;
-  onChange?: (item: IPopperItem) => void;
+  onChange?: (item: IPopperItem<T>) => void;
+  selectedItem?: IPopperItem<T>;
   popup?: boolean;
   popupList?: boolean;
   offset?: [number, number];
 }
 
-export const Popper: FC<IPopperProps> = ({
+export const Popper = <T extends object>({
   className,
   placement = 'right-start',
   children,
@@ -37,7 +39,8 @@ export const Popper: FC<IPopperProps> = ({
   popperItems,
   offset,
   onChange,
-}) => {
+  selectedItem,
+}: IPopperProps<T>) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
@@ -51,7 +54,7 @@ export const Popper: FC<IPopperProps> = ({
     },
   );
 
-  const handleSelect = (item: IPopperItem) => {
+  const handleSelect = (item: IPopperItem<T>) => {
     setShowPopper(false);
     onChange?.(item);
   };
@@ -106,7 +109,7 @@ export const Popper: FC<IPopperProps> = ({
         onMouseEnter={handleMouseOver}
         {...attributes.popper}
       >
-        {popperItems?.map((item) => (
+        {popperItems?.map((item: IPopperItem<T>) => (
           <PopperListItem
             key={item.id}
             item={item}

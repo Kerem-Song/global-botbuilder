@@ -50,7 +50,7 @@ export const BotBuilderHeader = () => {
         </div>
       </div>
       <div className="saveBtn">
-        <Button>저장하기</Button>
+        <Button type="primary">저장하기</Button>
       </div>
     </div>
   );

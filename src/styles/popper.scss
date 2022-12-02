@@ -18,6 +18,7 @@
 
   .luna-chatbot-list {
     display: flex;
+    cursor: pointer;
     max-width: rem(164);
     height: rem(32);
     padding: rem(8);
@@ -49,6 +50,7 @@
   }
 
   .list-view-btn {
+    cursor: pointer;
     width: rem(164);
     height: rem(33);
     padding: rem(8) rem(10);

@@ -1,25 +1,14 @@
 .scenarioWrapper {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  justify-content: center;
+  display: flex;
   width: 100%;
   height: 100%;
   background-color: $background;
-  text-transform: capitalize;
-
   .managementWrapper {
-    grid-column: 1/3;
-    display: grid;
-    grid-template-rows: rem(51) 14fr;
-    width: 100%;
-    height: 100%;
-
-    &:first-child {
-      border: 1px solid $gray200;
-    }
-    
+    width: rem(220);
+    border-right: 1px solid $gray200;
     .scenarioName {
       display: flex;
+      height: rem(51);
       justify-content: space-between;
       align-items: center;
       padding: 0 rem(12) 0 rem(12);
@@ -42,84 +31,64 @@
     }
 
     .scenarioTabWrapper {
-      display: grid;
-      grid-template-rows: rem(32) rem(173) rem(47) auto rem(45);
-      width: 100%;
-      height: 100%;
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - rem(51));
     }
 
     // 시나리오 탭
     .openedScenarioOption {
       display: flex;
+      flex: 0 0 rem(34);
       justify-content: space-between;
       align-items: center;
       padding: 0 rem(12);
-      height: rem(32);
       border-bottom: 1px solid $gray200;
       font-size: rem(13);
     }
 
     .basicScenarioWrapper {
-      display: grid;
-      grid-template-rows: rem(42) auto;
-      align-items: center;
-
       & p {
         padding: rem(16) rem(12);
         font-weight: 700;
         font-size: rem(12);
         color: $gray500;
       }
-      
+
       .basicScenarioList {
         margin: 0 rem(12);
+        margin-bottom: rem(18);
         border: 1px solid $gray200;
         border-radius: rem(8);
         background-color: $grayWhite;
-
         .basicScenario {
           display: flex;
           justify-content: space-between;
           padding: rem(12);
-          height: rem(40)
+          height: rem(40);
         }
       }
     }
-    
+
     .newScenarioBtn {
       display: flex;
       align-items: center;
-      padding: 0 rem(10) 0 rem(10);
+      padding: 0 rem(12);
       font-size: rem(12);
-
-      & button {
-        color: $grayWhite;
-        background-color: $primary500;
-      }
     }
 
     .scenarioListWrapper {
+      flex: auto;
       padding: rem(8) rem(10) 0 rem(10);
-      max-height: rem(400);
       overflow-y: auto;
+
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      //max-height: 100px;
     }
 
-    .scenarioList {
-      display: grid;
-      grid-template-columns: rem(116) rem(20) rem(20);
-      justify-content: space-between;
-      align-items: center;
-      padding: rem(2);
-
-      & span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .switch {
-
-      }
+    .scenarioListWrapper::-webkit-scrollbar {
+      display: none;
     }
 
     .search {
@@ -176,30 +145,28 @@
       .variableLists {
         max-height: rem(400);
         overflow-y: auto;
-      
+
         .variableList {
           padding-top: rem(10);
           display: grid;
           grid-template-columns: 5fr 5fr 1fr;
           align-items: center;
-          word-break:break-all;
+          word-break: break-all;
 
           & i {
             text-align: center;
           }
         }
       }
-
     }
   }
 
   .botBuilderWrapper {
-    grid-column: 3/12;
-
-    background-image: linear-gradient(0deg, transparent rem(4), #333 rem(5)), linear-gradient(90deg,  transparent rem(4), #333 rem(5));
+    flex: auto;
+    background-image: linear-gradient(0deg, transparent rem(4), #333 rem(5)),
+      linear-gradient(90deg, transparent rem(4), #333 rem(5));
     background-size: rem(5) rem(5);
   }
-
 
   .botTesterWrapper {
     grid-column: 12/12;

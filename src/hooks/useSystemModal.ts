@@ -4,7 +4,7 @@ import { systemModalOpen } from '../store/systemModalSlice';
 
 export interface IInfoModal {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export const useSystemModal = () => {

@@ -1,12 +1,11 @@
-import { icListMenu, icListMenuHover } from '@assets/index';
-import { Input } from '@components/data-entry/Input';
-import { Switch } from '@components/data-entry/Switch';
-import { Button, Card, Col, Row, Space } from '@components/index';
+import { Button, Card, Col, Input, Row, Space, Switch } from '@components';
+import { Popper } from '@components/navigation/Popper/Popper';
 
-import { useScenarioList } from '../../../hooks/client/scenario';
+import { useScenarioClient } from '../../../hooks/client/scenarioClient';
+import { ScenarioItem } from './ScenarioItem';
 
 export const ScenarioManagement = () => {
-  const { getScenarioList } = useScenarioList();
+  const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList;
   const basicScenarioList = [{ name: 'Welcome' }, { name: 'FAQ' }, { name: 'Help' }];
 
@@ -40,8 +39,7 @@ export const ScenarioManagement = () => {
       </div>
 
       <div className="newScenarioBtn">
-        {/* <button className="newScenarioBtn">+ 새 시나리오</button> */}
-        <Button block shape="round" type="primary" onClick={handleNewScenario}>
+        <Button block type="primary" onClick={handleNewScenario}>
           + 새 시나리오
         </Button>
       </div>
@@ -49,21 +47,7 @@ export const ScenarioManagement = () => {
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
           {data?.map((item) => (
-            <Card key={item.id} radius="small" bodyStyle={{ padding: '2px 12px' }}>
-              <Row align="center">
-                <Col flex="auto" style={{ fontSize: '13px' }}>
-                  {item.scenarioName}
-                </Col>
-                <Col>
-                  <Switch onChange={handleSwitch} />
-                </Col>
-                <Col>
-                  <Button small shape="ghost">
-                    <i className="fa-solid fa-ellipsis-vertical" />
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
+            <ScenarioItem key={item.id} item={item} />
           ))}
         </Space>
       </div>

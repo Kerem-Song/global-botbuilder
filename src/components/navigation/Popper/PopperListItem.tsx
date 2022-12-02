@@ -1,33 +1,41 @@
 import { Radio } from '@components/data-entry';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import { useRef } from 'react';
 
 import { IPopperItem } from './Popper';
 
-export interface IPopperListItem extends IHasClassNameNStyle {
-  item: IPopperItem;
+export interface IPopperLitsItem<T> extends IHasClassNameNStyle {
+  item: IPopperItem<T>;
   showBullet?: boolean;
   popupList?: boolean;
-  handleSelect?: (item: IPopperItem) => void;
+  handleSelect?: (item: IPopperItem<T>) => void;
 }
 
-export const PopperListItem: FC<IPopperListItem> = ({
+export const PopperListItem = <T extends object>({
   className,
   item,
   showBullet,
   popupList,
   handleSelect,
-}) => {
+}: IPopperLitsItem<T>) => {
+  const radioRef = useRef<HTMLInputElement>(null);
   const popperList = classNames(className, 'luna-chatbot-list', {
     'luna-popup-list': popupList,
   });
+
+  const handleCheckChange = () => {
+    if (radioRef.current) {
+      radioRef.current.checked = true;
+    }
+    handleSelect?.(item);
+  };
 
   const itemType = () => {
     switch (item.type) {
       case 'button':
         return (
-          <button className="list-view-btn" onClick={() => handleSelect?.(item)}>
+          <button className="list-view-btn" onClick={() => handleCheckChange()}>
             {item.name}
           </button>
         );
@@ -38,7 +46,7 @@ export const PopperListItem: FC<IPopperListItem> = ({
             <div
               className="items-name"
               role="presentation"
-              onClick={() => handleSelect?.(item)}
+              onClick={() => handleCheckChange()}
             >
               {item.name}
             </div>
@@ -50,9 +58,9 @@ export const PopperListItem: FC<IPopperListItem> = ({
           <div
             className={popperList}
             role="presentation"
-            onClick={() => handleSelect?.(item)}
+            onClick={() => handleCheckChange()}
           >
-            {showBullet && <Radio />}
+            {showBullet && <Radio ref={radioRef} />}
             <div className="items-name">{item.name}</div>
             {item.icon && <img className="social-icon" src={item.icon} alt="icon" />}
           </div>

@@ -28,6 +28,7 @@ main {
   flex: auto;
   padding-left: rem($asideSize);
   background-color: $background;
+  height: calc(100% - rem($headerSize));
   overflow-y: auto;
 }
 

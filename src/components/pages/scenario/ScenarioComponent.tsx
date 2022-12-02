@@ -13,7 +13,6 @@ export const ScenarioComponent = () => {
         <BotBuilderHeader />
         <Botbuilder />
       </div>
-      <BotTester />
     </div>
   );
 };
