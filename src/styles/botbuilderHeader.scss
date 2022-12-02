@@ -2,46 +2,51 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  padding: rem(15);
-  background-color: white;
+  padding: rem(8) rem(12);
+  background-color: $gray100;
 
   .botBuilderMakerWrapper {
     display: flex;
     flex-grow: 40;
     justify-content: left;
     align-items: center;
-    gap: rem(20);
+    gap: rem(30);
 
     .cardNumWrapper {
       position: relative;
-      padding-right: rem(20);
+      padding-right: rem(30);
+      color: $gray500;
 
-      &::after {
-        display: inline-block;
-        position: absolute;
-        content: "";
-        right: 0;
-        width: rem(1);
-        height: rem(16);
-        background-color:black;
+      .cardNum {
+        color: $primary700;
+        font-weight: 700;
+        line-height: rem(16);
       }
     }
-   
-  
+
     .makingBtn {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: rem(3);
+      gap: rem(8);
 
       .btnCategory {
-        padding-right: rem(20);
+        color: $gray500;
+      }
+
+      .btnWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(36);
+        height: rem(36);
+        padding: rem(11);
+        border-radius: rem(4);
       }
     }
   }
 
   .saveBtn {
-    flex-grow: 1;
+    // flex-grow: 1;
   }
 }
-
