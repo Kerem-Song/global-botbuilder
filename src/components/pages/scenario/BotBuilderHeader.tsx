@@ -28,7 +28,6 @@ export const BotBuilderHeader = () => {
           <Button className="btnWrapper">
             <img src={icImg} alt="icImg"></img>
           </Button>
-
           <Button className="btnWrapper">
             <img src={icBtnTemple} alt="icBtnTemple"></img>
           </Button>
@@ -39,7 +38,6 @@ export const BotBuilderHeader = () => {
             <img src={icCommerce} alt="icCommerce"></img>
           </Button>
         </div>
-
         <div className="makingBtn">
           <span className="btnCategory">Carousel</span>
           <Button className="btnWrapper">
@@ -52,7 +50,6 @@ export const BotBuilderHeader = () => {
             <img src={icCaroCommerce} alt="icCaroCommerce"></img>
           </Button>
         </div>
-
         <div className="makingBtn">
           <span className="btnCategory">Button</span>
           <Button className="btnWrapper">

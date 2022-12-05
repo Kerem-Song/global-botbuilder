@@ -1,11 +1,16 @@
 import '../../styles/radio.scss';
 
+import { IHasChildren } from '@models/interfaces';
 import React, { useCallback, useState } from 'react';
 import { forwardRef } from 'react';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
-export const Radio = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) => {
+export interface IRadioProps extends IHasChildren, IDataEntryProp {
+  disabled?: boolean;
+}
+
+export const Radio = forwardRef<HTMLInputElement, IRadioProps>((args, ref) => {
   const [selectedOption, setSelectedOption] = useState<boolean>(false);
 
   const radioHandler = useCallback(
@@ -21,10 +26,11 @@ export const Radio = forwardRef<HTMLInputElement, IDataEntryProp>((args, ref) =>
         {...args}
         className="radio"
         type="radio"
-        name="option"
+        name="radio"
         onChange={radioHandler}
         ref={ref}
       />
+      {args.children}
     </div>
   );
 });

@@ -2,8 +2,9 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  padding: rem(8) rem(12);
+  padding: rem(7) rem(12);
   background-color: $gray100;
+  border-bottom: 1px solid $gray200;
 
   .botBuilderMakerWrapper {
     display: flex;

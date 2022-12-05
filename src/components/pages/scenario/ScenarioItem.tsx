@@ -103,6 +103,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
               onChange={(m) => {
                 m.data?.action?.();
               }}
+              popup
+              popupList
             >
               <Button small shape="ghost">
                 <i className="fa-solid fa-ellipsis-vertical" />

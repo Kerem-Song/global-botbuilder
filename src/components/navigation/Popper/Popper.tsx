@@ -1,7 +1,7 @@
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
-import { FC, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
@@ -39,7 +39,6 @@ export const Popper = <T extends object>({
   popperItems,
   offset,
   onChange,
-  selectedItem,
 }: IPopperProps<T>) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const referenceElement = useRef<HTMLDivElement>(null);
