@@ -46,9 +46,11 @@ export const ScenarioManagement = () => {
 
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
-          {data?.map((item) => (
-            <ScenarioItem key={item.id} item={item} />
-          ))}
+          {data ? (
+            data?.map((item) => <ScenarioItem key={item.id} item={item} />)
+          ) : (
+            <div className="noResults"></div>
+          )}
         </Space>
       </div>
       <div className="search">

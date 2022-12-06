@@ -85,6 +85,22 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       //max-height: 100px;
+
+      .noResults {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 rem(12);
+        height: rem(76);
+        background-color: $grayWhite;
+        border: 1px dashed $gray250;
+        border-radius: rem(4);
+
+        font-weight: 500;
+        font-size: rem(13);
+        color: $gray300;
+        line-height: rem(16);
+      }
     }
 
     .scenarioListWrapper::-webkit-scrollbar {
