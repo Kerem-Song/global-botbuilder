@@ -11,7 +11,7 @@ import { CommerceCard } from '../..//pages/scenario/cards/CommerceCard';
 import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
 import { BasicCard } from '../../pages/scenario/cards/BasicCard';
-export interface CarouselProps extends IHasChildren, IHasClassNameNStyle {
+export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
@@ -20,7 +20,7 @@ export interface CarouselProps extends IHasChildren, IHasClassNameNStyle {
   onClick?: () => void;
 }
 
-export const Carousel: FC<CarouselProps> = ({
+export const Node: FC<INodeProps> = ({
   cards,
   className,
   style,
@@ -32,17 +32,17 @@ export const Carousel: FC<CarouselProps> = ({
 }) => {
   const { tc } = useI18n();
   const [isFolded, setIsFolded] = useState<boolean>(false);
-  const wrapClass = classNames(className, 'luna-carousel', {
-    'luna-carousel-bordered': bordered,
-    'luna-carousel-hoverble': hoverable,
+  const wrapClass = classNames(className, 'luna-node', {
+    'luna-node-bordered': bordered,
+    'luna-node-hoverble': hoverable,
     [`border-radious-${radius}`]: radius !== 'none',
-    'luna-carousel-fold': isFolded,
+    'luna-node-fold': isFolded,
   });
 
-  const titleClass = classNames('luna-carousel-head');
-  const bodyClass = classNames('luna-carousel-body');
+  const titleClass = classNames('luna-node-head');
+  const bodyClass = classNames('luna-node-body');
 
-  const handleFoldCarousel = () => {
+  const handleFoldNode = () => {
     setIsFolded(!isFolded);
   };
 
@@ -73,7 +73,7 @@ export const Carousel: FC<CarouselProps> = ({
             <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
           </div>
           <div className="dropBtn">
-            <Button onClick={handleFoldCarousel}>
+            <Button onClick={handleFoldNode}>
               {isFolded ? (
                 <i className="fa-solid fa-chevron-right"></i>
               ) : (

@@ -1,8 +1,9 @@
 .botBuilderWrapper {
-  flex: auto;
-  background-image: linear-gradient(0deg, transparent rem(4), #333 rem(5)),
-    linear-gradient(90deg, transparent rem(4), #333 rem(5));
-  background-size: rem(5) rem(5);
+  background-image: radial-gradient($gray200 10%, $gray150 10%);
+  background-position: 0 0;
+  background-size: rem(12) rem(12);
+  height: 100%;
+  width: 100%;
 }
 
 .botTesterWrapper {
@@ -89,4 +90,5 @@
 
 .botBuilderMain {
   height: 88%;
+  overflow-y: hidden;
 }

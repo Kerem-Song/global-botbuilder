@@ -1,4 +1,4 @@
-.luna-carousel {
+.luna-node {
   display: inline-block;
   border: 1px solid black;
   border-radius: rem(10);
@@ -24,7 +24,7 @@
       width: rem(350);
       overflow: hidden;
 
-      .luna-carousel-body {
+      .luna-node-body {
         .cards {
           overflow: hidden;
         }

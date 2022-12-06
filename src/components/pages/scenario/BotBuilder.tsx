@@ -1,4 +1,4 @@
-import { Carousel } from '@components/data-display/Carousel';
+import { Node } from '@components/data-display';
 import { ICanvasValue } from '@models/interfaces/IDraggable';
 import { CSSProperties, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -208,7 +208,7 @@ export const Botbuilder = () => {
                   }
                 }
               >
-                <Carousel title={title} cards={cards} className="carouselWrapper" />
+                <Node title={title} cards={cards} className="nodeWrapper" />
               </div>
             </Draggable>
           </div>
