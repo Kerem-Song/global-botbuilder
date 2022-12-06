@@ -9,6 +9,7 @@ import { CommerceCard } from 'src/pages/scenario/cards/CommerceCard';
 import img from '../../../assets/react.svg';
 import { dummy2 } from '../../../dummy';
 import { useCardList } from '../../../hooks/client/cardList';
+import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 interface IBotbuilderRect {
   rect: DOMRect;
 }
@@ -184,6 +185,11 @@ export const Botbuilder = () => {
   console.log('rect', botbuilderRect);
   return (
     <>
+      <BotBuilderZoomBtn
+        zoomIn={zoomIn}
+        zoomOut={zoomOut}
+        canvasScale={canvasValue.scale}
+      />
       <div
         className="botBuilderMain"
         onWheel={(e) => outterMouseWheelHandler(e)}

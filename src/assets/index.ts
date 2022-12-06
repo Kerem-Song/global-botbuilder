@@ -43,7 +43,17 @@ import icQuickBtnHover from '@assets/icons/ic_quick_btn_hover.svg';
 import icRadio from '@assets/icons/ic_radio_default.svg';
 import icRadioEnabled from '@assets/icons/ic_radio_enabled.svg';
 import icScenario from '@assets/icons/ic_scenario_default.svg';
+import icScenarioRedo from '@assets/icons/ic_scenario_redo_default.svg';
+import icScenarioRedoDisable from '@assets/icons/ic_scenario_redo_disable.svg';
+import icScenarioRedoHover from '@assets/icons/ic_scenario_redo_hover.svg';
 import icScenarioSelected from '@assets/icons/ic_scenario_select.svg';
+import icScenarioUndo from '@assets/icons/ic_scenario_undo_default.svg';
+import icScenarioUndoDisable from '@assets/icons/ic_scenario_undo_disable.svg';
+import icScenarioUndoHover from '@assets/icons/ic_scenario_undo_hover.svg';
+import icScenarioZoomMinus from '@assets/icons/ic_scenario_zoom_minus_default.svg';
+import icScenarioZoomMinusHover from '@assets/icons/ic_scenario_zoom_minus_hover.svg';
+import icScenarioZoomPlus from '@assets/icons/ic_scenario_zoom_plus_default.svg';
+import icScenarioZoomPlusHover from '@assets/icons/ic_scenario_zoom_plus_hover.svg';
 import icSearch from '@assets/icons/ic_search.svg';
 import icSearchActive from '@assets/icons/ic_search_active.svg';
 import icSearchDelete from '@assets/icons/ic_search_delete.svg';
@@ -109,7 +119,17 @@ export {
   icRadio,
   icRadioEnabled,
   icScenario,
+  icScenarioRedo,
+  icScenarioRedoDisable,
+  icScenarioRedoHover,
   icScenarioSelected,
+  icScenarioUndo,
+  icScenarioUndoDisable,
+  icScenarioUndoHover,
+  icScenarioZoomMinus,
+  icScenarioZoomMinusHover,
+  icScenarioZoomPlus,
+  icScenarioZoomPlusHover,
   icSearch,
   icSearchActive,
   icSearchDelete,

@@ -1,0 +1,92 @@
+.botBuilderWrapper {
+  flex: auto;
+  background-image: linear-gradient(0deg, transparent rem(4), #333 rem(5)),
+    linear-gradient(90deg, transparent rem(4), #333 rem(5));
+  background-size: rem(5) rem(5);
+}
+
+.botTesterWrapper {
+  grid-column: 12/12;
+}
+
+.botBuilderCanvasBtn {
+  padding: rem(12);
+}
+
+.botBuilderZoomBtn {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: rem(12);
+  width: rem(88);
+  height: rem(33);
+  left: rem(287);
+  top: rem(106);
+  background: $grayWhite;  
+  border: 1px solid $gray200;
+  border-radius: rem(4);
+  color: $gray500;
+  font-size: rem(14);
+
+  .minusZoomBtn {
+    background-image: url('@assets/icons/ic_scenario_zoom_minus_default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_scenario_zoom_minus_hover.svg');
+    }
+  }
+
+  .plusZoomBtn {
+    background-image: url('@assets/icons/ic_scenario_zoom_plus_default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_scenario_zoom_plus_hover.svg');
+    }
+  }
+}
+
+.operationBtn {
+  display: flex;
+  gap: rem(4);
+
+  .luna-btn {
+    width: rem(32);
+    height: rem(32);
+  }
+
+  .undo {
+    background-image: url('@assets/icons/ic_scenario_undo_default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_scenario_undo_hover.svg');
+    }
+
+    &:disabled {
+      background-image: url('@assets/icons/ic_scenario_undo_disable.svg');
+    }
+  }
+
+  .redo {
+    background-image: url('@assets/icons/ic_scenario_redo_default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_scenario_redo_hover.svg');
+    }
+
+    &:disabled {
+      background-image: url('@assets/icons/ic_scenario_redo_disable.svg');
+    }
+  }
+}
+
+.botBuilderMain {
+  height: 88%;
+}
