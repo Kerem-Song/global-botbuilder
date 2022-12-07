@@ -1,16 +1,5 @@
-import {
-  icBtnTemple,
-  icCaroCommerce,
-  icCaroImg,
-  icCaroList,
-  icCommerce,
-  icCondition,
-  icImg,
-  icList,
-  icQuickBtn,
-  icText,
-} from '@assets';
 import { Button } from '@components/general/Button';
+import { Col } from '@components/layout/Col';
 
 export const BotBuilderHeader = () => {
   const cardNum = 12;
@@ -22,42 +11,28 @@ export const BotBuilderHeader = () => {
         </span>
         <div className="makingBtn">
           <span className="btnCategory">Single</span>
-          <Button className="btnWrapper">
-            <img src={icText} alt="icText"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icImg} alt="icImg"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icBtnTemple} alt="icBtnTemple"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icList} alt="icList"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icCommerce} alt="icCommerce"></img>
-          </Button>
+          <Col className="btnWrapper">
+            <Button className="icon icText" />
+            <Button className="icon icImg" />
+            <Button className="icon icBtnTemple" />
+            <Button className="icon icList" />
+            <Button className="icon icCommerce" />
+          </Col>
         </div>
         <div className="makingBtn">
           <span className="btnCategory">Carousel</span>
-          <Button className="btnWrapper">
-            <img src={icCaroImg} alt="icCaroImg"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icCaroList} alt="icCaroList"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icCaroCommerce} alt="icCaroCommerce"></img>
-          </Button>
+          <Col className="btnWrapper">
+            <Button className="icon icCaroImg" />
+            <Button className="icon icCaroList" />
+            <Button className="icon icCaroCommerce" />
+          </Col>
         </div>
         <div className="makingBtn">
           <span className="btnCategory">Button</span>
-          <Button className="btnWrapper">
-            <img src={icQuickBtn} alt="icQuickBtn"></img>
-          </Button>
-          <Button className="btnWrapper">
-            <img src={icCondition} alt="icCondition"></img>
-          </Button>
+          <Col className="btnWrapper">
+            <Button className="icon icQuickBtn" />
+            <Button className="icon icCondition" />
+          </Col>
         </div>
       </div>
       <div className="saveBtn">

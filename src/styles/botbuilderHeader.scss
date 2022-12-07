@@ -15,7 +15,7 @@
 
     .cardNumWrapper {
       position: relative;
-      padding-right: rem(30);
+      padding-right: rem(50);
       color: $gray500;
 
       .cardNum {
@@ -37,12 +37,81 @@
 
       .btnWrapper {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        width: rem(36);
-        height: rem(36);
-        padding: rem(11);
-        border-radius: rem(4);
+        gap: rem(8);
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: rem(36);
+          height: rem(36);
+          padding: rem(11);
+          border-radius: rem(4);
+          background-repeat: no-repeat;
+          background-position: center;
+          &:hover {
+            background-color: $grayWhite;
+          }
+        }
+        .icText {
+          background-image: url('@assets/icons/ic_text.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_text_hover.svg');
+          }
+        }
+        .icImg {
+          background-image: url('@assets/icons/ic_Img.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Img_hover.svg');
+          }
+        }
+        .icBtnTemple {
+          background-image: url('@assets/icons/ic_Btn_Temple.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Btn_Temple_hover.svg');
+          }
+        }
+        .icList {
+          background-image: url('@assets/icons/ic_List.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_List_hover.svg');
+          }
+        }
+        .icCommerce {
+          background-image: url('@assets/icons/ic_Commerce.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Commerce_hover.svg');
+          }
+        }
+        .icCaroImg {
+          background-image: url('@assets/icons/ic_Caro_Img.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Caro_Img_hover.svg');
+          }
+        }
+        .icCaroList {
+          background-image: url('@assets/icons/ic_Caro_List.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Caro_List_hover.svg');
+          }
+        }
+        .icCaroCommerce {
+          background-image: url('@assets/icons/ic_Commerce.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Commerce_hover.svg');
+          }
+        }
+        .icQuickBtn {
+          background-image: url('@assets/icons/ic_Quick_Btn.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Quick_Btn_hover.svg');
+          }
+        }
+        .icCondition {
+          background-image: url('@assets/icons/ic_Condition.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_Condition_hover.svg');
+          }
+        }
       }
     }
   }
