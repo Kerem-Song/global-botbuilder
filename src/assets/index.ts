@@ -1,5 +1,8 @@
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
 import icBtnTempleHover from '@assets/icons/ic_btn_temple_hover.svg';
+import icCardDelete from '@assets/icons/ic_card_delete.svg';
+import icCardDuplication from '@assets/icons/ic_card_duplication.svg';
+import icCardPaste from '@assets/icons/ic_card_paste.svg';
 import icCaroCommerce from '@assets/icons/ic_caro_commerce.svg';
 import icCaroCommerceHover from '@assets/icons/ic_caro_commerce_hover.svg';
 import icCaroImg from '@assets/icons/ic_caro_img.svg';
@@ -74,6 +77,9 @@ import icLine from '@assets/images/img_line.svg';
 export {
   icBtnTemple,
   icBtnTempleHover,
+  icCardDelete,
+  icCardDuplication,
+  icCardPaste,
   icCaroCommerce,
   icCaroCommerceHover,
   icCaroImg,

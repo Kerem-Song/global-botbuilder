@@ -16,6 +16,17 @@ export type OsLinkType = {
   web?: string;
 };
 
+export type TCardType =
+  | 'text'
+  | 'image'
+  | 'buttonTemplate'
+  | 'list'
+  | 'commerce'
+  | 'carousel'
+  | 'listCarousel'
+  | 'commerceCarousel'
+  | 'condition';
+
 export interface IButtonType {
   label: string;
   action:

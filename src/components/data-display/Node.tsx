@@ -1,4 +1,5 @@
-import { Button } from '@components/general/Button';
+import { icCardDelete, icCardDuplication, icCardPaste } from '@assets';
+import { Popper } from '@components';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { FC } from 'react';
@@ -50,6 +51,48 @@ export const Node: FC<INodeProps> = ({
     console.log('handle card setting');
   };
 
+  const handleDuplicationCard = () => {
+    console.log('handle duplication');
+  };
+
+  const handlePasteCard = () => {
+    console.log('handle Paste');
+  };
+
+  const handleDeleteCard = () => {
+    console.log('handle delete card');
+  };
+
+  const nodeMenu = [
+    {
+      id: 'duplication',
+      name: 'Duplication',
+      type: 'icon-front',
+      icon: icCardDuplication,
+      data: {
+        action: handleDuplicationCard,
+      },
+    },
+    {
+      id: 'paste',
+      name: 'To Paste',
+      type: 'icon-front',
+      icon: icCardPaste,
+      data: {
+        action: handlePasteCard,
+      },
+    },
+    {
+      id: 'delete',
+      name: 'Delete',
+      type: 'icon-front',
+      icon: icCardDelete,
+      data: {
+        action: handleDeleteCard,
+      },
+    },
+  ];
+
   return (
     <div
       className={wrapClass}
@@ -60,27 +103,49 @@ export const Node: FC<INodeProps> = ({
       }}
     >
       <div className={titleClass}>
-        {title ? <p className={titleClass}>{title}</p> : undefined}
-        <Button onClick={handleCardSettingBtn}>
+        {title ? <p>{title}</p> : undefined}
+        <Popper
+          placement="right-start"
+          // offset={[-10, 15]}
+          popup
+          popupList
+          popperItems={[
+            {
+              id: 'duplication',
+              name: 'Duplication',
+              type: 'icon-front',
+              icon: icCardDuplication,
+              data: {
+                action: handleDuplicationCard,
+              },
+            },
+            {
+              id: 'paste',
+              name: 'To Paste',
+              type: 'icon-front',
+              icon: icCardPaste,
+              data: {
+                action: handlePasteCard,
+              },
+            },
+            {
+              id: 'delete',
+              name: 'Delete',
+              type: 'icon-front',
+              icon: icCardDelete,
+              data: {
+                action: handleDeleteCard,
+              },
+            },
+          ]}
+        >
           <i className="fa-solid fa-ellipsis-vertical" />
-        </Button>
+        </Popper>
       </div>
       {cards ? (
         <div className={bodyClass}>
           <BasicCard cards={cards} />
           {/* <CommerceCard cards={dummy2} /> */}
-          <div className="addCardBtn">
-            <Button onClick={() => console.log('말풍선 추가')}>+ 말풍선 추가</Button>
-          </div>
-          <div className="dropBtn">
-            <Button onClick={handleFoldNode}>
-              {isFolded ? (
-                <i className="fa-solid fa-chevron-right"></i>
-              ) : (
-                <i className="fa-solid fa-chevron-left"></i>
-              )}
-            </Button>
-          </div>
         </div>
       ) : undefined}
     </div>

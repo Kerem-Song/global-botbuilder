@@ -16,11 +16,12 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
     <div className="cards">
       {cards.map((item, i) => (
         <Card key={i} hoverable onClick={() => console.log('card click')}>
-          {item.thumbnail?.imageUrl && (
-            <div className="thumbnail">
-              <img src={item.thumbnail?.imageUrl} alt="" />
-            </div>
-          )}
+          <div className="thumbnail">
+            {item.thumbnail?.imageUrl && (
+              <img src={item.thumbnail?.imageUrl} alt="thumbnailImage" />
+            )}
+          </div>
+
           <div className="profile">
             <img src={item.profile.imageUrl} alt="" />
             <span>{item.profile.nickname}</span>

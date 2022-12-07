@@ -40,7 +40,7 @@ export const Botbuilder = () => {
   const cards: IBasicCard[] = [
     {
       title: '',
-      thumbnail: { imageUrl: img },
+      thumbnail: { imageUrl: '' },
       description: 'asdfasdfasfasdfasdfasdfasdf',
       // buttons: [{ label: '버튼1', action: 'message' }],
     },
