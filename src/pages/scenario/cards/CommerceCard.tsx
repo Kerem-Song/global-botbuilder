@@ -1,8 +1,9 @@
 import { Card } from '@components/data-display/Card';
+import { Slick } from '@components/data-display/Slick';
 import { Button } from '@components/general/Button';
 import { Divider } from '@components/layout/Divider';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { ICommerceCard } from 'src/models/interfaces/ICard';
 
 interface CommerceCard {
@@ -11,14 +12,20 @@ interface CommerceCard {
 
 export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
   const discountPriceCss = classNames('discountPrice', { discounted: true });
+  const [squareMode, setSquareMode] = useState<boolean>(false);
+  const thumbnailClass = classNames('thumbnail', {
+    square: squareMode,
+  });
 
   return (
-    <div className="cards">
+    <Slick>
       {cards.map((item, i) => (
         <Card key={i} hoverable onClick={() => console.log('card click')}>
-          <div className="thumbnail">
-            {item.thumbnail?.imageUrl && (
+          <div className={thumbnailClass}>
+            {item.thumbnail?.imageUrl ? (
               <img src={item.thumbnail?.imageUrl} alt="thumbnailImage" />
+            ) : (
+              <div className="skeleton"></div>
             )}
           </div>
 
@@ -62,9 +69,12 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
             {item.buttons?.map((button, i) => {
               return <Button key={i}>{button.label}</Button>;
             })}
+            {item.buttons && item.buttons.length < 3 ? (
+              <Button className="addBtn">+ Add a Button</Button>
+            ) : null}
           </div>
         </Card>
       ))}
-    </div>
+    </Slick>
   );
 };

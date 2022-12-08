@@ -1,5 +1,5 @@
-import { icCardDelete, icCardDuplication, icCardPaste } from '@assets';
-import { Popper } from '@components';
+import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
+import { Button, IPopperItem, Popper } from '@components';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { FC } from 'react';
@@ -12,6 +12,7 @@ import { CommerceCard } from '../..//pages/scenario/cards/CommerceCard';
 import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
 import { BasicCard } from '../../pages/scenario/cards/BasicCard';
+
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
@@ -63,7 +64,11 @@ export const Node: FC<INodeProps> = ({
     console.log('handle delete card');
   };
 
-  const nodeMenu = [
+  const handleNodeBottomBtn = () => {
+    console.log('handle node bottom btn');
+  };
+
+  const nodeMenu: IPopperItem<{ action: () => void }> = [
     {
       id: 'duplication',
       name: 'Duplication',
@@ -148,6 +153,9 @@ export const Node: FC<INodeProps> = ({
           {/* <CommerceCard cards={dummy2} /> */}
         </div>
       ) : undefined}
+      <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
+        <img src={icNodeBottom} alt="icNodeBottom" />
+      </Button>
     </div>
   );
 };

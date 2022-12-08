@@ -72,7 +72,7 @@ export const Slick = ({
       prevArrow: <SlickArrowLeft />,
       nextArrow: <SlickArrowRight />,
       dotsClass: 'slick-dots',
-      draggable: true,
+      draggable: false,
       infinite: loop,
       speed: speed,
     }),

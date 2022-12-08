@@ -35,6 +35,8 @@ import icListMenuHover from '@assets/icons/ic_list_menu_hover.svg';
 import icLnbHide from '@assets/icons/ic_lnb_hide.svg';
 import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icMinus from '@assets/icons/ic_minus.svg';
+import icNode from '@assets/icons/ic_node.svg';
+import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
 import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
@@ -114,6 +116,8 @@ export {
   icLnbHide,
   icLnbShow,
   icMinus,
+  icNode,
+  icNodeBottom,
   icPaste,
   icPen,
   icPenActive,
