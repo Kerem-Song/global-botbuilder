@@ -4,7 +4,7 @@
   height: 100%;
   background-color: $background;
   .managementWrapper {
-    width: rem(220);
+    flex: 0 0 rem(220);
     border-right: 1px solid $gray200;
     .scenarioName {
       display: flex;
