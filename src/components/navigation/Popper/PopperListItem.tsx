@@ -1,4 +1,3 @@
-import { Radio } from '@components/data-entry';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import { useRef } from 'react';
@@ -7,7 +6,6 @@ import { IPopperItem } from './Popper';
 
 export interface IPopperLitsItem<T> extends IHasClassNameNStyle {
   item: IPopperItem<T>;
-  showBullet?: boolean;
   popupList?: boolean;
   handleSelect?: (item: IPopperItem<T>) => void;
 }
@@ -15,7 +13,6 @@ export interface IPopperLitsItem<T> extends IHasClassNameNStyle {
 export const PopperListItem = <T extends object>({
   className,
   item,
-  showBullet,
   popupList,
   handleSelect,
 }: IPopperLitsItem<T>) => {
@@ -42,7 +39,7 @@ export const PopperListItem = <T extends object>({
       case 'icon-front': {
         return (
           <div className={popperList}>
-            {item.icon && <img src={item.icon} alt="icon" />}
+            <img src={item.icon} alt="icon" />
             <div
               className="items-name"
               role="presentation"
@@ -60,9 +57,7 @@ export const PopperListItem = <T extends object>({
             role="presentation"
             onClick={() => handleCheckChange()}
           >
-            {showBullet && <Radio ref={radioRef} />}
             <div className="items-name">{item.name}</div>
-            {item.icon && <img className="social-icon" src={item.icon} alt="icon" />}
           </div>
         );
     }

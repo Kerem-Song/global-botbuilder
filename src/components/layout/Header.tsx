@@ -1,7 +1,7 @@
 import '@styles/header.scss';
 
+import { Popper } from '@components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Select, { StylesConfig } from 'react-select';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -9,6 +9,8 @@ import { useRootState } from '../../hooks/useRootState';
 export const Header = () => {
   const { i18n, t, ts } = useI18n();
   const location = useLocation();
+  const language = i18n.language;
+
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: string) => {
     i18n.changeLanguage(lang, () => {
@@ -22,6 +24,30 @@ export const Header = () => {
   const pageName = location.pathname.slice(4);
 
   const user = 'UserName';
+  const languageMenus = [
+    {
+      id: `ko`,
+      name: '한국어',
+      select: '한',
+    },
+    {
+      id: `ja`,
+      name: '日本語',
+      select: '日',
+    },
+    {
+      id: `en`,
+      name: 'English',
+      select: 'Eng',
+    },
+    {
+      id: `key`,
+      name: 'Key',
+      select: 'Key',
+    },
+  ];
+
+  const langSelect = languageMenus.find((item) => item.id && item.id === language);
 
   return (
     <header>
@@ -30,20 +56,20 @@ export const Header = () => {
           <span className="brandName">{brandName}</span>
           <span className="pageName">{pageName}</span>
         </div>
-
-        <select
-          className="language"
-          value={i18n.language}
-          onChange={(e) => {
-            changeLanguageHandler(e.target.value);
-          }}
-        >
-          <option value="ko">한국어</option>
-          <option value="en">ENGLISH</option>
-          <option value="ja">日本語</option>
-          <option value="key">키확인</option>
-        </select>
-
+        <div className="languageContainer">
+          <Popper
+            popperSelect={languageMenus}
+            placement="bottom-end"
+            offset={[-6, 5]}
+            popup
+            popupList
+            onChange={(e) => {
+              changeLanguageHandler(e.id);
+            }}
+          >
+            <button className="language">{langSelect && langSelect.select}</button>
+          </Popper>
+        </div>
         <span className="userName">{user}</span>
       </div>
     </header>
