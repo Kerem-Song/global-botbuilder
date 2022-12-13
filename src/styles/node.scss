@@ -175,10 +175,17 @@
           content: url('@assets/icons/ic_node.svg');
         }
 
+        &:hover {
+          background-color: $primary100;
+          border-color: $primary200;
+        }
       }
 
       .addBtn {
+        margin-top: rem(4);
         background-color: $grayWhite;
+        border: 1px dashed $gray250;
+        border-radius: rem(4);
       }
     }
   }

@@ -1,6 +1,6 @@
 import { Node } from '@components/data-display';
 import { ICanvasValue } from '@models/interfaces/IDraggable';
-import { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Xwrapper } from 'react-xarrows';
 import { IBasicCard } from 'src/models/interfaces/ICard';
@@ -33,7 +33,7 @@ export const Botbuilder = () => {
 
   const transformOptions = {
     limitToBounds: false,
-    minScale: 0.05,
+    minScale: 0.25,
     maxScale: 2,
   };
 
@@ -180,6 +180,11 @@ export const Botbuilder = () => {
     }
   };
 
+  const outterMouseMoveHandler = (e: React.MouseEvent): void => {
+    console.log('outterMouseMoveHandler', e.movementX, e.movementY);
+    panning(e.movementX, e.movementY);
+  };
+
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
   console.log('rect', botbuilderRect);
@@ -190,14 +195,16 @@ export const Botbuilder = () => {
         zoomOut={zoomOut}
         canvasScale={canvasValue.scale}
       />
+
       <div
         className="botBuilderMain"
         onWheel={(e) => outterMouseWheelHandler(e)}
+        onDrag={outterMouseMoveHandler}
         ref={botbuilderRef}
       >
         <Xwrapper>
           <div className="canvasWrapper" style={canvasStyle}>
-            <Draggable bounds={{ top: 0, left: 0 }}>
+            <Draggable bounds={{ top: 0, left: 0, right: 4000 }}>
               <div
                 style={
                   {

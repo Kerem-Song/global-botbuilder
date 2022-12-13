@@ -8,10 +8,11 @@ import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 import { SizeType } from 'src/models/types/SizeType';
 
-import { CommerceCard } from '../..//pages/scenario/cards/CommerceCard';
+import { QuickReply } from '../..//pages/scenario/cards/QuickReply';
 import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
 import { BasicCard } from '../../pages/scenario/cards/BasicCard';
+import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
@@ -44,14 +45,6 @@ export const Node: FC<INodeProps> = ({
   const titleClass = classNames('luna-node-head');
   const bodyClass = classNames('luna-node-body');
 
-  const handleFoldNode = () => {
-    setIsFolded(!isFolded);
-  };
-
-  const handleCardSettingBtn = () => {
-    console.log('handle card setting');
-  };
-
   const handleDuplicationCard = () => {
     console.log('handle duplication');
   };
@@ -68,7 +61,7 @@ export const Node: FC<INodeProps> = ({
     console.log('handle node bottom btn');
   };
 
-  const nodeMenu: IPopperItem<{ action: () => void }> = [
+  const nodeMenu: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'duplication',
       name: 'Duplication',
@@ -114,35 +107,7 @@ export const Node: FC<INodeProps> = ({
           // offset={[-10, 15]}
           popup
           popupList
-          popperItems={[
-            {
-              id: 'duplication',
-              name: 'Duplication',
-              type: 'icon-front',
-              icon: icCardDuplication,
-              data: {
-                action: handleDuplicationCard,
-              },
-            },
-            {
-              id: 'paste',
-              name: 'To Paste',
-              type: 'icon-front',
-              icon: icCardPaste,
-              data: {
-                action: handlePasteCard,
-              },
-            },
-            {
-              id: 'delete',
-              name: 'Delete',
-              type: 'icon-front',
-              icon: icCardDelete,
-              data: {
-                action: handleDeleteCard,
-              },
-            },
-          ]}
+          popperItems={nodeMenu}
         >
           <i className="fa-solid fa-ellipsis-vertical" />
         </Popper>
@@ -151,6 +116,7 @@ export const Node: FC<INodeProps> = ({
         <div className={bodyClass}>
           <BasicCard cards={cards} />
           {/* <CommerceCard cards={dummy2} /> */}
+          {/* <QuickReply /> */}
         </div>
       ) : undefined}
       <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
