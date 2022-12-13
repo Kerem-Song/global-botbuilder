@@ -39,7 +39,11 @@ export const BasicCard: FC<BasicCard> = ({ cards }) => {
 
           <div className="buttonWrapper">
             {item.buttons?.map((button, i) => {
-              return <Button key={i}>{button.label}</Button>;
+              return (
+                <>
+                  <Button key={i}>{button.label}</Button>
+                </>
+              );
             })}
           </div>
         </Card>

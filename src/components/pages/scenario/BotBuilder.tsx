@@ -1,5 +1,6 @@
 import { Node } from '@components/data-display';
 import { ICanvasValue } from '@models/interfaces/IDraggable';
+import classNames from 'classnames';
 import React, { CSSProperties, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Xwrapper } from 'react-xarrows';
@@ -14,8 +15,6 @@ interface IBotbuilderRect {
   rect: DOMRect;
 }
 export const Botbuilder = () => {
-  const title = '캐로셀1';
-  const cardTitle = '카드 타이틀';
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
 
@@ -25,7 +24,7 @@ export const Botbuilder = () => {
     scale: 1.0,
   });
   const [isPanning, setIsPanning] = useState<boolean>(false);
-
+  const [selectedNode, setSelectedNode] = useState<string>('');
   const canvasStyle: CSSProperties = {
     top: canvasValue.y,
     left: canvasValue.x,
@@ -187,6 +186,7 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setSelectedNode('');
     if (e.buttons === 1) {
       setIsPanning(true);
     } else {
@@ -196,6 +196,24 @@ export const Botbuilder = () => {
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
+  const nodeRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleNodeClick = (e: React.SyntheticEvent) => {
+    setSelectedNode(e.currentTarget.id);
+  };
+
+  const testNodes = [
+    {
+      id: '1',
+      title: '1번',
+      cards: cards,
+    },
+    {
+      id: '2',
+      title: '2번',
+      cards: cards,
+    },
+  ];
 
   return (
     <>
@@ -227,7 +245,18 @@ export const Botbuilder = () => {
                   }
                 }
               >
-                <Node title={title} cards={cards} className="nodeWrapper" />
+                {testNodes.map((item) => {
+                  return (
+                    <Node
+                      id={item.id}
+                      key={item.id}
+                      title={item.title}
+                      cards={item.cards}
+                      active={selectedNode === item.id}
+                      onClick={(e) => handleNodeClick(e)}
+                    />
+                  );
+                })}
               </div>
             </Draggable>
           </div>

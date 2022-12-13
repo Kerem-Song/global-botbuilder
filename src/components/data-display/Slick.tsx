@@ -74,5 +74,9 @@ export const Slick = ({
     [autoplay, loop, speed],
   );
 
-  return <Slider {...settings}>{children}</Slider>;
+  return (
+    <Slider lazyLoad="ondemand" {...settings}>
+      {children}
+    </Slider>
+  );
 };

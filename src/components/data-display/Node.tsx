@@ -1,7 +1,7 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { FC } from 'react';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
@@ -15,31 +15,35 @@ import { BasicCard } from '../../pages/scenario/cards/BasicCard';
 import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
+  id: string;
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
+  active?: boolean;
   radius?: SizeType;
   cards?: IBasicCard[] | ICommerceCard[];
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
+  ref?: React.RefObject<HTMLDivElement | null>[];
 }
 
 export const Node: FC<INodeProps> = ({
+  id,
   cards,
   className,
   style,
   title,
   bordered = true,
   hoverable,
+  active,
   radius = 'small',
   onClick,
 }) => {
   const { tc } = useI18n();
-  const [isFolded, setIsFolded] = useState<boolean>(false);
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
     'luna-node-hoverble': hoverable,
     [`border-radious-${radius}`]: radius !== 'none',
-    'luna-node-fold': isFolded,
+    'luna-node-active': active,
   });
 
   const titleClass = classNames('luna-node-head');
@@ -93,11 +97,12 @@ export const Node: FC<INodeProps> = ({
 
   return (
     <div
+      id={id}
       className={wrapClass}
       style={style}
       role="presentation"
-      onClick={() => {
-        onClick?.();
+      onClick={(e) => {
+        onClick?.(e);
       }}
     >
       <div className={titleClass}>

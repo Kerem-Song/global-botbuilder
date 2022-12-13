@@ -2,7 +2,7 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  border: 2px solid $grayWhite;
+  border: 1px solid $grayWhite;
   border-radius: rem(12);
   background-color: $grayWhite;
   max-width: rem(216);
@@ -10,15 +10,15 @@
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   cursor: pointer;
   
-  &:hover {
-    border: rem(2) solid $primary200;
+  &-active {
+    outline: rem(2) solid $primary200;
+    outline-offset: -1px;
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
   .icNodeBottom {
     display: inline-block;
     position: absolute;
-    top: 95%;
     left: 36%;
   }
 
