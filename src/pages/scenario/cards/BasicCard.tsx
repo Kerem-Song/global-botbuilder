@@ -41,9 +41,6 @@ export const BasicCard: FC<BasicCard> = ({ cards }) => {
             {item.buttons?.map((button, i) => {
               return <Button key={i}>{button.label}</Button>;
             })}
-            {item.buttons && item.buttons.length < 3 ? (
-              <Button className="addBtn">+ Add a Button</Button>
-            ) : null}
           </div>
         </Card>
       ))}
