@@ -196,7 +196,7 @@ export const Botbuilder = () => {
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
-  console.log('ispanning', isPanning);
+
   return (
     <>
       <BotBuilderZoomBtn
@@ -210,10 +210,7 @@ export const Botbuilder = () => {
         onWheel={(e) => outterMouseWheelHandler(e)}
         onMouseDown={(e) => handleCanvasClick(e)}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={(e) => {
-          e.stopPropagation();
-          handleCanvasClick(e);
-        }}
+        onMouseUp={(e) => handleCanvasClick(e)}
         ref={botbuilderRef}
         role="presentation"
       >

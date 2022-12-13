@@ -2,7 +2,7 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  border: 1px solid $gray200;
+  border: 2px solid $grayWhite;
   border-radius: rem(12);
   background-color: $grayWhite;
   max-width: rem(216);
@@ -18,7 +18,7 @@
   .icNodeBottom {
     display: inline-block;
     position: absolute;
-    top: 94%;
+    top: 95%;
     left: 36%;
   }
 
@@ -26,6 +26,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: rem(8);
     
     & button {
       padding: rem(9);
@@ -33,7 +34,6 @@
   }
 
   &-body {   
-    padding-top: rem(10);
       .luna-card {
         width: 100%;
         &-body {
@@ -186,6 +186,48 @@
         background-color: $grayWhite;
         border: 1px dashed $gray250;
         border-radius: rem(4);
+      }
+    }
+
+    .slick-arrow {
+      margin-bottom: rem(4);
+      top: rem(10);
+      width: rem(26);
+      height: rem(26);
+      background-color: $grayWhite;
+      border: 1px solid $gray200;
+      border-radius: rem(4);
+
+      &.slick-prev {
+        position: relative;
+        left: rem(0);
+        &::after {
+          content: url('@assets/icons/ic_carousel_prev_active.svg');
+        }
+        
+        &.slick-disabled {
+          &::after {
+            content: url('@assets/icons/ic_carousel_prev_inactive.svg');
+          }
+        }
+      }
+
+      &.slick-next {
+        left: rem(164);
+       
+        &::after {
+          content: url('@assets/icons/ic_carousel_next_active.svg');
+        }
+
+        &.slick-disabled {
+          &::after {
+            content: url('@assets/icons/ic_carousel_next_inactive.svg');
+          }
+        }
+      }
+      
+      &::before {
+        display: none;
       }
     }
   }

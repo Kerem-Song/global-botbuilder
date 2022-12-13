@@ -28,7 +28,7 @@ export const Slick = ({
   children,
   autoplay = false,
   speed = 300,
-  loop = true,
+  loop = false,
   dots = false,
 }: sliderProps) => {
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
@@ -38,7 +38,6 @@ export const Slick = ({
       aria-hidden="true"
       aria-disabled={currentSlide === 0 ? true : false}
       type="button"
-      style={currentSlide === 0 ? { display: 'none' } : { display: 'block' }}
     >
       Previous
     </button>
@@ -47,17 +46,13 @@ export const Slick = ({
   const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
     <button
       {...props}
-      // className={
-      //   'slick-next slick-arrow' +
-      //   (slideCount && currentSlide === slideCount - 1 ? ' slick-disabled' : '')
-      // }
-      aria-hidden="true"
-      type="button"
-      style={
-        slideCount && currentSlide === slideCount - 1
-          ? { display: 'none' }
-          : { display: 'block' }
+      className={
+        'slick-next slick-arrow' +
+        (slideCount && currentSlide === slideCount - 1 ? ' slick-disabled' : '')
       }
+      aria-hidden="true"
+      aria-disabled={slideCount && currentSlide === slideCount - 1 ? true : false}
+      type="button"
     >
       Next
     </button>

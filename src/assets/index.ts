@@ -9,6 +9,10 @@ import icCaroImg from '@assets/icons/ic_caro_img.svg';
 import icCaroImgHover from '@assets/icons/ic_caro_img_hover.svg';
 import icCaroList from '@assets/icons/ic_caro_list.svg';
 import icCaroListHover from '@assets/icons/ic_caro_list_hover.svg';
+import icCarouselNextActive from '@assets/icons/ic_carousel_next_active.svg';
+import icCarouselNextInactive from '@assets/icons/ic_carousel_next_inactive.svg';
+import icCarouselPrevActive from '@assets/icons/ic_carousel_prev_active.svg';
+import icCarouselPrevInactive from '@assets/icons/ic_carousel_prev_inactive.svg';
 import icChatbot from '@assets/icons/ic_chatbot.svg';
 import icCheck from '@assets/icons/ic_check.svg';
 import icCommerce from '@assets/icons/ic_commerce.svg';
@@ -88,6 +92,10 @@ export {
   icCaroImgHover,
   icCaroList,
   icCaroListHover,
+  icCarouselNextActive,
+  icCarouselNextInactive,
+  icCarouselPrevActive,
+  icCarouselPrevInactive,
   icChatbot,
   icCheck,
   icCommerce,
