@@ -138,9 +138,11 @@ export const Botbuilder = () => {
   const zoomOut = () => {
     const ratio = canvasValue.scale * 0.25;
     let v = canvasValue.scale - ratio;
+
     if (transformOptions.minScale > v) {
       v = transformOptions.minScale;
     }
+
     setCanvasValue({
       x: canvasValue.x,
       y: canvasValue.y,
@@ -150,10 +152,10 @@ export const Botbuilder = () => {
 
   const zoomIn = () => {
     let v = canvasValue.scale + 0.1;
+
     if (transformOptions.maxScale < v) {
       v = transformOptions.maxScale;
     }
-    //linkDrawState.current = false;
 
     setCanvasValue({
       x: canvasValue.x,
@@ -179,12 +181,22 @@ export const Botbuilder = () => {
   };
 
   const outterMouseMoveHandler = (e: React.MouseEvent): void => {
+    e.stopPropagation();
     isPanning && panning(e.movementX, e.movementY);
+  };
+
+  const handleCanvasClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (e.buttons === 1) {
+      setIsPanning(true);
+    } else {
+      setIsPanning(false);
+    }
   };
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
-
+  console.log('ispanning', isPanning);
   return (
     <>
       <BotBuilderZoomBtn
@@ -196,9 +208,12 @@ export const Botbuilder = () => {
       <div
         className="botBuilderMain"
         onWheel={(e) => outterMouseWheelHandler(e)}
-        onMouseDown={() => setIsPanning(true)}
+        onMouseDown={(e) => handleCanvasClick(e)}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={() => setIsPanning(false)}
+        onMouseUp={(e) => {
+          e.stopPropagation();
+          handleCanvasClick(e);
+        }}
         ref={botbuilderRef}
         role="presentation"
       >
