@@ -3,6 +3,7 @@ import { Button, IPopperItem, Popper } from '@components';
 import classNames from 'classnames';
 import { MutableRefObject, useState } from 'react';
 import { FC } from 'react';
+import Draggable from 'react-draggable';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
@@ -96,37 +97,39 @@ export const Node: FC<INodeProps> = ({
   ];
 
   return (
-    <div
-      id={id}
-      className={wrapClass}
-      style={style}
-      role="presentation"
-      onClick={(e) => {
-        onClick?.(e);
-      }}
-    >
-      <div className={titleClass}>
-        {title ? <p>{title}</p> : undefined}
-        <Popper
-          placement="right-start"
-          // offset={[-10, 15]}
-          popup
-          popupList
-          popperItems={nodeMenu}
-        >
-          <i className="fa-solid fa-ellipsis-vertical" />
-        </Popper>
-      </div>
-      {cards ? (
-        <div className={bodyClass}>
-          <BasicCard cards={cards} />
-          {/* <CommerceCard cards={dummy2} /> */}
-          {/* <QuickReply /> */}
+    <Draggable>
+      <div
+        id={id}
+        className={wrapClass}
+        style={style}
+        role="presentation"
+        onClick={(e) => {
+          onClick?.(e);
+        }}
+      >
+        <div className={titleClass}>
+          {title ? <p>{title}</p> : undefined}
+          <Popper
+            placement="right-start"
+            // offset={[-10, 15]}
+            popup
+            popupList
+            popperItems={nodeMenu}
+          >
+            <i className="fa-solid fa-ellipsis-vertical" />
+          </Popper>
         </div>
-      ) : undefined}
-      <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
-        <img src={icNodeBottom} alt="icNodeBottom" />
-      </Button>
-    </div>
+        {cards ? (
+          <div className={bodyClass}>
+            <BasicCard cards={cards} />
+            {/* <CommerceCard cards={dummy2} /> */}
+            {/* <QuickReply /> */}
+          </div>
+        ) : undefined}
+        <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
+          <img src={icNodeBottom} alt="icNodeBottom" />
+        </Button>
+      </div>
+    </Draggable>
   );
 };

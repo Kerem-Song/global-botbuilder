@@ -1,6 +1,5 @@
 import { Node } from '@components/data-display';
 import { ICanvasValue } from '@models/interfaces/IDraggable';
-import classNames from 'classnames';
 import React, { CSSProperties, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Xwrapper } from 'react-xarrows';
@@ -32,7 +31,7 @@ export const Botbuilder = () => {
   };
 
   const transformOptions = {
-    limitToBounds: false,
+    limitToBounds: true,
     minScale: 0.25,
     maxScale: 2,
   };
@@ -185,8 +184,6 @@ export const Botbuilder = () => {
   };
 
   const handleCanvasClick = (e: React.MouseEvent) => {
-    console.log('handleCanvasClick', e.currentTarget);
-    e.preventDefault();
     e.stopPropagation();
     setSelectedNode('');
     if (e.buttons === 1) {
@@ -236,21 +233,22 @@ export const Botbuilder = () => {
       >
         <Xwrapper>
           <div className="canvasWrapper" style={canvasStyle}>
-            {testNodes.map((item) => (
+            {testNodes.map((item, i) => (
               <Draggable
+                defaultPosition={{ x: i * 220, y: 0 }}
+                scale={canvasValue.scale}
                 bounds={{ top: 0, left: 0, right: 4000 }}
                 key={item.id}
                 onDrag={(e) => e.stopPropagation()}
               >
                 <div
-                  style={
-                    {
-                      // display: 'flex',
-                      // position: 'absolute',
-                      // width: '100%',
-                      // height: "100%",
-                    }
-                  }
+                  className="draggableNode"
+                  style={{
+                    // display: 'block',
+                    position: 'absolute',
+                    // width: '100%',
+                    // height: "100%",
+                  }}
                 >
                   <Node
                     id={item.id}
