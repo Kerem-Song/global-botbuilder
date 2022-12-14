@@ -1,4 +1,5 @@
 import { Card } from '@components/data-display/Card';
+import { Carousel } from '@components/data-display/Carousel';
 import { Slick } from '@components/data-display/Slick';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
@@ -18,7 +19,7 @@ export const BasicCard: FC<BasicCard> = ({ cards }) => {
   const cardType: TCardType = 'image';
 
   return (
-    <Slick>
+    <Carousel>
       {cards.map((item, i) => (
         <Card key={i} onClick={() => console.log('card click')}>
           <div className={thumbnailClass}>
@@ -48,6 +49,6 @@ export const BasicCard: FC<BasicCard> = ({ cards }) => {
           </div>
         </Card>
       ))}
-    </Slick>
+    </Carousel>
   );
 };

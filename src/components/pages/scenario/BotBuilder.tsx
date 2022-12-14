@@ -214,6 +214,9 @@ export const Botbuilder = () => {
     },
   ];
 
+  for (let i = 3; i < 50; i++) {
+    testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
+  }
   return (
     <>
       <BotBuilderZoomBtn
