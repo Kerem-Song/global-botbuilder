@@ -1,18 +1,21 @@
-import { IHasChildren } from '@models';
 import { FC, useEffect, useRef } from 'react';
 
 export interface ILineContainerProps {
   lines: { start: string; end: string }[];
 }
 
+let updateStack: { (): void }[] = [];
 let updateLines: { start: string; end: string; update: () => void }[] = [];
 export const updateLine = (id: string) => {
+  updateStack = [];
   const filtered = updateLines.filter((f) => f.start === id || f.end === id);
-  filtered.map((f) =>
-    setTimeout(() => {
-      f.update();
-    }, 100),
-  );
+  filtered.map((f) => updateStack.push(f.update));
+  setTimeout(() => {
+    updateStack.map((f) => {
+      f();
+    });
+    updateStack = [];
+  }, 10);
 };
 export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
   updateLines = [];
@@ -37,17 +40,13 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
   );
 };
 
-export interface IConnectLineProps {
+interface IConnectLineProps {
   startId: string;
   endId: string;
   addUpdateLines: (start: string, end: string, update: () => void) => void;
 }
 
-export const ConnectLine: FC<IConnectLineProps> = ({
-  startId,
-  endId,
-  addUpdateLines,
-}) => {
+const ConnectLine: FC<IConnectLineProps> = ({ startId, endId, addUpdateLines }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGPathElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
@@ -144,7 +143,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         };
 
         const l4 = {
-          x: arrowPoint.x + ahw,
+          x: arrowPoint.x + ahw + 2,
           y: l3.y,
         };
 
@@ -153,9 +152,46 @@ export const ConnectLine: FC<IConnectLineProps> = ({
           y: arrowPoint.y,
         };
 
+        const arcSize = Math.min(20, Math.abs(ls.x - end.x) / 2);
+
+        const l1Path =
+          l1.x === end.x ? `L ${l1.x} ${l1.y}` : `L ${l1.x} ${l1.y - arcSize}`;
+
+        const q1Path =
+          l1.x === end.x
+            ? ''
+            : `Q ${l1.x} ${l1.y}, ${l1.x - (l1.x < end.x ? -arcSize : arcSize)} ${l1.y}`;
+
+        const l2Path =
+          l1.x === l2.x && l1.y === l2.y
+            ? ``
+            : `L ${l2.x + (l1.x < end.x ? -arcSize : arcSize)} ${l2.y}`;
+
+        const q2Path =
+          l2.y === l3.y ? '' : `Q ${l2.x} ${l2.y}, ${l2.x} ${l2.y - arcSize}`;
+
+        const l3Path =
+          l2.x === l3.x && l2.y === l3.y ? `` : `L ${l3.x} ${l3.y + arcSize}`;
+
+        const q3Path =
+          l3.y === l4.y && l2.y === l3.y
+            ? ''
+            : `Q ${l3.x} ${l3.y}, ${l3.x + (l3.x < end.x ? arcSize : -arcSize)} ${l3.y}`;
+
+        const l4Path =
+          l3.x === l4.x && l3.y === l4.y
+            ? ``
+            : `L ${l4.x - (l3.x < end.x ? arcSize : -arcSize)} ${l4.y}`;
+
+        const q4Path =
+          l3.x === l4.x && l3.y === l4.y
+            ? ''
+            : `Q ${l4.x} ${l4.y}, ${l4.x} ${l4.y + arcSize}`;
+
         lineRef.current.setAttribute(
           'd',
-          `M ${ls.x} ${ls.y} L ${l1.x} ${l1.y} L ${l2.x} ${l2.y} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
+          //`M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
+          `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
         );
       }
     }
@@ -166,6 +202,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       ref={svgRef}
       style={{
         position: 'absolute',
+        //transition: 'all 0.15s ease',
         // background: '#FF000011',
         zIndex: 0,
         pointerEvents: 'none',
@@ -183,7 +220,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       />
 
       <path
-        style={{ position: 'absolute' }}
+        style={{ position: 'absolute', transition: 'all 0.01s ease' }}
         ref={lineRef}
         stroke="#00B4ED"
         strokeWidth="3"
