@@ -24,6 +24,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   radius?: SizeType;
   cards?: IBasicCard[] | ICommerceCard[];
   onClick?: (e?: any) => void;
+  addArrow?: (from: string, to: string) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
 }
 
@@ -38,6 +39,7 @@ export const Node: FC<INodeProps> = ({
   active,
   radius = 'small',
   onClick,
+  addArrow,
 }) => {
   const { tc } = useI18n();
   const wrapClass = classNames(className, 'luna-node', {
@@ -97,39 +99,59 @@ export const Node: FC<INodeProps> = ({
   ];
 
   return (
-    <Draggable>
-      <div
-        id={id}
-        className={wrapClass}
-        style={style}
-        role="presentation"
-        onClick={(e) => {
-          onClick?.(e);
-        }}
-      >
-        <div className={titleClass}>
-          {title ? <p>{title}</p> : undefined}
-          <Popper
-            placement="right-start"
-            // offset={[-10, 15]}
-            popup
-            popupList
-            popperItems={nodeMenu}
-          >
-            <i className="fa-solid fa-ellipsis-vertical" />
-          </Popper>
-        </div>
-        {cards ? (
-          <div className={bodyClass}>
-            <BasicCard cards={cards} />
-            {/* <CommerceCard cards={dummy2} /> */}
-            {/* <QuickReply /> */}
-          </div>
-        ) : undefined}
-        <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
-          <img src={icNodeBottom} alt="icNodeBottom" />
-        </Button>
+    <div
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDrop={(e) => {
+        const from = e.dataTransfer.getData('id');
+        if (id === from) {
+          return;
+        }
+        addArrow?.(from, `node-${id}`);
+      }}
+      id={`node-${id}`}
+      className={wrapClass}
+      style={style}
+      role="presentation"
+      onClick={(e) => {
+        onClick?.(e);
+      }}
+    >
+      <div className={titleClass}>
+        {title ? <p>{title}</p> : undefined}
+        <Popper
+          placement="right-start"
+          // offset={[-10, 15]}
+          popup
+          popupList
+          popperItems={nodeMenu}
+        >
+          <i className="fa-solid fa-ellipsis-vertical" />
+        </Popper>
       </div>
-    </Draggable>
+      {cards ? (
+        <div className={bodyClass}>
+          <BasicCard cards={cards} />
+          {/* <CommerceCard cards={dummy2} /> */}
+          {/* <QuickReply /> */}
+        </div>
+      ) : undefined}
+
+      <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
+        <div
+          id={`node-bottom-${id}`}
+          role="presentation"
+          className="node-draggable-ignore"
+          draggable
+          onDragStart={(e) => {
+            e.dataTransfer.setData('id', `node-${id}`);
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <img src={icNodeBottom} alt="icNodeBottom" />
+        </div>
+      </Button>
+    </div>
   );
 };
