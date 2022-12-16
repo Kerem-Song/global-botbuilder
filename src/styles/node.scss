@@ -9,7 +9,7 @@
   padding: rem(13.5) rem(12) rem(24) rem(12);
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  
+
   &-active {
     outline: rem(2) solid $primary200;
     outline-offset: -1px;
@@ -27,130 +27,129 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: rem(8);
-    
+
     & button {
       padding: rem(9);
     }
   }
 
-  &-body {   
-      .luna-card {
-        width: 100%;
-        &-body {
-          padding: 0; 
-          .thumbnail {            
+  &-body {
+    .luna-card {
+      width: 100%;
+      &-body {
+        padding: 0;
+        .thumbnail {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: rem(96);
+
+          img {
+            width: 100%;
+            height: 100%;
+            max-width: rem(192);
+            border-radius: rem(8) rem(8) 0 0;
+          }
+          &.square {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: rem(96);
-                          
+            height: rem(192);
+
             img {
-              width: 100%;
-              height: 100%;
-              max-width: rem(192);
-              border-radius: rem(8) rem(8) 0 0;
-            }
-            &.square {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: rem(192);
-
-              img {
-                max-height: rem(192);
-              }
-            }
-            .skeleton {
-              height: 100%;
-              background-color: $gray150;
-              background-image: url('@assets/icons/ic_img.svg');
-              background-repeat: no-repeat;
-              background-position: center;
-              border-radius: rem(8) rem(8) 0 0;
+              max-height: rem(192);
             }
           }
-          .title {
-            padding-top: rem(12);
-            color: $grayBlack;
-            font-size: rem(14);
-            &.empty {
-              color: $gray300;
-              font-weight: 500;
-              font-size: rem(13);
-            }
+          .skeleton {
+            height: 100%;
+            background-color: $gray150;
+            background-image: url('@assets/icons/ic_img.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: rem(8) rem(8) 0 0;
           }
-          .description {
-            padding-top: rem(8);
-            color: $gray500;
-            font-size: rem(12);
+        }
+        .title {
+          padding-top: rem(12);
+          color: $grayBlack;
+          font-size: rem(14);
+          &.empty {
+            color: $gray300;
             font-weight: 500;
-            &.empty {
-              color: $gray300;
-              font-weight: 400;
-              font-size: rem(12);
-            }
+            font-size: rem(13);
           }
-          p {
-            white-space: normal;
-            word-break: break-all;
+        }
+        .description {
+          padding-top: rem(8);
+          color: $gray500;
+          font-size: rem(12);
+          font-weight: 500;
+          &.empty {
+            color: $gray300;
+            font-weight: 400;
+            font-size: rem(12);
           }
-    
-          & div {
-            width: 100%;
-          }
-          // Commerce Card Profile
-          .profile {
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            overflow: hidden;
-        
-            & img {
-              width: rem(15);
-            }
-         
-            & span {
-              padding-left: rem(5)
-            }
-          }
-          // Commerce Card priceWrapper
-          .priceWrapper {
-            padding: rem(10) 0 rem(10) 0;
-            height: rem(40);
-          }
-          .prices {
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            .discountPrice {
-              padding-left: rem(5);  
-            }
-            .discounted {
-              font-size: rem(1);
-              color: gray;
-              text-decoration : line-through;
-            }
+        }
+        p {
+          white-space: normal;
+          word-break: break-all;
+        }
+
+        & div {
+          width: 100%;
+        }
+        // Commerce Card Profile
+        .profile {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          overflow: hidden;
+
+          & img {
+            width: rem(15);
           }
 
-          // Commerce Card discount
-          .discount {
-            font-size: rem(10);
-            color: red;
+          & span {
+            padding-left: rem(5);
           }
         }
-        &-bordered {
-          border: none;
+        // Commerce Card priceWrapper
+        .priceWrapper {
+          padding: rem(10) 0 rem(10) 0;
+          height: rem(40);
         }
-      } 
-      
-    
+        .prices {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          .discountPrice {
+            padding-left: rem(5);
+          }
+          .discounted {
+            font-size: rem(1);
+            color: gray;
+            text-decoration: line-through;
+          }
+        }
+
+        // Commerce Card discount
+        .discount {
+          font-size: rem(10);
+          color: red;
+        }
+      }
+      &-bordered {
+        border: none;
+      }
+    }
+
     .addCardBtn {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: rem(10);
     }
-    
+
     .buttonWrapper {
       display: flex;
       flex-direction: row;
@@ -210,7 +209,7 @@
     //     &::after {
     //       content: url('@assets/icons/ic_carousel_prev_active.svg');
     //     }
-        
+
     //     &.slick-disabled {
     //       &::after {
     //         content: url('@assets/icons/ic_carousel_prev_inactive.svg');
@@ -220,7 +219,7 @@
 
     //   &.slick-next {
     //     left: rem(164);
-       
+
     //     &::after {
     //       content: url('@assets/icons/ic_carousel_next_active.svg');
     //     }
@@ -231,7 +230,7 @@
     //       }
     //     }
     //   }
-      
+
     //   &::before {
     //     display: none;
     //   }
