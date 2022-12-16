@@ -105,7 +105,7 @@ export const Node: FC<INodeProps> = ({
       }}
       onDrop={(e) => {
         const from = e.dataTransfer.getData('id');
-        if (id === from) {
+        if (!from || id === from) {
           return;
         }
         addArrow?.(from, `node-${id}`);
@@ -132,7 +132,7 @@ export const Node: FC<INodeProps> = ({
       </div>
       {cards ? (
         <div className={bodyClass}>
-          <BasicCard cards={cards} />
+          <BasicCard cards={cards} nodeId={`node-${id}`} />
           {/* <CommerceCard cards={dummy2} /> */}
           {/* <QuickReply /> */}
         </div>

@@ -8,10 +8,11 @@ import { FC, useState } from 'react';
 import { IBasicCard, TCardType } from '../../../models/interfaces/ICard';
 
 interface BasicCard {
+  nodeId: string;
   cards: IBasicCard[];
 }
 
-export const BasicCard: FC<BasicCard> = ({ cards }) => {
+export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
     square: squareMode,
@@ -19,7 +20,7 @@ export const BasicCard: FC<BasicCard> = ({ cards }) => {
   const cardType: TCardType = 'image';
 
   return (
-    <Carousel>
+    <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
         <Card key={i} onClick={() => console.log('card click')}>
           <div className={thumbnailClass}>

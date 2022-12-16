@@ -11,7 +11,7 @@ import img from '../../../assets/react.svg';
 import { dummy2 } from '../../../dummy';
 import { useCardList } from '../../../hooks/client/cardList';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
-import { ConnectLine, LineContainer, updateLine } from './ConnectLine';
+import { LineContainer, updateLine } from './LineContainer';
 
 interface IBotbuilderRect {
   rect: DOMRect;
@@ -115,12 +115,12 @@ const testNodes = [
   },
 ];
 
-for (let i = 3; i < 4; i++) {
+for (let i = 3; i < 50; i++) {
   testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
 }
 
 const testArrows: { start: string; end: string }[] = [];
-for (let i = 1; i < 2; i++) {
+for (let i = 1; i < 49; i++) {
   testArrows.push({ start: `node-${i}`, end: `node-${i + 1}` });
 }
 
@@ -143,7 +143,7 @@ export const Botbuilder = () => {
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [selectedNode, setSelectedNode] = useState<string>('');
   const [scale, setScale] = useState(1.0);
-  const [arrows, setArrows] = useState<{ start: string; end: string }[]>([]);
+  const [arrows, setArrows] = useState<{ start: string; end: string }[]>([...testArrows]);
   // const canvasStyle: CSSProperties = {
   //   top: canvasValue.y,
   //   left: canvasValue.x,
@@ -270,8 +270,8 @@ export const Botbuilder = () => {
             {testNodes.map((item, i) => (
               <Draggable
                 defaultPosition={{
-                  x: (i % 5) * 300 + 100,
-                  y: Math.floor(i / 5) * 400 + 100,
+                  x: (i % 10) * 300 + 100,
+                  y: Math.floor(i / 10) * 400 + 100,
                 }}
                 scale={scale}
                 bounds={{ top: -4000, left: -4000, right: 4000 }}

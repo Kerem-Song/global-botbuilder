@@ -5,12 +5,14 @@ import {
   icCarouselPrevInactive,
 } from '@assets';
 import { Col, Row } from '@components/layout';
+import { updateLine } from '@components/pages/scenario/LineContainer';
 import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
   children: ReactNode[];
+  nodeId: string;
 }
 
-export const Carousel: FC<CarouselProps> = ({ children }) => {
+export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
   const [current, setCurrent] = useState(0);
 
   const [style, setStyle] = useState({
@@ -24,10 +26,12 @@ export const Carousel: FC<CarouselProps> = ({ children }) => {
 
   const handleNextClick = () => {
     setCurrent(current === children.length - 1 ? 0 : current + 1);
+    updateLine(nodeId);
   };
 
   const handlePrevClick = () => {
     setCurrent(current !== 0 ? current - 1 : 0);
+    updateLine(nodeId);
   };
 
   return (
