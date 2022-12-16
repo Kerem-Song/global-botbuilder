@@ -4,7 +4,6 @@ import {
   icCarouselPrevActive,
   icCarouselPrevInactive,
 } from '@assets';
-import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
 import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
