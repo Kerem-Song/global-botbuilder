@@ -115,13 +115,13 @@ const testNodes = [
   },
 ];
 
-for (let i = 3; i < 50; i++) {
+for (let i = 3; i < 10; i++) {
   testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
 }
 
 const testArrows: { start: string; end: string }[] = [];
-for (let i = 1; i < 49; i++) {
-  testArrows.push({ start: `node-${i}`, end: `node-${i + 1}` });
+for (let i = 1; i < 9; i++) {
+  //testArrows.push({ start: `node-${i}`, end: `node-${i + 1}` });
 }
 
 export const Botbuilder = () => {
@@ -169,7 +169,7 @@ export const Botbuilder = () => {
   ];
 
   const zoomOut = () => {
-    const ratio = scale * 0.25;
+    const ratio = 0.25;
     let v = scale - ratio;
 
     if (transformOptions.minScale > v) {
@@ -185,7 +185,7 @@ export const Botbuilder = () => {
   };
 
   const zoomIn = () => {
-    let v = scale + 0.1;
+    let v = scale + 0.25;
 
     if (transformOptions.maxScale < v) {
       v = transformOptions.maxScale;
@@ -243,8 +243,8 @@ export const Botbuilder = () => {
   const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
   const nodeRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const handleNodeClick = (e: React.SyntheticEvent) => {
-    setSelectedNode(e.currentTarget.id);
+  const handleNodeClick = (id: string) => {
+    setSelectedNode(id);
   };
 
   return (
@@ -298,7 +298,7 @@ export const Botbuilder = () => {
                     title={item.title}
                     cards={item.cards}
                     active={selectedNode === item.id}
-                    onClick={(e) => handleNodeClick(e)}
+                    onClick={(e) => handleNodeClick(item.id)}
                     addArrow={(from, to) => {
                       setArrows([...arrows, { start: from, end: to }]);
                     }}

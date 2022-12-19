@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 export interface ILineContainerProps {
   lines: { start: string; end: string }[];
@@ -17,7 +17,9 @@ export const updateLine = (id: string) => {
     updateStack = [];
   }, 10);
 };
+
 export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
+  const [selectedLine, setSelectedLine] = useState<{ start: string; end: string }>();
   updateLines = [];
   const addUpdateLines = (start: string, end: string, update: () => void) => {
     updateLines.push({ start, end, update });
@@ -30,10 +32,15 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
     <>
       {lines.map((l, i) => (
         <ConnectLine
+          onClick={() => {
+            console.log(l);
+            setSelectedLine(l);
+          }}
           key={i}
           startId={l.start}
           endId={l.end}
           addUpdateLines={addUpdateLines}
+          active={selectedLine === l}
         />
       ))}
     </>
@@ -43,13 +50,23 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
 interface IConnectLineProps {
   startId: string;
   endId: string;
+  active: boolean;
+  onClick: () => void;
   addUpdateLines: (start: string, end: string, update: () => void) => void;
 }
 
-const ConnectLine: FC<IConnectLineProps> = ({ startId, endId, addUpdateLines }) => {
+const ConnectLine: FC<IConnectLineProps> = ({
+  startId,
+  endId,
+  active,
+  onClick,
+  addUpdateLines,
+}) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGPathElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
+
+  const stroke = active ? '#003DB2' : '#00B4ED';
 
   addUpdateLines(startId, endId, () => {
     const start = document.querySelector(`#${startId}`);
@@ -203,7 +220,7 @@ const ConnectLine: FC<IConnectLineProps> = ({ startId, endId, addUpdateLines }) 
       style={{
         position: 'absolute',
         //transition: 'all 0.15s ease',
-        // background: '#FF000011',
+        //background: '#FF000011',
         zIndex: 0,
         pointerEvents: 'none',
       }}
@@ -212,7 +229,7 @@ const ConnectLine: FC<IConnectLineProps> = ({ startId, endId, addUpdateLines }) 
         style={{ position: 'absolute' }}
         ref={arrowRef}
         d="M 0 0 L 6 6 L 12 0"
-        stroke="#00B4ED"
+        stroke={stroke}
         strokeWidth="3"
         fill="none"
         strokeLinecap="round"
@@ -220,9 +237,15 @@ const ConnectLine: FC<IConnectLineProps> = ({ startId, endId, addUpdateLines }) 
       />
 
       <path
-        style={{ position: 'absolute', transition: 'all 0.01s ease' }}
+        onClick={() => onClick?.()}
+        style={{
+          position: 'absolute',
+          transition: 'all 0.01s ease',
+          cursor: 'pointer',
+          pointerEvents: 'all',
+        }}
         ref={lineRef}
-        stroke="#00B4ED"
+        stroke={stroke}
         strokeWidth="3"
         strokeDasharray="6 3"
         fill="none"
