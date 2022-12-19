@@ -85,7 +85,7 @@ const ConnectLine: FC<IConnectLineProps> = ({
       const offset = { x: cr.x, y: cr.y };
       const arrowSize = { width: 12, height: 6 };
 
-      const ahw = Math.round(arrowSize.width / 2) - 2;
+      const ahw = Math.round(arrowSize.width / 2);
 
       const shw = Math.round(sr.width / 2);
       const ehw = Math.round(er.width / 2);
@@ -130,7 +130,7 @@ const ConnectLine: FC<IConnectLineProps> = ({
 
       if (lineRef.current && lineMouseRef.current) {
         const ls = {
-          x: sr.x - svgRect.x - offset.x + shw - ahw,
+          x: sr.x - svgRect.x - offset.x + shw,
           y: sr.bottom - svgRect.y - offset.y + 8,
         };
 
@@ -165,7 +165,7 @@ const ConnectLine: FC<IConnectLineProps> = ({
         };
 
         const l4 = {
-          x: arrowPoint.x + ahw + 2,
+          x: arrowPoint.x + ahw,
           y: l3.y,
         };
 

@@ -26,8 +26,8 @@ export const useSystemModal = () => {
         systemModalOpen({
           message: args.title,
           description: args.description,
-          confirmButton: 'Confirm',
-          cancelButton: 'Cancel',
+          confirmButton: '확인',
+          cancelButton: '취소',
           callbackFunc: () => {
             resolve(true);
           },

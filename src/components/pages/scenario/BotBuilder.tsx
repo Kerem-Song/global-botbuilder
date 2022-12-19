@@ -144,6 +144,12 @@ export const Botbuilder = () => {
   //   zoom: `${canvasValue.scale * 100}%`,
   // };
 
+  const handleAddArrows = (arrow: { start: string; end: string }) => {
+    if (!arrows.find((x) => x.start === arrow.start)) {
+      setArrows([...arrows, arrow]);
+    }
+  };
+
   const transformOptions = {
     limitToBounds: true,
     minScale: 0.25,
@@ -303,7 +309,7 @@ export const Botbuilder = () => {
                   active={selectedNode === item.id}
                   onClick={(e) => handleNodeClick(item.id)}
                   addArrow={(from, to) => {
-                    setArrows([...arrows, { start: from, end: to }]);
+                    handleAddArrows({ start: from, end: to });
                   }}
                 />
               </div>
