@@ -155,7 +155,7 @@ const ConnectLine: FC<IConnectLineProps> = ({
           x: l2.x,
           y:
             sr.bottom + minLine < er.top
-              ? svgRect.height / 2
+              ? l2.y
               : arrowPoint.y - minLine + lineOffset + arrowSize.height,
         };
 
@@ -185,7 +185,9 @@ const ConnectLine: FC<IConnectLineProps> = ({
             : `L ${l2.x + (l1.x < end.x ? -arcSize : arcSize)} ${l2.y}`;
 
         const q2Path =
-          l2.y === l3.y ? '' : `Q ${l2.x} ${l2.y}, ${l2.x} ${l2.y - arcSize}`;
+          l1.x === l2.x && l1.y === l2.y
+            ? ''
+            : `Q ${l2.x} ${l2.y}, ${l2.x} ${l2.y - arcSize}`;
 
         const l3Path =
           l2.x === l3.x && l2.y === l3.y ? `` : `L ${l3.x} ${l3.y + arcSize}`;
