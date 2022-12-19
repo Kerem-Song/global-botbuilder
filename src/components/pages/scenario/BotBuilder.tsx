@@ -1,14 +1,9 @@
-import { icDeploy } from '@assets';
 import { Node } from '@components/data-display';
-import { ICanvasValue } from '@models/interfaces/IDraggable';
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 import { IBasicCard } from 'src/models/interfaces/ICard';
-import { CommerceCard } from 'src/pages/scenario/cards/CommerceCard';
 
 import img from '../../../assets/react.svg';
-import { dummy2 } from '../../../dummy';
 import { useCardList } from '../../../hooks/client/cardList';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { LineContainer, updateLine } from './LineContainer';
@@ -127,7 +122,6 @@ for (let i = 1; i < 9; i++) {
 export const Botbuilder = () => {
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
-  const updateXarrow = useXarrow();
   // const [canvasValue, setCanvasValue] = useState<ICanvasValue>({
   //   x: 0,
   //   y: 0,
@@ -244,6 +238,14 @@ export const Botbuilder = () => {
   const nodeRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleNodeClick = (id: string) => {
+    const nodes = document.querySelectorAll<HTMLDivElement>('.draggableNode');
+    nodes.forEach((n) => {
+      n.style.zIndex = `${Math.max(0, Number(n.style.zIndex) - 1)}`;
+    });
+    const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
+    if (nodeWrap) {
+      nodeWrap.style.zIndex = `${testNodes.length}`;
+    }
     setSelectedNode(id);
   };
 
@@ -260,54 +262,55 @@ export const Botbuilder = () => {
         ref={botbuilderRef}
         role="presentation"
       >
-        <Xwrapper>
-          <div
-            className="canvasWrapper"
-            style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
-            ref={canvasRef}
-          >
-            <LineContainer lines={arrows} />
-            {testNodes.map((item, i) => (
-              <Draggable
-                defaultPosition={{
-                  x: (i % 10) * 300 + 100,
-                  y: Math.floor(i / 10) * 400 + 100,
+        <div
+          className="canvasWrapper"
+          style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
+          ref={canvasRef}
+        >
+          {testNodes.map((item, i) => (
+            <Draggable
+              defaultPosition={{
+                x: (i % 10) * 300 + 100,
+                y: Math.floor(i / 10) * 400 + 100,
+              }}
+              scale={scale}
+              bounds={{ top: -4000, left: -4000, right: 4000 }}
+              key={item.id}
+              onDrag={(e) => {
+                e.stopPropagation();
+                //updateXarrow();
+                updateLine(`node-${item.id}`);
+              }}
+              cancel=".node-draggable-ignore"
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <div
+                role="presentation"
+                className="draggableNode"
+                style={{
+                  // display: 'block',
+                  position: 'absolute',
+                  //zIndex: selectedNode === item.id ? 100 : 0,
+                  // width: '100%',
+                  // height: "100%",
                 }}
-                scale={scale}
-                bounds={{ top: -4000, left: -4000, right: 4000 }}
-                key={item.id}
-                onDrag={(e) => {
-                  e.stopPropagation();
-                  //updateXarrow();
-                  updateLine(`node-${item.id}`);
-                }}
-                cancel=".node-draggable-ignore"
               >
-                <div
-                  className="draggableNode"
-                  style={{
-                    // display: 'block',
-                    position: 'absolute',
-                    // width: '100%',
-                    // height: "100%",
+                <Node
+                  id={item.id}
+                  key={item.id}
+                  title={item.title}
+                  cards={item.cards}
+                  active={selectedNode === item.id}
+                  onClick={(e) => handleNodeClick(item.id)}
+                  addArrow={(from, to) => {
+                    setArrows([...arrows, { start: from, end: to }]);
                   }}
-                >
-                  <Node
-                    id={item.id}
-                    key={item.id}
-                    title={item.title}
-                    cards={item.cards}
-                    active={selectedNode === item.id}
-                    onClick={(e) => handleNodeClick(item.id)}
-                    addArrow={(from, to) => {
-                      setArrows([...arrows, { start: from, end: to }]);
-                    }}
-                  />
-                </div>
-              </Draggable>
-            ))}
-
-            {/* {arrows.map((x, i) => (
+                />
+              </div>
+            </Draggable>
+          ))}
+          <LineContainer lines={arrows} />
+          {/* {arrows.map((x, i) => (
               <Xarrow
                 key={i}
                 path={'grid'}
@@ -337,8 +340,7 @@ export const Botbuilder = () => {
                 }}
               />
             ))} */}
-          </div>
-        </Xwrapper>
+        </div>
       </div>
     </>
   );

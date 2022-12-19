@@ -65,13 +65,14 @@ const ConnectLine: FC<IConnectLineProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGPathElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
+  const lineMouseRef = useRef<SVGPathElement>(null);
 
   const stroke = active ? '#003DB2' : '#00B4ED';
 
   addUpdateLines(startId, endId, () => {
-    const start = document.querySelector(`#${startId}`);
-    const end = document.querySelector(`#${endId}`);
-    const canvas = document.querySelector('.canvasWrapper');
+    const start = document.querySelector<HTMLDivElement>(`#${startId}`);
+    const end = document.querySelector<HTMLDivElement>(`#${endId}`);
+    const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
 
     if (start && end && canvas) {
       const cr = canvas.getBoundingClientRect();
@@ -105,6 +106,10 @@ const ConnectLine: FC<IConnectLineProps> = ({
         svgRef.current.style.transform = translate;
         svgRef.current.style.width = `${svgRect.width}px`;
         svgRef.current.style.height = `${svgRect.height}px`;
+        svgRef.current.style.zIndex = `${Math.min(
+          Number(start.parentElement?.style.zIndex),
+          Number(end.parentElement?.style.zIndex),
+        )}`;
       }
 
       const arrowPoint = {
@@ -123,10 +128,10 @@ const ConnectLine: FC<IConnectLineProps> = ({
         arrowRef.current.style.transform = translate;
       }
 
-      if (lineRef.current) {
+      if (lineRef.current && lineMouseRef.current) {
         const ls = {
           x: sr.x - svgRect.x - offset.x + shw - ahw,
-          y: sr.bottom - svgRect.y - offset.y,
+          y: sr.bottom - svgRect.y - offset.y + 8,
         };
 
         const l1 = {
@@ -212,6 +217,12 @@ const ConnectLine: FC<IConnectLineProps> = ({
           //`M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
           `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
         );
+
+        lineMouseRef.current.setAttribute(
+          'd',
+          //`M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
+          `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
+        );
       }
     }
   });
@@ -239,17 +250,27 @@ const ConnectLine: FC<IConnectLineProps> = ({
       />
 
       <path
-        onClick={() => onClick?.()}
         style={{
           position: 'absolute',
           transition: 'all 0.01s ease',
-          cursor: 'pointer',
-          pointerEvents: 'all',
         }}
         ref={lineRef}
         stroke={stroke}
         strokeWidth="3"
         strokeDasharray="6 3"
+        fill="none"
+      />
+      <path
+        onClick={() => onClick?.()}
+        style={{
+          position: 'absolute',
+          transition: 'all 0.01s ease',
+          cursor: 'pointer',
+          pointerEvents: 'stroke',
+        }}
+        ref={lineMouseRef}
+        stroke="#FFFFFF01"
+        strokeWidth="10"
         fill="none"
       />
     </svg>
