@@ -26,7 +26,16 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
 
   const handleScenarioDelete = async () => {
     const result = await confirm({
-      title: '삭제하시겠습니까?',
+      title: '삭제',
+      description: (
+        <>
+          <span>{`${item.scenarioName}(와)과 연결된 시나리오가 있습니다.`}</span>
+          <br />
+          <span>: 시작, 시나리오01</span>
+          <br />
+          <span>정말 삭제하시겠습니까?</span>
+        </>
+      ),
     });
 
     if (result) {

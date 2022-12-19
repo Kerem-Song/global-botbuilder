@@ -1,6 +1,7 @@
 .luna-system-modal {
-  width: rem(328);
+  width: fit-content;
   min-height: rem(160);
+  min-width: rem(400);
   height: fit-content;
   margin: auto;
   display: flex;
@@ -14,29 +15,12 @@
   border-radius: rem(16);
   outline: none;
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
+  .title {
+    padding: 14px 20px 14px 20px;
+  }
   .content {
-    flex: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid $gray200;
-    .message {
-      font-weight: 700;
-      padding-bottom: rem(8);
-      color: $grayBlack;
-    }
-    .description {
-      font-weight: 500;
-      color: $grayBlack;
-    }
-  }
-  .cancelBtn {
-    font-weight: 700;
-    color: $gray300;
-  }
-  .confirmBtn {
-    font-weight: 700;
-    color: $grayBlack;
+    padding: rem(20);
+    color: $gray500;
+    font-size: rem(13);
   }
 }

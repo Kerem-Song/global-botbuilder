@@ -1,10 +1,11 @@
+import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { systemModalOpen } from '../store/systemModalSlice';
 
 export interface IInfoModal {
-  title: string;
-  description?: string;
+  title: ReactNode;
+  description?: ReactNode;
 }
 
 export const useSystemModal = () => {
