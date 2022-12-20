@@ -1,9 +1,7 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import classNames from 'classnames';
-import { MutableRefObject, useState } from 'react';
 import { FC } from 'react';
-import Draggable from 'react-draggable';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
@@ -16,7 +14,7 @@ import { BasicCard } from '../../pages/scenario/cards/BasicCard';
 import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
-  id: string;
+  id?: string;
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;

@@ -4,7 +4,9 @@ import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 
 import authReducer from './authSlice';
+import botBuilderMakerReducer from './botbuilderMaker';
 import brandInfoReducer from './brandInfoSlice';
+import makingNodeSliceReducer from './makingNode';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
 
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   systemModalReducer,
   sideBarStatusReducer,
   brandInfoReducer,
+  botBuilderMakerReducer,
+  makingNodeSliceReducer,
 });
 
 type ReducerType = typeof rootReducer;

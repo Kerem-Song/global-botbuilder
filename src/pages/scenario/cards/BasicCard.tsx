@@ -1,6 +1,5 @@
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
-import { Slick } from '@components/data-display/Slick';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
