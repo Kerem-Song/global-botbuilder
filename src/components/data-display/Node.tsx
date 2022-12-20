@@ -112,9 +112,10 @@ export const Node: FC<INodeProps> = ({
       className={wrapClass}
       style={style}
       role="presentation"
-      onClick={(e) => {
+      onMouseDown={(e) => {
         onClick?.(e);
       }}
+      onMouseUp={(e) => e.stopPropagation()}
     >
       <div className={titleClass}>
         {title ? <p>{title}</p> : undefined}

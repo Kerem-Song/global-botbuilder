@@ -1,10 +1,11 @@
+import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { systemModalOpen } from '../store/systemModalSlice';
 
 export interface IInfoModal {
-  title: string;
-  description?: string;
+  title: ReactNode;
+  description?: ReactNode;
 }
 
 export const useSystemModal = () => {
@@ -25,8 +26,8 @@ export const useSystemModal = () => {
         systemModalOpen({
           message: args.title,
           description: args.description,
-          confirmButton: 'Confirm',
-          cancelButton: 'Cancel',
+          confirmButton: '확인',
+          cancelButton: '취소',
           callbackFunc: () => {
             resolve(true);
           },

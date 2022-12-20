@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ReactNode } from 'react';
 
 export type SystemModalStatusType = {
   isOpen: boolean;
-  message?: string;
-  description?: string;
+  message?: ReactNode;
+  description?: ReactNode;
   confirmButton?: string;
   cancelButton?: string;
   callbackFunc?: () => void;
