@@ -1,127 +1,17 @@
 import { Node } from '@components/data-display';
 import { useRootState } from '@hooks';
+import { IArrow, IBasicCard } from '@models';
 import React, { useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import { IBasicCard } from 'src/models/interfaces/ICard';
-import { INode } from 'src/store/makingNode';
+import { useDispatch } from 'react-redux';
 
-import img from '../../../assets/react.svg';
 import { useCardList } from '../../../hooks/client/cardList';
+import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { LineContainer, updateLine } from './LineContainer';
 
-const cards: IBasicCard[] = [
-  {
-    title: '',
-    thumbnail: { imageUrl: '' },
-    description: 'asdfasdfasfasdfasdfasdfasdf',
-    // buttons: [{ label: '버튼1', action: 'message' }],
-  },
-  {
-    title: 'title2',
-    thumbnail: { imageUrl: img },
-    description:
-      '설명2asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadfasdfasdfasdfasdfasdfasdfasdfsd',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  { title: 'title3', thumbnail: { imageUrl: img }, description: '설명3' },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-];
-
-export const testNodes: INode[] = [
-  {
-    id: '1',
-    title: '1번',
-    cards: cards,
-  },
-  {
-    id: '2',
-    title: '2번',
-    cards: cards,
-  },
-];
-
-for (let i = 3; i < 10; i++) {
-  testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
-}
-
-const testArrows: { start: string; end: string }[] = [];
-for (let i = 1; i < 9; i++) {
-  //testArrows.push({ start: `node-${i}`, end: `node-${i + 1}` });
-}
-
-for (let i = 3; i < 5; i++) {
-  testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
-}
-
 export const Botbuilder = () => {
+  const dispatch = useDispatch();
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
 
@@ -129,9 +19,8 @@ export const Botbuilder = () => {
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [selectedNode, setSelectedNode] = useState<string>('');
   const [scale, setScale] = useState(1.0);
-  const [arrows, setArrows] = useState<{ start: string; end: string }[]>([...testArrows]);
-  const testnodesstate = useRootState((state) => state.makingNodeSliceReducer.nodes);
-  const [nodes, setNodes] = useState<INode[]>(testnodesstate);
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const [positionX, setPositionX] = useState(0);
   const [positionY, setPositionY] = useState(0);
   const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
@@ -149,9 +38,9 @@ export const Botbuilder = () => {
     });
   }, []);
 
-  const handleAddArrows = (arrow: { start: string; end: string }) => {
+  const handleAddArrows = (arrow: IArrow) => {
     if (!arrows.find((x) => x.start === arrow.start)) {
-      setArrows([...arrows, arrow]);
+      dispatch(addArrow(arrow));
     }
   };
 
@@ -226,7 +115,7 @@ export const Botbuilder = () => {
     });
     const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
     if (nodeWrap) {
-      nodeWrap.style.zIndex = `${testNodes.length}`;
+      nodeWrap.style.zIndex = `${nodes.length}`;
     }
     setSelectedNode(id);
   };
@@ -245,28 +134,21 @@ export const Botbuilder = () => {
           cardType === 'text' ? undefined : [{ label: 'add a button', action: 'block' }],
       },
     ];
-
+    console.log(e.clientX, e.clientY);
+    const canvasRect = canvasRef.current?.getBoundingClientRect();
     const addNode = {
       id: `${nodes.length + 1}`,
+      x: e.clientX / scale - (canvasRect?.left || 0),
+      y: e.clientY / scale - (canvasRect?.top || 0),
       title: cardType,
       cards: addCard,
     };
 
-    setNodes([...nodes, addNode]);
+    dispatch(appendNode(addNode));
 
     if (!canvasRef.current) {
       return;
     }
-
-    const canvasRect = canvasRef.current.getBoundingClientRect();
-    const translateX = (canvasRect.width - 310) / 2;
-    const translateY = (canvasRect.height - 300) / 2;
-    // const translateX = e.clientX - 310;
-    // const translateY = e.clientY - 300;
-    setPositionX(translateX);
-    setPositionY(translateY);
-
-    setIsRendered(true);
   };
 
   const handleMakingChatBubbleClick = () => {
@@ -280,15 +162,15 @@ export const Botbuilder = () => {
     setPositionY(translateY);
   };
 
-  useEffect(() => {
-    if (isRendered && nodeRef.current) {
-      nodeRef.current[
-        nodes.length - 1
-      ]!.style.transform = `translate(${positionX}px, ${positionY}px)`;
-      console.log('asdf', nodeRef.current[nodes.length - 1]);
-    }
-    setIsRendered(false);
-  }, [handleChatbubbleDrop, nodes]);
+  // useEffect(() => {
+  //   if (isRendered && nodeRef.current) {
+  //     nodeRef.current[
+  //       nodes.length - 1
+  //     ]!.style.transform = `translate(${positionX}px, ${positionY}px)`;
+  //     console.log('asdf', nodeRef.current[nodes.length - 1]);
+  //   }
+  //   setIsRendered(false);
+  // }, [handleChatbubbleDrop, nodes]);
 
   return (
     <>
@@ -302,24 +184,25 @@ export const Botbuilder = () => {
         onMouseUp={(e) => handleCanvasClick(e)}
         ref={botbuilderRef}
         role="presentation"
+        onDrop={(e) => {
+          handleChatbubbleDrop(e);
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
       >
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
           ref={canvasRef}
           role="presentation"
-          onDrop={(e) => {
-            handleChatbubbleDrop(e);
-          }}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
         >
           {nodes.map((item, i) => (
             <Draggable
-              defaultPosition={{
-                x: (i % 10) * 300 + 100,
-                y: Math.floor(i / 10) * 400 + 100,
+              //defaultPosition={{}}
+              position={{
+                x: item.x,
+                y: item.y,
               }}
               scale={scale}
               bounds={{ top: -4000, left: -4000, right: 4000 }}
@@ -328,6 +211,17 @@ export const Botbuilder = () => {
                 e.stopPropagation();
                 //updateXarrow();
                 updateLine(`node-${item.id}`);
+              }}
+              onStop={(e) => {
+                const me = e as MouseEvent;
+                const canvasRect = canvasRef.current?.getBoundingClientRect();
+                const nodeRect = nodeRef.current[i]?.getBoundingClientRect();
+                const node = {
+                  ...item,
+                  x: (nodeRect?.x || 0) - (canvasRect?.left || 0),
+                  y: (nodeRect?.y || 0) - (canvasRect?.top || 0),
+                };
+                dispatch(updateNode(node));
               }}
               cancel=".node-draggable-ignore"
               onMouseDown={(e) => e.stopPropagation()}

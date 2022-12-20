@@ -1,3 +1,4 @@
+export * from './IArrow';
 export * from './IAuthModel';
 export * from './IBotModel';
 export * from './IBrandInfo';

@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
+import undoable from 'redux-undo';
 
 import authReducer from './authSlice';
 import botBuilderMakerReducer from './botbuilderMaker';
@@ -16,7 +17,7 @@ const rootReducer = combineReducers({
   sideBarStatusReducer,
   brandInfoReducer,
   botBuilderMakerReducer,
-  makingNodeSliceReducer,
+  makingNodeSliceReducer: undoable(makingNodeSliceReducer),
 });
 
 type ReducerType = typeof rootReducer;

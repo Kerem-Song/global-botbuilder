@@ -1,11 +1,19 @@
+import { IArrow } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
 
 export interface ILineContainerProps {
-  lines: { start: string; end: string }[];
+  lines: IArrow[];
 }
 
 let updateStack: { (): void }[] = [];
 let updateLines: { start: string; end: string; update: () => void }[] = [];
+
+export const updateLineAll = () => {
+  setTimeout(() => {
+    updateLines.map((x) => x.update());
+  }, 10);
+};
+
 export const updateLine = (id: string) => {
   updateStack = [];
   const filtered = updateLines.filter((f) => f.start === id || f.end === id);
@@ -19,7 +27,7 @@ export const updateLine = (id: string) => {
 };
 
 export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
-  const [selectedLine, setSelectedLine] = useState<{ start: string; end: string }>();
+  const [selectedLine, setSelectedLine] = useState<IArrow>();
   updateLines = [];
   const addUpdateLines = (start: string, end: string, update: () => void) => {
     updateLines.push({ start, end, update });
