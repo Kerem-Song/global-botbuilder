@@ -221,7 +221,9 @@ export const Botbuilder = () => {
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const cardType = e.dataTransfer.getData('cardType');
-
+    if (!cardType) {
+      return;
+    }
     const addCard: IBasicCard[] = [
       {
         title: '',
