@@ -1,6 +1,6 @@
 import { IHasClassNameNStyle } from '@models';
 import * as classNames from 'classnames';
-import { createElement, FC } from 'react';
+import React, { createElement, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
@@ -16,7 +16,13 @@ export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
   href?: string;
   htmlType?: string;
   icon?: string;
+  value?: string;
+  draggable?: boolean;
   onClick?: () => void;
+  onDrag?: (e: React.DragEvent) => void;
+  onDragStart?: (e: React.DragEvent) => void;
+  onDrop?: (e: React.DragEvent) => void;
+  onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -28,11 +34,17 @@ export const Button: FC<ButtonProps> = ({
   disabled,
   href,
   htmlType = 'button',
-  onClick,
   shape = 'default',
   icon,
   style,
   className,
+  value,
+  draggable,
+  onClick,
+  onDrag,
+  onDragStart,
+  onDrop,
+  onDragEnd,
 }) => {
   if (children && label) {
     throw new Error('children과 label은 동시에 설정할 수 없다.');
@@ -66,9 +78,15 @@ export const Button: FC<ButtonProps> = ({
       className: controlCss,
       disabled: disabled && !href,
       href: href,
-      onClick,
       type: htmlType,
       style: style,
+      value,
+      draggable,
+      onClick,
+      onDrag,
+      onDragStart,
+      onDrop,
+      onDragEnd,
     },
     iconNode,
     labelNode,

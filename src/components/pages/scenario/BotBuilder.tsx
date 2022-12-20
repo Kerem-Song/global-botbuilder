@@ -1,17 +1,14 @@
 import { Node } from '@components/data-display';
-import React, { useRef, useState } from 'react';
-import { useEffect } from 'react';
+import { useRootState } from '@hooks';
+import React, { useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { IBasicCard } from 'src/models/interfaces/ICard';
+import { INode } from 'src/store/makingNode';
 
 import img from '../../../assets/react.svg';
 import { useCardList } from '../../../hooks/client/cardList';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { LineContainer, updateLine } from './LineContainer';
-
-interface IBotbuilderRect {
-  rect: DOMRect;
-}
 
 const cards: IBasicCard[] = [
   {
@@ -98,7 +95,7 @@ const cards: IBasicCard[] = [
   },
 ];
 
-const testNodes = [
+export const testNodes: INode[] = [
   {
     id: '1',
     title: '1번',
@@ -120,30 +117,25 @@ for (let i = 1; i < 9; i++) {
   //testArrows.push({ start: `node-${i}`, end: `node-${i + 1}` });
 }
 
+for (let i = 3; i < 5; i++) {
+  testNodes.push({ id: `${i}`, title: `${i}번`, cards: cards });
+}
+
 export const Botbuilder = () => {
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
-  // const [canvasValue, setCanvasValue] = useState<ICanvasValue>({
-  //   x: 0,
-  //   y: 0,
-  //   scale: 1.0,
-  // });
 
-  // const canvasValue = {
-  //   x: 0,
-  //   y: 0,
-  //   scale: 1.0,
-  // };
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [selectedNode, setSelectedNode] = useState<string>('');
   const [scale, setScale] = useState(1.0);
   const [arrows, setArrows] = useState<{ start: string; end: string }[]>([...testArrows]);
-  // const canvasStyle: CSSProperties = {
-  //   top: canvasValue.y,
-  //   left: canvasValue.x,
-  //   zoom: `${canvasValue.scale * 100}%`,
-  // };
+  const testnodesstate = useRootState((state) => state.makingNodeSliceReducer.nodes);
+  const [nodes, setNodes] = useState<INode[]>(testnodesstate);
+  const [positionX, setPositionX] = useState(0);
+  const [positionY, setPositionY] = useState(0);
+  const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
+  const [isRendered, setIsRendered] = useState<boolean>(false);
 
   useEffect(() => {
     window.addEventListener('wheel', (e) => {
@@ -169,18 +161,6 @@ export const Botbuilder = () => {
     maxScale: 2,
   };
 
-  const testCard: IBasicCard[] = [
-    {
-      title: 'title4',
-      thumbnail: { imageUrl: img },
-      description: '설명4',
-      buttons: [
-        { label: '버튼1', action: 'message' },
-        { label: '버튼1', action: 'message' },
-      ],
-    },
-  ];
-
   const zoomOut = () => {
     const ratio = 0.25;
     let v = scale - ratio;
@@ -189,12 +169,6 @@ export const Botbuilder = () => {
       v = transformOptions.minScale;
     }
     setScale(v);
-
-    // setCanvasValue({
-    //   x: canvasValue.x,
-    //   y: canvasValue.y,
-    //   scale: v,
-    // });
   };
 
   const zoomIn = () => {
@@ -204,11 +178,6 @@ export const Botbuilder = () => {
       v = transformOptions.maxScale;
     }
     setScale(v);
-    // setCanvasValue({
-    //   x: canvasValue.x,
-    //   y: canvasValue.y,
-    //   scale: v,
-    // });
   };
 
   const panning = (x: number, y: number) => {
@@ -222,11 +191,6 @@ export const Botbuilder = () => {
     canvasRef.current.style.top = `${
       parseInt(canvasRef.current.style.top) + y / scale
     }px`;
-    // setCanvasValue({
-    //   x: canvasValue.x + x / canvasValue.scale,
-    //   y: canvasValue.y + y / canvasValue.scale,
-    //   scale: canvasValue.scale,
-    // });
   };
 
   const outterMouseWheelHandler = (e: React.WheelEvent<HTMLDivElement>): void => {
@@ -253,8 +217,7 @@ export const Botbuilder = () => {
   };
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
-  const botbuilderRect = botbuilderRef.current?.getBoundingClientRect();
-  const nodeRef = useRef<(HTMLDivElement | null)[]>([]);
+  const draggableRef = useRef<HTMLDivElement | null>(null);
 
   const handleNodeClick = (id: string) => {
     const nodes = document.querySelectorAll<HTMLDivElement>('.draggableNode');
@@ -267,6 +230,65 @@ export const Botbuilder = () => {
     }
     setSelectedNode(id);
   };
+
+  const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    const cardType = e.dataTransfer.getData('cardType');
+    if (!cardType) {
+      return;
+    }
+    const addCard: IBasicCard[] = [
+      {
+        title: '',
+        thumbnail: cardType === 'text' ? undefined : { imageUrl: '' },
+        description: '',
+        buttons:
+          cardType === 'text' ? undefined : [{ label: 'add a button', action: 'block' }],
+      },
+    ];
+
+    const addNode = {
+      id: `${nodes.length + 1}`,
+      title: cardType,
+      cards: addCard,
+    };
+
+    setNodes([...nodes, addNode]);
+
+    if (!canvasRef.current) {
+      return;
+    }
+
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const translateX = (canvasRect.width - 310) / 2;
+    const translateY = (canvasRect.height - 300) / 2;
+    // const translateX = e.clientX - 310;
+    // const translateY = e.clientY - 300;
+    setPositionX(translateX);
+    setPositionY(translateY);
+
+    setIsRendered(true);
+  };
+
+  const handleMakingChatBubbleClick = () => {
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const translateX = (canvasRect.width - 310) / 2;
+    const translateY = (canvasRect.height - 300) / 2;
+    setPositionX(translateX);
+    setPositionY(translateY);
+  };
+
+  useEffect(() => {
+    if (isRendered && nodeRef.current) {
+      nodeRef.current[
+        nodes.length - 1
+      ]!.style.transform = `translate(${positionX}px, ${positionY}px)`;
+      console.log('asdf', nodeRef.current[nodes.length - 1]);
+    }
+    setIsRendered(false);
+  }, [handleChatbubbleDrop, nodes]);
 
   return (
     <>
@@ -285,8 +307,15 @@ export const Botbuilder = () => {
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
           ref={canvasRef}
+          role="presentation"
+          onDrop={(e) => {
+            handleChatbubbleDrop(e);
+          }}
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
         >
-          {testNodes.map((item, i) => (
+          {nodes.map((item, i) => (
             <Draggable
               defaultPosition={{
                 x: (i % 10) * 300 + 100,
@@ -313,6 +342,7 @@ export const Botbuilder = () => {
                   // width: '100%',
                   // height: "100%",
                 }}
+                ref={(el) => (nodeRef.current[i] = el)}
               >
                 <Node
                   id={item.id}
@@ -320,7 +350,7 @@ export const Botbuilder = () => {
                   title={item.title}
                   cards={item.cards}
                   active={selectedNode === item.id}
-                  onClick={(e) => handleNodeClick(item.id)}
+                  onClick={(e) => handleNodeClick(item.id!)}
                   addArrow={(from, to) => {
                     handleAddArrows({ start: from, end: to });
                   }}

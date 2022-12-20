@@ -22,11 +22,15 @@ export type TCardType =
   | 'buttonTemplate'
   | 'list'
   | 'commerce'
-  | 'carousel'
+  | 'imgCarousel'
   | 'listCarousel'
   | 'commerceCarousel'
+  | 'quickReply'
   | 'condition';
 
+export interface IBotBuilderCardType {
+  cardType: TCardType;
+}
 export interface IButtonType {
   label: string;
   action:

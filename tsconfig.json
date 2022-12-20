@@ -24,7 +24,9 @@
       "@assets": ["src/assets"],
       "@assets/*": ["src/assets/*"],
       "@hooks": ["src/hooks"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@store": ["src/store"],
+      "@store/*": ["src/store/*"]
     }
   },
   "include": ["src"],
