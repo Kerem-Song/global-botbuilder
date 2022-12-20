@@ -1,5 +1,6 @@
 import { Node } from '@components/data-display';
 import React, { useRef, useState } from 'react';
+import { useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { IBasicCard } from 'src/models/interfaces/ICard';
 
@@ -143,6 +144,18 @@ export const Botbuilder = () => {
   //   left: canvasValue.x,
   //   zoom: `${canvasValue.scale * 100}%`,
   // };
+
+  useEffect(() => {
+    window.addEventListener('wheel', (e) => {
+      console.log(e);
+      e.preventDefault();
+    });
+
+    window.addEventListener('wheel.impair', (e) => {
+      console.log(e);
+      e.preventDefault();
+    });
+  }, []);
 
   const handleAddArrows = (arrow: { start: string; end: string }) => {
     if (!arrows.find((x) => x.start === arrow.start)) {

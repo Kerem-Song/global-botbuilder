@@ -12,6 +12,8 @@ export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   radius?: SizeType;
   bodyClassName?: string;
   bodyStyle?: CSSProperties;
+  titleClassName?: string;
+  titleStyle?: CSSProperties;
   onClick?: () => void;
 }
 
@@ -19,8 +21,10 @@ export const Card: FC<CardProps> = ({
   children,
   className,
   bodyClassName,
+  titleClassName,
   style,
   bodyStyle,
+  titleStyle,
   title,
   bordered = true,
   hoverable,
@@ -37,7 +41,7 @@ export const Card: FC<CardProps> = ({
     className,
   );
 
-  const titleClass = classNames('luna-card-head');
+  const titleClass = classNames('luna-card-head', titleClassName);
 
   const bodyClass = classNames('luna-card-body', bodyClassName);
   return (
@@ -49,7 +53,11 @@ export const Card: FC<CardProps> = ({
       }}
       role="presentation"
     >
-      {title ? <div className={titleClass}>{title}</div> : undefined}
+      {title ? (
+        <div className={titleClass} style={titleStyle}>
+          {title}
+        </div>
+      ) : undefined}
       {children ? (
         <div className={bodyClass} style={bodyStyle}>
           {children}

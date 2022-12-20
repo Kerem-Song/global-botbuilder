@@ -38,6 +38,7 @@
   font-feature-settings: 'tnum';
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   min-width: 0;
   padding: 4px 11px;
@@ -71,8 +72,13 @@
       box-shadow: none;
     }
   }
-  span {
+  .count {
     line-height: 2;
+  }
+  .search {
+    width: rem(11);
+    height: rem(11);
+    margin-top: rem(2);
   }
 }
 
@@ -87,5 +93,13 @@
   &:hover {
     border-color: #f00;
     border-right-width: 1px;
+  }
+}
+
+.luna-input-large {
+  height: rem(49);
+  font-size: rem(14);
+  .luna-input {
+    height: rem(40);
   }
 }

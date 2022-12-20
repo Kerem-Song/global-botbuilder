@@ -1,4 +1,5 @@
-import { Card, Col, Row, Title } from '@components';
+import { imgLinebot } from '@assets';
+import { Card, Col, Row, Space, Title } from '@components';
 import { usePage } from '@hooks';
 import { IBotModel } from '@models';
 import { FC } from 'react';
@@ -8,42 +9,33 @@ import icHome from '../../../assets/ic_home.png';
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
   const { navigate, t, tc } = usePage();
   return (
-    <Card hoverable onClick={() => navigate('/scenario')}>
-      <Row gap={20}>
-        <Col>
-          <div
-            style={{
-              boxSizing: 'border-box',
-              margin: '10px',
-              background: '#DEDEDE',
-              height: '80px',
-              borderRadius: '40px',
-              border: '1px solid #CCCCCC',
-              padding: '28px',
-              width: '80px',
-              textAlign: 'center',
-            }}
-          >
-            <img src={icHome} alt="" />
-          </div>
-        </Col>
-        <Col flex="auto">
-          <Row align="center" gap={5} style={{ paddingBottom: '20px' }}>
-            <Col>
-              <Title level={3}>{model.botName}</Title>
-            </Col>
-            <Col>
-              <span style={{ color: '#A1A1A1' }}>
-                | {t('PROD_CHANNEL')}: {model.prodChannel} | {t('TEST_CHANNEL')}:{' '}
-                {model.testChannel}
-              </span>
-            </Col>
-          </Row>
-          <span style={{ fontSize: '10px', color: '#A1A1A1' }}>{`${tc('intlDateTime', {
-            val: model.updateDate ? new Date(model.updateDate) : '',
-          })}`}</span>
-        </Col>
-      </Row>
+    <Card
+      radius="large"
+      onClick={() => navigate('/scenario')}
+      className="chatbot-card"
+      titleClassName="title"
+      title={
+        <Row align="center" justify="space-between">
+          <Col>
+            <Space direction="vertical">
+              <span className="created">{`${tc('intlDateTime', {
+                val: model.updateDate ? new Date(model.updateDate) : '',
+              })}`}</span>
+              <span className="bot-name">{model.botName}</span>
+            </Space>
+          </Col>
+          <Col>
+            <img src={imgLinebot} width={48} height={48} alt="linebot" />
+          </Col>
+        </Row>
+      }
+    >
+      <Space direction="vertical">
+        <span className="channel-title">{t('PROD_CHANNEL')}</span>
+        <span className="channel-name">{model.prodChannel}</span>
+        <span className="channel-title">{t('TEST_CHANNEL')}</span>
+        <span className="channel-name">{model.testChannel}</span>
+      </Space>
     </Card>
   );
 };

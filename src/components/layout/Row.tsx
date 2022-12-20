@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRef } from 'react';
 import { FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
@@ -12,21 +14,44 @@ export const Row: FC<RowProps> = ({
   justify,
   align,
   children,
-  gap: gutter,
+  gap,
   style,
   className,
 }) => {
+  const padding = gap === undefined ? '0' : `-${gap / 2}px`;
+
   const styleResult = {
     display: 'flex',
     flexFlow: 'row wrap',
     justifyContent: justify,
     alignItems: align,
-    gap: gutter ? `0 ${gutter}px` : undefined,
+    margin: padding,
     ...style,
   };
 
+  const rowRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (gap !== undefined) {
+      if (rowRef.current) {
+        const children = rowRef.current.children;
+        for (let i = 0; i < children.length; i++) {
+          const child = rowRef.current.children[i] as HTMLDivElement;
+          child.style.padding = `${gap / 2}px`;
+        }
+      }
+    } else {
+      if (rowRef.current) {
+        const children = rowRef.current.children;
+        for (let i = 0; i < children.length; i++) {
+          const child = rowRef.current.children[i] as HTMLDivElement;
+          child.style.padding = '0';
+        }
+      }
+    }
+  }, [gap, children]);
+
   return (
-    <div style={styleResult} className={className}>
+    <div style={styleResult} className={className} ref={rowRef}>
       {children}
     </div>
   );

@@ -37,35 +37,42 @@ export const DashboardComponent = () => {
     }
   };
   return (
-    <div className="p-20">
-      <Row align="flex-end" justify="space-between">
-        <Col>
-          {t('CHATBOT_COUNT', { count: data?.length })}
-          <Button onClick={handleTest}>테스트</Button>
+    <div className="dashboardWrap">
+      <Input
+        size="large"
+        search
+        placeholder={t('SEARCH_PLACEHOLDER')}
+        value={searchKeyword}
+        onSearch={(v) => setSearchKeyword(v || '')}
+      />
+      <p className="chatbot-wrap">
+        <span className="my-chatbot">{t('MY_CHATBOT')}</span>
+        &nbsp;
+        <span className="chatbot-count">{data?.length || 0}</span>
+      </p>
+      <Row gap={20}>
+        <Col span={8}>
+          <NewBotCard onClick={() => handleIsOpen(true)} />
         </Col>
-        <Col className="w-300">
-          <Input
-            placeholder={t('SEARCH_PLACEHOLDER')}
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <Space direction="vertical">
-        <NewBotCard onClick={() => handleIsOpen(true)} />
+
         {isFetching ? (
-          <Card>
-            <Skeleton />
-          </Card>
+          <Col span={8}>
+            <Card>
+              <Skeleton />
+            </Card>
+          </Col>
         ) : (
           data
             ?.filter((x) => x.botName?.includes(searchKeyword))
             .map((bot) => {
-              return <BotCard key={bot.id} model={bot} />;
+              return (
+                <Col key={bot.id} span={8}>
+                  <BotCard model={bot} />
+                </Col>
+              );
             })
         )}
-      </Space>
+      </Row>
       <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} handleSave={handleSave} />
     </div>
   );

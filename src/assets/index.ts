@@ -1,3 +1,4 @@
+import icAdd from '@assets/icons/ic_add.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
 import icBtnTempleHover from '@assets/icons/ic_btn_temple_hover.svg';
 import icCardDelete from '@assets/icons/ic_card_delete.svg';
@@ -78,9 +79,12 @@ import icUser from '@assets/icons/ic_user.svg';
 import icUtterance from '@assets/icons/ic_Utterance_default.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
 import icInsta from '@assets/images/img_insta.svg';
+import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
+import imgLinebot from '@assets/images/img_linebot.svg';
 
 export {
+  icAdd,
   icBtnTemple,
   icBtnTempleHover,
   icCardDelete,
@@ -162,4 +166,6 @@ export {
   icUser,
   icUtterance,
   icUtteranceSelected,
+  imgInstabot,
+  imgLinebot,
 };
