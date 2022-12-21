@@ -16,11 +16,13 @@ export const BotBuilderHeader = () => {
     const cardType = e.currentTarget.value;
     const addCard: IBasicCard[] = [
       {
-        title: '',
-        thumbnail: cardType === 'text' ? undefined : { imageUrl: '' },
-        description: '',
+        title: cardType === 'Image' ? undefined : '',
+        thumbnail: cardType === 'Text' ? undefined : { imageUrl: '' },
+        description: cardType === 'Image' ? undefined : '',
         buttons:
-          cardType === 'text' ? undefined : [{ label: 'add a button', action: 'block' }],
+          cardType === 'Text' || cardType === 'Image'
+            ? undefined
+            : [{ label: 'Button 01', action: 'block' }],
       },
     ];
 
@@ -63,33 +65,37 @@ export const BotBuilderHeader = () => {
             <Button
               className="icon icText"
               onDragStart={(e) => handleDragStart(e)}
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'text' })}
               onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
-              value="text"
+              value="Text"
             />
             <Button
               className="icon icImg"
               onDragStart={(e) => handleDragStart(e)}
               onClick={(e) => handleMakingChatbubbleClick(e)}
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'image' })}
               draggable={true}
-              value="image"
+              value="Image"
             />
             <Button
               className="icon icBtnTemple"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'buttonTemplate' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Button Template"
             />
             <Button
               className="icon icList"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'list' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="List"
             />
             <Button
               className="icon icCommerce"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'commerce' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Commerce"
             />
           </Col>
         </div>

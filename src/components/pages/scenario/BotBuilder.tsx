@@ -1,6 +1,6 @@
 import { Node } from '@components/data-display';
 import { useRootState } from '@hooks';
-import { IArrow, IBasicCard } from '@models';
+import { IArrow, IBasicCard, ICommerceCard } from '@models';
 import { zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -94,15 +94,38 @@ export const Botbuilder = () => {
     if (!cardType) {
       return;
     }
-    const addCard: IBasicCard[] = [
-      {
-        title: '',
-        thumbnail: cardType === 'text' ? undefined : { imageUrl: '' },
-        description: '',
-        buttons:
-          cardType === 'text' ? undefined : [{ label: 'add a button', action: 'block' }],
-      },
-    ];
+    let addCard: IBasicCard[] | ICommerceCard[] = [];
+
+    switch (cardType) {
+      case 'Text':
+      case 'Image':
+      case 'Button Template':
+        addCard = [
+          {
+            title: cardType === 'Image' ? undefined : '',
+            thumbnail: cardType === 'Text' ? undefined : { imageUrl: '' },
+            description: cardType === 'Image' ? undefined : '',
+            buttons:
+              cardType === 'Text' || cardType === 'Image'
+                ? undefined
+                : [{ label: 'Button 01', action: 'block' }],
+          },
+        ];
+        break;
+
+      case 'Commerce':
+        addCard = [
+          {
+            price: 0,
+            currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
+            thumbnail: { imageUrl: '' },
+            profile: { brandName: '', imageUrl: '' },
+            productName: '',
+            // discount: 100,
+          },
+        ];
+        break;
+    }
 
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {

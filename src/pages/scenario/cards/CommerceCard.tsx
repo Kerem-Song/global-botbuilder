@@ -1,5 +1,6 @@
+import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
-import { Slick } from '@components/data-display/Slick';
+import { Carousel } from '@components/data-display/Carousel';
 import { Button } from '@components/general/Button';
 import { Divider } from '@components/layout/Divider';
 import classNames from 'classnames';
@@ -7,10 +8,11 @@ import { FC, useState } from 'react';
 import { ICommerceCard } from 'src/models/interfaces/ICard';
 
 interface CommerceCard {
+  nodeId: string;
   cards: ICommerceCard[];
 }
 
-export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
+export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
   const discountPriceCss = classNames('discountPrice', { discounted: true });
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
@@ -18,7 +20,7 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
   });
 
   return (
-    <Slick>
+    <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
         <Card key={i} hoverable onClick={() => console.log('card click')}>
           <div className={thumbnailClass}>
@@ -30,39 +32,44 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
           </div>
 
           <div className="profile">
-            <img src={item.profile.imageUrl} alt="" />
-            <span>{item.profile.nickname}</span>
-          </div>
-          <div className="priceWrapper">
-            <div className="prices">
-              {item.discountPrice && (
-                <p>
-                  {item.discountPrice}
-                  {item.currency}
-                </p>
-              )}
-
-              <p
-                className={classNames(
-                  'discountPrice',
-                  item.discountPrice ? 'discounted' : '',
-                )}
-              >
-                {item.price}
-              </p>
-            </div>
-            {item.discount && (
-              <div>
-                <p className="discount">
-                  {item.discount}
-                  discount
-                </p>
-              </div>
+            {item.profile.imageUrl ? (
+              <img src={item.profile.imageUrl} alt="profileImage" />
+            ) : (
+              <div className="skeleton"></div>
+            )}
+            {item.profile.brandName ? (
+              <span>{item.profile.brandName}</span>
+            ) : (
+              <span className="empty">Enter Brand Name</span>
             )}
           </div>
-          <Divider />
-          <div className="description">
-            <p>{item.description}</p>
+          <Divider className="commerceDivider" />
+          <div className="priceWrapper">
+            {item.discount && (
+              <div>
+                <span className="discounted">{item.price}</span>
+                <span className="discount">
+                  {item.discount} <span className="currency">{item.currency}</span>{' '}
+                  Discount
+                </span>
+              </div>
+            )}
+            <div className="prices">
+              {item.price ? (
+                <p>
+                  {item.discount ? item.price - item.discount : item.price}
+                  <span className="currency">{item.currency}</span>
+                </p>
+              ) : (
+                <p className="empty">
+                  {item.price} <span className="currency">{item.currency}</span>
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className={classNames('productName', item.productName ? '' : 'empty')}>
+            {item.productName ? <p>{item.productName}</p> : <p>Enter Product Name</p>}
           </div>
 
           <div className="buttonWrapper">
@@ -72,6 +79,6 @@ export const CommerceCard: FC<CommerceCard> = ({ cards }) => {
           </div>
         </Card>
       ))}
-    </Slick>
+    </Carousel>
   );
 };

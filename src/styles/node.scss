@@ -61,6 +61,21 @@
               max-height: rem(192);
             }
           }
+
+          &.round {
+            img {
+              border-radius: rem(8);
+            }
+
+            .skeleton {
+              border-radius: rem(8);
+            }
+          }
+
+          &.textCard {
+            display: none;
+          }
+
           .skeleton {
             height: 100%;
             background-color: $gray150;
@@ -79,6 +94,10 @@
             font-weight: 500;
             font-size: rem(13);
           }
+
+          &.none {
+            display: none;
+          }
         }
         .description {
           padding-top: rem(8);
@@ -89,6 +108,10 @@
             color: $gray300;
             font-weight: 400;
             font-size: rem(12);
+          }
+
+          &.none {
+            display: none;
           }
         }
         p {
@@ -105,38 +128,87 @@
           justify-content: start;
           align-items: center;
           overflow: hidden;
-
+          padding: rem(8) 0  0 rem(4);
+          .skeleton {
+            width: rem(24);
+            height: rem(24);
+            background-color: #EDEDF0;
+          }
           & img {
             width: rem(15);
           }
 
           & span {
             padding-left: rem(5);
+
+            &.empty {
+              color: $gray300;
+              font-weight: 500;
+              font-size: rem(13);
+              line-height: rem(15.6);
+            }
           }
+
         }
+
+        .commerceDivider {
+          margin: rem(4) 0 rem(8) 0;
+        }
+
         // Commerce Card priceWrapper
         .priceWrapper {
-          padding: rem(10) 0 rem(10) 0;
-          height: rem(40);
+          padding:0 0 rem(16) rem(4);
+
+          .currency {
+            padding-left: rem(2);
+          }
         }
+
         .prices {
           display: flex;
           justify-content: start;
           align-items: center;
+          padding-top: rem(4);
+          color: $grayBlack;
+          font-weight: 700;
+          font-size: rem(13);
+
+          .empty {
+            color: $gray300;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 16px;
+          }
+
           .discountPrice {
             padding-left: rem(5);
           }
-          .discounted {
-            font-size: rem(1);
-            color: gray;
-            text-decoration: line-through;
-          }
+     
         }
 
         // Commerce Card discount
+        .discounted {
+          font-size: rem(1);
+          color: gray;
+          text-decoration: line-through;
+        }
+
         .discount {
+          padding-left: rem(5);
           font-size: rem(10);
           color: red;
+        }
+
+        // Commerce Card Product Name {
+        .productName {
+          padding-left: rem(5);
+          font-size: rem(12);
+          color: $grayBlack;
+          font-weight: 400;
+
+          &.empty {
+            color: $gray300;
+          }
         }
       }
       &-bordered {

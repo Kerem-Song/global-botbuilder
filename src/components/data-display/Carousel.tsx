@@ -36,41 +36,43 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
 
   return (
     <>
-      <Row justify="space-between" align="center" className="carouselBtnWrapper">
-        <Col>
-          <button
-            className="carouselBtn prev"
-            onClick={handlePrevClick}
-            disabled={current === 0}
-          >
-            <img
-              src={current === 0 ? icCarouselPrevInactive : icCarouselPrevActive}
-              alt="carouselPrevBtn"
-            />
-          </button>
-        </Col>
-        <Col>
-          <p className="page">
-            {current + 1}/{children.length}
-          </p>
-        </Col>
-        <Col>
-          <button
-            className="carouselBtn next"
-            onClick={handleNextClick}
-            disabled={current + 1 === children.length}
-          >
-            <img
-              src={
-                current + 1 === children.length
-                  ? icCarouselNextInactive
-                  : icCarouselNextActive
-              }
-              alt="carouselNextBtn"
-            />
-          </button>
-        </Col>
-      </Row>
+      {children.length > 1 && (
+        <Row justify="space-between" align="center" className="carouselBtnWrapper">
+          <Col>
+            <button
+              className="carouselBtn prev"
+              onClick={handlePrevClick}
+              disabled={current === 0}
+            >
+              <img
+                src={current === 0 ? icCarouselPrevInactive : icCarouselPrevActive}
+                alt="carouselPrevBtn"
+              />
+            </button>
+          </Col>
+          <Col>
+            <p className="page">
+              {current + 1}/{children.length}
+            </p>
+          </Col>
+          <Col>
+            <button
+              className="carouselBtn next"
+              onClick={handleNextClick}
+              disabled={current + 1 === children.length}
+            >
+              <img
+                src={
+                  current + 1 === children.length
+                    ? icCarouselNextInactive
+                    : icCarouselNextActive
+                }
+                alt="carouselNextBtn"
+              />
+            </button>
+          </Col>
+        </Row>
+      )}
       <div role="presentation" style={{ width: '190px', overflowX: 'hidden' }}>
         <div style={{ display: 'flex', ...style }}>
           {children.map((c, i) => {

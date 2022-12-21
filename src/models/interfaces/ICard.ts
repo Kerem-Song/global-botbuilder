@@ -50,7 +50,7 @@ export interface IButtonType {
 }
 
 export interface Profile {
-  nickname: string;
+  brandName: string;
   imageUrl?: string;
 }
 
@@ -62,7 +62,7 @@ export interface IBasicCard {
 }
 
 export interface ICommerceCard {
-  description: string;
+  productName: string;
   price: number;
   currency: string;
   discount?: number;
@@ -70,5 +70,5 @@ export interface ICommerceCard {
   discountPrice?: number;
   thumbnail: IThumbnailType;
   profile: Profile;
-  buttons: IButtonType[];
+  buttons?: IButtonType[];
 }

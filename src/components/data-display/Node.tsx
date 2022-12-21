@@ -65,7 +65,8 @@ export const Node: FC<INodeProps> = ({
   const handleNodeBottomBtn = () => {
     console.log('handle node bottom btn');
   };
-
+  const isCommerce = cards?.some((e) => Object.keys(e).includes('price'));
+  console.log('isCommerce', isCommerce);
   const nodeMenu: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'duplication',
@@ -131,8 +132,13 @@ export const Node: FC<INodeProps> = ({
       </div>
       {cards ? (
         <div className={bodyClass}>
-          <BasicCard cards={cards} nodeId={`node-${id}`} />
-          {/* <CommerceCard cards={dummy2} /> */}
+          {!isCommerce ? (
+            <BasicCard cards={cards} nodeId={`node-${id}`} />
+          ) : (
+            <CommerceCard cards={cards} nodeId={`node-${id}`} />
+          )}
+
+          {/* <CommerceCard cards={cards} nodeId={`node-${id}`} /> */}
           {/* <QuickReply /> */}
         </div>
       ) : undefined}
