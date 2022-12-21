@@ -1,8 +1,7 @@
 import { useRootState } from '@hooks';
 import { IArrow } from '@models';
 import { setSelected } from '@store/botbuilderSlice';
-import { removeArrow } from '@store/makingNode';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ConnectLine } from './ConnectLine';
