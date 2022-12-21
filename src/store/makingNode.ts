@@ -107,21 +107,19 @@ export const testNodes: INode[] = [
 ];
 
 export interface INode {
-  id?: string;
+  id: string;
   title?: string;
   x: number;
   y: number;
   cards?: IBasicCard[] | ICommerceCard[];
 }
-export interface INodes {
+export interface IBuilderInfo {
   nodes: INode[];
   arrows: IArrow[];
-  nodeLength: number;
 }
-const initialState: INodes = {
+const initialState: IBuilderInfo = {
   nodes: testNodes,
   arrows: [],
-  nodeLength: 0,
 };
 
 export const makingNodeSlice = createSlice({
@@ -144,19 +142,24 @@ export const makingNodeSlice = createSlice({
     },
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
+
+      if (arrow.start === arrow.end) {
+        return;
+      }
+
+      if (state.arrows.find((x) => x.start === arrow.start)) {
+        return;
+      }
+
       state.arrows = [...state.arrows, arrow];
     },
-    setTempCard: (state, action: PayloadAction<INodes>) => {
+    setTempCard: (state, action: PayloadAction<IBuilderInfo>) => {
       const { nodes } = action.payload;
       state.nodes = state.nodes.concat(nodes);
       console.log('test arr in making card slice', state.nodes);
     },
-    checkNodesLength: (state, action: PayloadAction<INodes>) => {
-      state.nodeLength = state.nodes.length;
-    },
   },
 });
 
-export const { appendNode, updateNode, addArrow, setTempCard, checkNodesLength } =
-  makingNodeSlice.actions;
+export const { appendNode, updateNode, addArrow, setTempCard } = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

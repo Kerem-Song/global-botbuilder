@@ -5,7 +5,7 @@ import { encryptTransform } from 'redux-persist-transform-encrypt';
 import undoable from 'redux-undo';
 
 import authReducer from './authSlice';
-import botBuilderMakerReducer from './botbuilderMaker';
+import botBuilderReducer from './botbuilderSlice';
 import brandInfoReducer from './brandInfoSlice';
 import makingNodeSliceReducer from './makingNode';
 import sideBarStatusReducer from './sidebarStatusSlice';
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   systemModalReducer,
   sideBarStatusReducer,
   brandInfoReducer,
-  botBuilderMakerReducer,
+  botBuilderReducer,
   makingNodeSliceReducer: undoable(makingNodeSliceReducer),
 });
 

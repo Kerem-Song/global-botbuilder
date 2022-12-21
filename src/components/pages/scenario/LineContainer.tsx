@@ -222,13 +222,11 @@ const ConnectLine: FC<IConnectLineProps> = ({
 
         lineRef.current.setAttribute(
           'd',
-          //`M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
           `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
         );
 
         lineMouseRef.current.setAttribute(
           'd',
-          //`M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} L ${l3.x} ${l3.y} L ${l4.x} ${l4.y} L ${end.x} ${end.y}`,
           `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
         );
       }

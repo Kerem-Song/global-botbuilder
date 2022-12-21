@@ -1,73 +1,45 @@
 import { Node } from '@components/data-display';
 import { useRootState } from '@hooks';
 import { IArrow, IBasicCard } from '@models';
-import React, { useEffect, useRef, useState } from 'react';
+import { zoomIn, zoomOut } from '@store/botbuilderSlice';
+import React, { useCallback, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
-import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
+import { addArrow, appendNode, INode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { LineContainer, updateLine } from './LineContainer';
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
+
+  const botbuilderRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
+
+  const [isPanning, setIsPanning] = useState<boolean>(false);
+  const [selectedNode, setSelectedNode] = useState<string>('');
+
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
+
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
 
-  const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
-  const [isPanning, setIsPanning] = useState<boolean>(false);
-  const [selectedNode, setSelectedNode] = useState<string>('');
-  const [scale, setScale] = useState(1.0);
-  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
-  const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(0);
-  const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
-  const [isRendered, setIsRendered] = useState<boolean>(false);
+  const handleAddArrows = (arrow: IArrow) => {
+    dispatch(addArrow(arrow));
+  };
 
-  useEffect(() => {
-    window.addEventListener('wheel', (e) => {
-      console.log(e);
-      e.preventDefault();
-    });
-
-    window.addEventListener('wheel.impair', (e) => {
-      console.log(e);
-      e.preventDefault();
-    });
+  const handleZoomOut = useCallback(() => {
+    dispatch(zoomOut());
   }, []);
 
-  const handleAddArrows = (arrow: IArrow) => {
-    if (!arrows.find((x) => x.start === arrow.start)) {
-      dispatch(addArrow(arrow));
-    }
-  };
-
-  const transformOptions = {
-    limitToBounds: true,
-    minScale: 0.25,
-    maxScale: 2,
-  };
-
-  const zoomOut = () => {
-    const ratio = 0.25;
-    let v = scale - ratio;
-
-    if (transformOptions.minScale > v) {
-      v = transformOptions.minScale;
-    }
-    setScale(v);
-  };
-
-  const zoomIn = () => {
-    let v = scale + 0.25;
-
-    if (transformOptions.maxScale < v) {
-      v = transformOptions.maxScale;
-    }
-    setScale(v);
-  };
+  const handleZoomIn = useCallback(() => {
+    dispatch(zoomIn());
+  }, []);
 
   const panning = (x: number, y: number) => {
     if (!canvasRef.current) {
@@ -84,9 +56,9 @@ export const Botbuilder = () => {
 
   const outterMouseWheelHandler = (e: React.WheelEvent<HTMLDivElement>): void => {
     if (e.nativeEvent.deltaY > 0) {
-      zoomOut();
+      handleZoomOut();
     } else {
-      zoomIn();
+      handleZoomIn();
     }
   };
 
@@ -104,9 +76,6 @@ export const Botbuilder = () => {
       setIsPanning(false);
     }
   };
-
-  const botbuilderRef = useRef<HTMLDivElement | null>(null);
-  const draggableRef = useRef<HTMLDivElement | null>(null);
 
   const handleNodeClick = (id: string) => {
     const nodes = document.querySelectorAll<HTMLDivElement>('.draggableNode');
@@ -134,59 +103,43 @@ export const Botbuilder = () => {
           cardType === 'text' ? undefined : [{ label: 'add a button', action: 'block' }],
       },
     ];
-    console.log(e.clientX, e.clientY);
-    const canvasRect = canvasRef.current?.getBoundingClientRect();
+
+    const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
-      id: `${nodes.length + 1}`,
-      x: e.clientX / scale - (canvasRect?.left || 0),
-      y: e.clientY / scale - (canvasRect?.top || 0),
+      id: uuidv4(),
+      x: e.clientX / scale - canvasRect.left,
+      y: e.clientY / scale - canvasRect.top,
       title: cardType,
       cards: addCard,
     };
 
     dispatch(appendNode(addNode));
-
-    if (!canvasRef.current) {
-      return;
-    }
   };
 
-  const handleMakingChatBubbleClick = () => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvasRect = canvasRef.current.getBoundingClientRect();
-    const translateX = (canvasRect.width - 310) / 2;
-    const translateY = (canvasRect.height - 300) / 2;
-    setPositionX(translateX);
-    setPositionY(translateY);
+  const handleUpdateNodePosition = (index: number, item: INode) => {
+    const canvasRect = canvasRef.current?.getBoundingClientRect();
+    const nodeRect = nodeRef.current[index]?.getBoundingClientRect();
+    const node = {
+      ...item,
+      x: (nodeRect?.x || 0) - (canvasRect?.left || 0),
+      y: (nodeRect?.y || 0) - (canvasRect?.top || 0),
+    };
+    dispatch(updateNode(node));
   };
-
-  // useEffect(() => {
-  //   if (isRendered && nodeRef.current) {
-  //     nodeRef.current[
-  //       nodes.length - 1
-  //     ]!.style.transform = `translate(${positionX}px, ${positionY}px)`;
-  //     console.log('asdf', nodeRef.current[nodes.length - 1]);
-  //   }
-  //   setIsRendered(false);
-  // }, [handleChatbubbleDrop, nodes]);
 
   return (
     <>
-      <BotBuilderZoomBtn zoomIn={zoomIn} zoomOut={zoomOut} canvasScale={scale} />
+      <BotBuilderZoomBtn />
 
       <div
         className="botBuilderMain"
-        onWheel={(e) => outterMouseWheelHandler(e)}
-        onMouseDown={(e) => handleCanvasClick(e)}
+        onWheel={outterMouseWheelHandler}
+        onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={(e) => handleCanvasClick(e)}
+        onMouseUp={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
-        onDrop={(e) => {
-          handleChatbubbleDrop(e);
-        }}
+        onDrop={handleChatbubbleDrop}
         onDragOver={(e) => {
           e.preventDefault();
         }}
@@ -199,7 +152,6 @@ export const Botbuilder = () => {
         >
           {nodes.map((item, i) => (
             <Draggable
-              //defaultPosition={{}}
               position={{
                 x: item.x,
                 y: item.y,
@@ -209,19 +161,10 @@ export const Botbuilder = () => {
               key={item.id}
               onDrag={(e) => {
                 e.stopPropagation();
-                //updateXarrow();
                 updateLine(`node-${item.id}`);
               }}
-              onStop={(e) => {
-                const me = e as MouseEvent;
-                const canvasRect = canvasRef.current?.getBoundingClientRect();
-                const nodeRect = nodeRef.current[i]?.getBoundingClientRect();
-                const node = {
-                  ...item,
-                  x: (nodeRect?.x || 0) - (canvasRect?.left || 0),
-                  y: (nodeRect?.y || 0) - (canvasRect?.top || 0),
-                };
-                dispatch(updateNode(node));
+              onStop={() => {
+                handleUpdateNodePosition(i, item);
               }}
               cancel=".node-draggable-ignore"
               onMouseDown={(e) => e.stopPropagation()}
@@ -230,11 +173,7 @@ export const Botbuilder = () => {
                 role="presentation"
                 className="draggableNode"
                 style={{
-                  // display: 'block',
                   position: 'absolute',
-                  //zIndex: selectedNode === item.id ? 100 : 0,
-                  // width: '100%',
-                  // height: "100%",
                 }}
                 ref={(el) => (nodeRef.current[i] = el)}
               >
@@ -244,7 +183,7 @@ export const Botbuilder = () => {
                   title={item.title}
                   cards={item.cards}
                   active={selectedNode === item.id}
-                  onClick={(e) => handleNodeClick(item.id!)}
+                  onClick={() => handleNodeClick(item.id)}
                   addArrow={(from, to) => {
                     handleAddArrows({ start: from, end: to });
                   }}
@@ -253,36 +192,6 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer lines={arrows} />
-          {/* {arrows.map((x, i) => (
-              <Xarrow
-                key={i}
-                path={'grid'}
-                start={x.start}
-                end={x.end}
-                endAnchor={{ position: 'top', offset: { x: 0, y: 200 } }}
-                startAnchor={{ position: 'bottom', offset: { x: 0, y: 0 } }}
-                // _cpy1Offset={250}
-                // _cpy2Offset={-250}
-                // _cpx1Offset={250}
-                // _cpx2Offset={-250}
-                dashness
-                color="#00B4ED"
-                strokeWidth={3}
-                curveness={0.1}
-                headShape={{
-                  svgElem: (
-                    <path
-                      d="M 0 0 L 1 0.5 L 0 1 M 0 0 z"
-                      stroke="#00B4ED"
-                      strokeWidth={0.1}
-                      fill="none"
-                      style={{ transform: 'translate(90)' }}
-                    />
-                  ),
-                  offsetForward: 1,
-                }}
-              />
-            ))} */}
         </div>
       </div>
     </>

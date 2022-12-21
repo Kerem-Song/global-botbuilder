@@ -18,10 +18,10 @@ export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
   icon?: string;
   value?: string;
   draggable?: boolean;
-  onClick?: () => void;
-  onDrag?: (e: React.DragEvent) => void;
-  onDragStart?: (e: React.DragEvent) => void;
-  onDrop?: (e: React.DragEvent) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDrag?: (e: React.DragEvent<HTMLButtonElement>) => void;
+  onDragStart?: (e: React.DragEvent<HTMLButtonElement>) => void;
+  onDrop?: (e: React.DragEvent<HTMLButtonElement>) => void;
   onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
 }
 

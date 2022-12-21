@@ -1,36 +1,19 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
-import { useRootState } from '@hooks';
-import { IBasicCard, IBotBuilderCardType } from '@models/interfaces/ICard';
-import { setBotBuilderCardType } from '@store/botbuilderMaker';
-import { INodes, setTempCard } from '@store/makingNode';
-import React, { useCallback, useRef } from 'react';
+import { IBasicCard } from '@models/interfaces/ICard';
+import { appendNode } from '@store/makingNode';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 export const BotBuilderHeader = () => {
   const cardNum = 12;
   const dispatch = useDispatch();
-  const handleCardType = useCallback(
-    (payload: IBotBuilderCardType) => dispatch(setBotBuilderCardType(payload)),
-    [dispatch],
-  );
 
-  const setTemporaryCard = useCallback(
-    (payload: INodes) => dispatch(setTempCard(payload)),
-    [dispatch],
-  );
-
-  // const handleMakingChatbubbleBtn = (payload: IBotBuilderCardType) => {
-  //   console.log('handlemaking btn');
-  //   handleCardType(payload);
-  // };
-  // const handleMakingChatbubbleBtn = (e: HTMLButtonElement) {
-  //   e.
-  // }
-  const cardType = useRootState((state) => state.botBuilderMakerReducer.cardType);
-  const nodeLength = useRootState((state) => state.makingNodeSliceReducer.nodeLength);
-  const handleMakingChatbubbleClick = () => {
-    // const cardType = e.currentTarget.value;
+  const handleMakingChatbubbleClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    const cardType = e.currentTarget.value;
     const addCard: IBasicCard[] = [
       {
         title: '',
@@ -41,17 +24,26 @@ export const BotBuilderHeader = () => {
       },
     ];
 
+    const view = document.querySelector('.botBuilderMain');
+    const canvas = document.querySelector('.canvasWrapper');
+    const canvasRect = canvas?.getBoundingClientRect();
+    const viewRect = view?.getBoundingClientRect();
+
     const addNode = {
-      id: `${nodeLength + 1}`,
+      id: uuidv4(),
       title: cardType,
       cards: addCard,
+      x:
+        canvasRect && viewRect
+          ? viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x)
+          : 0,
+      y:
+        canvasRect && viewRect
+          ? viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y)
+          : 0,
     };
 
-    setTemporaryCard({ nodes: [addNode] });
-
-    // const canvasRect = canvasRef.current.getBoundingClientRect();
-    // const translateX = (canvasRect.width - 310) / 2;
-    // const translateY = (canvasRect.height - 300) / 2;
+    dispatch(appendNode(addNode));
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
@@ -72,13 +64,14 @@ export const BotBuilderHeader = () => {
               className="icon icText"
               onDragStart={(e) => handleDragStart(e)}
               // onClick={() => handleMakingChatbubbleBtn({ cardType: 'text' })}
-              onClick={() => handleMakingChatbubbleClick()}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
               value="text"
             />
             <Button
               className="icon icImg"
               onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               // onClick={() => handleMakingChatbubbleBtn({ cardType: 'image' })}
               draggable={true}
               value="image"
