@@ -6,6 +6,7 @@ export * from './ICard';
 export * from './IDataEntryProp';
 export * from './IHasChildren';
 export * from './IHasStyle';
+export * from './INode';
 export * from './IPageProps';
 export * from './IScenarioModel';
 export * from './IScenarioVariable';

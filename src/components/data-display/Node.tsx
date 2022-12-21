@@ -1,7 +1,9 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
@@ -40,6 +42,7 @@ export const Node: FC<INodeProps> = ({
   addArrow,
 }) => {
   const { tc } = useI18n();
+  const dispatch = useDispatch();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
     'luna-node-hoverble': hoverable,
@@ -60,6 +63,7 @@ export const Node: FC<INodeProps> = ({
 
   const handleDeleteCard = () => {
     console.log('handle delete card');
+    dispatch(removeItem(id));
   };
 
   const handleNodeBottomBtn = () => {
@@ -126,6 +130,9 @@ export const Node: FC<INodeProps> = ({
           popup
           popupList
           popperItems={nodeMenu}
+          onChange={(m) => {
+            m.data?.action?.();
+          }}
         >
           <i className="fa-solid fa-ellipsis-vertical" />
         </Popper>

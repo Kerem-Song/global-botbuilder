@@ -11,9 +11,7 @@ export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
   return (
     <div>
       {clone}
-      <div style={{ color: 'red', padding: '5px 5px 0 5px', height: '21px' }}>
-        {error?.message}
-      </div>
+      <div className="error-message">{error?.message}</div>
     </div>
   );
 };

@@ -54,7 +54,7 @@ export const ScenarioManagement = () => {
         </Space>
       </div>
       <div className="search">
-        <Input placeholder="시나리오명을 입력해주세요. " />
+        <Input placeholder="시나리오명을 입력해주세요. " search />
       </div>
     </div>
   );

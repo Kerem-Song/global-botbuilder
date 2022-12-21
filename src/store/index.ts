@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   sideBarStatusReducer,
   brandInfoReducer,
   botBuilderReducer,
-  makingNodeSliceReducer: undoable(makingNodeSliceReducer),
+  makingNodeSliceReducer: undoable(makingNodeSliceReducer, { debug: true }),
 });
 
 type ReducerType = typeof rootReducer;

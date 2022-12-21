@@ -21,7 +21,7 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
   return (
     <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
-        <Card key={i} onClick={() => console.log('card click')}>
+        <Card key={`card-${i}`} onClick={() => console.log('card click')}>
           {item.thumbnail ? (
             <div
               className={classNames(
@@ -62,10 +62,10 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
           </div>
 
           <div className="buttonWrapper">
-            {item.buttons?.map((button, i) => {
+            {item.buttons?.map((button, j) => {
               return (
                 <>
-                  <Button key={i}>{button.label}</Button>
+                  <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
                 </>
               );
             })}

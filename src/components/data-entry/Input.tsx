@@ -90,16 +90,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
           <Button
             small
             shape="ghost"
+            className="input-button"
             onClick={() => {
               setValue('');
               onSearch?.('');
             }}
           >
-            <img
-              className="search"
-              src={value?.length ? icSearchDelete : icSearch}
-              alt="serach"
-            />
+            <div className={classNames('search', { clear: value?.length })} />
           </Button>
         ) : undefined}
       </span>

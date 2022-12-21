@@ -1,14 +1,14 @@
 import { Node } from '@components/data-display';
 import { useRootState } from '@hooks';
-import { IArrow, IBasicCard, ICommerceCard } from '@models';
-import { zoomIn, zoomOut } from '@store/botbuilderSlice';
-import React, { useCallback, useRef, useState } from 'react';
+import { IArrow, IBasicCard, ICommerceCard, INode } from '@models';
+import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
-import { addArrow, appendNode, INode, updateNode } from '../../../store/makingNode';
+import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { LineContainer, updateLine } from './LineContainer';
 
@@ -20,14 +20,28 @@ export const Botbuilder = () => {
   const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
 
   const [isPanning, setIsPanning] = useState<boolean>(false);
-  const [selectedNode, setSelectedNode] = useState<string>('');
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const selected = useRootState((state) => state.botBuilderReducer.selected);
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
+
+  useEffect(() => {
+    const event = (e: KeyboardEvent) => {
+      if (e.key === 'Delete') {
+        dispatch(removeItem(selected));
+        dispatch(setSelected());
+      }
+    };
+    window.addEventListener('keydown', event);
+
+    return () => {
+      window.removeEventListener('keydown', event);
+    };
+  }, [selected]);
 
   const handleAddArrows = (arrow: IArrow) => {
     dispatch(addArrow(arrow));
@@ -69,7 +83,7 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setSelectedNode('');
+    dispatch(setSelected());
     if (e.buttons === 1) {
       setIsPanning(true);
     } else {
@@ -78,15 +92,15 @@ export const Botbuilder = () => {
   };
 
   const handleNodeClick = (id: string) => {
-    const nodes = document.querySelectorAll<HTMLDivElement>('.draggableNode');
-    nodes.forEach((n) => {
+    const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
+    nodeElements.forEach((n) => {
       n.style.zIndex = `${Math.max(0, Number(n.style.zIndex) - 1)}`;
     });
     const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
     if (nodeWrap) {
-      nodeWrap.style.zIndex = `${nodes.length}`;
+      nodeWrap.style.zIndex = `${nodeElements.length}`;
     }
-    setSelectedNode(id);
+    dispatch(setSelected(id));
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -142,10 +156,15 @@ export const Botbuilder = () => {
   const handleUpdateNodePosition = (index: number, item: INode) => {
     const canvasRect = canvasRef.current?.getBoundingClientRect();
     const nodeRect = nodeRef.current[index]?.getBoundingClientRect();
+    const x = (nodeRect?.x || 0) - (canvasRect?.left || 0);
+    const y = (nodeRect?.y || 0) - (canvasRect?.top || 0);
+    if (x === item.x && y === item.y) {
+      return;
+    }
     const node = {
       ...item,
-      x: (nodeRect?.x || 0) - (canvasRect?.left || 0),
-      y: (nodeRect?.y || 0) - (canvasRect?.top || 0),
+      x,
+      y,
     };
     dispatch(updateNode(node));
   };
@@ -205,7 +224,7 @@ export const Botbuilder = () => {
                   key={item.id}
                   title={item.title}
                   cards={item.cards}
-                  active={selectedNode === item.id}
+                  active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}
                   addArrow={(from, to) => {
                     handleAddArrows({ start: from, end: to });
