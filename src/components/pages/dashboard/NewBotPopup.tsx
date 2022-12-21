@@ -51,6 +51,7 @@ export const NewBotPopup: FC<{
           width: '600px',
           height: 'fit-content',
           margin: 'auto',
+          marginTop: '200px',
           padding: 0,
         },
       }}
