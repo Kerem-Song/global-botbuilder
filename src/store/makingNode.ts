@@ -1,4 +1,4 @@
-import { IArrow } from '@models';
+import { IArrow, INode } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 
@@ -106,16 +106,10 @@ export const testNodes: INode[] = [
   },
 ];
 
-export interface INode {
-  id: string;
-  title?: string;
-  x: number;
-  y: number;
-  cards?: IBasicCard[] | ICommerceCard[];
-}
 export interface IBuilderInfo {
   nodes: INode[];
   arrows: IArrow[];
+  selected?: INode | IArrow;
 }
 const initialState: IBuilderInfo = {
   nodes: testNodes,
@@ -153,6 +147,52 @@ export const makingNodeSlice = createSlice({
 
       state.arrows = [...state.arrows, arrow];
     },
+    removeItem: (state, action: PayloadAction<IArrow | string | undefined>) => {
+      if (typeof action.payload === 'string') {
+        const nodeId = action.payload as string;
+        if (nodeId) {
+          const found = state.nodes.find((x) => x.id === nodeId);
+
+          if (!found) {
+            return;
+          }
+
+          const index = state.nodes.indexOf(found);
+          const nodes = [...state.nodes];
+          nodes.splice(index, 1);
+          state.nodes = nodes;
+
+          const removeArrows = state.arrows.filter(
+            (x) => x.start === `node-${nodeId}` || x.end === `node-${nodeId}`,
+          );
+
+          if (removeArrows.length) {
+            const arrows = [...state.arrows];
+            removeArrows.forEach((arrow) => {
+              const index = arrows.indexOf(arrow);
+              arrows.splice(index, 1);
+            });
+            state.arrows = arrows;
+          }
+        }
+      } else {
+        const arrow = action.payload as IArrow;
+        if (arrow) {
+          const found = state.arrows.find(
+            (x) => x.start === arrow.start && x.end === arrow.end,
+          );
+
+          if (!found) {
+            return;
+          }
+
+          const index = state.arrows.indexOf(found);
+          const arrows = [...state.arrows];
+          arrows.splice(index, 1);
+          state.arrows = arrows;
+        }
+      }
+    },
     setTempCard: (state, action: PayloadAction<IBuilderInfo>) => {
       const { nodes } = action.payload;
       state.nodes = state.nodes.concat(nodes);
@@ -161,5 +201,6 @@ export const makingNodeSlice = createSlice({
   },
 });
 
-export const { appendNode, updateNode, addArrow, setTempCard } = makingNodeSlice.actions;
+export const { appendNode, updateNode, addArrow, removeItem, setTempCard } =
+  makingNodeSlice.actions;
 export default makingNodeSlice.reducer;
