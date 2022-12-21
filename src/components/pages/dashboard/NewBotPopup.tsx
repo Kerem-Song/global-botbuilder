@@ -59,12 +59,12 @@ export const NewBotPopup: FC<{
         setFocus('botName');
       }}
     >
-      <div style={{ padding: '14px 20px 0 20px' }}>
+      <div style={{ padding: '14px 20px 2px 20px' }}>
         <Title level={4}>{t('NEW_BOT_TITLE')}</Title>
       </div>
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row align="center" style={{ padding: '20px' }}>
+        <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
           <Col span={6}>{t('BOT_NAME_LABEL')}</Col>
           <Col span={18}>
             <FormItem error={errors.botName}>

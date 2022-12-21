@@ -74,6 +74,7 @@
   }
   .count {
     line-height: 2;
+    color: $gray300;
   }
   .input-button {
     width: rem(16);
@@ -102,10 +103,10 @@
 }
 
 .luna-input-error {
-  border: 1px solid #f00;
+  border: 1px solid $red;
   &:focus-within {
-    border-color: #f00;
-    box-shadow: 0 0 0 2px setAlpha(#f00, 0.2);
+    border-color: $red;
+    box-shadow: 0 0 0 2px setAlpha($red, 0.2);
     border-right-width: 1px;
     outline: 0;
   }
