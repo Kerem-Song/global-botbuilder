@@ -90,12 +90,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
           <Button
             small
             shape="ghost"
+            className="input-button"
             onClick={() => {
               setValue('');
               onSearch?.('');
             }}
           >
-            {value?.length ? <div className="clear" /> : <div className="search" />}
+            <div className={classNames('search', { clear: value?.length })} />
           </Button>
         ) : undefined}
       </span>
