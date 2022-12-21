@@ -76,9 +76,22 @@
     line-height: 2;
   }
   .search {
-    width: rem(11);
-    height: rem(11);
-    margin-top: rem(2);
+    width: rem(16);
+    height: rem(16);
+    margin-top: rem(0);
+    background-image: url('@assets/icons/ic_search.svg');
+    &:hover {
+      background-image: url('@assets/icons/ic_search_active.svg');
+    }
+  }
+  .clear {
+    width: rem(16);
+    height: rem(16);
+    margin-top: rem(0);
+    background-image: url('@assets/icons/ic_search_delete.svg');
+    &:hover {
+      background-image: url('@assets/icons/ic_search_delete_active.svg');
+    }
   }
 }
 

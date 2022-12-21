@@ -95,11 +95,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
               onSearch?.('');
             }}
           >
-            <img
-              className="search"
-              src={value?.length ? icSearchDelete : icSearch}
-              alt="serach"
-            />
+            {value?.length ? <div className="clear" /> : <div className="search" />}
           </Button>
         ) : undefined}
       </span>

@@ -75,7 +75,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
         <div style={{ display: 'flex', ...style }}>
           {children.map((c, i) => {
             return (
-              <div style={{ width: '190px', flex: 'none' }} key={i}>
+              <div style={{ width: '190px', flex: 'none' }} key={`card-wrap-${i}`}>
                 {i === current ? c : <div style={{ width: '190px' }}></div>}
               </div>
             );
