@@ -1,8 +1,7 @@
 import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
-import { IArrow, IBasicCard, ICommerceCard, IListCard, INode } from '@models';
-import { TDefaultCard } from '@models/types/DefaultCardType';
+import { IArrow, INode, TDefaultCard } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';

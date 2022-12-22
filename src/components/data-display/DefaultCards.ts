@@ -1,5 +1,9 @@
-import { IBasicCard, ICommerceCard, IListCard } from '@models/interfaces/ICard';
-import { TDefaultCard } from '@models/types/DefaultCardType';
+import {
+  IBasicCard,
+  ICommerceCard,
+  IListCard,
+  TDefaultCard,
+} from '@models/interfaces/ICard';
 
 export const defaultCards = (cardType: TDefaultCard) => {
   let addCard: IBasicCard[] | ICommerceCard[] | IListCard[] = [];

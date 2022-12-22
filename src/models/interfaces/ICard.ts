@@ -28,6 +28,19 @@ export type TCardType =
   | 'quickReply'
   | 'condition';
 
+export type TDefaultCard =
+  | 'Text'
+  | 'Image'
+  | 'Button Template'
+  | 'List'
+  | 'Commerce'
+  | 'Image Carousel'
+  | 'List Carousel'
+  | 'Commerce Carousel'
+  | 'Quick Reply'
+  | 'Condition'
+  | 'Count';
+
 export interface IBotBuilderCardType {
   cardType: TCardType;
 }

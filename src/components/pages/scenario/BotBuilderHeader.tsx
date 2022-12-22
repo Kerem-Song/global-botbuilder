@@ -1,8 +1,7 @@
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
-import { IBasicCard } from '@models/interfaces/ICard';
-import { TDefaultCard } from '@models/types/DefaultCardType';
+import { TDefaultCard } from '@models/interfaces/ICard';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -97,18 +96,24 @@ export const BotBuilderHeader = () => {
           <Col className="btnWrapper">
             <Button
               className="icon icCaroImg"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'imgCarousel' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Image Carousel"
             />
             <Button
               className="icon icCaroList"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'listCarousel' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="List Carousel"
             />
             <Button
               className="icon icCaroCommerce"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'commerceCarousel' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Commerce Carousel"
             />
           </Col>
         </div>
@@ -117,13 +122,24 @@ export const BotBuilderHeader = () => {
           <Col className="btnWrapper">
             <Button
               className="icon icQuickBtn"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'quickReply' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Quick Reply"
             />
             <Button
               className="icon icCondition"
-              // onClick={() => handleMakingChatbubbleBtn({ cardType: 'condition' })}
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
+              value="Condition"
+            />
+            <Button
+              className="icon icCount"
+              onDragStart={(e) => handleDragStart(e)}
+              onClick={(e) => handleMakingChatbubbleClick(e)}
+              draggable={true}
+              value="Count"
             />
           </Col>
         </div>

@@ -112,6 +112,12 @@
             background-image: url('@assets/icons/ic_Condition_hover.svg');
           }
         }
+        .icCount {
+          background-image: url('@assets/icons/ic_count.svg');
+          &:hover {
+            background-image: url('@assets/icons/ic_count_hover.svg');
+          }
+        }
       }
     }
   }
