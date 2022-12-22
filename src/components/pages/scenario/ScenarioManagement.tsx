@@ -7,7 +7,7 @@ import { ScenarioItem } from './ScenarioItem';
 export const ScenarioManagement = () => {
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList;
-  const basicScenarioList = [{ name: 'Welcome' }, { name: 'FAQ' }, { name: 'Help' }];
+  const basicScenarioList = [{ name: 'FAQ' }];
 
   const handleSwitch = () => {
     console.log('switch toggle');

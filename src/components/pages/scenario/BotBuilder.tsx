@@ -1,6 +1,6 @@
 import { Node } from '@components/data-display';
 import { useRootState } from '@hooks';
-import { IArrow, IBasicCard, ICommerceCard, INode } from '@models';
+import { IArrow, IBasicCard, ICommerceCard, IListCard, INode } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -108,7 +108,7 @@ export const Botbuilder = () => {
     if (!cardType) {
       return;
     }
-    let addCard: IBasicCard[] | ICommerceCard[] = [];
+    let addCard: IBasicCard[] | ICommerceCard[] | IListCard[] = [];
 
     switch (cardType) {
       case 'Text':
@@ -139,6 +139,23 @@ export const Botbuilder = () => {
           },
         ];
         break;
+
+      case 'List':
+        addCard = [
+          {
+            header: {
+              title: 'ㅁㄴㅇㄹ',
+            },
+            thumbnail: { imageUrl: '' },
+            items: [
+              {
+                thumbnail: { imageUrl: '' },
+                title: '',
+                description: '',
+              },
+            ],
+          },
+        ];
     }
 
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();

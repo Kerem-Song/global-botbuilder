@@ -72,3 +72,21 @@ export interface ICommerceCard {
   profile: Profile;
   buttons?: IButtonType[];
 }
+
+export interface IListCard {
+  header: {
+    title: string;
+  };
+  thumbnail?: IThumbnailType;
+  items: {
+    thumbnail?: IThumbnailType;
+    title: string;
+    description?: string;
+    action?: 'block' | 'message';
+    blockId?: string;
+    messageText?: string;
+    extra?: Map<string, any>;
+    link?: 'pc' | 'mobile' | 'web';
+  }[];
+  buttons?: IButtonType[];
+}
