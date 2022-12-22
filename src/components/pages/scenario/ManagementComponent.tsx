@@ -5,7 +5,6 @@ import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import usePage from '../../../hooks/usePage';
 import { ScenarioManagement } from './ScenarioManagement';
 import { VariablesManagement } from './VariablesManagement';
-
 export const ManagementComponent = () => {
   const { t } = usePage();
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
@@ -25,16 +24,16 @@ export const ManagementComponent = () => {
           {scenarioTab ? <span>{data?.length}</span> : null}
         </p>
         <div className="scenarioNameTabs">
-          <i
-            className={classNames('fa-solid fa-bars', scenarioTab ? 'on' : '')}
+          <div
+            className={classNames('tab scenario', scenarioTab ? 'on' : '')}
             onClick={handleScenarioNameTags}
             role="presentation"
-          />
-          <i
-            className={classNames('fa-solid fa-code', scenarioTab ? '' : 'on')}
+          ></div>
+          <div
+            className={classNames('tab variable', scenarioTab ? '' : 'on')}
             onClick={handleScenarioNameTags}
             role="presentation"
-          />
+          ></div>
         </div>
       </div>
       {scenarioTab ? <ScenarioManagement /> : <VariablesManagement />}

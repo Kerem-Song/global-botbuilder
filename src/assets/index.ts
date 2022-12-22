@@ -64,6 +64,10 @@ import icScenarioZoomMinus from '@assets/icons/ic_scenario_zoom_minus_default.sv
 import icScenarioZoomMinusHover from '@assets/icons/ic_scenario_zoom_minus_hover.svg';
 import icScenarioZoomPlus from '@assets/icons/ic_scenario_zoom_plus_default.svg';
 import icScenarioZoomPlusHover from '@assets/icons/ic_scenario_zoom_plus_hover.svg';
+import icScenarioTabScenarioOff from '@assets/icons/ic_scenariotab_scenario_off.svg';
+import icScenarioTabScenarioOn from '@assets/icons/ic_scenariotab_scenario_on.svg';
+import icScenarioTabVariableOff from '@assets/icons/ic_scenariotab_varaiable_off.svg';
+import icScenarioTabVariableOn from '@assets/icons/ic_scenariotab_varaiable_on.svg';
 import icSearch from '@assets/icons/ic_search.svg';
 import icSearchActive from '@assets/icons/ic_search_active.svg';
 import icSearchDelete from '@assets/icons/ic_search_delete.svg';
@@ -145,6 +149,10 @@ export {
   icScenarioRedoDisable,
   icScenarioRedoHover,
   icScenarioSelected,
+  icScenarioTabScenarioOff,
+  icScenarioTabScenarioOn,
+  icScenarioTabVariableOff,
+  icScenarioTabVariableOn,
   icScenarioUndo,
   icScenarioUndoDisable,
   icScenarioUndoHover,
