@@ -1,6 +1,8 @@
 import { Node } from '@components/data-display';
+import { defaultCards } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
 import { IArrow, IBasicCard, ICommerceCard, IListCard, INode } from '@models';
+import { TDefaultCard } from '@models/types/DefaultCardType';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -104,59 +106,12 @@ export const Botbuilder = () => {
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const cardType = e.dataTransfer.getData('cardType');
+    const cardType = e.dataTransfer.getData('cardType') as TDefaultCard;
     if (!cardType) {
       return;
     }
-    let addCard: IBasicCard[] | ICommerceCard[] | IListCard[] = [];
 
-    switch (cardType) {
-      case 'Text':
-      case 'Image':
-      case 'Button Template':
-        addCard = [
-          {
-            title: cardType === 'Image' ? undefined : '',
-            thumbnail: cardType === 'Text' ? undefined : { imageUrl: '' },
-            description: cardType === 'Image' ? undefined : '',
-            buttons:
-              cardType === 'Text' || cardType === 'Image'
-                ? undefined
-                : [{ label: 'Button 01', action: 'block' }],
-          },
-        ];
-        break;
-
-      case 'Commerce':
-        addCard = [
-          {
-            price: 0,
-            currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
-            thumbnail: { imageUrl: '' },
-            profile: { brandName: '', imageUrl: '' },
-            productName: '',
-            // discount: 100,
-          },
-        ];
-        break;
-
-      case 'List':
-        addCard = [
-          {
-            header: {
-              title: 'ㅁㄴㅇㄹ',
-            },
-            thumbnail: { imageUrl: '' },
-            items: [
-              {
-                thumbnail: { imageUrl: '' },
-                title: '',
-                description: '',
-              },
-            ],
-          },
-        ];
-    }
+    const addCard = defaultCards(cardType);
 
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
