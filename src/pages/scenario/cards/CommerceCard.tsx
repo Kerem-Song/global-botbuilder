@@ -23,54 +23,65 @@ export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
     <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
         <Card key={i} hoverable onClick={() => console.log('card click')}>
-          <div className={thumbnailClass}>
-            {item.thumbnail?.imageUrl ? (
-              <img src={item.thumbnail?.imageUrl} alt="thumbnailImage" />
-            ) : (
-              <div className="skeleton"></div>
-            )}
-          </div>
-
-          <div className="profile">
-            {item.profile.imageUrl ? (
-              <img src={item.profile.imageUrl} alt="profileImage" />
-            ) : (
-              <div className="skeleton"></div>
-            )}
-            {item.profile.brandName ? (
-              <span>{item.profile.brandName}</span>
-            ) : (
-              <span className="empty">Enter Brand Name</span>
-            )}
-          </div>
-          <Divider className="commerceDivider" />
-          <div className="priceWrapper">
-            {item.discount && (
-              <div>
-                <span className="discounted">{item.price}</span>
-                <span className="discount">
-                  {item.discount} <span className="currency">{item.currency}</span>{' '}
-                  Discount
-                </span>
-              </div>
-            )}
-            <div className="prices">
-              {item.price ? (
-                <p>
-                  {item.discount ? item.price - item.discount : item.price}
-                  <span className="currency">{item.currency}</span>
-                </p>
+          {item.thumbnail ? (
+            <div className={thumbnailClass}>
+              {item.thumbnail?.imageUrl ? (
+                <img src={item.thumbnail?.imageUrl} alt="thumbnailImage" />
               ) : (
-                <p className="empty">
-                  {item.price} <span className="currency">{item.currency}</span>
-                </p>
+                <div className="skeleton"></div>
               )}
             </div>
-          </div>
+          ) : null}
 
-          <div className={classNames('productName', item.productName ? '' : 'empty')}>
-            {item.productName ? <p>{item.productName}</p> : <p>Enter Product Name</p>}
-          </div>
+          {item.profile ? (
+            <>
+              <div className="profile">
+                {item.profile?.imageUrl ? (
+                  <img src={item.profile.imageUrl} alt="profileImage" />
+                ) : (
+                  <div className="skeleton"></div>
+                )}
+                {item.profile?.brandName ? (
+                  <span>{item.profile.brandName}</span>
+                ) : (
+                  <span className="empty">Enter Brand Name</span>
+                )}
+              </div>
+              <Divider className="commerceDivider" />
+            </>
+          ) : null}
+
+          {item.price !== undefined ? (
+            <div className="priceWrapper">
+              {item.discount && (
+                <div>
+                  <span className="discounted">{item.price}</span>
+                  <span className="discount">
+                    {item.discount} <span className="currency">{item.currency}</span>{' '}
+                    Discount
+                  </span>
+                </div>
+              )}
+              <div className="prices">
+                {item.price ? (
+                  <p>
+                    {item.discount ? item.price - item.discount : item.price}
+                    <span className="currency">{item.currency}</span>
+                  </p>
+                ) : (
+                  <p className="empty">
+                    {item.price} <span className="currency">{item.currency}</span>
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : null}
+
+          {item.productName !== undefined ? (
+            <div className={classNames('productName', item.productName ? '' : 'empty')}>
+              {item.productName ? <p>{item.productName}</p> : <p>Enter Product Name</p>}
+            </div>
+          ) : null}
 
           <div className="buttonWrapper">
             {item.buttons?.map((button, i) => {

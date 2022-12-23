@@ -34,7 +34,7 @@ export type TDefaultCard =
   | 'Button Template'
   | 'List'
   | 'Commerce'
-  | 'Image Carousel'
+  | 'Button Carousel'
   | 'List Carousel'
   | 'Commerce Carousel'
   | 'Quick Reply'
@@ -75,25 +75,25 @@ export interface IBasicCard {
 }
 
 export interface ICommerceCard {
-  productName: string;
-  price: number;
-  currency: string;
+  productName?: string;
+  price?: number;
+  currency?: string;
   discount?: number;
   discountRate?: number;
   discountPrice?: number;
-  thumbnail: IThumbnailType;
-  profile: Profile;
+  thumbnail?: IThumbnailType;
+  profile?: Profile;
   buttons?: IButtonType[];
 }
 
 export interface IListCard {
-  header: {
-    title: string;
+  header?: {
+    title?: string;
   };
   thumbnail?: IThumbnailType;
-  items: {
+  items?: {
     thumbnail?: IThumbnailType;
-    title: string;
+    title?: string;
     description?: string;
     action?: 'block' | 'message';
     blockId?: string;

@@ -53,6 +53,57 @@ export const defaultCards = (cardType: TDefaultCard) => {
           ],
         },
       ];
+      break;
+
+    case 'Button Carousel':
+      addCard = [
+        {
+          title: '',
+          thumbnail: { imageUrl: '' },
+          description: '',
+          buttons: [{ label: 'Button 01', action: 'block' }],
+        },
+        {
+          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+        },
+      ];
+      break;
+
+    case 'Commerce Carousel':
+      addCard = [
+        {
+          price: 0,
+          currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
+          thumbnail: { imageUrl: '' },
+          profile: { brandName: '', imageUrl: '' },
+          productName: '',
+        },
+        {
+          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+        },
+      ];
+      break;
+
+    case 'List Carousel':
+      addCard = [
+        {
+          header: {
+            title: '',
+          },
+          thumbnail: { imageUrl: '' },
+          items: [
+            {
+              thumbnail: { imageUrl: '' },
+              title: '',
+              description: '',
+            },
+          ],
+        },
+        {
+          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+        },
+      ];
+      break;
   }
 
   return addCard;

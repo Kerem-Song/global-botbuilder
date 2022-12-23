@@ -99,7 +99,7 @@ export const BotBuilderHeader = () => {
               onDragStart={(e) => handleDragStart(e)}
               onClick={(e) => handleMakingChatbubbleClick(e)}
               draggable={true}
-              value="Image Carousel"
+              value="Button Carousel"
             />
             <Button
               className="icon icCaroList"
