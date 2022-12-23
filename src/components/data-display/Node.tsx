@@ -4,7 +4,7 @@ import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
+import { IBasicCard, ICommerceCard, IListCard } from 'src/models/interfaces/ICard';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 import { SizeType } from 'src/models/types/SizeType';
@@ -14,6 +14,7 @@ import { dummy2 } from '../../dummy';
 import useI18n from '../../hooks/useI18n';
 import { BasicCard } from '../../pages/scenario/cards/BasicCard';
 import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
+import { ListCard } from '../../pages/scenario/cards/ListCard';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
@@ -22,7 +23,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   hoverable?: boolean;
   active?: boolean;
   radius?: SizeType;
-  cards?: IBasicCard[] | ICommerceCard[];
+  cards?: IBasicCard[] | ICommerceCard[] | IListCard[];
   onClick?: (e?: any) => void;
   addArrow?: (from: string, to: string) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
@@ -70,7 +71,7 @@ export const Node: FC<INodeProps> = ({
     console.log('handle node bottom btn');
   };
   const isCommerce = cards?.some((e) => Object.keys(e).includes('price'));
-  console.log('isCommerce', isCommerce);
+  const isList = cards?.some((e) => Object.keys(e).includes('header'));
   const nodeMenu: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'duplication',
@@ -139,13 +140,14 @@ export const Node: FC<INodeProps> = ({
       </div>
       {cards ? (
         <div className={bodyClass}>
-          {!isCommerce ? (
-            <BasicCard cards={cards} nodeId={`node-${id}`} />
+          {isList ? (
+            <ListCard cards={cards as IListCard[]} nodeId={`node-${id}`} />
+          ) : !isCommerce ? (
+            <BasicCard cards={cards as IBasicCard[]} nodeId={`node-${id}`} />
           ) : (
-            <CommerceCard cards={cards} nodeId={`node-${id}`} />
+            <CommerceCard cards={cards as ICommerceCard[]} nodeId={`node-${id}`} />
           )}
 
-          {/* <CommerceCard cards={cards} nodeId={`node-${id}`} /> */}
           {/* <QuickReply /> */}
         </div>
       ) : undefined}

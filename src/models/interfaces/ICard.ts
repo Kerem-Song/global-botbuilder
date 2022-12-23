@@ -28,6 +28,19 @@ export type TCardType =
   | 'quickReply'
   | 'condition';
 
+export type TDefaultCard =
+  | 'Text'
+  | 'Image'
+  | 'Button Template'
+  | 'List'
+  | 'Commerce'
+  | 'Button Carousel'
+  | 'List Carousel'
+  | 'Commerce Carousel'
+  | 'Quick Reply'
+  | 'Condition'
+  | 'Count';
+
 export interface IBotBuilderCardType {
   cardType: TCardType;
 }
@@ -62,13 +75,31 @@ export interface IBasicCard {
 }
 
 export interface ICommerceCard {
-  productName: string;
-  price: number;
-  currency: string;
+  productName?: string;
+  price?: number;
+  currency?: string;
   discount?: number;
   discountRate?: number;
   discountPrice?: number;
-  thumbnail: IThumbnailType;
-  profile: Profile;
+  thumbnail?: IThumbnailType;
+  profile?: Profile;
+  buttons?: IButtonType[];
+}
+
+export interface IListCard {
+  header?: {
+    title?: string;
+  };
+  thumbnail?: IThumbnailType;
+  items?: {
+    thumbnail?: IThumbnailType;
+    title?: string;
+    description?: string;
+    action?: 'block' | 'message';
+    blockId?: string;
+    messageText?: string;
+    extra?: Map<string, any>;
+    link?: 'pc' | 'mobile' | 'web';
+  }[];
   buttons?: IButtonType[];
 }

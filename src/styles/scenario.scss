@@ -21,11 +21,36 @@
       }
 
       .scenarioNameTabs {
-        & i {
+        display: flex;
+        
+        gap: rem(8);
+
+        .tab {
+          width: rem(24);
+          height: rem(24);
           padding: rem(5);
+          background-color: $gray200;
+          border-radius: rem(4);
+
+          &.scenario {
+            background-image: url('@assets/icons/ic_scenariotab_scenario_off.svg');
+
+            &.on {
+              background-image: url('@assets/icons/ic_scenariotab_scenario_on.svg');
+            }
+          }
+
+          &.variable {
+            background-image: url('@assets/icons/ic_scenariotab_variable_off.svg');
+
+            &.on {
+              background-image: url('@assets/icons/ic_scenariotab_variable_on.svg');
+            }
+          }
         }
+        
         .on {
-          background-color: cornflowerblue;
+          background-color: $primary500;
         }
       }
     }
