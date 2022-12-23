@@ -10,10 +10,12 @@ const transformOptions = {
 export interface BotBuilderMaker {
   scale: number;
   selected?: string | IArrow;
+  isEditDrawerOpen: boolean;
 }
 
 const initialState: BotBuilderMaker = {
   scale: 1.0,
+  isEditDrawerOpen: false,
 };
 
 export const botbuilderSlice = createSlice({
@@ -30,6 +32,11 @@ export const botbuilderSlice = createSlice({
     },
     setSelected: (state, action: PayloadAction<string | IArrow | undefined>) => {
       state.selected = action.payload;
+      if (typeof action.payload === 'string') {
+        state.isEditDrawerOpen = true;
+      } else {
+        state.isEditDrawerOpen = false;
+      }
     },
   },
 });

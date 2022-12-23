@@ -114,7 +114,7 @@ $green: #03bf4e;
   @include transition(all, 0.5s, ease-in-out);
 }
 
-$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100);
+$spaceamounts: (5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100);
 $sides: (top, bottom, left, right);
 
 @each $space in $spaceamounts {
