@@ -32,6 +32,16 @@ export const Botbuilder = () => {
   const { data } = getCardListQuery;
 
   useEffect(() => {
+    const event = (e: MouseEvent) => {
+      setIsPanning(false);
+    };
+    window.addEventListener('mouseup', event);
+    return () => {
+      window.removeEventListener('mouseup', event);
+    };
+  }, []);
+
+  useEffect(() => {
     const event = (e: KeyboardEvent) => {
       if (e.key === 'Delete') {
         dispatch(removeItem(selected));
@@ -85,6 +95,8 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
+
     dispatch(setSelected());
     if (e.buttons === 1) {
       setIsPanning(true);
@@ -151,7 +163,7 @@ export const Botbuilder = () => {
         onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={handleCanvasClick}
+        onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
         onDrop={handleChatbubbleDrop}
