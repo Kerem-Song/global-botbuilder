@@ -5,7 +5,7 @@ import {
   icCarouselPrevInactive,
 } from '@assets';
 import { Col, Row } from '@components/layout';
-import { updateLine } from '@components/pages/scenario/LineContainer';
+import { useUpdateLines } from '@hooks/useUpdateLines';
 import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
   children: ReactNode[];
@@ -19,6 +19,8 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
     marginLeft: `${current * -190}px`,
     transition: 'none',
   });
+
+  const { updateLine } = useUpdateLines();
 
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });

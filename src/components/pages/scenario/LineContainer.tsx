@@ -1,4 +1,6 @@
+import { icNodeBottom } from '@assets';
 import { useRootState } from '@hooks';
+import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
 import { setSelected } from '@store/botbuilderSlice';
 import { FC, useEffect } from 'react';
@@ -10,37 +12,14 @@ export interface ILineContainerProps {
   lines: IArrow[];
 }
 
-let updateStack: { (): void }[] = [];
-let updateLines: { start: string; end: string; update: () => void }[] = [];
-
-export const updateLineAll = () => {
-  setTimeout(() => {
-    updateLines.map((x) => x.update());
-  }, 10);
-};
-
-export const updateLine = (id: string) => {
-  updateStack = [];
-  const filtered = updateLines.filter((f) => f.start === id || f.end === id);
-  filtered.map((f) => updateStack.push(f.update));
-  setTimeout(() => {
-    updateStack.map((f) => {
-      f();
-    });
-    updateStack = [];
-  }, 10);
-};
-
 export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
   const dispatch = useDispatch();
+  const { updateLineAll, addUpdateLines } = useUpdateLines();
   const selectedLine = useRootState((state) => state.botBuilderReducer.selected);
-  updateLines = [];
-  const addUpdateLines = (start: string, end: string, update: () => void) => {
-    updateLines.push({ start, end, update });
-  };
+  const guideStart = useRootState((state) => state.botBuilderReducer.guideStart);
 
   useEffect(() => {
-    updateLines.map((ul) => ul.update());
+    updateLineAll();
   }, [lines]);
 
   return (
@@ -57,6 +36,24 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
           active={selectedLine === l}
         />
       ))}
+      {guideStart ? (
+        <div
+          style={{
+            position: 'absolute',
+            visibility: 'hidden',
+          }}
+          id="icBottomGuide"
+        >
+          <img src={icNodeBottom} alt="icNodeBottom" />
+        </div>
+      ) : undefined}
+      {guideStart ? (
+        <ConnectLine
+          startId={guideStart}
+          endId="icBottomGuide"
+          addUpdateLines={addUpdateLines}
+        />
+      ) : undefined}
     </>
   );
 };

@@ -1,5 +1,5 @@
-import { Button, Card, Col, Divider, Input, Row, Skeleton, Space } from '@components';
-import { useBotClient, useModalOpen, usePage, useSystemModal } from '@hooks';
+import { Card, Col, Input, Row, Skeleton } from '@components';
+import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { IBotModel } from '@models';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -12,7 +12,6 @@ export const DashboardComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
-  const { confirm } = useSystemModal();
 
   const { data, isFetching, botSaveMutate } = useBotClient();
 
@@ -24,18 +23,7 @@ export const DashboardComponent = () => {
       toast(message, { position: 'bottom-right' });
     }
   };
-  const handleTest = async () => {
-    const result = await confirm({
-      title: 'This page cannot be found.',
-      description: 'This page is no longer available.',
-    });
 
-    if (result) {
-      console.log('confirm');
-    } else {
-      console.log('cancel');
-    }
-  };
   return (
     <div className="dashboardWrap">
       <Input

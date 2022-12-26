@@ -4,8 +4,8 @@ import { FC, useRef } from 'react';
 interface IConnectLineProps {
   startId: string;
   endId: string;
-  active: boolean;
-  onClick: () => void;
+  active?: boolean;
+  onClick?: () => void;
   addUpdateLines: (start: string, end: string, update: () => void) => void;
 }
 

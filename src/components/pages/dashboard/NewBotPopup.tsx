@@ -11,18 +11,19 @@ const defaultValues: IBotModel = {
   botName: '',
 };
 
-const schema = yup
-  .object({
-    botName: yup.string().required('봇 이름은 필수입니다.'),
-  })
-  .required();
-
 export const NewBotPopup: FC<{
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
   handleSave: (model: IBotModel) => Promise<void>;
 }> = ({ isOpen, handleIsOpen, handleSave }) => {
   const { t, tc } = usePage();
+
+  const schema = yup
+    .object({
+      botName: yup.string().required('봇 이름은 필수입니다.'),
+    })
+    .required();
+
   const {
     register,
     handleSubmit,

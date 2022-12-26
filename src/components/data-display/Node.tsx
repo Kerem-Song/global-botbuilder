@@ -1,5 +1,8 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { useRootState } from '@hooks';
+import { useUpdateLines } from '@hooks/useUpdateLines';
+import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC } from 'react';
@@ -44,6 +47,8 @@ export const Node: FC<INodeProps> = ({
 }) => {
   const { tc } = useI18n();
   const dispatch = useDispatch();
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
     'luna-node-hoverble': hoverable,
@@ -67,8 +72,20 @@ export const Node: FC<INodeProps> = ({
     dispatch(removeItem(id));
   };
 
-  const handleNodeBottomBtn = () => {
-    console.log('handle node bottom btn');
+  const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (e.isTrusted) {
+      const guide = document.querySelector<HTMLDivElement>('#icBottomGuide');
+      if (guide) {
+        const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
+        const cr = canvas?.getBoundingClientRect() || new DOMRect();
+        const newPosition = {
+          x: e.clientX / scale - cr.x - 11,
+          y: e.clientY / scale - cr.y - 12,
+        };
+        guide.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
+      }
+      updateLine(`node-${id}`);
+    }
   };
   const isCommerce = cards?.some((e) => Object.keys(e).includes('price'));
   const isList = cards?.some((e) => Object.keys(e).includes('header'));
@@ -152,7 +169,7 @@ export const Node: FC<INodeProps> = ({
         </div>
       ) : undefined}
 
-      <Button shape="ghost" className="icNodeBottom" onClick={handleNodeBottomBtn}>
+      <Button shape="ghost" className="icNodeBottom">
         <div
           id={`node-bottom-${id}`}
           role="presentation"
@@ -160,7 +177,12 @@ export const Node: FC<INodeProps> = ({
           draggable
           onDragStart={(e) => {
             e.dataTransfer.setData('id', `node-${id}`);
+            dispatch(setGuideStartNode(`node-${id}`));
           }}
+          onDragEnd={(e) => {
+            dispatch(setGuideStartNode());
+          }}
+          onDrag={handleBottomDrag}
           onMouseDown={(e) => e.stopPropagation()}
         >
           <img src={icNodeBottom} alt="icNodeBottom" />

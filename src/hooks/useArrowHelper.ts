@@ -10,7 +10,6 @@ export const useElementHelper = (startId: string, endId: string) => {
   const lineOffset = 5;
   const minLine = 50;
   const outSize = { width: 50, height: 50 };
-  const offset = { x: cr.x, y: cr.y };
   const arrowSize = { width: 12, height: 6 };
 
   const ahw = Math.round(arrowSize.width / 2);
@@ -24,15 +23,16 @@ export const useElementHelper = (startId: string, endId: string) => {
   const maxY = Math.max(sr.top, sr.bottom, er.top, er.bottom);
 
   const svgRect = {
-    x: minX - offset.x - outSize.width,
-    y: minY - offset.y - outSize.height,
+    x: minX - cr.x - outSize.width,
+    y: minY - cr.y - outSize.height,
     width: Math.max(maxX - minX) + outSize.width * 2,
     height: maxY - minY + outSize.height * 2,
   };
 
+  const offset = { x: cr.x + svgRect.x, y: cr.y + svgRect.y };
+
   const arrowPoint = {
-    x:
-      sr.x < er.x ? svgRect.width - outSize.width - ehw - ahw : outSize.width + ehw - ahw,
+    x: er.x + ehw - offset.x - ahw,
     y:
       sr.y < er.y
         ? er.y - sr.y + outSize.height - arrowSize.height
@@ -45,10 +45,6 @@ export const useElementHelper = (startId: string, endId: string) => {
       element.style.transform = translate;
       element.style.width = `${svgRect.width}px`;
       element.style.height = `${svgRect.height}px`;
-      element.style.zIndex = `${Math.max(
-        Number(start?.parentElement?.style.zIndex),
-        Number(end?.parentElement?.style.zIndex),
-      )}`;
     }
   };
 
@@ -62,10 +58,10 @@ export const useElementHelper = (startId: string, endId: string) => {
 
   const setLinePath = (element: SVGPathElement | null) => {
     if (element) {
-      const halfRectX = Math.round(svgRect.width / 2);
+      //const halfRectX = Math.round(svgRect.width / 2);
       const ls = {
-        x: sr.x - svgRect.x - offset.x + shw,
-        y: sr.bottom - svgRect.y - offset.y + 8,
+        x: sr.x - offset.x + shw,
+        y: sr.bottom - offset.y + 8,
       };
 
       const l1 = {
@@ -78,12 +74,12 @@ export const useElementHelper = (startId: string, endId: string) => {
       const l2 = {
         x: isTreeLine
           ? l1.x
-          : sr.x < er.x
+          : ls.x < arrowPoint.x + ahw
           ? sr.right < er.left
-            ? halfRectX
+            ? Math.round((er.left - sr.right) / 2) + sr.right - offset.x
             : svgRect.width - lineOffset
           : er.right < sr.left
-          ? halfRectX
+          ? Math.round((sr.left - er.right) / 2) + er.right - offset.x
           : lineOffset,
         y: l1.y,
       };
@@ -124,20 +120,21 @@ export const useElementHelper = (startId: string, endId: string) => {
 
       const l3Path = l2.x === l3.x && l2.y === l3.y ? `` : `L ${l3.x} ${l3.y + arcSize}`;
 
+      const arcSize2 = Math.min(Math.round(Math.abs(end.x - l3.x) / 2), arcSize);
       const q3Path =
         l3.y === l4.y && l2.y === l3.y
           ? ''
-          : `Q ${l3.x} ${l3.y}, ${l3.x + (l3.x < end.x ? arcSize : -arcSize)} ${l3.y}`;
+          : `Q ${l3.x} ${l3.y}, ${l3.x + (l3.x < end.x ? arcSize2 : -arcSize2)} ${l3.y}`;
 
       const l4Path =
         l3.x === l4.x && l3.y === l4.y
           ? ``
-          : `L ${l4.x - (l3.x < end.x ? arcSize : -arcSize)} ${l4.y}`;
+          : `L ${l4.x - (l3.x < end.x ? arcSize2 : -arcSize2)} ${l4.y}`;
 
       const q4Path =
         l3.x === l4.x && l3.y === l4.y
           ? ''
-          : `Q ${l4.x} ${l4.y}, ${l4.x} ${l4.y + arcSize}`;
+          : `Q ${l4.x} ${l4.y}, ${l4.x} ${l4.y + arcSize2}`;
 
       element.setAttribute(
         'd',
