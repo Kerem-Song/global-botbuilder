@@ -346,7 +346,7 @@
 
       & button {
         display: block;
-        width: 100%;
+        width: rem(190);
         background-color: $gray100;
         border: 1px solid $gray150;
         border-radius: rem(4);
@@ -359,10 +359,13 @@
         }
       }
 
+      .nextNodeWrapper {
+        padding-top: rem(5) !important;
+      }
+
       .nextNode {
         width: rem(5);
         height: rem(5);
-        left: 93%;
         background-image: url('@assets/icons/ic_node.svg');
         background-repeat: no-repeat;
         background-position: center;
