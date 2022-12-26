@@ -1,3 +1,9 @@
+import {
+  icTesterNextActive,
+  icTesterNextInactive,
+  icTesterPrevActive,
+  icTesterPrevInactive,
+} from '@assets';
 import { Col } from '@components/layout';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
@@ -11,23 +17,14 @@ export interface IBotTesterProps {
   handleIsOpen: (value: boolean) => void;
 }
 
-export type ISendMessage = {
-  value?: string;
-  type?: string;
-};
-
-export interface IReplyMessage {
-  value?: string;
-  type?: string;
-}
-
-export type messageItemType =
-  | 'text'
-  | 'productCardCarousel'
-  | 'cardCarousel'
-  | 'card'
-  | 'productCard'
-  | 'image';
+export const CARD_TYPES = {
+  text: 'text',
+  productCardCarousel: 'productCardCarousel',
+  cardCarousel: 'cardCarousel',
+  card: 'card',
+  productCard: 'productCard',
+  image: 'image',
+} as const;
 
 export interface IProductCardContent {
   image?: {
@@ -68,6 +65,26 @@ export interface IProductCardContent {
       webLinkUrl?: string;
     };
   };
+}
+
+export type messageItemCardType = IBasicCardContent;
+
+export type messageItemContentType = IProductCardContent;
+
+export interface ITextCard {
+  value?: string;
+  isMe?: boolean;
+  type: typeof CARD_TYPES.text;
+}
+
+export interface IProductCardCarousel {
+  contents?: messageItemContentType[];
+  type: typeof CARD_TYPES.productCardCarousel;
+}
+
+export interface ICardCarousel {
+  contents?: messageItemContentType[];
+  type: typeof CARD_TYPES.cardCarousel;
 }
 
 export interface IBasicCardContent {
@@ -114,25 +131,78 @@ export interface IBasicCardContent {
       };
     },
   ];
-  type?: string;
+  type: typeof CARD_TYPES.card;
 }
 
-export type messageItemContentType = IProductCardContent;
-
-export interface IMessageItem {
-  value?: string;
-  isMe?: boolean;
-  type: messageItemType;
-  contentText?: string;
-  contents?: messageItemContentType[];
+export interface IProductCard {
+  image?: {
+    imageUrl?: string;
+    imageAspectRatio?: number;
+    imageSize?: number;
+    background?: string;
+    previewUrl?: string;
+    type?: string;
+  };
+  icon: {
+    url: string;
+  };
+  title: string;
+  description: string;
+  price?: {
+    gross?: number;
+    net?: number;
+    symbol?: string;
+    discount?: number;
+  };
+  buttons?: [
+    {
+      actionType?: string;
+      label?: string;
+      postback?: {
+        lunaNodeLink?: string;
+        webLinkUrl?: string;
+        text?: string;
+      };
+    },
+  ];
+  type: typeof CARD_TYPES.productCard;
+  defaultAction?: {
+    actionType?: string;
+    label?: string;
+    postback?: {
+      webLinkUrl?: string;
+    };
+  };
 }
+
+export interface IImageCard {
+  imageUrl: string;
+  imageAspectRatio: 0;
+  imageSize: 0;
+  background: string;
+  previewUrl: string;
+  type: typeof CARD_TYPES.image;
+  defaultAction: {
+    actionType: string;
+    label: string;
+    postback: {
+      webLinkUrl: string;
+    };
+  };
+}
+
+export type IMessageType =
+  | ITextCard
+  | IProductCardCarousel
+  | ICardCarousel
+  | IBasicCardContent
+  | IProductCard
+  | IImageCard;
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { data, botTesterMutate } = useBotTesterClient();
-
   const [text, setText] = useState<string>('');
-  const [dataMessages, setDataMessages] = useState<IMessageItem[]>([]);
-  console.log('dataMessages?', dataMessages);
+  const [dataMessages, setDataMessages] = useState<IMessageType[]>([]);
 
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
 
@@ -152,12 +222,14 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   const handleSend = (e: FormEvent<HTMLButtonElement>): void => {
-    const newMessage: IMessageItem = {
+    const newMessage: IMessageType = {
       value: text,
       isMe: true,
       type: 'text',
     };
     setDataMessages([...dataMessages, newMessage]);
+    // data.refetch();
+    // getMessageItems.refetch();
     e.preventDefault();
     setText('');
   };
@@ -202,7 +274,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               onClick={openTestInfo}
               ref={scrollRef}
             >
-              {dataMessages.map((item: IMessageItem, i) => {
+              {dataMessages.map((item, i) => {
                 return <TesterMessagesItem key={i} item={item} />;
               })}
             </div>
