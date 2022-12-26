@@ -66,6 +66,11 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
               return (
                 <>
                   <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
+                  <Button
+                    className="nextNode blue"
+                    shape="ghost"
+                    onClick={() => console.log('blueNode')}
+                  ></Button>
                 </>
               );
             })}
