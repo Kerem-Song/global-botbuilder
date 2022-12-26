@@ -114,7 +114,7 @@
 .botBuilderDrawer {
   height: calc(100vh - rem(97));
   margin-top: rem(97);
-  box-shadow: none;
+  box-shadow: none !important;
   background: $gray150 !important;
   border-left: 1px solid $gray200;
   .header {

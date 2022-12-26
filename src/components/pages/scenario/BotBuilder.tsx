@@ -1,4 +1,3 @@
-import { Input, InputTextarea } from '@components';
 import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
@@ -6,13 +5,13 @@ import { IArrow, INode, TDefaultCard } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
 import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
+import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer, updateLine } from './LineContainer';
 
 export const Botbuilder = () => {
@@ -28,9 +27,6 @@ export const Botbuilder = () => {
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
-  const isEditDrawerOpen = useRootState(
-    (state) => state.botBuilderReducer.isEditDrawerOpen,
-  );
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
@@ -120,6 +116,7 @@ export const Botbuilder = () => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
       id: uuidv4(),
+      type: cardType,
       x: e.clientX / scale - canvasRect.left,
       y: e.clientY / scale - canvasRect.top,
       title: cardType,
@@ -212,33 +209,7 @@ export const Botbuilder = () => {
           <LineContainer lines={arrows} />
         </div>
       </div>
-      <Drawer
-        className="botBuilderDrawer"
-        open={isEditDrawerOpen}
-        onClose={() => dispatch(setSelected())}
-        direction="right"
-        enableOverlay={false}
-        duration={200}
-        size={260}
-      >
-        <div className="header">
-          <span>버튼 템플릿</span>
-        </div>
-        <div className="node-item-wrap">
-          <p className="m-b-8">
-            <span className="label">말풍선명</span>
-            <span className="required">*</span>
-          </p>
-          <Input placeholder="Input Chat Bubble name" />
-        </div>
-        <div className="node-item-wrap">
-          <p className="m-b-8">
-            <span className="label">텍스트</span>
-            <span className="required">*</span>
-          </p>
-          <InputTextarea />
-        </div>
-      </Drawer>
+      <NodeEditDrawer />
     </>
   );
 };
