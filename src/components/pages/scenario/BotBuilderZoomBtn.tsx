@@ -1,14 +1,14 @@
 import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
+import { useUpdateLines } from '@hooks/useUpdateLines';
 import { zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
-import { updateLineAll } from './LineContainer';
-
 export const BotBuilderZoomBtn = () => {
   const dispatch = useDispatch();
+  const { updateLineAll } = useUpdateLines();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const handleZoomOut = () => {

@@ -1,6 +1,8 @@
+import { icNodeBottom } from '@assets';
 import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
+import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, TDefaultCard } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -12,10 +14,11 @@ import { useCardList } from '../../../hooks/client/cardList';
 import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
-import { LineContainer, updateLine } from './LineContainer';
+import { LineContainer } from './LineContainer';
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
+  const { updateLine } = useUpdateLines();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -108,7 +111,7 @@ export const Botbuilder = () => {
   const handleNodeClick = (id: string) => {
     const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
     nodeElements.forEach((n) => {
-      n.style.zIndex = `${Math.max(0, Number(n.style.zIndex) - 1)}`;
+      n.style.zIndex = `${Math.max(1, Number(n.style.zIndex) - 1)}`;
     });
     const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
     if (nodeWrap) {

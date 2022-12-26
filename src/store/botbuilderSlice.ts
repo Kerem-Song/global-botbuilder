@@ -11,6 +11,7 @@ export interface BotBuilderMaker {
   scale: number;
   selected?: string | IArrow;
   isEditDrawerOpen: boolean;
+  guideStart?: string;
 }
 
 const initialState: BotBuilderMaker = {
@@ -43,9 +44,32 @@ export const botbuilderSlice = createSlice({
         state.isEditDrawerOpen = action.payload;
       }
     },
+    setGuideStartNode: (state, action: PayloadAction<string | undefined>) => {
+      state.guideStart = action.payload;
+    },
+    // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
+    //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
+    //   const cr = canvas?.getBoundingClientRect() || new DOMRect();
+    //   const newPosition = {
+    //     x: action.payload.x - cr.x - 10,
+    //     y: action.payload.y - cr.y - 10,
+    //   };
+
+    //   if (state.guide.x === newPosition.x && state.guide.y === newPosition.y) {
+    //     return;
+    //   }
+    //   state.guide.x = newPosition.x;
+    //   state.guide.y = newPosition.y;
+    // },
   },
 });
 
-export const { zoomIn, zoomOut, setSelected, setEditDrawerToggle } =
-  botbuilderSlice.actions;
+export const {
+  zoomIn,
+  zoomOut,
+  setSelected,
+  setEditDrawerToggle,
+  setGuideStartNode,
+  // setGuidePosition,
+} = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
