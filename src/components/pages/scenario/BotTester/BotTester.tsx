@@ -8,6 +8,7 @@ import { Col } from '@components/layout';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import { number } from 'yargs';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -199,6 +200,11 @@ export type IMessageType =
   | IProductCard
   | IImageCard;
 
+type TPosition = {
+  x: number;
+  y: number;
+};
+
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { data, botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
@@ -208,6 +214,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const botbuilderMainRef = document.querySelector('.botBuilderWrapper');
+  const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
+  const botTesterRef = useRef<HTMLDivElement | null>(null);
+  const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
 
   const handleRefresh = () => {
     setDataMessages([]);
@@ -261,8 +271,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable>
-          <div className="botTester">
+        <Draggable
+          position={{
+            x: botbuilderRect.width - 400,
+            y: 0,
+          }}
+        >
+          <div className="botTester" ref={botTesterRef}>
             <Col className="botTesterHeader">
               <Col className="text">Testing the Bot</Col>
               <button className="icon refreshBtn" onClick={handleRefresh} />
