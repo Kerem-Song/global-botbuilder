@@ -246,6 +246,79 @@
           }
         }
 
+        // Quick Reply
+        .quickReplyWrapper {
+          display: flex;
+          flex-direction: column;
+          gap: rem(4);
+
+          & button {
+            width: rem(192);
+            height: rem(36);
+            background-color: $gray100;
+            border: rem(1) solid $gray200;
+            border-radius: rem(99);
+            font-size: rem(13);
+            color: $grayBlack;
+
+            &:hover {
+              background-color: $primary100;
+              border: rem(1) solid $primary200;
+            }
+          }
+        }
+
+        // Condition
+        .conditionWrapper {
+          width: rem(192);
+          height: rem(80);
+          background-color: $gray100;
+          border: rem(1) solid $gray200;
+          border-radius: rem(8);
+
+          & p{
+            max-height: rem(80);
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        // Count
+        .countConditionWrapper {
+          width: rem(192);
+          height: rem(80);
+          background-color: $gray100;
+          border: rem(1) solid $gray200;
+          border-radius: rem(8);
+        }
+
+        .nextNode {
+          width: rem(5);
+          height: rem(5);
+          position: absolute;
+             
+            left: 93%;
+          &.green {
+            top: 35%;
+            background-image: url('@assets/icons/ic_node_green.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+
+          &.red {
+            top: 60%;
+            background-image: url('@assets/icons/ic_node_red.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+
+          &.yellow {
+            top: 60%;
+            background-image: url('@assets/icons/ic_node_yellow.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+        }
       }
       &-bordered {
         border: none;

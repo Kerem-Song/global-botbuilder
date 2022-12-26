@@ -6,12 +6,14 @@ import img from '../assets/react.svg';
 
 const cards: IBasicCard[] = [
   {
+    type: 'Button Template',
     title: '',
     thumbnail: { imageUrl: '' },
     description: 'asdfasdfasfasdfasdfasdfasdf',
     // buttons: [{ label: '버튼1', action: 'message' }],
   },
   {
+    type: 'Button Template',
     title: 'title2',
     thumbnail: { imageUrl: img },
     description:
@@ -24,6 +26,7 @@ const cards: IBasicCard[] = [
   },
   { title: 'title3', thumbnail: { imageUrl: img }, description: '설명3' },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',
@@ -33,6 +36,7 @@ const cards: IBasicCard[] = [
     ],
   },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',
@@ -42,6 +46,7 @@ const cards: IBasicCard[] = [
     ],
   },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',
@@ -61,6 +66,7 @@ const cards: IBasicCard[] = [
     ],
   },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',
@@ -70,6 +76,7 @@ const cards: IBasicCard[] = [
     ],
   },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',
@@ -79,6 +86,7 @@ const cards: IBasicCard[] = [
     ],
   },
   {
+    type: 'Button Template',
     title: 'title4',
     thumbnail: { imageUrl: img },
     description: '설명4',

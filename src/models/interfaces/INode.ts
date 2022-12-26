@@ -1,4 +1,12 @@
-import { IBasicCard, ICommerceCard, TDefaultCard } from './ICard';
+import {
+  IBasicCard,
+  ICommerceCard,
+  ICondition,
+  ICount,
+  IListCard,
+  IQuickReply,
+  TDefaultCard,
+} from './ICard';
 
 export interface INode {
   id: string;
@@ -6,5 +14,11 @@ export interface INode {
   title?: string;
   x: number;
   y: number;
-  cards?: IBasicCard[] | ICommerceCard[];
+  cards?:
+    | IBasicCard[]
+    | ICommerceCard[]
+    | IListCard[]
+    | IQuickReply[]
+    | ICondition[]
+    | ICount[];
 }

@@ -25,6 +25,7 @@ export const BotBuilderHeader = () => {
 
     const addNode = {
       id: uuidv4(),
+      type: cardType,
       title: cardType,
       cards: addCard,
       x:
