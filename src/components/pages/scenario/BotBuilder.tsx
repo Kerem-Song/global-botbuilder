@@ -163,7 +163,7 @@ export const Botbuilder = () => {
         onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={handleCanvasClick}
+        onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
         onDrop={handleChatbubbleDrop}
@@ -190,8 +190,9 @@ export const Botbuilder = () => {
                 e.stopPropagation();
                 updateLine(`node-${item.id}`);
               }}
-              onStop={() => {
+              onStop={(e) => {
                 handleUpdateNodePosition(i, item);
+                e.stopPropagation();
               }}
               cancel=".node-draggable-ignore"
               onMouseDown={(e) => e.stopPropagation()}
