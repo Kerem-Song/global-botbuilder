@@ -16,6 +16,8 @@ import icCarouselPrevActive from '@assets/icons/ic_carousel_prev_active.svg';
 import icCarouselPrevInactive from '@assets/icons/ic_carousel_prev_inactive.svg';
 import icChatbot from '@assets/icons/ic_chatbot.svg';
 import icCheck from '@assets/icons/ic_check.svg';
+import icClosed from '@assets/icons/ic_closed_default.svg';
+import icClosedHover from '@assets/icons/ic_closed_hover.svg';
 import icCommerce from '@assets/icons/ic_commerce.svg';
 import icCommerceHover from '@assets/icons/ic_commerce_hover.svg';
 import icCondition from '@assets/icons/ic_condition.svg';
@@ -54,6 +56,8 @@ import icQuickBtn from '@assets/icons/ic_quick_btn.svg';
 import icQuickBtnHover from '@assets/icons/ic_quick_btn_hover.svg';
 import icRadio from '@assets/icons/ic_radio_default.svg';
 import icRadioEnabled from '@assets/icons/ic_radio_enabled.svg';
+import icRefresh from '@assets/icons/ic_refresh_default.svg';
+import icRefreshHover from '@assets/icons/ic_refresh_hover.svg';
 import icScenario from '@assets/icons/ic_scenario_default.svg';
 import icScenarioRedo from '@assets/icons/ic_scenario_redo_default.svg';
 import icScenarioRedoDisable from '@assets/icons/ic_scenario_redo_disable.svg';
@@ -79,6 +83,10 @@ import icSettingSelected from '@assets/icons/ic_setting_select.svg';
 import icShow from '@assets/icons/ic_show.svg';
 import icStatistics from '@assets/icons/ic_statistics_default.svg';
 import icStatisticsSelected from '@assets/icons/ic_statistics_select.svg';
+import icTesterNextActive from '@assets/icons/ic_tester_next_active.svg';
+import icTesterNextInactive from '@assets/icons/ic_tester_next_inactive.svg';
+import icTesterPrevActive from '@assets/icons/ic_tester_prev_active.svg';
+import icTesterPrevInactive from '@assets/icons/ic_tester_prev_inactive.svg';
 import icText from '@assets/icons/ic_text.svg';
 import icTextHover from '@assets/icons/ic_text_hover.svg';
 import icUser from '@assets/icons/ic_user.svg';
@@ -108,6 +116,8 @@ export {
   icCarouselPrevInactive,
   icChatbot,
   icCheck,
+  icClosed,
+  icClosedHover,
   icCommerce,
   icCommerceHover,
   icCondition,
@@ -148,6 +158,8 @@ export {
   icQuickBtnHover,
   icRadio,
   icRadioEnabled,
+  icRefresh,
+  icRefreshHover,
   icScenario,
   icScenarioRedo,
   icScenarioRedoDisable,
@@ -173,6 +185,10 @@ export {
   icShow,
   icStatistics,
   icStatisticsSelected,
+  icTesterNextActive,
+  icTesterNextInactive,
+  icTesterPrevActive,
+  icTesterPrevInactive,
   icText,
   icTextHover,
   icUser,

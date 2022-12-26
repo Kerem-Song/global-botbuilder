@@ -1,11 +1,15 @@
 textarea {
   position: relative;
   resize: none;
-  width: rem(220);
+  width: 100%;
   height: rem(40);
-  padding: rem(10);
+  padding: rem(12);
+  border: 1px solid $gray200;
+  border-radius: rem(8);
 }
 
 .textCounter {
   position: absolute;
+  color: $gray200;
+  font-family: 'Pretendard';
 }
