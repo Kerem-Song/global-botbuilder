@@ -1,14 +1,16 @@
 import {
+  CARD_TYPES,
   IBasicCard,
   ICommerceCard,
   ICondition,
   ICount,
   IListCard,
   IQuickReply,
+  TCardsValues,
   TDefaultCard,
 } from '@models/interfaces/ICard';
 
-export const defaultCards = (cardType: TDefaultCard) => {
+export const defaultCards = (cardType: TCardsValues) => {
   let addCard:
     | IBasicCard[]
     | ICommerceCard[]
@@ -18,32 +20,32 @@ export const defaultCards = (cardType: TDefaultCard) => {
     | ICount[] = [];
 
   switch (cardType) {
-    case 'Text':
-    case 'Image':
-    case 'Button Template':
+    case CARD_TYPES.TEXT:
+    case CARD_TYPES.IMAGE:
+    case CARD_TYPES.BUTTON_TEMPLATE:
       addCard = [
         {
           type:
-            cardType === 'Text'
-              ? 'Text'
-              : cardType === 'Image'
-              ? 'Image'
-              : 'Button Template',
-          title: cardType === 'Image' ? undefined : '',
-          thumbnail: cardType === 'Text' ? undefined : { imageUrl: '' },
-          description: cardType === 'Image' ? undefined : '',
+            cardType === CARD_TYPES.TEXT
+              ? CARD_TYPES.TEXT
+              : cardType === CARD_TYPES.IMAGE
+              ? CARD_TYPES.IMAGE
+              : CARD_TYPES.BUTTON_TEMPLATE,
+          title: cardType === CARD_TYPES.IMAGE ? undefined : '',
+          thumbnail: cardType === CARD_TYPES.TEXT ? undefined : { imageUrl: '' },
+          description: cardType === CARD_TYPES.IMAGE ? undefined : '',
           buttons:
-            cardType === 'Text' || cardType === 'Image'
+            cardType === CARD_TYPES.TEXT || cardType === CARD_TYPES.IMAGE
               ? undefined
               : [{ label: 'Button 01', action: 'block' }],
         },
       ];
       break;
 
-    case 'Commerce':
+    case CARD_TYPES.COMMERCE:
       addCard = [
         {
-          type: 'Commerce',
+          type: CARD_TYPES.COMMERCE,
           price: 0,
           currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
           thumbnail: { imageUrl: '' },
@@ -53,10 +55,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'List':
+    case CARD_TYPES.LIST:
       addCard = [
         {
-          type: 'List',
+          type: CARD_TYPES.LIST,
           header: {
             title: '',
           },
@@ -72,10 +74,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'Button Carousel':
+    case CARD_TYPES.BUTTON_CAROUSEL:
       addCard = [
         {
-          type: 'Button Carousel',
+          type: CARD_TYPES.BUTTON_CAROUSEL,
           title: '',
           thumbnail: { imageUrl: '' },
           description: '',
@@ -87,10 +89,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'Commerce Carousel':
+    case CARD_TYPES.COMMERCE_CAROUSEL:
       addCard = [
         {
-          type: 'Commerce Carousel',
+          type: CARD_TYPES.COMMERCE_CAROUSEL,
           price: 0,
           currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
           thumbnail: { imageUrl: '' },
@@ -103,10 +105,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'List Carousel':
+    case CARD_TYPES.LIST_CAROUSEL:
       addCard = [
         {
-          type: 'List Carousel',
+          type: CARD_TYPES.LIST_CAROUSEL,
           header: {
             title: '',
           },
@@ -125,10 +127,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'Quick Reply':
+    case CARD_TYPES.QUICK_REPLY:
       addCard = [
         {
-          type: 'Quick Reply',
+          type: CARD_TYPES.QUICK_REPLY,
           label: '',
           action: 'block',
           blockId: '',
@@ -136,10 +138,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'Condition':
+    case CARD_TYPES.CONDITION:
       addCard = [
         {
-          type: 'Condition',
+          type: CARD_TYPES.CONDITION,
           title: '',
           greenNode: '',
           redNode: '',
@@ -148,10 +150,10 @@ export const defaultCards = (cardType: TDefaultCard) => {
       ];
       break;
 
-    case 'Count':
+    case CARD_TYPES.COUNT:
       addCard = [
         {
-          type: 'Count',
+          type: CARD_TYPES.COUNT,
           title: '',
           yellowNode: '',
           redNode: '',

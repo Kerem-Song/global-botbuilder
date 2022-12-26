@@ -32,7 +32,7 @@ export const Condition: FC<Condition> = ({ nodeId, cards }) => {
       <Button
         className="nextNode red"
         shape="ghost"
-        onClick={() => console.log('greenNode')}
+        onClick={() => console.log('redNode')}
       ></Button>
     </Card>
   );

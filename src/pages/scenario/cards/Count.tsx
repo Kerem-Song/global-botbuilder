@@ -24,7 +24,7 @@ export const Count: FC<Count> = ({ nodeId, cards }) => {
       <Button
         className="nextNode yellow"
         shape="ghost"
-        onClick={() => console.log('greenNode')}
+        onClick={() => console.log('yellowNode')}
       ></Button>
     </Card>
   );

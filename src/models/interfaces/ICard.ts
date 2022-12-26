@@ -44,6 +44,24 @@ export type TDefaultCard =
 export interface IBotBuilderCardType {
   cardType: TCardType;
 }
+
+export const CARD_TYPES = {
+  TEXT: 'Text',
+  IMAGE: 'Image',
+  BUTTON_TEMPLATE: 'Button Template',
+  BUTTON_CAROUSEL: 'Button Carousel',
+  COMMERCE: 'Commerce',
+  COMMERCE_CAROUSEL: 'Commerce Carousel',
+  LIST: 'List',
+  LIST_CAROUSEL: 'List Carousel',
+  QUICK_REPLY: 'Quick Reply',
+  CONDITION: 'Condition',
+  COUNT: 'Count',
+} as const;
+
+export type ValueOf<T> = T[keyof T];
+
+export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 export interface IButtonType {
   label: string;
   action:
@@ -68,7 +86,11 @@ export interface Profile {
 }
 
 export interface IBasicCard {
-  type?: TDefaultCard;
+  type?:
+    | typeof CARD_TYPES.TEXT
+    | typeof CARD_TYPES.IMAGE
+    | typeof CARD_TYPES.BUTTON_TEMPLATE
+    | typeof CARD_TYPES.BUTTON_CAROUSEL;
   title?: string;
   description?: string;
   thumbnail?: IThumbnailType;
@@ -76,7 +98,7 @@ export interface IBasicCard {
 }
 
 export interface ICommerceCard {
-  type?: TDefaultCard;
+  type?: typeof CARD_TYPES.COMMERCE | typeof CARD_TYPES.COMMERCE_CAROUSEL;
   productName?: string;
   price?: number;
   currency?: string;
@@ -89,7 +111,7 @@ export interface ICommerceCard {
 }
 
 export interface IListCard {
-  type?: TDefaultCard;
+  type?: typeof CARD_TYPES.LIST | typeof CARD_TYPES.LIST_CAROUSEL;
   header?: {
     title?: string;
   };
@@ -108,7 +130,7 @@ export interface IListCard {
 }
 
 export interface IQuickReply {
-  type?: TDefaultCard;
+  type?: typeof CARD_TYPES.QUICK_REPLY;
   label: string;
   action: 'message' | 'block';
   messageText?: string;
@@ -127,7 +149,7 @@ export type TConditionSelect =
   | 'regex'; //RegExp 타입 호환 검토 필요
 
 export interface ICondition {
-  type?: TDefaultCard;
+  type?: typeof CARD_TYPES.CONDITION;
   title: string;
   greenNode: string; // 초록색 노드 : 사용자가 입력한 값이 조건에 부합하는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
   redNode: string; //빨간색 노드 : 사용자가 입력한 값이 조건에 부합하지 않는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
@@ -141,7 +163,7 @@ export interface ICondition {
 }
 
 export interface ICount {
-  type?: TDefaultCard;
+  type?: typeof CARD_TYPES.COUNT;
   title: string;
   yellowNode: string; // 노란색 노드 : 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
   redNode: string; //빨간색 노드 : 횟수 초과시 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
