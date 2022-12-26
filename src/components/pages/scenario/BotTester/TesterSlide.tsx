@@ -4,12 +4,12 @@ export const TesterSlide = () => {
   return (
     <>
       <div className="testerSlide">
-        <button className="slideBtns prevBtn">
+        <button className="slideBtns">
           <img src={icTesterPrevActive} alt="TesterSlidePrevBtn" />
         </button>
       </div>
-      <div className="testerSlide Next">
-        <button className="slideBtns nextBtn">
+      <div className="testerSlide next">
+        <button className="slideBtns">
           <img src={icTesterNextActive} alt="TesterSlideNextBtn" />
         </button>
       </div>

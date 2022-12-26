@@ -1,14 +1,7 @@
-import {
-  icTesterNextActive,
-  icTesterNextInactive,
-  icTesterPrevActive,
-  icTesterPrevInactive,
-} from '@assets';
 import { Col } from '@components/layout';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import { number } from 'yargs';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -67,8 +60,6 @@ export interface IProductCardContent {
     };
   };
 }
-
-export type messageItemCardType = IBasicCardContent;
 
 export type messageItemContentType = IProductCardContent;
 

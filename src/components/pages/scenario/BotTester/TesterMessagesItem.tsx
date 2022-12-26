@@ -45,12 +45,14 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
                       <div className="price">
                         <p className="currentPrice">
                           {content.price?.net
+                            ?.toFixed(0)
                             ?.toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                           {content.price?.symbol}
                         </p>
                         <p className="prevPrice">
                           {content.price?.gross
+                            ?.toFixed(0)
                             ?.toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                           {content.price?.symbol}
@@ -59,6 +61,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
                       <div className="discount">
                         <p className="discountPrice">
                           {content.price?.discount
+                            ?.toFixed(0)
                             ?.toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                           {content.price?.symbol}↓
@@ -72,9 +75,9 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
                       <div className="productBtn">
                         {content.buttons?.map((v, i) => {
                           return (
-                            <div key={i} className="btn">
+                            <button key={i} className="btn">
                               {v.label}
-                            </div>
+                            </button>
                           );
                         })}
                       </div>
@@ -167,11 +170,15 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
                 <div className="productCardPrices">
                   <div className="price">
                     <p className="currentPrice">
-                      {item.price?.net?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                      {item.price?.net
+                        ?.toFixed(0)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                       {item.price?.symbol}
                     </p>
                     <p className="prevPrice">
                       {item.price?.gross
+                        ?.toFixed(0)
                         ?.toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                       {item.price?.symbol}
@@ -180,6 +187,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
                   <div className="discount">
                     <p className="discountPrice">
                       {item.price?.discount
+                        ?.toFixed(0)
                         ?.toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                       {item.price?.symbol}↓
