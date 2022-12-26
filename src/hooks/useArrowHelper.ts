@@ -45,7 +45,7 @@ export const useElementHelper = (startId: string, endId: string) => {
       element.style.transform = translate;
       element.style.width = `${svgRect.width}px`;
       element.style.height = `${svgRect.height}px`;
-      element.style.zIndex = `${Math.min(
+      element.style.zIndex = `${Math.max(
         Number(start?.parentElement?.style.zIndex),
         Number(end?.parentElement?.style.zIndex),
       )}`;

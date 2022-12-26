@@ -103,6 +103,7 @@ export const testNodes: INode[] = [
     title: '1번',
     x: 100,
     y: 100,
+    type: 'Button Carousel',
     cards: cards,
   },
   {
@@ -110,6 +111,7 @@ export const testNodes: INode[] = [
     title: '2번',
     x: 400,
     y: 100,
+    type: 'Button Carousel',
     cards: cards,
   },
 ];
@@ -134,6 +136,7 @@ export const makingNodeSlice = createSlice({
     },
     updateNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
+      console.log(node);
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];

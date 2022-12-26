@@ -26,7 +26,7 @@
   height: rem(33);
   left: rem(287);
   top: rem(106);
-  background: $grayWhite;  
+  background: $grayWhite;
   border: 1px solid $gray200;
   border-radius: rem(4);
   color: $gray500;
@@ -108,5 +108,36 @@
     height: 100%;
     width: 100%;
     position: relative;
+  }
+}
+
+.botBuilderDrawer {
+  height: calc(100vh - rem(97));
+  margin-top: rem(97);
+  box-shadow: none !important;
+  background: $gray150 !important;
+  border-left: 1px solid $gray200;
+  .header {
+    background: $gray100;
+    padding: rem(12);
+    margin-bottom: rem(12);
+    span {
+      font-size: rem(16);
+      font-weight: 500;
+    }
+  }
+  .node-item-wrap {
+    background: $gray100;
+    padding: rem(12);
+    margin-bottom: rem(12);
+    .label {
+      font-size: rem(15);
+      font-weight: 500;
+    }
+    .required {
+      font-size: rem(15);
+      font-weight: 500;
+      color: $red;
+    }
   }
 }

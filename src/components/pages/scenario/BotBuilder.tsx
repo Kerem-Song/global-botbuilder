@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useCardList } from '../../../hooks/client/cardList';
 import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
+import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer, updateLine } from './LineContainer';
 
 export const Botbuilder = () => {
@@ -29,6 +30,16 @@ export const Botbuilder = () => {
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
+
+  useEffect(() => {
+    const event = (e: MouseEvent) => {
+      setIsPanning(false);
+    };
+    window.addEventListener('mouseup', event);
+    return () => {
+      window.removeEventListener('mouseup', event);
+    };
+  }, []);
 
   useEffect(() => {
     const event = (e: KeyboardEvent) => {
@@ -84,6 +95,8 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
+
     dispatch(setSelected());
     if (e.buttons === 1) {
       setIsPanning(true);
@@ -115,6 +128,7 @@ export const Botbuilder = () => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
       id: uuidv4(),
+      type: cardType,
       x: e.clientX / scale - canvasRect.left,
       y: e.clientY / scale - canvasRect.top,
       title: cardType,
@@ -149,7 +163,7 @@ export const Botbuilder = () => {
         onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUp={handleCanvasClick}
+        onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
         onDrop={handleChatbubbleDrop}
@@ -176,8 +190,9 @@ export const Botbuilder = () => {
                 e.stopPropagation();
                 updateLine(`node-${item.id}`);
               }}
-              onStop={() => {
+              onStop={(e) => {
                 handleUpdateNodePosition(i, item);
+                e.stopPropagation();
               }}
               cancel=".node-draggable-ignore"
               onMouseDown={(e) => e.stopPropagation()}
@@ -207,6 +222,7 @@ export const Botbuilder = () => {
           <LineContainer lines={arrows} />
         </div>
       </div>
+      <NodeEditDrawer />
     </>
   );
 };
