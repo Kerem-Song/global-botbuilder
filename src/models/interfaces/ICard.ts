@@ -68,6 +68,7 @@ export interface Profile {
 }
 
 export interface IBasicCard {
+  type?: TDefaultCard;
   title?: string;
   description?: string;
   thumbnail?: IThumbnailType;
@@ -75,6 +76,7 @@ export interface IBasicCard {
 }
 
 export interface ICommerceCard {
+  type?: TDefaultCard;
   productName?: string;
   price?: number;
   currency?: string;
@@ -87,6 +89,7 @@ export interface ICommerceCard {
 }
 
 export interface IListCard {
+  type?: TDefaultCard;
   header?: {
     title?: string;
   };
@@ -102,4 +105,47 @@ export interface IListCard {
     link?: 'pc' | 'mobile' | 'web';
   }[];
   buttons?: IButtonType[];
+}
+
+export interface IQuickReply {
+  type?: TDefaultCard;
+  label: string;
+  action: 'message' | 'block';
+  messageText?: string;
+  blockId?: string;
+  extra?: Record<string, any>;
+}
+
+export type TConditionSelect =
+  | null
+  | 'equal'
+  | 'notEqual'
+  | 'contain'
+  | 'greaterThan'
+  | 'lesserThan'
+  | 'notEmpty'
+  | 'regex'; //RegExp 타입 호환 검토 필요
+
+export interface ICondition {
+  type?: TDefaultCard;
+  title: string;
+  greenNode: string; // 초록색 노드 : 사용자가 입력한 값이 조건에 부합하는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
+  redNode: string; //빨간색 노드 : 사용자가 입력한 값이 조건에 부합하지 않는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
+  userInput?: string | number; // 사용자 입력 값
+  condition?: TConditionSelect; // 조건 선택
+  comparativeValue?: string; // 비교할 값
+  variableChoice?: string | number; // 변수 선택
+  logicalOperator?: 'and' | 'or' | null; // AND/OR 조건 설정
+  connectedMessage?: string; // 메시지 연결 - 말풍선 목록 타입으로 변경 요함
+  elseMessage?: string; // else 다음 메시지말풍선 목록 타입으로 변경 요함
+}
+
+export interface ICount {
+  type?: TDefaultCard;
+  title: string;
+  yellowNode: string; // 노란색 노드 : 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
+  redNode: string; //빨간색 노드 : 횟수 초과시 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
+  requestionNum?: number; // 재질문 횟수 설정
+  requestionConnectedMessage: string; // 재질문할 메시지 연결 - 말풍선 목록 타입으로 변경 요함
+  excessiveLimitedNumMessage: string; // 횟수 초과 메시지 연결 - 말풍선 목록 타입으로 변경 요함
 }

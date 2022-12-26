@@ -1,12 +1,21 @@
 import {
   IBasicCard,
   ICommerceCard,
+  ICondition,
+  ICount,
   IListCard,
+  IQuickReply,
   TDefaultCard,
 } from '@models/interfaces/ICard';
 
 export const defaultCards = (cardType: TDefaultCard) => {
-  let addCard: IBasicCard[] | ICommerceCard[] | IListCard[] = [];
+  let addCard:
+    | IBasicCard[]
+    | ICommerceCard[]
+    | IListCard[]
+    | IQuickReply[]
+    | ICondition[]
+    | ICount[] = [];
 
   switch (cardType) {
     case 'Text':
@@ -14,6 +23,12 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'Button Template':
       addCard = [
         {
+          type:
+            cardType === 'Text'
+              ? 'Text'
+              : cardType === 'Image'
+              ? 'Image'
+              : 'Button Template',
           title: cardType === 'Image' ? undefined : '',
           thumbnail: cardType === 'Text' ? undefined : { imageUrl: '' },
           description: cardType === 'Image' ? undefined : '',
@@ -28,6 +43,7 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'Commerce':
       addCard = [
         {
+          type: 'Commerce',
           price: 0,
           currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
           thumbnail: { imageUrl: '' },
@@ -40,6 +56,7 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'List':
       addCard = [
         {
+          type: 'List',
           header: {
             title: '',
           },
@@ -58,6 +75,7 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'Button Carousel':
       addCard = [
         {
+          type: 'Button Carousel',
           title: '',
           thumbnail: { imageUrl: '' },
           description: '',
@@ -72,6 +90,7 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'Commerce Carousel':
       addCard = [
         {
+          type: 'Commerce Carousel',
           price: 0,
           currency: 'USD', // 파트너스센터 설정에 따라 코드 변경 필요
           thumbnail: { imageUrl: '' },
@@ -87,6 +106,7 @@ export const defaultCards = (cardType: TDefaultCard) => {
     case 'List Carousel':
       addCard = [
         {
+          type: 'List Carousel',
           header: {
             title: '',
           },
@@ -101,6 +121,43 @@ export const defaultCards = (cardType: TDefaultCard) => {
         },
         {
           buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+        },
+      ];
+      break;
+
+    case 'Quick Reply':
+      addCard = [
+        {
+          type: 'Quick Reply',
+          label: '',
+          action: 'block',
+          blockId: '',
+        },
+      ];
+      break;
+
+    case 'Condition':
+      addCard = [
+        {
+          type: 'Condition',
+          title: '',
+          greenNode: '',
+          redNode: '',
+          condition: null,
+        },
+      ];
+      break;
+
+    case 'Count':
+      addCard = [
+        {
+          type: 'Count',
+          title: '',
+          yellowNode: '',
+          redNode: '',
+          requestionNum: 0,
+          requestionConnectedMessage: '',
+          excessiveLimitedNumMessage: '',
         },
       ];
       break;
