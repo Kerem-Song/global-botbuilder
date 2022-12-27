@@ -18,11 +18,6 @@ export const useBotTesterClient = () => {
       'https://638319836e6c83b7a98bcb28.mockapi.io/api/bot-tester/message_items',
       botTester,
     );
-
-    if (res) {
-      queryClient.invalidateQueries(['botTester-productCard']);
-      return res;
-    }
   });
 
   return { data: getMessageItems.data, botTesterMutate };

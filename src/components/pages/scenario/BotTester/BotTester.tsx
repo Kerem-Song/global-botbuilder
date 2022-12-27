@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
+import { TesterSlide } from './TesterSlide';
 import { TestInfoModal } from './TestInfoModal';
 
 export interface IBotTesterProps {
@@ -183,6 +184,17 @@ export interface IImageCard {
   };
 }
 
+export interface IQuickReplies {
+  actionType?: string;
+  label: string;
+  postback?: {
+    command?: string;
+    displayText?: string;
+    text?: string;
+    lunaNodeLink?: string;
+  };
+}
+
 export type IMessageType =
   | ITextCard
   | IProductCardCarousel
@@ -200,7 +212,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { data, botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
   const [dataMessages, setDataMessages] = useState<IMessageType[]>([]);
-
+  const [dataQuickReplies, setDataQuickReplies] = useState<IQuickReplies[]>([]);
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -212,6 +224,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const handleRefresh = () => {
     setDataMessages([]);
+    setDataQuickReplies([]);
   };
 
   const handleClose = () => {
@@ -235,9 +248,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     setText('');
   };
 
-  function openTestInfo() {
+  const handleQuickReplyClick = () => {
+    setDataQuickReplies([]);
+  };
+
+  const openTestInfo = () => {
     setIsOpenTestInfo(true);
-  }
+  };
 
   const closeTestInfo = () => {
     setIsOpenTestInfo(false);
@@ -246,11 +263,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   useEffect(() => {
     if (isOpen === false) {
       setDataMessages([]);
+      setDataQuickReplies([]);
     }
   }, [isOpen]);
 
   useEffect(() => {
     setDataMessages([...dataMessages, ...(data?.messages || [])]);
+    setDataQuickReplies(data?.quickReplies || []);
   }, [data]);
 
   useEffect(() => {
@@ -263,7 +282,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     <>
       {isOpen && (
         <Draggable
-          position={{
+          defaultPosition={{
             x: botbuilderRect.width - 400,
             y: 0,
           }}
@@ -283,6 +302,21 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               {dataMessages.map((item, i) => {
                 return <TesterMessagesItem key={i} item={item} />;
               })}
+              {/* <TesterSlide quickReplies> */}
+              <div className="quickReplies">
+                {dataQuickReplies.map((item, i) => {
+                  return (
+                    <button
+                      key={i}
+                      className="quickReply"
+                      onClick={handleQuickReplyClick}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {/* </TesterSlide> */}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
               <input

@@ -1,4 +1,6 @@
-import { IMessageItem } from '@components/pages/scenario/BotTester/BotTester';
+import { IMessageType } from '@components/pages/scenario/BotTester/BotTester';
+
+import { IQuickReplies } from './../../components/pages/scenario/BotTester/BotTester';
 
 export interface IBotTester {
   bot?: {
@@ -14,16 +16,6 @@ export interface IBotTester {
     snsRequestTimeUtc: string;
     queueInTimeUtc: string;
   };
-  messages?: IMessageItem[];
-  quickReplies?: [
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        command?: string;
-        displayText?: string;
-        lunaNodeLink?: string;
-      };
-    },
-  ];
+  messages?: IMessageType[];
+  quickReplies?: IQuickReplies[];
 }
