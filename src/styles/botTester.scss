@@ -1,0 +1,451 @@
+.botTester {
+  position: absolute;
+  width: rem(400);
+  height: rem(740);
+  background-color: $grayWhite;
+  border: 1px solid $gray200;
+  border-radius: rem(12);
+  cursor: pointer;
+  z-index: 900;
+
+  .botTesterHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: rem(45);
+    border-bottom: 1px solid $gray150;
+    padding-right: rem(15);
+    .text {
+      width: rem(308);
+      height: rem(17);
+      padding-left: rem(20);
+      margin-right: rem(20);
+      text-align: left;
+      font-size: rem(14);
+      font-weight: 700;
+      line-height: rem(17);
+    }
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(30);
+      height: rem(30);
+      background-color: $grayWhite;
+      border: none;
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+    }
+    .refreshBtn {
+      background-image: url('@assets/icons/ic_refresh_default.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_refresh_hover.svg');
+      }
+    }
+
+    .closeBtn {
+      background-image: url('@assets/icons/ic_closed_default.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_closed_hover.svg');
+      }
+    }
+  }
+
+  .botTesterContent {
+    gap: rem(10);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: rem(638);
+    // overflow: hidden;
+    overflow: auto;
+    overflow-y: scroll;
+    background-color: #99b0d7;
+    padding: rem(10) 0 rem(10) rem(8);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .send {
+      display: flex;
+      justify-content: right;
+      width: 100%;
+
+      .sendMessage {
+        max-width: rem(244);
+        height: -webkit-fit-content;
+        padding: rem(8) rem(14);
+        background-color: #8de386;
+        border: 1px solid #8de386;
+        border-radius: rem(16);
+        font-size: rem(13);
+        line-height: rem(16);
+      }
+    }
+    .reply {
+      width: 100%;
+      display: flex;
+      justify-content: left;
+      flex-direction: column;
+
+      .replyMessage {
+        max-width: rem(244);
+        height: -webkit-fit-content;
+        padding: rem(8) rem(14);
+        background-color: $grayWhite;
+        border-radius: rem(10);
+        white-space: pre-wrap;
+      }
+    }
+
+    .productCardContainer {
+      width: 100%;
+      max-height: rem(451);
+      display: flex;
+
+      .productCard {
+        position: relative;
+        max-width: rem(264);
+        margin-right: rem(10);
+        background-color: $grayWhite;
+        border-radius: rem(16);
+
+        .productCardImg {
+          width: rem(264);
+          height: rem(264);
+          border-radius: rem(16) rem(16) 0 0;
+        }
+
+        .productCardContents {
+          padding: 0 rem(12);
+
+          .productCardTitle {
+            display: flex;
+            align-content: center;
+            height: rem(40);
+            border-bottom: 1px solid #d9d9d9;
+
+            .title {
+              display: flex;
+              align-items: center;
+
+              .icon {
+                width: rem(24);
+                height: rem(24);
+                border-radius: rem(6);
+                margin-right: rem(8);
+              }
+              .name {
+                width: rem(200);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: rem(14);
+                line-height: rem(17);
+              }
+            }
+          }
+
+          .productCardPrices {
+            border-bottom: 1px solid #d9d9d9;
+            margin-top: rem(5);
+
+            .price {
+              display: flex;
+              align-items: center;
+              font-weight: 500;
+              margin-bottom: rem(8);
+
+              .currentPrice {
+                width: rem(198);
+                height: rem(22);
+                font-size: rem(18);
+              }
+
+              .prevPrice {
+                max-width: rem(114);
+                height: rem(19);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding-left: rem(20);
+                font-size: rem(16);
+                color: $gray300;
+                text-decoration-line: line-through;
+              }
+            }
+            .discount {
+              margin-bottom: rem(5);
+
+              .discountPrice {
+                font-size: rem(14);
+                line-height: rem(17);
+                font-weight: 400;
+                color: #ff0000;
+              }
+            }
+          }
+
+          .productContents {
+            margin-top: rem(1);
+
+            .productDesc {
+              display: flex;
+              align-items: center;
+              height: rem(33);
+
+              .desc {
+                width: rem(260);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: rem(14);
+                color: #636364;
+              }
+            }
+            .productBtn {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: rem(10);
+              .btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: rem(117);
+                height: rem(37);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: rem(14);
+
+                border: none;
+                background-color: #dbdee5;
+                border-radius: rem(8);
+              }
+            }
+          }
+        }
+      }
+
+      .productCardBtn {
+        position: absolute;
+        top: 50%;
+
+        .cardBtn {
+          width: rem(30);
+          height: rem(30);
+          background-color: $grayWhite;
+          opacity: 0.3;
+          border: rem(1) solid $gray200;
+          box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
+          border-radius: rem(4);
+        }
+      }
+    }
+
+    .cardCarouselContainer {
+      display: flex;
+      width: 100%;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      .cardCarousel {
+        width: rem(264);
+        height: rem(191);
+        background-color: $grayWhite;
+        margin: 0 rem(8) 0 0;
+        border-radius: rem(10);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .cardCarouselImg {
+          height: rem(132);
+          border-radius: rem(10) rem(10) 0 0;
+        }
+
+        .cardCarouselBtn {
+          width: rem(240);
+          height: rem(35);
+          margin-top: rem(12);
+          border: none;
+          border-radius: rem(8);
+          cursor: pointer;
+        }
+      }
+    }
+
+    .basicCardContainer {
+      width: rem(264);
+      height: rem(288);
+      background-color: $grayWhite;
+      border-radius: rem(16);
+
+      .cardImg {
+        width: rem(264);
+        height: rem(132);
+        border-radius: rem(200);
+      }
+
+      .cardText {
+        max-height: rem(70);
+        display: flex;
+        flex-direction: column;
+        padding: rem(16) rem(12);
+        gap: rem(4);
+
+        .cardTitle {
+          font-size: rem(14);
+          line-height: rem(17);
+          font-weight: 700;
+        }
+        .cardContextText {
+          font-weight: 400;
+        }
+      }
+      .cardBtnList {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: rem(12);
+        gap: rem(4);
+
+        .cardBtn {
+          width: rem(240);
+          height: rem(35);
+          border: none;
+          border-radius: rem(8);
+          background-color: #dbdee5;
+        }
+      }
+    }
+
+    .imageCardContainer {
+      width: rem(264);
+      height: rem(132);
+
+      .imageCardImg {
+        width: 100%;
+        height: 100%;
+        border-radius: rem(16);
+      }
+    }
+
+    .quickReply {
+      display: flex;
+      overflow: auto;
+      width: 100%;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      .quickReplies {
+        display: flex;
+        align-items: center;
+        padding: rem(8) rem(14);
+        margin-right: rem(8);
+        max-width: -webkit-fit-content;
+        height: rem(32);
+        border: 1px solid #3b4661;
+        background-color: #3b4661;
+        border-radius: rem(16);
+        color: $grayWhite;
+        cursor: pointer;
+      }
+    }
+    .quickReply::-webkit-scrollbar {
+      display: none;
+    }
+
+    .contentsList {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      .contents {
+        .content {
+          width: rem(300);
+          height: rem(150);
+          background-color: $grayWhite;
+          margin: rem(10) rem(5) rem(10) 0;
+          border-radius: rem(10);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .contentImg {
+            height: rem(100);
+            border-radius: rem(10) rem(10) 0 0;
+          }
+
+          .contentBtn {
+            width: 90%;
+            height: rem(30);
+            margin-top: rem(10);
+            border: none;
+            border-radius: rem(7);
+          }
+        }
+      }
+    }
+    .contentsList::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .botTesterContent::-webkit-scrollbar {
+    width: rem(8);
+    height: rem(0);
+    background-color: rgba(208, 221, 255, 0);
+  }
+
+  .botTesterContent::-webkit-scrollbar-thumb {
+    height: 30%;
+    background-color: rgba(208, 221, 255, 0);
+    border-radius: rem(18);
+    transition: background-color 3s ease-out;
+
+    &:hover {
+      background-color: rgba(298, 221, 255, 0.8);
+    }
+  }
+
+  .botTesterInput {
+    height: rem(57);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid $gray150;
+
+    .input {
+      width: rem(303);
+      height: rem(33);
+      background-color: $gray100;
+      border: 1px solid $gray100;
+      border-radius: rem(99);
+      padding: rem(8) rem(16);
+      margin-right: rem(8);
+    }
+
+    .sendBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: rem(2);
+      width: rem(49);
+      height: rem(30);
+      border: 1px solid $primary500;
+      background-color: $primary500;
+      border-radius: rem(8);
+      padding: rem(8) rem(10);
+      color: $grayWhite;
+
+      &:hover {
+        background-color: $primary700;
+      }
+    }
+  }
+}

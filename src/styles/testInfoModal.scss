@@ -1,0 +1,68 @@
+.testInfoModal {
+  position: absolute;
+  width: rem(300);
+  height: rem(172);
+  background-color: $grayWhite;
+  top: 0;
+  left: rem(-310);
+  border: 1px solid $gray200;
+  border-radius: rem(12);
+  cursor: pointer;
+
+  .testInfoHeader {
+    height: rem(45);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $gray200;
+    padding: rem(14) rem(15) rem(14) rem(20);
+
+    .headerName {
+      width: rem(234);
+      font-size: rem(14);
+      line-height: rem(17);
+      font-weight: 700;
+    }
+
+    .closeBtn {
+      width: rem(30);
+      height: rem(30);
+      cursor: pointer;
+      background-color: $grayWhite;
+      border: none;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url('@assets/icons/ic_closed_default.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_closed_hover.svg');
+      }
+    }
+  }
+
+  .testInfoContents {
+    width: rem(300);
+    padding: rem(17) rem(15);
+
+    .testInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: rem(13);
+
+      .info {
+        margin-bottom: rem(15);
+
+        .infoName {
+          width: 100%;
+          color: $gray500;
+          font-weight: 700;
+          margin-bottom: rem(5);
+        }
+
+        .infoText {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

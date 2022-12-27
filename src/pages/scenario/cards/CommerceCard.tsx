@@ -85,7 +85,16 @@ export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
 
           <div className="buttonWrapper">
             {item.buttons?.map((button, i) => {
-              return <Button key={i}>{button.label}</Button>;
+              return (
+                <>
+                  <Button key={i}>{button.label}</Button>;
+                  <Button
+                    className="nextNode blue"
+                    shape="ghost"
+                    onClick={() => console.log('blueNode')}
+                  ></Button>
+                </>
+              );
             })}
           </div>
         </Card>
