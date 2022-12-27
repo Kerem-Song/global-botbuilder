@@ -221,7 +221,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
   const botTesterRef = useRef<HTMLDivElement | null>(null);
   const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
-
+  console.log(dataQuickReplies);
   const handleRefresh = () => {
     setDataMessages([]);
     setDataQuickReplies([]);
@@ -302,21 +302,23 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               {dataMessages.map((item, i) => {
                 return <TesterMessagesItem key={i} item={item} />;
               })}
-              {/* <TesterSlide quickReplies> */}
-              <div className="quickReplies">
-                {dataQuickReplies.map((item, i) => {
-                  return (
-                    <button
-                      key={i}
-                      className="quickReply"
-                      onClick={handleQuickReplyClick}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                })}
-              </div>
-              {/* </TesterSlide> */}
+              {dataQuickReplies.length === 0 ? null : (
+                <TesterSlide quickReplies>
+                  <div className="quickReplies">
+                    {dataQuickReplies.map((item, i) => {
+                      return (
+                        <button
+                          key={i}
+                          className="quickReply"
+                          onClick={handleQuickReplyClick}
+                        >
+                          {item.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </TesterSlide>
+              )}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
               <input
