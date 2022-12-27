@@ -1,6 +1,7 @@
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
+import { useRootState } from '@hooks';
 import { TDefaultCard } from '@models/interfaces/ICard';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
@@ -8,10 +9,12 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 export const BotBuilderHeader = () => {
-  const cardNum = 12;
+  const cardNum = useRootState(
+    (state) => state.makingNodeSliceReducer.present.nodes,
+  ).length;
   const dispatch = useDispatch();
 
-  const handleMakingChatbubbleClick = (
+  const handleMakingChatbubbleClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     const cardType = e.currentTarget.value as TDefaultCard;
@@ -37,7 +40,6 @@ export const BotBuilderHeader = () => {
           ? viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y)
           : 0,
     };
-
     dispatch(appendNode(addNode));
   };
 

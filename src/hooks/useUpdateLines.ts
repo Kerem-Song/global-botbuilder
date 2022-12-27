@@ -2,7 +2,7 @@ import { IArrow } from '@models';
 import { useEffect } from 'react';
 
 let updateStack: { (): void }[] = [];
-let updateLines: { start: string; end: string; update: () => void }[] = [];
+const updateLines: { start: string; end: string; update: () => void }[] = [];
 
 export const updateLineAll = () => {
   setTimeout(() => {
@@ -21,12 +21,24 @@ const updateLine = (id: string) => {
     updateStack = [];
   }, 10);
 };
+
+const removeUpdateLines = (start: string, end: string) => {
+  const existsIndex = updateLines.findIndex((x) => x.start === start && x.end === end);
+  if (existsIndex >= 0) {
+    console.log(start, end, existsIndex);
+    updateLines.splice(existsIndex, 1);
+  }
+};
+
 const addUpdateLines = (start: string, end: string, update: () => void) => {
+  removeUpdateLines(start, end);
   updateLines.push({ start, end, update });
 };
 
-export const useUpdateLines = () => {
-  updateLines = [];
+// const initUpdateLines = () => {
+//   updateLines = [];
+// };
 
-  return { updateLineAll, updateLine, addUpdateLines };
+export const useUpdateLines = () => {
+  return { updateLineAll, updateLine, addUpdateLines, removeUpdateLines };
 };

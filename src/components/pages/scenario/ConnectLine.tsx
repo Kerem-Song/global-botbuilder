@@ -1,20 +1,18 @@
 import useElementHelper from '@hooks/useArrowHelper';
-import { FC, useRef } from 'react';
+import { useUpdateLines } from '@hooks/useUpdateLines';
+import { FC, useEffect, useRef } from 'react';
 
 interface IConnectLineProps {
   startId: string;
   endId: string;
   active?: boolean;
   onClick?: () => void;
-  addUpdateLines: (start: string, end: string, update: () => void) => void;
 }
-
 export const ConnectLine: FC<IConnectLineProps> = ({
   startId,
   endId,
   active,
   onClick,
-  addUpdateLines,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGPathElement>(null);
@@ -23,13 +21,23 @@ export const ConnectLine: FC<IConnectLineProps> = ({
 
   const stroke = active ? '#003DB2' : '#00B4ED';
 
-  addUpdateLines(startId, endId, () => {
-    const { setSvgStyle, setArrowStyle, setLinePath } = useElementHelper(startId, endId);
-    setSvgStyle(svgRef.current);
-    setArrowStyle(arrowRef.current);
-    setLinePath(lineRef.current);
-    setLinePath(lineMouseRef.current);
-  });
+  const { addUpdateLines, removeUpdateLines } = useUpdateLines();
+
+  useEffect(() => {
+    addUpdateLines(startId, endId, () => {
+      const { setSvgStyle, setArrowStyle, setLinePath } = useElementHelper(
+        startId,
+        endId,
+      );
+      setSvgStyle(svgRef.current);
+      setArrowStyle(arrowRef.current);
+      setLinePath(lineRef.current);
+      setLinePath(lineMouseRef.current);
+    });
+    return () => {
+      removeUpdateLines(startId, endId);
+    };
+  }, [svgRef.current, arrowRef.current, lineRef.current, lineMouseRef.current]);
 
   return (
     <svg
@@ -54,7 +62,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       <path
         style={{
           position: 'absolute',
-          transition: 'all 0.01s ease',
+          //transition: 'all 0.01s ease',
         }}
         ref={lineRef}
         stroke={stroke}
@@ -66,7 +74,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         onClick={() => onClick?.()}
         style={{
           position: 'absolute',
-          transition: 'all 0.01s ease',
+          //transition: 'all 0.01s ease',
           cursor: 'pointer',
           pointerEvents: 'stroke',
         }}

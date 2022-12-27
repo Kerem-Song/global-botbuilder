@@ -2,127 +2,13 @@ import { IArrow, INode } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 
-import img from '../assets/react.svg';
-
-const cards: IBasicCard[] = [
-  {
-    type: 'Button Template',
-    title: '',
-    thumbnail: { imageUrl: '' },
-    description: 'asdfasdfasfasdfasdfasdfasdf',
-    // buttons: [{ label: '버튼1', action: 'message' }],
-  },
-  {
-    type: 'Button Template',
-    title: 'title2',
-    thumbnail: { imageUrl: img },
-    description:
-      '설명2asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadfasdfasdfasdfasdfasdfasdfasdfsd',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  { title: 'title3', thumbnail: { imageUrl: img }, description: '설명3' },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-
-  {
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-  {
-    type: 'Button Template',
-    title: 'title4',
-    thumbnail: { imageUrl: img },
-    description: '설명4',
-    buttons: [
-      { label: '버튼1', action: 'message' },
-      { label: '버튼1', action: 'message' },
-    ],
-  },
-];
-
-export const testNodes: INode[] = [
-  {
-    id: '1',
-    title: '1번',
-    x: 100,
-    y: 100,
-    type: 'Button Carousel',
-    cards: cards,
-  },
-  {
-    id: '2',
-    title: '2번',
-    x: 400,
-    y: 100,
-    type: 'Button Carousel',
-    cards: cards,
-  },
-];
-
 export interface IBuilderInfo {
   nodes: INode[];
   arrows: IArrow[];
   selected?: INode | IArrow;
 }
 const initialState: IBuilderInfo = {
-  nodes: testNodes,
+  nodes: [],
   arrows: [],
 };
 

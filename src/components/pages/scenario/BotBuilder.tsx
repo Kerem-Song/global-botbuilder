@@ -18,7 +18,7 @@ import { LineContainer } from './LineContainer';
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
-  const { updateLine } = useUpdateLines();
+  const { updateLine, removeUpdateLines } = useUpdateLines();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -27,7 +27,6 @@ export const Botbuilder = () => {
   const [isPanning, setIsPanning] = useState<boolean>(false);
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
 
@@ -222,7 +221,7 @@ export const Botbuilder = () => {
               </div>
             </Draggable>
           ))}
-          <LineContainer lines={arrows} />
+          <LineContainer />
         </div>
       </div>
       <NodeEditDrawer />

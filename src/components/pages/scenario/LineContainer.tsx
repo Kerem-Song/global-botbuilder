@@ -3,18 +3,15 @@ import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
 import { setSelected } from '@store/botbuilderSlice';
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ConnectLine } from './ConnectLine';
 
-export interface ILineContainerProps {
-  lines: IArrow[];
-}
-
-export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
+export const LineContainer: FC = () => {
   const dispatch = useDispatch();
-  const { updateLineAll, addUpdateLines } = useUpdateLines();
+  const { updateLineAll } = useUpdateLines();
+  const lines = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const selectedLine = useRootState((state) => state.botBuilderReducer.selected);
   const guideStart = useRootState((state) => state.botBuilderReducer.guideStart);
 
@@ -22,17 +19,20 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
     updateLineAll();
   }, [lines]);
 
+  const handleLineClick = useCallback((l: IArrow) => {
+    dispatch(setSelected(l));
+  }, []);
+
   return (
     <>
       {lines.map((l, i) => (
         <ConnectLine
           onClick={() => {
-            dispatch(setSelected(l));
+            handleLineClick(l);
           }}
-          key={i}
+          key={`${l.start}-${l.end}`}
           startId={l.start}
           endId={l.end}
-          addUpdateLines={addUpdateLines}
           active={selectedLine === l}
         />
       ))}
@@ -48,11 +48,7 @@ export const LineContainer: FC<ILineContainerProps> = ({ lines }) => {
         </div>
       ) : undefined}
       {guideStart ? (
-        <ConnectLine
-          startId={guideStart}
-          endId="icBottomGuide"
-          addUpdateLines={addUpdateLines}
-        />
+        <ConnectLine startId={guideStart} endId="icBottomGuide" />
       ) : undefined}
     </>
   );
