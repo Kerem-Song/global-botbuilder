@@ -67,16 +67,29 @@ export const ListCard: FC<ListCard> = ({ nodeId, cards }) => {
               ))
             : null}
           <div className="buttonWrapper list">
-            {list.buttons?.map((button, i) => {
+            {list.buttons?.map((button, j) => {
               return (
-                <>
-                  <Button key={i}>{button.label}</Button>;
-                  <Button
-                    className="nextNode blue"
-                    shape="ghost"
-                    onClick={() => console.log('blueNode')}
-                  ></Button>
-                </>
+                // <>
+                //   <Button key={i}>{button.label}</Button>;
+                //   <Button
+                //     className="nextNode blue"
+                //     shape="ghost"
+                //     onClick={() => console.log('blueNode')}
+                //   ></Button>
+                // </>
+                <Row key={`card-${i}-button-${j}`}>
+                  <Col span={23}>
+                    <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
+                  </Col>
+                  <Col span={1} className="nextNodeWrapper">
+                    <Button
+                      key={`card-${i}-button-${j}-nodeButton-${j}`}
+                      className="nextNode blue"
+                      shape="ghost"
+                      onClick={() => console.log('blueNode')}
+                    ></Button>
+                  </Col>
+                </Row>
               );
             })}
           </div>
