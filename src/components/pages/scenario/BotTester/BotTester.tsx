@@ -71,12 +71,12 @@ export interface ITextCard {
 }
 
 export interface IProductCardCarousel {
-  contents?: messageItemContentType[];
+  contents: messageItemContentType[];
   type: typeof CARD_TYPES.productCardCarousel;
 }
 
 export interface ICardCarousel {
-  contents?: messageItemContentType[];
+  contents: messageItemContentType[];
   type: typeof CARD_TYPES.cardCarousel;
 }
 
@@ -303,8 +303,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 return <TesterMessagesItem key={i} item={item} />;
               })}
               {dataQuickReplies.length === 0 ? null : (
-                <TesterSlide quickReplies>
-                  <div className="quickReplies">
+                <div className="quickReplies">
+                  <TesterSlide quickReplies>
                     {dataQuickReplies.map((item, i) => {
                       return (
                         <button
@@ -316,8 +316,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                         </button>
                       );
                     })}
-                  </div>
-                </TesterSlide>
+                  </TesterSlide>
+                </div>
               )}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>

@@ -9,13 +9,13 @@ export const useBotTesterClient = () => {
 
   const getMessageItems = useQuery<IBotTester>(['botTester-productCard'], () =>
     http
-      .get('https://638319836e6c83b7a98bcb28.mockapi.io/api/bot-tester/message_items')
+      .get('https://634d41c1f5d2cc648ea0bf80.mockapi.io/message-items')
       .then((res) => res.data),
   );
 
   const botTesterMutate = useMutation(async (botTester: IBotTester) => {
     const res = await http.post(
-      'https://638319836e6c83b7a98bcb28.mockapi.io/api/bot-tester/message_items',
+      'https://634d41c1f5d2cc648ea0bf80.mockapi.io/message-items',
       botTester,
     );
   });

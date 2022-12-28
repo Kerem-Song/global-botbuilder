@@ -54,13 +54,11 @@
   }
 
   .botTesterContent {
-    gap: rem(10);
+    width: rem(400);
     display: flex;
     flex-direction: column;
-    position: relative;
+    gap: rem(10);
     height: rem(638);
-    overflow: hidden;
-    // overflow-x: auto;
     overflow-y: scroll;
     background-color: #99b0d7;
     padding: rem(10) 0 rem(10) rem(8);
@@ -333,18 +331,18 @@
     }
 
     .quickReplies {
-      // width: 100%;
-      width: rem(1500);
+      width: 100%;
       display: flex;
+      flex-direction: row;
+      align-items: center;
       justify-content: flex-start;
 
       .quickReply {
         display: flex;
-        justify-content: flex-start;
         align-items: center;
         padding: rem(8) rem(14);
         margin-right: rem(8);
-        max-width: -webkit-fit-content;
+        min-width: fit-content;
         border: 1px solid #3b4661;
         background-color: #3b4661;
         border-radius: rem(16);

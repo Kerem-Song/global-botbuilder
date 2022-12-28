@@ -1,12 +1,15 @@
 .botTesterSlide {
   position: relative;
+  display: flex;
+  overflow: hidden;
 
   .luna-carousel-slide {
     position: absolute;
+    display: flex;
     top: 45%;
-    z-index: 100;
 
     .slideBtns {
+      overflow-x: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
