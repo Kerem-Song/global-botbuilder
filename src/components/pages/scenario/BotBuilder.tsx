@@ -16,6 +16,8 @@ import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 
+const GRID_SIZE = 20;
+
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine, removeUpdateLines } = useUpdateLines();
@@ -131,8 +133,8 @@ export const Botbuilder = () => {
     const addNode = {
       id: uuidv4(),
       type: cardType,
-      x: e.clientX / scale - canvasRect.left,
-      y: e.clientY / scale - canvasRect.top,
+      x: (Math.round(e.clientX / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.left,
+      y: (Math.round(e.clientY / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.top,
       title: cardType,
       cards: addCard,
     };
@@ -185,6 +187,7 @@ export const Botbuilder = () => {
                 x: item.x,
                 y: item.y,
               }}
+              grid={[GRID_SIZE, GRID_SIZE]}
               scale={scale}
               bounds={{ top: -4000, left: -4000, right: 4000 }}
               key={item.id}
