@@ -1,22 +1,95 @@
-.testerSlide {
-  position: absolute;
-  top: 50%;
-  z-index: 100;
+.botTesterSlide {
+  position: relative;
 
-  .slideBtns {
-    width: rem(36);
-    height: rem(36);
-    box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
-    background-color: $grayWhite;
-    opacity: 0.6;
-    border-radius: rem(4);
-    border: 1px solid $gray200;
-    &:hover {
-      opacity: 1;
+  .luna-carousel-slide {
+    position: absolute;
+    top: 45%;
+    z-index: 100;
+
+    .slideBtns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(36);
+      height: rem(36);
+      box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
+      background-color: $grayWhite;
+      opacity: 0.6;
+      border-radius: rem(4);
+      border: 1px solid $gray200;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
-}
 
-.next {
-  right: rem(-1);
+  .luna-quickreply-slide {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    .slideBtns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(36);
+      height: rem(36);
+      box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
+      background-color: $grayWhite;
+      opacity: 0.6;
+      border-radius: rem(4);
+      border: 1px solid $gray200;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .next {
+    right: rem(0);
+  }
+
+  .luna-carousel-slide-right {
+    position: absolute;
+    top: 45%;
+    z-index: 100;
+    right: rem(0);
+    .slideBtns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(36);
+      height: rem(36);
+      box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
+      background-color: $grayWhite;
+      opacity: 0.6;
+      border-radius: rem(4);
+      border: 1px solid $gray200;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .luna-quickreply-slide-right {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    right: rem(0);
+
+    .slideBtns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(36);
+      height: rem(36);
+      box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
+      background-color: $grayWhite;
+      opacity: 0.6;
+      border-radius: rem(4);
+      border: 1px solid $gray200;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }

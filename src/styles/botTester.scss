@@ -59,8 +59,8 @@
     flex-direction: column;
     position: relative;
     height: rem(638);
-    // overflow: hidden;
-    overflow: auto;
+    overflow: hidden;
+    // overflow-x: auto;
     overflow-y: scroll;
     background-color: #99b0d7;
     padding: rem(10) 0 rem(10) rem(8);
@@ -105,7 +105,6 @@
       display: flex;
 
       .productCard {
-        position: relative;
         max-width: rem(264);
         margin-right: rem(10);
         background-color: $grayWhite;
@@ -333,20 +332,19 @@
       }
     }
 
-    .quickReply {
+    .quickReplies {
+      // width: 100%;
+      width: rem(1500);
       display: flex;
-      overflow: auto;
-      width: 100%;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      justify-content: flex-start;
 
-      .quickReplies {
+      .quickReply {
         display: flex;
+        justify-content: flex-start;
         align-items: center;
         padding: rem(8) rem(14);
         margin-right: rem(8);
         max-width: -webkit-fit-content;
-        height: rem(32);
         border: 1px solid #3b4661;
         background-color: #3b4661;
         border-radius: rem(16);
@@ -354,8 +352,8 @@
         cursor: pointer;
       }
     }
-    .quickReply::-webkit-scrollbar {
-      display: none;
+    .quickReplies::-webkit-scrollbar {
+      // display: none;
     }
 
     .contentsList {
