@@ -31,6 +31,6 @@ export const useBotClient = () => {
   return {
     data: getBotListQuery.data,
     isFetching: getBotListQuery.isFetching,
-    botSaveMutate,
+    botSaveAsync: botSaveMutate.mutateAsync,
   };
 };

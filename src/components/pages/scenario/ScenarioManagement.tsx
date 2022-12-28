@@ -5,7 +5,7 @@ import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import { ScenarioItem } from './ScenarioItem';
 
 export const ScenarioManagement = () => {
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList, scenarioSaveAsync } = useScenarioClient();
   const { data } = getScenarioList;
   const basicScenarioList = [{ name: 'FAQ' }];
 
@@ -13,8 +13,8 @@ export const ScenarioManagement = () => {
     console.log('switch toggle');
   };
 
-  const handleNewScenario = () => {
-    console.log('handle new scenario');
+  const handleNewScenario = async () => {
+    await scenarioSaveAsync(`scenario ${data?.length || 1}`);
   };
 
   return (

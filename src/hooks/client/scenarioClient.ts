@@ -1,19 +1,58 @@
 import { IScenarioModel } from '@models';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
 import { useHttp } from '../useHttp';
 
 export const useScenarioClient = () => {
+  const queryClient = useQueryClient();
   const http = useHttp();
-  const { scenarioId } = useParams();
-  const getScenarioList = useQuery<IScenarioModel[]>(['scenario-list'], () =>
+  const { botId } = useParams();
+  const getScenarioList = useQuery<IScenarioModel[]>(['scenario-list', botId], () =>
     http
-      .get(
-        `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${scenarioId}/scenario-list`,
-      )
+      .get(`https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list`)
       .then((res) => res.data),
   );
 
-  return { getScenarioList };
+  const scenarioSaveMutate = useMutation(async (scenarioName: string) => {
+    const res = await http.post(
+      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list`,
+      { scenarioName },
+    );
+
+    if (res) {
+      queryClient.invalidateQueries(['scenario-list', botId]);
+      return res;
+    }
+  });
+
+  const scenarioUpdateMutate = useMutation(async (scenario: IScenarioModel) => {
+    const res = await http.put(
+      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list/${scenario.id}`,
+      scenario,
+    );
+
+    if (res) {
+      queryClient.invalidateQueries(['scenario-list', botId]);
+      return res;
+    }
+  });
+
+  const scenarioDeleteMutate = useMutation(async (scenarioId: number) => {
+    const res = await http.delete(
+      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list/${scenarioId}`,
+    );
+
+    if (res) {
+      queryClient.invalidateQueries(['scenario-list', botId]);
+      return res;
+    }
+  });
+
+  return {
+    getScenarioList,
+    scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
+    scenarioUpdateAsync: scenarioUpdateMutate.mutateAsync,
+    scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
+  };
 };

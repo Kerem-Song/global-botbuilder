@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink, useLocation, useMatches } from 'react-router-dom';
+import { Link, NavLink, useLocation, useMatches, useParams } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -31,6 +31,7 @@ import { setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const Aside = () => {
   const location = useLocation();
+  const { botId } = useParams();
   const [page, setPage] = useState<string>(location.pathname);
 
   const { i18n, t, ts } = useI18n();
@@ -54,17 +55,17 @@ export const Aside = () => {
   };
 
   const menu = [
-    getMenuItem(1, 'scenario', icScenario, icScenarioSelected),
-    getMenuItem(2, 'utterance', icUtterance, icUtteranceSelected),
-    getMenuItem(3, 'data-api', icDataApi, icDataApiSelcted),
-    getMenuItem(4, 'deployment', icDeploy, icDeploySelected),
-    getMenuItem(5, 'history', icHistory, icHistorySelected),
-    getMenuItem(6, 'statistics', icStatistics, icStatisticsSelected),
+    getMenuItem(1, `${botId}/scenario`, icScenario, icScenarioSelected),
+    getMenuItem(2, `${botId}/utterance`, icUtterance, icUtteranceSelected),
+    getMenuItem(3, `${botId}/data-api`, icDataApi, icDataApiSelcted),
+    getMenuItem(4, `${botId}/deployment`, icDeploy, icDeploySelected),
+    getMenuItem(5, `${botId}/history`, icHistory, icHistorySelected),
+    getMenuItem(6, `${botId}/statistics`, icStatistics, icStatisticsSelected),
   ];
 
   const subMenu = [
     getMenuItem(1, 'help', icHelp, icHelpSelected),
-    getMenuItem(2, 'setting', icSetting, icSettingSelected),
+    getMenuItem(2, `${botId}/setting`, icSetting, icSettingSelected),
   ];
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);

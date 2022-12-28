@@ -14,16 +14,16 @@ export const DashboardComponent = () => {
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
 
-  const { data, isFetching, botSaveMutate } = useBotClient();
+  const { data, isFetching, botSaveAsync } = useBotClient();
 
   const handleSave = async (model: IBotModel) => {
-    const result = await botSaveMutate.mutateAsync(model);
+    const result = await botSaveAsync(model);
     if (result) {
       handleIsOpen(false);
       const message = t('NEW_BOT_OK_MESSAGE');
       toast.success(message, {
         position: 'bottom-center',
-        icon: ({ theme, type }) => <img src={icSuccess} alt="success" />,
+        icon: () => <img src={icSuccess} alt="success" />,
         theme: 'dark',
         hideProgressBar: true,
         className: 'luna-toast',
@@ -47,7 +47,7 @@ export const DashboardComponent = () => {
         <span className="chatbot-count">{data?.length || 0}</span>
       </p>
       <Row gap={20}>
-        {isFetching || botSaveMutate.isLoading ? (
+        {isFetching ? (
           <Col span={8}>
             <Card>
               <Skeleton />
@@ -58,9 +58,9 @@ export const DashboardComponent = () => {
             <div className="empty-card">
               <div className="content">
                 <img src={icEmptyBot} alt="emptyBot" />
-                <p className="description">No search results found.</p>
+                <p className="description">{t('EMPTY_DESCRIPTION')}</p>
                 <Button type="primary" onClick={() => handleIsOpen(true)}>
-                  <span className="button-label">Create a New bot</span>
+                  <span className="button-label">{t('NEW_BOT_TITLE')}</span>
                 </Button>
               </div>
             </div>
