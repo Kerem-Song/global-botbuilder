@@ -84,16 +84,21 @@ export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
           ) : null}
 
           <div className="buttonWrapper">
-            {item.buttons?.map((button, i) => {
+            {item.buttons?.map((button, j) => {
               return (
-                <>
-                  <Button key={i}>{button.label}</Button>;
-                  <Button
-                    className="nextNode blue"
-                    shape="ghost"
-                    onClick={() => console.log('blueNode')}
-                  ></Button>
-                </>
+                <Row key={`card-${i}-button-${j}`}>
+                  <Col span={23}>
+                    <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
+                  </Col>
+                  <Col span={1} className="nextNodeWrapper">
+                    <Button
+                      key={`card-${i}-button-${j}-nodeButton-${j}`}
+                      className="nextNode blue"
+                      shape="ghost"
+                      onClick={() => console.log('blueNode')}
+                    ></Button>
+                  </Col>
+                </Row>
               );
             })}
           </div>
