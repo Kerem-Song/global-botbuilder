@@ -30,6 +30,7 @@ import icDelete from '@assets/icons/ic_delete.svg';
 import icDeploy from '@assets/icons/ic_deploy_default.svg';
 import icDeploySelected from '@assets/icons/ic_deploy_select.svg';
 import icDuplication from '@assets/icons/ic_duplication.svg';
+import icEmptyBot from '@assets/icons/ic_empty_bot.svg';
 import icHelp from '@assets/icons/ic_help_default.svg';
 import icHelpSelected from '@assets/icons/ic_help_select.svg';
 import icHide from '@assets/icons/ic_hide.svg';
@@ -83,6 +84,7 @@ import icSettingSelected from '@assets/icons/ic_setting_select.svg';
 import icShow from '@assets/icons/ic_show.svg';
 import icStatistics from '@assets/icons/ic_statistics_default.svg';
 import icStatisticsSelected from '@assets/icons/ic_statistics_select.svg';
+import icSuccess from '@assets/icons/ic_success.svg';
 import icTesterNextActive from '@assets/icons/ic_tester_next_active.svg';
 import icTesterNextInactive from '@assets/icons/ic_tester_next_inactive.svg';
 import icTesterPrevActive from '@assets/icons/ic_tester_prev_active.svg';
@@ -130,6 +132,7 @@ export {
   icDeploy,
   icDeploySelected,
   icDuplication,
+  icEmptyBot,
   icHelp,
   icHelpSelected,
   icHide,
@@ -185,6 +188,7 @@ export {
   icShow,
   icStatistics,
   icStatisticsSelected,
+  icSuccess,
   icTesterNextActive,
   icTesterNextInactive,
   icTesterPrevActive,

@@ -1,4 +1,5 @@
-import { Card, Col, Input, Row, Skeleton } from '@components';
+import { icEmptyBot, icSuccess } from '@assets';
+import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { IBotModel } from '@models';
 import { useState } from 'react';
@@ -20,7 +21,14 @@ export const DashboardComponent = () => {
     if (result) {
       handleIsOpen(false);
       const message = t('NEW_BOT_OK_MESSAGE');
-      toast(message, { position: 'bottom-right' });
+      toast.success(message, {
+        position: 'bottom-center',
+        icon: ({ theme, type }) => <img src={icSuccess} alt="success" />,
+        theme: 'dark',
+        hideProgressBar: true,
+        className: 'luna-toast',
+        bodyClassName: 'luna-toast-body',
+      });
     }
   };
 
@@ -39,26 +47,39 @@ export const DashboardComponent = () => {
         <span className="chatbot-count">{data?.length || 0}</span>
       </p>
       <Row gap={20}>
-        <Col span={8}>
-          <NewBotCard onClick={() => handleIsOpen(true)} />
-        </Col>
-
-        {isFetching ? (
+        {isFetching || botSaveMutate.isLoading ? (
           <Col span={8}>
             <Card>
               <Skeleton />
             </Card>
           </Col>
+        ) : data?.length === 0 ? (
+          <Col span={24}>
+            <div className="empty-card">
+              <div className="content">
+                <img src={icEmptyBot} alt="emptyBot" />
+                <p className="description">No search results found.</p>
+                <Button type="primary" onClick={() => handleIsOpen(true)}>
+                  <span className="button-label">Create a New bot</span>
+                </Button>
+              </div>
+            </div>
+          </Col>
         ) : (
-          data
-            ?.filter((x) => x.botName?.includes(searchKeyword))
-            .map((bot) => {
-              return (
-                <Col key={bot.id} span={8}>
-                  <BotCard model={bot} />
-                </Col>
-              );
-            })
+          <>
+            <Col span={8}>
+              <NewBotCard onClick={() => handleIsOpen(true)} />
+            </Col>
+            {data
+              ?.filter((x) => x.botName?.includes(searchKeyword))
+              .map((bot) => {
+                return (
+                  <Col key={bot.id} span={8}>
+                    <BotCard model={bot} />
+                  </Col>
+                );
+              })}
+          </>
         )}
       </Row>
       <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} handleSave={handleSave} />

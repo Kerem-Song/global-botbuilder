@@ -84,3 +84,29 @@
     }
   }
 }
+
+.empty-card {
+  position: relative;
+  border: rem(1) solid $gray200;
+  height: rem(241);
+  background: $grayWhite;
+  border-radius: rem(12);
+  .content {
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    text-align: center;
+    transform: translate(50%, 50%);
+    .description {
+      color: $gray500;
+      font-size: rem(14);
+      font-weight: 500;
+      line-height: rem(25);
+      padding-bottom: rem(8);
+    }
+    .button-label {
+      font-size: rem(16);
+      font-weight: 500;
+    }
+  }
+}

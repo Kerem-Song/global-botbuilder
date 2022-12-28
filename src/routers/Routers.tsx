@@ -26,7 +26,7 @@ const finalRoutes = [
               element: <DashboardPage />,
               handle: true,
             },
-            { path: 'scenario', element: <ScenarioPage /> },
+            { path: ':scenarioid/scenario', element: <ScenarioPage /> },
             { path: 'utterance', element: <UtterancePage /> },
             { path: 'data-api', element: <DataApiPage /> },
             { path: 'deployment', element: <DeploymentPage /> },

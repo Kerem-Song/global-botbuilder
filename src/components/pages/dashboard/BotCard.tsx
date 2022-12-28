@@ -11,7 +11,7 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
   return (
     <Card
       radius="large"
-      onClick={() => navigate('/scenario')}
+      onClick={() => navigate(`/${model.id}/scenario`)}
       className="chatbot-card"
       titleClassName="title"
       title={

@@ -1,0 +1,11 @@
+.luna-toast {
+  border-radius: rem(8);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.luna-toast-body {
+  font-size: rem(15);
+  font-weight: 500;
+  color: $grayWhite;
+  line-height: rem(18);
+}
