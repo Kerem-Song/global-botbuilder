@@ -30,46 +30,52 @@ export const TesterSlide = ({ children, className, quickReplies }: ITesterSlideP
 
   const handleNextClick = () => {
     setCurrent(Math.min(current + 1, children.length - 1));
-    setCurrent(current === children.length - 1 ? 0 : current + 1);
   };
 
   const handlePrevClick = () => {
     setCurrent(Math.max(current - 1, 0));
-    setCurrent(current !== 0 ? current - 1 : 0);
   };
 
-  const prevSliderContainer = classNames(className, 'luna-carousel-slide', {
-    'luna-quickreply-slide': quickReplies,
+  const prevSliderContainer = classNames(className, 'luna-carousel-slide-left', {
+    'luna-quickreply-slide-left': quickReplies,
   });
   const nextSliderContainer = classNames(className, 'luna-carousel-slide-right', {
     'luna-quickreply-slide-right': quickReplies,
   });
 
   return (
-    <div className="botTesterSlide" style={{ ...style }}>
-      {children}
-      <div className={prevSliderContainer}>
-        <button className="slideBtns" disabled={current === 0} onClick={handlePrevClick}>
-          <img
-            src={current === 0 ? icTesterPrevInactive : icTesterPrevActive}
-            alt="TesterSlidePrevBtn"
-          />
-        </button>
+    <>
+      <div className="botTesterSlide" style={{ ...style }}>
+        {children}
+        <div className={prevSliderContainer}>
+          <button
+            className="slideBtns"
+            disabled={current === 0}
+            onClick={handlePrevClick}
+          >
+            <img
+              src={current === 0 ? icTesterPrevInactive : icTesterPrevActive}
+              alt="TesterSlidePrevBtn"
+            />
+          </button>
+        </div>
+        <div className={nextSliderContainer}>
+          <button
+            className="slideBtns"
+            disabled={current + 1 === children.length}
+            onClick={handleNextClick}
+          >
+            <img
+              src={
+                current + 1 === children.length
+                  ? icTesterNextInactive
+                  : icTesterNextActive
+              }
+              alt="TesterSlideNextBtn"
+            />
+          </button>
+        </div>
       </div>
-      <div className={nextSliderContainer}>
-        <button
-          className="slideBtns"
-          disabled={current + 1 === children.length}
-          onClick={handleNextClick}
-        >
-          <img
-            src={
-              current + 1 === children.length ? icTesterNextInactive : icTesterNextActive
-            }
-            alt="TesterSlideNextBtn"
-          />
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
