@@ -111,6 +111,18 @@
       scrollbar-width: none;
       //max-height: 100px;
 
+      .scenarioListName {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: rem(116);
+        white-space: nowrap;
+        
+      }
+
+      .scenarioListSwitch {
+        padding: 0 rem(8) !important;
+      }
+
       .noResults {
         display: flex;
         justify-content: center;

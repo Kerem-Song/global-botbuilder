@@ -97,11 +97,11 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           }}
         />
       ) : (
-        <Row align="center">
-          <Col flex="auto" style={{ fontSize: '13px' }}>
+        <Row align="center" style={{ flexWrap: 'nowrap' }}>
+          <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
             {item.scenarioName}
           </Col>
-          <Col>
+          <Col className="scenarioListSwitch">
             <Switch onChange={handleSwitch} />
           </Col>
           <Col>

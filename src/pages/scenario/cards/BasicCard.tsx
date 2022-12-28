@@ -4,12 +4,22 @@ import { Carousel } from '@components/data-display/Carousel';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableElementProps,
+} from 'react-sortable-hoc';
 
-import { IBasicCard } from '../../../models/interfaces/ICard';
+import { IBasicCard, IButtonType } from '../../../models/interfaces/ICard';
 
 interface BasicCard {
   nodeId: string;
   cards: IBasicCard[];
+}
+
+interface ISortableItem extends SortableElementProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
@@ -19,6 +29,11 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
     textCard: false,
   });
 
+  const SortableItem = SortableElement(({ children }: ISortableItem) => (
+    <li>{children}</li>
+  ));
+
+  // const onSortEnd = ({})
   return (
     <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
