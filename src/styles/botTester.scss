@@ -100,7 +100,7 @@
     .productCardContainer {
       width: 100%;
       max-height: rem(451);
-      display: flex;
+      position: relative;
 
       .productCard {
         max-width: rem(264);
@@ -115,7 +115,7 @@
         }
 
         .productCardContents {
-          padding: 0 rem(12);
+          padding: rem(1) rem(12);
 
           .productCardTitle {
             display: flex;
@@ -243,10 +243,8 @@
     }
 
     .cardCarouselContainer {
-      display: flex;
       width: 100%;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      position: relative;
 
       .cardCarousel {
         width: rem(264);
@@ -332,10 +330,10 @@
 
     .quickReplies {
       width: 100%;
-      display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
+      position: relative;
 
       .quickReply {
         display: flex;

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { CARD_TYPES, IMessageType, IProductCardContent } from './BotTester';
 import { TesterSlide } from './TesterSlide';
 

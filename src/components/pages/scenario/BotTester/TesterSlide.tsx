@@ -47,34 +47,28 @@ export const TesterSlide = ({ children, className, quickReplies }: ITesterSlideP
     <>
       <div className="botTesterSlide" style={{ ...style }}>
         {children}
-        <div className={prevSliderContainer}>
-          <button
-            className="slideBtns"
-            disabled={current === 0}
-            onClick={handlePrevClick}
-          >
-            <img
-              src={current === 0 ? icTesterPrevInactive : icTesterPrevActive}
-              alt="TesterSlidePrevBtn"
-            />
-          </button>
-        </div>
-        <div className={nextSliderContainer}>
-          <button
-            className="slideBtns"
-            disabled={current + 1 === children.length}
-            onClick={handleNextClick}
-          >
-            <img
-              src={
-                current + 1 === children.length
-                  ? icTesterNextInactive
-                  : icTesterNextActive
-              }
-              alt="TesterSlideNextBtn"
-            />
-          </button>
-        </div>
+      </div>
+      <div className={prevSliderContainer}>
+        <button className="slideBtns" disabled={current === 0} onClick={handlePrevClick}>
+          <img
+            src={current === 0 ? icTesterPrevInactive : icTesterPrevActive}
+            alt="TesterSlidePrevBtn"
+          />
+        </button>
+      </div>
+      <div className={nextSliderContainer}>
+        <button
+          className="slideBtns"
+          disabled={current + 1 === children.length}
+          onClick={handleNextClick}
+        >
+          <img
+            src={
+              current + 1 === children.length ? icTesterNextInactive : icTesterNextActive
+            }
+            alt="TesterSlideNextBtn"
+          />
+        </button>
       </div>
     </>
   );
