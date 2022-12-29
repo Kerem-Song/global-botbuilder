@@ -221,7 +221,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
   const botTesterRef = useRef<HTMLDivElement | null>(null);
   const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
-  // console.log(dataQuickReplies);
+
   const handleRefresh = () => {
     setDataMessages([]);
     setDataQuickReplies([]);
@@ -242,8 +242,20 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       type: 'text',
     };
     setDataMessages([...dataMessages, newMessage]);
-    // data.refetch();
-    // getMessageItems.refetch();
+
+    const sendMessage = {
+      message: {
+        id: '1',
+        utterance: {
+          value: text,
+        },
+      },
+    };
+    botTesterMutate.mutate(sendMessage, {
+      onSuccess: (submitResult) => {
+        setDataMessages((original) => [...original, ...(submitResult.messages ?? [])]);
+      },
+    });
     e.preventDefault();
     setText('');
   };
@@ -267,10 +279,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    setDataMessages([...dataMessages, ...(data?.messages || [])]);
-    setDataQuickReplies(data?.quickReplies || []);
-  }, [data]);
+  // useEffect(() => {
+  //   setDataMessages([...dataMessages, ...(data?.messages || [])]);
+  //   setDataQuickReplies(data?.quickReplies || []);
+  // }, [data]);
 
   useEffect(() => {
     if (scrollRef.current) {
