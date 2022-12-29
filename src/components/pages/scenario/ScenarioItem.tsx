@@ -1,5 +1,5 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
-import { useSystemModal } from '@hooks';
+import { useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -12,6 +12,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { scenarioDeleteAsync, scenarioUpdateAsync } = useScenarioClient();
+
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
@@ -39,7 +41,22 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     });
 
     if (result) {
-      console.log('confirm');
+      await scenarioDeleteAsync(item.id);
+    }
+  };
+
+  const handleScenarioUpdate = async (scenarioName?: string) => {
+    if (!scenarioName) {
+      toast('시나리오 이름을 입력해 주세요.', {
+        position: 'bottom-center',
+        theme: 'dark',
+        hideProgressBar: true,
+      });
+      return;
+    }
+    const res = await scenarioUpdateAsync({ ...item, scenarioName });
+    if (res) {
+      setIsEditing(false);
     }
   };
 
@@ -73,27 +90,13 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           maxLength={20}
           ref={inputRef}
           onBlur={(e) => {
-            if (!e.target.value) {
-              toast('시나리오 이름을 입력해 주세요.', {
-                position: 'bottom-center',
-                theme: 'dark',
-                hideProgressBar: true,
-              });
-              return;
-            }
-            item.scenarioName = e.target.value;
-            setIsEditing(false);
+            handleScenarioUpdate(e.target.value);
           }}
           onPressEsc={() => {
             setIsEditing(false);
           }}
           onPressEnter={(value) => {
-            if (!value) {
-              toast('시나리오 이름을 입력해 주세요.', { position: 'bottom-right' });
-              return;
-            }
-            item.scenarioName = value;
-            setIsEditing(false);
+            handleScenarioUpdate(value);
           }}
         />
       ) : (

@@ -1,10 +1,8 @@
 import { imgLinebot } from '@assets';
-import { Card, Col, Row, Space, Title } from '@components';
+import { Card, Col, Row, Space } from '@components';
 import { usePage } from '@hooks';
 import { IBotModel } from '@models';
 import { FC } from 'react';
-
-import icHome from '../../../assets/ic_home.png';
 
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
   const { navigate, t, tc } = usePage();

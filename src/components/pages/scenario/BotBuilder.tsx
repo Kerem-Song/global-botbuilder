@@ -16,7 +16,7 @@ import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 
-const GRID_SIZE = 20;
+const GRID_SIZE = 10;
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
