@@ -1,5 +1,4 @@
-import { Button, Card, Col, Input, Row, Space, Switch } from '@components';
-import { Popper } from '@components/navigation/Popper/Popper';
+import { Button, Input, Space, Switch } from '@components';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import { ScenarioItem } from './ScenarioItem';
@@ -7,7 +6,7 @@ import { ScenarioItem } from './ScenarioItem';
 export const ScenarioManagement = () => {
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList;
-  const basicScenarioList = [{ name: 'FAQ' }];
+  const basicScenarioList = [{ name: 'Help (Fallback)' }];
 
   const handleSwitch = () => {
     console.log('switch toggle');

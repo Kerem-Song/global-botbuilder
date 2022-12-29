@@ -221,7 +221,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
   const botTesterRef = useRef<HTMLDivElement | null>(null);
   const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
-  console.log(dataQuickReplies);
+  // console.log(dataQuickReplies);
   const handleRefresh = () => {
     setDataMessages([]);
     setDataQuickReplies([]);

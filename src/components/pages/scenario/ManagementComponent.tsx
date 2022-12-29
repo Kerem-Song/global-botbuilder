@@ -11,7 +11,7 @@ export const ManagementComponent = () => {
   const scenarioName = '시나리오 이름';
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList;
-  console.log('data', data?.length);
+
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };

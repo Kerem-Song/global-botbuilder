@@ -37,7 +37,11 @@ export const defaultCards = (cardType: TCardsValues) => {
           buttons:
             cardType === CARD_TYPES.TEXT || cardType === CARD_TYPES.IMAGE
               ? undefined
-              : [{ label: 'Button 01', action: 'block' }],
+              : [
+                  { label: 'Button 01', action: 'block' },
+                  { label: 'Button 02', action: 'block' },
+                  { label: 'Button 03', action: 'block' },
+                ],
         },
       ];
       break;

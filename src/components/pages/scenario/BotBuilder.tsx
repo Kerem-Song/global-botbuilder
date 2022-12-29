@@ -1,9 +1,9 @@
-import { icNodeBottom } from '@assets';
 import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
+import { SortableButtons } from '@components/data-display/SortableButtons';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, TDefaultCard } from '@models';
+import { IArrow, IButtonType, INode, TDefaultCard } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -158,10 +158,16 @@ export const Botbuilder = () => {
     dispatch(updateNode(node));
   };
 
+  const item: IButtonType[] = [
+    { label: 'Button 012', action: 'block' },
+    { label: 'Button 023', action: 'block' },
+    { label: 'Button 034', action: 'block' },
+  ];
+
   return (
     <>
       <BotBuilderZoomBtn />
-
+      <SortableButtons item={item} />
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
@@ -203,6 +209,7 @@ export const Botbuilder = () => {
               onMouseDown={(e) => e.stopPropagation()}
             >
               <div
+                key={item.id}
                 role="presentation"
                 className="draggableNode"
                 style={{

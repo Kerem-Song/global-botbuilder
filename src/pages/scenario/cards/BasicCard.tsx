@@ -1,25 +1,15 @@
 import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
+import { SortableButtons } from '@components/data-display/SortableButtons';
 import { Button } from '@components/general/Button';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
-import {
-  SortableContainer,
-  SortableElement,
-  SortableElementProps,
-} from 'react-sortable-hoc';
 
 import { IBasicCard, IButtonType } from '../../../models/interfaces/ICard';
-
 interface BasicCard {
   nodeId: string;
   cards: IBasicCard[];
-}
-
-interface ISortableItem extends SortableElementProps {
-  children: React.ReactNode;
-  className?: string;
 }
 
 export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
@@ -29,15 +19,10 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
     textCard: false,
   });
 
-  const SortableItem = SortableElement(({ children }: ISortableItem) => (
-    <li>{children}</li>
-  ));
-
-  // const onSortEnd = ({})
   return (
     <Carousel nodeId={nodeId}>
       {cards.map((item, i) => (
-        <Card key={`card-${i}`} onClick={() => console.log('card click')}>
+        <Card key={`card-${i}`}>
           {item.thumbnail ? (
             <div
               className={classNames(
@@ -77,8 +62,9 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
             {item.description ? <p>{item.description}</p> : <p>Enter Content</p>}
           </div>
 
-          <div className="buttonWrapper">
-            {item.buttons?.map((button, j) => {
+          {/* <div className="buttonWrapper"> */}
+          <SortableButtons item={item.buttons!} />
+          {/* {item.buttons?.map((button, j) => {
               return (
                 <Row key={`card-${i}-button-${j}`}>
                   <Col span={23}>
@@ -94,8 +80,8 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
                   </Col>
                 </Row>
               );
-            })}
-          </div>
+            })} */}
+          {/* </div> */}
         </Card>
       ))}
     </Carousel>

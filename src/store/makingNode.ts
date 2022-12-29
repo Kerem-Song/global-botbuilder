@@ -22,7 +22,7 @@ export const makingNodeSlice = createSlice({
     },
     updateNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
-      console.log(node);
+      // console.log(node);
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];

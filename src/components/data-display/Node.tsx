@@ -163,27 +163,6 @@ export const Node: FC<INodeProps> = ({
         return <Count cards={cards as ICount[]} nodeId={`node-${id}`} />;
     }
   };
-  // const isCommerce = cards?.some((e) => Object.keys(e).includes('price'));
-  // const isList = cards?.some((e) => Object.keys(e).includes('header'));
-  // const isQuickReply = cards?.some((e) => Object.keys(e).includes('label'));
-  // const isCondition = cards?.some((e) => Object.keys(e).includes('condition'));
-  // const isCount = cards?.some((e) => Object.keys(e).includes('requestionNum'));
-
-  // const handleShowingCards1 = (cards: INodeProps['cards']) => {
-  //   if (isCommerce) {
-  //     return <CommerceCard cards={cards as ICommerceCard[]} nodeId={`node-${id}`} />;
-  //   } else if (isList) {
-  //     return <ListCard cards={cards as IListCard[]} nodeId={`node-${id}`} />;
-  //   } else if (isQuickReply) {
-  //     return <QuickReply cards={cards as IQuickReply[]} nodeId={`node-${id}`} />;
-  //   } else if (isCondition) {
-  //     return <Condition cards={cards as ICondition[]} nodeId={`node-${id}`} />;
-  //   } else if (isCount) {
-  //     return <Count cards={cards as ICount[]} nodeId={`node-${id}`} />;
-  //   } else {
-  //     return <BasicCard cards={cards as IBasicCard[]} nodeId={`node-${id}`} />;
-  //   }
-  // };
 
   return (
     <div
