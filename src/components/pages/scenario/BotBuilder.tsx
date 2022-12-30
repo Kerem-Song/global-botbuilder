@@ -158,16 +158,10 @@ export const Botbuilder = () => {
     dispatch(updateNode(node));
   };
 
-  const item: IButtonType[] = [
-    { label: 'Button 012', action: 'block' },
-    { label: 'Button 023', action: 'block' },
-    { label: 'Button 034', action: 'block' },
-  ];
-
   return (
     <>
       <BotBuilderZoomBtn />
-      <SortableButtons item={item} />
+
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}

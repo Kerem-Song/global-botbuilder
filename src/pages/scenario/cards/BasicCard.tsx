@@ -3,6 +3,7 @@ import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
 import { SortableButtons } from '@components/data-display/SortableButtons';
 import { Button } from '@components/general/Button';
+import { DndContext } from '@dnd-kit/core';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
@@ -62,9 +63,8 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
             {item.description ? <p>{item.description}</p> : <p>Enter Content</p>}
           </div>
 
-          {/* <div className="buttonWrapper"> */}
-          <SortableButtons item={item.buttons!} />
-          {/* {item.buttons?.map((button, j) => {
+          <div className="buttonWrapper">
+            {item.buttons?.map((button, j) => {
               return (
                 <Row key={`card-${i}-button-${j}`}>
                   <Col span={23}>
@@ -80,8 +80,8 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
                   </Col>
                 </Row>
               );
-            })} */}
-          {/* </div> */}
+            })}
+          </div>
         </Card>
       ))}
     </Carousel>
