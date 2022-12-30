@@ -1,11 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import { IBotTester, ISendMessage } from './../../models/interfaces/IBotTester';
 import { useHttp } from './../useHttp';
 
 export const useBotTesterClient = () => {
-  const queryClient = useQueryClient();
   const http = useHttp();
 
   const getMessageItems = useQuery<IBotTester>(['botTester-productCard'], async () => {

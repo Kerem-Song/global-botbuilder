@@ -1,6 +1,7 @@
 export * from './IArrow';
 export * from './IAuthModel';
 export * from './IBotModel';
+export * from './IBotTester';
 export * from './IBrandInfo';
 export * from './ICard';
 export * from './IDataEntryProp';
