@@ -1,7 +1,11 @@
 .botTester {
-  position: absolute;
+  position: fixed;
+  display: block;
   width: rem(400);
-  height: rem(740);
+  height: calc(100vh - rem(120));
+  right: rem(10);
+  bottom: rem(10);
+  overflow: hidden;
   background-color: $grayWhite;
   border: 1px solid $gray200;
   border-radius: rem(12);
@@ -58,7 +62,7 @@
     display: flex;
     flex-direction: column;
     gap: rem(10);
-    height: rem(638);
+    height: calc(100% - rem(98));
     overflow-y: scroll;
     background-color: #99b0d7;
     padding: rem(10) 0 rem(10) rem(8);
@@ -414,7 +418,8 @@
   }
 
   .botTesterInput {
-    height: rem(57);
+    // height: rem(57);
+    height: rem(50);
     display: flex;
     justify-content: center;
     align-items: center;

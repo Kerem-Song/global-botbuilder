@@ -203,11 +203,6 @@ export type IMessageType =
   | IProductCard
   | IImageCard;
 
-type TPosition = {
-  x: number;
-  y: number;
-};
-
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { data, botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
@@ -217,10 +212,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const botbuilderMainRef = document.querySelector('.botBuilderWrapper');
-  const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
-  const botTesterRef = useRef<HTMLDivElement | null>(null);
-  const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
 
   const handleRefresh = () => {
     setDataMessages([]);
@@ -253,7 +244,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     };
     botTesterMutate.mutate(sendMessage, {
       onSuccess: (submitResult) => {
-        setDataMessages((original) => [...original, ...(submitResult.messages ?? [])]);
+        setDataMessages((original) => [...original, ...(submitResult.messages || [])]);
+        setDataQuickReplies([...(submitResult.quickReplies || [])]);
       },
     });
     e.preventDefault();
@@ -279,11 +271,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     }
   }, [isOpen]);
 
-  // useEffect(() => {
-  //   setDataMessages([...dataMessages, ...(data?.messages || [])]);
-  //   setDataQuickReplies(data?.quickReplies || []);
-  // }, [data]);
-
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
@@ -293,13 +280,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable
-          defaultPosition={{
-            x: botbuilderRect.width - 400,
-            y: 0,
-          }}
-        >
-          <div className="botTester" ref={botTesterRef}>
+        <Draggable>
+          <div className="botTester">
             <Col className="botTesterHeader">
               <Col className="text">Testing the Bot</Col>
               <button className="icon refreshBtn" onClick={handleRefresh} />
