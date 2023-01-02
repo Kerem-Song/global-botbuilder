@@ -1,3 +1,4 @@
+import { UniqueIdentifier } from '@dnd-kit/core';
 export interface IThumbnailType {
   imageUrl: string;
   link?: OsLinkType;
@@ -63,6 +64,7 @@ export type ValueOf<T> = T[keyof T];
 
 export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 export interface IButtonType {
+  id: UniqueIdentifier;
   label: string;
   action:
     | 'webLink'

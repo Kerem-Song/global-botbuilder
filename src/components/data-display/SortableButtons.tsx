@@ -1,94 +1,66 @@
-import { Button } from '@components/general';
-import { Col, Row } from '@components/layout';
-import { IButtonType } from '@models';
-import { arrayMoveImmutable } from 'array-move';
-import React, { useState } from 'react';
 import {
-  SortableContainer,
-  SortableContainerProps,
-  SortableElement,
-  SortableElementProps,
-  SortEvent,
-  SortEventWithTag,
-} from 'react-sortable-hoc';
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { IButtonType } from '@models';
+import { useState } from 'react';
 
-interface ISortableButtonsProps {
-  children?: React.ReactNode;
-  item: IButtonType[];
+import { SortableItem } from './SortableItem';
+interface ISortableContainer {
+  cardButtons: IButtonType[];
 }
-export const SortableButtons = ({ item }: ISortableButtonsProps) => {
-  const SortableItem: React.ComponentClass<
-    SortableElementProps & { value: IButtonType },
-    any
-  > = SortableElement(({ value }: { value: IButtonType }) => (
-    <Row>
-      <Col span={23}>
-        <Button>{value.label}</Button>
-      </Col>
-      <Col span={1} className="nextNodeWrapper">
-        <Button
-          className="nextNode blue"
-          shape="ghost"
-          onClick={() => console.log('blueNode')}
-        ></Button>
-      </Col>
-    </Row>
-  ));
+export const SortableButtons = ({ cardButtons }: ISortableContainer) => {
+  const [buttons, setButtons] = useState(cardButtons);
 
-  const SortableList: React.ComponentClass<
-    SortableContainerProps & { items: IButtonType[] },
-    any
-  > = SortableContainer(({ items }: { items: IButtonType[] }) => {
-    return (
-      <div className="buttonWrapper node-draggable-ignore">
-        {items.map((item: IButtonType, index: number) => (
-          <SortableItem key={`item-${index}`} index={index} value={item} />
-        ))}
-      </div>
-    );
-  });
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
 
-  const shouldCancelStart = (e: SortEvent | SortEventWithTag) => {
-    let target = e.currentTarget;
-    if (!target) {
-      target = e.currentTarget;
-      return true;
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e;
+
+    if (!over?.id) return;
+
+    if (active.id !== over.id) {
+      setButtons((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
     }
-    if (target.className === 'item') {
-      console.log('Div button click here ');
-      // perform you click opration here
-      return false;
-    }
-    return true;
   };
 
-  const [state, setState] = useState<IButtonType[]>([
-    { label: 'Button 012', action: 'block' },
-    { label: 'Button 023', action: 'block' },
-    { label: 'Button 034', action: 'block' },
-  ]);
-
-  const [buttons, setButtons] = useState(item);
-
-  const onSortEnd = ({
-    oldIndex,
-    newIndex,
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }): void => {
-    console.log('sortend func');
-
-    setButtons(arrayMoveImmutable(buttons, oldIndex, newIndex));
-    // setState(arrayMove(state, oldIndex, newIndex));
-    // console.log('buttons set', buttons);
-  };
-  console.log('buttons :"', buttons);
   return (
-    <SortableList
-      onSortStart={() => console.log('sort start')}
-      items={buttons}
-      // onSortEnd={onSortEnd}
-    />
+    <DndContext
+      onDragEnd={handleDragEnd}
+      sensors={sensors}
+      collisionDetection={closestCenter}
+    >
+      <SortableContext items={buttons} strategy={verticalListSortingStrategy}>
+        {buttons.map((item) => (
+          <SortableItem
+            key={item.id}
+            id={item.id}
+            label={item.label}
+            action={item.action}
+          />
+        ))}
+      </SortableContext>
+    </DndContext>
   );
 };

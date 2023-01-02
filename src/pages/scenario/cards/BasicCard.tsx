@@ -4,6 +4,7 @@ import { Carousel } from '@components/data-display/Carousel';
 import { SortableButtons } from '@components/data-display/SortableButtons';
 import { Button } from '@components/general/Button';
 import { DndContext } from '@dnd-kit/core';
+import { SortableContext } from '@dnd-kit/sortable';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
@@ -63,8 +64,8 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
             {item.description ? <p>{item.description}</p> : <p>Enter Content</p>}
           </div>
 
-          <div className="buttonWrapper">
-            {item.buttons?.map((button, j) => {
+          <div className="buttonWrapper node-draggable-ignore">
+            {/* {item.buttons?.map((button, j) => {
               return (
                 <Row key={`card-${i}-button-${j}`}>
                   <Col span={23}>
@@ -80,7 +81,8 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
                   </Col>
                 </Row>
               );
-            })}
+            })} */}
+            {item.buttons && <SortableButtons cardButtons={item.buttons} />}
           </div>
         </Card>
       ))}
