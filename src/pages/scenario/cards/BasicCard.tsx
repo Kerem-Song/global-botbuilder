@@ -65,23 +65,6 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
           </div>
 
           <div className="buttonWrapper node-draggable-ignore">
-            {/* {item.buttons?.map((button, j) => {
-              return (
-                <Row key={`card-${i}-button-${j}`}>
-                  <Col span={23}>
-                    <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
-                  </Col>
-                  <Col span={1} className="nextNodeWrapper">
-                    <Button
-                      key={`card-${i}-button-${j}-nodeButton-${j}`}
-                      className="nextNode blue"
-                      shape="ghost"
-                      onClick={() => console.log('blueNode')}
-                    ></Button>
-                  </Col>
-                </Row>
-              );
-            })} */}
             {item.buttons && <SortableButtons cardButtons={item.buttons} cardId={i} />}
           </div>
         </Card>

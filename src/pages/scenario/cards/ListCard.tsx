@@ -1,6 +1,7 @@
 import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
+import { SortableButtons } from '@components/data-display/SortableButtons';
 import { Button } from '@components/general/Button';
 import { Divider } from '@components/layout/Divider';
 import classNames from 'classnames';
@@ -66,32 +67,8 @@ export const ListCard: FC<ListCard> = ({ nodeId, cards }) => {
                 </div>
               ))
             : null}
-          <div className="buttonWrapper list">
-            {list.buttons?.map((button, j) => {
-              return (
-                // <>
-                //   <Button key={i}>{button.label}</Button>;
-                //   <Button
-                //     className="nextNode blue"
-                //     shape="ghost"
-                //     onClick={() => console.log('blueNode')}
-                //   ></Button>
-                // </>
-                <Row key={`card-${i}-button-${j}`}>
-                  <Col span={23}>
-                    <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
-                  </Col>
-                  <Col span={1} className="nextNodeWrapper">
-                    <Button
-                      key={`card-${i}-button-${j}-nodeButton-${j}`}
-                      className="nextNode blue"
-                      shape="ghost"
-                      onClick={() => console.log('blueNode')}
-                    ></Button>
-                  </Col>
-                </Row>
-              );
-            })}
+          <div className="buttonWrapper list node-draggable-ignore">
+            {list.buttons && <SortableButtons cardButtons={list.buttons} cardId={i} />}
           </div>
         </Card>
       ))}
