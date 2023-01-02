@@ -18,9 +18,10 @@ import { useState } from 'react';
 
 import { SortableItem } from './SortableItem';
 interface ISortableContainer {
+  cardId: number;
   cardButtons: IButtonType[];
 }
-export const SortableButtons = ({ cardButtons }: ISortableContainer) => {
+export const SortableButtons = ({ cardId, cardButtons }: ISortableContainer) => {
   const [buttons, setButtons] = useState(cardButtons);
 
   const sensors = useSensors(
@@ -55,6 +56,7 @@ export const SortableButtons = ({ cardButtons }: ISortableContainer) => {
         {buttons.map((item) => (
           <SortableItem
             key={item.id}
+            cardId={cardId}
             id={item.id}
             label={item.label}
             action={item.action}

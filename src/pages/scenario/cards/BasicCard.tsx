@@ -82,7 +82,7 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
                 </Row>
               );
             })} */}
-            {item.buttons && <SortableButtons cardButtons={item.buttons} />}
+            {item.buttons && <SortableButtons cardButtons={item.buttons} cardId={i} />}
           </div>
         </Card>
       ))}
