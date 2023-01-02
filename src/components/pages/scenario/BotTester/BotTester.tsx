@@ -204,10 +204,12 @@ export type IMessageType =
   | IImageCard;
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
-  const { data, botTesterMutate } = useBotTesterClient();
+  const { botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
   const [dataMessages, setDataMessages] = useState<IMessageType[]>([]);
-  const [dataQuickReplies, setDataQuickReplies] = useState<IQuickReplies[]>([]);
+  // const [dataQuickReplies, setDataQuickReplies] = useState<IQuickReplies[]>([]);
+  // console.log(botTesterMutate.data?.quickReplies);
+
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -215,7 +217,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const handleRefresh = () => {
     setDataMessages([]);
-    setDataQuickReplies([]);
+    // setDataQuickReplies([]);
   };
 
   const handleClose = () => {
@@ -233,6 +235,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       type: 'text',
     };
     setDataMessages([...dataMessages, newMessage]);
+    // setDataQuickReplies([...dataQuickReplies]);
 
     const sendMessage = {
       message: {
@@ -245,7 +248,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     botTesterMutate.mutate(sendMessage, {
       onSuccess: (submitResult) => {
         setDataMessages((original) => [...original, ...(submitResult.messages || [])]);
-        setDataQuickReplies([...(submitResult.quickReplies || [])]);
+        // setDataQuickReplies([...(submitResult.quickReplies || [])]);
       },
     });
     e.preventDefault();
@@ -253,7 +256,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   const handleQuickReplyClick = () => {
-    setDataQuickReplies([]);
+    // setDataQuickReplies([]);
   };
 
   const openTestInfo = () => {
@@ -267,7 +270,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   useEffect(() => {
     if (isOpen === false) {
       setDataMessages([]);
-      setDataQuickReplies([]);
+      // setDataQuickReplies([]);
     }
   }, [isOpen]);
 
@@ -294,25 +297,31 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               ref={scrollRef}
             >
               {dataMessages.map((item, i) => {
-                return <TesterMessagesItem key={i} item={item} />;
+                return (
+                  <div className="content" key={i}>
+                    <TesterMessagesItem item={item} />
+                    {item.type === 'text' && item.isMe === undefined ? (
+                      <div className="quickReplies">
+                        {botTesterMutate.data?.quickReplies && (
+                          <TesterSlide quickReplies>
+                            {botTesterMutate.data.quickReplies?.map((v, i) => {
+                              return (
+                                <button
+                                  key={i}
+                                  className="quickReply"
+                                  onClick={handleQuickReplyClick}
+                                >
+                                  {v.label}
+                                </button>
+                              );
+                            })}
+                          </TesterSlide>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                );
               })}
-              {dataQuickReplies.length === 0 ? null : (
-                <div className="quickReplies">
-                  <TesterSlide quickReplies>
-                    {dataQuickReplies.map((item, i) => {
-                      return (
-                        <button
-                          key={i}
-                          className="quickReply"
-                          onClick={handleQuickReplyClick}
-                        >
-                          {item.label}
-                        </button>
-                      );
-                    })}
-                  </TesterSlide>
-                </div>
-              )}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
               <input

@@ -32,7 +32,7 @@ export const InputTextarea: FC<InputTextareaProps> = ({
   }, [textareaRef]);
 
   return (
-    <form>
+    <>
       <textarea
         className="textInput"
         value={text}
@@ -48,6 +48,6 @@ export const InputTextarea: FC<InputTextareaProps> = ({
           {`/${maxLength}`}
         </span>
       ) : undefined}
-    </form>
+    </>
   );
 };
