@@ -1,8 +1,6 @@
-import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
-import { SortableButtons } from '@components/data-display/SortableButtons';
-import { Button } from '@components/general/Button';
+import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import { Divider } from '@components/layout/Divider';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
@@ -85,7 +83,9 @@ export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
           ) : null}
 
           <div className="buttonWrapper node-draggable-ignore">
-            {item.buttons && <SortableButtons cardButtons={item.buttons} cardId={i} />}
+            {item.buttons && (
+              <SortableButtonContainer cardButtons={item.buttons} cardId={i} />
+            )}
           </div>
         </Card>
       ))}

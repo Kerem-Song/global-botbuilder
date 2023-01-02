@@ -1,14 +1,10 @@
-import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
-import { SortableButtons } from '@components/data-display/SortableButtons';
-import { Button } from '@components/general/Button';
-import { DndContext } from '@dnd-kit/core';
-import { SortableContext } from '@dnd-kit/sortable';
+import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
-import { IBasicCard, IButtonType } from '../../../models/interfaces/ICard';
+import { IBasicCard } from '../../../models/interfaces/ICard';
 interface BasicCard {
   nodeId: string;
   cards: IBasicCard[];
@@ -65,7 +61,9 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
           </div>
 
           <div className="buttonWrapper node-draggable-ignore">
-            {item.buttons && <SortableButtons cardButtons={item.buttons} cardId={i} />}
+            {item.buttons && (
+              <SortableButtonContainer cardButtons={item.buttons} cardId={i} />
+            )}
           </div>
         </Card>
       ))}

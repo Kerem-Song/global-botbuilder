@@ -4,10 +4,15 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { IButtonType } from '@models';
 
-interface ISortableItem extends IButtonType {
+interface ISortableButtonItem extends IButtonType {
   cardId: number;
 }
-export const SortableItem = ({ id, label, action, cardId }: ISortableItem) => {
+export const SortableButtonItem = ({
+  id,
+  label,
+  action,
+  cardId,
+}: ISortableButtonItem) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id,
   });

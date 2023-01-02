@@ -69,8 +69,15 @@ export const defaultCards = (cardType: TCardsValues) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
+              id: 1,
               thumbnail: { imageUrl: '' },
-              title: '',
+              title: '1',
+              description: '',
+            },
+            {
+              id: 2,
+              thumbnail: { imageUrl: '' },
+              title: '2',
               description: '',
             },
           ],
@@ -119,6 +126,7 @@ export const defaultCards = (cardType: TCardsValues) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
+              id: 0,
               thumbnail: { imageUrl: '' },
               title: '',
               description: '',

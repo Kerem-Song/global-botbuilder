@@ -16,12 +16,12 @@ import {
 import { IButtonType } from '@models';
 import { useState } from 'react';
 
-import { SortableItem } from './SortableItem';
+import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {
   cardId: number;
   cardButtons: IButtonType[];
 }
-export const SortableButtons = ({ cardId, cardButtons }: ISortableContainer) => {
+export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContainer) => {
   const [buttons, setButtons] = useState(cardButtons);
 
   const sensors = useSensors(
@@ -54,7 +54,7 @@ export const SortableButtons = ({ cardId, cardButtons }: ISortableContainer) => 
     >
       <SortableContext items={buttons} strategy={verticalListSortingStrategy}>
         {buttons.map((item) => (
-          <SortableItem
+          <SortableButtonItem
             key={item.id}
             cardId={cardId}
             id={item.id}
