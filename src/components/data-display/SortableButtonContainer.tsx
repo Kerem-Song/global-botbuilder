@@ -2,16 +2,19 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
+  DragStartEvent,
   KeyboardSensor,
   PointerSensor,
+  UniqueIdentifier,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
 import {
   arrayMove,
+  rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { IButtonType } from '@models';
 import { useState } from 'react';
@@ -23,13 +26,20 @@ interface ISortableContainer {
 }
 export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContainer) => {
   const [buttons, setButtons] = useState(cardButtons);
-
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  const handleDragStart = (e: DragStartEvent) => {
+    const { active } = e;
+    console.log('active', active.id);
+
+    setActiveId(active.id);
+  };
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -48,11 +58,13 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
 
   return (
     <DndContext
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       sensors={sensors}
       collisionDetection={closestCenter}
+      modifiers={[restrictToParentElement]}
     >
-      <SortableContext items={buttons} strategy={verticalListSortingStrategy}>
+      <SortableContext items={buttons} strategy={rectSortingStrategy}>
         {buttons.map((item) => (
           <SortableButtonItem
             key={item.id}
@@ -61,6 +73,7 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
             label={item.label}
             action={item.action}
           />
+          // <SortableItemTest key={item.id} id={item.id} item={item} />
         ))}
       </SortableContext>
     </DndContext>

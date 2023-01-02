@@ -39,31 +39,6 @@ export const ListCard: FC<ListCard> = ({ nodeId, cards }) => {
           ) : null}
 
           {list.items && list.items.length < 6 ? (
-            // list.items?.map((item, i) => (
-            //     <div className={'listItems node-draggable-ignore'} key={i}>
-            //       <Row justify="flex-start" align="center">
-            //         <Col span={6}>
-            //           {item.thumbnail?.imageUrl ? (
-            //             <img src={item.thumbnail.imageUrl} alt="itemThumbnail" />
-            //           ) : (
-            //             <div className="listItemThumbnailSkeleton"></div>
-            //           )}
-            //         </Col>
-            //         <Col span={18} className="listItemsContent">
-            //           {item.title ? (
-            //             <p className="title">{item.title}</p>
-            //           ) : (
-            //             <p className="title empty">Enter Title</p>
-            //           )}
-            //           {item.description ? (
-            //             <p className="description">{item.description}</p>
-            //           ) : (
-            //             <p className="description empty">Enter Content</p>
-            //           )}
-            //         </Col>
-            //       </Row>
-            //     </div>
-            //   ))
             <div className={'node-draggable-ignore'}>
               {list.items && <SortableListContainer listItems={list.items} />}
             </div>
