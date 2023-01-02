@@ -39,5 +39,8 @@ export interface ISendMessage {
     utterance: {
       value: string;
     };
+    postback?: {
+      queryString: string;
+    };
   };
 }
