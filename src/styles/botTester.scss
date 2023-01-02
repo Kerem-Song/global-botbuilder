@@ -1,16 +1,14 @@
 .botTester {
-  position: fixed;
-  display: block;
+  position: absolute;
   width: rem(400);
   height: calc(100vh - rem(120));
   right: rem(10);
   bottom: rem(10);
-  overflow: hidden;
   background-color: $grayWhite;
   border: 1px solid $gray200;
   border-radius: rem(12);
   cursor: pointer;
-  z-index: 900;
+  z-index: 99;
 
   .botTesterHeader {
     display: flex;
