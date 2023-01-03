@@ -63,7 +63,7 @@
     height: calc(100% - rem(98));
     overflow-y: scroll;
     background-color: #99b0d7;
-    padding: rem(10) 0 rem(10) rem(8);
+    padding: rem(10) 0 0 rem(8);
     -ms-overflow-style: none;
     scrollbar-width: none;
 
@@ -76,6 +76,7 @@
         .sendMessage {
           max-width: rem(244);
           height: -webkit-fit-content;
+          margin-right: rem(8);
           padding: rem(8) rem(14);
           background-color: #8de386;
           border: 1px solid #8de386;
@@ -343,6 +344,7 @@
         justify-content: flex-start;
         position: relative;
         margin-top: rem(10);
+        padding-left: rem(40);
 
         .quickReply {
           display: flex;

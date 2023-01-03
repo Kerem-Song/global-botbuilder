@@ -26,7 +26,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
         return (
           <div className="productCardContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide>
+              <TesterSlide gapSize={10}>
                 {item.contents.map((c, i) => {
                   const content = c as IProductCardContent;
                   return (
@@ -96,7 +96,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
         return (
           <div className="cardCarouselContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide>
+              <TesterSlide gapSize={10}>
                 {item.contents?.map((c, i) => {
                   const content = c as IProductCardContent;
                   return (

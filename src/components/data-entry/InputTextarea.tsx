@@ -1,53 +1,57 @@
-import '../../styles/inputTextarea.scss';
+import { IDataEntryProp, IHasClassNameNStyle } from '@models';
+import classNames from 'classnames';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 
-import React, { FC, useCallback, useRef, useState } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
-
-export interface InputTextareaProps extends IDataEntryProp {
+export interface InputTextareaProps extends IDataEntryProp, IHasClassNameNStyle {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
-  onPressEnter?: (value: string | undefined) => void;
+  height?: number;
+  autoHeight?: boolean;
 }
 
-export const InputTextarea: FC<InputTextareaProps> = ({
-  maxLength,
-  showCount,
-  placeholder,
-}) => {
-  const [text, setText] = useState<string>('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(
+  (args, ref) => {
+    const [text, setText] = useState<string>('');
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-  };
+    const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setText(e.target.value);
+    };
 
-  const handleTextareaHeight = useCallback(() => {
-    if (textareaRef === null || textareaRef.current === null) {
-      return;
-    }
-    textareaRef.current.style.height = '40px';
-    textareaRef.current.style.height = textareaRef.current?.scrollHeight + 'px';
-  }, [textareaRef]);
+    const handleTextareaHeight = useCallback(() => {
+      if (!args.autoHeight || textareaRef === null || textareaRef.current === null) {
+        return;
+      }
+      textareaRef.current.style.height = '40px';
+      textareaRef.current.style.height = textareaRef.current?.scrollHeight + 'px';
+    }, [textareaRef]);
 
-  return (
-    <>
-      <textarea
-        className="textInput"
-        value={text}
-        onChange={handleTextArea}
-        onInput={handleTextareaHeight}
-        placeholder={placeholder}
-        maxLength={1000}
-        ref={textareaRef}
-      />
-      {showCount ? (
-        <span className="textCounter">
-          {text.length || 0}
-          {`/${maxLength}`}
-        </span>
-      ) : undefined}
-    </>
-  );
-};
+    const { style, height } = args;
+    const resultStyle = { ...style, height: height };
+    const resultClassName = classNames('textInput', args.className);
+
+    return (
+      <>
+        <textarea
+          className={resultClassName}
+          style={resultStyle}
+          value={text}
+          onChange={handleTextArea}
+          onInput={handleTextareaHeight}
+          placeholder={args.placeholder}
+          maxLength={1000}
+          ref={textareaRef}
+        />
+        {args.showCount ? (
+          <span className="textCounter">
+            {text.length || 0}
+            {`/${args.maxLength}`}
+          </span>
+        ) : undefined}
+      </>
+    );
+  },
+);
+
+InputTextarea.displayName = 'luna_input_textarea';

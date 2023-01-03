@@ -6,26 +6,41 @@ import {
 } from '@assets';
 import { IHasChildren, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 
 export interface ITesterSlideProps extends IHasChildren, IHasClassNameNStyle {
   quickReplies?: boolean;
   children: ReactNode[];
+  gapSize: number;
 }
 
-export const TesterSlide = ({ children, className, quickReplies }: ITesterSlideProps) => {
+export const TesterSlide = ({
+  children,
+  className,
+  gapSize,
+  quickReplies,
+}: ITesterSlideProps) => {
+  const slideRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
 
   const [style, setStyle] = useState({
-    marginLeft: `${current * -264}px`,
+    marginLeft: '0px',
     transition: 'none',
   });
 
   useEffect(() => {
-    setStyle({
-      marginLeft: `${current * -264}px`,
-      transition: 'all 0.3s ease-out',
-    });
+    if (slideRef.current && slideRef.current.children.length > current) {
+      let marginLeft = 0;
+      for (let i = 0; i < current; i++) {
+        console.log(slideRef.current.children[i].className);
+        marginLeft +=
+          slideRef.current.children[i].getBoundingClientRect().width + gapSize;
+      }
+      setStyle({
+        marginLeft: `${-marginLeft}px`,
+        transition: 'all 0.3s ease-out',
+      });
+    }
   }, [current]);
 
   const handleNextClick = () => {
@@ -45,7 +60,7 @@ export const TesterSlide = ({ children, className, quickReplies }: ITesterSlideP
 
   return (
     <>
-      <div className="botTesterSlide" style={{ ...style }}>
+      <div className="botTesterSlide" style={{ ...style }} ref={slideRef}>
         {children}
       </div>
       <div className={prevSliderContainer}>
