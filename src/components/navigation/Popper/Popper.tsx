@@ -116,7 +116,7 @@ export const Popper = <T extends object>({
       <div
         className={popperContainer}
         ref={popperElement}
-        style={{ ...styles.popper, display: showPopper ? 'block' : 'none' }}
+        style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}
         {...attributes.popper}

@@ -110,7 +110,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           <Col>
             <Popper
               placement="right-start"
-              offset={[-10, 15]}
+              offset={[5, 10]}
               popperItems={scenarioMenus}
               onChange={(m) => {
                 m.data?.action?.();
