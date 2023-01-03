@@ -17,7 +17,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { IButtonType } from '@models';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {
@@ -26,20 +26,16 @@ interface ISortableContainer {
 }
 export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContainer) => {
   const [buttons, setButtons] = useState(cardButtons);
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
-  const handleDragStart = (e: DragStartEvent) => {
-    const { active } = e;
-    console.log('active', active.id);
-
-    setActiveId(active.id);
-  };
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -58,7 +54,6 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
 
   return (
     <DndContext
-      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       sensors={sensors}
       collisionDetection={closestCenter}
