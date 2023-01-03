@@ -8,6 +8,13 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import {
+  restrictToFirstScrollableAncestor,
+  restrictToHorizontalAxis,
+  restrictToParentElement,
+  restrictToVerticalAxis,
+  restrictToWindowEdges,
+} from '@dnd-kit/modifiers';
+import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
@@ -53,14 +60,15 @@ export const SortableListContainer = ({ listItems }: ISortableContainer) => {
       onDragEnd={handleDragEnd}
       sensors={sensors}
       collisionDetection={closestCenter}
+      modifiers={[restrictToParentElement]}
     >
       {list && (
         <SortableContext items={list} strategy={verticalListSortingStrategy}>
-          {list.map((item) => (
-            <div className="listItems" key={item.id}>
+          <div className="listItems">
+            {list.map((item) => (
               <SortableListItem key={item.id} item={item} />
-            </div>
-          ))}
+            ))}
+          </div>
         </SortableContext>
       )}
     </DndContext>
