@@ -14,6 +14,7 @@ import { addArrow, appendNode, removeItem, updateNode } from '../../../store/mak
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
+import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 
 const GRID_SIZE = 10;
 
@@ -160,7 +161,7 @@ export const Botbuilder = () => {
   return (
     <>
       <BotBuilderZoomBtn />
-
+      {/* <NodeLinkPopUpMenu /> */}
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
