@@ -1,14 +1,16 @@
-import { CARD_TYPES, IMessageType, IProductCardContent } from './BotTester';
+import { DATA_TYPES, ICarousel, IDataType } from '@models';
+
 import { TesterSlide } from './TesterSlide';
 
-export interface TesterMessagesItemProps {
-  item: IMessageType;
+export interface TestProps {
+  item: IDataType;
 }
 
-export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
+export const TesterMessagesItem = ({ item }: TestProps) => {
+  console.log(item);
   const itemType = () => {
     switch (item.type) {
-      case CARD_TYPES.text:
+      case DATA_TYPES.text:
         return (
           <>
             {item.isMe === true ? (
@@ -22,13 +24,13 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
             )}
           </>
         );
-      case CARD_TYPES.productCardCarousel:
+      case DATA_TYPES.productCardCarousel:
         return (
           <div className="productCardContainer">
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10}>
                 {item.contents.map((c, i) => {
-                  const content = c as IProductCardContent;
+                  const content = c as ICarousel;
                   return (
                     <div key={i} className="productCard">
                       <img
@@ -92,13 +94,13 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
             )}
           </div>
         );
-      case CARD_TYPES.cardCarousel:
+      case DATA_TYPES.cardCarousel:
         return (
           <div className="cardCarouselContainer">
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10}>
                 {item.contents?.map((c, i) => {
-                  const content = c as IProductCardContent;
+                  const content = c as ICarousel;
                   return (
                     <div key={i} className="cardCarousel">
                       <img
@@ -116,7 +118,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
             )}
           </div>
         );
-      case CARD_TYPES.card:
+      case DATA_TYPES.card:
         return (
           <div className="basicCardContainer">
             {item.title ? (
@@ -158,7 +160,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
             )}
           </div>
         );
-      case CARD_TYPES.productCard:
+      case DATA_TYPES.productCard:
         return (
           <div className="productCardContainer">
             <div className="productCard">
@@ -219,10 +221,24 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
             </div>
           </div>
         );
-      case CARD_TYPES.image:
+      case DATA_TYPES.image:
         return (
           <div className="imageCardContainer">
             <img className="imageCardImg contain" src={item.imageUrl} alt="fullSizeImg" />
+          </div>
+        );
+      case DATA_TYPES.quickReplies:
+        return (
+          <div className="quickReplies">
+            <TesterSlide gapSize={8} quickReplies>
+              {item.quickReplies.map((v, i) => {
+                return (
+                  <button key={i} className="quickReply">
+                    {v.label}
+                  </button>
+                );
+              })}
+            </TesterSlide>
           </div>
         );
     }

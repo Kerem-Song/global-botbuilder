@@ -6,7 +6,7 @@ import {
 } from '@assets';
 import { IHasChildren, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import { ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 export interface ITesterSlideProps extends IHasChildren, IHasClassNameNStyle {
   quickReplies?: boolean;

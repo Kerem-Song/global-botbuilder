@@ -63,11 +63,11 @@
     height: calc(100% - rem(98));
     overflow-y: scroll;
     background-color: #99b0d7;
-    padding: rem(10) 0 0 rem(8);
+    padding: 0 0 0 rem(8);
     -ms-overflow-style: none;
     scrollbar-width: none;
 
-    .content {
+    .testerDataContainer {
       .send {
         display: flex;
         justify-content: right;
@@ -343,7 +343,7 @@
         align-items: center;
         justify-content: flex-start;
         position: relative;
-        margin-top: rem(10);
+        // margin-top: rem(10);
         padding-left: rem(40);
 
         .quickReply {
