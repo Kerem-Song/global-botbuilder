@@ -1,3 +1,4 @@
+import { UniqueIdentifier } from '@dnd-kit/core';
 export interface IThumbnailType {
   imageUrl: string;
   link?: OsLinkType;
@@ -63,6 +64,7 @@ export type ValueOf<T> = T[keyof T];
 
 export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 export interface IButtonType {
+  id: UniqueIdentifier;
   label: string;
   action:
     | 'webLink'
@@ -110,22 +112,25 @@ export interface ICommerceCard {
   buttons?: IButtonType[];
 }
 
+export interface ISortableListItem {
+  id: UniqueIdentifier;
+  thumbnail?: IThumbnailType;
+  title?: string;
+  description?: string;
+  action?: 'block' | 'message';
+  blockId?: string;
+  messageText?: string;
+  extra?: Map<string, any>;
+  link?: 'pc' | 'mobile' | 'web';
+}
+
 export interface IListCard {
   type?: typeof CARD_TYPES.LIST | typeof CARD_TYPES.LIST_CAROUSEL;
   header?: {
     title?: string;
   };
   thumbnail?: IThumbnailType;
-  items?: {
-    thumbnail?: IThumbnailType;
-    title?: string;
-    description?: string;
-    action?: 'block' | 'message';
-    blockId?: string;
-    messageText?: string;
-    extra?: Map<string, any>;
-    link?: 'pc' | 'mobile' | 'web';
-  }[];
+  items?: ISortableListItem[];
   buttons?: IButtonType[];
 }
 

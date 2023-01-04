@@ -228,7 +228,11 @@
 
         // List Card
         .listItems {
+          display: flex;
+          flex-direction: column;
           padding-top: rem(6);
+          gap: rem(6);
+          
           .listItemThumbnailSkeleton {
             width: rem(48);
             height: rem(48);

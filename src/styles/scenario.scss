@@ -1,7 +1,9 @@
 .scenarioWrapper {
+  position: relative;
   display: flex;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background-color: $background;
   .managementWrapper {
     flex: 0 0 rem(220);
@@ -22,7 +24,7 @@
 
       .scenarioNameTabs {
         display: flex;
-        
+
         gap: rem(8);
 
         .tab {
@@ -48,7 +50,7 @@
             }
           }
         }
-        
+
         .on {
           background-color: $primary500;
         }
@@ -115,9 +117,8 @@
       .scenarioListName {
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: rem(116);
+        max-width: rem(110);
         white-space: nowrap;
-        
       }
 
       .scenarioListSwitch {

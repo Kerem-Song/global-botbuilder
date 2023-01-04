@@ -1,12 +1,10 @@
-import { Col, Row } from '@components';
 import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
-import { SortableButtons } from '@components/data-display/SortableButtons';
-import { Button } from '@components/general/Button';
+import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
-import { IBasicCard, IButtonType } from '../../../models/interfaces/ICard';
+import { IBasicCard } from '../../../models/interfaces/ICard';
 interface BasicCard {
   nodeId: string;
   cards: IBasicCard[];
@@ -62,26 +60,11 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
             {item.description ? <p>{item.description}</p> : <p>Enter Content</p>}
           </div>
 
-          {/* <div className="buttonWrapper"> */}
-          <SortableButtons item={item.buttons!} />
-          {/* {item.buttons?.map((button, j) => {
-              return (
-                <Row key={`card-${i}-button-${j}`}>
-                  <Col span={23}>
-                    <Button key={`card-${i}-button-${j}`}>{button.label}</Button>
-                  </Col>
-                  <Col span={1} className="nextNodeWrapper">
-                    <Button
-                      key={`card-${i}-button-${j}-nodeButton-${j}`}
-                      className="nextNode blue"
-                      shape="ghost"
-                      onClick={() => console.log('blueNode')}
-                    ></Button>
-                  </Col>
-                </Row>
-              );
-            })} */}
-          {/* </div> */}
+          <div className="buttonWrapper node-draggable-ignore">
+            {item.buttons && (
+              <SortableButtonContainer cardButtons={item.buttons} cardId={i} />
+            )}
+          </div>
         </Card>
       ))}
     </Carousel>

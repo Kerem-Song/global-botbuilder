@@ -1,9 +1,8 @@
 import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
-import { SortableButtons } from '@components/data-display/SortableButtons';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, IButtonType, INode, TDefaultCard } from '@models';
+import { IArrow, INode, TDefaultCard } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -15,6 +14,7 @@ import { addArrow, appendNode, removeItem, updateNode } from '../../../store/mak
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
+import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 
 const GRID_SIZE = 10;
 
@@ -158,16 +158,10 @@ export const Botbuilder = () => {
     dispatch(updateNode(node));
   };
 
-  const item: IButtonType[] = [
-    { label: 'Button 012', action: 'block' },
-    { label: 'Button 023', action: 'block' },
-    { label: 'Button 034', action: 'block' },
-  ];
-
   return (
     <>
       <BotBuilderZoomBtn />
-      <SortableButtons item={item} />
+      {/* <NodeLinkPopUpMenu /> */}
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}

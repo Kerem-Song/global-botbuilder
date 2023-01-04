@@ -5,7 +5,7 @@
   height: 100%;
   // width: 100%;
   // 확인 필요
-  width: calc(100vw - rem(220));
+  width: calc(100vw - rem(270));
   height: calc(100vh - rem(51));
 }
 
@@ -127,6 +127,7 @@
     }
   }
   .node-item-wrap {
+    position: relative;
     background: $gray100;
     padding: rem(12);
     margin-bottom: rem(12);

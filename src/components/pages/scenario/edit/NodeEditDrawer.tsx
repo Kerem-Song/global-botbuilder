@@ -66,6 +66,12 @@ export const NodeEditDrawer = () => {
             <span className="label">텍스트</span>
             <span className="required">*</span>
           </p>
+          <InputTextarea
+            height={100}
+            showCount
+            maxLength={1000}
+            placeholder="Input Text"
+          />
         </div>
       </form>
     </Drawer>

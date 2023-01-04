@@ -38,9 +38,9 @@ export const defaultCards = (cardType: TCardsValues) => {
             cardType === CARD_TYPES.TEXT || cardType === CARD_TYPES.IMAGE
               ? undefined
               : [
-                  { label: 'Button 01', action: 'block' },
-                  { label: 'Button 02', action: 'block' },
-                  { label: 'Button 03', action: 'block' },
+                  { id: 1, label: 'Button 01', action: 'block' },
+                  { id: 2, label: 'Button 02', action: 'block' },
+                  { id: 3, label: 'Button 03', action: 'block' },
                 ],
         },
       ];
@@ -69,8 +69,15 @@ export const defaultCards = (cardType: TCardsValues) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
+              id: 1,
               thumbnail: { imageUrl: '' },
               title: '',
+              description: '',
+            },
+            {
+              id: 2,
+              thumbnail: { imageUrl: '' },
+              title: '2',
               description: '',
             },
           ],
@@ -85,10 +92,10 @@ export const defaultCards = (cardType: TCardsValues) => {
           title: '',
           thumbnail: { imageUrl: '' },
           description: '',
-          buttons: [{ label: 'Button 01', action: 'block' }],
+          buttons: [{ id: 1, label: 'Button 01', action: 'block' }],
         },
         {
-          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [{ id: 0, label: '+ Add a ChatBubble', action: 'block' }],
         },
       ];
       break;
@@ -104,7 +111,7 @@ export const defaultCards = (cardType: TCardsValues) => {
           productName: '',
         },
         {
-          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [{ id: 0, label: '+ Add a ChatBubble', action: 'block' }],
         },
       ];
       break;
@@ -119,6 +126,7 @@ export const defaultCards = (cardType: TCardsValues) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
+              id: 0,
               thumbnail: { imageUrl: '' },
               title: '',
               description: '',
@@ -126,7 +134,7 @@ export const defaultCards = (cardType: TCardsValues) => {
           ],
         },
         {
-          buttons: [{ label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [{ id: 0, label: '+ Add a ChatBubble', action: 'block' }],
         },
       ];
       break;

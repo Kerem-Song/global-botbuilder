@@ -203,13 +203,8 @@ export type IMessageType =
   | IProductCard
   | IImageCard;
 
-type TPosition = {
-  x: number;
-  y: number;
-};
-
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
-  const { data, botTesterMutate } = useBotTesterClient();
+  const { botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
   const [dataMessages, setDataMessages] = useState<IMessageType[]>([]);
   const [dataQuickReplies, setDataQuickReplies] = useState<IQuickReplies[]>([]);
@@ -217,11 +212,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const botbuilderMainRef = document.querySelector('.botBuilderWrapper');
-  const botbuilderRect = botbuilderMainRef?.getBoundingClientRect() || new DOMRect();
-  const botTesterRef = useRef<HTMLDivElement | null>(null);
-  const botTesterRect = botTesterRef.current?.getBoundingClientRect() || new DOMRect();
-  // console.log(dataQuickReplies);
+
   const handleRefresh = () => {
     setDataMessages([]);
     setDataQuickReplies([]);
@@ -242,8 +233,21 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       type: 'text',
     };
     setDataMessages([...dataMessages, newMessage]);
-    // data.refetch();
-    // getMessageItems.refetch();
+
+    const sendMessage = {
+      message: {
+        id: '1',
+        utterance: {
+          value: text,
+        },
+      },
+    };
+    botTesterMutate.mutate(sendMessage, {
+      onSuccess: (submitResult) => {
+        setDataMessages((original) => [...original, ...(submitResult.messages || [])]);
+        setDataQuickReplies([...(submitResult.quickReplies || [])]);
+      },
+    });
     e.preventDefault();
     setText('');
   };
@@ -263,14 +267,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   useEffect(() => {
     if (isOpen === false) {
       setDataMessages([]);
-      setDataQuickReplies([]);
     }
   }, [isOpen]);
-
-  useEffect(() => {
-    setDataMessages([...dataMessages, ...(data?.messages || [])]);
-    setDataQuickReplies(data?.quickReplies || []);
-  }, [data]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -281,13 +279,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable
-          defaultPosition={{
-            x: botbuilderRect.width - 400,
-            y: 0,
-          }}
-        >
-          <div className="botTester" ref={botTesterRef}>
+        <Draggable>
+          <div className="botTester">
             <Col className="botTesterHeader">
               <Col className="text">Testing the Bot</Col>
               <button className="icon refreshBtn" onClick={handleRefresh} />
@@ -300,25 +293,31 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               ref={scrollRef}
             >
               {dataMessages.map((item, i) => {
-                return <TesterMessagesItem key={i} item={item} />;
+                return (
+                  <div className="content" key={i}>
+                    <TesterMessagesItem item={item} />
+                    {item.type === 'text' && item.isMe === undefined ? (
+                      <div className="quickReplies">
+                        {dataQuickReplies.length === 0 ? null : (
+                          <TesterSlide gapSize={8} quickReplies>
+                            {dataQuickReplies?.map((v, i) => {
+                              return (
+                                <button
+                                  key={i}
+                                  className="quickReply"
+                                  onClick={handleQuickReplyClick}
+                                >
+                                  {v.label}
+                                </button>
+                              );
+                            })}
+                          </TesterSlide>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                );
               })}
-              {dataQuickReplies.length === 0 ? null : (
-                <div className="quickReplies">
-                  <TesterSlide quickReplies>
-                    {dataQuickReplies.map((item, i) => {
-                      return (
-                        <button
-                          key={i}
-                          className="quickReply"
-                          onClick={handleQuickReplyClick}
-                        >
-                          {item.label}
-                        </button>
-                      );
-                    })}
-                  </TesterSlide>
-                </div>
-              )}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
               <input

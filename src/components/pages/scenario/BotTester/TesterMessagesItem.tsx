@@ -26,7 +26,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
         return (
           <div className="productCardContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide>
+              <TesterSlide gapSize={10}>
                 {item.contents.map((c, i) => {
                   const content = c as IProductCardContent;
                   return (
@@ -96,7 +96,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
         return (
           <div className="cardCarouselContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide>
+              <TesterSlide gapSize={10}>
                 {item.contents?.map((c, i) => {
                   const content = c as IProductCardContent;
                   return (
@@ -222,7 +222,7 @@ export const TesterMessagesItem = ({ item }: TesterMessagesItemProps) => {
       case CARD_TYPES.image:
         return (
           <div className="imageCardContainer">
-            <img className="imageCardImg" src={item.imageUrl} alt="fullSizeImg" />
+            <img className="imageCardImg contain" src={item.imageUrl} alt="fullSizeImg" />
           </div>
         );
     }
