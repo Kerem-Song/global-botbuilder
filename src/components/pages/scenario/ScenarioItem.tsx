@@ -31,7 +31,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       title: '삭제',
       description: (
         <>
-          <span>{`${item.scenarioName}(와)과 연결된 시나리오가 있습니다.`}</span>
+          <span>{`${item.alias}(와)과 연결된 시나리오가 있습니다.`}</span>
           <br />
           <span>: 시작, 시나리오01</span>
           <br />
@@ -54,7 +54,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
       return;
     }
-    const res = await scenarioUpdateAsync({ ...item, scenarioName });
+    const res = await scenarioUpdateAsync({ ...item, alias: scenarioName });
     if (res) {
       setIsEditing(false);
     }
@@ -85,7 +85,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     <Card key={item.id} radius="small" bodyStyle={{ padding: '2px 12px' }}>
       {isEditing ? (
         <Input
-          value={item.scenarioName}
+          value={item.alias}
           showCount
           maxLength={20}
           ref={inputRef}
@@ -102,7 +102,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       ) : (
         <Row align="center" style={{ flexWrap: 'nowrap' }}>
           <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
-            {item.scenarioName}
+            {item.alias}
           </Col>
           <Col className="scenarioListSwitch">
             <Switch onChange={handleSwitch} />

@@ -1,22 +1,25 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage } from '@hooks';
-import { IBotModel } from '@models';
+import { usePage, useRootState } from '@hooks';
+import { IBotInput, SnsKind } from '@models';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import * as yup from 'yup';
 
-const defaultValues: IBotModel = {
-  botName: '',
-};
-
 export const NewBotPopup: FC<{
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
-  handleSave: (model: IBotModel) => Promise<void>;
+  handleSave: (model: IBotInput) => Promise<void>;
 }> = ({ isOpen, handleIsOpen, handleSave }) => {
   const { t, tc } = usePage();
+  const brandId = useRootState((state) => state.brandInfoReducer.brandId);
+
+  const defaultValues: IBotInput = {
+    brandId,
+    botName: '',
+    snsKind: SnsKind.Line,
+  };
 
   const schema = yup
     .object({
@@ -30,12 +33,12 @@ export const NewBotPopup: FC<{
     reset,
     setFocus,
     formState: { errors },
-  } = useForm<IBotModel>({
+  } = useForm<IBotInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: IBotModel) => {
+  const onSubmit = async (data: IBotInput) => {
     await handleSave(data);
     reset(defaultValues);
   };

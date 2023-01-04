@@ -1,5 +1,7 @@
+import { IHasResults, ISearchBotReq } from '@models';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IBotModel } from 'src/models/interfaces/IBotModel';
+import { AxiosResponse } from 'axios';
+import { IBotInput, IBotModel } from 'src/models/interfaces/IBotModel';
 
 import useHttp from '../useHttp';
 
@@ -11,16 +13,15 @@ export const useBotClient = () => {
     ['bot-list'],
     () =>
       http
-        .get('https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list')
-        .then((res) => res.data),
+        .post<ISearchBotReq, AxiosResponse<IHasResults<IBotModel>>>('/bot/searchbot', {
+          brandId: 'lunasoft',
+        })
+        .then((res) => res.data.result),
     { refetchOnWindowFocus: false, refetchOnMount: true },
   );
 
-  const botSaveMutate = useMutation(async (botModel: IBotModel) => {
-    const res = await http.post(
-      'https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list',
-      botModel,
-    );
+  const botSaveMutate = useMutation(async (botInput: IBotInput) => {
+    const res = await http.post('/bot/createbot', botInput);
 
     if (res) {
       queryClient.invalidateQueries(['bot-list']);

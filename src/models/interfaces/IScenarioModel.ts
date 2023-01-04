@@ -1,5 +1,5 @@
 export interface IScenarioModel {
-  id: number;
-  scenarioName: string;
-  isActive: boolean;
+  id: string;
+  alias: string;
+  activated: boolean;
 }

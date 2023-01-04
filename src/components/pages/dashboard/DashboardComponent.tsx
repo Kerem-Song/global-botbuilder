@@ -1,7 +1,7 @@
 import { icEmptyBot, icSuccess } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
-import { IBotModel } from '@models';
+import { IBotInput } from '@models';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -16,7 +16,7 @@ export const DashboardComponent = () => {
 
   const { data, isFetching, botSaveAsync } = useBotClient();
 
-  const handleSave = async (model: IBotModel) => {
+  const handleSave = async (model: IBotInput) => {
     const result = await botSaveAsync(model);
     if (result) {
       handleIsOpen(false);
