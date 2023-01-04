@@ -10,8 +10,7 @@ export const ManagementComponent = () => {
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오 이름';
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList;
-
+  const { data } = getScenarioList();
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };
@@ -36,7 +35,7 @@ export const ManagementComponent = () => {
           ></div>
         </div>
       </div>
-      {scenarioTab ? <ScenarioManagement /> : <VariablesManagement />}
+      {scenarioTab ? <ScenarioManagement scenarios={data} /> : <VariablesManagement />}
     </div>
   );
 };

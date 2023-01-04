@@ -1,4 +1,5 @@
 import { IArrow, INode } from '@models';
+import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 
@@ -16,6 +17,9 @@ export const makingNodeSlice = createSlice({
   name: 'makingNode',
   initialState,
   reducers: {
+    init: (state, action: PayloadAction<INodeRes[]>) => {
+      //state.nodes = action.payload;
+    },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
       state.nodes = [...state.nodes, node];

@@ -1,4 +1,4 @@
-import { IArrow } from '@models';
+import { IArrow, IScenarioModel } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
@@ -13,6 +13,7 @@ export interface BotBuilderMaker {
   isEditDrawerOpen: boolean;
   guideStart?: string;
   token?: string;
+  selectedScenario?: IScenarioModel;
 }
 
 const initialState: BotBuilderMaker = {
@@ -24,6 +25,9 @@ export const botbuilderSlice = createSlice({
   name: 'botbuilderCardType',
   initialState,
   reducers: {
+    setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
+      state.selectedScenario = action.payload;
+    },
     setSesstionToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
@@ -69,6 +73,7 @@ export const botbuilderSlice = createSlice({
 });
 
 export const {
+  setSelectedScenario,
   zoomIn,
   zoomOut,
   setSelected,

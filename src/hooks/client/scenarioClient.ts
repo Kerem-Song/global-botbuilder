@@ -1,6 +1,12 @@
 import { useRootState } from '@hooks/useRootState';
 import { IScenarioModel } from '@models';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import {
+  QueryObserver,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
 import { useHttp } from '../useHttp';
@@ -10,13 +16,30 @@ export const useScenarioClient = () => {
   const token = useRootState((state) => state.botBuilderReducer.token);
   const http = useHttp();
   const { botId } = useParams();
-  const getScenarioList = useQuery<IScenarioModel[]>(['scenario-list', botId], () =>
-    http
-      .post('/builder/getflowInfos', {
-        sessionToken: token,
-      })
-      .then((res) => res.data.result),
-  );
+
+  const getScenarioList = () => {
+    return useQuery<IScenarioModel[]>(
+      ['scenario-list', botId],
+      () =>
+        http
+          .post('/builder/getflowInfos', {
+            sessionToken: token,
+          })
+          .then((res) => res.data.result),
+      { refetchOnWindowFocus: false, refetchOnMount: true },
+    );
+  };
+
+  const getScenario = (scenarioId: string) => {
+    return useQuery<IGetFlowRes>(
+      ['scenario', scenarioId],
+      () =>
+        http
+          .post('/builder/getflow', { sessionToken: token, flowId: scenarioId })
+          .then((res) => res.data.result),
+      { refetchOnWindowFocus: false, refetchOnMount: true },
+    );
+  };
 
   const scenarioSaveMutate = useMutation(async (scenarioName: string) => {
     const res = await http.post(
@@ -55,6 +78,7 @@ export const useScenarioClient = () => {
 
   return {
     getScenarioList,
+    getScenario,
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioUpdateAsync: scenarioUpdateMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,

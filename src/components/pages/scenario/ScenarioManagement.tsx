@@ -1,19 +1,31 @@
 import { Button, Input, Space, Switch } from '@components';
+import { useRootState } from '@hooks';
+import { IScenarioModel } from '@models';
+import { setSelectedScenario } from '@store/botbuilderSlice';
+import { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import { ScenarioItem } from './ScenarioItem';
 
-export const ScenarioManagement = () => {
-  const { getScenarioList, scenarioSaveAsync } = useScenarioClient();
-  const { data } = getScenarioList;
+export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
+  scenarios,
+}) => {
+  const dispatch = useDispatch();
+  const { scenarioSaveAsync } = useScenarioClient();
+
   const basicScenarioList = [{ name: 'Help (Fallback)' }];
 
   const handleSwitch = () => {
     console.log('switch toggle');
   };
 
+  useEffect(() => {
+    dispatch(setSelectedScenario(scenarios?.[0]));
+  }, [scenarios]);
+
   const handleNewScenario = async () => {
-    await scenarioSaveAsync(`scenario ${data?.length || 1}`);
+    await scenarioSaveAsync(`scenario ${scenarios?.length || 1}`);
   };
 
   return (
@@ -45,8 +57,8 @@ export const ScenarioManagement = () => {
 
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
-          {data ? (
-            data?.map((item) => <ScenarioItem key={item.id} item={item} />)
+          {scenarios ? (
+            scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
           ) : (
             <div className="noResults"></div>
           )}
