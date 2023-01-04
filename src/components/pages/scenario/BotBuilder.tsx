@@ -161,7 +161,7 @@ export const Botbuilder = () => {
   return (
     <>
       <BotBuilderZoomBtn />
-      <NodeLinkPopUpMenu />
+      {/* <NodeLinkPopUpMenu /> */}
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
