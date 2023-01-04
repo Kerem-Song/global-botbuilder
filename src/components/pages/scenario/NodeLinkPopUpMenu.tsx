@@ -2,7 +2,7 @@ import { defaultCards, defaultNode } from '@components/data-display/DefaultCards
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { TCardsValues, TNodeTypes } from '@models';
+import { NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import { useState } from 'react';
@@ -15,16 +15,16 @@ interface INodeLinkPopUpFormValue {
 }
 
 const cardTypeValue = [
-  { className: 'icText', value: 'Text' },
-  { className: 'icBtnTemple', value: 'Button Template' },
-  { className: 'icList', value: 'List' },
-  { className: 'icCommerce', value: 'Commerce' },
-  { className: 'icCaroImg', value: 'Button Carousel' },
-  { className: 'icCaroList', value: 'List Carousel' },
-  { className: 'icCaroCommerce', value: 'Commerce Carousel' },
-  { className: 'icQuickBtn', value: 'Quick Reply' },
-  { className: 'icCondition', value: 'Condition' },
-  { className: 'icCount', value: 'Count' },
+  { className: 'icText', value: NODE_TYPES.TEXT_NODE },
+  { className: 'icBtnTemple', value: NODE_TYPES.BASIC_CARD_NODE },
+  { className: 'icList', value: NODE_TYPES.LIST },
+  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE },
+  { className: 'icCaroImg', value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE },
+  { className: 'icCaroList', value: NODE_TYPES.LIST_CAROUSEL },
+  { className: 'icCaroCommerce', value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE },
+  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE },
+  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE },
+  { className: 'icCount', value: NODE_TYPES.COUNT },
 ];
 
 export const NodeLinkPopUpMenu = () => {
@@ -50,6 +50,8 @@ export const NodeLinkPopUpMenu = () => {
     const cardType = e.currentTarget.value as TNodeTypes;
     // const addCard = defaultCards(cardType);
     const addCard = defaultNode(cardType);
+    console.log('cardtype node link', cardType);
+    console.log('addcard node link', addCard);
 
     const addNode = {
       id: uuidv4(),
