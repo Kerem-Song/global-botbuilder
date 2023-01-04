@@ -17,35 +17,6 @@ export type OsLinkType = {
   web?: string;
 };
 
-export type TCardType =
-  | 'text'
-  | 'image'
-  | 'buttonTemplate'
-  | 'list'
-  | 'commerce'
-  | 'imgCarousel'
-  | 'listCarousel'
-  | 'commerceCarousel'
-  | 'quickReply'
-  | 'condition';
-
-export type TDefaultCard =
-  | 'Text'
-  | 'Image'
-  | 'Button Template'
-  | 'List'
-  | 'Commerce'
-  | 'Button Carousel'
-  | 'List Carousel'
-  | 'Commerce Carousel'
-  | 'Quick Reply'
-  | 'Condition'
-  | 'Count';
-
-export interface IBotBuilderCardType {
-  cardType: TCardType;
-}
-
 export const CARD_TYPES = {
   TEXT: 'Text',
   IMAGE: 'Image',

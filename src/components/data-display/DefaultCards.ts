@@ -7,7 +7,6 @@ import {
   IListCard,
   IQuickReply,
   TCardsValues,
-  TDefaultCard,
 } from '@models/interfaces/ICard';
 
 export const defaultCards = (cardType: TCardsValues) => {

@@ -48,6 +48,7 @@ export const SortableButtonItem = ({
               console.log('blueNode');
               handleBlueNodeBtn(e);
             }}
+            onPointerDown={(e) => e.stopPropagation()}
           ></Button>
         </Col>
       </Row>
