@@ -1,18 +1,22 @@
 import { useRootState } from '@hooks/useRootState';
 import { IScenarioModel } from '@models';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import { initNodes } from '@store/makingNode';
 import {
   QueryObserver,
   useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+import { ActionCreators } from 'redux-undo';
 
 import { useHttp } from '../useHttp';
 
 export const useScenarioClient = () => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const http = useHttp();
   const { botId } = useParams();
@@ -36,7 +40,11 @@ export const useScenarioClient = () => {
       () =>
         http
           .post('/builder/getflow', { sessionToken: token, flowId: scenarioId })
-          .then((res) => res.data.result),
+          .then((res) => {
+            dispatch(initNodes(res.data.result.nodes));
+            dispatch(ActionCreators.clearHistory());
+            return res.data.result;
+          }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
   };

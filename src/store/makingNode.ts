@@ -1,7 +1,7 @@
 import { IArrow, INode } from '@models';
+import { CARD_TYPES, TCardsValues } from '@models/interfaces/ICard';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBasicCard, ICommerceCard } from 'src/models/interfaces/ICard';
 
 export interface IBuilderInfo {
   nodes: INode[];
@@ -13,12 +13,61 @@ const initialState: IBuilderInfo = {
   arrows: [],
 };
 
+const convert = (node: INodeRes): INode => {
+  const result: INode = {
+    id: node.id,
+    title: node.alias,
+    x: node.left,
+    y: node.top,
+    type: node.typeName as TCardsValues,
+  };
+
+  if (node.view) {
+    if (
+      node.view.typeName === 'BasicCardCarouselView' &&
+      node.view.childrenViews &&
+      node.view.childrenViews.length > 0
+    ) {
+      result.cards = node.view.childrenViews.map((x) => {
+        return {
+          type: CARD_TYPES.BUTTON_CAROUSEL,
+          title: x.title || '',
+          // description?: string;
+          thumbnail: {
+            imageUrl: x.imageCtrl.imageUrl,
+          },
+          buttons: x.buttons.map((b) => {
+            return {
+              id: b.id,
+              label: b.label,
+              action: b.actionType as 'webLink',
+            };
+          }),
+        };
+      });
+    }
+
+    if (node.view.typeName === 'AnswerView' && node.view.quicks?.length) {
+      result.cards = node.view.quicks.map((x) => {
+        return {
+          type: CARD_TYPES.QUICK_REPLY,
+          label: x.label,
+          action: x.actionType as 'message',
+        };
+      });
+    }
+  }
+
+  return result;
+};
+
 export const makingNodeSlice = createSlice({
   name: 'makingNode',
   initialState,
   reducers: {
-    init: (state, action: PayloadAction<INodeRes[]>) => {
-      //state.nodes = action.payload;
+    initNodes: (state, action: PayloadAction<INodeRes[] | undefined>) => {
+      const nodes = action.payload || [];
+      state.nodes = nodes.map((x) => convert(x));
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
@@ -103,6 +152,6 @@ export const makingNodeSlice = createSlice({
   },
 });
 
-export const { appendNode, updateNode, addArrow, removeItem, setTempCard } =
+export const { appendNode, updateNode, addArrow, removeItem, setTempCard, initNodes } =
   makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

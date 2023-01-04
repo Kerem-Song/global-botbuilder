@@ -18,6 +18,8 @@ export type OsLinkType = {
 };
 
 export const CARD_TYPES = {
+  INTENT: 'IntentNode',
+  OTHER_FLOW: 'OtherFlowRedirectNode',
   TEXT: 'Text',
   IMAGE: 'Image',
   BUTTON_TEMPLATE: 'Button Template',
@@ -26,7 +28,7 @@ export const CARD_TYPES = {
   COMMERCE_CAROUSEL: 'Commerce Carousel',
   LIST: 'List',
   LIST_CAROUSEL: 'List Carousel',
-  QUICK_REPLY: 'Quick Reply',
+  QUICK_REPLY: 'AnswerNode',
   CONDITION: 'Condition',
   COUNT: 'Count',
 } as const;

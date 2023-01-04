@@ -10,7 +10,13 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
-import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
+import {
+  addArrow,
+  appendNode,
+  initNodes,
+  removeItem,
+  updateNode,
+} from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -35,7 +41,7 @@ export const Botbuilder = () => {
 
   const { getScenario } = useScenarioClient();
   if (selectedScenario) {
-    const { data } = getScenario(selectedScenario.id);
+    getScenario(selectedScenario.id);
   }
 
   const { getCardListQuery } = useCardList();
@@ -217,6 +223,7 @@ export const Botbuilder = () => {
                 ref={(el) => (nodeRef.current[i] = el)}
               >
                 <Node
+                  typeName={item.type}
                   id={item.id}
                   key={item.id}
                   title={item.title}
