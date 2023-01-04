@@ -4,6 +4,7 @@ import { IBrandInfo } from '../models/interfaces/IBrandInfo';
 
 const initialState: IBrandInfo = {
   brandName: '루나소프트',
+  brandId: 'lunasoft',
 };
 
 export const BrandInfoSlice = createSlice({
@@ -11,8 +12,9 @@ export const BrandInfoSlice = createSlice({
   initialState,
   reducers: {
     setBrandInfo: (state, action: PayloadAction<IBrandInfo>) => {
-      const { brandName } = action.payload;
+      const { brandName, brandId } = action.payload;
       state.brandName = brandName;
+      state.brandId = brandId;
     },
   },
 });

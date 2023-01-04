@@ -6,7 +6,11 @@ import { IHasChildren } from '../../models/interfaces/IHasChildren';
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
-  const instance = axios.create({});
+  const instance = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    headers: {},
+    //withCredentials: true,
+  });
 
   instance.interceptors.request.use(
     function (config) {

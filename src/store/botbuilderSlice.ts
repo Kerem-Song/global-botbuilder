@@ -1,4 +1,4 @@
-import { IArrow, INode } from '@models';
+import { IArrow } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
@@ -12,6 +12,7 @@ export interface BotBuilderMaker {
   selected?: string | IArrow;
   isEditDrawerOpen: boolean;
   guideStart?: string;
+  token?: string;
 }
 
 const initialState: BotBuilderMaker = {
@@ -23,6 +24,9 @@ export const botbuilderSlice = createSlice({
   name: 'botbuilderCardType',
   initialState,
   reducers: {
+    setSesstionToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    },
     zoomIn: (state) => {
       const scale = Math.min(state.scale + 0.25, transformOptions.maxScale);
       state.scale = scale;
@@ -70,6 +74,7 @@ export const {
   setSelected,
   setEditDrawerToggle,
   setGuideStartNode,
+  setSesstionToken,
   // setGuidePosition,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
