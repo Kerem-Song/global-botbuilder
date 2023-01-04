@@ -1,6 +1,6 @@
 import { Node } from '@components/data-display';
 import { defaultNode } from '@components/data-display/DefaultCards';
-import { useRootState } from '@hooks';
+import { useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, TNodeTypes } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
@@ -10,13 +10,17 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
-import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
+import {
+  addArrow,
+  appendNode,
+  initNodes,
+  removeItem,
+  updateNode,
+} from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
-
-const GRID_SIZE = 10;
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
@@ -31,6 +35,14 @@ export const Botbuilder = () => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
+  const selectedScenario = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
+
+  const { getScenario } = useScenarioClient();
+  if (selectedScenario) {
+    getScenario(selectedScenario.id);
+  }
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
@@ -135,9 +147,9 @@ export const Botbuilder = () => {
     const addNode = {
       id: uuidv4(),
       type: cardType,
+      x: Math.round(e.clientX / scale) - canvasRect.left,
+      y: Math.round(e.clientY / scale) - canvasRect.top,
       title: cardType,
-      x: (Math.round(e.clientX / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.left,
-      y: (Math.round(e.clientY / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.top,
       cards: addCard,
     };
 
@@ -189,7 +201,6 @@ export const Botbuilder = () => {
                 x: item.x,
                 y: item.y,
               }}
-              grid={[GRID_SIZE, GRID_SIZE]}
               scale={scale}
               bounds={{ top: -4000, left: -4000, right: 4000 }}
               key={item.id}
@@ -214,6 +225,7 @@ export const Botbuilder = () => {
                 ref={(el) => (nodeRef.current[i] = el)}
               >
                 <Node
+                  typeName={item.type}
                   id={item.id}
                   key={item.id}
                   title={item.title}

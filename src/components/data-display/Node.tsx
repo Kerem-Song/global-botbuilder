@@ -37,6 +37,7 @@ import { QuickReply } from '../../pages/scenario/cards/QuickReply';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
+  typeName: string;
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
@@ -56,6 +57,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
 
 export const Node: FC<INodeProps> = ({
   id,
+  typeName,
   cards,
   className,
   style,
@@ -241,27 +243,35 @@ export const Node: FC<INodeProps> = ({
           <i className="fa-solid fa-ellipsis-vertical" />
         </Popper>
       </div>
-      {cards ? <div className={bodyClass}>{handleShowingCards(cards)}</div> : undefined}
-
-      <Button shape="ghost" className="icNodeBottom">
-        <div
-          id={`node-bottom-${id}`}
-          role="presentation"
-          className="node-draggable-ignore"
-          draggable
-          onDragStart={(e) => {
-            e.dataTransfer.setData('id', `node-${id}`);
-            dispatch(setGuideStartNode(`node-${id}`));
-          }}
-          onDragEnd={(e) => {
-            dispatch(setGuideStartNode());
-          }}
-          onDrag={handleBottomDrag}
-          onMouseDown={(e) => e.stopPropagation()}
-        >
-          <img src={icNodeBottom} alt="icNodeBottom" />
-        </div>
-      </Button>
+      <div className={bodyClass}>
+        {typeName === NODE_TYPES.INTENT_NODE && <div style={{ width: '190px' }}></div>}
+        {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
+          <div style={{ width: '190px' }}></div>
+        )}
+        {cards ? <>{handleShowingCards(cards)}</> : undefined}
+      </div>
+      {typeName !== NODE_TYPES.INTENT_NODE &&
+        typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
+          <Button shape="ghost" className="icNodeBottom">
+            <div
+              id={`node-bottom-${id}`}
+              role="presentation"
+              className="node-draggable-ignore"
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData('id', `node-${id}`);
+                dispatch(setGuideStartNode(`node-${id}`));
+              }}
+              onDragEnd={(e) => {
+                dispatch(setGuideStartNode());
+              }}
+              onDrag={handleBottomDrag}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <img src={icNodeBottom} alt="icNodeBottom" />
+            </div>
+          </Button>
+        )}
     </div>
   );
 };
