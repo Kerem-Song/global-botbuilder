@@ -14,12 +14,19 @@ import { SizeType } from 'src/models/types/SizeType';
 import useI18n from '../../hooks/useI18n';
 import {
   CARD_TYPES,
+  IAnswerNode,
   IBasicCard,
+  IBasicCardNode,
   ICommerceCard,
   ICondition,
+  IConditionNode,
   ICount,
+  ICountNode,
   IListCard,
+  IListNode,
+  IProductCardNode,
   IQuickReply,
+  NODE_TYPES,
 } from '../../models/interfaces/ICard';
 import { BasicCard } from '../../pages/scenario/cards/BasicCard';
 import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
@@ -36,12 +43,12 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   active?: boolean;
   radius?: SizeType;
   cards?:
-    | IBasicCard[]
-    | ICommerceCard[]
-    | IListCard[]
-    | IQuickReply[]
-    | ICondition[]
-    | ICount[];
+    | IBasicCardNode[]
+    | IProductCardNode[]
+    | IListNode[]
+    | IAnswerNode[]
+    | IConditionNode[]
+    | ICountNode[];
   onClick?: (e?: any) => void;
   addArrow?: (from: string, to: string) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
@@ -133,33 +140,67 @@ export const Node: FC<INodeProps> = ({
     },
   ];
 
+  // const handleShowingCards = (cards: INodeProps['cards']) => {
+  //   if (!cards) {
+  //     return <div></div>;
+  //   }
+  //   const cardType = cards[0].type;
+  //   switch (cardType) {
+  //     case CARD_TYPES.TEXT:
+  //     case CARD_TYPES.IMAGE:
+  //     case CARD_TYPES.BUTTON_TEMPLATE:
+  //     case CARD_TYPES.BUTTON_CAROUSEL:
+  //       return <BasicCard cards={cards as IBasicCard[]} nodeId={`node-${id}`} />;
+
+  //     case CARD_TYPES.LIST:
+  //     case CARD_TYPES.LIST_CAROUSEL:
+  //       return <ListCard cards={cards as IListCard[]} nodeId={`node-${id}`} />;
+
+  //     case CARD_TYPES.COMMERCE:
+  //     case CARD_TYPES.COMMERCE_CAROUSEL:
+  //       return <CommerceCard cards={cards as ICommerceCard[]} nodeId={`node-${id}`} />;
+
+  //     case CARD_TYPES.QUICK_REPLY:
+  //       return <QuickReply cards={cards as IQuickReply[]} nodeId={`node-${id}`} />;
+
+  //     case CARD_TYPES.CONDITION:
+  //       return <Condition cards={cards as ICondition[]} nodeId={`node-${id}`} />;
+
+  //     case CARD_TYPES.COUNT:
+  //       return <Count cards={cards as ICount[]} nodeId={`node-${id}`} />;
+  //   }
+  // };
+
   const handleShowingCards = (cards: INodeProps['cards']) => {
     if (!cards) {
       return <div></div>;
     }
     const cardType = cards[0].type;
     switch (cardType) {
-      case CARD_TYPES.TEXT:
-      case CARD_TYPES.IMAGE:
-      case CARD_TYPES.BUTTON_TEMPLATE:
-      case CARD_TYPES.BUTTON_CAROUSEL:
+      case NODE_TYPES.TEXT_NODE:
+      case NODE_TYPES.IMAGE_NODE:
+      case NODE_TYPES.BASIC_CARD_NODE:
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
         return <BasicCard cards={cards as IBasicCard[]} nodeId={`node-${id}`} />;
 
-      case CARD_TYPES.LIST:
-      case CARD_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.LIST:
+      case NODE_TYPES.LIST_CAROUSEL:
         return <ListCard cards={cards as IListCard[]} nodeId={`node-${id}`} />;
 
-      case CARD_TYPES.COMMERCE:
-      case CARD_TYPES.COMMERCE_CAROUSEL:
+      case NODE_TYPES.PRODUCT_CARD_NODE:
+      case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
         return <CommerceCard cards={cards as ICommerceCard[]} nodeId={`node-${id}`} />;
 
-      case CARD_TYPES.QUICK_REPLY:
+      case NODE_TYPES.ANSWER_NODE:
         return <QuickReply cards={cards as IQuickReply[]} nodeId={`node-${id}`} />;
 
-      case CARD_TYPES.CONDITION:
+      case NODE_TYPES.CONDITION_NODE:
         return <Condition cards={cards as ICondition[]} nodeId={`node-${id}`} />;
 
-      case CARD_TYPES.COUNT:
+      case NODE_TYPES.COUNT:
         return <Count cards={cards as ICount[]} nodeId={`node-${id}`} />;
     }
   };

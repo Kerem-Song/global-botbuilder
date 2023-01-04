@@ -1,9 +1,9 @@
-import { defaultCards } from '@components/data-display/DefaultCards';
+import { defaultCards, defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState } from '@hooks';
 import { useModalOpen } from '@hooks/useModalOpen';
-import { TCardsValues } from '@models/interfaces/ICard';
+import { TCardsValues, TNodeTypes } from '@models/interfaces/ICard';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -22,9 +22,11 @@ export const BotBuilderHeader = () => {
   const handleMakingChatbubbleClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    const cardType = e.currentTarget.value as TCardsValues;
+    // const cardType = e.currentTarget.value as TCardsValues;
+    const cardType = e.currentTarget.value as TNodeTypes;
 
-    const addCard = defaultCards(cardType);
+    // const addCard = defaultCards(cardType);
+    const addCard = defaultNode(cardType);
 
     const view = document.querySelector('.botBuilderMain');
     const canvas = document.querySelector('.canvasWrapper');

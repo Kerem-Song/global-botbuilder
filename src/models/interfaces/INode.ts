@@ -1,24 +1,24 @@
 import {
-  IBasicCard,
-  ICommerceCard,
-  ICondition,
-  ICount,
-  IListCard,
-  IQuickReply,
-  TCardsValues,
+  IAnswerNode,
+  IBasicCardNode,
+  IConditionNode,
+  ICountNode,
+  IListNode,
+  IProductCardNode,
+  TNodeTypes,
 } from './ICard';
 
 export interface INode {
   id: string;
-  type: TCardsValues;
+  type: TNodeTypes;
   title?: string;
   x: number;
   y: number;
   cards?:
-    | IBasicCard[]
-    | ICommerceCard[]
-    | IListCard[]
-    | IQuickReply[]
-    | ICondition[]
-    | ICount[];
+    | IBasicCardNode[]
+    | IProductCardNode[]
+    | IListNode[]
+    | IAnswerNode[]
+    | IConditionNode[]
+    | ICountNode[];
 }

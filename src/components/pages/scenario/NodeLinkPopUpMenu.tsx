@@ -1,8 +1,8 @@
-import { defaultCards } from '@components/data-display/DefaultCards';
+import { defaultCards, defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { TCardsValues } from '@models';
+import { TCardsValues, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import { useState } from 'react';
@@ -46,8 +46,10 @@ export const NodeLinkPopUpMenu = () => {
   };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const cardType = e.currentTarget.value as TCardsValues;
-    const addCard = defaultCards(cardType);
+    // const cardType = e.currentTarget.value as TCardsValues;
+    const cardType = e.currentTarget.value as TNodeTypes;
+    // const addCard = defaultCards(cardType);
+    const addCard = defaultNode(cardType);
 
     const addNode = {
       id: uuidv4(),

@@ -1,8 +1,8 @@
 import { Node } from '@components/data-display';
-import { defaultCards } from '@components/data-display/DefaultCards';
+import { defaultNode } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, TCardsValues } from '@models';
+import { IArrow, INode, TNodeTypes } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -122,20 +122,22 @@ export const Botbuilder = () => {
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const cardType = e.dataTransfer.getData('cardType') as TCardsValues;
+    // const cardType = e.dataTransfer.getData('cardType') as TCardsValues;
+    const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
     if (!cardType) {
       return;
     }
 
-    const addCard = defaultCards(cardType);
+    // const addCard = defaultCards(cardType);
+    const addCard = defaultNode(cardType);
 
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
       id: uuidv4(),
       type: cardType,
+      title: cardType,
       x: (Math.round(e.clientX / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.left,
       y: (Math.round(e.clientY / GRID_SIZE) * GRID_SIZE) / scale - canvasRect.top,
-      title: cardType,
       cards: addCard,
     };
 
