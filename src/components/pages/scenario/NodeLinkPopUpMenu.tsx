@@ -1,17 +1,17 @@
-import { icSearch } from '@assets/index';
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { CARD_TYPES, TDefaultCard } from '@models';
+import { TCardsValues } from '@models';
 import { appendNode } from '@store/makingNode';
-import { ChangeEvent, useState } from 'react';
+import classNames from 'classnames';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 interface INodeLinkPopUpFormValue {
-  cardType: TDefaultCard;
+  cardType: TCardsValues;
 }
 
 const cardTypeValue = [
@@ -28,7 +28,7 @@ const cardTypeValue = [
 ];
 
 export const NodeLinkPopUpMenu = () => {
-  const [type, setType] = useState<TDefaultCard | null>(null);
+  const [userInput, setUserInput] = useState<string | null>(null);
   const dispatch = useDispatch();
   const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const {
@@ -39,19 +39,14 @@ export const NodeLinkPopUpMenu = () => {
     formState: { errors },
   } = useForm<INodeLinkPopUpFormValue>();
 
-  const onSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (!type) {
-      return;
-    } else {
-      const searchedType = cardTypeValue.filter((item) => item.value === type);
-      setCardBtn(searchedType);
+  const onSubmit = () => {
+    if (!userInput) {
+      setCardBtn(cardTypeValue);
     }
-    setCardBtn([]);
   };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const cardType = e.currentTarget.value as TDefaultCard;
+    const cardType = e.currentTarget.value as TCardsValues;
     const addCard = defaultCards(cardType);
 
     const addNode = {
@@ -65,34 +60,21 @@ export const NodeLinkPopUpMenu = () => {
     dispatch(appendNode(addNode));
   };
 
-  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (isOfTypePermission(e.currentTarget.value)) {
-      setType(null);
+  const onSearch = (data: string) => {
+    const input = data.toLowerCase();
+
+    const filtered = cardTypeValue.filter((item) =>
+      item.value.toLowerCase().includes(input),
+    );
+    setCardBtn(filtered);
+    setUserInput(input);
+    console.log('input', input);
+    if (!data) {
+      setCardBtn(cardTypeValue);
     }
-    setType(e.currentTarget.value as TDefaultCard);
   };
 
-  const permissions = [
-    'text',
-    'button template',
-    'list',
-    'commerce',
-    'button carousel',
-    'list carousel',
-    'commerce carousel',
-    'quick reply',
-    'condition',
-    'count',
-  ] as const;
-  const cardValueArr = cardTypeValue.map((item) => item.value.toLowerCase());
-
-  type PermissionType = typeof cardValueArr[number];
-
-  function isOfTypePermission(userInput: string): userInput is PermissionType {
-    const input = userInput.toLowerCase();
-    return (permissions as readonly string[]).includes(input);
-  }
+  const cardBtnResult = classNames('btnWrapper', { noResult: !cardBtn.length });
 
   return (
     <div className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small">
@@ -101,27 +83,31 @@ export const NodeLinkPopUpMenu = () => {
           placeholder="Input search text"
           {...register('cardType')}
           search
-          onChange={(e) => onSearch(e)}
+          onSearch={(data) => onSearch(data as string)}
         />
       </form>
 
-      <div className="btnWrapper">
-        {cardBtn.map((item, i) => (
-          <Row key={i} justify="flex-start" align="center" gap={8}>
-            <Col>
-              <Button
-                key={i}
-                className={`icon ${item.className}`}
-                onClick={(e) => handleMakingChatbubble(e)}
-                draggable={true}
-                value={item.value}
-              />
-            </Col>
-            <Col>
-              <span className="cardType">{item.value}</span>
-            </Col>
-          </Row>
-        ))}
+      <div className={cardBtnResult}>
+        {cardBtn.length > 0 ? (
+          cardBtn.map((item, i) => (
+            <Row key={i} justify="flex-start" align="center" gap={8} className="btnRow">
+              <Col>
+                <Button
+                  key={i}
+                  className={`icon ${item.className}`}
+                  onClick={(e) => handleMakingChatbubble(e)}
+                  draggable={true}
+                  value={item.value}
+                />
+              </Col>
+              <Col>
+                <span className="cardType">{item.value}</span>
+              </Col>
+            </Row>
+          ))
+        ) : (
+          <div>No Results</div>
+        )}
       </div>
     </div>
   );

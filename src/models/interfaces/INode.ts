@@ -5,12 +5,12 @@ import {
   ICount,
   IListCard,
   IQuickReply,
-  TDefaultCard,
+  TCardsValues,
 } from './ICard';
 
 export interface INode {
   id: string;
-  type: TDefaultCard;
+  type: TCardsValues;
   title?: string;
   x: number;
   y: number;

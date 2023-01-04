@@ -1,6 +1,8 @@
 .nodeLinkPopUpMenuWrapper {
   padding: rem(12) rem(16);
-  overflow: hidden;
+  
+  max-width: rem(240);
+
   .inputWrapper {
     display: flex;
     flex-direction: row;
@@ -29,6 +31,28 @@
 
   .btnWrapper {
     padding: rem(12) rem(8);
+    height: rem(270);
+    max-height: rem(270);
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &.noResult {
+      margin-top: rem(8);
+      border: rem(1) dashed $gray250;
+      border-radius: rem(4);
+    }
+
+    .btnRow {
+      &:hover {
+        background-color: #ECF2FF;
+        border-radius: rem(6);
+      }
+    }
 
     .icon {
       display: flex;

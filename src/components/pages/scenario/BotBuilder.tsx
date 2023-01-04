@@ -2,7 +2,7 @@ import { Node } from '@components/data-display';
 import { defaultCards } from '@components/data-display/DefaultCards';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, TDefaultCard } from '@models';
+import { IArrow, INode, TCardsValues } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -122,7 +122,7 @@ export const Botbuilder = () => {
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const cardType = e.dataTransfer.getData('cardType') as TDefaultCard;
+    const cardType = e.dataTransfer.getData('cardType') as TCardsValues;
     if (!cardType) {
       return;
     }
@@ -161,7 +161,7 @@ export const Botbuilder = () => {
   return (
     <>
       <BotBuilderZoomBtn />
-      {/* <NodeLinkPopUpMenu /> */}
+      <NodeLinkPopUpMenu />
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
