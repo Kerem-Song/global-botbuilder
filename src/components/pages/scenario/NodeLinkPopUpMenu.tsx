@@ -3,9 +3,9 @@ import { defaultCards } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { TDefaultCard } from '@models';
+import { CARD_TYPES, TDefaultCard } from '@models';
 import { appendNode } from '@store/makingNode';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,14 +21,16 @@ const cardTypeValue = [
   { className: 'icCommerce', value: 'Commerce' },
   { className: 'icCaroImg', value: 'Button Carousel' },
   { className: 'icCaroList', value: 'List Carousel' },
+  { className: 'icCaroCommerce', value: 'Commerce Carousel' },
+  { className: 'icQuickBtn', value: 'Quick Reply' },
   { className: 'icCondition', value: 'Condition' },
   { className: 'icCount', value: 'Count' },
 ];
 
 export const NodeLinkPopUpMenu = () => {
-  const [type, setType] = useState<TDefaultCard>('Text');
+  const [type, setType] = useState<TDefaultCard | null>(null);
   const dispatch = useDispatch();
-
+  const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const {
     register,
     handleSubmit,
@@ -37,8 +39,15 @@ export const NodeLinkPopUpMenu = () => {
     formState: { errors },
   } = useForm<INodeLinkPopUpFormValue>();
 
-  const onSubmit = ({ cardType }: INodeLinkPopUpFormValue) => {
-    setType(cardType);
+  const onSubmit = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (!type) {
+      return;
+    } else {
+      const searchedType = cardTypeValue.filter((item) => item.value === type);
+      setCardBtn(searchedType);
+    }
+    setCardBtn([]);
   };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -56,19 +65,48 @@ export const NodeLinkPopUpMenu = () => {
     dispatch(appendNode(addNode));
   };
 
+  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (isOfTypePermission(e.currentTarget.value)) {
+      setType(null);
+    }
+    setType(e.currentTarget.value as TDefaultCard);
+  };
+
+  const permissions = [
+    'text',
+    'button template',
+    'list',
+    'commerce',
+    'button carousel',
+    'list carousel',
+    'commerce carousel',
+    'quick reply',
+    'condition',
+    'count',
+  ] as const;
+  const cardValueArr = cardTypeValue.map((item) => item.value.toLowerCase());
+
+  type PermissionType = typeof cardValueArr[number];
+
+  function isOfTypePermission(userInput: string): userInput is PermissionType {
+    const input = userInput.toLowerCase();
+    return (permissions as readonly string[]).includes(input);
+  }
+
   return (
     <div className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="inputWrapper">
-          <Input placeholder="Input search text" {...register('cardType')} />
-          <button className="searchBtn">
-            <img src={icSearch} alt="searchCardType" />
-          </button>
-        </div>
+        <Input
+          placeholder="Input search text"
+          {...register('cardType')}
+          search
+          onChange={(e) => onSearch(e)}
+        />
       </form>
 
       <div className="btnWrapper">
-        {cardTypeValue.map((item, i) => (
+        {cardBtn.map((item, i) => (
           <Row key={i} justify="flex-start" align="center" gap={8}>
             <Col>
               <Button

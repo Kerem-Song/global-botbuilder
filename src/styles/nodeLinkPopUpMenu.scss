@@ -1,4 +1,6 @@
 .nodeLinkPopUpMenuWrapper {
+  padding: rem(12) rem(16);
+  overflow: hidden;
   .inputWrapper {
     display: flex;
     flex-direction: row;
@@ -17,15 +19,17 @@
       border: none;
 
       height: rem(14);
+      line-height: rem(14.4);
     }
 
     .searchBtn {
-
+      padding: rem(12) rem(14);
     }
   }
 
   .btnWrapper {
-   
+    padding: rem(12) rem(8);
+
     .icon {
       display: flex;
       justify-content: center;
@@ -105,10 +109,6 @@
       &:hover {
         background-image: url('@assets/icons/ic_count_hover.svg');
       }
-    }
-
-    .cardType {
-      padding-left: rem(12);
     }
   }
 }
