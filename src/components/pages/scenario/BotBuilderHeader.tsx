@@ -1,9 +1,9 @@
-import { defaultCards, defaultNode } from '@components/data-display/DefaultCards';
+import { defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState } from '@hooks';
 import { useModalOpen } from '@hooks/useModalOpen';
-import { TCardsValues, TNodeTypes } from '@models/interfaces/ICard';
+import { NODE_TYPES, TNodeTypes } from '@models/interfaces/ICard';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -53,7 +53,7 @@ export const BotBuilderHeader = () => {
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('cardType', e.currentTarget.value);
   };
-
+  const test = NODE_TYPES;
   return (
     <>
       <div className="botBuilderHeader">
@@ -70,35 +70,28 @@ export const BotBuilderHeader = () => {
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Text"
-              />
-              <Button
-                className="icon icImg"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value="Image"
+                value={NODE_TYPES.TEXT_NODE}
               />
               <Button
                 className="icon icBtnTemple"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Button Template"
+                value={NODE_TYPES.BASIC_CARD_NODE}
               />
               <Button
                 className="icon icList"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="List"
+                value={NODE_TYPES.LIST}
               />
               <Button
                 className="icon icCommerce"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Commerce"
+                value={NODE_TYPES.PRODUCT_CARD_NODE}
               />
             </Col>
           </div>
@@ -110,21 +103,21 @@ export const BotBuilderHeader = () => {
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Button Carousel"
+                value={NODE_TYPES.BASIC_CARD_CAROUSEL_NODE}
               />
               <Button
                 className="icon icCaroList"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="List Carousel"
+                value={NODE_TYPES.LIST_CAROUSEL}
               />
               <Button
                 className="icon icCaroCommerce"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Commerce Carousel"
+                value={NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE}
               />
             </Col>
           </div>
@@ -136,21 +129,21 @@ export const BotBuilderHeader = () => {
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Quick Reply"
+                value={NODE_TYPES.ANSWER_NODE}
               />
               <Button
                 className="icon icCondition"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Condition"
+                value={NODE_TYPES.CONDITION_NODE}
               />
               <Button
                 className="icon icCount"
                 onDragStart={(e) => handleDragStart(e)}
                 onClick={(e) => handleMakingChatbubbleClick(e)}
                 draggable={true}
-                value="Count"
+                value={NODE_TYPES.COUNT}
               />
             </Col>
           </div>

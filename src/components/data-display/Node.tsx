@@ -178,6 +178,7 @@ export const Node: FC<INodeProps> = ({
       return <div></div>;
     }
     const cardType = cards[0].type;
+    console.log('cards@', cards[0]);
     switch (cardType) {
       case NODE_TYPES.TEXT_NODE:
       case NODE_TYPES.IMAGE_NODE:
