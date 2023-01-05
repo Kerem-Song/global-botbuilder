@@ -33,6 +33,7 @@ export const Botbuilder = () => {
   const [isPanning, setIsPanning] = useState<boolean>(false);
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedScenario = useRootState(
@@ -134,13 +135,11 @@ export const Botbuilder = () => {
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    // const cardType = e.dataTransfer.getData('cardType') as TCardsValues;
     const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
     if (!cardType) {
       return;
     }
 
-    // const addCard = defaultCards(cardType);
     const addCard = defaultNode(cardType);
 
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();

@@ -15,16 +15,28 @@ interface INodeLinkPopUpFormValue {
 }
 
 const cardTypeValue = [
-  { className: 'icText', value: NODE_TYPES.TEXT_NODE },
-  { className: 'icBtnTemple', value: NODE_TYPES.BASIC_CARD_NODE },
-  { className: 'icList', value: NODE_TYPES.LIST },
-  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE },
-  { className: 'icCaroImg', value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE },
-  { className: 'icCaroList', value: NODE_TYPES.LIST_CAROUSEL },
-  { className: 'icCaroCommerce', value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE },
-  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE },
-  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE },
-  { className: 'icCount', value: NODE_TYPES.COUNT },
+  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
+  {
+    className: 'icBtnTemple',
+    value: NODE_TYPES.BASIC_CARD_NODE,
+    nodeName: 'Button Template',
+  },
+  { className: 'icList', value: NODE_TYPES.LIST, nodeName: 'List' },
+  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },
+  {
+    className: 'icCaroImg',
+    value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+    nodeName: 'Carousel',
+  },
+  { className: 'icCaroList', value: NODE_TYPES.LIST_CAROUSEL, nodeName: 'List Carousel' },
+  {
+    className: 'icCaroCommerce',
+    value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+    nodeName: 'Commerce Carousel',
+  },
+  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
+  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
+  { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
 ];
 
 export const NodeLinkPopUpMenu = () => {
@@ -105,7 +117,7 @@ export const NodeLinkPopUpMenu = () => {
                 />
               </Col>
               <Col>
-                <span className="cardType">{item.value}</span>
+                <span className="cardType">{item.nodeName}</span>
               </Col>
             </Row>
           ))

@@ -4,11 +4,11 @@ import { SortableButtonContainer } from '@components/data-display/SortableButton
 import { Divider } from '@components/layout/Divider';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
-import { ICommerceCard } from 'src/models/interfaces/ICard';
+import { IProductCardNode } from 'src/models/interfaces/ICard';
 
 interface CommerceCard {
   nodeId: string;
-  cards: ICommerceCard[];
+  cards: IProductCardNode[];
 }
 
 export const CommerceCard: FC<CommerceCard> = ({ nodeId, cards }) => {
