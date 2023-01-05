@@ -56,7 +56,7 @@ export const BotBuilderHeader = () => {
   ) => {
     const cardType = e.currentTarget.value as TNodeTypes;
     const nodeName = e.currentTarget.getAttribute('data') as string;
-    console.log('node name', nodeName);
+
     const addCard = defaultNode(cardType);
 
     const view = document.querySelector('.botBuilderMain');
@@ -83,6 +83,9 @@ export const BotBuilderHeader = () => {
 
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('cardType', e.currentTarget.value);
+
+    const data = e.currentTarget.getAttribute('data') as string;
+    e.dataTransfer.setData('nodeName', data);
   };
 
   return (

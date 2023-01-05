@@ -138,6 +138,7 @@ export const Botbuilder = () => {
     if (!cardType) {
       return;
     }
+    const nodeName = e.dataTransfer.getData('nodeName') as string;
 
     const addCard = defaultNode(cardType);
 
@@ -147,7 +148,7 @@ export const Botbuilder = () => {
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
-      title: cardType,
+      title: nodeName,
       cards: addCard,
     };
 
