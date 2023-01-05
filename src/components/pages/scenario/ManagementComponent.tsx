@@ -1,3 +1,4 @@
+import { useRootState } from '@hooks';
 import classNames from 'classnames';
 import { useState } from 'react';
 
@@ -7,10 +8,11 @@ import { ScenarioManagement } from './ScenarioManagement';
 import { VariablesManagement } from './VariablesManagement';
 export const ManagementComponent = () => {
   const { t } = usePage();
+  const token = useRootState((state) => state.botBuilderReducer.token);
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오 이름';
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList();
+  const { data } = getScenarioList(token);
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };

@@ -1,7 +1,9 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
+import { setSelectedScenario } from '@store/botbuilderSlice';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 export interface IScenarioItemProps {
@@ -9,6 +11,7 @@ export interface IScenarioItemProps {
 }
 
 export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
+  const dispatch = useDispatch();
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -82,7 +85,14 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   ];
 
   return (
-    <Card key={item.id} radius="small" bodyStyle={{ padding: '2px 12px' }}>
+    <Card
+      key={item.id}
+      radius="small"
+      bodyStyle={{ padding: '2px 12px' }}
+      onClick={() => {
+        dispatch(setSelectedScenario(item));
+      }}
+    >
       {isEditing ? (
         <Input
           value={item.alias}

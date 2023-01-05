@@ -21,6 +21,7 @@ export interface IQuickReplyRes {
 }
 export interface INodeView {
   typeName: string;
+  text?: string;
   childrenViews?: IViewItem[];
   quicks?: IQuickReplyRes[];
 }
@@ -32,6 +33,7 @@ export interface INodeRes {
   typeName: string;
   seq: number;
   nextNodeId: string;
+  nodeKind: number;
   view?: INodeView;
 }
 
