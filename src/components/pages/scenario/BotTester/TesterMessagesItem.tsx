@@ -1,16 +1,15 @@
-import { DATA_TYPES, ICarousel, IDataType } from '@models';
+import { ICarousel, ITesterDataType, TESTER_DATA_TYPES } from '@models';
 
 import { TesterSlide } from './TesterSlide';
 
 export interface TestProps {
-  item: IDataType;
+  item: ITesterDataType;
 }
 
 export const TesterMessagesItem = ({ item }: TestProps) => {
-  console.log(item);
   const itemType = () => {
     switch (item.type) {
-      case DATA_TYPES.text:
+      case TESTER_DATA_TYPES.text:
         return (
           <>
             {item.isMe === true ? (
@@ -24,7 +23,7 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
             )}
           </>
         );
-      case DATA_TYPES.productCardCarousel:
+      case TESTER_DATA_TYPES.productCardCarousel:
         return (
           <div className="productCardContainer">
             {item.contents.length === 0 ? null : (
@@ -94,7 +93,7 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
             )}
           </div>
         );
-      case DATA_TYPES.cardCarousel:
+      case TESTER_DATA_TYPES.cardCarousel:
         return (
           <div className="cardCarouselContainer">
             {item.contents.length === 0 ? null : (
@@ -118,7 +117,7 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
             )}
           </div>
         );
-      case DATA_TYPES.card:
+      case TESTER_DATA_TYPES.card:
         return (
           <div className="basicCardContainer">
             {item.title ? (
@@ -160,7 +159,7 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
             )}
           </div>
         );
-      case DATA_TYPES.productCard:
+      case TESTER_DATA_TYPES.productCard:
         return (
           <div className="productCardContainer">
             <div className="productCard">
@@ -221,13 +220,13 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
             </div>
           </div>
         );
-      case DATA_TYPES.image:
+      case TESTER_DATA_TYPES.image:
         return (
           <div className="imageCardContainer">
             <img className="imageCardImg contain" src={item.imageUrl} alt="fullSizeImg" />
           </div>
         );
-      case DATA_TYPES.quickReplies:
+      case TESTER_DATA_TYPES.quickReplies:
         return (
           <div className="quickReplies">
             <TesterSlide gapSize={8} quickReplies>

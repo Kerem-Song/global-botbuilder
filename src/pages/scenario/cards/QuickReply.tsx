@@ -1,10 +1,10 @@
 import { Button, Card } from '@components';
-import { IQuickReply } from '@models';
+import { ITesterQuickReply } from '@models';
 import { FC } from 'react';
 
 interface QuickReply {
   nodeId: string;
-  cards: IQuickReply[];
+  cards: ITesterQuickReply[];
 }
 export const QuickReply: FC<QuickReply> = ({ nodeId, cards }) => {
   return (

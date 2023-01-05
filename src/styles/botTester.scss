@@ -63,11 +63,14 @@
     height: calc(100% - rem(98));
     overflow-y: scroll;
     background-color: #99b0d7;
-    padding: 0 0 0 rem(8);
+    padding: rem(10) 0 rem(10) rem(8);
     -ms-overflow-style: none;
     scrollbar-width: none;
 
     .testerDataContainer {
+      &[data-container='false'] {
+        display: none;
+      }
       .send {
         display: flex;
         justify-content: right;

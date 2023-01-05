@@ -1,6 +1,6 @@
 import { Col } from '@components/layout';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
-import { DATA_TYPES, IDataType, IQuickRepliesContent } from '@models';
+import { IQuickRepliesContent, ITesterDataType, TESTER_DATA_TYPES } from '@models';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
@@ -15,7 +15,7 @@ export interface IBotTesterProps {
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { botTesterMutate } = useBotTesterClient();
   const [text, setText] = useState<string>('');
-  const [testerData, setTesterData] = useState<IDataType[]>([]);
+  const [testerData, setTesterData] = useState<ITesterDataType[]>([]);
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +30,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   const handleSend = (e: FormEvent<HTMLButtonElement>): void => {
-    const newMessage: IDataType = {
+    const newMessage: ITesterDataType = {
       value: text,
       isMe: true,
       type: 'text',
@@ -51,7 +51,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
           if (submitResult.quickReplies) {
             const quickRepliesContent: IQuickRepliesContent = {
               quickReplies: submitResult.quickReplies,
-              type: DATA_TYPES.quickReplies,
+              type: TESTER_DATA_TYPES.quickReplies,
             };
             updatedTesterData.push(quickRepliesContent);
           }
@@ -101,13 +101,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
             >
               {testerData.map((item, i) => {
                 return (
-                  <>
-                    {item.type && (
-                      <div className="testerDataContainer" key={i}>
-                        <TesterMessagesItem item={item} />
-                      </div>
-                    )}
-                  </>
+                  <div
+                    key={i}
+                    className="testerDataContainer"
+                    data-container={item.type ? true : false}
+                  >
+                    {item.type && <TesterMessagesItem item={item} />}
+                  </div>
                 );
               })}
             </div>

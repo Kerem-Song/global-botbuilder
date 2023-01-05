@@ -13,8 +13,8 @@ export interface IBotTester {
     snsRequestTimeUtc: string;
     queueInTimeUtc: string;
   };
-  messages?: IDataType[];
-  quickReplies?: IQuickReply[];
+  messages?: ITesterDataType[];
+  quickReplies?: ITesterQuickReply[];
 }
 
 // mutation
@@ -44,11 +44,11 @@ export interface ISendMessage {
 }
 
 export interface ITest {
-  messages?: IDataType[];
-  quickReplies?: IDataType[];
+  messages?: ITesterDataType[];
+  quickReplies?: ITesterDataType[];
 }
 
-export const DATA_TYPES = {
+export const TESTER_DATA_TYPES = {
   text: 'text',
   productCardCarousel: 'productCardCarousel',
   cardCarousel: 'cardCarousel',
@@ -58,7 +58,7 @@ export const DATA_TYPES = {
   quickReplies: 'quickReplies',
 } as const;
 
-export type IDataType =
+export type ITesterDataType =
   | ITextCard
   | IProductCardCarousel
   | ICardCarousel
@@ -112,15 +112,15 @@ export interface ICarousel {
 export interface ITextCard {
   value?: string;
   isMe?: boolean;
-  type: typeof DATA_TYPES.text;
+  type: typeof TESTER_DATA_TYPES.text;
 }
 export interface IProductCardCarousel {
   contents: ICarousel[];
-  type: typeof DATA_TYPES.productCardCarousel;
+  type: typeof TESTER_DATA_TYPES.productCardCarousel;
 }
 export interface ICardCarousel {
   contents: ICarousel[];
-  type: typeof DATA_TYPES.cardCarousel;
+  type: typeof TESTER_DATA_TYPES.cardCarousel;
 }
 
 export interface IContentTextCard {
@@ -167,7 +167,7 @@ export interface IContentTextCard {
       };
     },
   ];
-  type: typeof DATA_TYPES.card;
+  type: typeof TESTER_DATA_TYPES.card;
 }
 
 export interface IProductCard {
@@ -201,7 +201,7 @@ export interface IProductCard {
       };
     },
   ];
-  type: typeof DATA_TYPES.productCard;
+  type: typeof TESTER_DATA_TYPES.productCard;
   defaultAction?: {
     actionType?: string;
     label?: string;
@@ -217,7 +217,7 @@ export interface IImageCard {
   imageSize: 0;
   background: string;
   previewUrl: string;
-  type: typeof DATA_TYPES.image;
+  type: typeof TESTER_DATA_TYPES.image;
   defaultAction: {
     actionType: string;
     label: string;
@@ -228,10 +228,10 @@ export interface IImageCard {
 }
 
 export interface IQuickRepliesContent {
-  quickReplies: IQuickReply[];
-  type: typeof DATA_TYPES.quickReplies;
+  quickReplies: ITesterQuickReply[];
+  type: typeof TESTER_DATA_TYPES.quickReplies;
 }
-export interface IQuickReply {
+export interface ITesterQuickReply {
   actionType?: string;
   label: string;
   postback?: {
