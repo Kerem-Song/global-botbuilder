@@ -7,7 +7,7 @@ export const useSessionTokenClient = () => {
   const http = useHttp();
   const { botId } = useParams();
   const getSessionToken = useQuery(
-    ['session-token'],
+    ['session-token', botId],
     () =>
       http
         .post('/bot/GetSessionToken', {

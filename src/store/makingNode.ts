@@ -23,6 +23,10 @@ const convert = (node: INodeRes): INode => {
   };
 
   if (node.view) {
+    if (node.view.typeName === 'TextView') {
+      result.cards = [{ type: NODE_TYPES.TEXT_NODE, title: node.view.text || '' }];
+    }
+
     if (
       node.view.typeName === 'BasicCardCarouselView' &&
       node.view.childrenViews &&
@@ -34,7 +38,7 @@ const convert = (node: INodeRes): INode => {
           title: x.title || '',
           // description?: string;
           thumbnail: {
-            imageUrl: x.imageCtrl.imageUrl,
+            imageUrl: x.imageCtrl?.imageUrl,
           },
           buttons: x.buttons.map((b) => {
             return {
@@ -68,6 +72,18 @@ export const makingNodeSlice = createSlice({
     initNodes: (state, action: PayloadAction<INodeRes[] | undefined>) => {
       const nodes = action.payload || [];
       state.nodes = nodes.map((x) => convert(x));
+      state.arrows = [];
+      nodes
+        .filter((x) => x.nodeKind === 2 && x.nextNodeId)
+        .map((n) => {
+          const nextNode = nodes.find((x) => x.id === n.nextNodeId);
+          if (nextNode) {
+            state.arrows = [
+              ...state.arrows,
+              { start: `node-${n.id}`, end: `node-${n.nextNodeId}` },
+            ];
+          }
+        });
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;

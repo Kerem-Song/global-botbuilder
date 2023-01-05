@@ -1,6 +1,7 @@
 import { useRootState } from '@hooks/useRootState';
 import { IScenarioModel } from '@models';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import { setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import {
   QueryObserver,
@@ -17,11 +18,10 @@ import { useHttp } from '../useHttp';
 export const useScenarioClient = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const token = useRootState((state) => state.botBuilderReducer.token);
   const http = useHttp();
   const { botId } = useParams();
 
-  const getScenarioList = () => {
+  const getScenarioList = (token: string) => {
     return useQuery<IScenarioModel[]>(
       ['scenario-list', botId],
       () =>
@@ -29,22 +29,30 @@ export const useScenarioClient = () => {
           .post('/builder/getflowInfos', {
             sessionToken: token,
           })
-          .then((res) => res.data.result),
+          .then((res) => {
+            return res.data.result;
+          }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
   };
 
-  const getScenario = (scenarioId: string) => {
+  const getScenario = (token: string, scenarioId?: string) => {
     return useQuery<IGetFlowRes>(
       ['scenario', scenarioId],
-      () =>
-        http
-          .post('/builder/getflow', { sessionToken: token, flowId: scenarioId })
-          .then((res) => {
-            dispatch(initNodes(res.data.result.nodes));
-            dispatch(ActionCreators.clearHistory());
-            return res.data.result;
-          }),
+      async () => {
+        if (!scenarioId) {
+          return [];
+        }
+
+        const res = await http.post('/builder/getflow', {
+          sessionToken: token,
+          flowId: scenarioId,
+        });
+
+        dispatch(initNodes(res.data.result.nodes));
+        dispatch(ActionCreators.clearHistory());
+        return res.data.result;
+      },
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
   };

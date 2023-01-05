@@ -20,9 +20,11 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
     console.log('switch toggle');
   };
 
-  useEffect(() => {
-    dispatch(setSelectedScenario(scenarios?.[0]));
-  }, [scenarios]);
+  // useEffect(() => {
+  //   if (scenarios?.length) {
+  //     dispatch(setSelectedScenario(scenarios?.[0]));
+  //   }
+  // }, [scenarios]);
 
   const handleNewScenario = async () => {
     await scenarioSaveAsync(`scenario ${scenarios?.length || 1}`);

@@ -38,11 +38,10 @@ export const Botbuilder = () => {
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
+  const token = useRootState((state) => state.botBuilderReducer.token);
 
   const { getScenario } = useScenarioClient();
-  if (selectedScenario) {
-    getScenario(selectedScenario.id);
-  }
+  getScenario(token, selectedScenario?.id);
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
@@ -175,7 +174,7 @@ export const Botbuilder = () => {
   return (
     <>
       <BotBuilderZoomBtn />
-      <NodeLinkPopUpMenu />
+      {/* <NodeLinkPopUpMenu /> */}
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}

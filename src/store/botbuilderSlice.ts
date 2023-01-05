@@ -12,13 +12,14 @@ export interface BotBuilderMaker {
   selected?: string | IArrow;
   isEditDrawerOpen: boolean;
   guideStart?: string;
-  token?: string;
+  token: string;
   selectedScenario?: IScenarioModel;
 }
 
 const initialState: BotBuilderMaker = {
   scale: 1.0,
   isEditDrawerOpen: false,
+  token: '',
 };
 
 export const botbuilderSlice = createSlice({

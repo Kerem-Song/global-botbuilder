@@ -9,27 +9,20 @@ import { ManagementComponent } from './ManagementComponent';
 
 export const ScenarioComponent = () => {
   const { token, isFetching } = useSessionTokenClient();
-  const selectedScenario = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
+
   const dispatch = useDispatch();
   if (isFetching) {
     return <></>;
   }
 
   dispatch(setSesstionToken(token));
+
   return (
     <div className="scenarioWrapper">
       <ManagementComponent />
       <div className="botBuilderWrapper">
-        {selectedScenario ? (
-          <>
-            <BotBuilderHeader />
-            <Botbuilder />
-          </>
-        ) : (
-          <></>
-        )}
+        <BotBuilderHeader />
+        <Botbuilder />
       </div>
     </div>
   );

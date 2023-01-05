@@ -252,6 +252,7 @@ export const Node: FC<INodeProps> = ({
         {cards ? <>{handleShowingCards(cards)}</> : undefined}
       </div>
       {typeName !== NODE_TYPES.INTENT_NODE &&
+        typeName !== NODE_TYPES.ANSWER_NODE &&
         typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
           <Button shape="ghost" className="icNodeBottom">
             <div
