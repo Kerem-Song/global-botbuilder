@@ -44,7 +44,7 @@ const convert = (node: INodeRes): INode => {
             return {
               id: b.id,
               label: b.label,
-              action: b.actionType as 'webLink',
+              action: b.actionType as 'linkWebUrl',
             };
           }),
         };

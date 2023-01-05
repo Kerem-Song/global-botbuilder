@@ -63,7 +63,7 @@ export interface IButtonType {
   id: UniqueIdentifier;
   label: string;
   action:
-    | 'webLink'
+    | 'linkWebUrl'
     | 'message'
     | 'block'
     | 'phone'

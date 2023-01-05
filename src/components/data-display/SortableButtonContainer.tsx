@@ -68,7 +68,6 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
             label={item.label}
             action={item.action}
           />
-          // <SortableItemTest key={item.id} id={item.id} item={item} />
         ))}
       </SortableContext>
     </DndContext>

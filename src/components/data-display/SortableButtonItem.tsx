@@ -39,18 +39,20 @@ export const SortableButtonItem = ({
             {label}
           </Button>
         </Col>
-        <Col span={1} className="nextNodeWrapper">
-          <Button
-            key={`card-${cardId}-button-${id}-nodeButton-${id}`}
-            className="nextNode blue"
-            shape="ghost"
-            onClick={(e) => {
-              console.log('blueNode');
-              handleBlueNodeBtn(e);
-            }}
-            onPointerDown={(e) => e.stopPropagation()}
-          ></Button>
-        </Col>
+        {action !== 'linkWebUrl' && (
+          <Col span={1} className="nextNodeWrapper">
+            <Button
+              key={`card-${cardId}-button-${id}-nodeButton-${id}`}
+              className="nextNode blue"
+              shape="ghost"
+              onClick={(e) => {
+                console.log('blueNode');
+                handleBlueNodeBtn(e);
+              }}
+              onPointerDown={(e) => e.stopPropagation()}
+            ></Button>
+          </Col>
+        )}
       </Row>
     </div>
   );

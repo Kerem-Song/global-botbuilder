@@ -58,12 +58,8 @@ export const NodeLinkPopUpMenu = () => {
   };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    // const cardType = e.currentTarget.value as TCardsValues;
     const cardType = e.currentTarget.value as TNodeTypes;
-    // const addCard = defaultCards(cardType);
     const addCard = defaultNode(cardType);
-    console.log('cardtype node link', cardType);
-    console.log('addcard node link', addCard);
 
     const addNode = {
       id: uuidv4(),
