@@ -117,7 +117,6 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
 
     dispatch(setSelected());
     if (e.buttons === 1) {
@@ -261,6 +260,7 @@ export const Botbuilder = () => {
           )}
         </div>
       </div>
+
       <NodeEditDrawer />
     </>
   );

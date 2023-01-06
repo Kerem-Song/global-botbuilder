@@ -133,6 +133,8 @@ export const NodeLinkPopUpMenu = ({
     <div
       className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"
       ref={nodeLinkPopUpMenuRef}
+      role="presentation"
+      onWheel={(e) => e.stopPropagation()}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -143,7 +145,7 @@ export const NodeLinkPopUpMenu = ({
         />
       </form>
 
-      <div className={cardBtnResult} onWheel={(e) => e.stopPropagation()}>
+      <div className={cardBtnResult}>
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
             <Row key={i} justify="flex-start" align="center" gap={8} className="btnRow">
