@@ -4,10 +4,8 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
-  DragStartEvent,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -19,7 +17,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { IButtonType } from '@models';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {

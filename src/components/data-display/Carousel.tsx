@@ -24,16 +24,15 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
 
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });
+    updateLine(nodeId);
   }, [current]);
 
   const handleNextClick = () => {
     setCurrent(current === children.length - 1 ? 0 : current + 1);
-    updateLine(nodeId);
   };
 
   const handlePrevClick = () => {
     setCurrent(current !== 0 ? current - 1 : 0);
-    updateLine(nodeId);
   };
 
   return (

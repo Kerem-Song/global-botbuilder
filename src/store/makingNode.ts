@@ -13,7 +13,8 @@ const initialState: IBuilderInfo = {
   arrows: [],
 };
 
-const convert = (node: INodeRes): INode => {
+const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
+  const arrows: IArrow[] = [];
   const result: INode = {
     id: node.id,
     title: node.alias,
@@ -32,7 +33,7 @@ const convert = (node: INodeRes): INode => {
       node.view.childrenViews &&
       node.view.childrenViews.length > 0
     ) {
-      result.cards = node.view.childrenViews.map((x) => {
+      result.cards = node.view.childrenViews.map((x, index) => {
         return {
           type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
           title: x.title || '',
@@ -41,9 +42,18 @@ const convert = (node: INodeRes): INode => {
             imageUrl: x.imageCtrl?.imageUrl,
           },
           buttons: x.buttons.map((b) => {
+            if (b.actionType === 'lunaNodeRedirect') {
+              arrows.push({
+                start: `next-${b.id}`,
+                updateKey: `node-${node.id}`,
+                end: `node-${b.actionValue}`,
+                isNextNode: true,
+              });
+            }
             return {
               id: b.id,
               label: b.label,
+              actionValue: b.actionValue,
               action: b.actionType as 'linkWebUrl',
             };
           }),
@@ -62,7 +72,7 @@ const convert = (node: INodeRes): INode => {
     }
   }
 
-  return result;
+  return { node: result, arrows };
 };
 
 export const makingNodeSlice = createSlice({
@@ -71,8 +81,11 @@ export const makingNodeSlice = createSlice({
   reducers: {
     initNodes: (state, action: PayloadAction<INodeRes[] | undefined>) => {
       const nodes = action.payload || [];
-      state.nodes = nodes.map((x) => convert(x));
+      const converted = nodes.map((x) => convert(x));
+      state.nodes = converted.map((x) => x.node);
       state.arrows = [];
+      converted.map((x) => (state.arrows = [...state.arrows, ...x.arrows]));
+      console.log(state.arrows);
       nodes
         .filter((x) => x.nodeKind === 2 && x.nextNodeId)
         .map((n) => {
