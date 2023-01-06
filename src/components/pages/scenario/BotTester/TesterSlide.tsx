@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import {
   icTesterNextActive,
   icTesterNextInactive,
@@ -26,22 +27,46 @@ export const TesterSlide = ({
   const [style, setStyle] = useState({
     marginLeft: '0px',
     transition: 'none',
+    display: 'flex',
+    justifyContent: 'flex-start',
   });
 
   useEffect(() => {
-    if (slideRef.current && slideRef.current.children.length > current) {
+    if (slideRef.current && slideRef.current.children.length > 1) {
       let marginLeft = 0;
       for (let i = 0; i < current; i++) {
-        console.log(slideRef.current.children[i].className);
         marginLeft +=
           slideRef.current.children[i].getBoundingClientRect().width + gapSize;
       }
       setStyle({
         marginLeft: `${-marginLeft}px`,
         transition: 'all 0.3s ease-out',
+        display: 'flex',
+        justifyContent: 'flex-start',
+      });
+    } else {
+      setStyle({
+        marginLeft: '0px',
+        transition: 'all 0.3s ease-out',
+        display: 'flex',
+        justifyContent: 'center',
       });
     }
   }, [current]);
+
+  // useEffect(() => {
+  //   if (slideRef.current && slideRef.current.children.length > current) {
+  //     let marginLeft = 0;
+  //     for (let i = 0; i < current; i++) {
+  //       marginLeft +=
+  //         slideRef.current.children[i].getBoundingClientRect().width + gapSize;
+  //     }
+  //     setStyle({
+  //       marginLeft: `${-marginLeft}px`,
+  //       transition: 'all 0.3s ease-out',
+  //     });
+  //   }
+  // }, [current]);
 
   const handleNextClick = () => {
     setCurrent(Math.min(current + 1, children.length - 1));

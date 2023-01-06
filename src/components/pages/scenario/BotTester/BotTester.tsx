@@ -1,5 +1,7 @@
 import { Col } from '@components/layout';
+import { useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
+// import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { IQuickRepliesContent, ITesterDataType, TESTER_DATA_TYPES } from '@models';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -14,12 +16,19 @@ export interface IBotTesterProps {
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { botTesterMutate } = useBotTesterClient();
+  // const { token } = useSessionTokenClient();
+  // console.log(token);
+  const token = useRootState((state) => state.botBuilderReducer.token);
+
   const [text, setText] = useState<string>('');
   const [testerData, setTesterData] = useState<ITesterDataType[]>([]);
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleRefresh = () => {
+    setTesterData([]);
+  };
 
   const handleClose = () => {
     handleIsOpen(false);
@@ -35,22 +44,29 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       isMe: true,
       type: 'text',
     };
+    if (!text || !text.trim()) return;
     setTesterData([...testerData, newMessage]);
+
     const sendMessage = {
-      message: {
+      sessionToken: token,
+      lunaMessage: {
         id: '1',
         utterance: {
           value: text,
         },
       },
     };
+
     botTesterMutate.mutate(sendMessage, {
       onSuccess: (submitResult) => {
         setTesterData((original) => {
-          const updatedTesterData = [...original, ...(submitResult.messages || [])];
-          if (submitResult.quickReplies) {
+          const updatedTesterData = [
+            ...original,
+            ...(submitResult.result?.messages || []),
+          ];
+          if (submitResult.result?.quickReplies) {
             const quickRepliesContent: IQuickRepliesContent = {
-              quickReplies: submitResult.quickReplies,
+              quickReplies: submitResult.result.quickReplies,
               type: TESTER_DATA_TYPES.quickReplies,
             };
             updatedTesterData.push(quickRepliesContent);
@@ -59,6 +75,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
         });
       },
     });
+
     e.preventDefault();
     setText('');
   };
@@ -90,7 +107,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
           <div className="botTester">
             <Col className="botTesterHeader">
               <Col className="text">Testing the Bot</Col>
-              <button className="icon refreshBtn" />
+              <button className="icon refreshBtn" onClick={handleRefresh} />
               <button className="icon closeBtn" onClick={handleClose} />
             </Col>
             <div
@@ -114,7 +131,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
               <input
                 className="input"
-                ref={inputRef}
                 value={text}
                 type="text"
                 onChange={handleText}

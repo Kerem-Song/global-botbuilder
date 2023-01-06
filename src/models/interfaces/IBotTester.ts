@@ -1,38 +1,33 @@
-// get
 export interface IBotTester {
-  bot?: {
-    snsKind?: number;
-    botId?: string;
+  result?: {
+    bot?: {
+      snsKind?: number;
+      botId?: string;
+      botName?: string;
+    };
+    user?: {
+      userId?: string;
+      userName?: string;
+      userKey?: string;
+    };
+    meta?: {
+      replyToken?: string;
+      callbackUrl?: string;
+      replyUserId?: string;
+      snsRequestTimeUtc: string;
+      queueInTimeUtc: string;
+    };
+    messages?: ITesterDataType[];
+    quickReplies?: ITesterQuickReply[];
   };
-  user?: {
-    userId?: string;
-  };
-  meta?: {
-    replyToken?: string;
-    callbackUrl?: string;
-    snsRequestTimeUtc: string;
-    queueInTimeUtc: string;
-  };
-  messages?: ITesterDataType[];
-  quickReplies?: ITesterQuickReply[];
+  exception?: string;
+  isSuccess?: boolean;
 }
 
 // mutation
 export interface ISendMessage {
-  bot?: {
-    snsKind?: number;
-    botId?: string;
-  };
-  user?: {
-    userId?: string;
-  };
-  meta?: {
-    replyToken?: string;
-    callbackUrl?: string;
-    snsRequestTimeUtc: string;
-    queueInTimeUtc: string;
-  };
-  message: {
+  sessionToken: string;
+  lunaMessage: {
     id: string;
     utterance: {
       value: string;
@@ -41,11 +36,6 @@ export interface ISendMessage {
       queryString: string;
     };
   };
-}
-
-export interface ITest {
-  messages?: ITesterDataType[];
-  quickReplies?: ITesterDataType[];
 }
 
 export const TESTER_DATA_TYPES = {
@@ -113,6 +103,7 @@ export interface ITextCard {
   value?: string;
   isMe?: boolean;
   type: typeof TESTER_DATA_TYPES.text;
+  defaultAction?: string;
 }
 export interface IProductCardCarousel {
   contents: ICarousel[];
