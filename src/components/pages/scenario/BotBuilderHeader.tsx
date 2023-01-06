@@ -5,13 +5,45 @@ import { useRootState } from '@hooks';
 import { useModalOpen } from '@hooks/useModalOpen';
 import { NODE_TYPES, TNodeTypes } from '@models/interfaces/ICard';
 import { appendNode } from '@store/makingNode';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { BotTester } from './BotTester/BotTester';
 
+const singleNodes = [
+  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
+  {
+    className: 'icBtnTemple',
+    value: NODE_TYPES.BASIC_CARD_NODE,
+    nodeName: 'Button Template',
+  },
+  { className: 'icList', value: NODE_TYPES.LIST, nodeName: 'List' },
+  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },
+];
+
+const carousleNodes = [
+  {
+    className: 'icCaroImg',
+    value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+    nodeName: 'Carousel',
+  },
+  { className: 'icCaroList', value: NODE_TYPES.LIST_CAROUSEL, nodeName: 'List Carousel' },
+  {
+    className: 'icCaroCommerce',
+    value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+    nodeName: 'Commerce Carousel',
+  },
+];
+
+const buttonNodes = [
+  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
+  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
+  { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
+];
+
 export const BotBuilderHeader = () => {
+  const [nodeName, setNodeName] = useState<string>();
   const cardNum = useRootState(
     (state) => state.makingNodeSliceReducer.present.nodes,
   ).length;
@@ -22,10 +54,9 @@ export const BotBuilderHeader = () => {
   const handleMakingChatbubbleClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    // const cardType = e.currentTarget.value as TCardsValues;
     const cardType = e.currentTarget.value as TNodeTypes;
+    const nodeName = e.currentTarget.getAttribute('data') as string;
 
-    // const addCard = defaultCards(cardType);
     const addCard = defaultNode(cardType);
 
     const view = document.querySelector('.botBuilderMain');
@@ -36,7 +67,7 @@ export const BotBuilderHeader = () => {
     const addNode = {
       id: uuidv4(),
       type: cardType,
-      title: cardType,
+      title: nodeName,
       cards: addCard,
       x:
         canvasRect && viewRect
@@ -52,8 +83,11 @@ export const BotBuilderHeader = () => {
 
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('cardType', e.currentTarget.value);
+
+    const data = e.currentTarget.getAttribute('data') as string;
+    e.dataTransfer.setData('nodeName', data);
   };
-  const test = NODE_TYPES;
+
   return (
     <>
       <div className="botBuilderHeader">
@@ -64,87 +98,51 @@ export const BotBuilderHeader = () => {
           <div className="makingBtn">
             <span className="btnCategory">Single</span>
             <Col className="btnWrapper">
-              {/* <button ondro></button> */}
-              <Button
-                className="icon icText"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.TEXT_NODE}
-              />
-              <Button
-                className="icon icBtnTemple"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.BASIC_CARD_NODE}
-              />
-              <Button
-                className="icon icList"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.LIST}
-              />
-              <Button
-                className="icon icCommerce"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.PRODUCT_CARD_NODE}
-              />
+              {singleNodes.map((item, i) => (
+                <Button
+                  key={i}
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => {
+                    handleMakingChatbubbleClick(e);
+                  }}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              ))}
             </Col>
           </div>
           <div className="makingBtn">
             <span className="btnCategory">Carousel</span>
             <Col className="btnWrapper">
-              <Button
-                className="icon icCaroImg"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.BASIC_CARD_CAROUSEL_NODE}
-              />
-              <Button
-                className="icon icCaroList"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.LIST_CAROUSEL}
-              />
-              <Button
-                className="icon icCaroCommerce"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE}
-              />
+              {carousleNodes.map((item, i) => (
+                <Button
+                  key={i}
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => handleMakingChatbubbleClick(e)}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              ))}
             </Col>
           </div>
           <div className="makingBtn">
             <span className="btnCategory">Button</span>
             <Col className="btnWrapper">
-              <Button
-                className="icon icQuickBtn"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.ANSWER_NODE}
-              />
-              <Button
-                className="icon icCondition"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.CONDITION_NODE}
-              />
-              <Button
-                className="icon icCount"
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={NODE_TYPES.COUNT}
-              />
+              {buttonNodes.map((item, i) => (
+                <Button
+                  key={i}
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => handleMakingChatbubbleClick(e)}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              ))}
             </Col>
           </div>
         </div>

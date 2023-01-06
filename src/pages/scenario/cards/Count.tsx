@@ -1,10 +1,10 @@
 import { Button, Card } from '@components';
-import { ICount } from '@models';
+import { ICountNode } from '@models';
 import { FC } from 'react';
 
 interface Count {
   nodeId: string;
-  cards: ICount[];
+  cards: ICountNode[];
 }
 export const Count: FC<Count> = ({ nodeId, cards }) => {
   return (

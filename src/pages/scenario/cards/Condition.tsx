@@ -1,10 +1,10 @@
 import { Button, Card } from '@components';
-import { ICondition } from '@models';
+import { IConditionNode } from '@models';
 import { FC } from 'react';
 
 interface Condition {
   nodeId: string;
-  cards: ICondition[];
+  cards: IConditionNode[];
 }
 export const Condition: FC<Condition> = ({ nodeId, cards }) => {
   return (

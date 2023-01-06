@@ -1,6 +1,6 @@
 import { Node } from '@components/data-display';
 import { defaultNode } from '@components/data-display/DefaultCards';
-import { useRootState, useScenarioClient } from '@hooks';
+import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, TNodeTypes } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
@@ -31,8 +31,13 @@ export const Botbuilder = () => {
   const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
 
   const [isPanning, setIsPanning] = useState<boolean>(false);
+  const [popUpPosition, setPopUpPosition] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedScenario = useRootState(
@@ -45,6 +50,8 @@ export const Botbuilder = () => {
 
   const { getCardListQuery } = useCardList();
   const { data } = getCardListQuery;
+
+  const { isOpen, handleIsOpen } = useModalOpen();
 
   useEffect(() => {
     const event = (e: MouseEvent) => {
@@ -110,7 +117,6 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
 
     dispatch(setSelected());
     if (e.buttons === 1) {
@@ -133,22 +139,26 @@ export const Botbuilder = () => {
   };
 
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    // const cardType = e.dataTransfer.getData('cardType') as TCardsValues;
+    const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
     if (!cardType) {
+      handleIsOpen(true);
+      setPopUpPosition({
+        x: Math.round(e.clientX / scale) - canvasRect.left,
+        y: Math.round(e.clientY / scale) - canvasRect.top,
+      });
       return;
     }
+    const nodeName = e.dataTransfer.getData('nodeName') as string;
 
-    // const addCard = defaultCards(cardType);
     const addCard = defaultNode(cardType);
 
-    const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const addNode = {
       id: uuidv4(),
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
-      title: cardType,
+      title: nodeName,
       cards: addCard,
     };
 
@@ -174,7 +184,7 @@ export const Botbuilder = () => {
   return (
     <>
       <BotBuilderZoomBtn />
-      {/* <NodeLinkPopUpMenu /> */}
+
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
@@ -241,8 +251,18 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
+          {isOpen && (
+            <NodeLinkPopUpMenu
+              handleIsOpen={handleIsOpen}
+              popUpPosition={popUpPosition}
+              addArrow={(from, to) => {
+                handleAddArrows({ start: from, end: to });
+              }}
+            />
+          )}
         </div>
       </div>
+
       <NodeEditDrawer />
     </>
   );

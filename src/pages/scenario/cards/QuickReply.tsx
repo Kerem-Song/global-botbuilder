@@ -1,10 +1,10 @@
 import { Button, Card } from '@components';
-import { ITesterQuickReply } from '@models';
+import { IAnswerNode } from '@models';
 import { FC } from 'react';
 
 interface QuickReply {
   nodeId: string;
-  cards: ITesterQuickReply[];
+  cards: IAnswerNode[];
 }
 export const QuickReply: FC<QuickReply> = ({ nodeId, cards }) => {
   return (
@@ -12,11 +12,9 @@ export const QuickReply: FC<QuickReply> = ({ nodeId, cards }) => {
       <div className="quickReplyWrapper">
         {cards?.map((item, i) => {
           return (
-            <>
-              <Button key={`${nodeId}-quickReply-${i}`}>
-                {item.label ? item.label : 'Quick Reply'}
-              </Button>
-            </>
+            <Button key={`${nodeId}-quickReply-${i}`}>
+              {item.label ? item.label : 'Quick Reply'}
+            </Button>
           );
         })}
       </div>

@@ -53,8 +53,8 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
             return {
               id: b.id,
               label: b.label,
-              action: b.actionType as 'webLink',
               actionValue: b.actionValue,
+              action: b.actionType as 'linkWebUrl',
             };
           }),
         };

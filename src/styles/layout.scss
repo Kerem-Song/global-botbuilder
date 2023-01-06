@@ -112,14 +112,21 @@ textarea {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: $gray200;
   opacity: 1; /* Firefox */
+  font-weight: 500;
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: $gray200;
+  font-weight: 500;
 }
 
 ::-ms-input-placeholder {
   /* Microsoft Edge */
   color: $gray200;
+  font-weight: 500;
+}
+
+input {
+  font-weight: 400;
 }

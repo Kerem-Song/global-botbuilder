@@ -4,10 +4,10 @@ import { SortableButtonContainer } from '@components/data-display/SortableButton
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 
-import { IBasicCard } from '../../../models/interfaces/ICard';
+import { IBasicCardNode } from '../../../models/interfaces/ICard';
 interface BasicCard {
   nodeId: string;
-  cards: IBasicCard[];
+  cards: IBasicCardNode[];
 }
 
 export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
