@@ -92,6 +92,7 @@ export const Node: FC<INodeProps> = ({
   const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
     if (e.isTrusted) {
       const guide = document.querySelector<HTMLDivElement>('#icBottomGuide');
+
       if (guide) {
         const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
         const cr = canvas?.getBoundingClientRect() || new DOMRect();

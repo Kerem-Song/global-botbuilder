@@ -2,16 +2,24 @@ import { defaultCards, defaultNode } from '@components/data-display/DefaultCards
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
+import { useRootState } from '@hooks';
+import { useOutsideClick } from '@hooks/useOutsideClick';
 import { NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
+}
+
+interface INodeLinkPopUpMenuProps {
+  popUpPosition: { x: number; y: number };
+  handleIsOpen: (value: boolean) => void;
+  addArrow?: (from: string, to: string) => void;
 }
 
 const cardTypeValue = [
@@ -39,10 +47,18 @@ const cardTypeValue = [
   { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
 ];
 
-export const NodeLinkPopUpMenu = () => {
+export const NodeLinkPopUpMenu = ({
+  popUpPosition,
+  handleIsOpen,
+  addArrow,
+}: INodeLinkPopUpMenuProps) => {
   const [userInput, setUserInput] = useState<string | null>(null);
+  const [start, setStart] = useState<string | null>();
   const dispatch = useDispatch();
   const [cardBtn, setCardBtn] = useState(cardTypeValue);
+  const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
+  const guideStart = useRootState((state) => state.botBuilderReducer.guideStart);
+
   const {
     register,
     handleSubmit,
@@ -59,17 +75,25 @@ export const NodeLinkPopUpMenu = () => {
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const cardType = e.currentTarget.value as TNodeTypes;
+    const nodeName = e.currentTarget.getAttribute('data') as string;
     const addCard = defaultNode(cardType);
 
     const addNode = {
       id: uuidv4(),
       type: cardType,
-      title: cardType,
+      title: nodeName,
       cards: addCard,
-      x: 0,
-      y: 0,
+      x: popUpPosition.x,
+      y: popUpPosition.y,
     };
+
     dispatch(appendNode(addNode));
+
+    if (start) {
+      addArrow?.(start, `node-${addNode.id}`);
+    }
+
+    handleIsOpen(false);
   };
 
   const onSearch = (data: string) => {
@@ -88,8 +112,28 @@ export const NodeLinkPopUpMenu = () => {
 
   const cardBtnResult = classNames('btnWrapper', { noResult: !cardBtn.length });
 
+  useOutsideClick(nodeLinkPopUpMenuRef, () => {
+    handleIsOpen(false);
+  });
+
+  useEffect(() => {
+    if (!nodeLinkPopUpMenuRef.current) {
+      return;
+    } else {
+      nodeLinkPopUpMenuRef.current.style.left = `${popUpPosition.x}px`;
+      nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
+    }
+
+    if (guideStart) {
+      setStart(guideStart);
+    }
+  }, []);
+
   return (
-    <div className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small">
+    <div
+      className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"
+      ref={nodeLinkPopUpMenuRef}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="Input search text"
@@ -99,7 +143,7 @@ export const NodeLinkPopUpMenu = () => {
         />
       </form>
 
-      <div className={cardBtnResult}>
+      <div className={cardBtnResult} onWheel={(e) => e.stopPropagation()}>
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
             <Row key={i} justify="flex-start" align="center" gap={8} className="btnRow">
@@ -110,6 +154,7 @@ export const NodeLinkPopUpMenu = () => {
                   onClick={(e) => handleMakingChatbubble(e)}
                   draggable={true}
                   value={item.value}
+                  data={item.nodeName}
                 />
               </Col>
               <Col>

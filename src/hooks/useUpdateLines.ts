@@ -25,7 +25,6 @@ const updateLine = (id: string) => {
 const removeUpdateLines = (start: string, end: string) => {
   const existsIndex = updateLines.findIndex((x) => x.start === start && x.end === end);
   if (existsIndex >= 0) {
-    console.log(start, end, existsIndex);
     updateLines.splice(existsIndex, 1);
   }
 };
