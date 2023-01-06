@@ -218,7 +218,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
               : [
                   { id: 1, label: 'Button 01', action: 'block' },
                   { id: 2, label: 'Button 02', action: 'block' },
-                  { id: 3, label: 'Button 03', action: 'block' },
+                  // { id: 3, label: 'Button 03', action: 'block' },
                 ],
         },
       ];

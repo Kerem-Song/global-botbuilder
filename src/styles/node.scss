@@ -364,10 +364,16 @@
       }
 
       .nextNodeWrapper {
-        padding-top: rem(5) !important;
+        display: flex;
+        flex-direction: column;
+        padding-top: rem(10) !important;
+        justify-content: flex-start;
+        align-items: center;
+        height: rem(42);
       }
 
       .nextNode {
+        position: absolute;
         width: rem(5);
         height: rem(5);
         background-image: url('@assets/icons/ic_node.svg');
@@ -375,6 +381,7 @@
         background-position: center;
         background-color: transparent;
         border-color: transparent;
+        
 
         &:hover {
           background-color: transparent;

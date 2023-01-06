@@ -21,6 +21,7 @@ export const SortableButtonItem = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    paddingTop: '4px',
   };
 
   const handleBlueNodeBtn = (e: React.MouseEvent) => {
@@ -30,30 +31,9 @@ export const SortableButtonItem = ({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Row key={`card-${cardId}-button-${id}`}>
-        <Col span={23}>
-          <Button
-            key={`card-${cardId}-button-${id}`}
-            onClick={() => console.log('button')}
-          >
-            {label}
-          </Button>
-        </Col>
-        {action !== 'linkWebUrl' && (
-          <Col span={1} className="nextNodeWrapper">
-            <Button
-              key={`card-${cardId}-button-${id}-nodeButton-${id}`}
-              className="nextNode blue"
-              shape="ghost"
-              onClick={(e) => {
-                console.log('blueNode');
-                handleBlueNodeBtn(e);
-              }}
-              onPointerDown={(e) => e.stopPropagation()}
-            ></Button>
-          </Col>
-        )}
-      </Row>
+      <Button key={`card-${cardId}-button-${id}`} onClick={() => console.log('button')}>
+        {label}
+      </Button>
     </div>
   );
 };

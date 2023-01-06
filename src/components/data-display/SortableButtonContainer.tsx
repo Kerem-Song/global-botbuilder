@@ -1,3 +1,5 @@
+import { Button } from '@components/general';
+import { Col, Row } from '@components/layout';
 import {
   closestCenter,
   DndContext,
@@ -52,24 +54,52 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
     }
   };
 
+  const handleBlueNodeBtn = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
   return (
-    <DndContext
-      onDragEnd={handleDragEnd}
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      modifiers={[restrictToParentElement]}
-    >
-      <SortableContext items={buttons} strategy={rectSortingStrategy}>
-        {buttons.map((item) => (
-          <SortableButtonItem
-            key={item.id}
-            cardId={cardId}
-            id={item.id}
-            label={item.label}
-            action={item.action}
-          />
-        ))}
-      </SortableContext>
-    </DndContext>
+    <Row justify="flex-start" align="flex-start">
+      <Col span={22}>
+        <DndContext
+          onDragEnd={handleDragEnd}
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToParentElement]}
+        >
+          <SortableContext items={buttons} strategy={rectSortingStrategy}>
+            {buttons.map((item) => (
+              <SortableButtonItem
+                key={item.id}
+                cardId={cardId}
+                id={item.id}
+                label={item.label}
+                action={item.action}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
+      </Col>
+      <Col span={2}>
+        {buttons.map(
+          (item) =>
+            item.action !== 'linkWebUrl' && (
+              <div className="nextNodeWrapper">
+                <Button
+                  key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
+                  className="nextNode blue"
+                  shape="ghost"
+                  onClick={(e) => {
+                    console.log('blueNode');
+                    handleBlueNodeBtn(e);
+                  }}
+                  onPointerDown={(e) => e.stopPropagation()}
+                />
+              </div>
+            ),
+        )}
+      </Col>
+    </Row>
   );
 };
