@@ -1,26 +1,34 @@
-export const useElementHelper = (startId: string, endId: string) => {
-  const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
-  const start = document.querySelector<HTMLDivElement>(`#${startId}`);
-  const end = document.querySelector<HTMLDivElement>(`#${endId}`);
+export const useElementHelper = (
+  canvas: HTMLDivElement | null,
+  start: HTMLDivElement | null,
+  end: HTMLDivElement | null,
+  startNode: HTMLDivElement | null,
+) => {
+  const isNextNode = startNode !== null;
 
   const cr = canvas?.getBoundingClientRect() || new DOMRect();
   const sr = start?.getBoundingClientRect() || new DOMRect();
   const er = end?.getBoundingClientRect() || new DOMRect();
+  const snr = startNode?.getBoundingClientRect() || new DOMRect();
 
   const lineOffset = 5;
   const minLine = 50;
+  const arrowSize = isNextNode ? { width: 6, height: 12 } : { width: 12, height: 6 };
   const outSize = { width: 50, height: 50 };
-  const arrowSize = { width: 12, height: 6 };
+  const arcSize = 20;
 
   const ahw = Math.round(arrowSize.width / 2);
+  const ahh = Math.round(arrowSize.height / 2);
 
   const shw = Math.round(sr.width / 2);
+
   const ehw = Math.round(er.width / 2);
+  const ehh = Math.round(er.height / 2);
 
   const minX = Math.min(sr.left, sr.right, er.left, er.right);
   const maxX = Math.max(sr.left, sr.right, er.left, er.right);
   const minY = Math.min(sr.top, sr.bottom, er.top, er.bottom);
-  const maxY = Math.max(sr.top, sr.bottom, er.top, er.bottom);
+  const maxY = Math.max(sr.top, sr.bottom, er.top, er.bottom, snr.bottom);
 
   const svgRect = {
     x: minX - cr.x - outSize.width,
@@ -32,11 +40,12 @@ export const useElementHelper = (startId: string, endId: string) => {
   const offset = { x: cr.x + svgRect.x, y: cr.y + svgRect.y };
 
   const arrowPoint = {
-    x: er.x + ehw - offset.x - ahw,
-    y:
-      sr.y < er.y
-        ? er.y - sr.y + outSize.height - arrowSize.height
-        : outSize.height - arrowSize.height,
+    x: isNextNode ? er.x - offset.x - arrowSize.width : er.x + ehw - offset.x - ahw,
+    y: isNextNode
+      ? er.y - offset.y + ehh
+      : sr.y < er.y
+      ? er.y - sr.y + outSize.height - arrowSize.height
+      : outSize.height - arrowSize.height,
   };
 
   const setSvgStyle = (element: SVGSVGElement | null) => {
@@ -54,94 +63,198 @@ export const useElementHelper = (startId: string, endId: string) => {
       element.style.transform = translate;
     }
   };
-  const isTreeLine = sr.bottom + minLine < er.top;
 
-  const setLinePath = (element: SVGPathElement | null) => {
+  const setLinePath = (
+    element: SVGPathElement | null,
+    mouseElement: SVGPathElement | null,
+  ) => {
+    if (!start || !end) {
+      if (element) {
+        element.setAttribute('d', '');
+      }
+
+      if (mouseElement) {
+        mouseElement.setAttribute('d', '');
+      }
+
+      return;
+    }
+    const startPoint = isNextNode
+      ? {
+          x: sr.left - offset.x + 20,
+          y: sr.bottom - offset.y + Math.round(sr.height / 2) + 15,
+        }
+      : {
+          x: sr.x - offset.x + shw,
+          y: sr.bottom - offset.y + 8,
+        };
+
+    const endPoint = isNextNode
+      ? {
+          x: arrowPoint.x + ahw,
+          y: arrowPoint.y + ahh,
+        }
+      : {
+          x: arrowPoint.x + ahw,
+          y: arrowPoint.y,
+        };
+    let line1 = '';
+    let line2 = '';
+    let line3 = '';
+    let line4 = '';
+
+    if (isNextNode) {
+      if (startPoint.x + minLine > endPoint.x) {
+        const isDirectionUp = snr.top > er.bottom + minLine;
+        const directionFactor = isDirectionUp ? -1 : 1;
+        const point1 = {
+          x: svgRect.width - lineOffset,
+          y: startPoint.y,
+        };
+
+        const point2 = {
+          x: point1.x,
+          y: isDirectionUp
+            ? er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
+            : svgRect.height - lineOffset,
+        };
+
+        const point3 = {
+          x: Math.max(endPoint.x - minLine, lineOffset),
+          y: point2.y,
+        };
+
+        const point4 = {
+          x: point3.x,
+          y: endPoint.y,
+        };
+
+        line1 = `L ${point1.x - arcSize} ${point1.y} Q ${point1.x},${point1.y} ${
+          point1.x
+        },${point1.y + arcSize * directionFactor}`;
+        line2 = `L ${point2.x} ${point2.y - arcSize * directionFactor} Q ${point2.x},${
+          point2.y
+        } ${point2.x - arcSize},${point2.y}`;
+        line3 = `L ${point3.x + arcSize} ${point3.y} Q ${point3.x},${point3.y} ${
+          point3.x
+        },${point3.y - arcSize}`;
+        line4 = `L ${point4.x} ${point4.y + arcSize} Q ${point4.x},${point4.y} ${
+          point4.x + arcSize
+        },${point4.y}`;
+      } else if (Math.abs(startPoint.y - endPoint.y) > 10) {
+        const x =
+          Math.min(startPoint.x, endPoint.x) +
+          Math.round(Math.abs(startPoint.x - endPoint.x) / 2);
+        const point1 = {
+          x,
+          y: startPoint.y,
+        };
+
+        const point2 = {
+          x,
+          y: endPoint.y,
+        };
+
+        const computeArcSize = Math.min(
+          Math.round(Math.abs(startPoint.y - endPoint.y) / 2),
+          arcSize,
+        );
+
+        line1 = `L ${point1.x - computeArcSize} ${point1.y} Q ${point1.x},${point1.y} ${
+          point1.x
+        },${point1.y + (startPoint.y < endPoint.y ? computeArcSize : -computeArcSize)}`;
+        line2 = `L ${point2.x} ${
+          point2.y + (startPoint.y < endPoint.y ? -computeArcSize : computeArcSize)
+        } Q ${point2.x},${point2.y} ${point2.x + computeArcSize},${point2.y}`;
+      }
+    } else {
+      if (startPoint.y + minLine > endPoint.y) {
+        const isDirectionLeft = startPoint.x > endPoint.x;
+        let directionFactor = isDirectionLeft ? -1 : 1;
+        const point1 = {
+          x: startPoint.x,
+          y: svgRect.height - lineOffset,
+        };
+
+        const point2 = {
+          x: isDirectionLeft
+            ? er.right + minLine > sr.left
+              ? lineOffset
+              : er.right + Math.round((sr.left - er.right) / 2) - offset.x
+            : sr.right + minLine > er.left
+            ? svgRect.width - lineOffset
+            : sr.right + Math.round((er.left - sr.right) / 2) - offset.x,
+          y: point1.y,
+        };
+
+        const point3 = {
+          x: point2.x,
+          y: Math.max(endPoint.y - minLine, lineOffset),
+        };
+
+        const point4 = {
+          x: endPoint.x,
+          y: point3.y,
+        };
+
+        line1 = `L ${point1.x} ${point1.y - arcSize} Q ${point1.x},${point1.y} ${
+          point1.x + arcSize * directionFactor
+        },${point1.y}`;
+        line2 = `L ${point2.x - arcSize * directionFactor} ${point2.y} Q ${point2.x},${
+          point2.y
+        } ${point2.x},${point2.y - arcSize}`;
+
+        directionFactor = point3.x > point4.x ? 1 : -1;
+
+        line3 = `L ${point3.x} ${point3.y + arcSize} Q ${point3.x},${point3.y} ${
+          point3.x - arcSize * directionFactor
+        },${point3.y}`;
+        line4 = `L ${point4.x + arcSize * directionFactor} ${point4.y} Q ${point4.x},${
+          point4.y
+        } ${point4.x},${point4.y + arcSize}`;
+      } else if (Math.abs(startPoint.x - endPoint.x) > 10) {
+        const y =
+          Math.min(startPoint.y, endPoint.y) +
+          Math.round(Math.abs(startPoint.y - endPoint.y) / 2);
+        const point1 = {
+          x: startPoint.x,
+          y,
+        };
+
+        const point2 = {
+          x: endPoint.x,
+          y,
+        };
+
+        const computeArcSize = Math.min(
+          Math.round(Math.abs(startPoint.x - endPoint.x) / 2),
+          arcSize,
+        );
+
+        line1 = `L ${point1.x} ${point1.y - computeArcSize} Q ${point1.x},${point1.y} ${
+          point1.x + (startPoint.x < endPoint.x ? computeArcSize : -computeArcSize)
+        },${point1.y}`;
+        line2 = `L ${
+          point2.x + (startPoint.x < endPoint.x ? -computeArcSize : computeArcSize)
+        } ${point2.y} Q ${point2.x},${point2.y} ${point2.x},${point2.y + computeArcSize}`;
+      }
+    }
+
     if (element) {
-      //const halfRectX = Math.round(svgRect.width / 2);
-      const ls = {
-        x: sr.x - offset.x + shw,
-        y: sr.bottom - offset.y + 8,
-      };
-
-      const l1 = {
-        x: ls.x,
-        y: isTreeLine
-          ? ls.y + Math.round((er.top - sr.bottom) / 2)
-          : svgRect.height - lineOffset,
-      };
-
-      const l2 = {
-        x: isTreeLine
-          ? l1.x
-          : ls.x < arrowPoint.x + ahw
-          ? sr.right < er.left
-            ? Math.round((er.left - sr.right) / 2) + sr.right - offset.x
-            : svgRect.width - lineOffset
-          : er.right < sr.left
-          ? Math.round((sr.left - er.right) / 2) + er.right - offset.x
-          : lineOffset,
-        y: l1.y,
-      };
-
-      const l3 = {
-        x: l2.x,
-        y: isTreeLine ? l2.y : arrowPoint.y - minLine + lineOffset + arrowSize.height,
-      };
-
-      const l4 = {
-        x: arrowPoint.x + ahw,
-        y: l3.y,
-      };
-
-      const end = {
-        x: l4.x,
-        y: arrowPoint.y,
-      };
-
-      const arcSize = isTreeLine ? Math.min(20, Math.abs(ls.x - end.x) / 2) : 20;
-
-      const l1Path = l1.x === end.x ? `L ${l1.x} ${l1.y}` : `L ${l1.x} ${l1.y - arcSize}`;
-
-      const q1Path =
-        l1.x === end.x
-          ? ''
-          : `Q ${l1.x} ${l1.y}, ${l1.x - (l1.x < end.x ? -arcSize : arcSize)} ${l1.y}`;
-
-      const l2Path =
-        l1.x === l2.x && l1.y === l2.y
-          ? ``
-          : `L ${l2.x + (l1.x < end.x ? -arcSize : arcSize)} ${l2.y}`;
-
-      const q2Path =
-        l1.x === l2.x && l1.y === l2.y
-          ? ''
-          : `Q ${l2.x} ${l2.y}, ${l2.x} ${l2.y - arcSize}`;
-
-      const l3Path = l2.x === l3.x && l2.y === l3.y ? `` : `L ${l3.x} ${l3.y + arcSize}`;
-
-      const arcSize2 = Math.min(Math.round(Math.abs(end.x - l3.x) / 2), arcSize);
-      const q3Path =
-        l3.y === l4.y && l2.y === l3.y
-          ? ''
-          : `Q ${l3.x} ${l3.y}, ${l3.x + (l3.x < end.x ? arcSize2 : -arcSize2)} ${l3.y}`;
-
-      const l4Path =
-        l3.x === l4.x && l3.y === l4.y
-          ? ``
-          : `L ${l4.x - (l3.x < end.x ? arcSize2 : -arcSize2)} ${l4.y}`;
-
-      const q4Path =
-        l3.x === l4.x && l3.y === l4.y
-          ? ''
-          : `Q ${l4.x} ${l4.y}, ${l4.x} ${l4.y + arcSize2}`;
-
       element.setAttribute(
         'd',
-        `M ${ls.x} ${ls.y} ${l1Path} ${q1Path} ${l2Path} ${q2Path} ${l3Path} ${q3Path} ${l4Path} ${q4Path} L ${end.x} ${end.y}`,
+        `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
+      );
+    }
+
+    if (mouseElement) {
+      mouseElement.setAttribute(
+        'd',
+        `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
       );
     }
   };
+
   return { setSvgStyle, setArrowStyle, setLinePath };
 };
 

@@ -32,7 +32,9 @@ export const LineContainer: FC = () => {
           }}
           key={`${l.start}-${l.end}`}
           startId={l.start}
+          updateKey={l.updateKey}
           endId={l.end}
+          isNextNode={l.isNextNode}
           active={selectedLine === l}
         />
       ))}

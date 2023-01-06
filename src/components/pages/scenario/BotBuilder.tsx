@@ -205,7 +205,9 @@ export const Botbuilder = () => {
               key={item.id}
               onDrag={(e) => {
                 e.stopPropagation();
-                updateLine(`node-${item.id}`);
+                if (e.isTrusted) {
+                  updateLine(`node-${item.id}`);
+                }
               }}
               onStop={(e) => {
                 handleUpdateNodePosition(i, item);

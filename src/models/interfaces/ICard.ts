@@ -70,6 +70,7 @@ export interface IButtonType {
     | 'operator'
     | 'osLink'
     | 'addChannel';
+  actionValue?: string;
   webLinkUrl?: string;
   messageText?: string;
   blockId?: string;

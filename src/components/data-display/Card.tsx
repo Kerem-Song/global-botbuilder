@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, useEffect } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
@@ -44,6 +44,7 @@ export const Card: FC<CardProps> = ({
   const titleClass = classNames('luna-card-head', titleClassName);
 
   const bodyClass = classNames('luna-card-body', bodyClassName);
+
   return (
     <div
       className={wrapClass}

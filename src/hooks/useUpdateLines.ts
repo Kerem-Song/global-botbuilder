@@ -1,6 +1,3 @@
-import { IArrow } from '@models';
-import { useEffect } from 'react';
-
 let updateStack: { (): void }[] = [];
 const updateLines: { start: string; end: string; update: () => void }[] = [];
 
@@ -11,9 +8,8 @@ export const updateLineAll = () => {
 };
 
 const updateLine = (id: string) => {
-  updateStack = [];
   const filtered = updateLines.filter((f) => f.start === id || f.end === id);
-  filtered.map((f) => updateStack.push(f.update));
+  updateStack = filtered.map((f) => f.update);
   setTimeout(() => {
     updateStack.map((f) => {
       f();
@@ -25,7 +21,6 @@ const updateLine = (id: string) => {
 const removeUpdateLines = (start: string, end: string) => {
   const existsIndex = updateLines.findIndex((x) => x.start === start && x.end === end);
   if (existsIndex >= 0) {
-    console.log(start, end, existsIndex);
     updateLines.splice(existsIndex, 1);
   }
 };
