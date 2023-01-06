@@ -7,7 +7,7 @@ import { useOutsideClick } from '@hooks/useOutsideClick';
 import { NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -73,14 +73,14 @@ export const NodeLinkPopUpMenu = ({
     }
   };
 
-  const handleMakingChatbubble = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const cardType = e.currentTarget.value as TNodeTypes;
-    const nodeName = e.currentTarget.getAttribute('data') as string;
-    const addCard = defaultNode(cardType);
+  const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
+    const nodeName = e.currentTarget.dataset.nodename;
 
+    const addCard = defaultNode(nodeType);
     const addNode = {
       id: uuidv4(),
-      type: cardType,
+      type: nodeType,
       title: nodeName,
       cards: addCard,
       x: popUpPosition.x,
@@ -148,21 +148,22 @@ export const NodeLinkPopUpMenu = ({
       <div className={cardBtnResult}>
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
-            <Row key={i} justify="flex-start" align="center" gap={8} className="btnRow">
-              <Col>
-                <Button
-                  key={i}
-                  className={`icon ${item.className}`}
-                  onClick={(e) => handleMakingChatbubble(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              </Col>
-              <Col>
-                <span className="cardType">{item.nodeName}</span>
-              </Col>
-            </Row>
+            <div
+              key={i}
+              onClick={(e) => handleMakingChatbubble(e)}
+              role="presentation"
+              data-nodename={item.nodeName}
+              data-nodetype={item.value}
+            >
+              <Row justify="flex-start" align="center" gap={8} className="btnRow">
+                <Col>
+                  <Button className={`icon ${item.className}`} />
+                </Col>
+                <Col>
+                  <span className="cardType">{item.nodeName}</span>
+                </Col>
+              </Row>
+            </div>
           ))
         ) : (
           <div>No Results</div>
