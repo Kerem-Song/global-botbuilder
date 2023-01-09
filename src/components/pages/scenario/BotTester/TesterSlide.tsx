@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import {
   icTesterNextActive,
   icTesterNextInactive,
@@ -13,12 +12,14 @@ export interface ITesterSlideProps extends IHasChildren, IHasClassNameNStyle {
   quickReplies?: boolean;
   children: ReactNode[];
   gapSize: number;
+  offset?: number;
 }
 
 export const TesterSlide = ({
   children,
   className,
   gapSize,
+  offset = 0,
   quickReplies,
 }: ITesterSlideProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
@@ -27,46 +28,22 @@ export const TesterSlide = ({
   const [style, setStyle] = useState({
     marginLeft: '0px',
     transition: 'none',
-    display: 'flex',
-    justifyContent: 'flex-start',
   });
 
   useEffect(() => {
-    if (slideRef.current && slideRef.current.children.length > 1) {
+    if (slideRef.current && slideRef.current.children.length) {
       let marginLeft = 0;
       for (let i = 0; i < current; i++) {
-        marginLeft +=
+        marginLeft -=
           slideRef.current.children[i].getBoundingClientRect().width + gapSize;
       }
+      marginLeft += offset;
       setStyle({
-        marginLeft: `${-marginLeft}px`,
+        marginLeft: `${Math.min(marginLeft, 0)}px`,
         transition: 'all 0.3s ease-out',
-        display: 'flex',
-        justifyContent: 'flex-start',
-      });
-    } else {
-      setStyle({
-        marginLeft: '0px',
-        transition: 'all 0.3s ease-out',
-        display: 'flex',
-        justifyContent: 'center',
       });
     }
   }, [current]);
-
-  // useEffect(() => {
-  //   if (slideRef.current && slideRef.current.children.length > current) {
-  //     let marginLeft = 0;
-  //     for (let i = 0; i < current; i++) {
-  //       marginLeft +=
-  //         slideRef.current.children[i].getBoundingClientRect().width + gapSize;
-  //     }
-  //     setStyle({
-  //       marginLeft: `${-marginLeft}px`,
-  //       transition: 'all 0.3s ease-out',
-  //     });
-  //   }
-  // }, [current]);
 
   const handleNextClick = () => {
     setCurrent(Math.min(current + 1, children.length - 1));

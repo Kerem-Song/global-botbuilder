@@ -57,24 +57,26 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       },
     };
 
-    botTesterMutate.mutate(sendMessage, {
-      onSuccess: (submitResult) => {
-        setTesterData((original) => {
-          const updatedTesterData = [
-            ...original,
-            ...(submitResult.result?.messages || []),
-          ];
-          if (submitResult.result?.quickReplies) {
-            const quickRepliesContent: IQuickRepliesContent = {
-              quickReplies: submitResult.result.quickReplies,
-              type: TESTER_DATA_TYPES.quickReplies,
-            };
-            updatedTesterData.push(quickRepliesContent);
-          }
-          return updatedTesterData;
-        });
-      },
-    });
+    setTimeout(() => {
+      botTesterMutate.mutate(sendMessage, {
+        onSuccess: (submitResult) => {
+          setTesterData((original) => {
+            const updatedTesterData = [
+              ...original,
+              ...(submitResult.result?.messages || []),
+            ];
+            if (submitResult.result?.quickReplies) {
+              const quickRepliesContent: IQuickRepliesContent = {
+                quickReplies: submitResult.result.quickReplies,
+                type: TESTER_DATA_TYPES.quickReplies,
+              };
+              updatedTesterData.push(quickRepliesContent);
+            }
+            return updatedTesterData;
+          });
+        },
+      });
+    }, 300);
 
     e.preventDefault();
     setText('');

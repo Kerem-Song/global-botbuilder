@@ -219,14 +219,12 @@
                   display: flex;
                   justify-content: center;
                   align-items: center;
-
                   width: rem(117);
                   height: rem(37);
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
                   font-size: rem(14);
-
                   border: none;
                   background-color: #dbdee5;
                   border-radius: rem(8);
@@ -278,6 +276,9 @@
             border: none;
             border-radius: rem(8);
             cursor: pointer;
+            &:hover {
+              background-color: #75767a;
+            }
           }
         }
       }
@@ -347,7 +348,7 @@
         position: relative;
         width: 100%;
         margin-top: rem(10);
-        // padding-left: rem(40);
+        padding-left: rem(40);
 
         .quickReply {
           display: flex;
