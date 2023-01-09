@@ -21,10 +21,15 @@ import { useState } from 'react';
 
 import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {
+  nodeId: string;
   cardId: number;
   cardButtons: IButtonType[];
 }
-export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContainer) => {
+export const SortableButtonContainer = ({
+  nodeId,
+  cardId,
+  cardButtons,
+}: ISortableContainer) => {
   const [buttons, setButtons] = useState(cardButtons);
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -70,6 +75,7 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
             {buttons.map((item) => (
               <SortableButtonItem
                 key={item.id}
+                nodeId={nodeId}
                 cardId={cardId}
                 id={item.id}
                 label={item.label}
@@ -83,13 +89,12 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
         {buttons.map(
           (item) =>
             item.action !== 'linkWebUrl' && (
-              <div className="nextNodeWrapper">
+              <div className="nextNodeWrapper" id={`next-${item.id}`}>
                 <Button
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
                   className="nextNode blue"
                   shape="ghost"
                   onClick={(e) => {
-                    console.log('blueNode');
                     handleBlueNodeBtn(e);
                   }}
                   onPointerDown={(e) => e.stopPropagation()}

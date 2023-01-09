@@ -26,10 +26,8 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const stroke = active ? '#003DB2' : '#00B4ED';
 
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
-
   useEffect(() => {
     const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
-    const start = document.querySelector<HTMLDivElement>(`#${startId}`);
     const end = document.querySelector<HTMLDivElement>(`#${endId}`);
     const startNode = isNextNode
       ? document.querySelector<HTMLDivElement>(`#${updateKey}`)
@@ -37,7 +35,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
     addUpdateLines(updateKey || startId, endId, () => {
       const { setSvgStyle, setArrowStyle, setLinePath } = useElementHelper(
         canvas,
-        start,
+        startId,
         end,
         startNode,
       );
@@ -58,11 +56,11 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         position: 'absolute',
         zIndex: 0,
         pointerEvents: 'none',
-        //      background: '#FF000011',
+        //background: '#FF000011',
       }}
     >
       <path
-        style={{ position: 'absolute' }}
+        style={{ position: 'absolute', transition: 'opacity 0.3s ease' }}
         ref={arrowRef}
         d={isNextNode ? 'M 0 0 L 6 6 L 0 12' : 'M 0 0 L 6 6 L 12 0'}
         stroke={stroke}
@@ -75,7 +73,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       <path
         style={{
           position: 'absolute',
-          //transition: 'all 0.01s',
+          transition: 'opacity 0.3s ease',
         }}
         ref={lineRef}
         stroke={stroke}
@@ -87,7 +85,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         onClick={() => onClick?.()}
         style={{
           position: 'absolute',
-          //         transition: 'all 0.01s',
+          transition: 'opacity 0.3s ease',
           cursor: 'pointer',
           pointerEvents: 'stroke',
         }}
