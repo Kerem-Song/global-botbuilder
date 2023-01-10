@@ -255,8 +255,8 @@ export const Botbuilder = () => {
             <NodeLinkPopUpMenu
               handleIsOpen={handleIsOpen}
               popUpPosition={popUpPosition}
-              addArrow={(from, to) => {
-                handleAddArrows({ start: from, end: to });
+              addArrow={(arrow: IArrow) => {
+                handleAddArrows(arrow);
               }}
             />
           )}

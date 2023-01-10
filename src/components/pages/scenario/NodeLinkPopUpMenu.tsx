@@ -4,7 +4,8 @@ import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import { IArrow, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import { GuideInfo } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
@@ -19,7 +20,7 @@ interface INodeLinkPopUpFormValue {
 interface INodeLinkPopUpMenuProps {
   popUpPosition: { x: number; y: number };
   handleIsOpen: (value: boolean) => void;
-  addArrow?: (from: string, to: string) => void;
+  addArrow?: (arrow: IArrow) => void;
 }
 
 const cardTypeValue = [
@@ -53,7 +54,7 @@ export const NodeLinkPopUpMenu = ({
   addArrow,
 }: INodeLinkPopUpMenuProps) => {
   const [userInput, setUserInput] = useState<string | null>(null);
-  const [start, setStart] = useState<string | null>();
+  const [start, setStart] = useState<GuideInfo | null>();
   const dispatch = useDispatch();
   const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +91,13 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (start) {
-      addArrow?.(start, `node-${addNode.id}`);
+      console.log();
+      addArrow?.({
+        start: start.startId,
+        end: `node-${addNode.id}`,
+        isNextNode: start.isNext,
+        updateKey: start.nodeId,
+      });
     }
 
     handleIsOpen(false);
@@ -125,7 +132,7 @@ export const NodeLinkPopUpMenu = ({
     }
 
     if (guideStart) {
-      setStart(guideStart.startId);
+      setStart(guideStart);
     }
   }, []);
 
