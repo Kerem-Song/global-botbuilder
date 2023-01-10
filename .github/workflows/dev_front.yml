@@ -26,8 +26,8 @@ jobs:
         run: |
           aws ssm get-parameters --with-decryption --names "/dev/svc/global/chatbotbuilder/front" --query Parameters[0].Value --output text > .env.development
 
-      # - name: Install Dependencies
-      #   run: npm i
+      - name: Install Dependencies
+        run: yarn install
 
       # - name: npm build
       #   run: CI=false npm run build:dev
