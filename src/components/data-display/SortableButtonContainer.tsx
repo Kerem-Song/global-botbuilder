@@ -17,7 +17,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { IButtonType } from '@models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {
@@ -57,6 +57,10 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
     e.preventDefault();
   };
 
+  useEffect(() => {
+    console.log('a');
+  }, [handleDragEnd]);
+
   return (
     <Row justify="flex-start" align="flex-start">
       <Col span={22}>
@@ -83,7 +87,10 @@ export const SortableButtonContainer = ({ cardId, cardButtons }: ISortableContai
         {buttons.map(
           (item) =>
             item.action !== 'linkWebUrl' && (
-              <div className="nextNodeWrapper">
+              <div
+                className="nextNodeWrapper"
+                id={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
+              >
                 <Button
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
                   className="nextNode blue"
