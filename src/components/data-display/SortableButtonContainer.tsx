@@ -114,6 +114,7 @@ export const SortableButtonContainer = ({
           (item) =>
             item.action !== 'linkWebUrl' && (
               <div
+                key={`next-${item.id}`}
                 role="presentation"
                 className="nextNodeWrapper"
                 id={`next-${item.id}`}
