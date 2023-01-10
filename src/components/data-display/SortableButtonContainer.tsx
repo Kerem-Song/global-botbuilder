@@ -16,8 +16,12 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
+import { useRootState } from '@hooks';
+import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IButtonType } from '@models';
+import { setGuideStartNode } from '@store/botbuilderSlice';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { SortableButtonItem } from './SortableButtonItem';
 interface ISortableContainer {
@@ -30,6 +34,9 @@ export const SortableButtonContainer = ({
   cardId,
   cardButtons,
 }: ISortableContainer) => {
+  const dispatch = useDispatch();
+  const { updateLine } = useUpdateLines();
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
   const [buttons, setButtons] = useState(cardButtons);
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -62,6 +69,20 @@ export const SortableButtonContainer = ({
     e.preventDefault();
   };
 
+  const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    const guide = document.querySelector<HTMLDivElement>('#icGuide');
+    if (guide) {
+      const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
+      const cr = canvas?.getBoundingClientRect() || new DOMRect();
+      const newPosition = {
+        x: e.clientX / scale - cr.x - 11,
+        y: e.clientY / scale - cr.y - 12,
+      };
+      guide.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
+    }
+    updateLine(nodeId);
+  };
+
   return (
     <Row justify="flex-start" align="flex-start">
       <Col span={22}>
@@ -89,7 +110,31 @@ export const SortableButtonContainer = ({
         {buttons.map(
           (item) =>
             item.action !== 'linkWebUrl' && (
-              <div className="nextNodeWrapper" id={`next-${item.id}`}>
+              <div
+                role="presentation"
+                className="nextNodeWrapper"
+                id={`next-${item.id}`}
+                draggable
+                onDragStart={(e) => {
+                  const img = new Image();
+                  e.dataTransfer.setData('id', `next-${item.id}`);
+                  e.dataTransfer.setData('nodeId', nodeId);
+                  e.dataTransfer.setData('isNext', '1');
+                  dispatch(
+                    setGuideStartNode({
+                      startId: `next-${item.id}`,
+                      nodeId,
+                      isNext: true,
+                    }),
+                  );
+                  e.dataTransfer.setDragImage(img, 0, 0);
+                }}
+                onDragEnd={(e) => {
+                  dispatch(setGuideStartNode());
+                }}
+                onDrag={handleBottomDrag}
+                onMouseDown={(e) => e.stopPropagation()}
+              >
                 <Button
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
                   className="nextNode blue"

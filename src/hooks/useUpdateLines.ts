@@ -8,6 +8,7 @@ const updateLineAll = () => {
 };
 
 const updateLine = (id: string) => {
+  console.log(id);
   const filtered = updateLines.filter((f) => f.start === id || f.end === id);
   const existsUpdateStackLength = updateStack.length;
   updateStack = filtered.map((f) => f.update);

@@ -1,8 +1,7 @@
 import { Button, Input, Space, Switch } from '@components';
 import { useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
-import { setSelectedScenario } from '@store/botbuilderSlice';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
@@ -11,8 +10,8 @@ import { ScenarioItem } from './ScenarioItem';
 export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
   scenarios,
 }) => {
-  const dispatch = useDispatch();
-  const { scenarioSaveAsync } = useScenarioClient();
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const { scenarioCreateAsync } = useScenarioClient();
 
   const basicScenarioList = [{ name: 'Help (Fallback)' }];
 
@@ -20,14 +19,11 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
     console.log('switch toggle');
   };
 
-  // useEffect(() => {
-  //   if (scenarios?.length) {
-  //     dispatch(setSelectedScenario(scenarios?.[0]));
-  //   }
-  // }, [scenarios]);
-
   const handleNewScenario = async () => {
-    await scenarioSaveAsync(`scenario ${scenarios?.length || 1}`);
+    await scenarioCreateAsync({
+      token,
+      scenarioName: `scenario ${scenarios?.length || 1}`,
+    });
   };
 
   return (
