@@ -25,7 +25,7 @@ export const LineContainer: FC = () => {
 
   return (
     <>
-      {lines.map((l, i) => (
+      {lines.map((l) => (
         <ConnectLine
           onClick={() => {
             handleLineClick(l);

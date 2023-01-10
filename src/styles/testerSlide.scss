@@ -2,10 +2,6 @@
   position: relative;
   display: flex;
   overflow: hidden;
-
-  .next {
-    right: rem(0);
-  }
 }
 
 .luna-carousel-slide-left {
@@ -81,7 +77,7 @@
   position: absolute;
   top: 0;
   z-index: 100;
-  right: rem(0);
+  right: 0;
 
   .slideBtns {
     display: flex;

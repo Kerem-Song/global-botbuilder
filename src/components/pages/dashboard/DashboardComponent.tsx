@@ -33,7 +33,7 @@ export const DashboardComponent = () => {
   };
 
   return (
-    <div className="dashboardWrap">
+    <div className="dashboard-wrap">
       <Input
         size="large"
         search

@@ -1,1 +1,1 @@
-export type SizeType = 'x-small' | 'small' | 'none' | 'large' | 'x-large';
+export type SizeType = 'none' | 'x-small' | 'small' | 'normal' | 'large' | 'x-large';

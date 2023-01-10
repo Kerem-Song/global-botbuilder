@@ -1,7 +1,7 @@
 let updateStack: { (): void }[] = [];
 const updateLines: { start: string; end: string; update: () => void }[] = [];
 
-export const updateLineAll = () => {
+const updateLineAll = () => {
   setTimeout(() => {
     updateLines.map((x) => x.update());
   }, 10);
@@ -9,13 +9,16 @@ export const updateLineAll = () => {
 
 const updateLine = (id: string) => {
   const filtered = updateLines.filter((f) => f.start === id || f.end === id);
+  const existsUpdateStackLength = updateStack.length;
   updateStack = filtered.map((f) => f.update);
-  setTimeout(() => {
-    updateStack.map((f) => {
-      f();
-    });
-    updateStack = [];
-  }, 10);
+  if (existsUpdateStackLength === 0) {
+    setTimeout(() => {
+      updateStack.map((f) => {
+        f();
+      });
+      updateStack = [];
+    }, 10);
+  }
 };
 
 const removeUpdateLines = (start: string, end: string) => {

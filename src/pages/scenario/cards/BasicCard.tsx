@@ -62,7 +62,11 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
 
           <div className="buttonWrapper node-draggable-ignore">
             {item.buttons && (
-              <SortableButtonContainer cardButtons={item.buttons} cardId={i} />
+              <SortableButtonContainer
+                nodeId={nodeId}
+                cardButtons={item.buttons}
+                cardId={i}
+              />
             )}
           </div>
         </Card>

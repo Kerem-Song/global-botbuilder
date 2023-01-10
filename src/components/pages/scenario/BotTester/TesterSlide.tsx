@@ -12,12 +12,14 @@ export interface ITesterSlideProps extends IHasChildren, IHasClassNameNStyle {
   quickReplies?: boolean;
   children: ReactNode[];
   gapSize: number;
+  offset?: number;
 }
 
 export const TesterSlide = ({
   children,
   className,
   gapSize,
+  offset = 0,
   quickReplies,
 }: ITesterSlideProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
@@ -29,15 +31,15 @@ export const TesterSlide = ({
   });
 
   useEffect(() => {
-    if (slideRef.current && slideRef.current.children.length > current) {
+    if (slideRef.current && slideRef.current.children.length) {
       let marginLeft = 0;
       for (let i = 0; i < current; i++) {
-        console.log(slideRef.current.children[i].className);
-        marginLeft +=
+        marginLeft -=
           slideRef.current.children[i].getBoundingClientRect().width + gapSize;
       }
+      marginLeft += offset;
       setStyle({
-        marginLeft: `${-marginLeft}px`,
+        marginLeft: `${Math.min(marginLeft, 0)}px`,
         transition: 'all 0.3s ease-out',
       });
     }

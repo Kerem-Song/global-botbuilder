@@ -1,10 +1,11 @@
 export const useElementHelper = (
   canvas: HTMLDivElement | null,
-  start: HTMLDivElement | null,
+  startId: string,
   end: HTMLDivElement | null,
   startNode: HTMLDivElement | null,
 ) => {
   const isNextNode = startNode !== null;
+  const start = document.querySelector<HTMLDivElement>(`#${startId}`);
 
   const cr = canvas?.getBoundingClientRect() || new DOMRect();
   const sr = start?.getBoundingClientRect() || new DOMRect();
@@ -25,8 +26,18 @@ export const useElementHelper = (
   const ehw = Math.round(er.width / 2);
   const ehh = Math.round(er.height / 2);
 
-  const minX = Math.min(sr.left, sr.right, er.left, er.right);
-  const maxX = Math.max(sr.left, sr.right, er.left, er.right);
+  const minX = Math.min(
+    isNextNode ? snr.left : sr.left,
+    isNextNode ? snr.left + 216 : sr.right,
+    er.left,
+    er.right,
+  );
+  const maxX = Math.max(
+    isNextNode ? snr.left : sr.left,
+    isNextNode ? snr.left + 216 : sr.right,
+    er.left,
+    er.right,
+  );
   const minY = Math.min(sr.top, sr.bottom, er.top, er.bottom);
   const maxY = Math.max(sr.top, sr.bottom, er.top, er.bottom, snr.bottom);
 
@@ -59,8 +70,13 @@ export const useElementHelper = (
 
   const setArrowStyle = (element: SVGPathElement | null) => {
     if (element) {
-      const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
-      element.style.transform = translate;
+      if (!start || !end) {
+        element.style.opacity = '0';
+      } else {
+        element.style.opacity = '1';
+        const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
+        element.style.transform = translate;
+      }
     }
   };
 
@@ -71,18 +87,20 @@ export const useElementHelper = (
     if (!start || !end) {
       if (element) {
         element.setAttribute('d', '');
+        element.style.opacity = '0';
       }
 
       if (mouseElement) {
         mouseElement.setAttribute('d', '');
+        mouseElement.style.opacity = '0';
       }
 
       return;
     }
     const startPoint = isNextNode
       ? {
-          x: sr.left - offset.x + 20,
-          y: sr.bottom - offset.y + Math.round(sr.height / 2) + 15,
+          x: snr.right - offset.x + sr.width / 2,
+          y: sr.bottom - offset.y - Math.round(sr.height / 2) + 2,
         }
       : {
           x: sr.x - offset.x + shw,
@@ -241,6 +259,7 @@ export const useElementHelper = (
     }
 
     if (element) {
+      element.style.opacity = '1';
       element.setAttribute(
         'd',
         `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
@@ -248,6 +267,7 @@ export const useElementHelper = (
     }
 
     if (mouseElement) {
+      mouseElement.style.opacity = '1';
       mouseElement.setAttribute(
         'd',
         `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
