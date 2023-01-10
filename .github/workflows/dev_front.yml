@@ -26,11 +26,14 @@ jobs:
         run: |
           aws ssm get-parameters --with-decryption --names "/dev/svc/global/chatbotbuilder/front" --query Parameters[0].Value --output text > .env.development
 
-      - name: Install Dependencies
-        run: npm i
+      # - name: Install Dependencies
+      #   run: npm i
 
-      - name: npm build
-        run: CI=false npm run build:dev
+      # - name: npm build
+      #   run: CI=false npm run build:dev
+
+      - name: build
+        run: tsc && vite build --mode development
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
