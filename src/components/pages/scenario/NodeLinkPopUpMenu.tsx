@@ -57,7 +57,7 @@ export const NodeLinkPopUpMenu = ({
   const dispatch = useDispatch();
   const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
-  const guideStart = useRootState((state) => state.botBuilderReducer.guideStart);
+  const guideStart = useRootState((state) => state.botBuilderReducer.guideInfo);
 
   const {
     register,
@@ -125,7 +125,7 @@ export const NodeLinkPopUpMenu = ({
     }
 
     if (guideStart) {
-      setStart(guideStart);
+      setStart(guideStart.startId);
     }
   }, []);
 
