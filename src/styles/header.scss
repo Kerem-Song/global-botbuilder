@@ -24,13 +24,15 @@ header {
       }
     }
 
-    .languageContainer {
-      grid-column: 11/12;
-      margin-left: rem(113);
-      .language {
+    .rightNav {
+      grid-column: 12/12;
+      display: flex;
+      align-items: center;
+      gap: rem(5);
+
+      .testerBtn {
+        width: rem(100);
         padding: rem(8) rem(5.5);
-        width: rem(32);
-        margin-right: rem(5);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -41,36 +43,49 @@ header {
         border: 1px solid $grayBlack;
         border-radius: rem(6);
         cursor: pointer;
+      }
 
+      .languageBtn {
+        padding: rem(8) rem(5.5);
+        width: rem(32);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $grayBlack;
+        color: $grayWhite;
+        font-size: rem(12);
+        line-height: rem(14);
+        border: 1px solid $grayBlack;
+        border-radius: rem(6);
+        cursor: pointer;
         &:hover {
           color: $gray300;
         }
       }
-    }
 
-    .userName {
-      grid-column: 12/12;
-      position: relative;
-      padding: rem(7) rem(10) rem(7) rem(25);
-      text-align: center;
-      color: $grayWhite;
-      background-color: $grayBlack;
-      border: 1px solid $grayBlack;
-      border-radius: rem(6);
-      font-size: rem(13);
-      line-height: rem(16);
-      cursor: pointer;
+      .userName {
+        position: relative;
+        padding: rem(7) rem(10) rem(7) rem(25);
+        text-align: center;
+        color: $grayWhite;
+        background-color: $grayBlack;
+        border: 1px solid $grayBlack;
+        border-radius: rem(6);
+        font-size: rem(13);
+        line-height: rem(16);
+        cursor: pointer;
 
-      &::before {
-        position: absolute;
-        display: inline-block;
-        top: 27%;
-        left: 14%;
-        content: url('@assets/icons/ic_user.svg');
-      }
+        &::before {
+          position: absolute;
+          display: inline-block;
+          top: 27%;
+          left: 14%;
+          content: url('@assets/icons/ic_user.svg');
+        }
 
-      &:hover {
-        color: $gray300;
+        &:hover {
+          color: $gray300;
+        }
       }
     }
   }

@@ -1,12 +1,13 @@
-import { ICarousel, ITesterDataType, TESTER_DATA_TYPES } from '@models';
+import { ICarousel, ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 
 import { TesterSlide } from './TesterSlide';
 
 export interface TestProps {
   item: ITesterDataType;
+  onClick: (debugMeta?: ITesterDebugMeta) => void;
 }
 
-export const TesterMessagesItem = ({ item }: TestProps) => {
+export const TesterMessagesItem = ({ item, onClick }: TestProps) => {
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:
@@ -17,7 +18,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
                 <div className="sendMessage">{item.value}</div>
               </div>
             ) : (
-              <div className="reply">
+              <div
+                role="presentation"
+                className="reply"
+                onClick={() => onClick(item.debugMeta)}
+              >
                 <div className="replyMessage">{item.value}</div>
               </div>
             )}
@@ -25,7 +30,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         );
       case TESTER_DATA_TYPES.productCardCarousel:
         return (
-          <div className="productCardContainer">
+          <div
+            className="productCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
                 {item.contents.map((c, i) => {
@@ -95,7 +104,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         );
       case TESTER_DATA_TYPES.cardCarousel:
         return (
-          <div className="cardCarouselContainer">
+          <div
+            className="cardCarouselContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
                 {item.contents?.map((c, i) => {
@@ -133,7 +146,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         );
       case TESTER_DATA_TYPES.card:
         return (
-          <div className="basicCardContainer">
+          <div
+            className="basicCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
             {item.title ? (
               <>
                 <img
@@ -175,7 +192,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         );
       case TESTER_DATA_TYPES.productCard:
         return (
-          <div className="productCardContainer">
+          <div
+            className="productCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
             <div className="productCard">
               <img
                 className="productCardImg"
@@ -236,7 +257,11 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         );
       case TESTER_DATA_TYPES.image:
         return (
-          <div className="imageCardContainer">
+          <div
+            className="imageCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
             <img className="imageCardImg contain" src={item.imageUrl} alt="fullSizeImg" />
           </div>
         );
