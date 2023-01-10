@@ -243,8 +243,8 @@ export const Botbuilder = () => {
                   cards={item.cards}
                   active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}
-                  addArrow={(from, to) => {
-                    handleAddArrows({ start: from, end: to });
+                  addArrow={(arrow: IArrow) => {
+                    handleAddArrows(arrow);
                   }}
                 />
               </div>

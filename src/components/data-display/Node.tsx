@@ -2,6 +2,7 @@ import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@ass
 import { Button, IPopperItem, Popper } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
+import { IArrow } from '@models';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -44,7 +45,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
     | IConditionNode[]
     | ICountNode[];
   onClick?: (e?: any) => void;
-  addArrow?: (from: string, to: string) => void;
+  addArrow?: (arrow: IArrow) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
 }
 
@@ -91,7 +92,7 @@ export const Node: FC<INodeProps> = ({
 
   const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
     if (e.isTrusted) {
-      const guide = document.querySelector<HTMLDivElement>('#icBottomGuide');
+      const guide = document.querySelector<HTMLDivElement>('#icGuide');
 
       if (guide) {
         const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
@@ -177,11 +178,21 @@ export const Node: FC<INodeProps> = ({
         e.preventDefault();
       }}
       onDrop={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
         const from = e.dataTransfer.getData('id');
         if (!from || id === from) {
           return;
         }
-        addArrow?.(from, `node-${id}`);
+
+        const nodeId = e.dataTransfer.getData('nodeId');
+        const isNext = e.dataTransfer.getData('isNext');
+        addArrow?.({
+          start: from,
+          end: `node-${id}`,
+          updateKey: nodeId,
+          isNextNode: isNext === '1',
+        });
       }}
       id={`node-${id}`}
       className={wrapClass}
@@ -225,7 +236,7 @@ export const Node: FC<INodeProps> = ({
               draggable
               onDragStart={(e) => {
                 e.dataTransfer.setData('id', `node-${id}`);
-                dispatch(setGuideStartNode(`node-${id}`));
+                dispatch(setGuideStartNode({ startId: `node-${id}`, isNext: false }));
               }}
               onDragEnd={(e) => {
                 dispatch(setGuideStartNode());

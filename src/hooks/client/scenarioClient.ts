@@ -57,17 +57,19 @@ export const useScenarioClient = () => {
     );
   };
 
-  const scenarioSaveMutate = useMutation(async (scenarioName: string) => {
-    const res = await http.post(
-      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list`,
-      { scenarioName },
-    );
+  const scenarioCreateMutate = useMutation(
+    async ({ token, scenarioName }: { token: string; scenarioName: string }) => {
+      const res = await http.post('/builder/createflow', {
+        sessionToken: token,
+        alias: scenarioName,
+      });
 
-    if (res) {
-      queryClient.invalidateQueries(['scenario-list', botId]);
-      return res;
-    }
-  });
+      if (res) {
+        queryClient.invalidateQueries(['scenario-list', botId]);
+        return res;
+      }
+    },
+  );
 
   const scenarioUpdateMutate = useMutation(async (scenario: IScenarioModel) => {
     const res = await http.put(
@@ -95,7 +97,7 @@ export const useScenarioClient = () => {
   return {
     getScenarioList,
     getScenario,
-    scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
+    scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioUpdateAsync: scenarioUpdateMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
   };

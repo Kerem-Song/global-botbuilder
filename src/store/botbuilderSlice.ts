@@ -7,11 +7,17 @@ const transformOptions = {
   maxScale: 2,
 };
 
+export interface GuideInfo {
+  startId: string;
+  nodeId?: string;
+  isNext: boolean;
+}
+
 export interface BotBuilderMaker {
   scale: number;
   selected?: string | IArrow;
   isEditDrawerOpen: boolean;
-  guideStart?: string;
+  guideInfo?: GuideInfo;
   token: string;
   selectedScenario?: IScenarioModel;
 }
@@ -53,8 +59,9 @@ export const botbuilderSlice = createSlice({
         state.isEditDrawerOpen = action.payload;
       }
     },
-    setGuideStartNode: (state, action: PayloadAction<string | undefined>) => {
-      state.guideStart = action.payload;
+    setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
+      console.log(action.payload);
+      state.guideInfo = action.payload;
     },
     // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
     //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');

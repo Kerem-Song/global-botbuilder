@@ -13,7 +13,7 @@ export const LineContainer: FC = () => {
   const { updateLineAll } = useUpdateLines();
   const lines = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const selectedLine = useRootState((state) => state.botBuilderReducer.selected);
-  const guideStart = useRootState((state) => state.botBuilderReducer.guideStart);
+  const guideInfo = useRootState((state) => state.botBuilderReducer.guideInfo);
 
   useEffect(() => {
     updateLineAll();
@@ -38,19 +38,25 @@ export const LineContainer: FC = () => {
           active={selectedLine === l}
         />
       ))}
-      {guideStart ? (
+      {guideInfo ? (
         <div
           style={{
             position: 'absolute',
             visibility: 'hidden',
           }}
-          id="icBottomGuide"
+          id="icGuide"
         >
           <img src={icNodeBottom} alt="icNodeBottom" />
         </div>
       ) : undefined}
-      {guideStart ? (
-        <ConnectLine startId={guideStart} endId="icBottomGuide" />
+      {guideInfo ? (
+        <ConnectLine
+          startId={guideInfo.startId}
+          endId="icGuide"
+          isNextNode={guideInfo.isNext}
+          updateKey={guideInfo.nodeId}
+          key={`${guideInfo.startId}-icGuide`}
+        />
       ) : undefined}
     </>
   );
