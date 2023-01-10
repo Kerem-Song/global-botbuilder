@@ -1,0 +1,52 @@
+name: Dev Global Bot Builder frontend
+on:
+  push:
+    tags:
+      - 'dev_front.*.*.*.*'
+
+jobs:
+  build:
+    name: Dev Global Bot Builder frontend Build
+    runs-on: ubuntu-latest
+
+    steps:   
+      - uses: actions/checkout@v3
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Create Env from ParameterStore
+        run: |
+          aws ssm get-parameters --with-decryption --names "/dev/svc/global/chatbotbuilder/front" --query Parameters[0].Value --output text > .env.development
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: npm build
+        run: CI=false npm run build:dev
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_S3_CLOUDFRONT_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_S3_CLOUDFRONT_SECRET_ACCESS_KEY }}
+
+      - name: S3 Deploy
+        run: aws s3 sync ./build s3://dev-global-bot-builder-front --delete
+
+      - name: Invalidate Cloudfront
+        uses: docker://rewindio/github-action-cloudfront-invalidate
+        env:
+          DISTRIBUTION_ID: ${{ secrets.AWS_DEV_DISTRIBUTION_ID }}
+          PATH_TO_INVALIDATE: /*
+          AWS_REGION: ap-northeast-2
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_CLOUDFRONT_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_CLOUDFRONT_SECRET_ACCESS_KEY }}
