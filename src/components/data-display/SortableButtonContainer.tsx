@@ -37,6 +37,7 @@ export const SortableButtonContainer = ({
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const [buttons, setButtons] = useState(cardButtons);
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -118,6 +119,11 @@ export const SortableButtonContainer = ({
                 id={`next-${item.id}`}
                 draggable
                 onDragStart={(e) => {
+                  if (arrows.find((x) => x.start === `next-${item.id}`)) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                  }
                   const img = new Image();
                   e.dataTransfer.setData('id', `next-${item.id}`);
                   e.dataTransfer.setData('nodeId', nodeId);

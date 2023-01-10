@@ -178,6 +178,8 @@ export const Node: FC<INodeProps> = ({
         e.preventDefault();
       }}
       onDrop={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
         const from = e.dataTransfer.getData('id');
         if (!from || id === from) {
           return;
