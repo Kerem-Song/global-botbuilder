@@ -27,7 +27,7 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         return (
           <div className="productCardContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide gapSize={10}>
+              <TesterSlide gapSize={10} offset={55}>
                 {item.contents.map((c, i) => {
                   const content = c as ICarousel;
                   return (
@@ -97,19 +97,33 @@ export const TesterMessagesItem = ({ item }: TestProps) => {
         return (
           <div className="cardCarouselContainer">
             {item.contents.length === 0 ? null : (
-              <TesterSlide gapSize={10}>
+              <TesterSlide gapSize={10} offset={55}>
                 {item.contents?.map((c, i) => {
                   const content = c as ICarousel;
+                  const carouselBtn = content.buttons && content.buttons?.[0];
+                  const webLinkUrl =
+                    carouselBtn.postback && carouselBtn.postback.webLinkUrl;
+                  const handleOpenWebLink = () => {
+                    if (webLinkUrl) {
+                      window.open(webLinkUrl);
+                    }
+                  };
                   return (
                     <div key={i} className="cardCarousel">
-                      <img
-                        className="cardCarouselImg"
-                        src={content.image?.imageUrl}
-                        alt="cardCarouselImg"
-                      />
-                      <button className="cardCarouselBtn">
-                        {content.buttons?.[0].label}
-                      </button>
+                      <>
+                        <img
+                          className="cardCarouselImg"
+                          src={content.image?.imageUrl}
+                          alt="cardCarouselImg"
+                        />
+                        {webLinkUrl ? (
+                          <button className="cardCarouselBtn" onClick={handleOpenWebLink}>
+                            {carouselBtn.label}
+                          </button>
+                        ) : (
+                          <button className="cardCarouselBtn">{carouselBtn.label}</button>
+                        )}
+                      </>
                     </div>
                   );
                 })}

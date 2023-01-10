@@ -57,7 +57,15 @@ export type ITesterDataType =
   | IImageCard
   | IQuickRepliesContent;
 
-// productCard(Carousel)
+export interface ITesterButton {
+  actionType?: string;
+  label?: string;
+  postback?: {
+    lunaNodeLink?: string;
+    webLinkUrl?: string;
+    text?: string;
+  };
+}
 export interface ICarousel {
   image?: {
     imageUrl?: string;
@@ -78,17 +86,7 @@ export interface ICarousel {
     symbol?: string;
     discount?: number;
   };
-  buttons?: [
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        lunaNodeLink?: string;
-        webLinkUrl?: string;
-        text?: string;
-      };
-    },
-  ];
+  buttons: ITesterButton[];
   type?: string;
   defaultAction?: {
     actionType?: string;
