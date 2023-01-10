@@ -92,7 +92,7 @@ import icTesterPrevInactive from '@assets/icons/ic_tester_prev_inactive.svg';
 import icText from '@assets/icons/ic_text.svg';
 import icTextHover from '@assets/icons/ic_text_hover.svg';
 import icUser from '@assets/icons/ic_user.svg';
-import icUtterance from '@assets/icons/ic_Utterance_default.svg';
+import icUtterance from '@assets/icons/ic_utterance_default.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
 import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
