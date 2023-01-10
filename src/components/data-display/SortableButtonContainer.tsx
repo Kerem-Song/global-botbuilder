@@ -62,6 +62,8 @@ export const SortableButtonContainer = ({
         return arrayMove(items, oldIndex, newIndex);
       });
     }
+
+    updateLine(nodeId);
   };
 
   const handleBlueNodeBtn = (e: React.MouseEvent) => {
