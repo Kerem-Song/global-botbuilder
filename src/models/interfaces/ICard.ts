@@ -1,4 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+import { NodeKind } from '@models/enum/NodeKind';
 export interface IThumbnailType {
   imageUrl: string;
   link?: OsLinkType;
@@ -37,6 +38,11 @@ export type ValueOf<T> = T[keyof T];
 
 export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 
+export const VIEW_TYPES = {
+  TextView: 'TextView',
+  BasicCardCarouselView: 'BasicCardCarouselView',
+};
+
 export const NODE_TYPES = {
   ANSWER_NODE: 'AnswerNode',
   BASIC_CARD_CAROUSEL_NODE: 'BasicCardCarouselNode',
@@ -59,6 +65,26 @@ export const NODE_TYPES = {
 } as const;
 
 export type TNodeTypes = ValueOf<typeof NODE_TYPES>;
+export const getNodeKind = (nodeType: TNodeTypes) => {
+  switch (nodeType) {
+    case 'AnswerNode':
+      return NodeKind.AnswerNode;
+    case 'BasicCardCarouselNode':
+    case 'BasicCardCarouselTemplateNode':
+    case 'BasicCardNode':
+    case 'ImageNode':
+    case 'ListCarouselNode':
+    case 'ListNode':
+    case 'ProductCardCarouselNode':
+    case 'ProductCardCarouselTemplateNode':
+    case 'ProductCardNode':
+    case 'ProductCardTemplateNode':
+    case 'TextNode':
+      return NodeKind.InputNode;
+    default:
+      return NodeKind.CommandNode;
+  }
+};
 export interface IButtonType {
   id: UniqueIdentifier;
   label: string;

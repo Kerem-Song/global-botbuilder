@@ -100,7 +100,7 @@ export const useElementHelper = (
     const startPoint = isNextNode
       ? {
           x: snr.right - offset.x + sr.width / 2,
-          y: sr.bottom - offset.y - Math.round(sr.height / 2) + 2,
+          y: sr.bottom - offset.y + 8,
         }
       : {
           x: sr.x - offset.x + shw,

@@ -4,14 +4,16 @@ import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { IArrow, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import { getNodeKind, IArrow, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import { NodeKind } from '@models/enum/NodeKind';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+
+import { idGen } from '../../../modules';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -80,12 +82,13 @@ export const NodeLinkPopUpMenu = ({
 
     const addCard = defaultNode(nodeType);
     const addNode = {
-      id: uuidv4(),
+      id: idGen.generate('node'),
       type: nodeType,
       title: nodeName,
       cards: addCard,
       x: popUpPosition.x,
       y: popUpPosition.y,
+      nodeKind: getNodeKind(nodeType),
     };
 
     dispatch(appendNode(addNode));

@@ -1,3 +1,6 @@
+import { TNodeTypes } from '@models';
+import { NodeKind } from '@models/enum/NodeKind';
+
 export interface IViewItem {
   id: string;
   title: string;
@@ -21,6 +24,18 @@ export interface IQuickReplyRes {
 }
 export interface INodeView {
   typeName: string;
+  title?: string;
+  description?: string;
+  imageCtrl: {
+    imageUrl: string;
+  };
+  buttons: {
+    label: string;
+    actionType: string;
+    actionValue: string;
+    id: string;
+    typeName: string;
+  }[];
   text?: string;
   childrenViews?: IViewItem[];
   quicks?: IQuickReplyRes[];
@@ -30,10 +45,10 @@ export interface INodeRes {
   id: string;
   left: number;
   top: number;
-  typeName: string;
+  typeName: TNodeTypes;
   seq: number;
   nextNodeId: string;
-  nodeKind: number;
+  nodeKind: NodeKind;
   view?: INodeView;
 }
 

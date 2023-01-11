@@ -1,6 +1,7 @@
 import { Button, Input, Space, Switch } from '@components';
 import { useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
+import { setSelectedScenario } from '@store/botbuilderSlice';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -10,10 +11,13 @@ import { ScenarioItem } from './ScenarioItem';
 export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
   scenarios,
 }) => {
+  const dispatch = useDispatch();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
 
-  const basicScenarioList = [{ name: 'Help (Fallback)' }];
+  const basicScenarioList = useRootState(
+    (state) => state.botBuilderReducer.basicScenarios,
+  );
 
   const handleSwitch = () => {
     console.log('switch toggle');
@@ -36,14 +40,21 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
       <div className="basicScenarioWrapper">
         <p>기본 제공 시나리오</p>
         <div className="basicScenarioList">
-          {basicScenarioList.map((item, i) => {
-            return (
-              <div key={i} className="basicScenario">
-                <span>{item.name}</span>
-                <Switch onChange={handleSwitch} />
-              </div>
-            );
-          })}
+          {basicScenarioList &&
+            basicScenarioList.map((item, i) => {
+              return (
+                <div
+                  role="presentation"
+                  key={i}
+                  className="basicScenario"
+                  onClick={() => {
+                    dispatch(setSelectedScenario(item));
+                  }}
+                >
+                  <span>{item.alias}</span>
+                </div>
+              );
+            })}
         </div>
       </div>
 

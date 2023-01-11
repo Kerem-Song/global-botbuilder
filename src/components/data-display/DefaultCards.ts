@@ -15,9 +15,9 @@ import {
   NODE_TYPES,
   TCardsValues,
 } from '@models/interfaces/ICard';
-import { v4 as uuidv4 } from 'uuid';
 
-import { TNodeTypes } from './../../models/interfaces/ICard';
+import { TNodeTypes } from '../../models/interfaces/ICard';
+import { idGen } from '../../modules';
 
 export const defaultNode = (nodeType: TNodeTypes) => {
   let addNode:
@@ -47,8 +47,9 @@ export const defaultNode = (nodeType: TNodeTypes) => {
             nodeType === NODE_TYPES.TEXT_NODE || nodeType === NODE_TYPES.IMAGE_NODE
               ? undefined
               : [
-                  { id: uuidv4(), label: 'Button 01', action: 'block' },
-                  { id: uuidv4(), label: 'Button 02', action: 'block' },
+                  { id: idGen.generate('ctrl'), label: 'Button 01', action: 'block' },
+                  { id: idGen.generate('ctrl'), label: 'Button 02', action: 'block' },
+                  // { id: 3, label: 'Button 03', action: 'block' },
                 ],
         },
       ];
@@ -77,7 +78,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
-              id: uuidv4(),
+              id: idGen.generate('ctrl'),
               thumbnail: { imageUrl: '' },
               title: '',
               description: '',
@@ -94,10 +95,12 @@ export const defaultNode = (nodeType: TNodeTypes) => {
           title: '',
           thumbnail: { imageUrl: '' },
           description: '',
-          buttons: [{ id: uuidv4(), label: 'Button 01', action: 'block' }],
+          buttons: [{ id: idGen.generate('ctrl'), label: 'Button 01', action: 'block' }],
         },
         {
-          buttons: [{ id: uuidv4(), label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [
+            { id: idGen.generate('ctrl'), label: '+ Add a ChatBubble', action: 'block' },
+          ],
         },
       ];
       break;
@@ -113,7 +116,9 @@ export const defaultNode = (nodeType: TNodeTypes) => {
           productName: '',
         },
         {
-          buttons: [{ id: uuidv4(), label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [
+            { id: idGen.generate('ctrl'), label: '+ Add a ChatBubble', action: 'block' },
+          ],
         },
       ];
       break;
@@ -128,7 +133,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
           thumbnail: { imageUrl: '' },
           items: [
             {
-              id: uuidv4(),
+              id: idGen.generate('ctrl'),
               thumbnail: { imageUrl: '' },
               title: '',
               description: '',
@@ -136,7 +141,9 @@ export const defaultNode = (nodeType: TNodeTypes) => {
           ],
         },
         {
-          buttons: [{ id: uuidv4(), label: '+ Add a ChatBubble', action: 'block' }],
+          buttons: [
+            { id: idGen.generate('ctrl'), label: '+ Add a ChatBubble', action: 'block' },
+          ],
         },
       ];
       break;

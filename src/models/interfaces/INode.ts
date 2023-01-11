@@ -1,3 +1,5 @@
+import { NodeKind } from '@models/enum/NodeKind';
+
 import {
   IAnswerNode,
   IBasicCardNode,
@@ -12,6 +14,7 @@ export interface INode {
   id: string;
   type: TNodeTypes;
   title?: string;
+  nodeKind: NodeKind;
   x: number;
   y: number;
   cards?:

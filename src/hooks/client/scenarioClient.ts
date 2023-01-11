@@ -1,7 +1,7 @@
 import { useRootState } from '@hooks/useRootState';
-import { IScenarioModel } from '@models';
+import { IHasResults, IResponse, IScenarioModel } from '@models';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { setSelectedScenario } from '@store/botbuilderSlice';
+import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import {
   QueryObserver,
@@ -9,6 +9,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
@@ -26,11 +27,25 @@ export const useScenarioClient = () => {
       ['scenario-list', botId],
       () =>
         http
-          .post('/builder/getflowInfos', {
-            sessionToken: token,
-          })
+          .post<string, AxiosResponse<IHasResults<IScenarioModel>>>(
+            '/builder/getflowInfos',
+            {
+              sessionToken: token,
+            },
+          )
           .then((res) => {
-            return res.data.result;
+            const basicScenarios: IScenarioModel[] = [];
+            const fallbackScenario = res.data.result.find((x) => x.isFallbackFlow);
+            const startScenario = res.data.result.find((x) => x.isStartFlow);
+            if (fallbackScenario) {
+              basicScenarios.push(fallbackScenario);
+            }
+
+            if (startScenario) {
+              basicScenarios.push(startScenario);
+            }
+            dispatch(setBasicScenarios(basicScenarios));
+            return res.data.result.filter((x) => !x.isFallbackFlow && !x.isStartFlow);
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );

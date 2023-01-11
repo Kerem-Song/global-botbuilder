@@ -89,6 +89,7 @@
         border-radius: rem(8);
         background-color: $grayWhite;
         .basicScenario {
+          cursor: pointer;
           display: flex;
           justify-content: space-between;
           align-items: center;
