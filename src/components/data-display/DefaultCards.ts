@@ -1,19 +1,11 @@
 import {
-  CARD_TYPES,
   IAnswerNode,
-  IBasicCard,
   IBasicCardNode,
-  ICommerceCard,
-  ICondition,
   IConditionNode,
-  ICount,
   ICountNode,
-  IListCard,
   IListNode,
   IProductCardNode,
-  IQuickReply,
   NODE_TYPES,
-  TCardsValues,
 } from '@models/interfaces/ICard';
 
 import { TNodeTypes } from '../../models/interfaces/ICard';
