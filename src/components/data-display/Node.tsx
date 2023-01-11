@@ -245,6 +245,7 @@ export const Node: FC<INodeProps> = ({
             draggable
             onDragStart={(e) => {
               e.dataTransfer.setData('id', `node-${id}`);
+              e.dataTransfer.setData('pointType', 'blue');
               dispatch(
                 setGuideStartNode({ startId: `node-${id}`, isNext: false, type: 'blue' }),
               );
