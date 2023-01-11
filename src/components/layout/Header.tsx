@@ -82,7 +82,7 @@ export const Header = () => {
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
           <span className="userName">{user}</span>
-          <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
+          {/* <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} /> */}
         </div>
       </div>
     </header>
