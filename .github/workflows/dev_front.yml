@@ -43,7 +43,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_S3_CLOUDFRONT_SECRET_ACCESS_KEY }}
 
       - name: S3 Deploy
-        run: aws s3 sync ./build s3://dev-global-bot-builder-front --delete
+        run: aws s3 sync ./dist s3://dev-global-bot-builder-front --delete
 
       - name: Invalidate Cloudfront
         uses: docker://rewindio/github-action-cloudfront-invalidate
