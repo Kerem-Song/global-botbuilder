@@ -38,6 +38,11 @@ const buttonNodes = [
   { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
   { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
   { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
+  {
+    className: 'icSetParameter',
+    value: NODE_TYPES.PARAMETER_SET_NODE,
+    nodeName: 'Set Parameter',
+  },
 ];
 
 export const BotBuilderHeader = () => {

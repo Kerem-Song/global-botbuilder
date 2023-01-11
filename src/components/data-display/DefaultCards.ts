@@ -19,7 +19,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[] = [];
-
+  console.log('nodetype', nodeType);
   switch (nodeType) {
     case NODE_TYPES.TEXT_NODE:
     case NODE_TYPES.IMAGE_NODE:
@@ -176,6 +176,9 @@ export const defaultNode = (nodeType: TNodeTypes) => {
         },
       ];
       break;
+
+    case NODE_TYPES.PARAMETER_SET_NODE:
+      addNode = [];
   }
 
   return addNode;

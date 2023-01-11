@@ -1,15 +1,16 @@
 import { Button, Card } from '@components';
-import { IConditionNode } from '@models';
+import { IConditionNode, INode } from '@models';
 import { FC } from 'react';
 
 interface Condition {
   nodeId: string;
-  cards: IConditionNode[];
+  conditions?: IConditionNode[];
+  values: INode;
 }
-export const Condition: FC<Condition> = ({ nodeId, cards }) => {
+export const Condition: FC<Condition> = ({ nodeId, values, conditions }) => {
   return (
     <Card>
-      {cards?.map((item, i) => {
+      {conditions?.map((item, i) => {
         return (
           <div className="countConditionWrapper" key={`${nodeId}-condition-${i}`}>
             <p>
