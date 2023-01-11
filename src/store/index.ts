@@ -1,5 +1,4 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { ignoreActions } from 'redux-ignore';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';

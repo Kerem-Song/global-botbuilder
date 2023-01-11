@@ -25,10 +25,10 @@ export const TestPage = () => {
       <>
         <Popper
           popperItems={[
-            { id: 1, name: 'ChatbotName1', icon: icInsta },
-            { id: 2, name: 'ChatbotName2', icon: icLine },
-            { id: 3, name: 'ChatbotNameisc.....', icon: icLine },
-            { id: 4, name: 'List View', type: 'button' },
+            { id: '1', name: 'ChatbotName1', icon: icInsta },
+            { id: '2', name: 'ChatbotName2', icon: icLine },
+            { id: '3', name: 'ChatbotNameisc.....', icon: icLine },
+            { id: '4', name: 'List View', type: 'button' },
           ]}
           showBullet
         >
@@ -40,19 +40,19 @@ export const TestPage = () => {
         <Popper
           popperItems={[
             {
-              id: 1,
+              id: '1',
               name: 'Duplication',
               type: 'icon-front',
               icon: icDuplication,
             },
             {
-              id: 2,
+              id: '2',
               name: 'To paste',
               type: 'icon-front',
               icon: icPaste,
             },
             {
-              id: 3,
+              id: '3',
               name: 'Delete',
               type: 'icon-front',
               icon: icDelete,
