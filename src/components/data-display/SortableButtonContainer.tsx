@@ -15,11 +15,9 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
-import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IButtonType } from '@models';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { NextNodeButton } from './NextNodeButton';
 import { SortableButtonItem } from './SortableButtonItem';

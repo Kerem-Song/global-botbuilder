@@ -1,6 +1,5 @@
 import { IArrow, INode } from '@models';
-import { NodeKind } from '@models/enum/NodeKind';
-import { NODE_TYPES, TNodeTypes, VIEW_TYPES } from '@models/interfaces/ICard';
+import { NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

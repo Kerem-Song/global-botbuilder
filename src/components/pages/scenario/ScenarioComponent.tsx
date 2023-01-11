@@ -1,4 +1,3 @@
-import { useRootState } from '@hooks';
 import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { setSesstionToken } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';

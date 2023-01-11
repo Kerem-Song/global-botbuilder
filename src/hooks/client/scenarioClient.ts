@@ -1,14 +1,8 @@
-import { useRootState } from '@hooks/useRootState';
-import { IHasResults, IResponse, IScenarioModel } from '@models';
+import { IHasResults, IScenarioModel } from '@models';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
+import { setBasicScenarios } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
-import {
-  QueryObserver,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';

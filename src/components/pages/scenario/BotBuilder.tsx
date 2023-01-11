@@ -8,7 +8,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
-import { useCardList } from '../../../hooks/client/cardList';
 import { idGen } from '../../../modules';
 import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
@@ -18,7 +17,7 @@ import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 
 export const Botbuilder = () => {
   const dispatch = useDispatch();
-  const { updateLine, removeUpdateLines } = useUpdateLines();
+  const { updateLine } = useUpdateLines();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -41,9 +40,6 @@ export const Botbuilder = () => {
 
   const { getScenario } = useScenarioClient();
   getScenario(token, selectedScenario?.id);
-
-  const { getCardListQuery } = useCardList();
-  const { data } = getCardListQuery;
 
   const { isOpen, handleIsOpen } = useModalOpen();
 
