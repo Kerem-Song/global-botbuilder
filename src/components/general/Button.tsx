@@ -1,5 +1,5 @@
 import { IHasClassNameNStyle } from '@models';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import React, { createElement, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
