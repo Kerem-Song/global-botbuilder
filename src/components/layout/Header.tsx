@@ -3,6 +3,7 @@ import '@styles/header.scss';
 import { Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -25,6 +26,11 @@ export const Header = () => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const pageName = location.pathname.split('/').slice(-1)[0];
+  const pathName = location.pathname;
+
+  useEffect(() => {
+    handleIsOpen(false);
+  }, [pathName]);
 
   const user = 'UserName';
   const languageMenus = [
