@@ -20,6 +20,7 @@ export interface BotBuilderMaker {
   guideInfo?: GuideInfo;
   token: string;
   selectedScenario?: IScenarioModel;
+  basicScenarios?: IScenarioModel[];
 }
 
 const initialState: BotBuilderMaker = {
@@ -32,6 +33,9 @@ export const botbuilderSlice = createSlice({
   name: 'botbuilderCardType',
   initialState,
   reducers: {
+    setBasicScenarios: (state, action: PayloadAction<IScenarioModel[]>) => {
+      state.basicScenarios = action.payload;
+    },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       state.selectedScenario = action.payload;
     },
@@ -82,6 +86,7 @@ export const botbuilderSlice = createSlice({
 
 export const {
   setSelectedScenario,
+  setBasicScenarios,
   zoomIn,
   zoomOut,
   setSelected,

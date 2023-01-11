@@ -13,7 +13,6 @@
   font-size: rem(14);
   line-height: rem(16.8);
 
-
   &-active {
     outline: rem(2) solid $primary200;
     outline-offset: -1px;
@@ -143,11 +142,11 @@
           justify-content: start;
           align-items: center;
           overflow: hidden;
-          padding: rem(8) 0  0 rem(4);
+          padding: rem(8) 0 0 rem(4);
           .skeleton {
             width: rem(24);
             height: rem(24);
-            background-color: #EDEDF0;
+            background-color: #ededf0;
           }
           & img {
             width: rem(15);
@@ -163,7 +162,6 @@
               line-height: rem(15.6);
             }
           }
-
         }
 
         .commerceDivider {
@@ -172,7 +170,7 @@
 
         // Commerce Card priceWrapper
         .priceWrapper {
-          padding:0 0 rem(16) rem(4);
+          padding: 0 0 rem(16) rem(4);
 
           .currency {
             padding-left: rem(2);
@@ -198,7 +196,6 @@
           .discountPrice {
             padding-left: rem(5);
           }
-     
         }
 
         // Commerce Card discount
@@ -232,14 +229,14 @@
           flex-direction: column;
           padding-top: rem(6);
           gap: rem(6);
-          
+
           .listItemThumbnailSkeleton {
             width: rem(48);
             height: rem(48);
-            background-color: #EDEDF0;
+            background-color: #ededf0;
             border-radius: rem(4);
           }
-  
+
           .listItemsContent {
             padding-left: rem(8) !important;
             line-height: rem(15.6);
@@ -280,7 +277,7 @@
           border: rem(1) solid $gray200;
           border-radius: rem(8);
 
-          & p{
+          & p {
             max-height: rem(80);
             overflow: hidden;
             text-overflow: ellipsis;
@@ -299,7 +296,7 @@
         .nextNode {
           width: rem(5);
           height: rem(5);
-          position: absolute; 
+          position: absolute;
           left: 93%;
 
           &.green {
@@ -355,7 +352,7 @@
         border: 1px solid $gray150;
         border-radius: rem(4);
         color: $grayBlack;
-        font-size: rem(13);  
+        font-size: rem(13);
 
         &:hover {
           background-color: $primary100;
@@ -372,16 +369,17 @@
         height: rem(42);
       }
 
-      .nextNode {
-        position: absolute;
+      .nextNodeDrag {
         width: rem(5);
         height: rem(5);
+      }
+
+      .nextNode {
         background-image: url('@assets/icons/ic_node.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-color: transparent;
         border-color: transparent;
-        
 
         &:hover {
           background-color: transparent;
@@ -406,6 +404,33 @@
         font-size: rem(13);
         line-height: rem(16);
         color: $gray500;
+      }
+    }
+
+    .intent-node {
+      width: rem(190);
+      .nextNodeDrag {
+        width: rem(5);
+        height: rem(5);
+        position: absolute;
+        right: rem(10);
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+
+      .nextNode {
+        width: rem(5);
+        height: rem(5);
+        background-image: url('@assets/icons/ic_node.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border-color: transparent;
+
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
       }
     }
   }

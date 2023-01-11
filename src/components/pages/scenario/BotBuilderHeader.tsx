@@ -3,12 +3,12 @@ import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState } from '@hooks';
 import { useModalOpen } from '@hooks/useModalOpen';
-import { NODE_TYPES, TNodeTypes } from '@models/interfaces/ICard';
+import { getNodeKind, NODE_TYPES, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
+import { idGen } from '../../../modules';
 import { BotTester } from './BotTester/BotTester';
 
 const singleNodes = [
@@ -65,10 +65,11 @@ export const BotBuilderHeader = () => {
     const viewRect = view?.getBoundingClientRect();
 
     const addNode = {
-      id: uuidv4(),
+      id: idGen.generate('node'),
       type: cardType,
       title: nodeName,
       cards: addCard,
+      nodeKind: getNodeKind(cardType),
       x:
         canvasRect && viewRect
           ? viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x)

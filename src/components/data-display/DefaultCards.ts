@@ -15,9 +15,9 @@ import {
   NODE_TYPES,
   TCardsValues,
 } from '@models/interfaces/ICard';
-import { v4 as uuidv4 } from 'uuid';
 
-import { TNodeTypes } from './../../models/interfaces/ICard';
+import { TNodeTypes } from '../../models/interfaces/ICard';
+import { idGen } from '../../modules';
 
 export const defaultCards = (cardType: TCardsValues) => {
   let addCard:
@@ -217,8 +217,8 @@ export const defaultNode = (nodeType: TNodeTypes) => {
             nodeType === NODE_TYPES.TEXT_NODE || nodeType === NODE_TYPES.IMAGE_NODE
               ? undefined
               : [
-                  { id: uuidv4(), label: 'Button 01', action: 'block' },
-                  { id: uuidv4(), label: 'Button 02', action: 'block' },
+                  { id: idGen.generate('ctrl'), label: 'Button 01', action: 'block' },
+                  { id: idGen.generate('ctrl'), label: 'Button 02', action: 'block' },
                   // { id: 3, label: 'Button 03', action: 'block' },
                 ],
         },

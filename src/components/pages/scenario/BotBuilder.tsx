@@ -2,21 +2,15 @@ import { Node } from '@components/data-display';
 import { defaultNode } from '@components/data-display/DefaultCards';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, TNodeTypes } from '@models';
+import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 import { useCardList } from '../../../hooks/client/cardList';
-import {
-  addArrow,
-  appendNode,
-  initNodes,
-  removeItem,
-  updateNode,
-} from '../../../store/makingNode';
+import { idGen } from '../../../modules';
+import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -154,12 +148,13 @@ export const Botbuilder = () => {
     const addCard = defaultNode(cardType);
 
     const addNode = {
-      id: uuidv4(),
+      id: idGen.generate('node'),
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
       title: nodeName,
       cards: addCard,
+      nodeKind: getNodeKind(cardType),
     };
 
     dispatch(appendNode(addNode));
@@ -237,6 +232,7 @@ export const Botbuilder = () => {
               >
                 <Node
                   typeName={item.type}
+                  nodekind={item.nodeKind}
                   id={item.id}
                   key={item.id}
                   title={item.title}

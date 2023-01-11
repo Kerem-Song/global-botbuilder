@@ -3,6 +3,7 @@ import { Button, IPopperItem, Popper } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
+import { NodeKind } from '@models/enum/NodeKind';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -28,10 +29,12 @@ import { Condition } from '../../pages/scenario/cards/Condition';
 import { Count } from '../../pages/scenario/cards/Count';
 import { ListCard } from '../../pages/scenario/cards/ListCard';
 import { QuickReply } from '../../pages/scenario/cards/QuickReply';
+import { NextNodeButton } from './NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
   typeName: string;
+  nodekind: NodeKind;
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
@@ -52,6 +55,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
 export const Node: FC<INodeProps> = ({
   id,
   typeName,
+  nodekind,
   cards,
   className,
   style,
@@ -219,35 +223,37 @@ export const Node: FC<INodeProps> = ({
         </Popper>
       </div>
       <div className={bodyClass}>
-        {typeName === NODE_TYPES.INTENT_NODE && <div style={{ width: '190px' }}></div>}
+        {typeName === NODE_TYPES.INTENT_NODE && (
+          <div className="intent-node">
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} />
+          </div>
+        )}
         {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
           <div style={{ width: '190px' }}></div>
         )}
         {cards ? <>{handleShowingCards(cards)}</> : undefined}
       </div>
-      {typeName !== NODE_TYPES.INTENT_NODE &&
-        typeName !== NODE_TYPES.ANSWER_NODE &&
-        typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
-          <Button shape="ghost" className="icNodeBottom">
-            <div
-              id={`node-bottom-${id}`}
-              role="presentation"
-              className="node-draggable-ignore"
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.setData('id', `node-${id}`);
-                dispatch(setGuideStartNode({ startId: `node-${id}`, isNext: false }));
-              }}
-              onDragEnd={(e) => {
-                dispatch(setGuideStartNode());
-              }}
-              onDrag={handleBottomDrag}
-              onMouseDown={(e) => e.stopPropagation()}
-            >
-              <img src={icNodeBottom} alt="icNodeBottom" />
-            </div>
-          </Button>
-        )}
+      {nodekind === NodeKind.InputNode && (
+        <Button shape="ghost" className="icNodeBottom">
+          <div
+            id={`node-bottom-${id}`}
+            role="presentation"
+            className="node-draggable-ignore"
+            draggable
+            onDragStart={(e) => {
+              e.dataTransfer.setData('id', `node-${id}`);
+              dispatch(setGuideStartNode({ startId: `node-${id}`, isNext: false }));
+            }}
+            onDragEnd={(e) => {
+              dispatch(setGuideStartNode());
+            }}
+            onDrag={handleBottomDrag}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <img src={icNodeBottom} alt="icNodeBottom" />
+          </div>
+        </Button>
+      )}
     </div>
   );
 };

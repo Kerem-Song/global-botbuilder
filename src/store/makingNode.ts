@@ -1,5 +1,6 @@
 import { IArrow, INode } from '@models';
-import { NODE_TYPES, TNodeTypes } from '@models/interfaces/ICard';
+import { NodeKind } from '@models/enum/NodeKind';
+import { NODE_TYPES, TNodeTypes, VIEW_TYPES } from '@models/interfaces/ICard';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -20,16 +21,25 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
     title: node.alias,
     x: node.left,
     y: node.top,
-    type: node.typeName as TNodeTypes,
+    type: node.typeName,
+    nodeKind: node.nodeKind,
   };
 
+  if (node.nextNodeId && node.typeName === NODE_TYPES.INTENT_NODE) {
+    arrows.push({
+      start: `next-${node.id}`,
+      updateKey: `node-${node.id}`,
+      end: `node-${node.nextNodeId}`,
+      isNextNode: true,
+    });
+  }
   if (node.view) {
-    if (node.view.typeName === 'TextView') {
+    if (node.view.typeName === VIEW_TYPES.TextView) {
       result.cards = [{ type: NODE_TYPES.TEXT_NODE, title: node.view.text || '' }];
     }
 
     if (
-      node.view.typeName === 'BasicCardCarouselView' &&
+      node.view.typeName === VIEW_TYPES.BasicCardCarouselView &&
       node.view.childrenViews &&
       node.view.childrenViews.length > 0
     ) {
@@ -69,6 +79,39 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
           action: x.actionType as 'message',
         };
       });
+    }
+
+    if (node.view.typeName === 'BasicCardView') {
+      result.cards = [
+        {
+          type: NODE_TYPES.BASIC_CARD_NODE,
+          title: node.view.title,
+          description: node.view.description,
+          thumbnail: node.view.imageCtrl
+            ? {
+                imageUrl: node.view.imageCtrl.imageUrl,
+              }
+            : undefined,
+          buttons: node.view.buttons
+            ? node.view.buttons.map((b) => {
+                if (b.actionType === 'lunaNodeRedirect') {
+                  arrows.push({
+                    start: `next-${b.id}`,
+                    updateKey: `node-${node.id}`,
+                    end: `node-${b.actionValue}`,
+                    isNextNode: true,
+                  });
+                }
+                return {
+                  id: b.id,
+                  label: b.label,
+                  actionValue: b.actionValue,
+                  action: b.actionType as 'linkWebUrl',
+                };
+              })
+            : undefined,
+        },
+      ];
     }
   }
 
