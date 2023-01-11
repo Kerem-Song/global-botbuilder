@@ -9,10 +9,16 @@ import { useDispatch } from 'react-redux';
 export interface NextNodeButtonProps {
   ctrlId: string;
   nodeId: string;
+  index?: number;
   type: 'blue' | 'green' | 'red' | 'yellow';
 }
 
-export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId, type }) => {
+export const NextNodeButton: FC<NextNodeButtonProps> = ({
+  ctrlId,
+  nodeId,
+  index,
+  type,
+}) => {
   const dispatch = useDispatch();
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -58,7 +64,8 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId, type }
     <>
       <div
         role="presentation"
-        className={classNames('nextNodeDrag', type)}
+        className={classNames('nextNodeDrag')}
+        style={{ top: index !== undefined ? `${index * 25 + 35}%` : undefined }}
         id={`next-${ctrlId}`}
         draggable
         onDragStart={StartDrag}

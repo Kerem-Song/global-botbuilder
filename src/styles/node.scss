@@ -253,7 +253,7 @@
           flex-direction: column;
           gap: rem(4);
 
-          & button {
+          & .btnQuickRelply {
             width: rem(192);
             height: rem(36);
             background-color: $gray100;
@@ -298,20 +298,7 @@
           height: rem(5);
           position: absolute;
           right: rem(10);
-          top: 50%;
           transform: translate(0, -50%);
-
-          &.green {
-            top: 35%;
-          }
-
-          &.red {
-            top: 60%;
-          }
-
-          &.yellow {
-            top: 60%;
-          }
         }
 
         .nextNode {
@@ -434,7 +421,7 @@
       }
     }
 
-    .intent-node {
+    .command-node {
       width: rem(190);
       .nextNodeDrag {
         width: rem(5);

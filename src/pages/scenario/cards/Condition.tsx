@@ -25,8 +25,8 @@ export const Condition: FC<Condition> = ({ nodeId, cards }) => {
           </div>
         );
       })}
-      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" />
-      <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="red" />
+      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" index={0} />
+      <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="red" index={1} />
     </Card>
   );
 };

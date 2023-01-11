@@ -242,6 +242,7 @@ export interface IListNode {
 
 export interface IAnswerNode {
   type?: typeof NODE_TYPES.ANSWER_NODE;
+  id: string;
   label: string;
   action: 'message' | 'block';
   messageText?: string;

@@ -227,12 +227,22 @@ export const Node: FC<INodeProps> = ({
       </div>
       <div className={bodyClass}>
         {typeName === NODE_TYPES.INTENT_NODE && (
-          <div className="intent-node">
+          <div className="command-node">
             <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
           </div>
         )}
         {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
           <div style={{ width: '190px' }}></div>
+        )}
+        {typeName === NODE_TYPES.JSON_REQUEST_NODE && (
+          <div className="command-node">
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+          </div>
+        )}
+        {typeName === NODE_TYPES.PARAMETER_SET_NODE && (
+          <div className="command-node">
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+          </div>
         )}
         {cards ? <>{handleShowingCards(cards)}</> : undefined}
       </div>

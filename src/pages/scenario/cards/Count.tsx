@@ -17,8 +17,13 @@ export const Count: FC<Count> = ({ nodeId, cards }) => {
           </div>
         );
       })}
-      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" />
-      <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="yellow" />
+      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" index={0} />
+      <NextNodeButton
+        ctrlId={`${nodeId}-false`}
+        nodeId={nodeId}
+        type="yellow"
+        index={1}
+      />
     </Card>
   );
 };

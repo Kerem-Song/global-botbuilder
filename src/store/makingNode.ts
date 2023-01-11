@@ -1,4 +1,5 @@
 import { IArrow, INode } from '@models';
+import { NodeKind } from '@models/enum/NodeKind';
 import { NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -24,7 +25,11 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
     nodeKind: node.nodeKind,
   };
 
-  if (node.nextNodeId && node.typeName === NODE_TYPES.INTENT_NODE) {
+  if (
+    node.nextNodeId &&
+    node.nodeKind !== NodeKind.InputNode &&
+    node.typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
+  ) {
     arrows.push({
       start: `next-${node.id}`,
       updateKey: `node-${node.id}`,
@@ -74,8 +79,18 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
 
     if (node.view.typeName === 'AnswerView' && node.view.quicks?.length) {
       result.cards = node.view.quicks.map((x) => {
+        if (x.actionType === 'lunaNodeRedirect') {
+          arrows.push({
+            start: `next-${x.id}`,
+            updateKey: `node-${node.id}`,
+            end: `node-${x.actionValue}`,
+            isNextNode: true,
+            type: 'blue',
+          });
+        }
         return {
           type: NODE_TYPES.ANSWER_NODE,
+          id: x.id,
           label: x.label,
           action: x.actionType as 'message',
         };
