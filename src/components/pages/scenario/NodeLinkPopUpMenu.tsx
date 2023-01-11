@@ -100,6 +100,7 @@ export const NodeLinkPopUpMenu = ({
         end: `node-${addNode.id}`,
         isNextNode: start.isNext,
         updateKey: start.nodeId,
+        type: start.type,
       });
     }
 

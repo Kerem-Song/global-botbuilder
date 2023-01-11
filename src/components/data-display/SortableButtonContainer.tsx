@@ -94,6 +94,7 @@ export const SortableButtonContainer = ({
                 <NextNodeButton
                   ctrlId={`${item.id}`}
                   nodeId={nodeId}
+                  type="blue"
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
                 />
               </div>

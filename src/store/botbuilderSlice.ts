@@ -11,6 +11,7 @@ export interface GuideInfo {
   startId: string;
   nodeId?: string;
   isNext: boolean;
+  type: 'blue' | 'green' | 'red' | 'yellow';
 }
 
 export interface BotBuilderMaker {
@@ -64,7 +65,6 @@ export const botbuilderSlice = createSlice({
       }
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
-      console.log(action.payload);
       state.guideInfo = action.payload;
     },
     // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {

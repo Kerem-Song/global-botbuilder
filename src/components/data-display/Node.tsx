@@ -191,11 +191,14 @@ export const Node: FC<INodeProps> = ({
 
         const nodeId = e.dataTransfer.getData('nodeId');
         const isNext = e.dataTransfer.getData('isNext');
+        const pointType = e.dataTransfer.getData('pointType');
+
         addArrow?.({
           start: from,
           end: `node-${id}`,
           updateKey: nodeId,
           isNextNode: isNext === '1',
+          type: pointType as 'blue',
         });
       }}
       id={`node-${id}`}
@@ -225,7 +228,7 @@ export const Node: FC<INodeProps> = ({
       <div className={bodyClass}>
         {typeName === NODE_TYPES.INTENT_NODE && (
           <div className="intent-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} />
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
           </div>
         )}
         {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
@@ -242,7 +245,9 @@ export const Node: FC<INodeProps> = ({
             draggable
             onDragStart={(e) => {
               e.dataTransfer.setData('id', `node-${id}`);
-              dispatch(setGuideStartNode({ startId: `node-${id}`, isNext: false }));
+              dispatch(
+                setGuideStartNode({ startId: `node-${id}`, isNext: false, type: 'blue' }),
+              );
             }}
             onDragEnd={(e) => {
               dispatch(setGuideStartNode());
