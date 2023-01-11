@@ -38,25 +38,6 @@ export interface ISendMessage {
   };
 }
 
-export const TESTER_DATA_TYPES = {
-  text: 'text',
-  productCardCarousel: 'productCardCarousel',
-  cardCarousel: 'cardCarousel',
-  card: 'card',
-  productCard: 'productCard',
-  image: 'image',
-  quickReplies: 'quickReplies',
-} as const;
-
-export type ITesterDataType =
-  | ITextCard
-  | IProductCardCarousel
-  | ICardCarousel
-  | IContentTextCard
-  | IProductCard
-  | IImageCard
-  | IQuickRepliesContent;
-
 export interface ITesterButton {
   actionType?: string;
   label?: string;
@@ -66,6 +47,7 @@ export interface ITesterButton {
     text?: string;
   };
 }
+
 export interface ICarousel {
   image?: {
     imageUrl?: string;
@@ -97,22 +79,66 @@ export interface ICarousel {
   };
 }
 
-export interface ITextCard {
+export interface ITesterQuickReply {
+  actionType?: string;
+  label: string;
+  postback?: {
+    command?: string;
+    displayText?: string;
+    text?: string;
+    lunaNodeLink?: string;
+  };
+}
+
+export interface ITesterDebugMeta {
+  nodeId?: string;
+  nodeAlias?: string;
+  nodeType?: string;
+  flowId?: string;
+  flowAlias?: string;
+}
+
+export interface IHasDebugMeta {
+  debugMeta?: ITesterDebugMeta;
+}
+
+export const TESTER_DATA_TYPES = {
+  text: 'text',
+  productCardCarousel: 'productCardCarousel',
+  cardCarousel: 'cardCarousel',
+  card: 'card',
+  productCard: 'productCard',
+  image: 'image',
+  quickReplies: 'quickReplies',
+} as const;
+
+export type ITesterDataType =
+  | ITextCard
+  | IProductCardCarousel
+  | ICardCarousel
+  | IContentTextCard
+  | IProductCard
+  | IImageCard
+  | IQuickRepliesContent;
+
+export interface ITextCard extends IHasDebugMeta {
   value?: string;
   isMe?: boolean;
   type: typeof TESTER_DATA_TYPES.text;
   defaultAction?: string;
 }
-export interface IProductCardCarousel {
+
+export interface IProductCardCarousel extends IHasDebugMeta {
   contents: ICarousel[];
   type: typeof TESTER_DATA_TYPES.productCardCarousel;
 }
-export interface ICardCarousel {
+
+export interface ICardCarousel extends IHasDebugMeta {
   contents: ICarousel[];
   type: typeof TESTER_DATA_TYPES.cardCarousel;
 }
 
-export interface IContentTextCard {
+export interface IContentTextCard extends IHasDebugMeta {
   contentText?: string;
   title?: string;
   image?: {
@@ -159,7 +185,7 @@ export interface IContentTextCard {
   type: typeof TESTER_DATA_TYPES.card;
 }
 
-export interface IProductCard {
+export interface IProductCard extends IHasDebugMeta {
   image?: {
     imageUrl?: string;
     imageAspectRatio?: number;
@@ -200,7 +226,7 @@ export interface IProductCard {
   };
 }
 
-export interface IImageCard {
+export interface IImageCard extends IHasDebugMeta {
   imageUrl: string;
   imageAspectRatio: 0;
   imageSize: 0;
@@ -219,14 +245,4 @@ export interface IImageCard {
 export interface IQuickRepliesContent {
   quickReplies: ITesterQuickReply[];
   type: typeof TESTER_DATA_TYPES.quickReplies;
-}
-export interface ITesterQuickReply {
-  actionType?: string;
-  label: string;
-  postback?: {
-    command?: string;
-    displayText?: string;
-    text?: string;
-    lunaNodeLink?: string;
-  };
 }

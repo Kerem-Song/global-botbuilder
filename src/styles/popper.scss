@@ -9,7 +9,7 @@
 .luna-chatbot-container {
   width: rem(180);
   padding: rem(8);
-  z-index: 200;
+  z-index: 999;
   background-color: $grayWhite;
   border: 1px solid $gray200;
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
@@ -26,11 +26,6 @@
     &:hover {
       background-color: $primary100;
       border-radius: rem(6);
-    }
-
-    &:checked {
-      // font-weight: 1000;
-      background-color: yellow;
     }
 
     .items-name {
@@ -74,6 +69,7 @@
   border: 1px solid $gray200;
   border-radius: rem(12);
   background-color: $grayWhite;
+  z-index: 999;
 
   .luna-popup-list {
     display: flex;

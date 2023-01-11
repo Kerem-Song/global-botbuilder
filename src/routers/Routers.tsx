@@ -24,10 +24,12 @@ const finalRoutes = [
             {
               path: 'dashboard',
               element: <DashboardPage />,
+              errorElement: <>404</>,
               handle: true,
             },
             {
               path: ':botId',
+              errorElement: <>404</>,
               children: [
                 { path: 'scenario', element: <ScenarioPage /> },
                 { path: 'utterance', element: <UtterancePage /> },
@@ -38,7 +40,7 @@ const finalRoutes = [
                 { path: 'setting', element: <SettingPage /> },
               ],
             },
-            { path: 'help', element: <HelpPage /> },
+            { path: 'help', element: <HelpPage />, errorElement: <>404</> },
             { path: '', element: <Navigate to="/dashboard" replace={true} /> },
           ],
         },

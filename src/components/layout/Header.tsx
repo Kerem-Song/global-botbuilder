@@ -1,6 +1,9 @@
 import '@styles/header.scss';
 
 import { Popper } from '@components';
+import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
+import { useModalOpen } from '@hooks';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -10,6 +13,7 @@ export const Header = () => {
   const { i18n, t, ts } = useI18n();
   const location = useLocation();
   const language = i18n.language;
+  const { isOpen, handleIsOpen } = useModalOpen();
 
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: string) => {
@@ -22,6 +26,11 @@ export const Header = () => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const pageName = location.pathname.split('/').slice(-1)[0];
+  const pathName = location.pathname;
+
+  useEffect(() => {
+    handleIsOpen(false);
+  }, [pathName]);
 
   const user = 'UserName';
   const languageMenus = [
@@ -56,21 +65,25 @@ export const Header = () => {
           <span className="brandName">{brandName}</span>
           <span className="pageName">{pageName}</span>
         </div>
-        <div className="languageContainer">
+        <div className="rightNav">
+          <button className="testerBtn" onClick={() => handleIsOpen(true)}>
+            Test
+          </button>
           <Popper
             popperSelect={languageMenus}
             placement="bottom-end"
-            offset={[-6, 5]}
+            offset={[0, 5]}
             popup
             popupList
             onChange={(e) => {
               changeLanguageHandler(e.id);
             }}
           >
-            <button className="language">{langSelect && langSelect.select}</button>
+            <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
+          <span className="userName">{user}</span>
+          <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
         </div>
-        <span className="userName">{user}</span>
       </div>
     </header>
   );

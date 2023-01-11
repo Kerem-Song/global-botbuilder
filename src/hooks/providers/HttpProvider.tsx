@@ -11,6 +11,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
     headers: {},
     //withCredentials: true,
   });
+  console.log('import.meta. env', import.meta.env);
 
   instance.interceptors.request.use(
     function (config) {

@@ -5,12 +5,12 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build:dev": "tsc && vite build --mode development"
+    "build:dev": "tsc && NODE_ENV=production vite build --mode development"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.6",

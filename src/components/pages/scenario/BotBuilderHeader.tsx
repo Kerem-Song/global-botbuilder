@@ -2,14 +2,12 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState } from '@hooks';
-import { useModalOpen } from '@hooks/useModalOpen';
 import { getNodeKind, NODE_TYPES, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { idGen } from '../../../modules';
-import { BotTester } from './BotTester/BotTester';
 
 const singleNodes = [
   { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
@@ -47,7 +45,6 @@ export const BotBuilderHeader = () => {
   const cardNum = useRootState(
     (state) => state.makingNodeSliceReducer.present.nodes,
   ).length;
-  const { isOpen, handleIsOpen } = useModalOpen();
 
   const dispatch = useDispatch();
 
@@ -90,75 +87,67 @@ export const BotBuilderHeader = () => {
   };
 
   return (
-    <>
-      <div className="botBuilderHeader">
-        <div className="botBuilderMakerWrapper">
-          <span className="cardNumWrapper">
-            chat bubble <span className="cardNum">{cardNum}</span>
-          </span>
-          <div className="makingBtn">
-            <span className="btnCategory">Single</span>
-            <Col className="btnWrapper">
-              {singleNodes.map((item, i) => (
-                <Button
-                  key={i}
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => {
-                    handleMakingChatbubbleClick(e);
-                  }}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              ))}
-            </Col>
-          </div>
-          <div className="makingBtn">
-            <span className="btnCategory">Carousel</span>
-            <Col className="btnWrapper">
-              {carousleNodes.map((item, i) => (
-                <Button
-                  key={i}
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => handleMakingChatbubbleClick(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              ))}
-            </Col>
-          </div>
-          <div className="makingBtn">
-            <span className="btnCategory">Button</span>
-            <Col className="btnWrapper">
-              {buttonNodes.map((item, i) => (
-                <Button
-                  key={i}
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => handleMakingChatbubbleClick(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              ))}
-            </Col>
-          </div>
+    <div className="botBuilderHeader">
+      <div className="botBuilderMakerWrapper">
+        <span className="cardNumWrapper">
+          chat bubble <span className="cardNum">{cardNum}</span>
+        </span>
+        <div className="makingBtn">
+          <span className="btnCategory">Single</span>
+          <Col className="btnWrapper">
+            {singleNodes.map((item, i) => (
+              <Button
+                key={i}
+                className={`${item.nodeName} icon ${item.className} `}
+                onDragStart={(e) => handleDragStart(e)}
+                onClick={(e) => {
+                  handleMakingChatbubbleClick(e);
+                }}
+                draggable={true}
+                value={item.value}
+                data={item.nodeName}
+              />
+            ))}
+          </Col>
         </div>
-        <div className="testBtn">
-          <Button small type="default" onClick={() => handleIsOpen(true)}>
-            Test
-          </Button>
+        <div className="makingBtn">
+          <span className="btnCategory">Carousel</span>
+          <Col className="btnWrapper">
+            {carousleNodes.map((item, i) => (
+              <Button
+                key={i}
+                className={`${item.nodeName} icon ${item.className} `}
+                onDragStart={(e) => handleDragStart(e)}
+                onClick={(e) => handleMakingChatbubbleClick(e)}
+                draggable={true}
+                value={item.value}
+                data={item.nodeName}
+              />
+            ))}
+          </Col>
         </div>
-        <div className="saveBtn">
-          <Button small type="primary">
-            Save
-          </Button>
+        <div className="makingBtn">
+          <span className="btnCategory">Button</span>
+          <Col className="btnWrapper">
+            {buttonNodes.map((item, i) => (
+              <Button
+                key={i}
+                className={`${item.nodeName} icon ${item.className} `}
+                onDragStart={(e) => handleDragStart(e)}
+                onClick={(e) => handleMakingChatbubbleClick(e)}
+                draggable={true}
+                value={item.value}
+                data={item.nodeName}
+              />
+            ))}
+          </Col>
         </div>
       </div>
-      <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
-    </>
+      <div className="saveBtn">
+        <Button small type="primary">
+          Save
+        </Button>
+      </div>
+    </div>
   );
 };

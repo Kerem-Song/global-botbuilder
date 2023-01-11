@@ -2,7 +2,12 @@ import { Col } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
 // import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
-import { IQuickRepliesContent, ITesterDataType, TESTER_DATA_TYPES } from '@models';
+import {
+  IQuickRepliesContent,
+  ITesterDataType,
+  ITesterDebugMeta,
+  TESTER_DATA_TYPES,
+} from '@models';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 
@@ -23,6 +28,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const [text, setText] = useState<string>('');
   const [testerData, setTesterData] = useState<ITesterDataType[]>([]);
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
+  const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -57,26 +63,24 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       },
     };
 
-    setTimeout(() => {
-      botTesterMutate.mutate(sendMessage, {
-        onSuccess: (submitResult) => {
-          setTesterData((original) => {
-            const updatedTesterData = [
-              ...original,
-              ...(submitResult.result?.messages || []),
-            ];
-            if (submitResult.result?.quickReplies) {
-              const quickRepliesContent: IQuickRepliesContent = {
-                quickReplies: submitResult.result.quickReplies,
-                type: TESTER_DATA_TYPES.quickReplies,
-              };
-              updatedTesterData.push(quickRepliesContent);
-            }
-            return updatedTesterData;
-          });
-        },
-      });
-    }, 300);
+    botTesterMutate.mutate(sendMessage, {
+      onSuccess: (submitResult) => {
+        setTesterData((original) => {
+          const updatedTesterData = [
+            ...original,
+            ...(submitResult.result?.messages || []),
+          ];
+          if (submitResult.result?.quickReplies) {
+            const quickRepliesContent: IQuickRepliesContent = {
+              quickReplies: submitResult.result.quickReplies,
+              type: TESTER_DATA_TYPES.quickReplies,
+            };
+            updatedTesterData.push(quickRepliesContent);
+          }
+          return updatedTesterData;
+        });
+      },
+    });
 
     e.preventDefault();
     setText('');
@@ -105,7 +109,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable>
+        <Draggable onDrag={undefined}>
           <div className="botTester">
             <Col className="botTesterHeader">
               <Col className="text">Testing the Bot</Col>
@@ -125,7 +129,12 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                     className="testerDataContainer"
                     data-container={item.type ? true : false}
                   >
-                    {item.type && <TesterMessagesItem item={item} />}
+                    {item.type && (
+                      <TesterMessagesItem
+                        item={item}
+                        onClick={(debugMeta) => setDebugMeta(debugMeta)}
+                      />
+                    )}
                   </div>
                 );
               })}
@@ -142,7 +151,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 Send
               </button>
             </form>
-            <TestInfoModal isOpen={isOpenTestInfo} handleClose={closeTestInfo} />
+            {debugMeta && (
+              <TestInfoModal
+                isOpen={isOpenTestInfo}
+                handleClose={closeTestInfo}
+                debugMeta={debugMeta}
+              />
+            )}
           </div>
         </Draggable>
       )}
