@@ -5,7 +5,6 @@ import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { getNodeKind, IArrow, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
-import { NodeKind } from '@models/enum/NodeKind';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
@@ -100,6 +99,7 @@ export const NodeLinkPopUpMenu = ({
         end: `node-${addNode.id}`,
         isNextNode: start.isNext,
         updateKey: start.nodeId,
+        type: start.type,
       });
     }
 

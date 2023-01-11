@@ -20,7 +20,7 @@ export const ParameterSet: FC<IParameterSet> = ({ id, values, params }) => {
         );
       })}
       <div className="intent-node parameterSetNextNodeBtn">
-        <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} />
+        <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
       </div>
     </Card>
   );

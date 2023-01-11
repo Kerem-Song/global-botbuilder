@@ -2,15 +2,17 @@ import { Button } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setGuideStartNode } from '@store/botbuilderSlice';
+import classNames from 'classnames';
 import { DragEvent, FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 export interface NextNodeButtonProps {
   ctrlId: string;
   nodeId: string;
+  type: 'blue' | 'green' | 'red' | 'yellow';
 }
 
-export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId }) => {
+export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId, type }) => {
   const dispatch = useDispatch();
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -22,15 +24,17 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId }) => {
       e.preventDefault();
       return;
     }
-    const img = new Image();
+    //const img = new Image();
     e.dataTransfer.setData('id', `next-${ctrlId}`);
     e.dataTransfer.setData('nodeId', nodeId);
+    e.dataTransfer.setData('pointType', type);
     e.dataTransfer.setData('isNext', '1');
     dispatch(
       setGuideStartNode({
         startId: `next-${ctrlId}`,
         nodeId,
         isNext: true,
+        type,
       }),
     );
     //e.dataTransfer.setDragImage(img, 0, 0);
@@ -54,7 +58,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId }) => {
     <>
       <div
         role="presentation"
-        className="nextNodeDrag"
+        className={classNames('nextNodeDrag', type)}
         id={`next-${ctrlId}`}
         draggable
         onDragStart={StartDrag}
@@ -65,7 +69,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({ ctrlId, nodeId }) => {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <Button
-          className="nextNode blue"
+          className={classNames('nextNode', type)}
           shape="ghost"
           onClick={(e) => {
             e.stopPropagation();

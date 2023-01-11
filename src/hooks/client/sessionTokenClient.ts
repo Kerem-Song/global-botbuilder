@@ -15,6 +15,7 @@ export const useSessionTokenClient = () => {
           botId,
         })
         .then((res) => res.data.result),
+    //http.post('/bottest/initsamplegroup').then((res) => res.data.result),
     { refetchOnWindowFocus: false, refetchOnMount: true },
   );
 

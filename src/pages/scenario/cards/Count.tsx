@@ -1,4 +1,5 @@
 import { Button, Card } from '@components';
+import { NextNodeButton } from '@components/data-display/NextNodeButton';
 import { ICountNode } from '@models';
 import { FC } from 'react';
 
@@ -16,16 +17,8 @@ export const Count: FC<Count> = ({ nodeId, cards }) => {
           </div>
         );
       })}
-      <Button
-        className="nextNode green"
-        shape="ghost"
-        onClick={() => console.log('greenNode')}
-      ></Button>
-      <Button
-        className="nextNode yellow"
-        shape="ghost"
-        onClick={() => console.log('yellowNode')}
-      ></Button>
+      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" />
+      <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="yellow" />
     </Card>
   );
 };

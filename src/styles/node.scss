@@ -294,34 +294,61 @@
           border-radius: rem(8);
         }
 
-        .nextNode {
+        .nextNodeDrag {
           width: rem(5);
           height: rem(5);
           position: absolute;
-          left: 93%;
+          right: rem(10);
+          top: 50%;
+          transform: translate(0, -50%);
 
           &.green {
             top: 35%;
+          }
+
+          &.red {
+            top: 60%;
+          }
+
+          &.yellow {
+            top: 60%;
+          }
+        }
+
+        .nextNode {
+          width: rem(5);
+          height: rem(5);
+          background-image: url('@assets/icons/ic_node.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-color: transparent;
+          border-color: transparent;
+
+          &.green {
             background-image: url('@assets/icons/ic_node_green.svg');
             background-repeat: no-repeat;
             background-position: center;
           }
 
           &.red {
-            top: 60%;
             background-image: url('@assets/icons/ic_node_red.svg');
             background-repeat: no-repeat;
             background-position: center;
           }
 
           &.yellow {
-            top: 60%;
             background-image: url('@assets/icons/ic_node_yellow.svg');
             background-repeat: no-repeat;
             background-position: center;
           }
+
+          &:hover {
+            background-color: transparent;
+            border-color: transparent;
+          }
         }
       }
+
       &-bordered {
         border: none;
       }
@@ -427,18 +454,10 @@
         background-position: center;
         background-color: transparent;
         border-color: transparent;
-
         &:hover {
           background-color: transparent;
           border-color: transparent;
         }
-      }
-    }
-
-    .parameterSetNextNodeBtn {
-      .nextNode {
-        top: 50%;
-        transform: translate(-15%, -10%);
       }
     }
   }

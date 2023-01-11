@@ -1,6 +1,5 @@
 import { IArrow, INode } from '@models';
-import { NodeKind } from '@models/enum/NodeKind';
-import { NODE_TYPES, TNodeTypes, VIEW_TYPES } from '@models/interfaces/ICard';
+import { NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -31,6 +30,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
       updateKey: `node-${node.id}`,
       end: `node-${node.nextNodeId}`,
       isNextNode: true,
+      type: 'blue',
     });
   }
   if (node.view) {
@@ -58,6 +58,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
                 updateKey: `node-${node.id}`,
                 end: `node-${b.actionValue}`,
                 isNextNode: true,
+                type: 'blue',
               });
             }
             return {
@@ -100,6 +101,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
                     updateKey: `node-${node.id}`,
                     end: `node-${b.actionValue}`,
                     isNextNode: true,
+                    type: 'blue',
                   });
                 }
                 return {
@@ -136,7 +138,7 @@ export const makingNodeSlice = createSlice({
           if (nextNode) {
             state.arrows = [
               ...state.arrows,
-              { start: `node-${n.id}`, end: `node-${n.nextNodeId}` },
+              { start: `node-${n.id}`, end: `node-${n.nextNodeId}`, type: 'blue' },
             ];
           }
         });

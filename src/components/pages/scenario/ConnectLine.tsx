@@ -8,14 +8,24 @@ interface IConnectLineProps {
   updateKey?: string;
   isNextNode?: boolean;
   active?: boolean;
+  type: 'blue' | 'green' | 'red' | 'yellow';
   onClick?: () => void;
 }
+
+const strokes = {
+  blue: ['#00B4ED', '#003DB2'],
+  green: ['#25CDAF', '#00826A'],
+  red: ['#EE7878', '#AE0000'],
+  yellow: ['#FFBD70', '#FF8A00'],
+};
+
 export const ConnectLine: FC<IConnectLineProps> = ({
   startId,
   updateKey,
   endId,
   isNextNode,
   active,
+  type,
   onClick,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -23,7 +33,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const lineRef = useRef<SVGPathElement>(null);
   const lineMouseRef = useRef<SVGPathElement>(null);
 
-  const stroke = active ? '#003DB2' : '#00B4ED';
+  const stroke = strokes[type][active ? 1 : 0];
 
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
   useEffect(() => {

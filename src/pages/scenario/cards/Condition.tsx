@@ -1,4 +1,5 @@
-import { Button, Card } from '@components';
+import { Card } from '@components';
+import { NextNodeButton } from '@components/data-display/NextNodeButton';
 import { IConditionNode, INode } from '@models';
 import { FC } from 'react';
 
@@ -25,16 +26,8 @@ export const Condition: FC<Condition> = ({ nodeId, values, conditions }) => {
           </div>
         );
       })}
-      <Button
-        className="nextNode green"
-        shape="ghost"
-        onClick={() => console.log('greenNode')}
-      ></Button>
-      <Button
-        className="nextNode red"
-        shape="ghost"
-        onClick={() => console.log('redNode')}
-      ></Button>
+      <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" />
+      <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="red" />
     </Card>
   );
 };

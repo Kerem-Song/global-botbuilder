@@ -34,6 +34,7 @@ export const LineContainer: FC = () => {
           startId={l.start}
           updateKey={l.updateKey}
           endId={l.end}
+          type={l.type}
           isNextNode={l.isNextNode}
           active={selectedLine === l}
         />
@@ -53,6 +54,7 @@ export const LineContainer: FC = () => {
         <ConnectLine
           startId={guideInfo.startId}
           endId="icGuide"
+          type={guideInfo.type}
           isNextNode={guideInfo.isNext}
           updateKey={guideInfo.nodeId}
           key={`${guideInfo.startId}-icGuide`}
