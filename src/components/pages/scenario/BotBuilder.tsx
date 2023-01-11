@@ -30,7 +30,7 @@ export const Botbuilder = () => {
   });
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-
+  console.log('nodes:', nodes);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedScenario = useRootState(
@@ -233,6 +233,7 @@ export const Botbuilder = () => {
                   key={item.id}
                   title={item.title}
                   cards={item.cards}
+                  items={item}
                   active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}
                   addArrow={(arrow: IArrow) => {

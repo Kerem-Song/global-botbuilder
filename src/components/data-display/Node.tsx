@@ -2,7 +2,7 @@ import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@ass
 import { Button, IPopperItem, Popper } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow } from '@models';
+import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
@@ -28,6 +28,7 @@ import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
 import { Condition } from '../../pages/scenario/cards/Condition';
 import { Count } from '../../pages/scenario/cards/Count';
 import { ListCard } from '../../pages/scenario/cards/ListCard';
+import { ParameterSet } from '../../pages/scenario/cards/ParameterSet';
 import { QuickReply } from '../../pages/scenario/cards/QuickReply';
 import { NextNodeButton } from './NextNodeButton';
 
@@ -47,6 +48,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[];
+  items: INode;
   onClick?: (e?: any) => void;
   addArrow?: (arrow: IArrow) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
@@ -57,6 +59,7 @@ export const Node: FC<INodeProps> = ({
   typeName,
   nodekind,
   cards,
+  items,
   className,
   style,
   title,
@@ -141,13 +144,30 @@ export const Node: FC<INodeProps> = ({
     },
   ];
 
-  const handleShowingCards = (cards: INodeProps['cards']) => {
+  const handleShowingNodesWithoutCards = (typeName: INodeProps['typeName']) => {
+    switch (typeName) {
+      case NODE_TYPES.CONDITION_NODE:
+        return <Condition nodeId={`node-${id}`} values={items} />;
+
+      case NODE_TYPES.COUNT:
+        return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
+
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        return <ParameterSet id={id} values={items} />;
+      default:
+        return <div></div>;
+    }
+  };
+
+  const handleShowingCards = (
+    cards: INodeProps['cards'],
+    typeName: INodeProps['typeName'],
+  ) => {
     if (!cards) {
       return <div></div>;
     }
-    const cardType = cards[0].type;
 
-    switch (cardType) {
+    switch (typeName) {
       case NODE_TYPES.TEXT_NODE:
       case NODE_TYPES.IMAGE_NODE:
       case NODE_TYPES.BASIC_CARD_NODE:
@@ -169,10 +189,13 @@ export const Node: FC<INodeProps> = ({
         return <QuickReply cards={cards as IAnswerNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.CONDITION_NODE:
-        return <Condition cards={cards as IConditionNode[]} nodeId={`node-${id}`} />;
+        return <Condition nodeId={`node-${id}`} values={items} />;
 
       case NODE_TYPES.COUNT:
         return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
+
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        return <ParameterSet id={id} values={items} />;
     }
   };
 
@@ -234,17 +257,11 @@ export const Node: FC<INodeProps> = ({
         {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
           <div style={{ width: '190px' }}></div>
         )}
-        {typeName === NODE_TYPES.JSON_REQUEST_NODE && (
-          <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
-          </div>
+        {cards ? (
+          <>{handleShowingCards(cards, typeName)}</>
+        ) : (
+          handleShowingNodesWithoutCards(typeName)
         )}
-        {typeName === NODE_TYPES.PARAMETER_SET_NODE && (
-          <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
-          </div>
-        )}
-        {cards ? <>{handleShowingCards(cards)}</> : undefined}
       </div>
       {nodekind === NodeKind.InputNode && (
         <Button shape="ghost" className="icNodeBottom">
