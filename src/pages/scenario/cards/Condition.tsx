@@ -11,10 +11,10 @@ interface Condition {
 export const Condition: FC<Condition> = ({ nodeId, values, conditions }) => {
   return (
     <Card>
-      {conditions?.map((item, i) => {
-        return (
-          <div className="countConditionWrapper" key={`${nodeId}-condition-${i}`}>
-            <p>
+      <div className="countConditionWrapper" key={`${nodeId}-condition-${nodeId}`}>
+        {conditions?.map((item, i) => {
+          return (
+            <p key={i}>
               if &#123;&#123;{item.userInput}&#125;&#125;
               {item.condition}
               {item.comparativeValue}
@@ -23,9 +23,9 @@ export const Condition: FC<Condition> = ({ nodeId, values, conditions }) => {
               {item.connectedMessage}
               {item.elseMessage}
             </p>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <NextNodeButton ctrlId={`${nodeId}-true`} nodeId={nodeId} type="green" index={0} />
       <NextNodeButton ctrlId={`${nodeId}-false`} nodeId={nodeId} type="red" index={1} />
     </Card>
