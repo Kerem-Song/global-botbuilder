@@ -18,7 +18,7 @@
 
       & span {
         padding-left: rem(4);
-        color: $primary700;
+        color: $primary500;
         font-weight: 700;
       }
 
@@ -114,6 +114,15 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       //max-height: 100px;
+      .luna-card-bordered {
+        border: rem(1) solid $gray200;
+        border-radius: rem(8);
+      }
+      .selected {
+        background-color: $primary100;
+        border: rem(1) solid $primary200;
+        border-radius: rem(8);
+      }
 
       .scenarioListName {
         text-overflow: ellipsis;
