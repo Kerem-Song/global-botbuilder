@@ -39,8 +39,11 @@ export type ValueOf<T> = T[keyof T];
 export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 
 export const VIEW_TYPES = {
-  TextView: 'TextView',
-  BasicCardCarouselView: 'BasicCardCarouselView',
+  TEXT_VIEW: 'TextView',
+  BASIC_CARD_CAROUSEL_VIEW: 'BasicCardCarouselView',
+  ANSWER_VIEW: 'AnswerView',
+  BASIC_CARD_VIEW: 'BasicCardView',
+  JSON_REQUEST_VIEW: 'JsonRequestView',
 };
 
 export const NODE_TYPES = {

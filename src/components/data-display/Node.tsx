@@ -146,14 +146,25 @@ export const Node: FC<INodeProps> = ({
 
   const handleShowingNodesWithoutCards = (typeName: INodeProps['typeName']) => {
     switch (typeName) {
+      case NODE_TYPES.INTENT_NODE:
+        return (
+          <div className="command-node">
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+          </div>
+        );
       case NODE_TYPES.CONDITION_NODE:
         return <Condition nodeId={`node-${id}`} values={items} />;
-
       case NODE_TYPES.COUNT:
         return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSet id={id} values={items} />;
+      case NODE_TYPES.JSON_REQUEST_NODE:
+        return (
+          <div className="command-node">
+            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+          </div>
+        );
       default:
         return <div></div>;
     }
@@ -249,14 +260,6 @@ export const Node: FC<INodeProps> = ({
         </Popper>
       </div>
       <div className={bodyClass}>
-        {typeName === NODE_TYPES.INTENT_NODE && (
-          <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
-          </div>
-        )}
-        {typeName === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && (
-          <div style={{ width: '190px' }}></div>
-        )}
         {cards ? (
           <>{handleShowingCards(cards, typeName)}</>
         ) : (

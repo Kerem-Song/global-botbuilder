@@ -14,6 +14,7 @@ export interface INode {
   id: string;
   type: TNodeTypes;
   title?: string;
+  description?: string;
   nodeKind: NodeKind;
   x: number;
   y: number;
