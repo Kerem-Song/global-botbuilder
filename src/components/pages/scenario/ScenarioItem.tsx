@@ -2,7 +2,9 @@ import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Item } from '@storybook/api/dist/ts3.9/lib/stories';
+import classNames from 'classnames';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -14,6 +16,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioDeleteAsync, scenarioRenameAsync } = useScenarioClient();
@@ -88,14 +91,21 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     },
   ];
 
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
+
+  const selectedScenario = classNames({ selected: selectedScenarios?.id === item.id });
+
   return (
     <Card
       key={item.id}
       radius="small"
-      bodyStyle={{ padding: '2px 12px' }}
+      bodyStyle={{ padding: '8px 12px' }}
       onClick={() => {
         dispatch(setSelectedScenario(item));
       }}
+      className={selectedScenario}
     >
       {isEditing ? (
         <Input
