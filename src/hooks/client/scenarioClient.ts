@@ -80,34 +80,41 @@ export const useScenarioClient = () => {
     },
   );
 
-  const scenarioUpdateMutate = useMutation(async (scenario: IScenarioModel) => {
-    const res = await http.put(
-      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list/${scenario.id}`,
-      scenario,
-    );
+  const scenarioRenameMutate = useMutation(
+    async ({ token, scenario }: { token: string; scenario: IScenarioModel }) => {
+      const res = await http.post('/builder/renameflow', {
+        sessionToken: token,
+        flowId: scenario.id,
+        name: scenario.alias,
+      });
 
-    if (res) {
-      queryClient.invalidateQueries(['scenario-list', botId]);
-      return res;
-    }
-  });
+      if (res) {
+        queryClient.invalidateQueries(['scenario-list', botId]);
+        return res;
+      }
+    },
+  );
 
-  const scenarioDeleteMutate = useMutation(async (scenarioId: string) => {
-    const res = await http.delete(
-      `https://634d41c1f5d2cc648ea0bf80.mockapi.io/bot-list/${botId}/scenario-list/${scenarioId}`,
-    );
+  const scenarioDeleteMutate = useMutation(
+    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+      const res = await http.post('builder/deleteflow', {
+        sessionToken: token,
+        flowId: scenarioId,
+        isForce: false,
+      });
 
-    if (res) {
-      queryClient.invalidateQueries(['scenario-list', botId]);
-      return res;
-    }
-  });
+      if (res) {
+        queryClient.invalidateQueries(['scenario-list', botId]);
+        return res;
+      }
+    },
+  );
 
   return {
     getScenarioList,
     getScenario,
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
-    scenarioUpdateAsync: scenarioUpdateMutate.mutateAsync,
+    scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
   };
 };
