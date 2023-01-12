@@ -8,8 +8,10 @@ import {
   ITesterDebugMeta,
   TESTER_DATA_TYPES,
 } from '@models';
+import { initMessages, setTesterData } from '@store/botTesterSlice';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import { useDispatch } from 'react-redux';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -24,16 +26,17 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   // const { token } = useSessionTokenClient();
   // console.log(token);
   const token = useRootState((state) => state.botBuilderReducer.token);
-
+  const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
-  const [testerData, setTesterData] = useState<ITesterDataType[]>([]);
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
-
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const dispatch = useDispatch();
+
   const handleRefresh = () => {
-    setTesterData([]);
+    dispatch(initMessages());
+    setDebugMeta(undefined);
   };
 
   const handleClose = () => {
@@ -51,12 +54,12 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       type: 'text',
     };
     if (!text || !text.trim()) return;
-    setTesterData([...testerData, newMessage]);
+    dispatch(setTesterData([newMessage]));
 
     const sendMessage = {
       sessionToken: token,
       lunaMessage: {
-        id: '1',
+        id: 'utterance',
         utterance: {
           value: text,
         },
@@ -65,23 +68,17 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
     botTesterMutate.mutate(sendMessage, {
       onSuccess: (submitResult) => {
-        setTesterData((original) => {
-          const updatedTesterData = [
-            ...original,
-            ...(submitResult.result?.messages || []),
-          ];
-          if (submitResult.result?.quickReplies) {
-            const quickRepliesContent: IQuickRepliesContent = {
-              quickReplies: submitResult.result.quickReplies,
-              type: TESTER_DATA_TYPES.quickReplies,
-            };
-            updatedTesterData.push(quickRepliesContent);
-          }
-          return updatedTesterData;
-        });
+        const updateTesterData = submitResult.result?.messages || [];
+        if (submitResult.result?.quickReplies) {
+          const quickpRepliesContent: IQuickRepliesContent = {
+            quickReplies: submitResult.result.quickReplies,
+            type: TESTER_DATA_TYPES.quickReplies,
+          };
+          updateTesterData.push(quickpRepliesContent);
+        }
+        dispatch(setTesterData(updateTesterData));
       },
     });
-
     e.preventDefault();
     setText('');
   };
@@ -96,7 +93,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   useEffect(() => {
     if (isOpen === false) {
-      setTesterData([]);
+      dispatch(initMessages());
+      setDebugMeta(undefined);
     }
   }, [isOpen]);
 
@@ -104,7 +102,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
     }
-  }, [testerData]);
+  }, [botTesterData]);
 
   return (
     <>
@@ -122,7 +120,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               onClick={openTestInfo}
               ref={scrollRef}
             >
-              {testerData.map((item, i) => {
+              {botTesterData.map((item, i) => {
                 return (
                   <div
                     key={i}

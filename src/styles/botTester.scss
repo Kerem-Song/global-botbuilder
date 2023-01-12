@@ -215,7 +215,8 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: rem(10);
-                .btn {
+
+                .luna-testerItem-btn {
                   display: flex;
                   justify-content: center;
                   align-items: center;
@@ -228,6 +229,9 @@
                   border: none;
                   background-color: #dbdee5;
                   border-radius: rem(8);
+                  &:hover {
+                    background-color: #75767a;
+                  }
                 }
               }
             }
@@ -269,7 +273,7 @@
             border-radius: rem(10) rem(10) 0 0;
           }
 
-          .cardCarouselBtn {
+          .luna-testerItem-cardCarouselBtn {
             width: rem(240);
             height: rem(35);
             margin-top: rem(12);
@@ -317,12 +321,15 @@
           padding-bottom: rem(12);
           gap: rem(4);
 
-          .cardBtn {
+          .luna-testerItem-cardBtn {
             width: rem(240);
             height: rem(35);
             border: none;
             border-radius: rem(8);
             background-color: #dbdee5;
+            &:hover {
+              background-color: #75767a;
+            }
           }
         }
       }
@@ -350,7 +357,7 @@
         margin-top: rem(10);
         padding-left: rem(40);
 
-        .quickReply {
+        .luna-testerItem-quickReplyBtn {
           display: flex;
           align-items: center;
           padding: rem(8) rem(14);
@@ -361,9 +368,6 @@
           border-radius: rem(16);
           color: $grayWhite;
           cursor: pointer;
-          &:last-child {
-            margin-right: 0;
-          }
         }
       }
 

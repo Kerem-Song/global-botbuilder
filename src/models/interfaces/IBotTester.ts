@@ -29,7 +29,7 @@ export interface ISendMessage {
   sessionToken: string;
   lunaMessage: {
     id: string;
-    utterance: {
+    utterance?: {
       value: string;
     };
     postback?: {
@@ -38,13 +38,15 @@ export interface ISendMessage {
   };
 }
 
-export interface ITesterButton {
-  actionType?: string;
-  label?: string;
-  postback?: {
-    lunaNodeLink?: string;
+export interface ITesterQuickReply {
+  actionType: string;
+  label: string;
+  postback: {
     webLinkUrl?: string;
+    command?: string;
+    displayText?: string;
     text?: string;
+    lunaNodeLink?: string;
   };
 }
 
@@ -68,7 +70,7 @@ export interface ITesterCard {
     symbol?: string;
     discount?: number;
   };
-  buttons: ITesterButton[];
+  buttons: ITesterQuickReply[];
   type?: string;
   defaultAction?: {
     actionType?: string;
@@ -79,16 +81,16 @@ export interface ITesterCard {
   };
 }
 
-export interface ITesterQuickReply {
-  actionType?: string;
-  label: string;
-  postback?: {
-    command?: string;
-    displayText?: string;
-    text?: string;
-    lunaNodeLink?: string;
-  };
-}
+// export interface ITesterQuickReply {
+//   actionType?: string;
+//   label: string;
+//   postback?: {
+//     command?: string;
+//     displayText?: string;
+//     text?: string;
+//     lunaNodeLink?: string;
+//   };
+// }
 
 export interface ITesterDebugMeta {
   nodeId?: string;
@@ -156,32 +158,7 @@ export interface IContentTextCard extends IHasDebugMeta {
       };
     };
   };
-  buttons?: [
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        webLinkUrl?: string;
-      };
-    },
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        text?: string;
-      };
-    },
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        p1?: string;
-        p2?: string;
-        p3?: string;
-        displayText?: string;
-      };
-    },
-  ];
+  buttons: ITesterQuickReply[];
   type: typeof TESTER_DATA_TYPES.card;
 }
 
@@ -205,17 +182,7 @@ export interface IProductCard extends IHasDebugMeta {
     symbol?: string;
     discount?: number;
   };
-  buttons?: [
-    {
-      actionType?: string;
-      label?: string;
-      postback?: {
-        lunaNodeLink?: string;
-        webLinkUrl?: string;
-        text?: string;
-      };
-    },
-  ];
+  buttons: ITesterQuickReply[];
   type: typeof TESTER_DATA_TYPES.productCard;
   defaultAction?: {
     actionType?: string;
