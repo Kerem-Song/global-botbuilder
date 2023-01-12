@@ -18,6 +18,7 @@ export interface INode {
   nodeKind: NodeKind;
   x: number;
   y: number;
+  view?: ITextView;
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]
@@ -25,4 +26,8 @@ export interface INode {
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[];
+}
+
+export interface ITextView {
+  text: string;
 }

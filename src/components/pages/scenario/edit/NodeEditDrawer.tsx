@@ -1,12 +1,15 @@
-import { Input, InputTextarea } from '@components';
+import { Input } from '@components';
 import { useRootState } from '@hooks';
-import { IBasicCard, INode } from '@models';
-import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
-import { updateNode } from '@store/makingNode';
+import { IBasicCard, NODE_TYPES } from '@models';
+import { INodeEditModel } from '@models/interfaces/INodeEditModel';
+import { setEditDrawerToggle } from '@store/botbuilderSlice';
+import { editNode } from '@store/makingNode';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
+
+import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
   const dispatch = useDispatch();
@@ -18,28 +21,50 @@ export const NodeEditDrawer = () => {
 
   const selected = useRootState((state) => state.botBuilderReducer.selected);
 
+  const formMethods = useForm<INodeEditModel>();
   const {
     register,
     handleSubmit,
     reset,
     getValues,
     formState: { errors },
-  } = useForm<INode>();
+  } = formMethods;
 
-  const onSubmit = (node: INode) => {
-    dispatch(updateNode(node));
+  const onSubmit = (node: INodeEditModel) => {
+    dispatch(editNode(node));
     //dispatch(setSelected());
   };
   const selectedNode = nodes.find((x) => x.id === selected);
   useEffect(() => {
     if (selectedNode) {
-      reset(selectedNode);
+      const model: INodeEditModel = {
+        id: selectedNode.id,
+        caption: selectedNode.type,
+        title: selectedNode.title || '',
+        view: { text: '' },
+      };
+      if (selectedNode.type === NODE_TYPES.TEXT_NODE) {
+        const card: IBasicCard = selectedNode.cards?.[0] as IBasicCard;
+        if (card) {
+          model.view = { text: card.description || '' };
+        }
+      }
+      reset(model);
     } else {
       handleSubmit(onSubmit)();
       reset({ id: '', title: '' });
       dispatch(setEditDrawerToggle(false));
     }
   }, [selectedNode]);
+
+  const editItem = () => {
+    switch (selectedNode?.type) {
+      case 'TextNode':
+        return <TextNodeEdit />;
+      default:
+        <></>;
+    }
+  };
 
   return (
     <Drawer
@@ -50,30 +75,21 @@ export const NodeEditDrawer = () => {
       duration={200}
       size={260}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="header">
-          <span>{getValues().type}</span>
-        </div>
-        <div className="node-item-wrap">
-          <p className="m-b-8">
-            <span className="label">말풍선명</span>
-            <span className="required">*</span>
-          </p>
-          <Input placeholder="Input Chat Bubble name" {...register('title')} />
-        </div>
-        <div className="node-item-wrap">
-          <p className="m-b-8">
-            <span className="label">텍스트</span>
-            <span className="required">*</span>
-          </p>
-          <InputTextarea
-            height={100}
-            showCount
-            maxLength={1000}
-            placeholder="Input Text"
-          />
-        </div>
-      </form>
+      <FormProvider {...formMethods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="header">
+            <span>{getValues().caption}</span>
+          </div>
+          <div className="node-item-wrap">
+            <p className="m-b-8">
+              <span className="label">말풍선명</span>
+              <span className="required">*</span>
+            </p>
+            <Input placeholder="Input Chat Bubble name" {...register('title')} />
+          </div>
+          {editItem()}
+        </form>
+      </FormProvider>
     </Drawer>
   );
 };

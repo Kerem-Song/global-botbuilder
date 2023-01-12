@@ -1,6 +1,7 @@
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
+import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -41,7 +42,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
 
   if (node.view) {
     if (node.view.typeName === VIEW_TYPES.TEXT_VIEW) {
-      result.cards = [{ type: NODE_TYPES.TEXT_NODE, title: node.view.text || '' }];
+      result.cards = [{ type: NODE_TYPES.TEXT_NODE, description: node.view.text || '' }];
     }
 
     if (
@@ -177,6 +178,18 @@ export const makingNodeSlice = createSlice({
         state.nodes = nodes;
       }
     },
+    editNode: (state, action: PayloadAction<INodeEditModel>) => {
+      const node = action.payload;
+      // console.log(node);
+      const matched = state.nodes.find((x) => x.id === node.id);
+      if (matched) {
+        const nodes = [...state.nodes];
+        const index = nodes.indexOf(matched);
+        const old = nodes[index];
+        nodes.splice(index, 1, { ...old, title: node.title });
+        state.nodes = nodes;
+      }
+    },
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
 
@@ -245,6 +258,13 @@ export const makingNodeSlice = createSlice({
   },
 });
 
-export const { appendNode, updateNode, addArrow, removeItem, setTempCard, initNodes } =
-  makingNodeSlice.actions;
+export const {
+  appendNode,
+  updateNode,
+  editNode,
+  addArrow,
+  removeItem,
+  setTempCard,
+  initNodes,
+} = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

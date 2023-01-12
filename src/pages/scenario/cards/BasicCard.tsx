@@ -43,19 +43,19 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards }) => {
           )}
 
           <div
-            className={classNames(
-              'title',
-              item.title ? '' : item.title === undefined ? 'none' : 'empty',
-            )}
+            className={classNames('title', {
+              none: item.title === undefined,
+              empty: item.title === '',
+            })}
           >
             {item.title ? <p>{item.title}</p> : <p>Enter Title</p>}
           </div>
 
           <div
-            className={classNames(
-              'description',
-              item.description ? '' : item.description === undefined ? 'none' : 'empty',
-            )}
+            className={classNames('description', {
+              none: item.description === undefined,
+              empty: item.description === '',
+            })}
           >
             {item.description ? <p>{item.description}</p> : <p>Enter Content</p>}
           </div>
