@@ -43,29 +43,41 @@ export const Aside = () => {
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
 
-  const getMenuItem = (id: number, url: string, icon: string, selectedIcon: string) => {
+  const getMenuItem = (
+    id: number,
+    url: string,
+    name: string,
+    icon: string,
+    selectedIcon: string,
+  ) => {
     return {
       id,
       url: `/${i18n.language}/${url}`,
       icon,
       selectedIcon,
       alt: url.replace(/^./, url[0].toUpperCase()),
-      desc: ts(`${url.toUpperCase()}`),
+      desc: ts(`${name.toUpperCase()}`),
     };
   };
 
   const menu = [
-    getMenuItem(1, `${botId}/scenario`, icScenario, icScenarioSelected),
-    getMenuItem(2, `${botId}/utterance`, icUtterance, icUtteranceSelected),
-    getMenuItem(3, `${botId}/data-api`, icDataApi, icDataApiSelcted),
-    getMenuItem(4, `${botId}/deployment`, icDeploy, icDeploySelected),
-    getMenuItem(5, `${botId}/history`, icHistory, icHistorySelected),
-    getMenuItem(6, `${botId}/statistics`, icStatistics, icStatisticsSelected),
+    getMenuItem(1, `${botId}/scenario`, 'scenario', icScenario, icScenarioSelected),
+    getMenuItem(2, `${botId}/utterance`, 'utterance', icUtterance, icUtteranceSelected),
+    getMenuItem(3, `${botId}/data-api`, 'data-api', icDataApi, icDataApiSelcted),
+    getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected),
+    getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected),
+    getMenuItem(
+      6,
+      `${botId}/statistics`,
+      'statistics',
+      icStatistics,
+      icStatisticsSelected,
+    ),
   ];
 
   const subMenu = [
-    getMenuItem(1, 'help', icHelp, icHelpSelected),
-    getMenuItem(2, `${botId}/setting`, icSetting, icSettingSelected),
+    getMenuItem(1, 'help', 'help', icHelp, icHelpSelected),
+    getMenuItem(2, `${botId}/setting`, 'setting', icSetting, icSettingSelected),
   ];
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);

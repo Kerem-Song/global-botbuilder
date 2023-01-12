@@ -1,5 +1,5 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
-import { useScenarioClient, useSystemModal } from '@hooks';
+import { useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -15,7 +15,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { scenarioDeleteAsync, scenarioUpdateAsync } = useScenarioClient();
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const { scenarioDeleteAsync, scenarioRenameAsync } = useScenarioClient();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -44,11 +45,11 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     });
 
     if (result) {
-      await scenarioDeleteAsync(item.id);
+      await scenarioDeleteAsync({ token, scenarioId: item.id });
     }
   };
 
-  const handleScenarioUpdate = async (scenarioName?: string) => {
+  const handleScenarioRename = async (scenarioName?: string) => {
     if (!scenarioName) {
       toast('시나리오 이름을 입력해 주세요.', {
         position: 'bottom-center',
@@ -57,7 +58,10 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
       return;
     }
-    const res = await scenarioUpdateAsync({ ...item, alias: scenarioName });
+    const res = await scenarioRenameAsync({
+      token,
+      scenario: { ...item, alias: scenarioName },
+    });
     if (res) {
       setIsEditing(false);
     }
@@ -100,13 +104,13 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           maxLength={20}
           ref={inputRef}
           onBlur={(e) => {
-            handleScenarioUpdate(e.target.value);
+            handleScenarioRename(e.target.value);
           }}
           onPressEsc={() => {
             setIsEditing(false);
           }}
           onPressEnter={(value) => {
-            handleScenarioUpdate(value);
+            handleScenarioRename(value);
           }}
         />
       ) : (
