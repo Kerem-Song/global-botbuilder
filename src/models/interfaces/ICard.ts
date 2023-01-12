@@ -106,6 +106,7 @@ export interface IButtonType {
   osLink?: OsLinkType;
   phoneNumber?: string;
   extra?: Record<string, any>;
+  type?: typeof NODE_TYPES.ANSWER_NODE;
 }
 
 export interface Profile {

@@ -26,11 +26,10 @@ export const Header = () => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const pageName = location.pathname.split('/').slice(-1)[0];
-  const pathName = location.pathname;
 
   useEffect(() => {
     handleIsOpen(false);
-  }, [pathName]);
+  }, [location]);
 
   const user = 'UserName';
   const languageMenus = [

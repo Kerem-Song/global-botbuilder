@@ -5,6 +5,8 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IButtonType } from '@models';
 import React, { useEffect } from 'react';
 
+import { NextNodeButton } from './NextNodeButton';
+
 interface ISortableButtonItem extends IButtonType {
   nodeId: string;
   cardId: number;
@@ -15,6 +17,7 @@ export const SortableButtonItem = ({
   action,
   nodeId,
   cardId,
+  type,
 }: ISortableButtonItem) => {
   const { updateLine } = useUpdateLines();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
@@ -42,9 +45,15 @@ export const SortableButtonItem = ({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Button key={`card-${cardId}-button-${id}`} onClick={() => console.log('button')}>
-        {label}
-      </Button>
+      {type !== 'AnswerNode' ? (
+        <Button key={`card-${cardId}-button-${id}`} onClick={() => console.log('button')}>
+          {label}
+        </Button>
+      ) : (
+        <Button key={`${nodeId}-quickReply-${id}`} className="btnQuickRelply">
+          {label ? label : 'Quick Reply'}
+        </Button>
+      )}
     </div>
   );
 };

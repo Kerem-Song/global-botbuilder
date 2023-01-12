@@ -48,7 +48,7 @@ export interface ITesterButton {
   };
 }
 
-export interface ICarousel {
+export interface ITesterCard {
   image?: {
     imageUrl?: string;
     imageAspectRatio?: number;
@@ -129,12 +129,12 @@ export interface ITextCard extends IHasDebugMeta {
 }
 
 export interface IProductCardCarousel extends IHasDebugMeta {
-  contents: ICarousel[];
+  contents: ITesterCard[];
   type: typeof TESTER_DATA_TYPES.productCardCarousel;
 }
 
 export interface ICardCarousel extends IHasDebugMeta {
-  contents: ICarousel[];
+  contents: ITesterCard[];
   type: typeof TESTER_DATA_TYPES.cardCarousel;
 }
 
