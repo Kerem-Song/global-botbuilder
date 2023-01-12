@@ -1,4 +1,9 @@
-import { ICarousel, ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
+import {
+  ITesterCard,
+  ITesterDataType,
+  ITesterDebugMeta,
+  TESTER_DATA_TYPES,
+} from '@models';
 
 import { TesterSlide } from './TesterSlide';
 
@@ -38,7 +43,7 @@ export const TesterMessagesItem = ({ item, onClick }: TestProps) => {
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
                 {item.contents.map((c, i) => {
-                  const content = c as ICarousel;
+                  const content = c as ITesterCard;
                   return (
                     <div key={i} className="productCard">
                       <img
@@ -112,7 +117,7 @@ export const TesterMessagesItem = ({ item, onClick }: TestProps) => {
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
                 {item.contents?.map((c, i) => {
-                  const content = c as ICarousel;
+                  const content = c as ITesterCard;
                   const carouselBtn = content.buttons && content.buttons?.[0];
                   const webLinkUrl =
                     carouselBtn.postback && carouselBtn.postback.webLinkUrl;
