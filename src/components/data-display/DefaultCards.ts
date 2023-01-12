@@ -143,6 +143,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
     case NODE_TYPES.ANSWER_NODE:
       addNode = [
         {
+          id: idGen.generate('node'),
           type: NODE_TYPES.ANSWER_NODE,
           label: '',
           action: 'block',
