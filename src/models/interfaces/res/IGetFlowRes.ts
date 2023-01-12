@@ -37,6 +37,7 @@ export interface INodeView {
     typeName: string;
   }[];
   text?: string;
+  url?: string;
   childrenViews?: IViewItem[];
   quicks?: IQuickReplyRes[];
 }

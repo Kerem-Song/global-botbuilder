@@ -38,13 +38,14 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
       type: 'blue',
     });
   }
+
   if (node.view) {
-    if (node.view.typeName === VIEW_TYPES.TextView) {
+    if (node.view.typeName === VIEW_TYPES.TEXT_VIEW) {
       result.cards = [{ type: NODE_TYPES.TEXT_NODE, title: node.view.text || '' }];
     }
 
     if (
-      node.view.typeName === VIEW_TYPES.BasicCardCarouselView &&
+      node.view.typeName === VIEW_TYPES.BASIC_CARD_CAROUSEL_VIEW &&
       node.view.childrenViews &&
       node.view.childrenViews.length > 0
     ) {
@@ -77,7 +78,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
       });
     }
 
-    if (node.view.typeName === 'AnswerView' && node.view.quicks?.length) {
+    if (node.view.typeName === VIEW_TYPES.ANSWER_VIEW && node.view.quicks?.length) {
       result.cards = node.view.quicks.map((x) => {
         if (x.actionType === 'lunaNodeRedirect') {
           arrows.push({
@@ -97,7 +98,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
       });
     }
 
-    if (node.view.typeName === 'BasicCardView') {
+    if (node.view.typeName === VIEW_TYPES.BASIC_CARD_VIEW) {
       result.cards = [
         {
           type: NODE_TYPES.BASIC_CARD_NODE,
@@ -130,8 +131,11 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
         },
       ];
     }
-  }
 
+    if (node.view.typeName === VIEW_TYPES.JSON_REQUEST_VIEW) {
+      result.description = node.view.url;
+    }
+  }
   return { node: result, arrows };
 };
 
