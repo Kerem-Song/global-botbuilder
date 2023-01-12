@@ -9,13 +9,13 @@ export const useSessionTokenClient = () => {
   const getSessionToken = useQuery(
     ['session-token', botId],
     () =>
-      // http
-      //   .post('/bot/GetSessionToken', {
-      //     userId: 'abcd',
-      //     botId,
-      //   })
-      //   .then((res) => res.data.result),
-      http.post('/bottest/initsamplegroup').then((res) => res.data.result),
+      http
+        .post('/bot/GetSessionToken', {
+          userId: 'abcd',
+          botId,
+        })
+        .then((res) => res.data.result),
+    // http.post('/bottest/initsamplegroup').then((res) => res.data.result),
     { refetchOnWindowFocus: false, refetchOnMount: true },
   );
 
