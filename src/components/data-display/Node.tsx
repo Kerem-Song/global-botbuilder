@@ -186,7 +186,13 @@ export const Node: FC<INodeProps> = ({
         return <CommerceCard cards={cards as IProductCardNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.ANSWER_NODE:
-        return <QuickReply cards={cards as IAnswerNode[]} nodeId={`node-${id}`} />;
+        return (
+          <QuickReply
+            cards={cards as IAnswerNode[]}
+            nodeId={`node-${id}`}
+            cardId={+`${id}`}
+          />
+        );
 
       case NODE_TYPES.CONDITION_NODE:
         return <Condition nodeId={`node-${id}`} values={items} />;

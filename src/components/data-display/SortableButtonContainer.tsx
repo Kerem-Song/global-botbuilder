@@ -16,7 +16,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IButtonType } from '@models';
+import { IAnswerNode, IButtonType } from '@models';
 import { useState } from 'react';
 
 import { NextNodeButton } from './NextNodeButton';
@@ -60,7 +60,7 @@ export const SortableButtonContainer = ({
 
     updateLine(nodeId);
   };
-
+  console.log('item type', buttons);
   return (
     <Row justify="flex-start" align="flex-start">
       <Col span={22}>
@@ -79,6 +79,7 @@ export const SortableButtonContainer = ({
                 id={item.id}
                 label={item.label}
                 action={item.action}
+                type={item.type}
               />
             ))}
           </SortableContext>
@@ -86,7 +87,7 @@ export const SortableButtonContainer = ({
       </Col>
       <Col span={2}>
         {buttons.map(
-          (item) =>
+          (item, i) =>
             item.action !== 'linkWebUrl' && (
               <div className="nextNodeWrapper">
                 <NextNodeButton
@@ -94,6 +95,7 @@ export const SortableButtonContainer = ({
                   nodeId={nodeId}
                   type="blue"
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
+                  index={item.type === 'AnswerNode' ? i : undefined}
                 />
               </div>
             ),
