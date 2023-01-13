@@ -14,17 +14,17 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { IListCard } from '@models';
+import { IScenarioModel } from '@models';
 import { useState } from 'react';
 
-import { SortableListItem } from './SortableListItem';
+import { SortableScenarioListItem } from './SortableScenarioListItem';
 
 interface ISortableContainer {
-  listItems: IListCard['items'];
+  scenarioList?: IScenarioModel[];
 }
 
-export const SortableListContainer = ({ listItems }: ISortableContainer) => {
-  const [list, setList] = useState(listItems);
+export const SortableScenarioListContainer = ({ scenarioList }: ISortableContainer) => {
+  const [list, setList] = useState(scenarioList);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -62,11 +62,9 @@ export const SortableListContainer = ({ listItems }: ISortableContainer) => {
     >
       {list && (
         <SortableContext items={list} strategy={verticalListSortingStrategy}>
-          <div className="listItems">
-            {list.map((item) => (
-              <SortableListItem key={item.id} item={item} />
-            ))}
-          </div>
+          {list.map((item) => (
+            <SortableScenarioListItem key={item.id} item={item} />
+          ))}
         </SortableContext>
       )}
     </DndContext>

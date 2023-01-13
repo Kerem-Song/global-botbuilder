@@ -1,4 +1,5 @@
 import { Button, Input, Space, Switch } from '@components';
+import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
 import { useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
@@ -6,7 +7,6 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
-import { ScenarioItem } from './ScenarioItem';
 
 export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
   scenarios,
@@ -67,7 +67,8 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
           {scenarios ? (
-            scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
+            // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
+            <SortableScenarioListContainer scenarioList={scenarios} />
           ) : (
             <div className="noResults"></div>
           )}
