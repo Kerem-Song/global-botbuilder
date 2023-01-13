@@ -7,7 +7,7 @@ import { NodeKind } from '@models/enum/NodeKind';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
@@ -216,6 +216,10 @@ export const Node: FC<INodeProps> = ({
     }
   };
 
+  const HandleNodeSelect = async (e: React.MouseEvent<HTMLDivElement>) => {
+    onClick?.(e);
+  };
+
   return (
     <div
       onDragOver={(e) => {
@@ -245,9 +249,7 @@ export const Node: FC<INodeProps> = ({
       className={wrapClass}
       style={style}
       role="presentation"
-      onMouseDown={(e) => {
-        onClick?.(e);
-      }}
+      onClick={HandleNodeSelect}
       onMouseUp={(e) => e.stopPropagation()}
     >
       <div className={titleClass}>

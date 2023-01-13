@@ -181,7 +181,7 @@ export const Botbuilder = () => {
         onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
-        onMouseUpCapture={handleCanvasClick}
+        //onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
         onDrop={handleChatbubbleDrop}

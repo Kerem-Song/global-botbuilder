@@ -1,6 +1,13 @@
 import { IDataEntryProp, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
 export interface InputTextareaProps extends IDataEntryProp, IHasClassNameNStyle {
   maxLength?: number;
@@ -15,8 +22,11 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     const [text, setText] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+    //useImperativeHandle(ref, () => textareaRef.current!, [textareaRef.current]);
+    const { style, height, showCount, autoHeight, ...inputProps } = args;
     const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.target.value);
+      args.onChange?.(e);
     };
 
     const handleTextareaHeight = useCallback(() => {
@@ -24,28 +34,32 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
         return;
       }
       textareaRef.current.style.height = '40px';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 10}px`;
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }, [textareaRef]);
 
     useEffect(() => {
-      if (ref) {
-        ref(textareaRef.current);
-      }
+      // if (ref) {
+      //   ref(textareaRef.current);
+      // }
 
       if (!args.autoHeight || textareaRef.current === null) {
         return;
       }
+
       textareaRef.current.style.height = '40px';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 10}px`;
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }, [textareaRef.current]);
 
-    const { style, height } = args;
-    const resultStyle = { ...style, height: height };
+    const resultStyle = {
+      ...style,
+      minHeight: height,
+    };
     const resultClassName = classNames('textInput', args.className);
 
     return (
       <>
         <textarea
+          {...inputProps}
           className={resultClassName}
           style={resultStyle}
           value={text}
@@ -53,7 +67,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
           onInput={handleTextareaHeight}
           placeholder={args.placeholder}
           maxLength={1000}
-          ref={textareaRef}
+          ref={ref}
         />
         {args.showCount ? (
           <span className="textCounter">
