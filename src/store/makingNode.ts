@@ -42,6 +42,7 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
 
   if (node.view) {
     if (node.view.typeName === VIEW_TYPES.TEXT_VIEW) {
+      result.view = { text: node.view.text || '' };
       result.cards = [{ type: NODE_TYPES.TEXT_NODE, description: node.view.text || '' }];
     }
 

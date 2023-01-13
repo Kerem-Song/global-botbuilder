@@ -1,6 +1,6 @@
 import { IDataEntryProp, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface InputTextareaProps extends IDataEntryProp, IHasClassNameNStyle {
   maxLength?: number;
@@ -20,12 +20,24 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     };
 
     const handleTextareaHeight = useCallback(() => {
-      if (!args.autoHeight || textareaRef === null || textareaRef.current === null) {
+      if (!args.autoHeight || textareaRef.current === null) {
         return;
       }
       textareaRef.current.style.height = '40px';
-      textareaRef.current.style.height = textareaRef.current?.scrollHeight + 'px';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 10}px`;
     }, [textareaRef]);
+
+    useEffect(() => {
+      if (ref) {
+        ref(textareaRef.current);
+      }
+
+      if (!args.autoHeight || textareaRef.current === null) {
+        return;
+      }
+      textareaRef.current.style.height = '40px';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 10}px`;
+    }, [textareaRef.current]);
 
     const { style, height } = args;
     const resultStyle = { ...style, height: height };
