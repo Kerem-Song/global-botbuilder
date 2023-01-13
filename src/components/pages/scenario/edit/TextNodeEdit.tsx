@@ -1,4 +1,4 @@
-import { InputTextarea } from '@components';
+import { Input, InputTextarea } from '@components';
 import { useFormContext } from 'react-hook-form';
 
 export const TextNodeEdit = () => {
@@ -13,9 +13,10 @@ export const TextNodeEdit = () => {
       <InputTextarea
         height={100}
         showCount
+        autoHeight
         maxLength={1000}
         placeholder="Input Text"
-        {...register('view')}
+        {...register('view.text')}
       />
     </div>
   );

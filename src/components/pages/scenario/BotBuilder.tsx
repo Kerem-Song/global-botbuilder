@@ -53,19 +53,19 @@ export const Botbuilder = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const event = (e: KeyboardEvent) => {
-      if (e.key === 'Delete') {
-        dispatch(removeItem(selected));
-        dispatch(setSelected());
-      }
-    };
-    window.addEventListener('keydown', event);
+  // useEffect(() => {
+  //   const event = (e: KeyboardEvent) => {
+  //     if (e.key === 'Delete') {
+  //       dispatch(removeItem(selected));
+  //       dispatch(setSelected());
+  //     }
+  //   };
+  //   window.addEventListener('keydown', event);
 
-    return () => {
-      window.removeEventListener('keydown', event);
-    };
-  }, [selected]);
+  //   return () => {
+  //     window.removeEventListener('keydown', event);
+  //   };
+  // }, [selected]);
 
   const handleAddArrows = (arrow: IArrow) => {
     dispatch(addArrow(arrow));
