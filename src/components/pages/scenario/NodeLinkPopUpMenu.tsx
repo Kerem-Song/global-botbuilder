@@ -157,6 +157,10 @@ export const NodeLinkPopUpMenu = ({
     }
   }, []);
 
+  const handleMakingOtherFlow = () => {
+    console.log('asdfasdfadfadf');
+    console.log('data other flow', data);
+  };
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList(token);
@@ -167,7 +171,7 @@ export const NodeLinkPopUpMenu = ({
     name: item.alias,
     type: 'search' as ItemType,
     data: {
-      action: handleMakingChatbubble,
+      action: handleMakingOtherFlow,
     },
   }));
 
@@ -190,7 +194,7 @@ export const NodeLinkPopUpMenu = ({
       <div className={cardBtnResult}>
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
-            <>
+            <div key={i}>
               {item.value === 'OtherFlowRedirectNode' ? (
                 <div key={i}>
                   <Popper
@@ -199,7 +203,10 @@ export const NodeLinkPopUpMenu = ({
                     offset={[200, 20]}
                     popup
                     popupList
-                    onChange={() => handleMakingChatbubble}
+                    onChange={(m) => {
+                      console.log('mm', m);
+                      // m.data?.action?.();
+                    }}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>
@@ -229,7 +236,7 @@ export const NodeLinkPopUpMenu = ({
                   </Row>
                 </div>
               )}
-            </>
+            </div>
           ))
         ) : (
           <div>No Results</div>
