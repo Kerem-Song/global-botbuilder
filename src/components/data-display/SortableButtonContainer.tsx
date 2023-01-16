@@ -60,7 +60,7 @@ export const SortableButtonContainer = ({
 
     updateLine(nodeId);
   };
-  console.log('item type', buttons);
+
   return (
     <Row justify="flex-start" align="flex-start">
       <Col span={22}>
@@ -89,7 +89,7 @@ export const SortableButtonContainer = ({
         {buttons.map(
           (item, i) =>
             item.action !== 'linkWebUrl' && (
-              <div className="nextNodeWrapper">
+              <div className="nextNodeWrapper" key={i}>
                 <NextNodeButton
                   ctrlId={`${item.id}`}
                   nodeId={nodeId}

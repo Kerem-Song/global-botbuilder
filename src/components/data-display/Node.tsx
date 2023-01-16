@@ -28,6 +28,7 @@ import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
 import { Condition } from '../../pages/scenario/cards/Condition';
 import { Count } from '../../pages/scenario/cards/Count';
 import { ListCard } from '../../pages/scenario/cards/ListCard';
+import { OtherFlowRedirectCard } from '../../pages/scenario/cards/OtherFlowRedirectCard';
 import { ParameterSet } from '../../pages/scenario/cards/ParameterSet';
 import { QuickReply } from '../../pages/scenario/cards/QuickReply';
 import { NextNodeButton } from './NextNodeButton';
@@ -165,6 +166,8 @@ export const Node: FC<INodeProps> = ({
             <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
           </div>
         );
+      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
+        return <OtherFlowRedirectCard id={id} values={items} />;
       default:
         return <div></div>;
     }
