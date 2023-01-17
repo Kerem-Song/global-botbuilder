@@ -1,10 +1,10 @@
+import { Col, Row } from '@components/layout';
+import { ScenarioItem } from '@components/pages/scenario/ScenarioItem';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ISortableListItem } from '@models';
+import { IScenarioModel, ISortableListItem } from '@models';
 
-import { SortableListCardItem } from './SortableListCardItem';
-
-export const SortableListItem = ({ item }: { item: ISortableListItem }) => {
+export const SortableScenarioListItem = ({ item }: { item: IScenarioModel }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: item.id,
   });
@@ -16,7 +16,7 @@ export const SortableListItem = ({ item }: { item: ISortableListItem }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <SortableListCardItem item={item} />
+      <ScenarioItem item={item} />
     </div>
   );
 };

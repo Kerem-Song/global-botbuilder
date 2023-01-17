@@ -180,6 +180,11 @@ export const defaultNode = (nodeType: TNodeTypes) => {
 
     case NODE_TYPES.PARAMETER_SET_NODE:
       addNode = [];
+      break;
+
+    case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
+      addNode = [];
+      break;
   }
 
   return addNode;

@@ -2,9 +2,17 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { useRootState } from '@hooks';
+import { ItemType, Popper } from '@components/navigation';
+import { useRootState, useScenarioClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { getNodeKind, IArrow, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import {
+  getNodeKind,
+  IArrow,
+  IScenarioModel,
+  NODE_TYPES,
+  TCardsValues,
+  TNodeTypes,
+} from '@models';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
@@ -47,6 +55,16 @@ const cardTypeValue = [
   { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
   { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
   { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
+  {
+    className: 'icParameterSet',
+    value: NODE_TYPES.PARAMETER_SET_NODE,
+    nodeName: 'Parameter Set',
+  },
+  {
+    className: 'icOtherFlowRedirect',
+    value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+    nodeName: 'Other Flow Redirect',
+  },
 ];
 
 export const NodeLinkPopUpMenu = ({
@@ -139,6 +157,24 @@ export const NodeLinkPopUpMenu = ({
     }
   }, []);
 
+  const handleMakingOtherFlow = () => {
+    console.log('asdfasdfadfadf');
+    console.log('data other flow', data);
+  };
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const { getScenarioList } = useScenarioClient();
+  const { data } = getScenarioList(token);
+
+  const [scenarioList, setScenarioList] = useState<IScenarioModel[] | undefined>(data);
+  const poperSelectItems = scenarioList?.map((item) => ({
+    id: item.id,
+    name: item.alias,
+    type: 'search' as ItemType,
+    data: {
+      action: handleMakingOtherFlow,
+    },
+  }));
+
   return (
     <div
       className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"
@@ -158,21 +194,48 @@ export const NodeLinkPopUpMenu = ({
       <div className={cardBtnResult}>
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
-            <div
-              key={i}
-              onClick={(e) => handleMakingChatbubble(e)}
-              role="presentation"
-              data-nodename={item.nodeName}
-              data-nodetype={item.value}
-            >
-              <Row justify="flex-start" align="center" gap={8} className="btnRow">
-                <Col>
-                  <Button className={`icon ${item.className}`} />
-                </Col>
-                <Col>
-                  <span className="cardType">{item.nodeName}</span>
-                </Col>
-              </Row>
+            <div key={i}>
+              {item.value === 'OtherFlowRedirectNode' ? (
+                <div key={i}>
+                  <Popper
+                    popperItems={poperSelectItems}
+                    placement="right-start"
+                    offset={[200, 20]}
+                    popup
+                    popupList
+                    onChange={(m) => {
+                      console.log('mm', m);
+                      // m.data?.action?.();
+                    }}
+                  >
+                    <Row justify="flex-start" align="center" gap={8} className="btnRow">
+                      <Col>
+                        <Button className={`icon ${item.className}`} />
+                      </Col>
+                      <Col>
+                        <span className="cardType">{item.nodeName}</span>
+                      </Col>
+                    </Row>
+                  </Popper>
+                </div>
+              ) : (
+                <div
+                  key={i}
+                  onClick={(e) => handleMakingChatbubble(e)}
+                  role="presentation"
+                  data-nodename={item.nodeName}
+                  data-nodetype={item.value}
+                >
+                  <Row justify="flex-start" align="center" gap={8} className="btnRow">
+                    <Col>
+                      <Button className={`icon ${item.className}`} />
+                    </Col>
+                    <Col>
+                      <span className="cardType">{item.nodeName}</span>
+                    </Col>
+                  </Row>
+                </div>
+              )}
             </div>
           ))
         ) : (

@@ -1,3 +1,4 @@
+import { Input } from '@components/data-entry';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
@@ -26,7 +27,7 @@ export interface IPopperSelectItem<T> {
   data?: T;
 }
 
-export type ItemType = 'button' | 'icon-front';
+export type ItemType = 'button' | 'icon-front' | 'search';
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
@@ -121,6 +122,16 @@ export const Popper = <T extends object>({
         onMouseEnter={handleMouseOver}
         {...attributes.popper}
       >
+        {popperItems?.some((item) => item.type === 'search') ? (
+          <>
+            <Input
+              placeholder="Input search text"
+              search
+              // onSearch={(data) => onSearch(data as string)}
+            />
+          </>
+        ) : null}
+
         {popperItems?.map((item: IPopperItem<T>) => (
           <PopperListItem
             key={item.id}
