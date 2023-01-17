@@ -1,4 +1,4 @@
-import { TNodeTypes } from '@models';
+import { ConditionJoin, ConditionOperator, TNodeTypes } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 
 export interface IViewItem {
@@ -22,6 +22,12 @@ export interface IQuickReplyRes {
   id: string;
   typeName: string;
 }
+
+export interface IConditionItem {
+  op1: string;
+  op2: string;
+  operator: ConditionOperator;
+}
 export interface INodeView {
   typeName: string;
   title?: string;
@@ -40,7 +46,14 @@ export interface INodeView {
   url?: string;
   childrenViews?: IViewItem[];
   quicks?: IQuickReplyRes[];
+
+  /** condition node */
+  falseThenNextNodeId?: string;
+  trueThenNextNodeId?: string;
+  join?: ConditionJoin;
+  items?: IConditionItem[];
 }
+
 export interface INodeRes {
   alias: string;
   id: string;

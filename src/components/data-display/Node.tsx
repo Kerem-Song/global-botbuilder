@@ -49,7 +49,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[];
-  items: INode;
+  node: INode;
   onClick?: (e?: any) => void;
   addArrow?: (arrow: IArrow) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
@@ -60,7 +60,7 @@ export const Node: FC<INodeProps> = ({
   typeName,
   nodekind,
   cards,
-  items,
+  node,
   className,
   style,
   title,
@@ -154,12 +154,12 @@ export const Node: FC<INodeProps> = ({
           </div>
         );
       case NODE_TYPES.CONDITION_NODE:
-        return <Condition nodeId={`node-${id}`} values={items} />;
+        return <Condition nodeId={`node-${id}`} node={node} />;
       case NODE_TYPES.COUNT:
         return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSet id={id} values={items} />;
+        return <ParameterSet id={id} values={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:
         return (
           <div className="command-node">
@@ -167,7 +167,7 @@ export const Node: FC<INodeProps> = ({
           </div>
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return <OtherFlowRedirectCard id={id} values={items} />;
+        return <OtherFlowRedirectCard id={id} values={node} />;
       default:
         return <div></div>;
     }
@@ -209,13 +209,13 @@ export const Node: FC<INodeProps> = ({
         );
 
       case NODE_TYPES.CONDITION_NODE:
-        return <Condition nodeId={`node-${id}`} values={items} />;
+        return <Condition nodeId={`node-${id}`} node={node} />;
 
       case NODE_TYPES.COUNT:
         return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSet id={id} values={items} />;
+        return <ParameterSet id={id} values={node} />;
     }
   };
 

@@ -141,6 +141,33 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
     if (node.view.typeName === VIEW_TYPES.JSON_REQUEST_VIEW) {
       result.description = node.view.url;
     }
+
+    if (node.view.typeName === VIEW_TYPES.CONDITION_VIEW) {
+      if (node.view.items) {
+        result.view = { items: node.view.items, join: node.view.join };
+      }
+
+      if (node.view.falseThenNextNodeId) {
+        arrows.push({
+          start: `next-node-${node.id}-false`,
+          updateKey: `node-${node.id}`,
+          end: `node-${node.view.falseThenNextNodeId}`,
+          isNextNode: true,
+          type: 'red',
+        });
+      }
+
+      if (node.view.trueThenNextNodeId) {
+        console.log(node.view.trueThenNextNodeId);
+        arrows.push({
+          start: `next-node-${node.id}-true`,
+          updateKey: `node-${node.id}`,
+          end: `node-${node.view.trueThenNextNodeId}`,
+          isNextNode: true,
+          type: 'green',
+        });
+      }
+    }
   }
   return { node: result, arrows };
 };

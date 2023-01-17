@@ -44,6 +44,7 @@ export const VIEW_TYPES = {
   ANSWER_VIEW: 'AnswerView',
   BASIC_CARD_VIEW: 'BasicCardView',
   JSON_REQUEST_VIEW: 'JsonRequestView',
+  CONDITION_VIEW: 'ConditionView',
 };
 
 export const NODE_TYPES = {
