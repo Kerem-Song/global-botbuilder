@@ -1,7 +1,11 @@
-import { IArrow, INode } from '@models';
+import { IArrow, INode, ITextView } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
-import { NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
-import { INodeEditModel } from '@models/interfaces/INodeEditModel';
+import { IBasicCard, NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
+import {
+  IBasicCardViewModel,
+  INodeEditModel,
+  ITextViewModel,
+} from '@models/interfaces/INodeEditModel';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -181,12 +185,26 @@ export const makingNodeSlice = createSlice({
     },
     editNode: (state, action: PayloadAction<INodeEditModel>) => {
       const node = action.payload;
-      // console.log(node);
+      console.log(node);
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];
         const index = nodes.indexOf(matched);
         const old = nodes[index];
+        if (old.type === NODE_TYPES.TEXT_NODE) {
+          const card = old.cards?.[0] as IBasicCard;
+          const view = node.view as ITextViewModel;
+          card.description = view.text;
+        }
+
+        if (old.type === NODE_TYPES.BASIC_CARD_NODE) {
+          const card = old.cards?.[0] as IBasicCard;
+          const view = node.view as IBasicCardViewModel;
+          card.title = view.title;
+          card.description = view.description;
+          card.buttons = [...(view.buttons || [])];
+        }
+
         nodes.splice(index, 1, { ...old, title: node.title });
         state.nodes = nodes;
       }

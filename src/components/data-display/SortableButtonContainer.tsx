@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IAnswerNode, IButtonType } from '@models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { NextNodeButton } from './NextNodeButton';
 import { SortableButtonItem } from './SortableButtonItem';
@@ -32,7 +32,13 @@ export const SortableButtonContainer = ({
   cardButtons,
 }: ISortableContainer) => {
   const { updateLine } = useUpdateLines();
-  const [buttons, setButtons] = useState(cardButtons);
+  console.log(cardButtons);
+  const [buttons, setButtons] = useState<IButtonType[]>([]);
+
+  useEffect(() => {
+    setButtons(cardButtons);
+  }, [cardButtons]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

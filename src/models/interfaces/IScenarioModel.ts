@@ -4,4 +4,5 @@ export interface IScenarioModel {
   activated: boolean;
   isFallbackFlow: boolean;
   isStartFlow: boolean;
+  seq: number;
 }

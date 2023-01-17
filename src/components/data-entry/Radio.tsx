@@ -19,18 +19,18 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>((args, ref) => {
     },
     [selectedOption],
   );
-
+  const { children, ...inputArgs } = args;
   return (
     <div className="radioContainer">
       <input
-        {...args}
+        {...inputArgs}
         className="radio"
         type="radio"
         name="radio"
         onChange={radioHandler}
         ref={ref}
       />
-      {args.children}
+      {children}
     </div>
   );
 });

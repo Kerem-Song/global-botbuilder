@@ -39,7 +39,9 @@ export const useScenarioClient = () => {
               basicScenarios.push(startScenario);
             }
             dispatch(setBasicScenarios(basicScenarios));
-            return res.data.result.filter((x) => !x.isFallbackFlow && !x.isStartFlow);
+            return res.data.result
+              .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
+              .sort((a, b) => (a.seq > b.seq ? 1 : -1));
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );

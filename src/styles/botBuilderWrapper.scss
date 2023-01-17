@@ -112,33 +112,38 @@
 }
 
 .botBuilderDrawer {
-  height: calc(100vh - rem(97));
+  //  height: calc(100vh - rem(97));
+
   margin-top: rem(97);
   box-shadow: none !important;
   background: $gray150 !important;
   border-left: 1px solid $gray200;
-  .header {
-    background: $gray100;
-    padding: rem(12);
-    margin-bottom: rem(12);
-    span {
-      font-size: rem(16);
-      font-weight: 500;
+  .wrapper {
+    height: calc(100vh - rem(97));
+    overflow: auto;
+    .header {
+      background: $gray100;
+      padding: rem(12);
+      margin-bottom: rem(12);
+      span {
+        font-size: rem(16);
+        font-weight: 500;
+      }
     }
-  }
-  .node-item-wrap {
-    position: relative;
-    background: $gray100;
-    padding: rem(12);
-    margin-bottom: rem(12);
-    .label {
-      font-size: rem(15);
-      font-weight: 500;
-    }
-    .required {
-      font-size: rem(15);
-      font-weight: 500;
-      color: $red;
+    .node-item-wrap {
+      position: relative;
+      background: $gray100;
+      padding: rem(12);
+      margin-bottom: rem(12);
+      .label {
+        font-size: rem(15);
+        font-weight: 500;
+      }
+      .required {
+        font-size: rem(15);
+        font-weight: 500;
+        color: $red;
+      }
     }
   }
 }
