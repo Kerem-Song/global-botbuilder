@@ -6,6 +6,7 @@ import {
   IConditionNode,
   ICountNode,
   IListNode,
+  IOtherFlowRedirectNode,
   IProductCardNode,
   TNodeTypes,
 } from './ICard';
@@ -25,7 +26,8 @@ export interface INode {
     | IListNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | ICountNode[];
+    | ICountNode[]
+    | IOtherFlowRedirectNode[];
 }
 
 export interface ITextView {

@@ -111,7 +111,6 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (start) {
-      console.log();
       addArrow?.({
         start: start.startId,
         end: `node-${addNode.id}`,
@@ -132,7 +131,7 @@ export const NodeLinkPopUpMenu = ({
     );
     setCardBtn(filtered);
     setUserInput(input);
-    console.log('input', input);
+
     if (!data) {
       setCardBtn(cardTypeValue);
     }
@@ -144,22 +143,8 @@ export const NodeLinkPopUpMenu = ({
     handleIsOpen(false);
   });
 
-  useEffect(() => {
-    if (!nodeLinkPopUpMenuRef.current) {
-      return;
-    } else {
-      nodeLinkPopUpMenuRef.current.style.left = `${popUpPosition.x}px`;
-      nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
-    }
-
-    if (guideStart) {
-      setStart(guideStart);
-    }
-  }, []);
-
   const handleMakingOtherFlow = (name: string) => {
-    console.log('asdfasdfadfadf');
-    const nodeType = 'OtherFlowRedirectNode' as TNodeTypes;
+    const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = name;
     const addCard = defaultNode(nodeType);
     const addNode = {
@@ -175,7 +160,6 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (start) {
-      console.log();
       addArrow?.({
         start: start.startId,
         end: `node-${addNode.id}`,
@@ -187,6 +171,21 @@ export const NodeLinkPopUpMenu = ({
 
     handleIsOpen(false);
   };
+
+  useEffect(() => {
+    if (!nodeLinkPopUpMenuRef.current) {
+      return;
+    } else {
+      nodeLinkPopUpMenuRef.current.style.left = `${popUpPosition.x}px`;
+      nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
+    }
+
+    if (guideStart) {
+      console.log('use effect');
+      setStart(guideStart);
+    }
+  }, []);
+
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList(token);
@@ -214,6 +213,7 @@ export const NodeLinkPopUpMenu = ({
           {...register('cardType')}
           search
           onSearch={(data) => onSearch(data as string)}
+          value={userInput || ''}
         />
       </form>
 

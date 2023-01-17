@@ -101,7 +101,7 @@ export const Popper = <T extends object>({
   });
 
   const [items, setItems] = useState(popperItems);
-  const [userInput, setUserInput] = useState<string | null>(null);
+  const [userInput, setUserInput] = useState<string | null>('');
 
   const onSearch = (data: string) => {
     const input = data.toLowerCase();
@@ -114,12 +114,6 @@ export const Popper = <T extends object>({
     setUserInput(input);
 
     if (!data) {
-      setItems(popperItems);
-    }
-  };
-
-  const onSubmit = () => {
-    if (!userInput) {
       setItems(popperItems);
     }
   };
@@ -146,12 +140,14 @@ export const Popper = <T extends object>({
         onMouseEnter={handleMouseOver}
         {...attributes.popper}
       >
-        {items?.some((item) => item.type === 'search') ? (
+        {popperItems?.some((item) => item.type === 'search') ? (
           <>
             <Input
               placeholder="Input search text"
               search
               onSearch={(data) => onSearch(data as string)}
+              onChange={(e) => setUserInput(e.currentTarget.value)}
+              value={userInput || ''}
             />
           </>
         ) : null}

@@ -10,6 +10,7 @@ import {
 
 import { TNodeTypes } from '../../models/interfaces/ICard';
 import { idGen } from '../../modules';
+import { IOtherFlowRedirectNode } from './../../models/interfaces/ICard';
 
 export const defaultNode = (nodeType: TNodeTypes) => {
   let addNode:
@@ -18,8 +19,9 @@ export const defaultNode = (nodeType: TNodeTypes) => {
     | IListNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | ICountNode[] = [];
-  console.log('nodetype', nodeType);
+    | ICountNode[]
+    | IOtherFlowRedirectNode[] = [];
+
   switch (nodeType) {
     case NODE_TYPES.TEXT_NODE:
     case NODE_TYPES.IMAGE_NODE:

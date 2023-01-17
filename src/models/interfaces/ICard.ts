@@ -277,3 +277,8 @@ export interface ICountNode {
   requestionConnectedMessage: string; // 재질문할 메시지 연결 - 말풍선 목록 타입으로 변경 요함
   excessiveLimitedNumMessage: string; // 횟수 초과 메시지 연결 - 말풍선 목록 타입으로 변경 요함
 }
+
+export interface IOtherFlowRedirectNode {
+  id: string;
+  type: typeof NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
+}
