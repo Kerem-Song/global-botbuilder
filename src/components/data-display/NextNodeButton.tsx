@@ -9,14 +9,14 @@ import { useDispatch } from 'react-redux';
 export interface NextNodeButtonProps {
   ctrlId: string;
   nodeId: string;
-  index?: number;
+  offset?: number;
   type: 'blue' | 'green' | 'red' | 'yellow';
 }
 
 export const NextNodeButton: FC<NextNodeButtonProps> = ({
   ctrlId,
   nodeId,
-  index,
+  offset,
   type,
 }) => {
   const dispatch = useDispatch();
@@ -65,7 +65,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
       <div
         role="presentation"
         className={classNames('nextNodeDrag')}
-        style={{ top: index !== undefined ? `${index * 25 + 35}%` : undefined }}
+        style={{ top: offset !== undefined ? `${offset}px` : undefined }}
         id={`next-${ctrlId}`}
         draggable
         onDragStart={StartDrag}
