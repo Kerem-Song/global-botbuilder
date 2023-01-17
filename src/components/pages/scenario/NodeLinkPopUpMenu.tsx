@@ -157,8 +157,35 @@ export const NodeLinkPopUpMenu = ({
     }
   }, []);
 
-  const handleMakingOtherFlow = () => {
+  const handleMakingOtherFlow = (name: string) => {
     console.log('asdfasdfadfadf');
+    const nodeType = 'OtherFlowRedirectNode' as TNodeTypes;
+    const nodeName = name;
+    const addCard = defaultNode(nodeType);
+    const addNode = {
+      id: idGen.generate('node'),
+      type: nodeType,
+      title: nodeName,
+      cards: addCard,
+      x: popUpPosition.x,
+      y: popUpPosition.y,
+      nodeKind: getNodeKind(nodeType),
+    };
+
+    dispatch(appendNode(addNode));
+
+    if (start) {
+      console.log();
+      addArrow?.({
+        start: start.startId,
+        end: `node-${addNode.id}`,
+        isNextNode: start.isNext,
+        updateKey: start.nodeId,
+        type: start.type,
+      });
+    }
+
+    handleIsOpen(false);
   };
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
@@ -204,7 +231,7 @@ export const NodeLinkPopUpMenu = ({
                     offset={[200, 20]}
                     popperItems={poperSelectItems}
                     onChange={(m) => {
-                      m.data?.action?.();
+                      m.data?.action?.(m.name);
                     }}
                     popup
                     popupList
