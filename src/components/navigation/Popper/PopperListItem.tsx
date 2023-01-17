@@ -1,6 +1,7 @@
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { IHasClassNameNStyle } from '@models';
+import { popper } from '@popperjs/core';
 import classNames from 'classnames';
 import { useRef } from 'react';
 
@@ -54,15 +55,14 @@ export const PopperListItem = <T extends object>({
       }
       case 'search': {
         return (
-          <div key={item.id} role="presentation" data-nodename={item.name}>
-            <Row justify="flex-start" align="center" gap={8} className="btnRow">
-              <Col>
-                <Button className={`icon ${item.id}`} />
-              </Col>
-              <Col>
-                <span className="cardType">{item.name}</span>
-              </Col>
-            </Row>
+          <div
+            key={item.id}
+            role="presentation"
+            data-nodename={item.name}
+            className={popperList}
+            onClick={() => handleCheckChange()}
+          >
+            <div className="items-name">{item.name}</div>
           </div>
         );
       }

@@ -2,7 +2,7 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { ItemType, Popper } from '@components/navigation';
+import { IPopperItem, ItemType, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import {
@@ -157,9 +157,35 @@ export const NodeLinkPopUpMenu = ({
     }
   }, []);
 
-  const handleMakingOtherFlow = () => {
+  const handleMakingOtherFlow = (name: string) => {
     console.log('asdfasdfadfadf');
-    console.log('data other flow', data);
+    const nodeType = 'OtherFlowRedirectNode' as TNodeTypes;
+    const nodeName = name;
+    const addCard = defaultNode(nodeType);
+    const addNode = {
+      id: idGen.generate('node'),
+      type: nodeType,
+      title: nodeName,
+      cards: addCard,
+      x: popUpPosition.x,
+      y: popUpPosition.y,
+      nodeKind: getNodeKind(nodeType),
+    };
+
+    dispatch(appendNode(addNode));
+
+    if (start) {
+      console.log();
+      addArrow?.({
+        start: start.startId,
+        end: `node-${addNode.id}`,
+        isNextNode: start.isNext,
+        updateKey: start.nodeId,
+        type: start.type,
+      });
+    }
+
+    handleIsOpen(false);
   };
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
@@ -196,17 +222,16 @@ export const NodeLinkPopUpMenu = ({
           cardBtn.map((item, i) => (
             <div key={i}>
               {item.value === 'OtherFlowRedirectNode' ? (
-                <div key={i}>
+                <div>
                   <Popper
-                    popperItems={poperSelectItems}
                     placement="right-start"
                     offset={[200, 20]}
+                    popperItems={poperSelectItems}
+                    onChange={(m) => {
+                      m.data?.action?.(m.name);
+                    }}
                     popup
                     popupList
-                    onChange={(m) => {
-                      console.log('mm', m);
-                      // m.data?.action?.();
-                    }}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>

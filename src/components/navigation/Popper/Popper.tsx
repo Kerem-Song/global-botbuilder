@@ -93,12 +93,36 @@ export const Popper = <T extends object>({
       if (!outsideClickRef.current?.hasAttribute('data-mouse-over')) {
         setShowPopper(false);
       }
-    }, 100);
+    }, 1000);
   };
 
   const popperContainer = classNames(className, 'luna-chatbot-container', {
     'luna-popup-container': popup,
   });
+
+  const [items, setItems] = useState(popperItems);
+  const [userInput, setUserInput] = useState<string | null>(null);
+
+  const onSearch = (data: string) => {
+    const input = data.toLowerCase();
+
+    const filtered = popperItems?.filter((item) =>
+      item.name.toLowerCase().includes(input),
+    );
+
+    setItems(filtered);
+    setUserInput(input);
+
+    if (!data) {
+      setItems(popperItems);
+    }
+  };
+
+  const onSubmit = () => {
+    if (!userInput) {
+      setItems(popperItems);
+    }
+  };
 
   return (
     <div ref={outsideClickRef}>
@@ -123,17 +147,17 @@ export const Popper = <T extends object>({
         onMouseEnter={handleMouseOver}
         {...attributes.popper}
       >
-        {popperItems?.some((item) => item.type === 'search') ? (
+        {items?.some((item) => item.type === 'search') ? (
           <>
             <Input
               placeholder="Input search text"
               search
-              // onSearch={(data) => onSearch(data as string)}
+              onSearch={(data) => onSearch(data as string)}
             />
           </>
         ) : null}
 
-        {popperItems?.map((item: IPopperItem<T>) => (
+        {items?.map((item: IPopperItem<T>) => (
           <PopperListItem
             key={item.id}
             item={item}
