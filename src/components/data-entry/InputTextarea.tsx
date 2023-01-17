@@ -1,20 +1,29 @@
 import { IDataEntryProp, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import React, {
+  ChangeEvent,
+  FocusEvent,
   forwardRef,
   useCallback,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from 'react';
 
-export interface InputTextareaProps extends IDataEntryProp, IHasClassNameNStyle {
+export interface InputTextareaProps extends IHasClassNameNStyle {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
   height?: number;
   autoHeight?: boolean;
+  disabled?: boolean;
+  id?: string;
+  name?: string;
+  value?: string;
+  isError?: boolean;
+  required?: boolean;
+  onBlur?: (e: FocusEvent<HTMLTextAreaElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(

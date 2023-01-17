@@ -1,11 +1,14 @@
+import { useSystemModal } from '@hooks/useSystemModal';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
+  const { error } = useSystemModal();
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     headers: {},
@@ -28,6 +31,9 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
 
   instance.interceptors.response.use(
     function (response) {
+      if (!response.data.isSuccess) {
+        error({ title: 'error', description: response.data.exception.message });
+      }
       return response;
     },
     function (err) {

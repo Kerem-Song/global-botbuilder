@@ -8,9 +8,10 @@ import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 
-export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
-  scenarios,
-}) => {
+export const ScenarioManagement: FC<{
+  scenarios?: IScenarioModel[];
+  isFetching: boolean;
+}> = ({ scenarios, isFetching }) => {
   const dispatch = useDispatch();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
@@ -26,7 +27,7 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
   const handleNewScenario = async () => {
     await scenarioCreateAsync({
       token,
-      scenarioName: `scenario ${scenarios?.length || 1}`,
+      scenarioName: `scenario ${(scenarios?.length || 0) + 1}`,
     });
   };
 
@@ -65,14 +66,18 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
       </div>
 
       <div className="scenarioListWrapper">
-        <Space gap="small" direction="vertical">
-          {scenarios ? (
-            // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
-            <SortableScenarioListContainer scenarioList={scenarios} />
-          ) : (
-            <div className="noResults"></div>
-          )}
-        </Space>
+        {isFetching ? (
+          <></>
+        ) : (
+          <Space gap="small" direction="vertical">
+            {scenarios ? (
+              // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
+              <SortableScenarioListContainer scenarioList={scenarios} />
+            ) : (
+              <div className="noResults"></div>
+            )}
+          </Space>
+        )}
       </div>
       <div className="search">
         <Input placeholder="시나리오명을 입력해주세요. " search />

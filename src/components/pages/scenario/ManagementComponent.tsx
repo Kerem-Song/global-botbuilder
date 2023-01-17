@@ -12,7 +12,7 @@ export const ManagementComponent = () => {
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오';
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
+  const { data, isFetching } = getScenarioList(token);
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };
@@ -37,7 +37,11 @@ export const ManagementComponent = () => {
           ></div>
         </div>
       </div>
-      {scenarioTab ? <ScenarioManagement scenarios={data} /> : <VariablesManagement />}
+      {scenarioTab ? (
+        <ScenarioManagement scenarios={data} isFetching={isFetching} />
+      ) : (
+        <VariablesManagement />
+      )}
     </div>
   );
 };

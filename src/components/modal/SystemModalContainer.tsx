@@ -69,9 +69,14 @@ export const SystemModalContainer = () => {
       <div className="content">{modalInfo.description}</div>
       <Row justify="flex-end" style={{ padding: '0 20px 20px 20px' }}>
         <Space>
-          <Button className="min-w-100" onClick={handleClose}>
-            {modalInfo.cancelButton}
-          </Button>
+          {modalInfo.cancelButton ? (
+            <Button className="min-w-100" onClick={handleClose}>
+              {modalInfo.cancelButton}
+            </Button>
+          ) : (
+            <></>
+          )}
+
           <Button
             className="min-w-100"
             htmlType="submit"
