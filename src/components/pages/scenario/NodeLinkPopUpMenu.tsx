@@ -2,7 +2,7 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { ItemType, Popper } from '@components/navigation';
+import { IPopperItem, ItemType, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import {
@@ -159,7 +159,6 @@ export const NodeLinkPopUpMenu = ({
 
   const handleMakingOtherFlow = () => {
     console.log('asdfasdfadfadf');
-    console.log('data other flow', data);
   };
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
@@ -169,7 +168,7 @@ export const NodeLinkPopUpMenu = ({
   const poperSelectItems = scenarioList?.map((item) => ({
     id: item.id,
     name: item.alias,
-    type: 'search' as ItemType,
+    // type: 'search' as ItemType,
     data: {
       action: handleMakingOtherFlow,
     },
@@ -196,17 +195,19 @@ export const NodeLinkPopUpMenu = ({
           cardBtn.map((item, i) => (
             <div key={i}>
               {item.value === 'OtherFlowRedirectNode' ? (
-                <div key={i}>
+                <div
+                  data-nodename={'Other Flow Redirect Node'}
+                  data-nodetype={'OtherFlowRedirectNode'}
+                >
                   <Popper
-                    popperItems={poperSelectItems}
                     placement="right-start"
                     offset={[200, 20]}
+                    popperItems={poperSelectItems}
+                    onChange={(m) => {
+                      m.data?.action?.();
+                    }}
                     popup
                     popupList
-                    onChange={(m) => {
-                      console.log('mm', m);
-                      // m.data?.action?.();
-                    }}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>
