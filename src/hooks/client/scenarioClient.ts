@@ -97,6 +97,29 @@ export const useScenarioClient = () => {
     },
   );
 
+  const scenarioActivateMutate = useMutation(
+    async ({
+      token,
+      flowId,
+      activated,
+    }: {
+      token: string;
+      flowId: string;
+      activated: boolean;
+    }) => {
+      const res = await http.post('/builder/activateflow', {
+        sessionToken: token,
+        flowId,
+        activated,
+      });
+
+      if (res) {
+        queryClient.invalidateQueries(['scenario-list', botId]);
+        return res;
+      }
+    },
+  );
+
   const scenarioDeleteMutate = useMutation(
     async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
       const res = await http.post('builder/deleteflow', {
@@ -118,5 +141,6 @@ export const useScenarioClient = () => {
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
+    scenarioActivaAsync: scenarioActivateMutate.mutateAsync,
   };
 };

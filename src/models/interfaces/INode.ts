@@ -1,3 +1,4 @@
+import { ConditionJoin } from '@models/enum';
 import { NodeKind } from '@models/enum/NodeKind';
 
 import {
@@ -10,6 +11,7 @@ import {
   IProductCardNode,
   TNodeTypes,
 } from './ICard';
+import { IConditionItem } from './res/IGetFlowRes';
 
 export interface INode {
   id: string;
@@ -19,7 +21,7 @@ export interface INode {
   nodeKind: NodeKind;
   x: number;
   y: number;
-  view?: ITextView;
+  view?: ITextView | IConditionView;
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]
@@ -32,4 +34,9 @@ export interface INode {
 
 export interface ITextView {
   text: string;
+}
+
+export interface IConditionView {
+  items: IConditionItem[];
+  join?: ConditionJoin;
 }

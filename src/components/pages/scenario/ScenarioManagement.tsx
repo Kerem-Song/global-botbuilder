@@ -3,15 +3,18 @@ import { SortableScenarioListContainer } from '@components/data-display/Sortable
 import { useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
-import { FC } from 'react';
+import { useEffect } from '@storybook/addons';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 
-export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
-  scenarios,
-}) => {
+export const ScenarioManagement: FC<{
+  scenarios?: IScenarioModel[];
+  isFetching: boolean;
+}> = ({ scenarios, isFetching }) => {
   const dispatch = useDispatch();
+  const [isActivated, setIsActivated] = useState(false);
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
 
@@ -19,14 +22,17 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
     (state) => state.botBuilderReducer.basicScenarios,
   );
 
-  const handleSwitch = () => {
+  const handleSwitch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsActivated(e.target.checked);
     console.log('switch toggle');
   };
+
+  console.log(isActivated);
 
   const handleNewScenario = async () => {
     await scenarioCreateAsync({
       token,
-      scenarioName: `scenario ${scenarios?.length || 1}`,
+      scenarioName: `scenario ${(scenarios?.length || 0) + 1}`,
     });
   };
 
@@ -65,14 +71,20 @@ export const ScenarioManagement: FC<{ scenarios?: IScenarioModel[] }> = ({
       </div>
 
       <div className="scenarioListWrapper">
-        <Space gap="small" direction="vertical">
-          {scenarios ? (
-            // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
-            <SortableScenarioListContainer scenarioList={scenarios} />
-          ) : (
-            <div className="noResults"></div>
-          )}
-        </Space>
+        {isFetching ? (
+          <></>
+        ) : (
+          <Space gap="small" direction="vertical">
+            {scenarios ? (
+              // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
+              <SortableScenarioListContainer
+                scenarioList={scenarios.filter((x) => !isActivated || x.activated)}
+              />
+            ) : (
+              <div className="noResults"></div>
+            )}
+          </Space>
+        )}
       </div>
       <div className="search">
         <Input placeholder="시나리오명을 입력해주세요. " search />

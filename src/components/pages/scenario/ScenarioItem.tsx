@@ -19,7 +19,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const [isSelected, setIsSelected] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botBuilderReducer.token);
-  const { scenarioDeleteAsync, scenarioRenameAsync } = useScenarioClient();
+  const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActivaAsync } =
+    useScenarioClient();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -29,8 +30,9 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     }
   }, [isEditing]);
 
-  const handleSwitch = () => {
-    console.log('switch toggle');
+  const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    await scenarioActivaAsync({ token, flowId: item.id, activated: e.target.checked });
+    //console.log('switch toggle');
   };
 
   const handleScenarioDelete = async () => {
@@ -101,7 +103,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     <Card
       key={item.id}
       radius="small"
-      bodyStyle={{ padding: '8px 12px' }}
+      bodyStyle={{ padding: '8px 12px', cursor: 'pointer' }}
       onClick={() => {
         dispatch(setSelectedScenario(item));
       }}
@@ -129,7 +131,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             {item.alias}
           </Col>
           <Col className="scenarioListSwitch">
-            <Switch onChange={handleSwitch} />
+            <Switch onChange={handleSwitch} checked={item.activated} />
           </Col>
           <Col>
             <Popper

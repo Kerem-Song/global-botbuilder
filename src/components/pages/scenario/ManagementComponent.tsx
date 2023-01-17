@@ -12,7 +12,7 @@ export const ManagementComponent = () => {
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오';
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
+  const { data, isFetching } = getScenarioList(token);
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };
@@ -26,18 +26,22 @@ export const ManagementComponent = () => {
         </p>
         <div className="scenarioNameTabs">
           <div
-            className={classNames('tab scenario', scenarioTab ? 'on' : '')}
+            className={classNames('tab scenario', { on: scenarioTab })}
             onClick={handleScenarioNameTags}
             role="presentation"
           ></div>
           <div
-            className={classNames('tab variable', scenarioTab ? '' : 'on')}
+            className={classNames('tab variable', { on: !scenarioTab })}
             onClick={handleScenarioNameTags}
             role="presentation"
           ></div>
         </div>
       </div>
-      {scenarioTab ? <ScenarioManagement scenarios={data} /> : <VariablesManagement />}
+      {scenarioTab ? (
+        <ScenarioManagement scenarios={data} isFetching={isFetching} />
+      ) : (
+        <VariablesManagement />
+      )}
     </div>
   );
 };

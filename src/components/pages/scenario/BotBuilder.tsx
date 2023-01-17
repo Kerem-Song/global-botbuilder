@@ -233,7 +233,7 @@ export const Botbuilder = () => {
                   key={item.id}
                   title={item.title}
                   cards={item.cards}
-                  items={item}
+                  node={item}
                   active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}
                   addArrow={(arrow: IArrow) => {

@@ -15,7 +15,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { IScenarioModel } from '@models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SortableScenarioListItem } from './SortableScenarioListItem';
 
@@ -24,7 +24,11 @@ interface ISortableContainer {
 }
 
 export const SortableScenarioListContainer = ({ scenarioList }: ISortableContainer) => {
-  const [list, setList] = useState(scenarioList);
+  const [list, setList] = useState<IScenarioModel[]>();
+
+  useEffect(() => {
+    setList(scenarioList);
+  }, [scenarioList]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

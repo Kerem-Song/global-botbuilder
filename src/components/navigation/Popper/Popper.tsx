@@ -124,7 +124,8 @@ export const Popper = <T extends object>({
         className="popper"
         ref={referenceElement}
         role="presentation"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           handlePopper();
         }}
         onMouseLeave={handleLazyHide}

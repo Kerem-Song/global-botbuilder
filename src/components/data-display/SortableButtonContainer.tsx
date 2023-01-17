@@ -101,7 +101,7 @@ export const SortableButtonContainer = ({
                   nodeId={nodeId}
                   type="blue"
                   key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
-                  index={item.type === 'AnswerNode' ? i : undefined}
+                  offset={item.type === 'AnswerNode' ? i * 40 + 66 : undefined}
                 />
               </div>
             ),

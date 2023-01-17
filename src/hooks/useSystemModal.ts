@@ -20,6 +20,16 @@ export const useSystemModal = () => {
     );
   };
 
+  const error = (args: IInfoModal) => {
+    dispatch(
+      systemModalOpen({
+        message: args.title,
+        description: args.description,
+        confirmButton: 'OK',
+      }),
+    );
+  };
+
   const confirm = (args: IInfoModal): Promise<boolean | undefined> => {
     return new Promise((resolve) => {
       dispatch(
@@ -41,5 +51,5 @@ export const useSystemModal = () => {
       );
     });
   };
-  return { info, confirm };
+  return { info, confirm, error };
 };
