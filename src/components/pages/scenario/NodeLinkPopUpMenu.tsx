@@ -195,7 +195,7 @@ export const NodeLinkPopUpMenu = ({
   const poperSelectItems = scenarioList?.map((item) => ({
     id: item.id,
     name: item.alias,
-    // type: 'search' as ItemType,
+    type: 'search' as ItemType,
     data: {
       action: handleMakingOtherFlow,
     },
@@ -222,10 +222,7 @@ export const NodeLinkPopUpMenu = ({
           cardBtn.map((item, i) => (
             <div key={i}>
               {item.value === 'OtherFlowRedirectNode' ? (
-                <div
-                  data-nodename={'Other Flow Redirect Node'}
-                  data-nodetype={'OtherFlowRedirectNode'}
-                >
+                <div>
                   <Popper
                     placement="right-start"
                     offset={[200, 20]}
