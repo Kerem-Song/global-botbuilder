@@ -26,12 +26,12 @@ export const ManagementComponent = () => {
         </p>
         <div className="scenarioNameTabs">
           <div
-            className={classNames('tab scenario', scenarioTab ? 'on' : '')}
+            className={classNames('tab scenario', { on: scenarioTab })}
             onClick={handleScenarioNameTags}
             role="presentation"
           ></div>
           <div
-            className={classNames('tab variable', scenarioTab ? '' : 'on')}
+            className={classNames('tab variable', { on: !scenarioTab })}
             onClick={handleScenarioNameTags}
             role="presentation"
           ></div>
