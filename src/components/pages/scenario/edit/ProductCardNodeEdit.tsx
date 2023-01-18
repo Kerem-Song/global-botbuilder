@@ -156,7 +156,7 @@ export const ProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">브랜드 이름</span>
-            <Input {...register(`view.brandName`)} value={values.view.brandName || ''} />
+            <Input {...register(`view.brandName`)} value={values.view?.brandName || ''} />
           </Space>
         </div>
       </div>
@@ -173,16 +173,16 @@ export const ProductCardNodeEdit = () => {
             </p>
             <Input
               {...register(`view.productName`)}
-              value={values.view.productName || ''}
+              value={values.view?.productName || ''}
             />
             <p className="m-b-8">
               <span className="label">가격</span>
               <span className="required">*</span>
             </p>
-            <p className="m-b-8">
+            <div className="m-b-8">
               <Row justify="space-between">
                 <Col span={17}>
-                  <Input {...register(`view.price`)} value={values.view.price || ''} />
+                  <Input {...register(`view.price`)} value={values.view?.price || ''} />
                 </Col>
                 <Col>
                   <Select
@@ -192,12 +192,12 @@ export const ProductCardNodeEdit = () => {
                   />
                 </Col>
               </Row>
-            </p>
+            </div>
 
             <span className="label">할인</span>
             <Input
               {...register(`view.discountPrice`)}
-              value={values.view.discountPrice}
+              value={values.view?.discountPrice}
             />
           </Space>
         </div>
