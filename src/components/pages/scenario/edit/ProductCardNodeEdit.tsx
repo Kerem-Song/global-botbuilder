@@ -1,7 +1,7 @@
 import { icImg } from '@assets';
 import { Col, Divider, Input, Radio, Row, Space } from '@components';
 import { IButtonType } from '@models';
-import { useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 const currencyOptions = [
@@ -73,9 +73,14 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ProductCardNodeEdit = () => {
-  const { register, getValues } = useFormContext();
+  const { register, getValues, control } = useFormContext();
   const values = getValues();
   console.log('value.view', values.view);
+
+  const { field: currencyField } = useController({
+    name: `view.currency`,
+    control,
+  });
   return (
     <>
       <div className="node-item-wrap">
@@ -189,9 +194,14 @@ export const ProductCardNodeEdit = () => {
                 </Col>
                 <Col>
                   <Select
+                    {...currencyField}
                     options={currencyOptions}
                     styles={reactSelectStyle}
                     defaultValue={currencyOptions[0]}
+                    value={currencyOptions.find(
+                      (item) => item.value === currencyField.value,
+                    )}
+                    onChange={(options: any) => currencyField.onChange(options?.value)}
                   />
                 </Col>
               </Row>
