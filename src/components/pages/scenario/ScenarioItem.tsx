@@ -18,7 +18,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botBuilderReducer.token);
-  const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActivaAsync } =
+  const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActiveAsync } =
     useScenarioClient();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   }, [isEditing]);
 
   const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await scenarioActivaAsync({ token, flowId: item.id, activated: e.target.checked });
+    await scenarioActiveAsync({ token, flowId: item.id, activated: e.target.checked });
     //console.log('switch toggle');
   };
 

@@ -11,7 +11,7 @@ import {
   IProductCardNode,
   TNodeTypes,
 } from './ICard';
-import { IConditionItem } from './res/IGetFlowRes';
+import { IConditionItem, IViewBase } from './res/IGetFlowRes';
 
 export interface INode {
   id: string;
@@ -21,7 +21,7 @@ export interface INode {
   nodeKind: NodeKind;
   x: number;
   y: number;
-  view?: ITextView | IConditionView;
+  view?: IViewBase;
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]
@@ -30,13 +30,4 @@ export interface INode {
     | IConditionNode[]
     | ICountNode[]
     | IOtherFlowRedirectNode[];
-}
-
-export interface ITextView {
-  text: string;
-}
-
-export interface IConditionView {
-  items: IConditionItem[];
-  join?: ConditionJoin;
 }

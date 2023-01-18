@@ -1,7 +1,7 @@
 import { defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
-import { useRootState } from '@hooks';
+import { useRootState, useScenarioClient } from '@hooks';
 import { getNodeKind, NODE_TYPES, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
 import React, { useState } from 'react';
@@ -54,8 +54,19 @@ export const BotBuilderHeader = () => {
   const cardNum = useRootState(
     (state) => state.makingNodeSliceReducer.present.nodes,
   ).length;
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const selectedScenario = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
 
   const dispatch = useDispatch();
+  const { scenarioSaveAsync } = useScenarioClient();
+
+  const handleScenarioSave = () => {
+    if (token && selectedScenario) {
+      scenarioSaveAsync({ token, scenarioId: selectedScenario.id });
+    }
+  };
 
   const handleMakingChatbubbleClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -153,7 +164,7 @@ export const BotBuilderHeader = () => {
         </div>
       </div>
       <div className="saveBtn">
-        <Button small type="primary">
+        <Button small type="primary" onClick={handleScenarioSave}>
           Save
         </Button>
       </div>

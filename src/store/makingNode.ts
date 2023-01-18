@@ -7,7 +7,14 @@ import {
   INodeEditModel,
   ITextViewModel,
 } from '@models/interfaces/INodeEditModel';
-import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
+import {
+  ACTION_TYPES,
+  IAnswerNode,
+  IConditionNode,
+  INodeBase,
+  INodeRes,
+  ITextNode,
+} from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IBuilderInfo {
@@ -20,7 +27,7 @@ const initialState: IBuilderInfo = {
   arrows: [],
 };
 
-const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
+const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
   const arrows: IArrow[] = [];
   const result: INode = {
     id: node.id,
@@ -31,11 +38,21 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
     nodeKind: node.nodeKind,
   };
 
-  if (
-    node.nextNodeId &&
-    node.nodeKind !== NodeKind.InputNode &&
-    node.typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
-  ) {
+  // if (
+  //   node.nextNodeId &&
+  //   node.nodeKind !== NodeKind.InputNode &&
+  //   node.typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
+  // ) {
+  //   arrows.push({
+  //     start: `next-${node.id}`,
+  //     updateKey: `node-${node.id}`,
+  //     end: `node-${node.nextNodeId}`,
+  //     isNextNode: true,
+  //     type: 'blue',
+  //   });
+  // }
+
+  if (node.typeName === NODE_TYPES.INTENT_NODE) {
     arrows.push({
       start: `next-${node.id}`,
       updateKey: `node-${node.id}`,
@@ -45,130 +62,181 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
     });
   }
 
-  if (node.view) {
-    if (node.view.typeName === VIEW_TYPES.TEXT_VIEW) {
-      result.view = { text: node.view.text || '' };
-      result.cards = [{ type: NODE_TYPES.TEXT_NODE, description: node.view.text || '' }];
-    }
+  if (node.typeName === NODE_TYPES.ANSWER_NODE) {
+    const answerNode: IAnswerNode = node as IAnswerNode;
+    result.cards = answerNode.view.quicks.map((x) => {
+      if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT) {
+        arrows.push({
+          start: `next-${x.id}`,
+          updateKey: `node-${node.id}`,
+          end: `node-${x.actionValue}`,
+          isNextNode: true,
+          type: 'blue',
+        });
+      }
+      return {
+        type: NODE_TYPES.ANSWER_NODE,
+        id: x.id,
+        label: x.label,
+        action: x.actionType as 'message',
+      };
+    });
+  }
 
-    if (
-      node.view.typeName === VIEW_TYPES.BASIC_CARD_CAROUSEL_VIEW &&
-      node.view.childrenViews &&
-      node.view.childrenViews.length > 0
-    ) {
-      result.cards = node.view.childrenViews.map((x) => {
-        return {
-          type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-          title: x.title || '',
-          thumbnail: {
-            imageUrl: x.imageCtrl?.imageUrl,
-          },
-          buttons: x.buttons.map((b) => {
-            if (b.actionType === 'lunaNodeRedirect') {
-              arrows.push({
-                start: `next-${b.id}`,
-                updateKey: `node-${node.id}`,
-                end: `node-${b.actionValue}`,
-                isNextNode: true,
-                type: 'blue',
-              });
-            }
-            return {
-              id: b.id,
-              label: b.label,
-              actionValue: b.actionValue,
-              action: b.actionType as 'linkWebUrl',
-            };
-          }),
-        };
+  if (node.typeName === NODE_TYPES.CONDITION_NODE) {
+    const conditionNode: IConditionNode = node as IConditionNode;
+    result.view = conditionNode.view;
+
+    if (conditionNode.view.falseThenNextNodeId) {
+      arrows.push({
+        start: `next-node-${node.id}-false`,
+        updateKey: `node-${node.id}`,
+        end: `node-${conditionNode.view.falseThenNextNodeId}`,
+        isNextNode: true,
+        type: 'red',
       });
     }
 
-    if (node.view.typeName === VIEW_TYPES.ANSWER_VIEW && node.view.quicks?.length) {
-      result.cards = node.view.quicks.map((x) => {
-        if (x.actionType === 'lunaNodeRedirect') {
-          arrows.push({
-            start: `next-${x.id}`,
-            updateKey: `node-${node.id}`,
-            end: `node-${x.actionValue}`,
-            isNextNode: true,
-            type: 'blue',
-          });
-        }
-        return {
-          type: NODE_TYPES.ANSWER_NODE,
-          id: x.id,
-          label: x.label,
-          action: x.actionType as 'message',
-        };
+    if (conditionNode.view.trueThenNextNodeId) {
+      arrows.push({
+        start: `next-node-${node.id}-true`,
+        updateKey: `node-${node.id}`,
+        end: `node-${conditionNode.view.trueThenNextNodeId}`,
+        isNextNode: true,
+        type: 'green',
       });
-    }
-
-    if (node.view.typeName === VIEW_TYPES.BASIC_CARD_VIEW) {
-      result.cards = [
-        {
-          type: NODE_TYPES.BASIC_CARD_NODE,
-          title: node.view.title,
-          description: node.view.description,
-          thumbnail: node.view.imageCtrl
-            ? {
-                imageUrl: node.view.imageCtrl.imageUrl,
-              }
-            : undefined,
-          buttons: node.view.buttons
-            ? node.view.buttons.map((b) => {
-                if (b.actionType === 'lunaNodeRedirect') {
-                  arrows.push({
-                    start: `next-${b.id}`,
-                    updateKey: `node-${node.id}`,
-                    end: `node-${b.actionValue}`,
-                    isNextNode: true,
-                    type: 'blue',
-                  });
-                }
-                return {
-                  id: b.id,
-                  label: b.label,
-                  actionValue: b.actionValue,
-                  action: b.actionType as 'linkWebUrl',
-                };
-              })
-            : undefined,
-        },
-      ];
-    }
-
-    if (node.view.typeName === VIEW_TYPES.JSON_REQUEST_VIEW) {
-      result.description = node.view.url;
-    }
-
-    if (node.view.typeName === VIEW_TYPES.CONDITION_VIEW) {
-      if (node.view.items) {
-        result.view = { items: node.view.items, join: node.view.join };
-      }
-
-      if (node.view.falseThenNextNodeId) {
-        arrows.push({
-          start: `next-node-${node.id}-false`,
-          updateKey: `node-${node.id}`,
-          end: `node-${node.view.falseThenNextNodeId}`,
-          isNextNode: true,
-          type: 'red',
-        });
-      }
-
-      if (node.view.trueThenNextNodeId) {
-        console.log(node.view.trueThenNextNodeId);
-        arrows.push({
-          start: `next-node-${node.id}-true`,
-          updateKey: `node-${node.id}`,
-          end: `node-${node.view.trueThenNextNodeId}`,
-          isNextNode: true,
-          type: 'green',
-        });
-      }
     }
   }
+
+  if (node.typeName === NODE_TYPES.TEXT_NODE) {
+    const textNode: ITextNode = node as ITextNode;
+    result.view = textNode.view;
+  }
+
+  // if (node.view) {
+  //   if (node.view.typeName === VIEW_TYPES.TEXT_VIEW) {
+  //     result.view = { text: node.view.text || '' };
+  //     result.cards = [{ type: NODE_TYPES.TEXT_NODE, description: node.view.text || '' }];
+  //   }
+
+  //   if (
+  //     node.view.typeName === VIEW_TYPES.BASIC_CARD_CAROUSEL_VIEW &&
+  //     node.view.childrenViews &&
+  //     node.view.childrenViews.length > 0
+  //   ) {
+  //     result.cards = node.view.childrenViews.map((x) => {
+  //       return {
+  //         type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+  //         title: x.title || '',
+  //         thumbnail: {
+  //           imageUrl: x.imageCtrl?.imageUrl,
+  //         },
+  //         buttons: x.buttons.map((b) => {
+  //           if (b.actionType === 'lunaNodeRedirect') {
+  //             arrows.push({
+  //               start: `next-${b.id}`,
+  //               updateKey: `node-${node.id}`,
+  //               end: `node-${b.actionValue}`,
+  //               isNextNode: true,
+  //               type: 'blue',
+  //             });
+  //           }
+  //           return {
+  //             id: b.id,
+  //             label: b.label,
+  //             actionValue: b.actionValue,
+  //             action: b.actionType as 'linkWebUrl',
+  //           };
+  //         }),
+  //       };
+  //     });
+  //   }
+
+  //   if (node.view.typeName === VIEW_TYPES.ANSWER_VIEW && node.view.quicks?.length) {
+  //     result.cards = node.view.quicks.map((x) => {
+  //       if (x.actionType === 'lunaNodeRedirect') {
+  //         arrows.push({
+  //           start: `next-${x.id}`,
+  //           updateKey: `node-${node.id}`,
+  //           end: `node-${x.actionValue}`,
+  //           isNextNode: true,
+  //           type: 'blue',
+  //         });
+  //       }
+  //       return {
+  //         type: NODE_TYPES.ANSWER_NODE,
+  //         id: x.id,
+  //         label: x.label,
+  //         action: x.actionType as 'message',
+  //       };
+  //     });
+  //   }
+
+  //   if (node.view.typeName === VIEW_TYPES.BASIC_CARD_VIEW) {
+  //     result.cards = [
+  //       {
+  //         type: NODE_TYPES.BASIC_CARD_NODE,
+  //         title: node.view.title,
+  //         description: node.view.description,
+  //         thumbnail: node.view.imageCtrl
+  //           ? {
+  //               imageUrl: node.view.imageCtrl.imageUrl,
+  //             }
+  //           : undefined,
+  //         buttons: node.view.buttons
+  //           ? node.view.buttons.map((b) => {
+  //               if (b.actionType === 'lunaNodeRedirect') {
+  //                 arrows.push({
+  //                   start: `next-${b.id}`,
+  //                   updateKey: `node-${node.id}`,
+  //                   end: `node-${b.actionValue}`,
+  //                   isNextNode: true,
+  //                   type: 'blue',
+  //                 });
+  //               }
+  //               return {
+  //                 id: b.id,
+  //                 label: b.label,
+  //                 actionValue: b.actionValue,
+  //                 action: b.actionType as 'linkWebUrl',
+  //               };
+  //             })
+  //           : undefined,
+  //       },
+  //     ];
+  //   }
+
+  //   if (node.view.typeName === VIEW_TYPES.JSON_REQUEST_VIEW) {
+  //     result.description = node.view.url;
+  //   }
+
+  //   if (node.view.typeName === VIEW_TYPES.CONDITION_VIEW) {
+  //     if (node.view.items) {
+  //       result.view = { items: node.view.items, join: node.view.join };
+  //     }
+
+  //     if (node.view.falseThenNextNodeId) {
+  //       arrows.push({
+  //         start: `next-node-${node.id}-false`,
+  //         updateKey: `node-${node.id}`,
+  //         end: `node-${node.view.falseThenNextNodeId}`,
+  //         isNextNode: true,
+  //         type: 'red',
+  //       });
+  //     }
+
+  //     if (node.view.trueThenNextNodeId) {
+  //       console.log(node.view.trueThenNextNodeId);
+  //       arrows.push({
+  //         start: `next-node-${node.id}-true`,
+  //         updateKey: `node-${node.id}`,
+  //         end: `node-${node.view.trueThenNextNodeId}`,
+  //         isNextNode: true,
+  //         type: 'green',
+  //       });
+  //     }
+  //   }
+  // }
   return { node: result, arrows };
 };
 
@@ -176,7 +244,7 @@ export const makingNodeSlice = createSlice({
   name: 'makingNode',
   initialState,
   reducers: {
-    initNodes: (state, action: PayloadAction<INodeRes[] | undefined>) => {
+    initNodes: (state, action: PayloadAction<INodeBase[] | undefined>) => {
       const nodes = action.payload || [];
       const converted = nodes.map((x) => convert(x));
       state.nodes = converted.map((x) => x.node);

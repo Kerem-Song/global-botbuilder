@@ -4,11 +4,11 @@ import { ConditionJoin, ConditionOperator, INode } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
-interface Condition {
+interface IConditionNodeProps {
   nodeId: string;
   node: INode;
 }
-export const Condition: FC<Condition> = ({ nodeId, node }) => {
+export const ConditionNode: FC<IConditionNodeProps> = ({ nodeId, node }) => {
   const view: IConditionView = node.view as IConditionView;
   return (
     <Card>

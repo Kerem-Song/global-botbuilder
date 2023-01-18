@@ -1,6 +1,7 @@
+import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { setBasicScenarios } from '@store/botbuilderSlice';
+import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -17,6 +18,7 @@ export const useScenarioClient = () => {
   const dispatch = useDispatch();
   const http = useHttp();
   const { botId } = useParams();
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
   const getScenarioList = (token: string) => {
     return useQuery<IScenarioModel[]>(
@@ -41,6 +43,7 @@ export const useScenarioClient = () => {
               basicScenarios.push(startScenario);
             }
             dispatch(setBasicScenarios(basicScenarios));
+            dispatch(setSelectedScenario(fallbackScenario));
             return res.data.result
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
@@ -144,6 +147,28 @@ export const useScenarioClient = () => {
     },
   );
 
+  const scenarioSaveMutate = useMutation(
+    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+      const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
+      console.log(old);
+      nodes.forEach((node) => {
+        const oldNode = old?.nodes.find((x) => x.id === node.id);
+        if (oldNode) {
+          oldNode.top = node.y;
+          oldNode.left = node.x;
+        }
+      });
+      const res = await http.post('builder/updateflow', {
+        sessionToken: token,
+        flow: old,
+      });
+      if (res) {
+        queryClient.invalidateQueries(['scenario', scenarioId]);
+        return res;
+      }
+    },
+  );
+
   return {
     getScenarioList,
     getCachedScenarioList,
@@ -151,6 +176,7 @@ export const useScenarioClient = () => {
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
-    scenarioActivaAsync: scenarioActivateMutate.mutateAsync,
+    scenarioActiveAsync: scenarioActivateMutate.mutateAsync,
+    scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
   };
 };

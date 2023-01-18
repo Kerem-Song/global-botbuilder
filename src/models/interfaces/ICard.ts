@@ -68,6 +68,7 @@ export const NODE_TYPES = {
   COUNT: 'Count',
 } as const;
 
+export type TViewTypes = ValueOf<typeof VIEW_TYPES>;
 export type TNodeTypes = ValueOf<typeof NODE_TYPES>;
 export const getNodeKind = (nodeType: TNodeTypes) => {
   switch (nodeType) {

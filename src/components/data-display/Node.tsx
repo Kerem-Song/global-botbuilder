@@ -1,9 +1,13 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
+import { CountNode } from '@components/pages/scenario/nodes/CountNode';
+import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
+import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -151,16 +155,11 @@ export const Node: FC<INodeProps> = ({
   const handleShowingNodesWithoutCards = (typeName: INodeProps['typeName']) => {
     switch (typeName) {
       case NODE_TYPES.INTENT_NODE:
-        return (
-          <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
-          </div>
-        );
+        return <IntentNode id={id} />;
       case NODE_TYPES.CONDITION_NODE:
-        return <Condition nodeId={`node-${id}`} node={node} />;
+        return <ConditionNode nodeId={`node-${id}`} node={node} />;
       case NODE_TYPES.COUNT:
-        return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
-
+        return <CountNode nodeId={`node-${id}`} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSet id={id} values={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:
@@ -170,16 +169,26 @@ export const Node: FC<INodeProps> = ({
           </div>
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return <OtherFlowRedirectCard id={id} values={node} />;
+        return <OtherFlowRedirectCard />;
+      case NODE_TYPES.TEXT_NODE:
+        return handleShowingCards([]);
       default:
         return <div></div>;
     }
   };
 
-  const handleShowingCards = (
-    cards: INodeProps['cards'],
-    typeName: INodeProps['typeName'],
-  ) => {
+  const handleShowingCards = (cards: INodeProps['cards']) => {
+    if (node.type === NODE_TYPES.TEXT_NODE) {
+      const view = node.view as ITextView;
+      console.log(node);
+      if (view) {
+        const textCards: IBasicCardNode[] = [
+          { type: NODE_TYPES.TEXT_NODE, description: view.text },
+        ];
+        return <BasicCard cards={textCards} nodeId={`node-${id}`} />;
+      }
+    }
+
     if (!cards) {
       return <div></div>;
     }
@@ -275,7 +284,7 @@ export const Node: FC<INodeProps> = ({
       </div>
       <div className={bodyClass}>
         {cards ? (
-          <>{handleShowingCards(cards, typeName)}</>
+          <>{handleShowingCards(cards)}</>
         ) : (
           handleShowingNodesWithoutCards(typeName)
         )}
