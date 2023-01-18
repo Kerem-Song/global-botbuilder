@@ -193,6 +193,7 @@ export interface IAnswerNode {
   action: 'message' | 'block';
   messageText?: string;
   blockId?: string;
+  allowRes?: boolean;
   extra?: Record<string, any>;
 }
 

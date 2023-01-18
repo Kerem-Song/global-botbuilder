@@ -4,7 +4,12 @@ export interface INodeEditModel {
   id: string;
   caption: string;
   title: string;
-  view: ITextViewModel | IBasicCardViewModel | IListCardViewModel | IProductCardViewModel;
+  view:
+    | ITextViewModel
+    | IBasicCardViewModel
+    | IListCardViewModel
+    | IProductCardViewModel
+    | IAnswerViewModel;
 }
 
 export interface ITextViewModel {
@@ -35,4 +40,11 @@ export interface IProductCardViewModel {
   thumbnail?: IThumbnailType;
   profile?: Profile;
   buttons?: IButtonType[];
+}
+
+export interface IAnswerViewModel {
+  allowRes: boolean;
+  extra?: Record<string, any>;
+  label?: string;
+  action?: 'message' | 'block';
 }

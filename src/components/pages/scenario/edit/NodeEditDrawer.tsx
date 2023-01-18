@@ -1,6 +1,12 @@
 import { Input } from '@components';
 import { useRootState } from '@hooks';
-import { IBasicCardNode, IListCardNode, IProductCardNode, NODE_TYPES } from '@models';
+import {
+  IAnswerNode,
+  IBasicCardNode,
+  IListCardNode,
+  IProductCardNode,
+  NODE_TYPES,
+} from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
@@ -9,6 +15,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
+import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
@@ -96,6 +103,18 @@ export const NodeEditDrawer = () => {
           };
         }
       }
+
+      if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
+        const card: IAnswerNode = selectedNode.cards?.[0] as IAnswerNode;
+        if (card) {
+          model.view = {
+            allowRes: card.allowRes || false,
+            label: card.label,
+            action: card.action,
+            extra: card.extra,
+          };
+        }
+      }
       reset(model);
     } else {
       handleSubmit(onSubmit)();
@@ -114,6 +133,8 @@ export const NodeEditDrawer = () => {
         return <ListCardNodeEdit />;
       case 'ProductCardNode':
         return <ProductCardNodeEdit />;
+      case 'AnswerNode':
+        return <AnswerNodeEdit />;
       default:
         <></>;
     }

@@ -1,4 +1,4 @@
-import { IArrow, INode } from '@models';
+import { IAnswerNode, IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import {
   IBasicCardNode,
@@ -8,6 +8,7 @@ import {
   VIEW_TYPES,
 } from '@models/interfaces/ICard';
 import {
+  IAnswerViewModel,
   IBasicCardViewModel,
   IListCardViewModel,
   INodeEditModel,
@@ -224,39 +225,55 @@ export const makingNodeSlice = createSlice({
         const nodes = [...state.nodes];
         const index = nodes.indexOf(matched);
         const old = nodes[index];
-        if (old.type === NODE_TYPES.TEXT_NODE) {
-          const card = old.cards?.[0] as IBasicCardNode;
-          const view = node.view as ITextViewModel;
-          card.description = view.text;
-        }
 
-        if (old.type === NODE_TYPES.BASIC_CARD_NODE) {
-          const card = old.cards?.[0] as IBasicCardNode;
-          const view = node.view as IBasicCardViewModel;
-          card.title = view.title;
-          card.description = view.description;
-          card.buttons = [...(view.buttons || [])];
-        }
+        switch (old.type) {
+          case NODE_TYPES.TEXT_NODE: {
+            const card = old.cards?.[0] as IBasicCardNode;
+            const view = node.view as ITextViewModel;
+            card.description = view.text;
+            break;
+          }
 
-        if (old.type === NODE_TYPES.LIST_CARD_NODE) {
-          const card = old.cards?.[0] as IListCardNode;
-          const view = node.view as IListCardViewModel;
-          card.header!.title = view.header?.title;
-          card.items = [...(view.items || [])];
-          card.buttons = [...(view.buttons || [])];
-        }
+          case NODE_TYPES.BASIC_CARD_NODE: {
+            const card = old.cards?.[0] as IBasicCardNode;
+            const view = node.view as IBasicCardViewModel;
+            card.title = view.title;
+            card.description = view.description;
+            card.buttons = [...(view.buttons || [])];
+            break;
+          }
 
-        if (old.type === NODE_TYPES.PRODUCT_CARD_NODE) {
-          const card = old.cards?.[0] as IProductCardNode;
-          const view = node.view as IProductCardViewModel;
-          card.thumbnail = view.thumbnail;
-          card.profile!.brandName = view.profile?.brandName;
-          card.profile!.imageUrl = view.profile?.imageUrl;
-          card.productName = view.productName;
-          card.price = view.price;
-          card.currency = view.currency;
-          card.discount = view.discount;
-          card.buttons = [...(view.buttons || [])];
+          case NODE_TYPES.LIST_CARD_NODE: {
+            const card = old.cards?.[0] as IListCardNode;
+            const view = node.view as IListCardViewModel;
+            card.header!.title = view.header?.title;
+            card.items = [...(view.items || [])];
+            card.buttons = [...(view.buttons || [])];
+            break;
+          }
+
+          case NODE_TYPES.PRODUCT_CARD_NODE: {
+            const card = old.cards?.[0] as IProductCardNode;
+            const view = node.view as IProductCardViewModel;
+            card.thumbnail = view.thumbnail;
+            card.profile!.brandName = view.profile?.brandName;
+            card.profile!.imageUrl = view.profile?.imageUrl;
+            card.productName = view.productName;
+            card.price = view.price;
+            card.currency = view.currency;
+            card.discount = view.discount;
+            card.buttons = [...(view.buttons || [])];
+            break;
+          }
+
+          case NODE_TYPES.ANSWER_NODE: {
+            const card = old.cards?.[0] as IAnswerNode;
+            const view = node.view as IAnswerViewModel;
+            card.allowRes = view.allowRes;
+            card.extra = view.extra;
+            card.label = view.label || '';
+            card.action = view.action || 'message';
+          }
         }
         nodes.splice(index, 1, { ...old, title: node.title });
         state.nodes = nodes;
