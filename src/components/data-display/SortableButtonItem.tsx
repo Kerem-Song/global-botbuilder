@@ -5,8 +5,6 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IButtonType } from '@models';
 import React, { useEffect } from 'react';
 
-import { NextNodeButton } from './NextNodeButton';
-
 interface ISortableButtonItem extends IButtonType {
   nodeId: string;
   cardId: number;

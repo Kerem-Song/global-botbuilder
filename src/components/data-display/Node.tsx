@@ -7,7 +7,7 @@ import { NodeKind } from '@models/enum/NodeKind';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
@@ -73,7 +73,6 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
-  const { tc } = useI18n();
   const dispatch = useDispatch();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const { updateLine } = useUpdateLines();
@@ -293,7 +292,7 @@ export const Node: FC<INodeProps> = ({
                 setGuideStartNode({ startId: `node-${id}`, isNext: false, type: 'blue' }),
               );
             }}
-            onDragEnd={(e) => {
+            onDragEnd={() => {
               dispatch(setGuideStartNode());
             }}
             onDrag={handleBottomDrag}

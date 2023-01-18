@@ -3,7 +3,6 @@ import { SortableScenarioListContainer } from '@components/data-display/Sortable
 import { useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
-import { useEffect } from '@storybook/addons';
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -11,8 +10,7 @@ import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 
 export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];
-  isFetching: boolean;
-}> = ({ scenarios, isFetching }) => {
+}> = ({ scenarios }) => {
   const dispatch = useDispatch();
   const [isActivated, setIsActivated] = useState(false);
   const token = useRootState((state) => state.botBuilderReducer.token);
@@ -24,10 +22,7 @@ export const ScenarioManagement: FC<{
 
   const handleSwitch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsActivated(e.target.checked);
-    console.log('switch toggle');
   };
-
-  console.log(isActivated);
 
   const handleNewScenario = async () => {
     await scenarioCreateAsync({

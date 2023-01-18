@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { CSSProperties, FC, useEffect } from 'react';
+import { CSSProperties, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';

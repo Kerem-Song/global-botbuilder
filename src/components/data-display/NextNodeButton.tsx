@@ -69,7 +69,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
         id={`next-${ctrlId}`}
         draggable
         onDragStart={StartDrag}
-        onDragEnd={(e) => {
+        onDragEnd={() => {
           dispatch(setGuideStartNode());
         }}
         onDrag={handleBottomDrag}

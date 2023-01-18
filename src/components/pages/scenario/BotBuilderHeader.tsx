@@ -51,7 +51,6 @@ const buttonNodes = [
 ];
 
 export const BotBuilderHeader = () => {
-  const [nodeName, setNodeName] = useState<string>();
   const cardNum = useRootState(
     (state) => state.makingNodeSliceReducer.present.nodes,
   ).length;

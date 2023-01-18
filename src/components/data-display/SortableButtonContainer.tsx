@@ -16,7 +16,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IAnswerNode, IButtonType } from '@models';
+import { IButtonType } from '@models';
 import { useEffect, useState } from 'react';
 
 import { NextNodeButton } from './NextNodeButton';

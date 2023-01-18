@@ -1,7 +1,6 @@
 import { useSystemModal } from '@hooks/useSystemModal';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 

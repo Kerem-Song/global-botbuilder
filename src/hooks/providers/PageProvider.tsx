@@ -1,7 +1,7 @@
 import { i18n } from 'i18next';
 import { createContext, FC } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
-import { NavigateFunction, NavigateOptions, To, useNavigate } from 'react-router';
+import { NavigateOptions, To, useNavigate } from 'react-router';
 
 import { IPageProps } from '../../models/interfaces/IPageProps';
 

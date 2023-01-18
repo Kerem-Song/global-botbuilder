@@ -16,7 +16,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActivaAsync } =
