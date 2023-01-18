@@ -1,32 +1,30 @@
 .checkboxContainer {
-  div {
-    display: flex;
-    align-items: center;
-    .checkbox {
-      appearance: none;
-      width: rem(20);
-      height: rem(20);
-      border: rem(1) solid $gray200;
-      border-radius: rem(6);
+  display: flex;
+  align-items: center;
+  .checkbox {
+    appearance: none;
+    width: rem(20);
+    height: rem(20);
+    border: rem(1) solid $gray200;
+    border-radius: rem(6);
+    cursor: pointer;
 
-      &:checked {
-        border-color: transparent;
-        background-image: url('/src/assets/icons/ic_check.svg');
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-color: $primary500;
-      }
-
-      &:disabled {
-        border-color: transparent;
-        background-image: url('/src/assets/icons/ic_check.svg');
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-color: $primary200;
-      }
+    &:checked {
+      border-color: transparent;
+      background-image: url('/src/assets/icons/ic_check.svg');
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-color: $primary500;
+      cursor: pointer;
     }
-    label {
-      padding-left: rem(3);
+
+    &:disabled {
+      border-color: transparent;
+      background-image: url('/src/assets/icons/ic_check.svg');
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-color: $primary200;
+      cursor: pointer;
     }
   }
 }

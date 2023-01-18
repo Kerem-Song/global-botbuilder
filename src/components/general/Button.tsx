@@ -9,6 +9,7 @@ export type ButtonShape = 'default' | 'circle' | 'round' | 'ghost';
 export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
   type?: 'default' | 'primary' | 'secondary';
   small?: boolean;
+  large?: boolean;
   shape?: ButtonShape;
   block?: boolean;
   label?: string;
@@ -30,6 +31,7 @@ export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
 export const Button: FC<ButtonProps> = ({
   type = 'default',
   small,
+  large,
   block,
   children,
   label,
@@ -65,6 +67,7 @@ export const Button: FC<ButtonProps> = ({
       'luna-btn-primary': type === 'primary',
       'luna-btn-secondary': type === 'secondary',
       'luna-btn-small': small,
+      'luna-btn-large': large,
       'luna-btn-ghost': shape === 'ghost',
     },
     className,
