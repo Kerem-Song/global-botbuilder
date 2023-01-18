@@ -1,6 +1,7 @@
 import { DefaultLayout } from '@components';
 import { BotLayout } from '@components/layout/BotLayout';
 import { Layout } from '@components/layout/Layout';
+import { UtteranceDetail } from '@components/pages/utterance/UtteranceDetail';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';
@@ -41,7 +42,19 @@ const finalRoutes = [
               errorElement: <>404</>,
               children: [
                 { path: 'scenario', element: <ScenarioPage /> },
-                { path: 'utterance', element: <UtterancePage /> },
+                {
+                  path: 'utterance',
+                  children: [
+                    {
+                      path: '',
+                      element: <UtterancePage />,
+                    },
+                    {
+                      path: ':utteranceId',
+                      element: <UtteranceDetail />,
+                    },
+                  ],
+                },
                 { path: 'data-api', element: <DataApiPage /> },
                 { path: 'deployment', element: <DeploymentPage /> },
                 { path: 'history', element: <HistoryPage /> },

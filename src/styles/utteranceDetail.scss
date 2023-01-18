@@ -1,0 +1,108 @@
+.utteranceDetailWrap {
+  padding-top: rem(40);
+  max-width: rem(1140);
+  margin-left: auto;
+  margin-right: auto;
+  .detailButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .deleteBtn {
+      background-color: #636364;
+      color: $grayWhite;
+      margin-right: rem(8);
+      &:hover {
+        background-color: $gray300;
+        color: $gray500;
+      }
+    }
+  }
+  .utterance {
+    background-color: $grayWhite;
+    padding: rem(20);
+    border: 1px solid $gray200;
+  }
+  .add {
+    margin-top: rem(20);
+    border-bottom: none;
+    border-top-left-radius: rem(8);
+    border-top-right-radius: rem(8);
+  }
+
+  .list {
+    border-bottom-left-radius: rem(8);
+    border-bottom-right-radius: rem(8);
+
+    form {
+      div {
+        display: flex;
+        align-items: center;
+
+        .utteranceItem {
+          width: 100%;
+          padding: rem(20);
+          height: rem(44);
+          border: 1px solid $gray200;
+          border-radius: rem(8);
+          margin-bottom: rem(4);
+          .item {
+            width: 100%;
+            margin-left: rem(12);
+            font-size: rem(13);
+            line-height: rem(16);
+          }
+          &:hover {
+            background-color: $primary100;
+            cursor: pointer;
+          }
+        }
+        .emptyList {
+          height: rem(207);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img {
+              width: rem(56);
+              height: rem(56);
+            }
+            span {
+              margin-top: rem(10);
+              font-size: rem(14);
+              font-weight: rem(500);
+              line-height: rem(25);
+            }
+          }
+        }
+        .title {
+          width: 78%;
+          font-size: rem(16);
+          font-weight: 500;
+        }
+        .icDelete {
+          width: rem(38);
+          height: rem(38);
+          padding: rem(8);
+          background-color: $grayWhite;
+          border: 1px solid $gray200;
+          border-radius: rem(8);
+          cursor: pointer;
+          background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+          &:hover {
+            background-color: $primary100;
+          }
+          &:disabled {
+            background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+            &:hover {
+              background-color: $grayWhite;
+            }
+          }
+        }
+      }
+    }
+  }
+}
