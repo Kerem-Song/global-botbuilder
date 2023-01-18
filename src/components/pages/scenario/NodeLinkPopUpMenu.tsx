@@ -137,7 +137,7 @@ export const NodeLinkPopUpMenu = ({
     );
     setCardBtn(filtered);
     setUserInput(input);
-    console.log('input', input);
+
     if (!data) {
       setCardBtn(cardTypeValue);
     }
@@ -218,6 +218,7 @@ export const NodeLinkPopUpMenu = ({
           {...register('cardType')}
           search
           onSearch={(data) => onSearch(data as string)}
+          value={userInput || ''}
         />
       </form>
 

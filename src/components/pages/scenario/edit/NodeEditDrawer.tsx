@@ -1,6 +1,6 @@
 import { Input } from '@components';
 import { useRootState } from '@hooks';
-import { IBasicCard, NODE_TYPES } from '@models';
+import { IBasicCard, IListCard, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
@@ -10,6 +10,7 @@ import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
+import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
@@ -63,6 +64,17 @@ export const NodeEditDrawer = () => {
           };
         }
       }
+
+      if (selectedNode.type === NODE_TYPES.LIST) {
+        const card: IListCard = selectedNode.cards?.[0] as IListCard;
+        if (card) {
+          model.view = {
+            header: { title: card.header?.title },
+            items: card.items,
+            buttons: card.buttons,
+          };
+        }
+      }
       reset(model);
     } else {
       handleSubmit(onSubmit)();
@@ -77,6 +89,8 @@ export const NodeEditDrawer = () => {
         return <TextNodeEdit />;
       case 'BasicCardNode':
         return <BasicCardNodeEdit />;
+      case 'ListNode':
+        return <ListCardNodeEdit />;
       default:
         <></>;
     }

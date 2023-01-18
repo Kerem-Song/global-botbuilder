@@ -144,6 +144,25 @@
         font-weight: 500;
         color: $red;
       }
+
+      .img {
+        width: rem(64);
+        height: rem(64);
+        background-image: url('@assets/icons/ic_img.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: $grayWhite;
+        border: rem(1) dashed $gray200;
+        border-radius: rem(6);
+      }
+
+      .addBtn {
+        width: 100%;
+        height: rem(40);
+        background-color: $grayWhite;
+        border: rem(1) dashed #B5B4B4;
+        border-radius: rem(8);
+      }
     }
   }
 }

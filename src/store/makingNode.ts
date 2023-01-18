@@ -1,8 +1,9 @@
 import { IArrow, INode, ITextView } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
-import { IBasicCard, NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
+import { IBasicCard, IListCard, NODE_TYPES, VIEW_TYPES } from '@models/interfaces/ICard';
 import {
   IBasicCardViewModel,
+  IListCardViewModel,
   INodeEditModel,
   ITextViewModel,
 } from '@models/interfaces/INodeEditModel';
@@ -232,6 +233,15 @@ export const makingNodeSlice = createSlice({
           card.buttons = [...(view.buttons || [])];
         }
 
+        if (old.type === NODE_TYPES.LIST) {
+          const card = old.cards?.[0] as IListCard;
+          console.log('old list', card.items);
+          const view = node.view as IListCardViewModel;
+          console.log('old list view', view.items);
+          card.header!.title = view.header?.title;
+          card.items = [...(view.items || [])];
+          card.buttons = [...(view.buttons || [])];
+        }
         nodes.splice(index, 1, { ...old, title: node.title });
         state.nodes = nodes;
       }
