@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
-import { idGen } from '../../../modules';
+import { ID_GEN } from '../../../modules';
 import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
@@ -144,7 +144,7 @@ export const Botbuilder = () => {
     const addCard = defaultNode(cardType);
 
     const addNode = {
-      id: idGen.generate('node'),
+      id: ID_GEN.generate('node'),
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
@@ -248,9 +248,6 @@ export const Botbuilder = () => {
             <NodeLinkPopUpMenu
               handleIsOpen={handleIsOpen}
               popUpPosition={popUpPosition}
-              addArrow={(arrow: IArrow) => {
-                handleAddArrows(arrow);
-              }}
             />
           )}
         </div>

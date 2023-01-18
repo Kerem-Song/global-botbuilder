@@ -71,20 +71,16 @@ export const ScenarioManagement: FC<{
       </div>
 
       <div className="scenarioListWrapper">
-        {isFetching ? (
-          <></>
-        ) : (
-          <Space gap="small" direction="vertical">
-            {scenarios ? (
-              // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
-              <SortableScenarioListContainer
-                scenarioList={scenarios.filter((x) => !isActivated || x.activated)}
-              />
-            ) : (
-              <div className="noResults"></div>
-            )}
-          </Space>
-        )}
+        <Space gap="small" direction="vertical">
+          {scenarios ? (
+            // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
+            <SortableScenarioListContainer
+              scenarioList={scenarios.filter((x) => !isActivated || x.activated)}
+            />
+          ) : (
+            <div className="noResults"></div>
+          )}
+        </Space>
       </div>
       <div className="search">
         <Input placeholder="시나리오명을 입력해주세요. " search />

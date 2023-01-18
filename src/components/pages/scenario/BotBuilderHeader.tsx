@@ -7,7 +7,7 @@ import { appendNode } from '@store/makingNode';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { idGen } from '../../../modules';
+import { ID_GEN } from '../../../modules';
 
 const singleNodes = [
   { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
@@ -72,7 +72,7 @@ export const BotBuilderHeader = () => {
     const viewRect = view?.getBoundingClientRect();
 
     const addNode = {
-      id: idGen.generate('node'),
+      id: ID_GEN.generate('node'),
       type: cardType,
       title: nodeName,
       cards: addCard,

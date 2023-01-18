@@ -1,8 +1,16 @@
-export type IdType = 'node' | 'view' | 'ctrl';
+export const ID_TYPES = {
+  NODE: 'node',
+  VIEW: 'VIEW',
+  CTRL: 'ctrl',
+} as const;
+
+export type IdType = typeof ID_TYPES[keyof typeof ID_TYPES];
+
 const rnd = () => {
   return Math.floor(Math.random() * 61439) + 4096;
 };
-export const idGen = {
+
+export const ID_GEN = {
   generate: (prefix: IdType) => {
     let resultPreFix: string = prefix;
 

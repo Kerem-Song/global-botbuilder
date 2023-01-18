@@ -10,6 +10,8 @@ import { ActionCreators } from 'redux-undo';
 
 import { useHttp } from '../useHttp';
 
+const SCENARIO_LIST = 'scenario-list';
+
 export const useScenarioClient = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ export const useScenarioClient = () => {
 
   const getScenarioList = (token: string) => {
     return useQuery<IScenarioModel[]>(
-      ['scenario-list', botId],
+      [SCENARIO_LIST, botId],
       () =>
         http
           .post<string, AxiosResponse<IHasResults<IScenarioModel>>>(
@@ -45,6 +47,13 @@ export const useScenarioClient = () => {
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
+  };
+
+  const getCachedScenarioList = (botId?: string): IScenarioModel[] | undefined => {
+    if (!botId) {
+      return undefined;
+    }
+    return queryClient.getQueryData<IScenarioModel[]>(['scenario-list', botId]);
   };
 
   const getScenario = (token: string, scenarioId?: string) => {
@@ -91,7 +100,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
-        queryClient.invalidateQueries(['scenario-list', botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
     },
@@ -114,7 +123,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
-        queryClient.invalidateQueries(['scenario-list', botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
     },
@@ -129,7 +138,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
-        queryClient.invalidateQueries(['scenario-list', botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
     },
@@ -137,6 +146,7 @@ export const useScenarioClient = () => {
 
   return {
     getScenarioList,
+    getCachedScenarioList,
     getScenario,
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,

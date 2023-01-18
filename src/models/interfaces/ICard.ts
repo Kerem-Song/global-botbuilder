@@ -71,19 +71,19 @@ export const NODE_TYPES = {
 export type TNodeTypes = ValueOf<typeof NODE_TYPES>;
 export const getNodeKind = (nodeType: TNodeTypes) => {
   switch (nodeType) {
-    case 'AnswerNode':
+    case NODE_TYPES.ANSWER_NODE:
       return NodeKind.AnswerNode;
-    case 'BasicCardCarouselNode':
-    case 'BasicCardCarouselTemplateNode':
-    case 'BasicCardNode':
-    case 'ImageNode':
-    case 'ListCarouselNode':
-    case 'ListNode':
-    case 'ProductCardCarouselNode':
-    case 'ProductCardCarouselTemplateNode':
-    case 'ProductCardNode':
-    case 'ProductCardTemplateNode':
-    case 'TextNode':
+    case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+    case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
+    case NODE_TYPES.BASIC_CARD_NODE:
+    case NODE_TYPES.IMAGE_NODE:
+    case NODE_TYPES.LIST_CAROUSEL:
+    case NODE_TYPES.LIST:
+    case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+    case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
+    case NODE_TYPES.PRODUCT_CARD_NODE:
+    case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:
+    case NODE_TYPES.TEXT_NODE:
       return NodeKind.InputNode;
     default:
       return NodeKind.CommandNode;

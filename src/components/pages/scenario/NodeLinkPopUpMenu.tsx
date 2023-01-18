@@ -2,25 +2,19 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { IPopperItem, ItemType, Popper } from '@components/navigation';
+import { ItemType, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import {
-  getNodeKind,
-  IArrow,
-  IScenarioModel,
-  NODE_TYPES,
-  TCardsValues,
-  TNodeTypes,
-} from '@models';
+import { getNodeKind, INode, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
 import { GuideInfo } from '@store/botbuilderSlice';
-import { appendNode } from '@store/makingNode';
+import { addArrow, appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
-import { idGen } from '../../../modules';
+import { ID_GEN, ID_TYPES } from '../../../modules';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -29,7 +23,6 @@ interface INodeLinkPopUpFormValue {
 interface INodeLinkPopUpMenuProps {
   popUpPosition: { x: number; y: number };
   handleIsOpen: (value: boolean) => void;
-  addArrow?: (arrow: IArrow) => void;
 }
 
 const cardTypeValue = [
@@ -70,20 +63,31 @@ const cardTypeValue = [
 export const NodeLinkPopUpMenu = ({
   popUpPosition,
   handleIsOpen,
-  addArrow,
 }: INodeLinkPopUpMenuProps) => {
+  const { botId } = useParams();
   const [userInput, setUserInput] = useState<string | null>(null);
-  const [start, setStart] = useState<GuideInfo | null>();
   const dispatch = useDispatch();
   const [cardBtn, setCardBtn] = useState(cardTypeValue);
+  const [scenarioList, setScenarioList] = useState<
+    {
+      id: string;
+      name: string;
+      type: ItemType;
+      data: {
+        action: (name: string, start?: GuideInfo) => void;
+        start?: GuideInfo;
+      };
+    }[]
+  >();
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
-  const guideStart = useRootState((state) => state.botBuilderReducer.guideInfo);
+  const guideStart = useRootState((state) => state.botBuilderReducer.savedGuideInfo);
+
+  const { getCachedScenarioList } = useScenarioClient();
+  const data = getCachedScenarioList(botId);
 
   const {
     register,
     handleSubmit,
-    reset,
-    getValues,
     formState: { errors },
   } = useForm<INodeLinkPopUpFormValue>();
 
@@ -99,7 +103,7 @@ export const NodeLinkPopUpMenu = ({
 
     const addCard = defaultNode(nodeType);
     const addNode = {
-      id: idGen.generate('node'),
+      id: ID_GEN.generate('node'),
       type: nodeType,
       title: nodeName,
       cards: addCard,
@@ -110,15 +114,16 @@ export const NodeLinkPopUpMenu = ({
 
     dispatch(appendNode(addNode));
 
-    if (start) {
-      console.log();
-      addArrow?.({
-        start: start.startId,
-        end: `node-${addNode.id}`,
-        isNextNode: start.isNext,
-        updateKey: start.nodeId,
-        type: start.type,
-      });
+    if (guideStart) {
+      dispatch(
+        addArrow({
+          start: guideStart.startId,
+          end: `node-${addNode.id}`,
+          isNextNode: guideStart.isNext,
+          updateKey: guideStart.nodeId,
+          type: guideStart.type,
+        }),
+      );
     }
 
     handleIsOpen(false);
@@ -151,19 +156,30 @@ export const NodeLinkPopUpMenu = ({
       nodeLinkPopUpMenuRef.current.style.left = `${popUpPosition.x}px`;
       nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
     }
-
-    if (guideStart) {
-      setStart(guideStart);
-    }
   }, []);
 
-  const handleMakingOtherFlow = (name: string) => {
-    console.log('asdfasdfadfadf');
-    const nodeType = 'OtherFlowRedirectNode' as TNodeTypes;
+  useEffect(() => {
+    if (data && guideStart) {
+      setScenarioList(
+        data?.map((item) => ({
+          id: item.id,
+          name: item.alias,
+          type: 'search' as ItemType,
+          data: {
+            action: handleMakingOtherFlow,
+            start: guideStart,
+          },
+        })),
+      );
+    }
+  }, [data, guideStart]);
+
+  const handleMakingOtherFlow = (name: string, guide?: GuideInfo) => {
+    const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = name;
     const addCard = defaultNode(nodeType);
-    const addNode = {
-      id: idGen.generate('node'),
+    const addNode: INode = {
+      id: ID_GEN.generate(ID_TYPES.NODE),
       type: nodeType,
       title: nodeName,
       cards: addCard,
@@ -174,32 +190,20 @@ export const NodeLinkPopUpMenu = ({
 
     dispatch(appendNode(addNode));
 
-    if (start) {
-      console.log();
-      addArrow?.({
-        start: start.startId,
-        end: `node-${addNode.id}`,
-        isNextNode: start.isNext,
-        updateKey: start.nodeId,
-        type: start.type,
-      });
+    if (guide) {
+      dispatch(
+        addArrow({
+          start: guide.startId,
+          end: `node-${addNode.id}`,
+          isNextNode: guide.isNext,
+          updateKey: guide.nodeId,
+          type: guide.type,
+        }),
+      );
     }
 
     handleIsOpen(false);
   };
-  const token = useRootState((state) => state.botBuilderReducer.token);
-  const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
-
-  const [scenarioList, setScenarioList] = useState<IScenarioModel[] | undefined>(data);
-  const poperSelectItems = scenarioList?.map((item) => ({
-    id: item.id,
-    name: item.alias,
-    type: 'search' as ItemType,
-    data: {
-      action: handleMakingOtherFlow,
-    },
-  }));
 
   return (
     <div
@@ -221,14 +225,14 @@ export const NodeLinkPopUpMenu = ({
         {cardBtn.length > 0 ? (
           cardBtn.map((item, i) => (
             <div key={i}>
-              {item.value === 'OtherFlowRedirectNode' ? (
+              {item.value === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && scenarioList ? (
                 <div>
                   <Popper
                     placement="right-start"
                     offset={[200, 20]}
-                    popperItems={poperSelectItems}
+                    popperItems={scenarioList}
                     onChange={(m) => {
-                      m.data?.action?.(m.name);
+                      m.data?.action?.(m.name, m.data.start);
                     }}
                     popup
                     popupList

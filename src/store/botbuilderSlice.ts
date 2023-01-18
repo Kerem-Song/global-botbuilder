@@ -19,6 +19,7 @@ export interface BotBuilderMaker {
   selected?: string | IArrow;
   isEditDrawerOpen: boolean;
   guideInfo?: GuideInfo;
+  savedGuideInfo?: GuideInfo;
   token: string;
   selectedScenario?: IScenarioModel;
   basicScenarios?: IScenarioModel[];
@@ -66,6 +67,9 @@ export const botbuilderSlice = createSlice({
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
       state.guideInfo = action.payload;
+      if (action.payload) {
+        state.savedGuideInfo = action.payload;
+      }
     },
     // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
     //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
