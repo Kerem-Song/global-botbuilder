@@ -3,17 +3,18 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { Aside } from './Aside';
-import { Header } from './Header';
 
-export const DefaultLayout = () => {
+export const Layout = () => {
   console.log('DefaultLayout');
 
   return (
     <>
-      <Header />
-      <main>
+      <Aside />
+      <div id="layout">
         <Outlet />
-      </main>
+      </div>
+      <ToastContainer />
+      <SystemModalContainer />
     </>
   );
 };
