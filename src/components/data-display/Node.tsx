@@ -7,7 +7,11 @@ import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
-import { ITextView } from '@models/interfaces/res/IGetFlowRes';
+import {
+  IBasicCardCarouselView,
+  IBasicCardView,
+  ITextView,
+} from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -152,7 +156,7 @@ export const Node: FC<INodeProps> = ({
     },
   ];
 
-  const handleShowingNodesWithoutCards = (typeName: INodeProps['typeName']) => {
+  const handleShowingNodesWithoutCards = () => {
     switch (typeName) {
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;
@@ -170,14 +174,12 @@ export const Node: FC<INodeProps> = ({
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectCard />;
-      case NODE_TYPES.TEXT_NODE:
-        return handleShowingCards([]);
       default:
-        return <div></div>;
+        return handleShowingCards();
     }
   };
 
-  const handleShowingCards = (cards: INodeProps['cards']) => {
+  const handleShowingCards = () => {
     if (node.type === NODE_TYPES.TEXT_NODE) {
       const view = node.view as ITextView;
       console.log(node);
@@ -187,6 +189,57 @@ export const Node: FC<INodeProps> = ({
         ];
         return <BasicCard cards={textCards} nodeId={`node-${id}`} />;
       }
+    }
+
+    if (node.type === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
+      const view = node.view as IBasicCardCarouselView;
+      const basicCards: IBasicCardNode[] = view.childrenViews.map((x) => {
+        return {
+          type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+          title: x.title || '',
+          thumbnail: x.imageCtrl
+            ? {
+                imageUrl: x.imageCtrl?.imageUrl,
+              }
+            : undefined,
+          buttons: x.buttons?.map((b) => {
+            return {
+              id: b.id,
+              label: b.label,
+              actionValue: b.actionValue,
+              action: b.actionType as 'linkWebUrl',
+            };
+          }),
+        };
+      });
+
+      return <BasicCard cards={basicCards} nodeId={`node-${id}`} />;
+    }
+
+    if (node.type === NODE_TYPES.BASIC_CARD_NODE) {
+      const view = node.view as IBasicCardView;
+      const basicCards: IBasicCardNode[] = [
+        {
+          type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+          title: view.title,
+          description: view.description,
+          thumbnail: view.imageCtrl
+            ? {
+                imageUrl: view.imageCtrl.imageUrl,
+              }
+            : undefined,
+          buttons: view.buttons?.map((b) => {
+            return {
+              id: b.id,
+              label: b.label,
+              actionValue: b.actionValue,
+              action: b.actionType as 'linkWebUrl',
+            };
+          }),
+        },
+      ];
+
+      return <BasicCard cards={basicCards} nodeId={`node-${id}`} />;
     }
 
     if (!cards) {
@@ -229,6 +282,8 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSet id={id} values={node} />;
     }
+
+    return <div></div>;
   };
 
   const HandleNodeSelect = async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -283,11 +338,7 @@ export const Node: FC<INodeProps> = ({
         </Popper>
       </div>
       <div className={bodyClass}>
-        {cards ? (
-          <>{handleShowingCards(cards)}</>
-        ) : (
-          handleShowingNodesWithoutCards(typeName)
-        )}
+        {cards ? <>{handleShowingCards()}</> : handleShowingNodesWithoutCards()}
       </div>
       {nodekind === NodeKind.InputNode && (
         <Button shape="ghost" className="icNodeBottom">

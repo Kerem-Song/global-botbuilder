@@ -25,11 +25,13 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
   const { updateLine } = useUpdateLines();
 
   const StartDrag = (e: DragEvent<HTMLDivElement>) => {
+    console.log(arrows);
     if (arrows.find((x) => x.start === `next-${ctrlId}`)) {
       e.stopPropagation();
       e.preventDefault();
       return;
     }
+
     //const img = new Image();
     e.dataTransfer.setData('id', `next-${ctrlId}`);
     e.dataTransfer.setData('nodeId', nodeId);
