@@ -62,10 +62,10 @@ export const defaultNode = (nodeType: TNodeTypes) => {
       ];
       break;
 
-    case NODE_TYPES.LIST:
+    case NODE_TYPES.LIST_CARD_NODE:
       addNode = [
         {
-          type: NODE_TYPES.LIST,
+          type: NODE_TYPES.LIST_CARD_NODE,
           header: {
             title: '',
           },

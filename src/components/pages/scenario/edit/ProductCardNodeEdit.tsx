@@ -148,7 +148,7 @@ export const ProductCardNodeEdit = () => {
               <Col span={8} className="img"></Col>
               <Col span={14}>
                 <p>Recommended size</p>
-                <p>640 x 640 </p>
+                <p>640 x 640</p>
               </Col>
             </Row>
           </Space>
@@ -156,7 +156,10 @@ export const ProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">브랜드 이름</span>
-            <Input {...register(`view.brandName`)} value={values.view?.brandName || ''} />
+            <Input
+              {...register(`view.profile.brandName`)}
+              value={values.view?.brandName || ''}
+            />
           </Space>
         </div>
       </div>
@@ -168,7 +171,7 @@ export const ProductCardNodeEdit = () => {
           <Divider />
           <Space direction="vertical">
             <p className="m-b-8">
-              <span className="label">상품명</span>
+              <span className="label">상품명 </span>
               <span className="required">*</span>
             </p>
             <Input
@@ -176,7 +179,7 @@ export const ProductCardNodeEdit = () => {
               value={values.view?.productName || ''}
             />
             <p className="m-b-8">
-              <span className="label">가격</span>
+              <span className="label">가격 </span>
               <span className="required">*</span>
             </p>
             <div className="m-b-8">
@@ -195,10 +198,7 @@ export const ProductCardNodeEdit = () => {
             </div>
 
             <span className="label">할인</span>
-            <Input
-              {...register(`view.discountPrice`)}
-              value={values.view?.discountPrice}
-            />
+            <Input {...register(`view.discount`)} value={values.view?.discountPrice} />
           </Space>
         </div>
       </div>

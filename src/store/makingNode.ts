@@ -3,6 +3,7 @@ import { NodeKind } from '@models/enum/NodeKind';
 import {
   IBasicCardNode,
   IListCardNode,
+  IProductCardNode,
   NODE_TYPES,
   VIEW_TYPES,
 } from '@models/interfaces/ICard';
@@ -10,6 +11,7 @@ import {
   IBasicCardViewModel,
   IListCardViewModel,
   INodeEditModel,
+  IProductCardViewModel,
   ITextViewModel,
 } from '@models/interfaces/INodeEditModel';
 import { INodeRes } from '@models/interfaces/res/IGetFlowRes';
@@ -236,13 +238,24 @@ export const makingNodeSlice = createSlice({
           card.buttons = [...(view.buttons || [])];
         }
 
-        if (old.type === NODE_TYPES.LIST) {
+        if (old.type === NODE_TYPES.LIST_CARD_NODE) {
           const card = old.cards?.[0] as IListCardNode;
-          console.log('old list', card.items);
           const view = node.view as IListCardViewModel;
-          console.log('old list view', view.items);
           card.header!.title = view.header?.title;
           card.items = [...(view.items || [])];
+          card.buttons = [...(view.buttons || [])];
+        }
+
+        if (old.type === NODE_TYPES.PRODUCT_CARD_NODE) {
+          const card = old.cards?.[0] as IProductCardNode;
+          const view = node.view as IProductCardViewModel;
+          card.thumbnail = view.thumbnail;
+          card.profile!.brandName = view.profile?.brandName;
+          card.profile!.imageUrl = view.profile?.imageUrl;
+          card.productName = view.productName;
+          card.price = view.price;
+          card.currency = view.currency;
+          card.discount = view.discount;
           card.buttons = [...(view.buttons || [])];
         }
         nodes.splice(index, 1, { ...old, title: node.title });

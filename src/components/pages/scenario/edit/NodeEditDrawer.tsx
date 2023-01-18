@@ -66,7 +66,7 @@ export const NodeEditDrawer = () => {
         }
       }
 
-      if (selectedNode.type === NODE_TYPES.LIST) {
+      if (selectedNode.type === NODE_TYPES.LIST_CARD_NODE) {
         const card: IListCardNode = selectedNode.cards?.[0] as IListCardNode;
         console.log('card:', card);
         if (card) {
