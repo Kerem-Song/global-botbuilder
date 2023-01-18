@@ -2,7 +2,7 @@ import { Card } from '@components/data-display/Card';
 import { Carousel } from '@components/data-display/Carousel';
 import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import classNames from 'classnames';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { IBasicCardNode } from '../../../../models/interfaces/ICard';
 interface BasicCard {

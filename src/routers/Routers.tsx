@@ -31,7 +31,10 @@ const finalRoutes = [
               path: ':botId',
               errorElement: <>404</>,
               children: [
-                { path: 'scenario', element: <ScenarioPage /> },
+                {
+                  path: 'scenario',
+                  element: <ScenarioPage />,
+                },
                 { path: 'utterance', element: <UtterancePage /> },
                 { path: 'data-api', element: <DataApiPage /> },
                 { path: 'deployment', element: <DeploymentPage /> },

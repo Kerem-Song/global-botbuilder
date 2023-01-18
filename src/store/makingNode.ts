@@ -1,4 +1,4 @@
-import { IArrow, INode, ITextView } from '@models';
+import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import {
   IBasicCardNode,
@@ -61,11 +61,10 @@ const convert = (node: INodeRes): { node: INode; arrows: IArrow[] } => {
       node.view.childrenViews &&
       node.view.childrenViews.length > 0
     ) {
-      result.cards = node.view.childrenViews.map((x, index) => {
+      result.cards = node.view.childrenViews.map((x) => {
         return {
           type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
           title: x.title || '',
-          // description?: string;
           thumbnail: {
             imageUrl: x.imageCtrl?.imageUrl,
           },
@@ -218,7 +217,6 @@ export const makingNodeSlice = createSlice({
     },
     editNode: (state, action: PayloadAction<INodeEditModel>) => {
       const node = action.payload;
-      console.log(node);
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];

@@ -1,4 +1,4 @@
-import { IDataEntryProp, IHasClassNameNStyle } from '@models';
+import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import React, {
   ChangeEvent,

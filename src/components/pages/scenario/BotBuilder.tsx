@@ -9,7 +9,7 @@ import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
 import { ID_GEN } from '../../../modules';
-import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
+import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -44,7 +44,7 @@ export const Botbuilder = () => {
   const { isOpen, handleIsOpen } = useModalOpen();
 
   useEffect(() => {
-    const event = (e: MouseEvent) => {
+    const event = () => {
       setIsPanning(false);
     };
     window.addEventListener('mouseup', event);
