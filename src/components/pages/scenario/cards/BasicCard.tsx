@@ -4,7 +4,7 @@ import { SortableButtonContainer } from '@components/data-display/SortableButton
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
-import { IBasicCardNode } from '../../../models/interfaces/ICard';
+import { IBasicCardNode } from '../../../../models/interfaces/ICard';
 interface BasicCard {
   nodeId: string;
   cards: IBasicCardNode[];
