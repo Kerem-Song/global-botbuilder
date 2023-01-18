@@ -1,6 +1,6 @@
 import { Input } from '@components';
 import { useRootState } from '@hooks';
-import { IBasicCard, IListCard, NODE_TYPES } from '@models';
+import { IBasicCardNode, IListCardNode, IProductCardNode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
+import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
@@ -48,14 +49,14 @@ export const NodeEditDrawer = () => {
       };
       console.log(selectedNode);
       if (selectedNode.type === NODE_TYPES.TEXT_NODE) {
-        const card: IBasicCard = selectedNode.cards?.[0] as IBasicCard;
+        const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
         if (card) {
           model.view = { text: card.description };
         }
       }
 
       if (selectedNode.type === NODE_TYPES.BASIC_CARD_NODE) {
-        const card: IBasicCard = selectedNode.cards?.[0] as IBasicCard;
+        const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
         if (card) {
           model.view = {
             title: card.title,
@@ -66,11 +67,31 @@ export const NodeEditDrawer = () => {
       }
 
       if (selectedNode.type === NODE_TYPES.LIST) {
-        const card: IListCard = selectedNode.cards?.[0] as IListCard;
+        const card: IListCardNode = selectedNode.cards?.[0] as IListCardNode;
+        console.log('card:', card);
         if (card) {
           model.view = {
             header: { title: card.header?.title },
             items: card.items,
+            buttons: card.buttons,
+          };
+        }
+      }
+
+      if (selectedNode.type === NODE_TYPES.PRODUCT_CARD_NODE) {
+        const card: IProductCardNode = selectedNode.cards?.[0] as IProductCardNode;
+        if (card) {
+          model.view = {
+            productName: card.productName,
+            price: card.price,
+            currency: card.currency,
+            discount: card.discount,
+            discountRate: card.discountRate,
+            discountPrice: card.discountPrice,
+            profile: {
+              brandName: card.profile?.brandName,
+              imageUrl: card.profile?.imageUrl,
+            },
             buttons: card.buttons,
           };
         }
@@ -91,6 +112,8 @@ export const NodeEditDrawer = () => {
         return <BasicCardNodeEdit />;
       case 'ListNode':
         return <ListCardNodeEdit />;
+      case 'ProductCardNode':
+        return <ProductCardNodeEdit />;
       default:
         <></>;
     }
