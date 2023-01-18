@@ -24,14 +24,16 @@ import {
   IProductCardNode,
   NODE_TYPES,
 } from '../../models/interfaces/ICard';
-import { BasicCard } from '../../pages/scenario/cards/BasicCard';
-import { CommerceCard } from '../../pages/scenario/cards/CommerceCard';
-import { Condition } from '../../pages/scenario/cards/Condition';
-import { Count } from '../../pages/scenario/cards/Count';
-import { ListCard } from '../../pages/scenario/cards/ListCard';
-import { OtherFlowRedirectCard } from '../../pages/scenario/cards/OtherFlowRedirectCard';
-import { ParameterSet } from '../../pages/scenario/cards/ParameterSet';
-import { QuickReply } from '../../pages/scenario/cards/QuickReply';
+import {
+  BasicCard,
+  CommerceCard,
+  Condition,
+  Count,
+  ListCard,
+  OtherFlowRedirectCard,
+  ParameterSet,
+  QuickReply,
+} from '../pages/scenario/cards';
 import { NextNodeButton } from './NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
