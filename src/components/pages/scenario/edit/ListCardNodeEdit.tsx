@@ -11,6 +11,7 @@ import {
   Switch,
   Title,
 } from '@components';
+import { itemsEqual } from '@dnd-kit/sortable/dist/utilities';
 import { IButtonType, ISortableListItem } from '@models';
 import { useFormContext } from 'react-hook-form';
 
@@ -21,25 +22,28 @@ export const ListCardNodeEdit = () => {
   return (
     <>
       <div className="node-item-wrap">
-        <p className="m-b-8">
+        <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">Head Title</span>
-            <Input {...register('view.header.title')} />
+            <Input
+              {...register('view.header.title')}
+              value={values.view?.header?.title || ''}
+            />
           </Space>
-        </p>
+        </div>
       </div>
       <div className="node-item-wrap">
-        <p className="m-b-8">
+        <div className="m-b-8">
           <Space style={{ alignItems: 'center' }}>
             <span className="label">Head 이미지 설정</span>
             <Switch />
           </Space>
-        </p>
+        </div>
         <Space direction="vertical">
-          <p className="m-b-8">
+          <div className="m-b-8">
             <span className="subLabel">이미지 업로드 </span>
             <span className="required">*</span>
-          </p>
+          </div>
 
           <span className="subLabel">이미지 타입</span>
           <Row>
@@ -91,11 +95,11 @@ export const ListCardNodeEdit = () => {
           values.view.items &&
           values.view.items.map((item: ISortableListItem, index: number) => (
             <div key={item.id}>
-              <p className="m-b-8">
+              <div className="m-b-8">
                 <span className="subLabel">List 이미지 업로드 </span>
                 <span className="required">*</span>
-              </p>
-              <p className="m-b-8">
+              </div>
+              <div className="m-b-8">
                 <Space direction="vertical">
                   <Row align="center" gap={12} style={{ margin: 0 }}>
                     <Col span={8} className="img"></Col>
@@ -105,26 +109,32 @@ export const ListCardNodeEdit = () => {
                     </Col>
                   </Row>
                 </Space>
-              </p>
-              <p className="m-b-8">
+              </div>
+              <div className="m-b-8">
                 <Space direction="vertical">
                   <span className="label">List Title</span>
-                  <Input {...register(`view.items[${index}].title`)} />
+                  <Input
+                    {...register(`view.items[${index}].title`)}
+                    value={item.title || ''}
+                  />
                 </Space>
-              </p>
-              <p className="m-b-8">
+              </div>
+              <div className="m-b-8">
                 <Space direction="vertical">
                   <span className="label">List Contents</span>
-                  <Input {...register(`view.items[${index}].description`)} />
+                  <Input
+                    {...register(`view.items[${index}].description`)}
+                    value={item.description || ''}
+                  />
                 </Space>
-              </p>
+              </div>
             </div>
           ))}
-        <p>
+        <div>
           <Button shape="ghost" className="addBtn">
             + Add a List
           </Button>
-        </p>
+        </div>
       </div>
 
       {values.view &&
@@ -138,7 +148,10 @@ export const ListCardNodeEdit = () => {
               </p>
               <Space direction="vertical">
                 <span className="subLabel">버튼명</span>
-                <Input {...register(`view.buttons[${index}].label`)} />
+                <Input
+                  {...register(`view.buttons[${index}].label`)}
+                  value={b.label || ''}
+                />
                 <span className="subLabel">버튼타입</span>
               </Space>
             </div>

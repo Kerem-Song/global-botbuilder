@@ -111,35 +111,9 @@ export interface IButtonType {
 }
 
 export interface Profile {
-  brandName: string;
+  brandName?: string;
   imageUrl?: string;
 }
-
-export interface IBasicCard {
-  type?:
-    | typeof CARD_TYPES.TEXT
-    | typeof CARD_TYPES.IMAGE
-    | typeof CARD_TYPES.BUTTON_TEMPLATE
-    | typeof CARD_TYPES.BUTTON_CAROUSEL;
-  title?: string;
-  description?: string;
-  thumbnail?: IThumbnailType;
-  buttons?: IButtonType[];
-}
-
-export interface ICommerceCard {
-  type?: typeof CARD_TYPES.COMMERCE | typeof CARD_TYPES.COMMERCE_CAROUSEL;
-  productName?: string;
-  price?: number;
-  currency?: string;
-  discount?: number;
-  discountRate?: number;
-  discountPrice?: number;
-  thumbnail?: IThumbnailType;
-  profile?: Profile;
-  buttons?: IButtonType[];
-}
-
 export interface ISortableListItem {
   id: UniqueIdentifier;
   thumbnail?: IThumbnailType;
@@ -162,15 +136,6 @@ export interface IListCard {
   buttons?: IButtonType[];
 }
 
-export interface IQuickReply {
-  type?: typeof CARD_TYPES.QUICK_REPLY;
-  label: string;
-  action: 'message' | 'block';
-  messageText?: string;
-  blockId?: string;
-  extra?: Record<string, any>;
-}
-
 export type TConditionSelect =
   | null
   | 'equal'
@@ -180,30 +145,6 @@ export type TConditionSelect =
   | 'lesserThan'
   | 'notEmpty'
   | 'regex'; //RegExp 타입 호환 검토 필요
-
-export interface ICondition {
-  type?: typeof CARD_TYPES.CONDITION;
-  title: string;
-  greenNode: string; // 초록색 노드 : 사용자가 입력한 값이 조건에 부합하는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
-  redNode: string; //빨간색 노드 : 사용자가 입력한 값이 조건에 부합하지 않는 경우 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
-  userInput?: string | number; // 사용자 입력 값
-  condition?: TConditionSelect; // 조건 선택
-  comparativeValue?: string; // 비교할 값
-  variableChoice?: string | number; // 변수 선택
-  logicalOperator?: 'and' | 'or' | null; // AND/OR 조건 설정
-  connectedMessage?: string; // 메시지 연결 - 말풍선 목록 타입으로 변경 요함
-  elseMessage?: string; // else 다음 메시지말풍선 목록 타입으로 변경 요함
-}
-
-export interface ICount {
-  type?: typeof CARD_TYPES.COUNT;
-  title: string;
-  yellowNode: string; // 노란색 노드 : 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
-  redNode: string; //빨간색 노드 : 횟수 초과시 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
-  requestionNum?: number; // 재질문 횟수 설정
-  requestionConnectedMessage: string; // 재질문할 메시지 연결 - 말풍선 목록 타입으로 변경 요함
-  excessiveLimitedNumMessage: string; // 횟수 초과 메시지 연결 - 말풍선 목록 타입으로 변경 요함
-}
 
 export interface IBasicCardNode {
   type?:
@@ -235,7 +176,7 @@ export interface IProductCardNode {
   buttons?: IButtonType[];
 }
 
-export interface IListNode {
+export interface IListCardNode {
   type?: typeof NODE_TYPES.LIST | typeof NODE_TYPES.LIST_CAROUSEL;
   header?: {
     title?: string;
