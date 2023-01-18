@@ -20,6 +20,7 @@ import {
   IConditionNode,
   ICountNode,
   IListNode,
+  IOtherFlowRedirectNode,
   IProductCardNode,
   NODE_TYPES,
 } from '../../models/interfaces/ICard';
@@ -48,7 +49,8 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
     | IListNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | ICountNode[];
+    | ICountNode[]
+    | IOtherFlowRedirectNode[];
   node: INode;
   onClick?: (e?: any) => void;
   addArrow?: (arrow: IArrow) => void;
