@@ -24,7 +24,11 @@ export const ListCard: FC<ListCard> = ({ nodeId, cards }) => {
       {cards.map((list, i) => (
         <Card key={`card-${i}`} hoverable onClick={() => console.log('card click')}>
           {list.header ? (
-            <div className={classNames('title list', { empty: !list.header?.title })}>
+            <div
+              className={classNames('title list', {
+                empty: !list.header?.title,
+              })}
+            >
               {list.header?.title ? <p>{list.header.title}</p> : <p>Enter Head Title</p>}
             </div>
           ) : null}
