@@ -164,8 +164,8 @@ export const Botbuilder = () => {
   const handleUpdateNodePosition = (index: number, item: INode) => {
     const canvasRect = canvasRef.current?.getBoundingClientRect();
     const nodeRect = nodeRef.current[index]?.getBoundingClientRect();
-    const x = (nodeRect?.x || 0) - (canvasRect?.left || 0);
-    const y = (nodeRect?.y || 0) - (canvasRect?.top || 0);
+    const x = Math.round((nodeRect?.x || 0) - (canvasRect?.left || 0));
+    const y = Math.round((nodeRect?.y || 0) - (canvasRect?.top || 0));
     if (x === item.x && y === item.y) {
       return;
     }
