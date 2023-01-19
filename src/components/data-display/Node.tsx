@@ -27,7 +27,7 @@ import {
   IBasicCardNode,
   IConditionNode,
   ICountNode,
-  IListNode,
+  IListCardNode,
   IOtherFlowRedirectNode,
   IProductCardNode,
   NODE_TYPES,
@@ -56,7 +56,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]
-    | IListNode[]
+    | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[]
@@ -254,9 +254,9 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
         return <BasicCard cards={cards as IBasicCardNode[]} nodeId={`node-${id}`} />;
 
-      case NODE_TYPES.LIST:
+      case NODE_TYPES.LIST_CARD_NODE:
       case NODE_TYPES.LIST_CAROUSEL:
-        return <ListCard cards={cards as IListNode[]} nodeId={`node-${id}`} />;
+        return <ListCard cards={cards as IListCardNode[]} nodeId={`node-${id}`} />;
 
       case NODE_TYPES.PRODUCT_CARD_NODE:
       case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:

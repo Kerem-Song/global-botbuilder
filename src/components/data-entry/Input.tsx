@@ -53,6 +53,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const inputWrapClassName = classNames('luna-input-wrap', {
     'luna-input-error': isError,
     'luna-input-large': size === 'large',
+    'luna-input-small': size === 'small',
   });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

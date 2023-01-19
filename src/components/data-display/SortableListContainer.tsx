@@ -15,7 +15,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { IListCard } from '@models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SortableListItem } from './SortableListItem';
 
@@ -52,6 +52,12 @@ export const SortableListContainer = ({ listItems }: ISortableContainer) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (listItems) {
+      setList(listItems);
+    }
+  }, [listItems]);
 
   return (
     <DndContext

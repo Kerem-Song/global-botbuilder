@@ -6,7 +6,7 @@ import {
   IBasicCardNode,
   IConditionNode,
   ICountNode,
-  IListNode,
+  IListCardNode,
   IOtherFlowRedirectNode,
   IProductCardNode,
   TNodeTypes,
@@ -25,7 +25,7 @@ export interface INode {
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]
-    | IListNode[]
+    | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[]

@@ -1,0 +1,38 @@
+.alertModalWrap {
+  position: absolute;
+  width: rem(400);
+  height: rem(192);
+  top: calc(100vh - rem(276));
+  right: 0;
+  border: 1px solid $gray200;
+  border-radius: rem(12);
+  background-color: $grayWhite;
+
+  .modalTitle {
+    width: 100%;
+    height: rem(45);
+    border-bottom: 1px solid $gray200;
+    padding: rem(13) 0 0 rem(20);
+    .title {
+      font-size: rem(15);
+    }
+  }
+
+  .modalText {
+    padding: rem(20);
+  }
+
+  .modalButtons {
+    margin-right: rem(20);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .btn {
+      margin-right: rem(10);
+      width: rem(90);
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

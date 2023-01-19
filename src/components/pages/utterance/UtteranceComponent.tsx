@@ -1,14 +1,31 @@
-import { Button, Card, Col, FormItem, Input, ReactSelect, Row, Space } from '@components';
+import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
+import { useState } from 'react';
 import Select from 'react-select';
 
+import { UtteranceList } from './UtteranceList';
+
+const SORT = [
+  { value: 'Recent', label: 'Recent' },
+  { value: 'Intent name', label: 'Intent name' },
+  { value: 'Scenario name', label: 'Scenario name' },
+];
+const SCENARIOS = [
+  { value: 'All', label: 'All' },
+  { value: 'Scenario 01', label: 'Scenario 01' },
+  { value: 'Scenario 02', label: 'Scenario 02' },
+  { value: 'Scenario not selected', label: 'Scenario not selected' },
+];
+
 export const UtteranceComponent = () => {
+  const [sort, setSort] = useState('');
+  const [select, setSelect] = useState('');
   return (
-    <div className="utterance-wrap">
-      <span className="title">Intent Management</span>
+    <div className="utteranceWrap">
+      <div className="title">Intent Management</div>
       <Card
         radius="normal"
         bodyStyle={{ padding: '20px' }}
-        style={{ border: '1px sold #DCDCDC' }}
+        style={{ border: '1px solid #DCDCDC' }}
       >
         <form>
           <Space direction="vertical">
@@ -19,7 +36,11 @@ export const UtteranceComponent = () => {
               </Col>
               <Col>
                 <FormItem>
-                  <Select options={[]} />
+                  <Select
+                    options={SORT}
+                    defaultInputValue={sort}
+                    onChange={() => setSort}
+                  />
                 </FormItem>
               </Col>
               <Col>
@@ -27,7 +48,11 @@ export const UtteranceComponent = () => {
               </Col>
               <Col>
                 <FormItem>
-                  <Select options={[]} />
+                  <Select
+                    options={SCENARIOS}
+                    defaultInputValue={select}
+                    onChange={() => setSelect}
+                  />
                 </FormItem>
               </Col>
               <Col>
@@ -35,7 +60,7 @@ export const UtteranceComponent = () => {
               </Col>
               <Col flex="auto">
                 <FormItem>
-                  <Input search />
+                  <Input search placeholder="Please enter a search word" />
                 </FormItem>
               </Col>
             </Row>
@@ -50,6 +75,9 @@ export const UtteranceComponent = () => {
           </Space>
         </form>
       </Card>
+      <div className="utteranceListWrap">
+        <UtteranceList />
+      </div>
     </div>
   );
 };

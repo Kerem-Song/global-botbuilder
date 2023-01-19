@@ -3,7 +3,7 @@ import {
   IBasicCardNode,
   IConditionNode,
   ICountNode,
-  IListNode,
+  IListCardNode,
   IProductCardNode,
   NODE_TYPES,
 } from '@models/interfaces/ICard';
@@ -16,7 +16,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
   let addNode:
     | IBasicCardNode[]
     | IProductCardNode[]
-    | IListNode[]
+    | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
     | ICountNode[]
@@ -62,10 +62,10 @@ export const defaultNode = (nodeType: TNodeTypes) => {
       ];
       break;
 
-    case NODE_TYPES.LIST:
+    case NODE_TYPES.LIST_CARD_NODE:
       addNode = [
         {
-          type: NODE_TYPES.LIST,
+          type: NODE_TYPES.LIST_CARD_NODE,
           header: {
             title: '',
           },

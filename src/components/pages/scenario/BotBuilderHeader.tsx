@@ -16,7 +16,7 @@ const singleNodes = [
     value: NODE_TYPES.BASIC_CARD_NODE,
     nodeName: 'Button Template',
   },
-  { className: 'icList', value: NODE_TYPES.LIST, nodeName: 'List' },
+  { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: 'List' },
   { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },
 ];
 
