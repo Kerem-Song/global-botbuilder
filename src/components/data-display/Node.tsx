@@ -182,7 +182,7 @@ export const Node: FC<INodeProps> = ({
   const handleShowingCards = () => {
     if (node.type === NODE_TYPES.TEXT_NODE) {
       const view = node.view as ITextView;
-      console.log(node);
+
       if (view) {
         const textCards: IBasicCardNode[] = [
           { type: NODE_TYPES.TEXT_NODE, description: view.text },
@@ -213,7 +213,7 @@ export const Node: FC<INodeProps> = ({
         };
       });
 
-      return <BasicCard cards={basicCards} nodeId={`node-${id}`} />;
+      return <BasicCard cards={basicCards} nodeId={`node-${id}`} isCarousel />;
     }
 
     if (node.type === NODE_TYPES.BASIC_CARD_NODE) {

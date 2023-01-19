@@ -1,15 +1,11 @@
 import { IButtonType, ISortableListItem, IThumbnailType, Profile } from './ICard';
+import { IViewBase } from './res/IGetFlowRes';
 
 export interface INodeEditModel {
   id: string;
   caption: string;
   title: string;
-  view:
-    | ITextViewModel
-    | IBasicCardViewModel
-    | IListCardViewModel
-    | IProductCardViewModel
-    | IAnswerViewModel;
+  view?: IViewBase;
 }
 
 export interface ITextViewModel {

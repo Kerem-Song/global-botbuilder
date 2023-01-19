@@ -1,6 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
-import { IHasResults, IScenarioModel } from '@models';
-import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import { IHasResults, IScenarioModel, NODE_TYPES } from '@models';
+import { IBasicCardView, IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
 import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
 
+import { nodeHelper } from '../../modules/nodeHelper';
 import { useHttp } from '../useHttp';
 
 const SCENARIO_LIST = 'scenario-list';
@@ -19,6 +20,7 @@ export const useScenarioClient = () => {
   const http = useHttp();
   const { botId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
 
   const getScenarioList = (token: string) => {
     return useQuery<IScenarioModel[]>(
@@ -46,7 +48,7 @@ export const useScenarioClient = () => {
             dispatch(setSelectedScenario(fallbackScenario));
             return res.data.result
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
-              .sort((a, b) => (a.seq > b.seq ? 1 : -1));
+              .sort((a, b) => (a.seq > b.seq ? -1 : 1));
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
@@ -72,9 +74,11 @@ export const useScenarioClient = () => {
           flowId: scenarioId,
         });
 
-        dispatch(initNodes(res.data.result.nodes));
-        dispatch(ActionCreators.clearHistory());
-        return res.data.result;
+        if (res) {
+          dispatch(initNodes(res.data.result.nodes));
+          dispatch(ActionCreators.clearHistory());
+          return res.data.result;
+        }
       },
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
@@ -150,17 +154,42 @@ export const useScenarioClient = () => {
   const scenarioSaveMutate = useMutation(
     async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
-      console.log(old);
-      nodes.forEach((node) => {
-        const oldNode = old?.nodes.find((x) => x.id === node.id);
-        if (oldNode) {
-          oldNode.top = node.y;
-          oldNode.left = node.x;
+      const resultNodes = nodes.map((x) => {
+        const converted = nodeHelper.ConvertToNode(x);
+        const arrow = arrows.find((a) => a.start.substring(5) === x.id);
+        if (arrow) {
+          converted.nextNodeId = arrow.end.substring(5);
         }
+
+        if (converted.typeName === NODE_TYPES.BASIC_CARD_NODE && converted.view) {
+          const view: IBasicCardView = converted.view;
+          const buttons = view.buttons?.map((b) => {
+            const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+            if (buttonArrow) {
+              return { ...b, actionValue: buttonArrow.end.substring(5) };
+            }
+            return b;
+          });
+          converted.view = { ...view, buttons: buttons } as IBasicCardView;
+        }
+
+        return converted;
       });
+      const result = { ...old, nodes: resultNodes };
+      // nodes.forEach((node) => {
+      //   const oldNode = old?.nodes.find((x) => x.id === node.id);
+      //   console.log(oldNode);
+      //   console.log(node);
+      //   if (oldNode) {
+      //     oldNode.alias = node.title || '';
+      //     oldNode.top = node.y;
+      //     oldNode.left = node.x;
+      //   }
+      // });
+
       const res = await http.post('builder/updateflow', {
         sessionToken: token,
-        flow: old,
+        flow: result,
       });
       if (res) {
         queryClient.invalidateQueries(['scenario', scenarioId]);

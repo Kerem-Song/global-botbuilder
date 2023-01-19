@@ -32,7 +32,6 @@ export const SortableButtonContainer = ({
   cardButtons,
 }: ISortableContainer) => {
   const { updateLine } = useUpdateLines();
-  console.log(cardButtons);
   const [buttons, setButtons] = useState<IButtonType[]>([]);
 
   useEffect(() => {

@@ -2,12 +2,13 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState, useScenarioClient } from '@hooks';
-import { getNodeKind, NODE_TYPES, TNodeTypes } from '@models';
+import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
 import { appendNode } from '@store/makingNode';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ID_GEN } from '../../../modules';
+import { ID_GEN, ID_TYPES } from '../../../modules';
+import { nodeHelper } from '../../../modules/nodeHelper';
 
 const singleNodes = [
   { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
@@ -75,25 +76,29 @@ export const BotBuilderHeader = () => {
     const nodeName = e.currentTarget.getAttribute('data') as string;
 
     const addCard = defaultNode(cardType);
+    const nodeView = nodeHelper.createDefaultView(cardType);
 
     const view = document.querySelector('.botBuilderMain');
     const canvas = document.querySelector('.canvasWrapper');
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
-    const addNode = {
-      id: ID_GEN.generate('node'),
+    const addNode: INode = {
+      id: ID_GEN.generate(ID_TYPES.NODE),
       type: cardType,
       title: nodeName,
       cards: addCard,
+      view: nodeView,
       nodeKind: getNodeKind(cardType),
+      option: 1,
+      seq: 0,
       x:
         canvasRect && viewRect
-          ? viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x)
+          ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
           : 0,
       y:
         canvasRect && viewRect
-          ? viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y)
+          ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
           : 0,
     };
     dispatch(appendNode(addNode));

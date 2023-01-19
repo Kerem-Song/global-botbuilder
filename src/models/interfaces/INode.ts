@@ -1,4 +1,3 @@
-import { ConditionJoin } from '@models/enum';
 import { NodeKind } from '@models/enum/NodeKind';
 
 import {
@@ -9,9 +8,10 @@ import {
   IListCardNode,
   IOtherFlowRedirectNode,
   IProductCardNode,
+  NODE_TYPES,
   TNodeTypes,
 } from './ICard';
-import { IConditionItem, IViewBase } from './res/IGetFlowRes';
+import { IIntentNode, IViewBase } from './res/IGetFlowRes';
 
 export interface INode {
   id: string;
@@ -19,6 +19,8 @@ export interface INode {
   title?: string;
   description?: string;
   nodeKind: NodeKind;
+  option: number;
+  seq: number;
   x: number;
   y: number;
   view?: IViewBase;

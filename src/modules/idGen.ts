@@ -1,6 +1,6 @@
 export const ID_TYPES = {
   NODE: 'node',
-  VIEW: 'VIEW',
+  VIEW: 'view',
   CTRL: 'ctrl',
 } as const;
 

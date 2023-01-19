@@ -91,12 +91,13 @@ export interface INodeBase {
   alias: string;
   id: string;
   left: number;
-  nextNodeId: string;
+  nextNodeId?: string;
   nodeKind: NodeKind;
   option: number;
   seq: number;
   top: number;
   typeName: TNodeTypes;
+  view?: IViewBase;
 }
 
 export interface IViewBase {
@@ -159,6 +160,7 @@ export interface IBasicCardCarouselNode extends INodeBase {
 
 export interface IBasicCardCarouselView extends IViewBase {
   isSuffle: boolean;
+  count: number;
   childrenViews: IBasicCardView[];
 }
 

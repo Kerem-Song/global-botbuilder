@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { ID_GEN, ID_TYPES } from '../../../modules';
+import { nodeHelper } from '../../../modules/nodeHelper';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -102,11 +103,15 @@ export const NodeLinkPopUpMenu = ({
     const nodeName = e.currentTarget.dataset.nodename;
 
     const addCard = defaultNode(nodeType);
+    const nodeView = nodeHelper.createDefaultView(nodeType);
     const addNode = {
       id: ID_GEN.generate('node'),
       type: nodeType,
       title: nodeName,
       cards: addCard,
+      view: nodeView,
+      option: 1,
+      seq: 0,
       x: popUpPosition.x,
       y: popUpPosition.y,
       nodeKind: getNodeKind(nodeType),
@@ -185,6 +190,8 @@ export const NodeLinkPopUpMenu = ({
       cards: addCard,
       x: popUpPosition.x,
       y: popUpPosition.y,
+      option: 64,
+      seq: 0,
       nodeKind: getNodeKind(nodeType),
     };
 

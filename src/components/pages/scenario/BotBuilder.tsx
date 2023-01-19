@@ -9,6 +9,7 @@ import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
 import { ID_GEN } from '../../../modules';
+import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
@@ -142,8 +143,9 @@ export const Botbuilder = () => {
     const nodeName = e.dataTransfer.getData('nodeName') as string;
 
     const addCard = defaultNode(cardType);
+    const nodeView = nodeHelper.createDefaultView(cardType);
 
-    const addNode = {
+    const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
@@ -151,6 +153,9 @@ export const Botbuilder = () => {
       title: nodeName,
       cards: addCard,
       nodeKind: getNodeKind(cardType),
+      view: nodeView,
+      option: 1,
+      seq: 0,
     };
 
     dispatch(appendNode(addNode));

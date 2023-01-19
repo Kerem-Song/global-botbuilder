@@ -43,6 +43,8 @@ export const botbuilderSlice = createSlice({
     },
     setSesstionToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
+      state.selectedScenario = undefined;
+      state.selected = undefined;
     },
     zoomIn: (state) => {
       const scale = Math.min(state.scale + 0.25, transformOptions.maxScale);

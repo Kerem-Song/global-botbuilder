@@ -52,69 +52,68 @@ export const NodeEditDrawer = () => {
         id: selectedNode.id,
         caption: selectedNode.type,
         title: selectedNode.title || '',
-        view: { text: '' },
+        view: selectedNode.view,
       };
-      console.log(selectedNode);
-      if (selectedNode.type === NODE_TYPES.TEXT_NODE) {
-        const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
-        if (card) {
-          model.view = { text: card.description };
-        }
-      }
+      // if (selectedNode.type === NODE_TYPES.TEXT_NODE) {
+      //   const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
+      //   if (card) {
+      //     model.view = { text: card.description };
+      //   }
+      // }
 
-      if (selectedNode.type === NODE_TYPES.BASIC_CARD_NODE) {
-        const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
-        if (card) {
-          model.view = {
-            title: card.title,
-            description: card.description,
-            buttons: card.buttons,
-          };
-        }
-      }
+      // if (selectedNode.type === NODE_TYPES.BASIC_CARD_NODE) {
+      //   const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
+      //   if (card) {
+      //     model.view = {
+      //       title: card.title,
+      //       description: card.description,
+      //       buttons: card.buttons,
+      //     };
+      //   }
+      // }
 
-      if (selectedNode.type === NODE_TYPES.LIST_CARD_NODE) {
-        const card: IListCardNode = selectedNode.cards?.[0] as IListCardNode;
-        console.log('card:', card);
-        if (card) {
-          model.view = {
-            header: { title: card.header?.title },
-            items: card.items,
-            buttons: card.buttons,
-          };
-        }
-      }
+      // if (selectedNode.type === NODE_TYPES.LIST_CARD_NODE) {
+      //   const card: IListCardNode = selectedNode.cards?.[0] as IListCardNode;
+      //   console.log('card:', card);
+      //   if (card) {
+      //     model.view = {
+      //       header: { title: card.header?.title },
+      //       items: card.items,
+      //       buttons: card.buttons,
+      //     };
+      //   }
+      // }
 
-      if (selectedNode.type === NODE_TYPES.PRODUCT_CARD_NODE) {
-        const card: IProductCardNode = selectedNode.cards?.[0] as IProductCardNode;
-        if (card) {
-          model.view = {
-            productName: card.productName,
-            price: card.price,
-            currency: card.currency,
-            discount: card.discount,
-            discountRate: card.discountRate,
-            discountPrice: card.discountPrice,
-            profile: {
-              brandName: card.profile?.brandName,
-              imageUrl: card.profile?.imageUrl,
-            },
-            buttons: card.buttons,
-          };
-        }
-      }
+      // if (selectedNode.type === NODE_TYPES.PRODUCT_CARD_NODE) {
+      //   const card: IProductCardNode = selectedNode.cards?.[0] as IProductCardNode;
+      //   if (card) {
+      //     model.view = {
+      //       productName: card.productName,
+      //       price: card.price,
+      //       currency: card.currency,
+      //       discount: card.discount,
+      //       discountRate: card.discountRate,
+      //       discountPrice: card.discountPrice,
+      //       profile: {
+      //         brandName: card.profile?.brandName,
+      //         imageUrl: card.profile?.imageUrl,
+      //       },
+      //       buttons: card.buttons,
+      //     };
+      //   }
+      // }
 
-      if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
-        const card: IAnswerNode = selectedNode.cards?.[0] as IAnswerNode;
-        if (card) {
-          model.view = {
-            allowRes: card.allowRes || false,
-            label: card.label,
-            action: card.action,
-            extra: card.extra,
-          };
-        }
-      }
+      // if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
+      //   const card: IAnswerNode = selectedNode.cards?.[0] as IAnswerNode;
+      //   if (card) {
+      //     model.view = {
+      //       allowRes: card.allowRes || false,
+      //       label: card.label,
+      //       action: card.action,
+      //       extra: card.extra,
+      //     };
+      //   }
+      // }
       reset(model);
     } else {
       handleSubmit(onSubmit)();

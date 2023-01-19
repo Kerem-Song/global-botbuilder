@@ -4,15 +4,17 @@ import {
   icCarouselPrevActive,
   icCarouselPrevInactive,
 } from '@assets';
+import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
   children: ReactNode[];
   nodeId: string;
+  addCarousel?: boolean;
 }
 
-export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
+export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) => {
   const [current, setCurrent] = useState(0);
 
   const [style, setStyle] = useState({
@@ -22,13 +24,15 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
 
   const { updateLine } = useUpdateLines();
 
+  const length = children.length + (addCarousel ? 1 : 0);
+
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });
     updateLine(nodeId);
   }, [current]);
 
   const handleNextClick = () => {
-    setCurrent(current === children.length - 1 ? 0 : current + 1);
+    setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
   const handlePrevClick = () => {
@@ -37,7 +41,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
 
   return (
     <>
-      {children.length > 1 && (
+      {addCarousel && (
         <Row justify="space-between" align="center" className="carouselBtnWrapper">
           <Col>
             <button
@@ -53,20 +57,20 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
           </Col>
           <Col>
             <p className="page">
-              {current + 1}/{children.length}
+              {current === children.length
+                ? undefined
+                : `${current + 1}/${children.length}`}
             </p>
           </Col>
           <Col>
             <button
               className="carouselBtn next"
               onClick={handleNextClick}
-              disabled={current + 1 === children.length}
+              disabled={current + 1 === length}
             >
               <img
                 src={
-                  current + 1 === children.length
-                    ? icCarouselNextInactive
-                    : icCarouselNextActive
+                  current + 1 === length ? icCarouselNextInactive : icCarouselNextActive
                 }
                 alt="carouselNextBtn"
               />
@@ -83,6 +87,11 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children }) => {
               </div>
             );
           })}
+          <div style={{ width: '190px', flex: 'none' }}>
+            <div style={{ width: '190px' }}>
+              <Button block>말풍선 추가</Button>
+            </div>
+          </div>
         </div>
       </div>
     </>
