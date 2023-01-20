@@ -38,6 +38,7 @@ import icHide from '@assets/icons/ic_hide.svg';
 import icHistory from '@assets/icons/ic_history_default.svg';
 import icHistorySelected from '@assets/icons/ic_history_select.svg';
 import icImg from '@assets/icons/ic_img.svg';
+import icImgAddHover from '@assets/icons/ic_img_add_hover.svg';
 import icImgHover from '@assets/icons/ic_img_hover.svg';
 import icList from '@assets/icons/ic_list.svg';
 import icListHover from '@assets/icons/ic_list_hover.svg';
@@ -149,6 +150,7 @@ export {
   icHistory,
   icHistorySelected,
   icImg,
+  icImgAddHover,
   icImgHover,
   icInsta,
   icLine,

@@ -56,7 +56,9 @@ const reactSelectStyle: StylesConfig = {
     lineHeight: 1.5,
     backgroundColor: 'white',
     ':hover': {
-      color: 'black',
+      color: '#222222',
+      backgroundColor: '#ECF2FF',
+      borderRadius: '6px',
     },
   }),
   singleValue: (provided) => ({
@@ -68,7 +70,8 @@ const reactSelectStyle: StylesConfig = {
   }),
   menu: (provided) => ({
     ...provided,
-    borderRadius: '2px',
+    border: '1px solid #DCDCDC',
+    borderRadius: '8px',
   }),
 };
 

@@ -154,6 +154,12 @@
         background-color: $grayWhite;
         border: rem(1) dashed $gray200;
         border-radius: rem(6);
+
+        &:hover {
+          background-image: url('@assets/icons/ic_img_add_hover.svg');
+          background-color: $primary100;
+          border: rem(1) dashed $primary300;
+        }
       }
 
       .addBtn {
@@ -162,6 +168,18 @@
         background-color: $grayWhite;
         border: rem(1) dashed #B5B4B4;
         border-radius: rem(8);
+
+        &:hover {
+          background-image: url('@assets/icons/ic_img_add_hover.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-color: $primary100;
+          border: rem(1) dashed $primary300;
+
+          span {
+            display: none;
+          }
+        }
       }
 
       .input {

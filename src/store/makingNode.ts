@@ -246,6 +246,7 @@ export const makingNodeSlice = createSlice({
           case NODE_TYPES.LIST_CARD_NODE: {
             const card = old.cards?.[0] as IListCardNode;
             const view = node.view as IListCardViewModel;
+            card.allowHeadImgField = view.allowHeadImgField;
             card.header!.title = view.header?.title;
             card.items = [...(view.items || [])];
             card.buttons = [...(view.buttons || [])];
@@ -273,6 +274,9 @@ export const makingNodeSlice = createSlice({
             card.extra = view.extra;
             card.label = view.label || '';
             card.action = view.action || 'message';
+            card.connectedScenario = view.connectedScenario;
+            card.url = view.url;
+            card.messageText = view.messageText;
           }
         }
         nodes.splice(index, 1, { ...old, title: node.title });
