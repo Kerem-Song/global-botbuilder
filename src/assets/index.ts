@@ -48,6 +48,8 @@ import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icMinus from '@assets/icons/ic_minus.svg';
 import icNode from '@assets/icons/ic_node.svg';
 import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
+import icOtherFlowRedirect from '@assets/icons/ic_other_flow_redirect.svg';
+import icOtherFlowRedirectHover from '@assets/icons/ic_other_flow_redirect_hover.svg';
 import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
@@ -99,6 +101,8 @@ import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.
 import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
 import icUtteranceEmpty from '@assets/icons/ic_utterance_empty.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
+import icSetParameter from '@assets/icons/icSetParameter.svg';
+import icSetParameterHover from '@assets/icons/icSetParameterHover.svg';
 import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
@@ -157,6 +161,8 @@ export {
   icMinus,
   icNode,
   icNodeBottom,
+  icOtherFlowRedirect,
+  icOtherFlowRedirectHover,
   icPaste,
   icPen,
   icPenActive,
@@ -189,6 +195,8 @@ export {
   icSearchActive,
   icSearchDelete,
   icSearchDeleteActive,
+  icSetParameter,
+  icSetParameterHover,
   icSetting,
   icSettingSelected,
   icShow,

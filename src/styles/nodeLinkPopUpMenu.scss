@@ -135,5 +135,17 @@
         background-image: url('@assets/icons/ic_count_hover.svg');
       }
     }
+    .icSetParameter {
+      background-image: url('@assets/icons/ic_set_parameter.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_set_parameter_hover.svg');
+      }
+    }
+    .icOtherFlowRedirect {
+      background-image: url('@assets/icons/ic_other_flow_redirect.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_other_flow_redirect_hover.svg');
+      }
+    }
   }
 }

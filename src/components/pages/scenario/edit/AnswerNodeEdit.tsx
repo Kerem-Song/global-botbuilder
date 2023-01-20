@@ -1,5 +1,6 @@
 import { Button, Input, Switch } from '@components';
 import { Divider, Space } from '@components/layout';
+import classnames from 'classnames';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
@@ -16,7 +17,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '60px',
+    width: '236px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -94,15 +95,19 @@ export const AnswerNodeEdit = () => {
               <span className="label">사용자 응답 받기</span>
               <Switch {...allowResField} />
             </Space>
+            <Divider />
             <div>
               <span>변수 설정</span>
               <span className="required">*</span>
             </div>
-            <Input
-              {...register(`view.extra`)}
-              value={values.view?.extra || ''}
-              placeholder="변수명을 입력해주세요"
-            />
+            <div className={classnames('input', { 'disabled ': !values.view.allowRes })}>
+              <Input
+                {...register(`view.extra`)}
+                value={values.view?.extra || ''}
+                placeholder="변수명을 입력해주세요"
+                disabled={!values.view.allowRes}
+              />
+            </div>
           </Space>
         </div>
       </div>

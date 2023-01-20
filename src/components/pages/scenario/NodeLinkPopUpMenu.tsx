@@ -49,7 +49,7 @@ const cardTypeValue = [
   { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
   { className: 'icCount', value: NODE_TYPES.COUNT, nodeName: 'Count' },
   {
-    className: 'icParameterSet',
+    className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
     nodeName: 'Parameter Set',
   },

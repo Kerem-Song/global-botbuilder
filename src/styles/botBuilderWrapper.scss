@@ -163,6 +163,15 @@
         border: rem(1) dashed #B5B4B4;
         border-radius: rem(8);
       }
+
+      .input {
+        &.disabled {
+          input {
+            background-color: $gray150;
+            border: 1px solid $gray200;
+          }
+        }
+      }
     }
   }
 }
