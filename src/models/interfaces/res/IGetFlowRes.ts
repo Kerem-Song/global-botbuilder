@@ -124,17 +124,8 @@ export interface IAnswerNode extends INodeBase {
 }
 
 export interface IAnswerView extends IViewBase {
-  quicks?: IQuickItem[];
+  quicks?: IButtonCtrl[];
   utteranceParam?: string;
-}
-
-export interface IQuickItem {
-  id: string;
-  actionType: ActionTypes;
-  actionValue?: string;
-  label: string;
-  seq: number;
-  typeName: CtrlTypes;
 }
 
 export interface IConditionNode extends INodeBase {

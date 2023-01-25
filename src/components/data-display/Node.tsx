@@ -1,8 +1,12 @@
 import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
+import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
+import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { CountNode } from '@components/pages/scenario/nodes/CountNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
+import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
@@ -177,7 +181,13 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectCard />;
       case NODE_TYPES.ANSWER_NODE:
-        return <QuickReply nodeId={`node-${id}`} cardId={+`${id}`} node={node} />;
+        return <AnswerNode nodeId={`node-${id}`} node={node} />;
+      case NODE_TYPES.TEXT_NODE:
+        return <TextNode node={node} />;
+      case NODE_TYPES.BASIC_CARD_NODE:
+        return <BasicCardNode node={node} />;
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+        return <BasicCardCarouselNode node={node} />;
       default:
         return handleShowingCards();
     }
@@ -251,7 +261,7 @@ export const Node: FC<INodeProps> = ({
     }
 
     switch (typeName) {
-      case NODE_TYPES.TEXT_NODE:
+      //case NODE_TYPES.TEXT_NODE:
       case NODE_TYPES.IMAGE_NODE:
       case NODE_TYPES.BASIC_CARD_NODE:
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:

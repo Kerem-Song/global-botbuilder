@@ -2,21 +2,18 @@ import { Button } from '@components/general';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IButtonType } from '@models';
-import { IQuickItem } from '@models/interfaces/res/IGetFlowRes';
+import { CTRL_TYPES, IButtonCtrl } from '@models/interfaces/res/IGetFlowRes';
 import React, { useEffect } from 'react';
 
-interface ISortableButtonItemProps extends IQuickItem {
+interface ISortableButtonCtrlItemProps extends IButtonCtrl {
   nodeId: string;
-  cardId: number;
 }
-export const SortableQuickButtonItem = ({
+export const SortableButtonCtrlItem = ({
   id,
   label,
-  actionType,
   nodeId,
-  cardId,
-}: ISortableButtonItemProps) => {
+  typeName,
+}: ISortableButtonCtrlItemProps) => {
   const { updateLine } = useUpdateLines();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id,
@@ -43,9 +40,15 @@ export const SortableQuickButtonItem = ({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Button key={`${nodeId}-quickReply-${id}`} className="btnQuickRelply">
-        {label ? label : 'Quick Reply'}
-      </Button>
+      {typeName !== CTRL_TYPES.QUICK_CTRL ? (
+        <Button key={`card-${nodeId}-button-${id}`} onClick={() => console.log('button')}>
+          {label}
+        </Button>
+      ) : (
+        <Button key={`${nodeId}-quickReply-${id}`} className="btnQuickRelply">
+          {label ? label : 'Quick Reply'}
+        </Button>
+      )}
     </div>
   );
 };

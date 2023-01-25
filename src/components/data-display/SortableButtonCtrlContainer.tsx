@@ -16,29 +16,30 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IButtonType } from '@models';
-import { ACTION_TYPES, IQuickItem } from '@models/interfaces/res/IGetFlowRes';
+import {
+  ACTION_TYPES,
+  CTRL_TYPES,
+  IButtonCtrl,
+} from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 
 import { NextNodeButton } from './NextNodeButton';
-import { SortableButtonItem } from './SortableButtonItem';
-import { SortableQuickButtonItem } from './SortableQuickButtonItem';
-interface ISortableContainer {
+import { SortableButtonCtrlItem } from './SortableButtonCtrlItem';
+
+interface ISortableButtonCtrlContainerProps {
   nodeId: string;
-  cardId: number;
-  quickButtons?: IQuickItem[];
+  buttonList?: IButtonCtrl[];
 }
-export const SortableQuickButtonContainer = ({
+export const SortableButtonCtrlContainer = ({
   nodeId,
-  cardId,
-  quickButtons: quickButtons,
-}: ISortableContainer) => {
+  buttonList,
+}: ISortableButtonCtrlContainerProps) => {
   const { updateLine } = useUpdateLines();
-  const [buttons, setButtons] = useState<IQuickItem[]>([]);
+  const [buttons, setButtons] = useState<IButtonCtrl[]>([]);
 
   useEffect(() => {
-    setButtons(quickButtons || []);
-  }, [quickButtons]);
+    setButtons(buttonList || []);
+  }, [buttonList]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -79,10 +80,9 @@ export const SortableQuickButtonContainer = ({
         >
           <SortableContext items={buttons} strategy={rectSortingStrategy}>
             {buttons.map((item) => (
-              <SortableQuickButtonItem
+              <SortableButtonCtrlItem
                 key={item.id}
                 nodeId={nodeId}
-                cardId={cardId}
                 id={item.id}
                 label={item.label}
                 actionType={item.actionType}
@@ -102,8 +102,10 @@ export const SortableQuickButtonContainer = ({
                   ctrlId={`${item.id}`}
                   nodeId={nodeId}
                   type="blue"
-                  key={`card-${cardId}-button-${item.id}-nodeButton-${item.id}`}
-                  offset={i * 40 + 66}
+                  key={`card-${nodeId}-button-${item.id}-nodeButton-${item.id}`}
+                  offset={
+                    item.typeName === CTRL_TYPES.QUICK_CTRL ? i * 40 + 66 : undefined
+                  }
                 />
               </div>
             ),
