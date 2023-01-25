@@ -27,12 +27,12 @@ const finalRoutes = [
             {
               path: 'dashboard',
               element: <DefaultLayout />,
+              handle: true,
               children: [
                 {
                   index: true,
                   element: <DashboardPage />,
                   errorElement: <>404</>,
-                  handle: true,
                 },
               ],
             },

@@ -68,7 +68,7 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
 
   if (node.typeName === NODE_TYPES.ANSWER_NODE) {
     const answerNode: IAnswerNode = node as IAnswerNode;
-    result.cards = answerNode.view.quicks.map((x) => {
+    result.cards = answerNode.view.quicks?.map((x) => {
       if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT) {
         arrows.push({
           start: `next-${x.id}`,

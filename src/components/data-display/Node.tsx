@@ -8,6 +8,7 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import {
+  IAnswerView,
   IBasicCardCarouselView,
   IBasicCardView,
   ITextView,
@@ -157,6 +158,7 @@ export const Node: FC<INodeProps> = ({
   ];
 
   const handleShowingNodesWithoutCards = () => {
+    console.log(node);
     switch (typeName) {
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;
@@ -174,6 +176,8 @@ export const Node: FC<INodeProps> = ({
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectCard />;
+      case NODE_TYPES.ANSWER_NODE:
+        return <QuickReply nodeId={`node-${id}`} cardId={+`${id}`} node={node} />;
       default:
         return handleShowingCards();
     }
@@ -263,24 +267,23 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
         return <CommerceCard cards={cards as IProductCardNode[]} nodeId={`node-${id}`} />;
+      // case NODE_TYPES.ANSWER_NODE:
+      //   return (
+      //     <QuickReply
+      //       cards={cards as IAnswerNode[]}
+      //       nodeId={`node-${id}`}
+      //       cardId={+`${id}`}
+      //     />
+      //   );
 
-      case NODE_TYPES.ANSWER_NODE:
-        return (
-          <QuickReply
-            cards={cards as IAnswerNode[]}
-            nodeId={`node-${id}`}
-            cardId={+`${id}`}
-          />
-        );
+      // case NODE_TYPES.CONDITION_NODE:
+      //   return <Condition nodeId={`node-${id}`} node={node} />;
 
-      case NODE_TYPES.CONDITION_NODE:
-        return <Condition nodeId={`node-${id}`} node={node} />;
+      // case NODE_TYPES.COUNT:
+      //   return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
 
-      case NODE_TYPES.COUNT:
-        return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
-
-      case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSet id={id} values={node} />;
+      // case NODE_TYPES.PARAMETER_SET_NODE:
+      //   return <ParameterSet id={id} values={node} />;
     }
 
     return <div></div>;
@@ -337,9 +340,7 @@ export const Node: FC<INodeProps> = ({
           <i className="fa-solid fa-ellipsis-vertical" />
         </Popper>
       </div>
-      <div className={bodyClass}>
-        {cards ? <>{handleShowingCards()}</> : handleShowingNodesWithoutCards()}
-      </div>
+      <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
       {nodekind === NodeKind.InputNode && (
         <Button shape="ghost" className="icNodeBottom">
           <div

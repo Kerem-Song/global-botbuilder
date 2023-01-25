@@ -1,19 +1,26 @@
-import { Button, Card } from '@components';
-import { NextNodeButton } from '@components/data-display/NextNodeButton';
+import { Card } from '@components';
 import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
-import { IAnswerNode } from '@models';
+import { SortableQuickButtonContainer } from '@components/data-display/SortableQuickButtonContainer';
+import { INode } from '@models';
+import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
 interface QuickReply {
   nodeId: string;
   cardId: number;
-  cards: IAnswerNode[];
+  node: INode;
 }
-export const QuickReply: FC<QuickReply> = ({ nodeId, cards, cardId }) => {
+export const QuickReply: FC<QuickReply> = ({ nodeId, node, cardId }) => {
+  const view = node.view as IAnswerView;
+  console.log(view);
   return (
     <Card>
       <div className="quickReplyWrapper node-draggable-ignore">
-        <SortableButtonContainer cardButtons={cards} cardId={cardId} nodeId={nodeId} />
+        <SortableQuickButtonContainer
+          quickButtons={view.quicks}
+          cardId={cardId}
+          nodeId={nodeId}
+        />
         {/* {cards?.map((item, i) => {
           return (
             <div key={`${nodeId}-quickReply-${i}`}>
