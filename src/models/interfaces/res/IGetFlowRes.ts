@@ -186,6 +186,22 @@ export interface IBasicCardNode extends INodeBase {
   view: IBasicCardView;
 }
 
+export interface IParameterSetNode extends INodeBase {
+  view: IParameterSetView;
+}
+
+export interface IParameterSetView extends IViewBase {
+  parameters: Record<string, string>;
+}
+
+export interface IOtherFlowRedirectNode extends INodeBase {
+  view: IOtherFlowRedirectView;
+}
+
+export interface IOtherFlowRedirectView extends IViewBase {
+  title?: string;
+}
+
 export interface IGetFlowRes {
   alias: string;
   id: string;

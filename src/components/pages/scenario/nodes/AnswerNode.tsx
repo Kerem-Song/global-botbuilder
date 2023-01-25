@@ -10,7 +10,7 @@ interface AnswerNodeProps {
 }
 export const AnswerNode: FC<AnswerNodeProps> = ({ nodeId, node }) => {
   const view = node.view as IAnswerView;
-  console.log(view);
+
   return (
     <Card>
       <div className="quickReplyWrapper node-draggable-ignore">

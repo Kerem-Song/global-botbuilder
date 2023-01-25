@@ -9,6 +9,8 @@ import {
   IIntentNode,
   IIntentView,
   INodeBase,
+  IOtherFlowRedirectView,
+  IParameterSetView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
@@ -27,6 +29,10 @@ export const nodeHelper = {
         return nodeHelper.createDefaultConditionView();
       case NODE_TYPES.ANSWER_NODE:
         return nodeHelper.createDefaultAnswerView();
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        return nodeHelper.createDefaultParameterSetView();
+      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
+        return nodeHelper.createDefaultOtherFlowRedirectView();
       default:
         return undefined;
     }
@@ -101,6 +107,22 @@ export const nodeHelper = {
       ],
     };
 
+    return result;
+  },
+  createDefaultParameterSetView: () => {
+    const result: IParameterSetView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.ANSWER_VIEW,
+      parameters: {},
+    };
+
+    return result;
+  },
+  createDefaultOtherFlowRedirectView: () => {
+    const result: IOtherFlowRedirectView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.OTHER_FLOW_REDIRECT_VIEW,
+    };
     return result;
   },
   ConvertToNode: (node: INode) => {

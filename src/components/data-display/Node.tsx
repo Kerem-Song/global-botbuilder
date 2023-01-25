@@ -6,6 +6,7 @@ import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { CountNode } from '@components/pages/scenario/nodes/CountNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
+import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
@@ -171,7 +172,7 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.COUNT:
         return <CountNode nodeId={`node-${id}`} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSet id={id} values={node} />;
+        return <ParameterSetNode node={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:
         return (
           <div className="command-node">
