@@ -10,6 +10,7 @@ import { NodeKind } from '@models/enum/NodeKind';
 import {
   IBasicCardCarouselView,
   IBasicCardView,
+  IConditionView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';

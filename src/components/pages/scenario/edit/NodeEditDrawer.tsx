@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
+import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
@@ -134,6 +135,8 @@ export const NodeEditDrawer = () => {
         return <ProductCardNodeEdit />;
       case 'AnswerNode':
         return <AnswerNodeEdit />;
+      case 'ConditionNode':
+        return <ConditionNodeEdit />;
       default:
         <></>;
     }
