@@ -1,24 +1,17 @@
 import { icImg } from '@assets';
-import {
-  Button,
-  Col,
-  Divider,
-  Input,
-  InputTextarea,
-  Radio,
-  Row,
-  Space,
-  Switch,
-  Title,
-} from '@components';
-import { itemsEqual } from '@dnd-kit/sortable/dist/utilities';
+import { Button, Col, Divider, Input, Radio, Row, Space, Switch } from '@components';
 import { IButtonType, ISortableListItem } from '@models';
-import { useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 
 export const ListCardNodeEdit = () => {
-  const { register, getValues } = useFormContext();
+  const { register, getValues, control } = useFormContext();
   const values = getValues();
   console.log('value.view', values.view);
+
+  const { field: allowHeadImgField } = useController({
+    name: `view.allowHeadImg`,
+    control,
+  });
   return (
     <>
       <div className="node-item-wrap">
@@ -36,7 +29,7 @@ export const ListCardNodeEdit = () => {
         <div className="m-b-8">
           <Space style={{ alignItems: 'center' }}>
             <span className="label">Head 이미지 설정</span>
-            <Switch />
+            <Switch {...allowHeadImgField} />
           </Space>
         </div>
         <Space direction="vertical">
@@ -102,8 +95,8 @@ export const ListCardNodeEdit = () => {
               <div className="m-b-8">
                 <Space direction="vertical">
                   <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={8} className="img"></Col>
-                    <Col span={14}>
+                    <Col span={7} className="img"></Col>
+                    <Col span={15}>
                       <p>Recommended</p>
                       <p>400 x 400 </p>
                     </Col>
@@ -131,9 +124,11 @@ export const ListCardNodeEdit = () => {
             </div>
           ))}
         <div>
-          <Button shape="ghost" className="addBtn">
-            + Add a List
-          </Button>
+          {values.view.buttons?.length === 0 ? (
+            <Button shape="ghost" className="addBtn">
+              <span>+ Add a List</span>
+            </Button>
+          ) : null}
         </div>
       </div>
 

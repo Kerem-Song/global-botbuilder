@@ -1,4 +1,5 @@
 import { IButtonType, ISortableListItem, IThumbnailType, Profile } from './ICard';
+import { IScenarioModel } from './IScenarioModel';
 import { IViewBase } from './res/IGetFlowRes';
 
 export interface INodeEditModel {
@@ -19,6 +20,7 @@ export interface IBasicCardViewModel {
 }
 
 export interface IListCardViewModel {
+  allowHeadImgField: boolean;
   header?: {
     title?: string;
   };
@@ -42,5 +44,15 @@ export interface IAnswerViewModel {
   allowRes: boolean;
   extra?: Record<string, any>;
   label?: string;
-  action?: 'message' | 'block';
+  action?:
+    | 'linkWebUrl'
+    | 'message'
+    | 'block'
+    | 'phone'
+    | 'operator'
+    | 'osLink'
+    | 'addChannel';
+  connectedScenario?: IScenarioModel;
+  messageText?: string;
+  url?: string;
 }

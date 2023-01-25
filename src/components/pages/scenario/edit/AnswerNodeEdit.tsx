@@ -1,11 +1,23 @@
 import { Button, Input, Switch } from '@components';
 import { Divider, Space } from '@components/layout';
+import { useScenarioClient } from '@hooks';
+import { IScenarioModel } from '@models';
+import classnames from 'classnames';
+import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { useParams } from 'react-router';
 import Select, { StylesConfig } from 'react-select';
 
+interface IReactSelect {
+  value: string;
+  label: string;
+}
 const answerNodeTypeOptions = [
-  { value: 'message', label: 'message' },
-  { value: 'block', label: 'block' },
+  { value: 'block', label: 'Connecting the Chat Bubble' },
+  { value: 'block', label: 'Connecting the Scenario' },
+  { value: 'linkWebUrl', label: 'Connecting the URL' },
+  { value: 'messageText', label: 'Type a message' },
+  { value: 'operator', label: 'Connect to a counselor' },
 ];
 
 const reactSelectStyle: StylesConfig = {
@@ -16,7 +28,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '60px',
+    width: '236px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -54,7 +66,9 @@ const reactSelectStyle: StylesConfig = {
     lineHeight: 1.5,
     backgroundColor: 'white',
     ':hover': {
-      color: 'black',
+      color: '#222222',
+      backgroundColor: '#ECF2FF',
+      borderRadius: '6px',
     },
   }),
   singleValue: (provided) => ({
@@ -66,7 +80,8 @@ const reactSelectStyle: StylesConfig = {
   }),
   menu: (provided) => ({
     ...provided,
-    borderRadius: '2px',
+    border: '1px solid #DCDCDC',
+    borderRadius: '8px',
   }),
 };
 
@@ -85,6 +100,22 @@ export const AnswerNodeEdit = () => {
     control,
   });
 
+  const { field: scenarioField } = useController({
+    name: `view.connectedScenario`,
+    control,
+  });
+
+  const [scenarioList, setScenarioList] = useState<IReactSelect[]>([]);
+  const { botId } = useParams();
+  const { getCachedScenarioList } = useScenarioClient();
+  const data = getCachedScenarioList(botId);
+
+  useEffect(() => {
+    if (data) {
+      setScenarioList(data?.map((item) => ({ value: item.alias, label: item.alias })));
+    }
+  }, [data]);
+
   return (
     <>
       <div className="node-item-wrap">
@@ -94,15 +125,19 @@ export const AnswerNodeEdit = () => {
               <span className="label">사용자 응답 받기</span>
               <Switch {...allowResField} />
             </Space>
+            <Divider />
             <div>
               <span>변수 설정</span>
               <span className="required">*</span>
             </div>
-            <Input
-              {...register(`view.extra`)}
-              value={values.view?.extra || ''}
-              placeholder="변수명을 입력해주세요"
-            />
+            <div className={classnames('input', { 'disabled ': !values.view?.allowRes })}>
+              <Input
+                {...register(`view.extra`)}
+                value={values.view?.extra || ''}
+                placeholder="변수명을 입력해주세요"
+                disabled={!values.view?.allowRes}
+              />
+            </div>
           </Space>
         </div>
       </div>
@@ -138,6 +173,37 @@ export const AnswerNodeEdit = () => {
               )}
               onChange={(options: any) => answerNodeTypeField.onChange(options?.value)}
             />
+            {values.view.action === 'block' && (
+              <Select
+                {...scenarioField}
+                options={scenarioList}
+                styles={reactSelectStyle}
+                defaultValue={scenarioList[0]}
+                value={scenarioList.find((item) => item.value === scenarioField.value)}
+                onChange={(options: any) => scenarioField.onChange(options?.value)}
+              />
+            )}
+            {values.view.action === 'linkWebUrl' && (
+              <Space direction="vertical">
+                <div>
+                  <span className="label">URL 입력 </span>
+                  <span className="required">*</span>
+                </div>
+                <Input {...register(`view.url`)} value={values.view?.url || ''} />
+              </Space>
+            )}
+            {values.view.action === 'messageText' && (
+              <Space direction="vertical">
+                <div>
+                  <span className="label">메세지 입력 </span>
+                  <span className="required">*</span>
+                </div>
+                <Input
+                  {...register(`view.messageText`)}
+                  value={values.view?.messageText || ''}
+                />
+              </Space>
+            )}
           </Space>
         </div>
         <div className="m-b-8">

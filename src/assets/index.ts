@@ -38,6 +38,7 @@ import icHide from '@assets/icons/ic_hide.svg';
 import icHistory from '@assets/icons/ic_history_default.svg';
 import icHistorySelected from '@assets/icons/ic_history_select.svg';
 import icImg from '@assets/icons/ic_img.svg';
+import icImgAddHover from '@assets/icons/ic_img_add_hover.svg';
 import icImgHover from '@assets/icons/ic_img_hover.svg';
 import icList from '@assets/icons/ic_list.svg';
 import icListHover from '@assets/icons/ic_list_hover.svg';
@@ -48,6 +49,8 @@ import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icMinus from '@assets/icons/ic_minus.svg';
 import icNode from '@assets/icons/ic_node.svg';
 import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
+import icOtherFlowRedirect from '@assets/icons/ic_other_flow_redirect.svg';
+import icOtherFlowRedirectHover from '@assets/icons/ic_other_flow_redirect_hover.svg';
 import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
@@ -99,6 +102,8 @@ import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.
 import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
 import icUtteranceEmpty from '@assets/icons/ic_utterance_empty.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
+import icSetParameter from '@assets/icons/icSetParameter.svg';
+import icSetParameterHover from '@assets/icons/icSetParameterHover.svg';
 import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
@@ -145,6 +150,7 @@ export {
   icHistory,
   icHistorySelected,
   icImg,
+  icImgAddHover,
   icImgHover,
   icInsta,
   icLine,
@@ -157,6 +163,8 @@ export {
   icMinus,
   icNode,
   icNodeBottom,
+  icOtherFlowRedirect,
+  icOtherFlowRedirectHover,
   icPaste,
   icPen,
   icPenActive,
@@ -189,6 +197,8 @@ export {
   icSearchActive,
   icSearchDelete,
   icSearchDeleteActive,
+  icSetParameter,
+  icSetParameterHover,
   icSetting,
   icSettingSelected,
   icShow,

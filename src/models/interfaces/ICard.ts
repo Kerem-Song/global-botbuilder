@@ -1,5 +1,7 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { NodeKind } from '@models/enum/NodeKind';
+
+import { IScenarioModel } from './IScenarioModel';
 export interface IThumbnailType {
   imageUrl: string;
   link?: OsLinkType;
@@ -179,6 +181,7 @@ export interface IProductCardNode {
 
 export interface IListCardNode {
   type?: typeof NODE_TYPES.LIST_CARD_NODE | typeof NODE_TYPES.LIST_CAROUSEL;
+  allowHeadImgField?: boolean;
   header?: {
     title?: string;
   };
@@ -191,11 +194,20 @@ export interface IAnswerNode {
   type?: typeof NODE_TYPES.ANSWER_NODE;
   id: string;
   label: string;
-  action: 'message' | 'block';
+  action:
+    | 'linkWebUrl'
+    | 'message'
+    | 'block'
+    | 'phone'
+    | 'operator'
+    | 'osLink'
+    | 'addChannel';
   messageText?: string;
   blockId?: string;
   allowRes?: boolean;
   extra?: Record<string, any>;
+  connectedScenario?: IScenarioModel;
+  url?: string;
 }
 
 export interface IConditionNode {
