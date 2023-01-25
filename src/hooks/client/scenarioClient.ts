@@ -1,6 +1,10 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel, NODE_TYPES } from '@models';
-import { IBasicCardView, IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import {
+  IBasicCardView,
+  IConditionView,
+  IGetFlowRes,
+} from '@models/interfaces/res/IGetFlowRes';
 import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -171,6 +175,25 @@ export const useScenarioClient = () => {
             return b;
           });
           converted.view = { ...view, buttons: buttons } as IBasicCardView;
+        }
+
+        if (converted.typeName === NODE_TYPES.CONDITION_NODE && converted.view) {
+          const view: IConditionView = converted.view;
+
+          const trueArrow = arrows.find(
+            (a) => a.start.substring(10) === `${converted.id}-true`,
+          );
+
+          console.log(trueArrow);
+          const falseArrow = arrows.find(
+            (a) => a.start.substring(10) === `${converted.id}-false`,
+          );
+
+          converted.view = {
+            ...view,
+            trueThenNextNodeId: trueArrow ? trueArrow.end.substring(5) : undefined,
+            falseThenNextNodeId: falseArrow ? falseArrow.end.substring(5) : undefined,
+          } as IConditionView;
         }
 
         return converted;
