@@ -24,6 +24,7 @@ export interface INode {
   x: number;
   y: number;
   view?: IViewBase;
+  nextNodeId?: string;
   cards?:
     | IBasicCardNode[]
     | IProductCardNode[]

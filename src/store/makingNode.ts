@@ -1,4 +1,4 @@
-import { IArrow, INode } from '@models';
+import { IArrow, INode, NodeKind } from '@models';
 import { IListCardNode, IProductCardNode, NODE_TYPES } from '@models/interfaces/ICard';
 import {
   IAnswerViewModel,
@@ -41,10 +41,11 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
     nodeKind: node.nodeKind,
     option: node.option,
     seq: node.seq,
+    nextNodeId: node.nextNodeId,
     view: node.view,
   };
 
-  if (node.nextNodeId && node.typeName === NODE_TYPES.JSON_REQUEST_NODE) {
+  if (node.nextNodeId && node.nodeKind !== NodeKind.InputNode) {
     arrows.push({
       start: `next-${node.id}`,
       updateKey: `node-${node.id}`,
@@ -54,21 +55,21 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
     });
   }
 
-  if (node.typeName === NODE_TYPES.INTENT_NODE) {
-    if (node.nextNodeId) {
-      arrows.push({
-        start: `next-${node.id}`,
-        updateKey: `node-${node.id}`,
-        end: `node-${node.nextNodeId}`,
-        isNextNode: true,
-        type: 'blue',
-      });
-    }
-  }
+  // if (node.typeName === NODE_TYPES.INTENT_NODE) {
+  //   if (node.nextNodeId) {
+  //     arrows.push({
+  //       start: `next-${node.id}`,
+  //       updateKey: `node-${node.id}`,
+  //       end: `node-${node.nextNodeId}`,
+  //       isNextNode: true,
+  //       type: 'blue',
+  //     });
+  //   }
+  // }
 
   if (node.typeName === NODE_TYPES.ANSWER_NODE) {
     const answerNode: IAnswerNode = node as IAnswerNode;
-    result.cards = answerNode.view.quicks.map((x) => {
+    result.cards = answerNode.view.quicks?.map((x) => {
       if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT) {
         arrows.push({
           start: `next-${x.id}`,
@@ -89,7 +90,6 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
 
   if (node.typeName === NODE_TYPES.CONDITION_NODE) {
     const conditionNode: IConditionNode = node as IConditionNode;
-    result.view = conditionNode.view;
 
     if (conditionNode.view.falseThenNextNodeId) {
       arrows.push({
@@ -112,14 +112,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
     }
   }
 
-  if (node.typeName === NODE_TYPES.TEXT_NODE) {
-    const textNode: ITextNode = node as ITextNode;
-    result.view = textNode.view;
-  }
-
   if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
     const cardCarouselNode: IBasicCardCarouselNode = node as IBasicCardCarouselNode;
-    result.view = cardCarouselNode.view;
     cardCarouselNode.view.childrenViews.forEach((v) =>
       v.buttons?.forEach((b) => {
         if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
@@ -137,7 +131,6 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
 
   if (node.typeName === NODE_TYPES.BASIC_CARD_NODE) {
     const cardNode: IBasicCardNode = node as IBasicCardNode;
-    result.view = cardNode.view;
     cardNode.view.buttons?.forEach((b) => {
       if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
         arrows.push({
@@ -164,9 +157,9 @@ export const makingNodeSlice = createSlice({
       state.nodes = converted.map((x) => x.node);
       state.arrows = [];
       converted.map((x) => (state.arrows = [...state.arrows, ...x.arrows]));
-      console.log(state.arrows);
+
       nodes
-        .filter((x) => x.nodeKind === 2 && x.nextNodeId)
+        .filter((x) => x.nodeKind === NodeKind.InputNode && x.nextNodeId)
         .map((n) => {
           const nextNode = nodes.find((x) => x.id === n.nextNodeId);
           if (nextNode) {

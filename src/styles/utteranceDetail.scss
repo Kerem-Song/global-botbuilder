@@ -82,6 +82,12 @@
           width: 78%;
           font-size: rem(16);
           font-weight: 500;
+          .utteranceLength {
+            font-weight: 700;
+            font-size: rem(16);
+            line-height: rem(19.2);
+            color: $primary500;
+          }
         }
         .icDelete {
           width: rem(38);
@@ -92,11 +98,15 @@
           border-radius: rem(8);
           cursor: pointer;
           background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+          background-position: center;
+          background-repeat: no-repeat;
           &:hover {
             background-color: $primary100;
           }
           &:disabled {
             background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+            background-position: center;
+            background-repeat: no-repeat;
             &:hover {
               background-color: $grayWhite;
             }

@@ -47,6 +47,7 @@ export const VIEW_TYPES = {
   BASIC_CARD_VIEW: 'BasicCardView',
   JSON_REQUEST_VIEW: 'JsonRequestView',
   CONDITION_VIEW: 'ConditionView',
+  OTHER_FLOW_REDIRECT_VIEW: 'OtherFlowRedirectView',
 };
 
 export const NODE_TYPES = {

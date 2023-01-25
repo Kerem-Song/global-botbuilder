@@ -2,12 +2,15 @@ import { ConditionJoin, INode, NODE_TYPES, TNodeTypes, VIEW_TYPES } from '@model
 import {
   ACTION_TYPES,
   CTRL_TYPES,
+  IAnswerView,
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
   IIntentNode,
   IIntentView,
   INodeBase,
+  IOtherFlowRedirectView,
+  IParameterSetView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
@@ -24,6 +27,12 @@ export const nodeHelper = {
         return nodeHelper.createDefaultBasicCardCarouselView();
       case NODE_TYPES.CONDITION_NODE:
         return nodeHelper.createDefaultConditionView();
+      case NODE_TYPES.ANSWER_NODE:
+        return nodeHelper.createDefaultAnswerView();
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        return nodeHelper.createDefaultParameterSetView();
+      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
+        return nodeHelper.createDefaultOtherFlowRedirectView();
       default:
         return undefined;
     }
@@ -81,6 +90,39 @@ export const nodeHelper = {
       join: ConditionJoin.And,
     };
 
+    return result;
+  },
+  createDefaultAnswerView: () => {
+    const result: IAnswerView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.ANSWER_VIEW,
+      quicks: [
+        {
+          id: ID_GEN.generate(ID_TYPES.CTRL),
+          label: '퀵 리플라이 1',
+          seq: 0,
+          typeName: CTRL_TYPES.QUICK_CTRL,
+          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
+        },
+      ],
+    };
+
+    return result;
+  },
+  createDefaultParameterSetView: () => {
+    const result: IParameterSetView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.ANSWER_VIEW,
+      parameters: {},
+    };
+
+    return result;
+  },
+  createDefaultOtherFlowRedirectView: () => {
+    const result: IOtherFlowRedirectView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.OTHER_FLOW_REDIRECT_VIEW,
+    };
     return result;
   },
   ConvertToNode: (node: INode) => {

@@ -1,6 +1,5 @@
-import { Button, Card } from '@components';
+import { Card } from '@components';
 import { NextNodeButton } from '@components/data-display/NextNodeButton';
-import { ICountNode } from '@models';
 import { FC } from 'react';
 
 interface ICountNodeProps {
@@ -9,6 +8,7 @@ interface ICountNodeProps {
 export const CountNode: FC<ICountNodeProps> = ({ nodeId }) => {
   return (
     <Card>
+      <div className="countConditionWrapper"></div>
       <NextNodeButton
         ctrlId={`${nodeId}-true`}
         nodeId={nodeId}

@@ -1,17 +1,16 @@
 import { Button, Card } from '@components';
-import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import { SortableButtonCtrlContainer } from '@components/data-display/SortableButtonCtrlContainer';
 import { INode } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
-interface QuickReply {
+interface AnswerNodeProps {
   nodeId: string;
-  cardId: number;
   node: INode;
 }
-export const QuickReply: FC<QuickReply> = ({ nodeId, node, cardId }) => {
+export const AnswerNode: FC<AnswerNodeProps> = ({ nodeId, node }) => {
   const view = node.view as IAnswerView;
+
   return (
     <Card>
       <div className="quickReplyWrapper node-draggable-ignore">

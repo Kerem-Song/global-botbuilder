@@ -16,6 +16,7 @@ export type ActionTypes = ValueOf<typeof ACTION_TYPES>;
 export const CTRL_TYPES = {
   IMAGE_CTRL: 'ImageCtrl',
   BUTTON_CTRL: 'ButtonCtrl',
+  QUICK_CTRL: 'QuickCtrl',
 };
 
 export type CtrlTypes = ValueOf<typeof CTRL_TYPES>;
@@ -123,17 +124,8 @@ export interface IAnswerNode extends INodeBase {
 }
 
 export interface IAnswerView extends IViewBase {
-  quicks: IQuickItem[];
-  utteranceParam: string;
-}
-
-export interface IQuickItem {
-  id: string;
-  actionType: ActionTypes;
-  actionValue: string;
-  label: string;
-  seq: number;
-  typeName: 'QuickCtrl';
+  quicks?: IButtonCtrl[];
+  utteranceParam?: string;
 }
 
 export interface IConditionNode extends INodeBase {
@@ -192,6 +184,22 @@ export interface IButtonCtrl extends ICtrlBase {
 
 export interface IBasicCardNode extends INodeBase {
   view: IBasicCardView;
+}
+
+export interface IParameterSetNode extends INodeBase {
+  view: IParameterSetView;
+}
+
+export interface IParameterSetView extends IViewBase {
+  parameters: Record<string, string>;
+}
+
+export interface IOtherFlowRedirectNode extends INodeBase {
+  view: IOtherFlowRedirectView;
+}
+
+export interface IOtherFlowRedirectView extends IViewBase {
+  title?: string;
 }
 
 export interface IGetFlowRes {
