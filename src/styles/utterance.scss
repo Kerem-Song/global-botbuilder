@@ -1,8 +1,3 @@
-* {
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .utteranceWrap {
   position: relative;
   padding: rem(20);
@@ -56,6 +51,8 @@
               border: none;
               background-image: url('@assets/icons/ic_utterance_add.svg');
               cursor: pointer;
+              background-position: center;
+              background-repeat: no-repeat;
             }
           }
           .connectScenarios {
@@ -69,6 +66,7 @@
             justify-content: center;
             align-items: center;
             width: rem(100);
+
             .icDelete {
               width: rem(38);
               height: rem(38);
@@ -79,11 +77,15 @@
               border-radius: rem(8);
               cursor: pointer;
               background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+              background-position: center;
+              background-repeat: no-repeat;
               &:hover {
                 background-color: $primary100;
               }
               &:disabled {
                 background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+                background-position: center;
+                background-repeat: no-repeat;
                 &:hover {
                   background-color: $grayWhite;
                 }

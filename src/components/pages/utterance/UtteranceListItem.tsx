@@ -1,22 +1,33 @@
 import { icUtteranceEmpty } from '@assets';
+import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { AlertModal } from './AlertModal';
 
 export const UtteranceListItem = () => {
+  const { utteranceListItemMutate } = useUtteranceClient();
+  const navigate = useNavigate();
   const [isOpenAlert, setIsOpenAlert] = useState<boolean>(false);
+
   const closeAlert = () => {
     setIsOpenAlert(false);
   };
+
   const openAlert = () => {
     setIsOpenAlert(true);
-    console.log('open');
   };
 
   return (
     <>
       <tr className="list">
-        <td className="utteranceList intent">Point</td>
+        <td
+          role="presentation"
+          className="utteranceList intent"
+          onClick={() => navigate(':utteranceId')}
+        >
+          Point
+        </td>
         <td className="utteranceList connectScenarios">Point check</td>
         <td className="utteranceList utterance">
           points, points check, points check, points accumulated...
@@ -24,26 +35,6 @@ export const UtteranceListItem = () => {
         <td className="utteranceList icon">
           <button className="icDelete" onClick={openAlert} />
           <AlertModal isOpenAlert={isOpenAlert} closeAlert={closeAlert} />
-        </td>
-      </tr>
-      <tr className="list">
-        <td className="utteranceList intent">Go to SNS</td>
-        <td className="utteranceList connectScenarios">-</td>
-        <td className="utteranceList utterance">
-          SNS, Facebook, insragram, kakaotail, line
-        </td>
-        <td className="utteranceList icon">
-          <button className="icDelete" onClick={openAlert}></button>
-        </td>
-      </tr>
-      <tr className="list">
-        <td className="utteranceList intent">Go to SNS</td>
-        <td className="utteranceList connectScenarios">-</td>
-        <td className="utteranceList utterance">
-          SNS, Facebook, insragram, kakaotail, line
-        </td>
-        <td className="utteranceList icon">
-          <button className="icDelete" onClick={openAlert}></button>
         </td>
       </tr>
       <tr className="emptyList">

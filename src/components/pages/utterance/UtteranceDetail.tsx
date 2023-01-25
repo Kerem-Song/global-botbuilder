@@ -3,9 +3,51 @@ import { Card } from '@components/data-display';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
+import { useRootState } from '@hooks';
+import { useUtteranceClient } from '@hooks/client/utteranceClient';
+import { IDataEntryProp } from '@models';
+import { removeUtteranceData, setUtteranceData } from '@store/utteranceDetailSlice';
+import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-export const UtteranceDetail = () => {
+export interface UtteranceDetailProps extends IDataEntryProp {
+  onPressEnter?: (value: string | undefined) => void;
+}
+
+export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
+  const { utteranceDetailMutate } = useUtteranceClient();
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const utteranceData = useRootState((state) => state.utteranceDetailReducer.utterance);
+  const [intent, setIntent] = useState<string>('');
+  const [utterance, setUtterance] = useState<string>('');
+
+  const dispatch = useDispatch();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleIntent = (e: ChangeEvent<HTMLInputElement>): void => {
+    setIntent(e.target.value);
+  };
+
+  const handleUtterance = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUtterance(e.target.value);
+  };
+
+  const handleDelete = (e: FormEvent<HTMLButtonElement>): void => {
+    const newUtterance = { id: utteranceData.length, utterance: utterance };
+    dispatch(removeUtteranceData(newUtterance.id));
+    e.preventDefault();
+  };
+
+  const handleEnter = (e: FormEvent<HTMLButtonElement>): void => {
+    const newUtterance = { id: utteranceData.length + 1, utterance: utterance };
+    if (!utterance || !utterance.trim()) return;
+    dispatch(setUtteranceData([newUtterance]));
+    e.preventDefault();
+    setUtterance('');
+  };
+
   const navigate = useNavigate();
   return (
     <div className="utteranceDetailWrap">
@@ -39,7 +81,12 @@ export const UtteranceDetail = () => {
                 <span>Intent Name</span>
               </Col>
               <Col flex="auto">
-                <Input placeholder="Input Intent Name" showCount maxLength={20} />
+                <Input
+                  onChange={handleIntent}
+                  placeholder="Input Intent Name"
+                  showCount
+                  maxLength={20}
+                />
               </Col>
             </Row>
             <Row align="center" gap={10}>
@@ -54,12 +101,17 @@ export const UtteranceDetail = () => {
         </form>
       </Card>
       <div className="utterance add">
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <Space direction="vertical">
             <p style={{ fontSize: '16px', fontWeight: 500 }}>Add Utterance</p>
             <Row>
               <Col flex="auto">
-                <Input placeholder="Press Enter and enter the utterance keyword." />
+                <Input
+                  value={utterance}
+                  ref={inputRef}
+                  onChange={handleUtterance}
+                  placeholder="Press Enter and enter the utterance keyword."
+                />
               </Col>
               <Col style={{ marginLeft: '8px' }}>
                 <Button
@@ -71,6 +123,7 @@ export const UtteranceDetail = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
+                  onClick={handleEnter}
                 >
                   <img src={icEnter} alt="enter" />
                 </Button>
@@ -82,42 +135,45 @@ export const UtteranceDetail = () => {
       <div className="utterance list">
         <form>
           <Space direction="horizontal">
-            <p className="title">Utterance</p>
+            <span className="title">
+              Utterance <span className="utteranceLength">{utteranceData.length}</span>
+            </span>
             <Input size="small" search placeholder="Input search text" />
-            <button className="icDelete" />
+            <button className="icDelete" onClick={handleDelete} />
           </Space>
         </form>
         <form>
           <Row style={{ marginTop: '12px' }}>
-            <div className="utteranceItem">
-              <Checkbox style={{ marginLeft: '20px' }} />
-              <p className="item">the first screen</p>
-            </div>
-            <div className="utteranceItem">
-              <Checkbox style={{ marginLeft: '20px' }} />
-              <p className="item">the first screen</p>
-            </div>
-            <div className="utteranceItem">
-              <Checkbox style={{ marginLeft: '20px' }} />
-              <p className="item">the first screen</p>
-            </div>
+            <>
+              {utteranceData.length > 0 ? (
+                utteranceData.map((v, i) => {
+                  return (
+                    <div key={i} className="utteranceItem">
+                      <Checkbox style={{ marginLeft: '20px' }} />
+                      <p className="item">{v.utterance}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <Row style={{ width: '100%', marginTop: '12px' }}>
+                  <div className="emptyList utteranceItem">
+                    <div className="empty">
+                      <img src={icUtteranceEmpty} alt="empty" />
+                      <span>No registered Utterance.</span>
+                    </div>
+                  </div>
+                </Row>
+              )}
+            </>
           </Row>
-          <Row style={{ marginTop: '12px' }}>
+          {/* <Row style={{ width: '100%', marginTop: '12px' }}>
             <div className="emptyList utteranceItem">
               <div className="empty">
                 <img src={icUtteranceEmpty} alt="empty" />
                 <span>No search results found.</span>
               </div>
             </div>
-          </Row>
-          <Row style={{ marginTop: '12px' }}>
-            <div className="emptyList utteranceItem">
-              <div className="empty">
-                <img src={icUtteranceEmpty} alt="empty" />
-                <span>No registered Utterance.</span>
-              </div>
-            </div>
-          </Row>
+          </Row> */}
         </form>
       </div>
     </div>
