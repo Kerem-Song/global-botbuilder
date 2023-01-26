@@ -4,6 +4,8 @@ import { INode } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
+import { NODE_PREFIX } from '../../../../modules';
+
 export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
   const view = node.view as IParameterSetView;
 
@@ -15,7 +17,11 @@ export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
           return <p key={key}>{`{{${key}}} = ${view.parameters[key]}`}</p>;
         })}
       </div>
-      <NextNodeButton ctrlId={`${node.id}`} nodeId={`node-${node.id}`} type="blue" />
+      <NextNodeButton
+        ctrlId={`${node.id}`}
+        nodeId={`${NODE_PREFIX}${node.id}`}
+        type="blue"
+      />
     </Card>
   );
 };

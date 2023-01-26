@@ -1,6 +1,7 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel, NODE_TYPES } from '@models';
 import {
+  IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
   IGetFlowRes,
@@ -173,7 +174,7 @@ export const useScenarioClient = () => {
         }
 
         if (converted.typeName === NODE_TYPES.BASIC_CARD_NODE && converted.view) {
-          const view: IBasicCardView = converted.view;
+          const view = converted.view as IBasicCardView;
           const buttons = view.buttons?.map((b) => {
             const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
             if (buttonArrow) {
@@ -182,6 +183,23 @@ export const useScenarioClient = () => {
             return b;
           });
           converted.view = { ...view, buttons: buttons } as IBasicCardView;
+        }
+
+        if (
+          converted.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE &&
+          converted.view
+        ) {
+          const carouselView = converted.view as IBasicCardCarouselView;
+
+          const childrenViews = carouselView.childrenViews.map((view) => {
+            const buttons = view.buttons?.map((b) => {
+              const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+              return { ...b, actionValue: buttonArrow?.end.substring(5) };
+            });
+            return { ...view, buttons };
+          });
+
+          converted.view = { ...carouselView, childrenViews } as IBasicCardCarouselView;
         }
 
         if (converted.typeName === NODE_TYPES.CONDITION_NODE && converted.view) {

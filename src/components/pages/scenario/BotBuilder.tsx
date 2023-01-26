@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
-import { ID_GEN } from '../../../modules';
+import { ID_GEN, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
@@ -212,7 +212,7 @@ export const Botbuilder = () => {
               onDrag={(e) => {
                 e.stopPropagation();
                 if (e.isTrusted) {
-                  updateLine(`node-${item.id}`);
+                  updateLine(`${NODE_PREFIX}${item.id}`);
                 }
               }}
               onStop={(e) => {

@@ -20,6 +20,8 @@ import {
 } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { NODE_PREFIX } from '../modules';
+
 export interface IBuilderInfo {
   nodes: INode[];
   arrows: IArrow[];
@@ -48,24 +50,12 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
   if (node.nextNodeId && node.nodeKind !== NodeKind.InputNode) {
     arrows.push({
       start: `next-${node.id}`,
-      updateKey: `node-${node.id}`,
-      end: `node-${node.nextNodeId}`,
+      updateKey: `${NODE_PREFIX}${node.id}`,
+      end: `${NODE_PREFIX}${node.nextNodeId}`,
       isNextNode: true,
       type: 'blue',
     });
   }
-
-  // if (node.typeName === NODE_TYPES.INTENT_NODE) {
-  //   if (node.nextNodeId) {
-  //     arrows.push({
-  //       start: `next-${node.id}`,
-  //       updateKey: `node-${node.id}`,
-  //       end: `node-${node.nextNodeId}`,
-  //       isNextNode: true,
-  //       type: 'blue',
-  //     });
-  //   }
-  // }
 
   if (node.typeName === NODE_TYPES.ANSWER_NODE) {
     const answerNode: IAnswerNode = node as IAnswerNode;
@@ -73,8 +63,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
       if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT) {
         arrows.push({
           start: `next-${x.id}`,
-          updateKey: `node-${node.id}`,
-          end: `node-${x.actionValue}`,
+          updateKey: `${NODE_PREFIX}${node.id}`,
+          end: `${NODE_PREFIX}${x.actionValue}`,
           isNextNode: true,
           type: 'blue',
         });
@@ -94,8 +84,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
     if (conditionNode.view.falseThenNextNodeId) {
       arrows.push({
         start: `next-node-${node.id}-false`,
-        updateKey: `node-${node.id}`,
-        end: `node-${conditionNode.view.falseThenNextNodeId}`,
+        updateKey: `${NODE_PREFIX}${node.id}`,
+        end: `${NODE_PREFIX}${conditionNode.view.falseThenNextNodeId}`,
         isNextNode: true,
         type: 'red',
       });
@@ -104,8 +94,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
     if (conditionNode.view.trueThenNextNodeId) {
       arrows.push({
         start: `next-node-${node.id}-true`,
-        updateKey: `node-${node.id}`,
-        end: `node-${conditionNode.view.trueThenNextNodeId}`,
+        updateKey: `${NODE_PREFIX}${node.id}`,
+        end: `${NODE_PREFIX}${conditionNode.view.trueThenNextNodeId}`,
         isNextNode: true,
         type: 'green',
       });
@@ -119,8 +109,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
         if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
           arrows.push({
             start: `next-${b.id}`,
-            updateKey: `node-${node.id}`,
-            end: `node-${b.actionValue}`,
+            updateKey: `${NODE_PREFIX}${node.id}`,
+            end: `${NODE_PREFIX}${b.actionValue}`,
             isNextNode: true,
             type: 'blue',
           });
@@ -135,8 +125,8 @@ const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
       if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
         arrows.push({
           start: `next-${b.id}`,
-          updateKey: `node-${node.id}`,
-          end: `node-${b.actionValue}`,
+          updateKey: `${NODE_PREFIX}${node.id}`,
+          end: `${NODE_PREFIX}${b.actionValue}`,
           isNextNode: true,
           type: 'blue',
         });
@@ -165,7 +155,11 @@ export const makingNodeSlice = createSlice({
           if (nextNode) {
             state.arrows = [
               ...state.arrows,
-              { start: `node-${n.id}`, end: `node-${n.nextNodeId}`, type: 'blue' },
+              {
+                start: `${NODE_PREFIX}${n.id}`,
+                end: `${NODE_PREFIX}${n.nextNodeId}`,
+                type: 'blue',
+              },
             ];
           }
         });
@@ -276,7 +270,9 @@ export const makingNodeSlice = createSlice({
           state.nodes = nodes;
 
           const removeArrows = state.arrows.filter(
-            (x) => x.start === `node-${nodeId}` || x.end === `node-${nodeId}`,
+            (x) =>
+              x.start === `${NODE_PREFIX}${nodeId}` ||
+              x.end === `${NODE_PREFIX}${nodeId}`,
           );
 
           if (removeArrows.length) {

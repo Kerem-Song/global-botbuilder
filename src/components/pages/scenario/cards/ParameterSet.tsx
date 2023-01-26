@@ -1,7 +1,9 @@
-import { Button, Card } from '@components';
+import { Card } from '@components';
 import { NextNodeButton } from '@components/data-display/NextNodeButton';
 import { INode } from '@models';
 import { FC } from 'react';
+
+import { NODE_PREFIX } from '../../../../modules';
 
 interface IParameterSet {
   id?: string;
@@ -9,7 +11,6 @@ interface IParameterSet {
   params?: string[];
 }
 export const ParameterSet: FC<IParameterSet> = ({ id, values, params }) => {
-  console.log('parameter set');
   return (
     <Card>
       {params?.map((item, i) => {
@@ -20,7 +21,7 @@ export const ParameterSet: FC<IParameterSet> = ({ id, values, params }) => {
         );
       })}
       <div className="command-node">
-        <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+        <NextNodeButton ctrlId={`${id}`} nodeId={`${NODE_PREFIX}${id}`} type="blue" />
       </div>
     </Card>
   );

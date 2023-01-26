@@ -24,7 +24,6 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
-import { SizeType } from 'src/models/types/SizeType';
 
 import {
   IAnswerNode,
@@ -36,6 +35,8 @@ import {
   IProductCardNode,
   NODE_TYPES,
 } from '../../models/interfaces/ICard';
+import { SizeType } from '../../models/types/SizeType';
+import { NODE_PREFIX } from '../../modules';
 import {
   BasicCard,
   CommerceCard,
@@ -122,7 +123,7 @@ export const Node: FC<INodeProps> = ({
         };
         guide.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
       }
-      updateLine(`node-${id}`);
+      updateLine(`${NODE_PREFIX}${id}`);
     }
   };
 
@@ -162,21 +163,21 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;
       case NODE_TYPES.CONDITION_NODE:
-        return <ConditionNode nodeId={`node-${id}`} node={node} />;
+        return <ConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.COUNT:
-        return <CountNode nodeId={`node-${id}`} />;
+        return <CountNode nodeId={`${NODE_PREFIX}${id}`} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNode node={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:
         return (
           <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`node-${id}`} type="blue" />
+            <NextNodeButton ctrlId={`${id}`} nodeId={`${NODE_PREFIX}${id}`} type="blue" />
           </div>
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectCard />;
       case NODE_TYPES.ANSWER_NODE:
-        return <AnswerNode nodeId={`node-${id}`} node={node} />;
+        return <AnswerNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.TEXT_NODE:
         return <TextNode node={node} />;
       case NODE_TYPES.BASIC_CARD_NODE:
@@ -196,7 +197,7 @@ export const Node: FC<INodeProps> = ({
         const textCards: IBasicCardNode[] = [
           { type: NODE_TYPES.TEXT_NODE, description: view.text },
         ];
-        return <BasicCard cards={textCards} nodeId={`node-${id}`} />;
+        return <BasicCard cards={textCards} nodeId={`${NODE_PREFIX}${id}`} />;
       }
     }
 
@@ -222,7 +223,7 @@ export const Node: FC<INodeProps> = ({
         };
       });
 
-      return <BasicCard cards={basicCards} nodeId={`node-${id}`} isCarousel />;
+      return <BasicCard cards={basicCards} nodeId={`${NODE_PREFIX}${id}`} isCarousel />;
     }
 
     if (node.type === NODE_TYPES.BASIC_CARD_NODE) {
@@ -248,7 +249,7 @@ export const Node: FC<INodeProps> = ({
         },
       ];
 
-      return <BasicCard cards={basicCards} nodeId={`node-${id}`} />;
+      return <BasicCard cards={basicCards} nodeId={`${NODE_PREFIX}${id}`} />;
     }
 
     if (!cards) {
@@ -261,34 +262,26 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.BASIC_CARD_NODE:
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
       case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
-        return <BasicCard cards={cards as IBasicCardNode[]} nodeId={`node-${id}`} />;
+        return (
+          <BasicCard cards={cards as IBasicCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
+        );
 
       case NODE_TYPES.LIST_CARD_NODE:
       case NODE_TYPES.LIST_CAROUSEL:
-        return <ListCard cards={cards as IListCardNode[]} nodeId={`node-${id}`} />;
+        return (
+          <ListCard cards={cards as IListCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
+        );
 
       case NODE_TYPES.PRODUCT_CARD_NODE:
       case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
-        return <CommerceCard cards={cards as IProductCardNode[]} nodeId={`node-${id}`} />;
-      // case NODE_TYPES.ANSWER_NODE:
-      //   return (
-      //     <QuickReply
-      //       cards={cards as IAnswerNode[]}
-      //       nodeId={`node-${id}`}
-      //       cardId={+`${id}`}
-      //     />
-      //   );
-
-      // case NODE_TYPES.CONDITION_NODE:
-      //   return <Condition nodeId={`node-${id}`} node={node} />;
-
-      // case NODE_TYPES.COUNT:
-      //   return <Count cards={cards as ICountNode[]} nodeId={`node-${id}`} />;
-
-      // case NODE_TYPES.PARAMETER_SET_NODE:
-      //   return <ParameterSet id={id} values={node} />;
+        return (
+          <CommerceCard
+            cards={cards as IProductCardNode[]}
+            nodeId={`${NODE_PREFIX}${id}`}
+          />
+        );
     }
 
     return <div></div>;
@@ -317,13 +310,13 @@ export const Node: FC<INodeProps> = ({
 
         addArrow?.({
           start: from,
-          end: `node-${id}`,
+          end: `${NODE_PREFIX}${id}`,
           updateKey: nodeId,
           isNextNode: isNext === '1',
           type: pointType as 'blue',
         });
       }}
-      id={`node-${id}`}
+      id={`${NODE_PREFIX}${id}`}
       className={wrapClass}
       style={style}
       role="presentation"
@@ -349,15 +342,19 @@ export const Node: FC<INodeProps> = ({
       {nodekind === NodeKind.InputNode && (
         <Button shape="ghost" className="icNodeBottom">
           <div
-            id={`node-bottom-${id}`}
+            id={`${NODE_PREFIX}bottom-${id}`}
             role="presentation"
             className="node-draggable-ignore"
             draggable
             onDragStart={(e) => {
-              e.dataTransfer.setData('id', `node-${id}`);
+              e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
               e.dataTransfer.setData('pointType', 'blue');
               dispatch(
-                setGuideStartNode({ startId: `node-${id}`, isNext: false, type: 'blue' }),
+                setGuideStartNode({
+                  startId: `${NODE_PREFIX}${id}`,
+                  isNext: false,
+                  type: 'blue',
+                }),
               );
             }}
             onDragEnd={() => {

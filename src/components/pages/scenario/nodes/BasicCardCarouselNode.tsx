@@ -3,6 +3,7 @@ import { INode } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
+import { NODE_PREFIX } from '../../../../modules';
 import { BasicCardView } from '../views/BasicCardView';
 
 export interface IBasicCardCarouselNodeProps {
@@ -12,9 +13,9 @@ export interface IBasicCardCarouselNodeProps {
 export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node }) => {
   const view = node.view as IBasicCardCarouselView;
   return (
-    <Carousel nodeId={`node-${node.id}`} addCarousel>
+    <Carousel nodeId={`${NODE_PREFIX}${node.id}`} addCarousel>
       {view.childrenViews.map((v) => {
-        return <BasicCardView key={v.id} nodeId={`node-${node.id}`} view={v} />;
+        return <BasicCardView key={v.id} nodeId={`${NODE_PREFIX}${node.id}`} view={v} />;
       })}
     </Carousel>
   );

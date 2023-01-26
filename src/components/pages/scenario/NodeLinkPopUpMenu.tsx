@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { ID_GEN, ID_TYPES } from '../../../modules';
+import { ID_GEN, ID_TYPES, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 
 interface INodeLinkPopUpFormValue {
@@ -123,7 +123,7 @@ export const NodeLinkPopUpMenu = ({
       dispatch(
         addArrow({
           start: guideStart.startId,
-          end: `node-${addNode.id}`,
+          end: `${NODE_PREFIX}${addNode.id}`,
           isNextNode: guideStart.isNext,
           updateKey: guideStart.nodeId,
           type: guideStart.type,
@@ -205,7 +205,7 @@ export const NodeLinkPopUpMenu = ({
       dispatch(
         addArrow({
           start: guide.startId,
-          end: `node-${addNode.id}`,
+          end: `${NODE_PREFIX}${addNode.id}`,
           isNextNode: guide.isNext,
           updateKey: guide.nodeId,
           type: guide.type,
