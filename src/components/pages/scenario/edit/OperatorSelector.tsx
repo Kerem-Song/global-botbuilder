@@ -22,7 +22,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '236px',
+    width: '220px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -80,8 +80,7 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const OperatorSelector = ({ index }: { index: number }) => {
-  const { register, getValues, control } = useFormContext();
-  const values = getValues();
+  const { control } = useFormContext();
   const { field: operatorField } = useController({
     name: `view.items.${index}.operator`,
     control,

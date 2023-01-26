@@ -7,7 +7,7 @@ import { FC } from 'react';
 export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
   const view = node.view as IParameterSetView;
 
-  console.log(view);
+  // console.log(view);
   return (
     <Card>
       <div className="countConditionWrapper">

@@ -1,10 +1,10 @@
-import { Input } from '@components';
+import { Button, Input } from '@components';
 import { Divider, Space } from '@components/layout';
 import { useRootState, useScenarioClient } from '@hooks';
-import { ConditionOperator } from '@models';
 import { IConditionItem } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { useController, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { OperatorSelector } from './OperatorSelector';
@@ -13,17 +13,6 @@ interface IReactSelect {
   value: string;
   label: string;
 }
-const operatorOptions = [
-  { value: ConditionOperator.Is, label: 'is/are equal to' },
-  { value: ConditionOperator.IsNot, label: 'is/are not equal to' },
-  { value: ConditionOperator.Contain, label: 'contain(s)' },
-  { value: ConditionOperator.NotContain, label: 'not contain' },
-  { value: ConditionOperator.GreaterThan, label: 'is/are greater than' },
-  { value: ConditionOperator.LessThan, label: 'is/are lesser than' },
-  { value: ConditionOperator.StartWith, label: 'start with' },
-  { value: ConditionOperator.EndWith, label: 'end with' },
-  { value: ConditionOperator.Regex, label: 'regex' },
-];
 
 const reactSelectStyle: StylesConfig = {
   control: (provided, state) => ({
@@ -33,7 +22,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '236px',
+    width: '220px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -93,21 +82,18 @@ const reactSelectStyle: StylesConfig = {
 export const ConditionNodeEdit = () => {
   const { register, getValues, control } = useFormContext();
   const values = getValues();
+
   console.log('value.view in condition node edit', values.view);
 
   const { fields, append, remove } = useFieldArray({
     name: 'operator',
     control,
   });
+
   // const { field: operatorField } = useController({
   //   name: `view.items.${index}.operator`,
   //   control,
   // });
-
-  const { field: joinField } = useController({
-    name: `view.join`,
-    control,
-  });
 
   const { field: trueThenNextNodeIdField } = useController({
     name: `view.trueThenNextNodeId`,
@@ -150,7 +136,6 @@ export const ConditionNodeEdit = () => {
   //     //modal alert
   //   }
   // };
-
   return (
     <>
       <div className="node-item-wrap">
@@ -163,30 +148,65 @@ export const ConditionNodeEdit = () => {
               <span className="required">*</span>
             </div>
 
-            {values.view.items?.map((item: IConditionItem, i: number) => (
-              <div key={i}>
-                <Input
-                  {...register(`view.items[${i}].op1`)}
-                  value={item.op1 || ''}
-                  placeholder="변수명을 입력해주세요"
-                />
-                <OperatorSelector index={i} />
+            {values.view &&
+              values.view.items &&
+              values.view.items.map((item: IConditionItem, i: number) => (
+                <Space direction="vertical" key={i}>
+                  <Input
+                    {...register(`view.items[${i}].op1`)}
+                    value={item.op1 || ''}
+                    placeholder="변수명을 입력해주세요"
+                  />
+                  <OperatorSelector index={i} />
 
-                <Input
-                  {...register(`view.items[${i}].op2`)}
-                  value={item.op2 || ''}
-                  placeholder="변수명을 입력해주세요"
-                />
-                <div className="joinWrapper">
-                  <label className="join">
-                    <input {...register(`view.join`)} type="radio" value={1} />
-                  </label>
-                  <label>
-                    <input {...register(`view.join`)} type="radio" value={0} />
-                  </label>
-                </div>
-              </div>
-            ))}
+                  <Input
+                    {...register(`view.items[${i}].op2`)}
+                    value={item.op2 || ''}
+                    placeholder="변수명을 입력해주세요"
+                  />
+
+                  {values.view.join !== undefined && i === 0 ? (
+                    <div className="joinWrapper">
+                      <label
+                        className={classNames(`join`, {
+                          on: parseInt(values.view.join),
+                        })}
+                        role="presentation"
+                      >
+                        <input {...register(`view.join`)} type="radio" value={1} />
+                        <span>And</span>
+                      </label>
+                      <label
+                        className={classNames(`join`, {
+                          on: !parseInt(values.view.join),
+                        })}
+                        role="presentation"
+                      >
+                        <input {...register(`view.join`)} type="radio" value={0} />
+                        <span>Or</span>
+                      </label>
+                    </div>
+                  ) : (
+                    values.view.join !== undefined &&
+                    i < 5 && (
+                      <div
+                        className={classNames(`joinWrapper`, {
+                          on: values.view.join !== undefined,
+                        })}
+                      >
+                        <Button
+                          shape="ghost"
+                          className={classNames(`join button`, {
+                            on: values.view.join !== undefined,
+                          })}
+                        >
+                          {parseInt(values.view.join) ? 'And' : 'Or'}
+                        </Button>
+                      </div>
+                    )
+                  )}
+                </Space>
+              ))}
           </Space>
         </div>
       </div>

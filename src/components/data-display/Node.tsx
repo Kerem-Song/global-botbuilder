@@ -13,10 +13,8 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import {
-  IAnswerView,
   IBasicCardCarouselView,
   IBasicCardView,
-  IConditionView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
@@ -28,7 +26,6 @@ import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 import { SizeType } from 'src/models/types/SizeType';
 
-import useI18n from '../../hooks/useI18n';
 import {
   IAnswerNode,
   IBasicCardNode,
@@ -42,12 +39,8 @@ import {
 import {
   BasicCard,
   CommerceCard,
-  Condition,
-  Count,
   ListCard,
   OtherFlowRedirectCard,
-  ParameterSet,
-  QuickReply,
 } from '../pages/scenario/cards';
 import { NextNodeButton } from './NextNodeButton';
 
@@ -164,7 +157,7 @@ export const Node: FC<INodeProps> = ({
   ];
 
   const handleShowingNodesWithoutCards = () => {
-    console.log(node);
+    // console.log(node);
     switch (typeName) {
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;

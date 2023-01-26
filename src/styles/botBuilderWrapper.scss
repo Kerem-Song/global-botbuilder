@@ -190,6 +190,49 @@
           }
         }
       }
+
+      .joinWrapper {
+        display: flex;
+        justify-content: center;
+        border: rem(1) solid $gray200;
+        border-radius: rem(8);
+        color: $primary500;
+        background-color: $grayWhite;
+
+        &.on {
+          background-color: $primary500;
+          color: $grayWhite;
+          border-color: $primary500;
+
+          button {
+            color: $grayWhite;
+          }
+        }
+
+        .join {
+          width:rem(118);
+          text-align: center;
+          padding: rem(6) rem(46);
+          color: $primary500;
+          
+          input[type="radio"] {
+            display: none;
+          }
+          
+          &.on {
+            background-color: $primary500;
+            color: $grayWhite;
+            border-radius: rem(8);
+          }
+
+          &.button {
+            justify-content: center;
+            width: 100%;
+            height: rem(32);
+          }
+  
+        }
+      }
     }
   }
 }
