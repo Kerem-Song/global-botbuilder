@@ -61,36 +61,6 @@ export const ScenarioSelector = ({ children }: any) => {
   };
 
   const scenarioResult = classNames('btnWrapper', { noResult: !scenarioList?.length });
-
-  // const handleMakingOtherFlowRidect = (e: string) => {
-  //   const nodeType: TNodeTypes = 'OtherFlowRedirectNode';
-  //   const nodeName = e ? e : 'Other Flow Redirect';
-
-  //   const addCard = defaultNode(nodeType);
-  //   const addNode = {
-  //     id: idGen.generate('node'),
-  //     type: nodeType,
-  //     title: nodeName,
-  //     cards: addCard,
-  //     x: popUpPosition.x,
-  //     y: popUpPosition.y,
-  //     nodeKind: getNodeKind(nodeType),
-  //   };
-
-  //   dispatch(appendNode(addNode));
-
-  //   if (start) {
-  //     console.log();
-  //     addArrow?.({
-  //       start: start.startId,
-  //       end: `node-${addNode.id}`,
-  //       isNextNode: start.isNext,
-  //       updateKey: start.nodeId,
-  //       type: start.type,
-  //     });
-  //   }
-  // };
-
   return (
     <div
       className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"
