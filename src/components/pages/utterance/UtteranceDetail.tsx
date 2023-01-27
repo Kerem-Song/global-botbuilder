@@ -1,79 +1,119 @@
-import { icEnter, icUtteranceEmpty } from '@assets';
+import { icEnter, icSuccess, icUtteranceEmpty } from '@assets';
 import { Card } from '@components/data-display';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { useRootState } from '@hooks';
+import { useRootState, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
-import { IDataEntryProp } from '@models';
-import { removeUtteranceData, setUtteranceData } from '@store/utteranceDetailSlice';
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {
+  IInputFormModel,
+  ISaveIntent,
+  IUtteranceModel,
+} from '@models/interfaces/IUtterance';
+import { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
 
-export interface UtteranceDetailProps extends IDataEntryProp {
-  onPressEnter?: (value: string | undefined) => void;
-}
+export const UtteranceDetail = () => {
+  const [select, setSelect] = useState('');
 
-export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
-  const { utteranceDetailMutate } = useUtteranceClient();
+  const { intentMutate } = useUtteranceClient();
+
+  const { confirm } = useSystemModal();
+
+  const { register, handleSubmit, control, getValues, watch } = useForm<IUtteranceModel>({
+    defaultValues: {
+      items: [],
+    },
+  });
+
+  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
+
+  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+
   const token = useRootState((state) => state.botBuilderReducer.token);
-  const utteranceData = useRootState((state) => state.utteranceDetailReducer.utterance);
-  const [intent, setIntent] = useState<string>('');
-  const [utterance, setUtterance] = useState<string>('');
-
-  const dispatch = useDispatch();
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleIntent = (e: ChangeEvent<HTMLInputElement>): void => {
-    setIntent(e.target.value);
-  };
-
-  const handleUtterance = (e: ChangeEvent<HTMLInputElement>): void => {
-    setUtterance(e.target.value);
-  };
-
-  const handleDelete = (e: FormEvent<HTMLButtonElement>): void => {
-    const newUtterance = { id: utteranceData.length, utterance: utterance };
-    dispatch(removeUtteranceData(newUtterance.id));
-    e.preventDefault();
-  };
-
-  const handleEnter = (e: FormEvent<HTMLButtonElement>): void => {
-    const newUtterance = { id: utteranceData.length + 1, utterance: utterance };
-    if (!utterance || !utterance.trim()) return;
-    dispatch(setUtteranceData([newUtterance]));
-    e.preventDefault();
-    setUtterance('');
-  };
 
   const navigate = useNavigate();
+
+  const openModal = async () => {
+    const result = await confirm({
+      title: 'Delete',
+      description: (
+        <span>
+          There is a scenario associated with scenario 02
+          <br />: Start, Scenario 01
+          <br />
+          Are you sure you want to delete it?
+        </span>
+      ),
+    });
+
+    if (result) {
+      const deleteItems = getValues().items.filter((x) => x.isChecked);
+      deleteItems.map((item) => {
+        const index = getValues().items.indexOf(item);
+        remove(index);
+      });
+    }
+  };
+
+  const handleAddUtternace = (data: IInputFormModel): void => {
+    if (!data.utterance || !data.utterance.trim()) return;
+    append({ utterance: data.utterance });
+    inputForm.reset();
+  };
+
+  const handleSave = (data: IUtteranceModel): void => {
+    const newIntent: ISaveIntent = {
+      sessionToken: token,
+      intentName: data.name,
+      utterances: data.items.map((x) => x.utterance),
+    };
+
+    intentMutate.mutate(newIntent, {
+      onSuccess: (submitResult) => {
+        console.log(submitResult);
+        const message = '저장되었습니다.';
+        toast.success(message, {
+          position: 'bottom-right',
+          icon: () => <img src={icSuccess} alt="success" />,
+          theme: 'dark',
+          hideProgressBar: true,
+          className: 'luna-toast',
+          bodyClassName: 'luna-toast-body',
+        });
+        navigate(-1);
+      },
+    });
+  };
+
   return (
     <div className="utteranceDetailWrap">
-      <div className="detailButtons">
-        <div>
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            List
-          </Button>
+      <form onSubmit={handleSubmit(handleSave)}>
+        <div className="detailButtons">
+          <div>
+            <Button
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              List
+            </Button>
+          </div>
+          <div>
+            <Button className="deleteBtn">Delete intent</Button>
+            <Button large type="primary" htmlType="submit">
+              Save
+            </Button>
+          </div>
         </div>
-        <div>
-          <Button className="deleteBtn">Delete intent</Button>
-          <Button large type="primary">
-            Save
-          </Button>
-        </div>
-      </div>
-      <Card
-        radius="normal"
-        bodyStyle={{ padding: '20px' }}
-        style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
-      >
-        <form>
+        <Card
+          radius="normal"
+          bodyStyle={{ padding: '20px' }}
+          style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
+        >
           <Space direction="vertical">
             <p style={{ fontSize: '16px', fontWeight: 500 }}>Group Information</p>
             <Row align="center" gap={10}>
@@ -82,7 +122,7 @@ export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
               </Col>
               <Col flex="auto">
                 <Input
-                  onChange={handleIntent}
+                  {...register('name')}
                   placeholder="Input Intent Name"
                   showCount
                   maxLength={20}
@@ -94,22 +134,20 @@ export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
                 <span>Connect Scenarios</span>
               </Col>
               <Col flex="auto">
-                <Input placeholder="Input Intent Name" />
+                <Select defaultInputValue={select} onChange={() => setSelect} />
               </Col>
             </Row>
           </Space>
-        </form>
-      </Card>
+        </Card>
+      </form>
       <div className="utterance add">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Space direction="vertical">
-            <p style={{ fontSize: '16px', fontWeight: 500 }}>Add Utterance</p>
+        <Space direction="vertical">
+          <p style={{ fontSize: '16px', fontWeight: 500 }}>Add Utterance</p>
+          <form onSubmit={inputForm.handleSubmit(handleAddUtternace)}>
             <Row>
               <Col flex="auto">
                 <Input
-                  value={utterance}
-                  ref={inputRef}
-                  onChange={handleUtterance}
+                  {...inputForm.register('utterance')}
                   placeholder="Press Enter and enter the utterance keyword."
                 />
               </Col>
@@ -123,50 +161,50 @@ export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  onClick={handleEnter}
+                  htmlType="submit"
                 >
                   <img src={icEnter} alt="enter" />
                 </Button>
               </Col>
             </Row>
-          </Space>
-        </form>
+          </form>
+        </Space>
       </div>
       <div className="utterance list">
-        <form>
-          <Space direction="horizontal">
-            <span className="title">
-              Utterance <span className="utteranceLength">{utteranceData.length}</span>
-            </span>
-            <Input size="small" search placeholder="Input search text" />
-            <button className="icDelete" onClick={handleDelete} />
-          </Space>
-        </form>
-        <form>
-          <Row style={{ marginTop: '12px' }}>
-            <>
-              {utteranceData.length > 0 ? (
-                utteranceData.map((v, i) => {
-                  return (
-                    <div key={i} className="utteranceItem">
-                      <Checkbox style={{ marginLeft: '20px' }} />
-                      <p className="item">{v.utterance}</p>
-                    </div>
-                  );
-                })
-              ) : (
-                <Row style={{ width: '100%', marginTop: '12px' }}>
-                  <div className="emptyList utteranceItem">
-                    <div className="empty">
-                      <img src={icUtteranceEmpty} alt="empty" />
-                      <span>No registered Utterance.</span>
-                    </div>
+        <Space direction="horizontal">
+          <span className="title">
+            Utterance <span className="utteranceLength">{watch('items').length}</span>
+          </span>
+          <Input size="small" search placeholder="Input search text" />
+          <button className="icDelete" onClick={openModal} />
+        </Space>
+        <Row style={{ marginTop: '12px' }}>
+          <>
+            {fields.length > 0 ? (
+              fields.map((v, i) => {
+                return (
+                  <div key={i} className="utteranceItem">
+                    <Checkbox
+                      {...register(`items.${i}.isChecked`)}
+                      style={{ marginLeft: '20px' }}
+                    />
+                    <p className="item">{v.utterance}</p>
                   </div>
-                </Row>
-              )}
-            </>
-          </Row>
-          {/* <Row style={{ width: '100%', marginTop: '12px' }}>
+                );
+              })
+            ) : (
+              <Row style={{ width: '100%', marginTop: '12px' }}>
+                <div className="emptyList utteranceItem">
+                  <div className="empty">
+                    <img src={icUtteranceEmpty} alt="empty" />
+                    <span>No registered Utterance.</span>
+                  </div>
+                </div>
+              </Row>
+            )}
+          </>
+        </Row>
+        {/* <Row style={{ width: '100%', marginTop: '12px' }}>
             <div className="emptyList utteranceItem">
               <div className="empty">
                 <img src={icUtteranceEmpty} alt="empty" />
@@ -174,7 +212,6 @@ export const UtteranceDetail = ({ onPressEnter }: UtteranceDetailProps) => {
               </div>
             </div>
           </Row> */}
-        </form>
       </div>
     </div>
   );

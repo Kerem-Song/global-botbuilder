@@ -167,7 +167,7 @@ export const useScenarioClient = () => {
     async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
       const resultNodes = nodes.map((x) => {
-        const converted = nodeHelper.ConvertToNode(x);
+        const converted = nodeHelper.convertToINodeBase(x);
         const arrow = arrows.find((a) => a.start.substring(5) === x.id);
         if (arrow) {
           converted.nextNodeId = arrow.end.substring(5);

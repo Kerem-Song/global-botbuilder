@@ -1,9 +1,7 @@
-import { icSearch, icSearchDelete } from '@assets';
 import { Button } from '@components/general';
 import { SizeType } from '@models';
 import classNames from 'classnames';
-import { createElement, useRef } from 'react';
-import { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useState } from 'react';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
@@ -19,7 +17,11 @@ export interface InputProps extends IDataEntryProp {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
-  const [value, setValue] = useState(args.value);
+  const [value, setValue] = useState<string>();
+
+  useEffect(() => {
+    setValue(args.value || args.defaultValue);
+  }, [args.value, args.defaultValue, args]);
 
   const {
     showCount,
@@ -66,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     <input
       className={inputClassName}
       {...inputProps}
-      value={value}
+      //value={value}
       onChange={onChangeHandler}
       onKeyDown={args.onPressEnter ? handleKeyDown : undefined}
       ref={ref}

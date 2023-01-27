@@ -2,7 +2,6 @@ import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
-import { Item } from '@storybook/api/dist/ts3.9/lib/stories';
 import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -110,7 +109,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     >
       {isEditing ? (
         <Input
-          value={item.alias}
+          defaultValue={item.alias}
           showCount
           maxLength={20}
           ref={inputRef}
