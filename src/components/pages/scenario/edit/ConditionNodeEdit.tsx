@@ -80,20 +80,14 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ConditionNodeEdit = () => {
-  const { register, getValues, control } = useFormContext();
+  const { register, getValues, control, setValue } = useFormContext();
   const values = getValues();
-
   console.log('value.view in condition node edit', values.view);
-
+  const [join, setJoin] = useState<1 | 0>();
   const { fields, append, remove } = useFieldArray({
-    name: 'operator',
+    name: `view.items`,
     control,
   });
-
-  // const { field: operatorField } = useController({
-  //   name: `view.items.${index}.operator`,
-  //   control,
-  // });
 
   const { field: trueThenNextNodeIdField } = useController({
     name: `view.trueThenNextNodeId`,
@@ -119,23 +113,36 @@ export const ConditionNodeEdit = () => {
     }
   }, [data]);
 
-  // const handleRemoveButton = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
-  //   e.preventDefault();
-  //   remove(index);
-  // };
+  const handleJoin = (join: 1 | 0) => {
+    setJoin(join);
+  };
 
-  // const handleAddConditionButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   if (fields.length < 3) {
-  //     append({
-  //       op1: '',
-  //       operator: '',
-  //       op2: '',
-  //     });
-  //   } else {
-  //     //modal alert
+  // useEffect(() => {
+  //   if (values.view.join) {
+  //     setJoin(values.view.join);
   //   }
-  // };
+  // }, [values.view.join]);
+
+  const handleDeleteButton = (index: number) => {
+    // e.preventDefault();
+    remove(index);
+  };
+
+  const handleAddConditionButton = () => {
+    console.log('handle add condition btn');
+    // e.preventDefault();
+    if (fields.length < 6) {
+      append({
+        op1: '',
+        operator: '',
+        op2: '',
+      });
+    } else {
+      //modal alert
+      console.log('5개까지 가능');
+    }
+  };
+
   return (
     <>
       <div className="node-item-wrap">
@@ -147,72 +154,120 @@ export const ConditionNodeEdit = () => {
               <span>Setting Conditions</span>
               <span className="required">*</span>
             </div>
+            {fields.length === 0 && (
+              <Space direction="vertical">
+                <Input
+                  {...register(`view.items[${0}].op1`)}
+                  placeholder="변수명을 입력해주세요"
+                />
+                <OperatorSelector index={0} />
 
-            {values.view &&
-              values.view.items &&
-              values.view.items.map((item: IConditionItem, i: number) => (
-                <Space direction="vertical" key={i}>
-                  <Input
-                    {...register(`view.items[${i}].op1`)}
-                    value={item.op1 || ''}
-                    placeholder="변수명을 입력해주세요"
-                  />
-                  <OperatorSelector index={i} />
+                <Input
+                  {...register(`view.items[${0}].op2`)}
+                  placeholder="변수명을 입력해주세요"
+                />
 
-                  <Input
-                    {...register(`view.items[${i}].op2`)}
-                    value={item.op2 || ''}
-                    placeholder="변수명을 입력해주세요"
-                  />
+                <div className="joinWrapper">
+                  <label className={classNames(`join`)}>
+                    <input
+                      {...register(`view.join`)}
+                      type="radio"
+                      value={1}
+                      onClick={() => {
+                        handleJoin(1);
+                        handleAddConditionButton();
+                      }}
+                    />
+                    <div data-join={'and'}>And</div>
+                  </label>
+                  <label className={classNames(`join`)} role="presentation">
+                    <input
+                      {...register(`view.join`)}
+                      type="radio"
+                      value={0}
+                      onClick={() => {
+                        handleJoin(0);
+                        handleAddConditionButton();
+                      }}
+                    />
+                    <div data-join={'or'}>Or</div>
+                  </label>
+                </div>
+              </Space>
+            )}
+            {fields.map((item, i) => (
+              <Space direction="vertical" key={i}>
+                <Input
+                  {...register(`view.items[${i}].op1`)}
+                  placeholder="변수명을 입력해주세요"
+                />
+                <OperatorSelector index={i} />
 
-                  {values.view.join !== undefined && i === 0 ? (
-                    <div className="joinWrapper">
-                      <label
-                        className={classNames(`join`, {
-                          on: parseInt(values.view.join),
-                        })}
-                        role="presentation"
-                      >
-                        <input {...register(`view.join`)} type="radio" value={1} />
-                        <span>And</span>
-                      </label>
-                      <label
-                        className={classNames(`join`, {
-                          on: !parseInt(values.view.join),
-                        })}
-                        role="presentation"
-                      >
-                        <input {...register(`view.join`)} type="radio" value={0} />
-                        <span>Or</span>
-                      </label>
-                    </div>
-                  ) : (
-                    values.view.join !== undefined &&
-                    i < 5 && (
-                      <div
-                        className={classNames(`joinWrapper`, {
+                <Input
+                  {...register(`view.items[${i}].op2`)}
+                  placeholder="변수명을 입력해주세요"
+                />
+
+                {values.view.join !== undefined && i === 0 ? (
+                  <div className="joinWrapper">
+                    <label className={classNames(`join`)}>
+                      <input
+                        {...register(`view.join`)}
+                        type="radio"
+                        value={1}
+                        checked={Number(values.view.join) === 1}
+                        onClick={() => handleJoin(1)}
+                      />
+                      <div data-join={'and'}>And</div>
+                    </label>
+                    <label className={classNames(`join`)} role="presentation">
+                      <input
+                        {...register(`view.join`)}
+                        type="radio"
+                        value={0}
+                        checked={Number(values.view.join) === 0}
+                        onClick={() => handleJoin(0)}
+                      />
+                      <div data-join={'or'}>Or</div>
+                    </label>
+                  </div>
+                ) : (
+                  values.view.join !== undefined &&
+                  i < 5 && (
+                    <div
+                      className={classNames(`joinWrapper`, {
+                        on: values.view.join !== undefined,
+                      })}
+                    >
+                      <Button
+                        shape="ghost"
+                        className={classNames(`join button`, {
                           on: values.view.join !== undefined,
                         })}
+                        onClick={(e) => {
+                          if (i < 5) {
+                            handleAddConditionButton();
+                          }
+                        }}
                       >
-                        <Button
-                          shape="ghost"
-                          className={classNames(`join button`, {
-                            on: values.view.join !== undefined,
-                          })}
-                        >
-                          {parseInt(values.view.join) ? 'And' : 'Or'}
-                        </Button>
-                      </div>
-                    )
-                  )}
-                </Space>
-              ))}
+                        {Number(join) === 1 ? 'And' : 'Or'}
+                      </Button>
+                    </div>
+                  )
+                )}
+                <div className="deleteBtn">
+                  <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
+                    Delete
+                  </Button>
+                </div>
+              </Space>
+            ))}
           </Space>
         </div>
       </div>
       <div className="node-item-wrap">
         <div className="m-b-8">
-          <Space style={{ alignItems: 'center' }}>
+          <Space direction="vertical">
             <span className="label">Message connection</span>
             <Select
               {...trueThenNextNodeIdField}
@@ -234,7 +289,7 @@ export const ConditionNodeEdit = () => {
           <Space direction="vertical">
             <span className="label">else</span>
             <div>
-              <span className="label">Next message </span>
+              <span>Next message </span>
               <span className="required">*</span>
             </div>
             <Select

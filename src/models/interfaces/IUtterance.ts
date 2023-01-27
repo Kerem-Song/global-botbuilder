@@ -1,37 +1,51 @@
-export interface IUtteranceList {
-  result: [
-    {
-      intentId: string;
-      intentName: string;
-      flowId: string;
-      flowName: string;
-      nodeId: string;
-      viewId: string;
-      utterances?: string;
-    },
-  ];
+export interface IIntentListItem {
+  updateUtc: string;
+  intentId: string;
+  intentName: string;
+  flowId: string;
+  flowName: string;
+  nodeId: string;
+  viewId: string;
+  utterances?: string;
+  utteranceSummary: string;
 }
 
 export interface ISearchIntent {
   sessionToken: string;
+  pageNo?: number;
+  countPerPage: number;
 }
 
 export interface ISaveIntent {
   sessionToken: string;
   intentId?: string;
   intentName: string;
-  utterances: [string];
+  utterances: string[];
   flowId?: string;
 }
 
-export interface IUtteranceDetailList {
+export interface IResponseIntentData {
   result: string;
   exception?: string;
   isSuccess?: boolean;
 }
 
-export type IEnterUtterance = {
-  id: number;
+export interface IDeleteIntent {
+  sessionToken: string;
+  intentId: string;
+}
+
+export interface IUtteranceItem {
+  isChecked?: boolean;
   utterance: string;
-  checked?: boolean;
-};
+}
+export interface IUtteranceModel {
+  id: string;
+  name: string;
+  connectScenarioId: string;
+  items: IUtteranceItem[];
+}
+
+export interface IInputFormModel {
+  utterance: string;
+}

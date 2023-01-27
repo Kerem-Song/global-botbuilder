@@ -193,11 +193,15 @@
 
       .joinWrapper {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         border: rem(1) solid $gray200;
         border-radius: rem(8);
         color: $primary500;
         background-color: $grayWhite;
+
+        button {
+          color: $primary500;
+        }
 
         &.on {
           background-color: $primary500;
@@ -210,28 +214,64 @@
         }
 
         .join {
-          width:rem(118);
-          text-align: center;
-          padding: rem(6) rem(46);
-          color: $primary500;
+          width: 100%;
+
+          div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &[data-join='and'] {
+              border-radius:  rem(8) 0  0 rem(8);
+              position: relative;
+              &::after {
+                position: absolute;
+                content: '';
+                right: rem(1);
+                width: rem(1);
+                height: rem(32);
+                background-color: $gray200;
+              }
+            }
+  
+            &[data-join='or'] {
+              border-radius: 0 rem(8) rem(8) 0;
+            }
+          }
           
           input[type="radio"] {
             display: none;
-          }
-          
-          &.on {
-            background-color: $primary500;
-            color: $grayWhite;
             border-radius: rem(8);
+            width: 100%;
           }
 
+          input[type='radio'] + div {
+            background-color: $grayWhite;
+            color: $primary500;
+            height: rem(32);
+          }
+
+          input[type='radio']:checked + div{
+            width: 100%;
+            background-color: $primary500;
+            color: $grayWhite;
+            &::after { 
+              display: none;
+            }
+
+          }
+        
           &.button {
             justify-content: center;
             width: 100%;
             height: rem(32);
           }
-  
         }
+      }
+
+      .deleteBtn {
+        display: flex;
+        justify-content: right;
       }
     }
   }
