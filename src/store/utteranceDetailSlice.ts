@@ -13,15 +13,12 @@ export const UtteranceDetailSlice = createSlice({
   reducers: {
     setUtteranceData: (state, action: PayloadAction<IEnterUtterance[]>) => {
       const item = action.payload;
-      console.log('dafdsfadfas', item);
       state.utterance = [...state.utterance, ...item];
     },
-    removeUtteranceData: (state, action) => {
+    removeUtteranceData: (state, action: PayloadAction<IEnterUtterance[]>) => {
       const item = action.payload;
-      console.log('item', item);
-      state.utterance = [
-        ...state.utterance.filter((utterance: IEnterUtterance) => utterance.id !== item),
-      ];
+      console.log('itemtmem', item);
+      state.utterance = [...state.utterance.filter((utterance) => utterance !== item)];
     },
     initUtterance: (state) => {
       state.utterance = [];
