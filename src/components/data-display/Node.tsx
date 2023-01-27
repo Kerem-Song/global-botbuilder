@@ -158,7 +158,7 @@ export const Node: FC<INodeProps> = ({
   ];
 
   const handleShowingNodesWithoutCards = () => {
-    console.log(node);
+    // console.log(node);
     switch (typeName) {
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;

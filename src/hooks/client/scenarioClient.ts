@@ -89,6 +89,13 @@ export const useScenarioClient = () => {
     );
   };
 
+  const getCachedScenario = (scenarioId?: string): IGetFlowRes | undefined => {
+    if (!scenarioId) {
+      return undefined;
+    }
+    return queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
+  };
+
   const scenarioCreateMutate = useMutation(
     async ({ token, scenarioName }: { token: string; scenarioName: string }) => {
       const res = await http.post('/builder/createflow', {
@@ -243,6 +250,7 @@ export const useScenarioClient = () => {
     getScenarioList,
     getCachedScenarioList,
     getScenario,
+    getCachedScenario,
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
