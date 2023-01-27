@@ -1,26 +1,18 @@
 import { IArrow, INode, NodeKind } from '@models';
-import { IListCardNode, IProductCardNode, NODE_TYPES } from '@models/interfaces/ICard';
-import {
-  IAnswerViewModel,
-  IBasicCardViewModel,
-  IListCardViewModel,
-  INodeEditModel,
-  IProductCardViewModel,
-  ITextViewModel,
-} from '@models/interfaces/INodeEditModel';
+import { NODE_TYPES } from '@models/interfaces/ICard';
+import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
   ACTION_TYPES,
   IAnswerNode,
   IBasicCardCarouselNode,
   IBasicCardNode,
   IConditionNode,
-  IIntentNode,
   INodeBase,
-  ITextNode,
 } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { NODE_PREFIX } from '../modules';
+import { nodeHelper } from '../modules/nodeHelper';
 
 export interface IBuilderInfo {
   nodes: INode[];
@@ -34,72 +26,24 @@ const initialState: IBuilderInfo = {
 
 const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
   const arrows: IArrow[] = [];
-  const result: INode = {
-    id: node.id,
-    title: node.alias,
-    x: node.left,
-    y: node.top,
-    type: node.typeName,
-    nodeKind: node.nodeKind,
-    option: node.option,
-    seq: node.seq,
-    nextNodeId: node.nextNodeId,
-    view: node.view,
-  };
+  const result: INode = nodeHelper.convertToINode(node);
 
-  if (node.nextNodeId && node.nodeKind !== NodeKind.InputNode) {
-    arrows.push({
-      start: `next-${node.id}`,
-      updateKey: `${NODE_PREFIX}${node.id}`,
-      end: `${NODE_PREFIX}${node.nextNodeId}`,
-      isNextNode: true,
-      type: 'blue',
-    });
+  if (node.nextNodeId) {
+    if (node.nodeKind === NodeKind.InputNode) {
+      arrows.push(nodeHelper.createConnectArrow(node.id, node.nextNodeId));
+    } else {
+      arrows.push(nodeHelper.createNextArrow(node.id, node.nextNodeId));
+    }
   }
 
   if (node.typeName === NODE_TYPES.ANSWER_NODE) {
     const answerNode: IAnswerNode = node as IAnswerNode;
-    result.cards = answerNode.view.quicks?.map((x) => {
-      if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT) {
-        arrows.push({
-          start: `next-${x.id}`,
-          updateKey: `${NODE_PREFIX}${node.id}`,
-          end: `${NODE_PREFIX}${x.actionValue}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-      return {
-        type: NODE_TYPES.ANSWER_NODE,
-        id: x.id,
-        label: x.label,
-        action: x.actionType as 'message',
-      };
-    });
+    arrows.push(...nodeHelper.createAnswerNodeArrow(answerNode));
   }
 
   if (node.typeName === NODE_TYPES.CONDITION_NODE) {
     const conditionNode: IConditionNode = node as IConditionNode;
-
-    if (conditionNode.view.falseThenNextNodeId) {
-      arrows.push({
-        start: `next-node-${node.id}-false`,
-        updateKey: `${NODE_PREFIX}${node.id}`,
-        end: `${NODE_PREFIX}${conditionNode.view.falseThenNextNodeId}`,
-        isNextNode: true,
-        type: 'red',
-      });
-    }
-
-    if (conditionNode.view.trueThenNextNodeId) {
-      arrows.push({
-        start: `next-node-${node.id}-true`,
-        updateKey: `${NODE_PREFIX}${node.id}`,
-        end: `${NODE_PREFIX}${conditionNode.view.trueThenNextNodeId}`,
-        isNextNode: true,
-        type: 'green',
-      });
-    }
+    arrows.push(...nodeHelper.createConditionNodeArrow(conditionNode));
   }
 
   if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
@@ -147,22 +91,6 @@ export const makingNodeSlice = createSlice({
       state.nodes = converted.map((x) => x.node);
       state.arrows = [];
       converted.map((x) => (state.arrows = [...state.arrows, ...x.arrows]));
-
-      nodes
-        .filter((x) => x.nodeKind === NodeKind.InputNode && x.nextNodeId)
-        .map((n) => {
-          const nextNode = nodes.find((x) => x.id === n.nextNodeId);
-          if (nextNode) {
-            state.arrows = [
-              ...state.arrows,
-              {
-                start: `${NODE_PREFIX}${n.id}`,
-                end: `${NODE_PREFIX}${n.nextNodeId}`,
-                type: 'blue',
-              },
-            ];
-          }
-        });
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;

@@ -1,19 +1,27 @@
-import { ConditionJoin, INode, NODE_TYPES, TNodeTypes, VIEW_TYPES } from '@models';
+import {
+  ConditionJoin,
+  IArrow,
+  INode,
+  NODE_TYPES,
+  TNodeTypes,
+  VIEW_TYPES,
+} from '@models';
 import {
   ACTION_TYPES,
   CTRL_TYPES,
+  IAnswerNode,
   IAnswerView,
   IBasicCardCarouselView,
   IBasicCardView,
+  IConditionNode,
   IConditionView,
-  IIntentNode,
-  IIntentView,
   INodeBase,
   IOtherFlowRedirectView,
   IParameterSetView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
+import { NODE_PREFIX } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
 
 export const nodeHelper = {
@@ -125,7 +133,7 @@ export const nodeHelper = {
     };
     return result;
   },
-  ConvertToNode: (node: INode) => {
+  convertToINodeBase: (node: INode): INodeBase => {
     const converted: INodeBase = {
       id: node.id,
       alias: node.title || '',
@@ -139,5 +147,75 @@ export const nodeHelper = {
     };
 
     return converted;
+  },
+  convertToINode: (node: INodeBase): INode => {
+    return {
+      id: node.id,
+      title: node.alias,
+      x: node.left,
+      y: node.top,
+      type: node.typeName,
+      nodeKind: node.nodeKind,
+      option: node.option,
+      seq: node.seq,
+      nextNodeId: node.nextNodeId,
+      view: node.view,
+    };
+  },
+  createNextArrow: (nodeId: string, nextNodeId: string): IArrow => {
+    return {
+      start: `next-${nodeId}`,
+      updateKey: `${NODE_PREFIX}${nodeId}`,
+      end: `${NODE_PREFIX}${nextNodeId}`,
+      isNextNode: true,
+      type: 'blue',
+    };
+  },
+  createConnectArrow: (nodeId: string, connectNodeId: string): IArrow => {
+    return {
+      start: `${NODE_PREFIX}${nodeId}`,
+      end: `${NODE_PREFIX}${connectNodeId}`,
+      type: 'blue',
+    };
+  },
+  createAnswerNodeArrow: (node: IAnswerNode): IArrow[] => {
+    const result: IArrow[] = [];
+    node.view.quicks?.map((x) => {
+      if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && x.actionValue) {
+        result.push({
+          start: `next-${x.id}`,
+          updateKey: `${NODE_PREFIX}${node.id}`,
+          end: `${NODE_PREFIX}${x.actionValue}`,
+          isNextNode: true,
+          type: 'blue',
+        });
+      }
+    });
+
+    return result;
+  },
+  createConditionNodeArrow: (node: IConditionNode): IArrow[] => {
+    const result: IArrow[] = [];
+    if (node.view.falseThenNextNodeId) {
+      result.push({
+        start: `next-node-${node.id}-false`,
+        updateKey: `${NODE_PREFIX}${node.id}`,
+        end: `${NODE_PREFIX}${node.view.falseThenNextNodeId}`,
+        isNextNode: true,
+        type: 'red',
+      });
+    }
+
+    if (node.view.trueThenNextNodeId) {
+      result.push({
+        start: `next-node-${node.id}-true`,
+        updateKey: `${NODE_PREFIX}${node.id}`,
+        end: `${NODE_PREFIX}${node.view.trueThenNextNodeId}`,
+        isNextNode: true,
+        type: 'green',
+      });
+    }
+
+    return result;
   },
 };
