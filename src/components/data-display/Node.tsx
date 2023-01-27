@@ -6,6 +6,8 @@ import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { CountNode } from '@components/pages/scenario/nodes/CountNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
+import { ListCardCarouselNode } from '@components/pages/scenario/nodes/ListCardCarouselNode';
+import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useRootState } from '@hooks';
@@ -184,6 +186,10 @@ export const Node: FC<INodeProps> = ({
         return <BasicCardNode node={node} />;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
         return <BasicCardCarouselNode node={node} />;
+      case NODE_TYPES.LIST_CARD_NODE:
+        return <ListCardNode node={node} />;
+      case NODE_TYPES.LIST_CAROUSEL:
+        return <ListCardCarouselNode node={node} />;
       default:
         return handleShowingCards();
     }

@@ -3,6 +3,7 @@ import {
   IArrow,
   INode,
   NODE_TYPES,
+  NodeKind,
   TNodeTypes,
   VIEW_TYPES,
 } from '@models';
@@ -11,10 +12,13 @@ import {
   CTRL_TYPES,
   IAnswerNode,
   IAnswerView,
+  IBasicCardCarouselNode,
   IBasicCardCarouselView,
+  IBasicCardNode,
   IBasicCardView,
   IConditionNode,
   IConditionView,
+  IListCardView,
   INodeBase,
   IOtherFlowRedirectView,
   IParameterSetView,
@@ -133,6 +137,32 @@ export const nodeHelper = {
     };
     return result;
   },
+  createDefaultListCardView: () => {
+    const result: IListCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.LIST_CARD_VIEW,
+      header: '',
+      seq: 0,
+      items: [],
+      imageCtrl: {
+        imageUrl: '',
+        altText: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.IMAGE_CTRL,
+      },
+      buttons: [
+        {
+          id: ID_GEN.generate(ID_TYPES.CTRL),
+          label: '버튼 1',
+          seq: 0,
+          typeName: CTRL_TYPES.BUTTON_CTRL,
+          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
+        },
+      ],
+    };
+
+    return result;
+  },
   convertToINodeBase: (node: INode): INodeBase => {
     const converted: INodeBase = {
       id: node.id,
@@ -217,5 +247,69 @@ export const nodeHelper = {
     }
 
     return result;
+  },
+  createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
+    const result: IArrow[] = [];
+    view.buttons?.forEach((b) => {
+      if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
+        result.push({
+          start: `next-${b.id}`,
+          updateKey: `${NODE_PREFIX}${nodeId}`,
+          end: `${NODE_PREFIX}${b.actionValue}`,
+          isNextNode: true,
+          type: 'blue',
+        });
+      }
+    });
+    return result;
+  },
+  createBasicCardCarouselArrow: (
+    nodeId: string,
+    view: IBasicCardCarouselView,
+  ): IArrow[] => {
+    const result: IArrow[] = [];
+    result.push(
+      ...view.childrenViews
+        .map((view) => nodeHelper.createBasicCardArrow(nodeId, view))
+        .flat(1),
+    );
+    return result;
+  },
+  initArrows: (node: INodeBase): IArrow[] => {
+    const arrows: IArrow[] = [];
+    if (node.nextNodeId) {
+      if (node.nodeKind === NodeKind.InputNode) {
+        arrows.push(nodeHelper.createConnectArrow(node.id, node.nextNodeId));
+      } else {
+        arrows.push(nodeHelper.createNextArrow(node.id, node.nextNodeId));
+      }
+    }
+
+    if (node.typeName === NODE_TYPES.ANSWER_NODE) {
+      const answerNode: IAnswerNode = node as IAnswerNode;
+      arrows.push(...nodeHelper.createAnswerNodeArrow(answerNode));
+    }
+
+    if (node.typeName === NODE_TYPES.CONDITION_NODE) {
+      const conditionNode: IConditionNode = node as IConditionNode;
+      arrows.push(...nodeHelper.createConditionNodeArrow(conditionNode));
+    }
+
+    if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
+      const cardCarouselNode: IBasicCardCarouselNode = node as IBasicCardCarouselNode;
+      arrows.push(
+        ...nodeHelper.createBasicCardCarouselArrow(
+          cardCarouselNode.id,
+          cardCarouselNode.view,
+        ),
+      );
+    }
+
+    if (node.typeName === NODE_TYPES.BASIC_CARD_NODE) {
+      const cardNode: IBasicCardNode = node as IBasicCardNode;
+      arrows.push(...nodeHelper.createBasicCardArrow(cardNode.id, cardNode.view));
+    }
+
+    return arrows;
   },
 };

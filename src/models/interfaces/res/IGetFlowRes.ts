@@ -9,6 +9,8 @@ import { NodeKind } from '@models/enum/NodeKind';
 
 export const ACTION_TYPES = {
   LUNA_NODE_REDIRECT: 'lunaNodeRedirect',
+  ACT_VALUE_IS_UTTR: 'actValueIsUttr',
+  LBL_IS_UTTR: 'lblIsUttr',
 };
 
 export type ActionTypes = ValueOf<typeof ACTION_TYPES>;
@@ -17,6 +19,7 @@ export const CTRL_TYPES = {
   IMAGE_CTRL: 'ImageCtrl',
   BUTTON_CTRL: 'ButtonCtrl',
   QUICK_CTRL: 'QuickCtrl',
+  LISTCARD_ITEM_CTRL: 'ListCardItemCtrl',
 };
 
 export type CtrlTypes = ValueOf<typeof CTRL_TYPES>;
@@ -200,6 +203,36 @@ export interface IOtherFlowRedirectNode extends INodeBase {
 
 export interface IOtherFlowRedirectView extends IViewBase {
   title?: string;
+}
+
+export interface IListCardNode extends INodeBase {
+  view: IListCardView;
+}
+
+export interface IListCardCarouselNode extends INodeBase {
+  view: IListCardCarouselView;
+}
+export interface IListCardView extends IViewBase {
+  header: string;
+  imageCtrl: IImageCtrl;
+  seq: number;
+  buttons?: IButtonCtrl[];
+  items: IListCardItem[];
+}
+
+export interface IListCardItem extends ICtrlBase {
+  actionType: ActionTypes;
+  actionValue?: string;
+  description: string;
+  imageUrl: string;
+  seq: number;
+  title: string;
+}
+
+export interface IListCardCarouselView extends IViewBase {
+  isSuffle: boolean;
+  count: number;
+  childrenViews: IListCardView[];
 }
 
 export interface IGetFlowRes {

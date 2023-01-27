@@ -239,6 +239,11 @@
           padding-top: rem(6);
           gap: rem(6);
 
+          img {
+            width: rem(48);
+            height: rem(48);
+          }
+
           .listItemThumbnailSkeleton {
             width: rem(48);
             height: rem(48);

@@ -25,58 +25,8 @@ const initialState: IBuilderInfo = {
 };
 
 const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
-  const arrows: IArrow[] = [];
   const result: INode = nodeHelper.convertToINode(node);
-
-  if (node.nextNodeId) {
-    if (node.nodeKind === NodeKind.InputNode) {
-      arrows.push(nodeHelper.createConnectArrow(node.id, node.nextNodeId));
-    } else {
-      arrows.push(nodeHelper.createNextArrow(node.id, node.nextNodeId));
-    }
-  }
-
-  if (node.typeName === NODE_TYPES.ANSWER_NODE) {
-    const answerNode: IAnswerNode = node as IAnswerNode;
-    arrows.push(...nodeHelper.createAnswerNodeArrow(answerNode));
-  }
-
-  if (node.typeName === NODE_TYPES.CONDITION_NODE) {
-    const conditionNode: IConditionNode = node as IConditionNode;
-    arrows.push(...nodeHelper.createConditionNodeArrow(conditionNode));
-  }
-
-  if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
-    const cardCarouselNode: IBasicCardCarouselNode = node as IBasicCardCarouselNode;
-    cardCarouselNode.view.childrenViews.forEach((v) =>
-      v.buttons?.forEach((b) => {
-        if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-          arrows.push({
-            start: `next-${b.id}`,
-            updateKey: `${NODE_PREFIX}${node.id}`,
-            end: `${NODE_PREFIX}${b.actionValue}`,
-            isNextNode: true,
-            type: 'blue',
-          });
-        }
-      }),
-    );
-  }
-
-  if (node.typeName === NODE_TYPES.BASIC_CARD_NODE) {
-    const cardNode: IBasicCardNode = node as IBasicCardNode;
-    cardNode.view.buttons?.forEach((b) => {
-      if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-        arrows.push({
-          start: `next-${b.id}`,
-          updateKey: `${NODE_PREFIX}${node.id}`,
-          end: `${NODE_PREFIX}${b.actionValue}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-    });
-  }
+  const arrows = nodeHelper.initArrows(node);
 
   return { node: result, arrows };
 };
@@ -98,7 +48,6 @@ export const makingNodeSlice = createSlice({
     },
     updateNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
-      // console.log(node);
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];

@@ -26,6 +26,9 @@ export const useScenarioClient = () => {
   const { botId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
+  const selectedScenario = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
 
   const getScenarioList = (token: string) => {
     return useQuery<IScenarioModel[]>(
@@ -40,8 +43,9 @@ export const useScenarioClient = () => {
           )
           .then((res) => {
             const basicScenarios: IScenarioModel[] = [];
-            const fallbackScenario = res.data.result.find((x) => x.isFallbackFlow);
-            const startScenario = res.data.result.find((x) => x.isStartFlow);
+            const scenarios = res.data.result;
+            const fallbackScenario = scenarios.find((x) => x.isFallbackFlow);
+            const startScenario = scenarios.find((x) => x.isStartFlow);
             if (fallbackScenario) {
               basicScenarios.push(fallbackScenario);
             }
@@ -49,9 +53,17 @@ export const useScenarioClient = () => {
             if (startScenario) {
               basicScenarios.push(startScenario);
             }
+
             dispatch(setBasicScenarios(basicScenarios));
-            dispatch(setSelectedScenario(fallbackScenario));
-            return res.data.result
+
+            if (
+              !selectedScenario ||
+              !scenarios.find((x) => x.id === selectedScenario.id)
+            ) {
+              dispatch(setSelectedScenario(fallbackScenario));
+            }
+
+            return scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
               .sort((a, b) => (a.seq > b.seq ? -1 : 1));
           }),

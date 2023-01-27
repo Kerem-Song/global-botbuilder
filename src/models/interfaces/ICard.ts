@@ -48,6 +48,8 @@ export const VIEW_TYPES = {
   JSON_REQUEST_VIEW: 'JsonRequestView',
   CONDITION_VIEW: 'ConditionView',
   OTHER_FLOW_REDIRECT_VIEW: 'OtherFlowRedirectView',
+  LIST_CARD_VIEW: 'ListCardView',
+  LIST_CARD_CAROUSEL_VIEW: 'ListCardCarouselView',
 };
 
 export const NODE_TYPES = {
@@ -66,8 +68,8 @@ export const NODE_TYPES = {
   PRODUCT_CARD_NODE: 'ProductCardNode',
   PRODUCT_CARD_TEMPLATE_NODE: 'ProductCardTemplateNode',
   TEXT_NODE: 'TextNode',
-  LIST_CARD_NODE: 'ListNode',
-  LIST_CAROUSEL: 'ListCarouselNode',
+  LIST_CARD_NODE: 'ListCardNode',
+  LIST_CAROUSEL: 'ListCardCarouselNode',
   COUNT: 'Count',
 } as const;
 

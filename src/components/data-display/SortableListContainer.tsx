@@ -15,16 +15,17 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { IListCard } from '@models';
+import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 
 import { SortableListItem } from './SortableListItem';
 
 interface ISortableContainer {
-  listItems: IListCard['items'];
+  listItems: IListCardItem[];
 }
 
 export const SortableListContainer = ({ listItems }: ISortableContainer) => {
-  const [list, setList] = useState(listItems);
+  const [list, setList] = useState<IListCardItem[]>();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
