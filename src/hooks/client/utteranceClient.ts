@@ -17,18 +17,19 @@ export const useUtteranceClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
   const token = useRootState((state) => state.botBuilderReducer.token);
-
-  const getIntentListQuery = useQuery<IPagingItems<IIntentListItem>>(
-    ['intent-list'],
-    () =>
-      http
-        .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
-          'Builder/SearchIntent',
-          { sessionToken: token, countPerPage: 50 },
-        )
-        .then((res) => res.data.result),
-    { refetchOnWindowFocus: false, refetchOnMount: true },
-  );
+  const getIntentListQuery = (orderType: number, flowId: string | null | undefined) => {
+    return useQuery<IPagingItems<IIntentListItem>>(
+      ['intent-list', orderType, flowId],
+      () =>
+        http
+          .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
+            'Builder/SearchIntent',
+            { sessionToken: token, countPerPage: 50, orderType, flowId },
+          )
+          .then((res) => res.data.result),
+      { refetchOnWindowFocus: false, refetchOnMount: true },
+    );
+  };
 
   const intentMutate = useMutation(async (intent: ISaveIntent) => {
     const result = await http.post<ISaveIntent, AxiosResponse<IResponseIntentData>>(
@@ -43,16 +44,16 @@ export const useUtteranceClient = () => {
       'Builder/DeleteIntent',
       deleteIntent,
     );
+
     if (result) {
       queryClient.invalidateQueries(['intent-list']);
-      return result;
+      return result.data;
     }
   });
 
   return {
-    data: getIntentListQuery.data,
+    getIntentListQuery,
     intentMutate,
     intentDeleteMutate,
-    intentDeleteAsync: intentDeleteMutate.mutateAsync,
   };
 };
