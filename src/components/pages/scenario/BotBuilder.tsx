@@ -3,7 +3,12 @@ import { defaultNode } from '@components/data-display/DefaultCards';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
-import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import {
+  setEditDrawerToggle,
+  setSelected,
+  zoomIn,
+  zoomOut,
+} from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
@@ -36,6 +41,9 @@ export const Botbuilder = () => {
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
+  );
+  const isEditDrawerOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
   const token = useRootState((state) => state.botBuilderReducer.token);
 
@@ -109,6 +117,10 @@ export const Botbuilder = () => {
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
+    // if (isEditDrawerOpen) {
+    //   dispatch(setEditDrawerToggle(false));
+    //   return;
+    // }
     dispatch(setSelected());
     if (e.buttons === 1) {
       setIsPanning(true);

@@ -3,9 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
-import { setEditDrawerToggle } from '@store/botbuilderSlice';
+import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
   const dispatch = useDispatch();
-
+  const [isOpen, setIsOpen] = useState(false);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
@@ -41,8 +41,8 @@ export const NodeEditDrawer = () => {
               operator: yup.number().required(`Operator 설정은 필수 입니다.`),
             }),
           ),
-          trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
-          falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
+          //trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
+          //falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
         }),
       }),
     })
@@ -75,6 +75,7 @@ export const NodeEditDrawer = () => {
   };
 
   useEffect(() => {
+    console.log(selectedNode);
     if (selectedNode) {
       const model: INodeEditModel = {
         id: selectedNode.id,
@@ -85,17 +86,23 @@ export const NodeEditDrawer = () => {
       };
 
       reset(model);
-    } else {
-      handleSubmit(onSubmit)();
-      if (!isValid) {
-        return;
-      }
-
-      reset({ id: '', title: '' });
-
-      dispatch(setEditDrawerToggle(false));
     }
   }, [selectedNode]);
+
+  useEffect(() => {
+    if (isEditDrawerOpen) {
+      setIsOpen(true);
+    } else if (selectedNode) {
+      handleSubmit(onSubmit)();
+      if (isValid) {
+        reset({ id: '', title: '' });
+        setIsOpen(false);
+        dispatch(setSelected());
+      } else {
+        dispatch(setEditDrawerToggle(true));
+      }
+    }
+  }, [isEditDrawerOpen]);
 
   const editItem = () => {
     switch (selectedNode?.type) {
@@ -119,7 +126,7 @@ export const NodeEditDrawer = () => {
   return (
     <Drawer
       className="botBuilderDrawer"
-      open={isEditDrawerOpen}
+      open={isOpen}
       direction="right"
       enableOverlay={false}
       duration={200}
