@@ -2,7 +2,12 @@ import { FormItem, Input } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
-import { INodeEditModel } from '@models/interfaces/INodeEditModel';
+import {
+  basicCardNodeEditSchema,
+  conditionNodeEditSchema,
+  INodeEditModel,
+  textNodeEditSchema,
+} from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
 import { useEffect, useMemo, useState } from 'react';
@@ -31,20 +36,20 @@ export const NodeEditDrawer = () => {
   const schema = yup
     .object({
       title: yup.string().required('말풍선 명은 필수입니다.'),
-      view: yup.object().when('nodeType', {
-        is: NODE_TYPES.CONDITION_NODE,
-        then: yup.object().shape({
-          items: yup.array().of(
-            yup.object().shape({
-              op1: yup.string().required(`변수 입력은 필수 입니다.`),
-              op2: yup.string().required(`변수 입력은 필수 입니다.`),
-              operator: yup.number().required(`Operator 설정은 필수 입니다.`),
-            }),
-          ),
-          //trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
-          //falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
+      view: yup
+        .object()
+        .when('nodeType', {
+          is: NODE_TYPES.TEXT_NODE,
+          then: textNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.BASIC_CARD_NODE,
+          then: basicCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.CONDITION_NODE,
+          then: conditionNodeEditSchema,
         }),
-      }),
     })
     .required();
 

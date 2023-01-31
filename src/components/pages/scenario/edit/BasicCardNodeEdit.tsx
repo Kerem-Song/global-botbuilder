@@ -1,12 +1,60 @@
 import { icImg } from '@assets';
-import { Col, Input, InputTextarea, Radio, Row, Space, Switch, Title } from '@components';
-import { IButtonType } from '@models';
-import { useFormContext } from 'react-hook-form';
+import {
+  Col,
+  FormItem,
+  Input,
+  InputTextarea,
+  Radio,
+  Row,
+  Space,
+  Switch,
+  Title,
+} from '@components';
+import { IButtonType, IGNodeEditModel } from '@models';
+import { ACTION_TYPES, IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
+import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+
+import { ButtonTypeSelector } from './ButtonTypeSelector';
+
+const selectOptions = [
+  { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: 'Node Redirect' },
+  { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: 'Action is Utterance' },
+  { value: ACTION_TYPES.LBL_IS_UTTR, label: 'Label is Utterance' },
+  { value: ACTION_TYPES.URL, label: 'Url 연결' },
+];
 
 export const BasicCardNodeEdit = () => {
-  const { register, getValues } = useFormContext();
+  const {
+    register,
+    getValues,
+    control,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
-  console.log(values);
+  console.log('basic card node edit', values);
+
+  const { fields, append, remove } = useFieldArray({
+    name: `view.buttons`,
+    control,
+  });
+
+  const handleAddConditionButton = () => {
+    console.log('handle add condition btn');
+    // e.preventDefault();
+    if (fields.length < 3) {
+      append({
+        id: '',
+        typeName: '',
+        label: '',
+        seq: 0,
+        actionType: '',
+        actionValue: '',
+      });
+    } else {
+      //modal alert
+      console.log('3개까지 가능');
+    }
+  };
   return (
     <>
       <div className="node-item-wrap">
@@ -66,34 +114,39 @@ export const BasicCardNodeEdit = () => {
         </p>
         <Space direction="vertical">
           <span className="subLabel">타이틀</span>
-          <Input {...register('view.title')} />
+          <FormItem error={errors.view && errors.view.title}>
+            <Input {...register('view.title')} />
+          </FormItem>
           <span className="subLabel">내용</span>
-          <InputTextarea
-            height={100}
-            showCount
-            maxLength={1000}
-            placeholder="Input Text"
-            {...register('view.description')}
-          />
+          <FormItem error={errors.view && errors.view.description}>
+            <InputTextarea
+              height={100}
+              showCount
+              maxLength={1000}
+              placeholder="Input Text"
+              {...register('view.description')}
+            />
+          </FormItem>
         </Space>
       </div>
-      {values.view &&
-        values.view.buttons &&
-        values.view.buttons.map((b: IButtonType, index: number) => {
-          return (
-            <div className="node-item-wrap" key={b.id}>
-              <p className="m-b-8">
-                <span className="label">버튼</span>
-                <span className="required">*</span>
-              </p>
-              <Space direction="vertical">
-                <span className="subLabel">버튼명</span>
-                <Input {...register(`view.buttons[${index}].label`)} />
-                <span className="subLabel">버튼타입</span>
-              </Space>
-            </div>
-          );
-        })}
+      {fields.map((item, i) => (
+        <div className="node-item-wrap" key={item.id}>
+          <p className="m-b-8">
+            <span className="label">버튼</span>
+            <span className="required">*</span>
+          </p>
+          <Space direction="vertical">
+            <span className="subLabel">버튼명</span>
+            <FormItem
+              error={errors.view && errors.view.buttons && errors.view.buttons[i]?.label}
+            >
+              <Input {...register(`view.buttons.${i}.label`)} />
+            </FormItem>
+            <span className="subLabel">버튼타입</span>
+            <ButtonTypeSelector index={i} options={selectOptions} />
+          </Space>
+        </div>
+      ))}
     </>
   );
 };
