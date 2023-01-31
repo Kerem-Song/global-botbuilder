@@ -2,6 +2,12 @@ import { IButtonType, ISortableListItem, IThumbnailType, Profile } from './ICard
 import { IScenarioModel } from './IScenarioModel';
 import { IViewBase } from './res/IGetFlowRes';
 
+export interface IGNodeEditModel<T extends IViewBase> {
+  id: string;
+  caption: string;
+  title: string;
+  view?: T;
+}
 export interface INodeEditModel {
   id: string;
   caption: string;

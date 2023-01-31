@@ -1,19 +1,15 @@
-import { Input } from '@components';
+import { FormItem, Input } from '@components';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
-import {
-  IAnswerNode,
-  IBasicCardNode,
-  IListCardNode,
-  IProductCardNode,
-  NODE_TYPES,
-} from '@models';
+import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
@@ -32,7 +28,34 @@ export const NodeEditDrawer = () => {
 
   const selected = useRootState((state) => state.botBuilderReducer.selected);
 
-  const formMethods = useForm<INodeEditModel>();
+  const schema = yup
+    .object({
+      title: yup.string().required('말풍선 명은 필수입니다.'),
+      view: yup.object().shape({
+        items: yup.array().of(
+          yup.object().shape({
+            op1: yup.string().required(`변수 입력은 필수 입니다.`),
+            op2: yup.string().required(`변수 입력은 필수 입니다.`),
+            operator: yup.number().required(`Operator 설정은 필수 입니다.`),
+          }),
+        ),
+        trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
+        falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
+      }),
+    })
+    .required();
+
+  const selectedNode = nodes.find((x) => x.id === selected);
+
+  const formMethods = useForm<INodeEditModel>({
+    mode: 'onSubmit',
+    defaultValues: {
+      ...selectedNode,
+      title: undefined,
+      view: { id: undefined, typeName: undefined },
+    },
+    resolver: yupResolver(schema),
+  });
   const {
     register,
     handleSubmit,
@@ -43,10 +66,11 @@ export const NodeEditDrawer = () => {
 
   const onSubmit = (node: INodeEditModel) => {
     console.log(node);
+
     dispatch(editNode(node));
     //dispatch(setSelected());
   };
-  const selectedNode = nodes.find((x) => x.id === selected);
+
   useEffect(() => {
     if (selectedNode) {
       console.log(selectedNode.view);
@@ -116,10 +140,17 @@ export const NodeEditDrawer = () => {
       //     };
       //   }
       // }
+
       reset(model);
     } else {
       handleSubmit(onSubmit)();
+
+      if (errors) {
+        return;
+      }
+
       reset({ id: '', title: '' });
+
       dispatch(setEditDrawerToggle(false));
     }
   }, [selectedNode]);
@@ -142,7 +173,7 @@ export const NodeEditDrawer = () => {
         <></>;
     }
   };
-
+  console.log('errors in edit drawer', errors);
   return (
     <Drawer
       className="botBuilderDrawer"
@@ -163,7 +194,9 @@ export const NodeEditDrawer = () => {
                 <span className="label">말풍선명</span>
                 <span className="required">*</span>
               </p>
-              <Input placeholder="Input Chat Bubble name" {...register('title')} />
+              <FormItem error={errors.title}>
+                <Input placeholder="Input Chat Bubble name" {...register('title')} />
+              </FormItem>
             </div>
             {editItem()}
           </form>

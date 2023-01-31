@@ -49,3 +49,8 @@ export interface IUtteranceModel {
 export interface IInputFormModel {
   utterance: string;
 }
+
+export interface ISearchData {
+  sort: number;
+  scenarios?: string | null;
+}

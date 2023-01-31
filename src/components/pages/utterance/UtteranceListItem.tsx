@@ -1,18 +1,20 @@
-import { icUtteranceEmpty } from '@assets';
+import { icSuccess, icUtteranceEmpty } from '@assets';
 import { useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import { IDeleteIntent } from '@models';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { IDeleteIntent, IIntentListItem, IPagingItems } from '@models';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
-export const UtteranceListItem = () => {
-  const { data, intentDeleteMutate } = useUtteranceClient();
-  const [searchKeyword, setSearchKeyword] = useState('');
+export interface IUtteranceListItemProps {
+  data: IPagingItems<IIntentListItem> | undefined;
+}
+
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
+  const { intentDeleteMutate } = useUtteranceClient();
   const navigate = useNavigate();
   const token = useRootState((state) => state.botBuilderReducer.token);
-
   const { confirm } = useSystemModal();
 
   const openModal = async (flowName: string, intentId: string) => {
@@ -37,6 +39,15 @@ export const UtteranceListItem = () => {
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
+          const message = '삭제되었습니다.';
+          toast.success(message, {
+            position: 'bottom-right',
+            icon: () => <img src={icSuccess} alt="success" />,
+            theme: 'dark',
+            hideProgressBar: true,
+            className: 'luna-toast',
+            bodyClassName: 'luna-toast-body',
+          });
         },
       });
     }

@@ -1,15 +1,14 @@
-import { Button, Input } from '@components';
+import { Button, FormItem, Input } from '@components';
 import { Divider, Space } from '@components/layout';
-import { useRootState, useScenarioClient } from '@hooks';
-import { ConditionJoin } from '@models';
-import { IConditionItem } from '@models/interfaces/res/IGetFlowRes';
+import { usePage, useRootState, useScenarioClient } from '@hooks';
+import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
+import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useController, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { OperatorSelector } from './OperatorSelector';
-
 interface IReactSelect {
   value: string;
   label: string;
@@ -81,10 +80,18 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ConditionNodeEdit = () => {
-  const { register, getValues, control, setValue } = useFormContext();
+  const { t, tc } = usePage();
+  const {
+    register,
+    getValues,
+    control,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IConditionView>>();
   const values = getValues();
   console.log('value.view in condition node edit', values.view);
+
   const [join, setJoin] = useState<1 | 0>();
+
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
     control,
@@ -118,14 +125,7 @@ export const ConditionNodeEdit = () => {
     setJoin(join);
   };
 
-  // useEffect(() => {
-  //   if (values.view.join) {
-  //     setJoin(values.view.join);
-  //   }
-  // }, [values.view.join]);
-
   const handleDeleteButton = (index: number) => {
-    // e.preventDefault();
     remove(index);
   };
 
@@ -135,7 +135,7 @@ export const ConditionNodeEdit = () => {
     if (fields.length < 6) {
       append({
         op1: '',
-        operator: '',
+        operator: ConditionOperator.Is,
         op2: '',
       });
     } else {
@@ -144,38 +144,53 @@ export const ConditionNodeEdit = () => {
     }
   };
 
+  console.log('errors in condition node', errors);
   return (
     <>
       <div className="node-item-wrap">
         <div className="m-b-8">
           <Space direction="vertical">
-            <span className="label">Setting Conditions</span>
+            <span className="label">Setting Conditions </span>
             <Divider />
             <div>
-              <span>Setting Conditions</span>
+              <span>Setting Conditions </span>
               <span className="required">*</span>
             </div>
             {fields.length === 0 && (
               <Space direction="vertical">
-                <Input
-                  {...register(`view.items[${0}].op1`)}
-                  placeholder="변수명을 입력해주세요"
-                />
+                <FormItem
+                  error={errors.view && errors.view.items && errors.view?.items[0]?.op1}
+                >
+                  <Input
+                    {...register(`view.items.${0}.op1`)}
+                    placeholder="변수명을 입력해주세요"
+                  />
+                </FormItem>
+
                 <OperatorSelector index={0} />
 
+                {errors.view && errors.view.items && errors.view.items[0]?.operator && (
+                  <p className="error-message">
+                    {errors.view?.items[0]?.operator.message}
+                  </p>
+                )}
+
                 <Input
-                  {...register(`view.items[${0}].op2`)}
+                  {...register(`view.items.${0}.op2`)}
                   placeholder="변수명을 입력해주세요"
                 />
 
+                {errors.view && errors.view.items && errors.view?.items[0]?.op2 && (
+                  <p className="error-message">{errors.view?.items[0]?.op2.message}</p>
+                )}
                 <div className="joinWrapper">
                   <label className={classNames(`join`)}>
                     <input
                       {...register(`view.join`, { valueAsNumber: true })}
-                      type="number"
+                      type="radio"
                       value={ConditionJoin.And}
                       onClick={() => {
-                        handleJoin(1);
+                        handleJoin(ConditionJoin.And);
                         handleAddConditionButton();
                       }}
                     />
@@ -184,10 +199,10 @@ export const ConditionNodeEdit = () => {
                   <label className={classNames(`join`)} role="presentation">
                     <input
                       {...register(`view.join`, { valueAsNumber: true })}
-                      type="number"
+                      type="radio"
                       value={ConditionJoin.Or}
                       onClick={() => {
-                        handleJoin(0);
+                        handleJoin(ConditionJoin.Or);
                         handleAddConditionButton();
                       }}
                     />
@@ -199,25 +214,39 @@ export const ConditionNodeEdit = () => {
             {fields.map((item, i) => (
               <Space direction="vertical" key={i}>
                 <Input
-                  {...register(`view.items[${i}].op1`)}
+                  {...register(`view.items.${i}.op1`)}
                   placeholder="변수명을 입력해주세요"
                 />
+
+                {errors.view && errors.view.items && errors.view?.items[i]?.op1 && (
+                  <p className="error-message">{errors.view?.items[i]?.op1?.message}</p>
+                )}
                 <OperatorSelector index={i} />
-
+                <p className="error-message">
+                  {errors.view &&
+                    errors.view.items &&
+                    errors.view?.items[i]?.operator &&
+                    errors.view?.items[i]?.operator?.message}
+                </p>
+                {/* <FormItem error={errors.view?.items[i].op2}> */}
                 <Input
-                  {...register(`view.items[${i}].op2`)}
+                  {...register(`view.items.${i}.op2`)}
                   placeholder="변수명을 입력해주세요"
                 />
+                {/* </FormItem> */}
 
-                {values.view.join !== undefined && i === 0 ? (
+                {errors.view && errors.view.items && errors.view?.items[i]?.op2 && (
+                  <p className="error-message">{errors.view?.items[i]?.op2?.message}</p>
+                )}
+                {values.view?.join !== undefined && i === 0 ? (
                   <div className="joinWrapper">
                     <label className={classNames(`join`)}>
                       <input
                         {...register(`view.join`, { valueAsNumber: true })}
                         type="radio"
                         value={ConditionJoin.And}
-                        checked={Number(values.view.join) === 1}
-                        onClick={() => handleJoin(1)}
+                        checked={Number(values.view.join) === ConditionJoin.And}
+                        onClick={() => handleJoin(ConditionJoin.And)}
                       />
                       <div data-join={'and'}>And</div>
                     </label>
@@ -226,14 +255,14 @@ export const ConditionNodeEdit = () => {
                         {...register(`view.join`, { valueAsNumber: true })}
                         type="radio"
                         value={ConditionJoin.Or}
-                        checked={Number(values.view.join) === 0}
-                        onClick={() => handleJoin(0)}
+                        checked={Number(values.view.join) === ConditionJoin.Or}
+                        onClick={() => handleJoin(ConditionJoin.Or)}
                       />
                       <div data-join={'or'}>Or</div>
                     </label>
                   </div>
                 ) : (
-                  values.view.join !== undefined &&
+                  values.view?.join !== undefined &&
                   i < 5 && (
                     <div
                       className={classNames(`joinWrapper`, {
@@ -251,7 +280,7 @@ export const ConditionNodeEdit = () => {
                           }
                         }}
                       >
-                        {Number(join) === 1 ? 'And' : 'Or'}
+                        {Number(join) === ConditionJoin.And ? 'And' : 'Or'}
                       </Button>
                     </div>
                   )
@@ -269,7 +298,11 @@ export const ConditionNodeEdit = () => {
       <div className="node-item-wrap">
         <div className="m-b-8">
           <Space direction="vertical">
-            <span className="label">Message connection</span>
+            <div>
+              <span className="label">Message connection </span>
+              <span className="required">*</span>
+            </div>
+
             <Select
               {...trueThenNextNodeIdField}
               options={scenario}
@@ -282,6 +315,7 @@ export const ConditionNodeEdit = () => {
                 trueThenNextNodeIdField.onChange(options?.value)
               }
             />
+            {/* {errors.view && <div className="error-message">{errors.view}</div>} */}
           </Space>
 
           <Divider />
