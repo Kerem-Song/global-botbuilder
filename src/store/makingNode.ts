@@ -63,7 +63,7 @@ export const makingNodeSlice = createSlice({
         const nodes = [...state.nodes];
         const index = nodes.indexOf(matched);
         const old = nodes[index];
-        old.view = node.view;
+        //old.view = node.view;
         // switch (old.type) {
         //   case NODE_TYPES.TEXT_NODE: {
         //     const card = old.cards?.[0] as IBasicCardNode;
@@ -113,7 +113,7 @@ export const makingNodeSlice = createSlice({
         //     //card.action = view.action || 'message';
         //   }
         // }
-        nodes.splice(index, 1, { ...old, title: node.title });
+        nodes.splice(index, 1, { ...old, title: node.title, view: node.view });
         state.nodes = nodes;
       }
     },

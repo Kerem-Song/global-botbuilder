@@ -1,10 +1,13 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel, NODE_TYPES } from '@models';
 import {
+  IAnswerView,
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
   IGetFlowRes,
+  IListCardCarouselView,
+  IListCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
@@ -189,10 +192,7 @@ export const useScenarioClient = () => {
           const view = converted.view as IBasicCardView;
           const buttons = view.buttons?.map((b) => {
             const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
-            if (buttonArrow) {
-              return { ...b, actionValue: buttonArrow.end.substring(5) };
-            }
-            return b;
+            return { ...b, actionValue: buttonArrow?.end.substring(5) };
           });
           converted.view = { ...view, buttons: buttons } as IBasicCardView;
         }
@@ -214,6 +214,32 @@ export const useScenarioClient = () => {
           converted.view = { ...carouselView, childrenViews } as IBasicCardCarouselView;
         }
 
+        if (converted.typeName === NODE_TYPES.LIST_CARD_NODE && converted.view) {
+          const view = converted.view as IListCardView;
+          const buttons = view.buttons?.map((b) => {
+            console.log(arrows);
+            console.log(b.id);
+            const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+            console.log(buttonArrow);
+            return { ...b, actionValue: buttonArrow?.end.substring(5) };
+          });
+          converted.view = { ...view, buttons: buttons } as IListCardView;
+        }
+
+        if (converted.typeName === NODE_TYPES.LIST_CAROUSEL && converted.view) {
+          const carouselView = converted.view as IListCardCarouselView;
+
+          const childrenViews = carouselView.childrenViews.map((view) => {
+            const buttons = view.buttons?.map((b) => {
+              const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+              return { ...b, actionValue: buttonArrow?.end.substring(5) };
+            });
+            return { ...view, buttons };
+          });
+
+          converted.view = { ...carouselView, childrenViews } as IListCardCarouselView;
+        }
+
         if (converted.typeName === NODE_TYPES.CONDITION_NODE && converted.view) {
           const view: IConditionView = converted.view;
 
@@ -221,7 +247,6 @@ export const useScenarioClient = () => {
             (a) => a.start.substring(10) === `${converted.id}-true`,
           );
 
-          console.log(trueArrow);
           const falseArrow = arrows.find(
             (a) => a.start.substring(10) === `${converted.id}-false`,
           );
@@ -231,6 +256,16 @@ export const useScenarioClient = () => {
             trueThenNextNodeId: trueArrow ? trueArrow.end.substring(5) : undefined,
             falseThenNextNodeId: falseArrow ? falseArrow.end.substring(5) : undefined,
           } as IConditionView;
+        }
+
+        if (converted.typeName === NODE_TYPES.ANSWER_NODE && converted.view) {
+          const view: IAnswerView = converted.view;
+          const quicks = view.quicks?.map((q) => {
+            const arrow = arrows.find((a) => a.start.substring(5) === q.id);
+            return { ...q, actionValue: arrow?.end.substring(5) };
+          });
+
+          converted.view = { ...view, quicks } as IAnswerView;
         }
 
         return converted;

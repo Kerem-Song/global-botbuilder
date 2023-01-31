@@ -49,6 +49,7 @@ export const NodeEditDrawer = () => {
   const selectedNode = nodes.find((x) => x.id === selected);
   useEffect(() => {
     if (selectedNode) {
+      console.log(selectedNode.view);
       const model: INodeEditModel = {
         id: selectedNode.id,
         caption: selectedNode.type,
@@ -125,17 +126,17 @@ export const NodeEditDrawer = () => {
 
   const editItem = () => {
     switch (selectedNode?.type) {
-      case 'TextNode':
+      case NODE_TYPES.TEXT_NODE:
         return <TextNodeEdit />;
-      case 'BasicCardNode':
+      case NODE_TYPES.BASIC_CARD_NODE:
         return <BasicCardNodeEdit />;
-      case 'ListNode':
+      case NODE_TYPES.LIST_CARD_NODE:
         return <ListCardNodeEdit />;
-      case 'ProductCardNode':
+      case NODE_TYPES.PRODUCT_CARD_NODE:
         return <ProductCardNodeEdit />;
-      case 'AnswerNode':
+      case NODE_TYPES.ANSWER_NODE:
         return <AnswerNodeEdit />;
-      case 'ConditionNode':
+      case NODE_TYPES.CONDITION_NODE:
         return <ConditionNodeEdit />;
       default:
         <></>;

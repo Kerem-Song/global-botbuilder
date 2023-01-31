@@ -1,5 +1,6 @@
 import {
   ConditionJoin,
+  ConditionOperator,
   IArrow,
   INode,
   NODE_TYPES,
@@ -18,6 +19,7 @@ import {
   IBasicCardView,
   IConditionNode,
   IConditionView,
+  IListCardCarouselView,
   IListCardView,
   INodeBase,
   IOtherFlowRedirectView,
@@ -37,6 +39,10 @@ export const nodeHelper = {
         return nodeHelper.createDefaultBasicCardView();
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
         return nodeHelper.createDefaultBasicCardCarouselView();
+      case NODE_TYPES.LIST_CARD_NODE:
+        return nodeHelper.createDefaultListCardView();
+      case NODE_TYPES.LIST_CAROUSEL:
+        return nodeHelper.createDefaultListCardCarouselView();
       case NODE_TYPES.CONDITION_NODE:
         return nodeHelper.createDefaultConditionView();
       case NODE_TYPES.ANSWER_NODE:
@@ -98,7 +104,7 @@ export const nodeHelper = {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
-      items: [],
+      items: [{ op1: '', operator: ConditionOperator.Is, op2: '' }],
       join: ConditionJoin.And,
     };
 
@@ -159,6 +165,17 @@ export const nodeHelper = {
           actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
         },
       ],
+    };
+
+    return result;
+  },
+  createDefaultListCardCarouselView: () => {
+    const result: IListCardCarouselView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
+      childrenViews: [nodeHelper.createDefaultListCardView()],
+      isSuffle: false,
+      count: 0,
     };
 
     return result;

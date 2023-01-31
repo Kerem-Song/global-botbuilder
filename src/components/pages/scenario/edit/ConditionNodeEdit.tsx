@@ -1,6 +1,7 @@
 import { Button, Input } from '@components';
 import { Divider, Space } from '@components/layout';
 import { useRootState, useScenarioClient } from '@hooks';
+import { ConditionJoin } from '@models';
 import { IConditionItem } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -170,9 +171,9 @@ export const ConditionNodeEdit = () => {
                 <div className="joinWrapper">
                   <label className={classNames(`join`)}>
                     <input
-                      {...register(`view.join`)}
-                      type="radio"
-                      value={1}
+                      {...register(`view.join`, { valueAsNumber: true })}
+                      type="number"
+                      value={ConditionJoin.And}
                       onClick={() => {
                         handleJoin(1);
                         handleAddConditionButton();
@@ -182,9 +183,9 @@ export const ConditionNodeEdit = () => {
                   </label>
                   <label className={classNames(`join`)} role="presentation">
                     <input
-                      {...register(`view.join`)}
-                      type="radio"
-                      value={0}
+                      {...register(`view.join`, { valueAsNumber: true })}
+                      type="number"
+                      value={ConditionJoin.Or}
                       onClick={() => {
                         handleJoin(0);
                         handleAddConditionButton();
@@ -212,9 +213,9 @@ export const ConditionNodeEdit = () => {
                   <div className="joinWrapper">
                     <label className={classNames(`join`)}>
                       <input
-                        {...register(`view.join`)}
+                        {...register(`view.join`, { valueAsNumber: true })}
                         type="radio"
-                        value={1}
+                        value={ConditionJoin.And}
                         checked={Number(values.view.join) === 1}
                         onClick={() => handleJoin(1)}
                       />
@@ -222,9 +223,9 @@ export const ConditionNodeEdit = () => {
                     </label>
                     <label className={classNames(`join`)} role="presentation">
                       <input
-                        {...register(`view.join`)}
+                        {...register(`view.join`, { valueAsNumber: true })}
                         type="radio"
-                        value={0}
+                        value={ConditionJoin.Or}
                         checked={Number(values.view.join) === 0}
                         onClick={() => handleJoin(0)}
                       />
