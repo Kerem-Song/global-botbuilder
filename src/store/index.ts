@@ -13,7 +13,6 @@ import intentReducer from './intentSlice';
 import makingNodeSliceReducer from './makingNode';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
-import utteranceDetailReducer from './utteranceDetailSlice';
 
 const rootReducer = combineReducers({
   authReducer,
@@ -22,7 +21,6 @@ const rootReducer = combineReducers({
   brandInfoReducer,
   botBuilderReducer,
   botTesterReducer,
-  utteranceDetailReducer,
   intentReducer,
   intentListReducer,
   makingNodeSliceReducer: undoable(makingNodeSliceReducer, { debug: true, limit: 20 }),

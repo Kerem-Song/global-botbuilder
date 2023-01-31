@@ -17,14 +17,18 @@ export const useUtteranceClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
   const token = useRootState((state) => state.botBuilderReducer.token);
-  const getIntentListQuery = (orderType: number, flowId: string | null | undefined) => {
+  const getIntentListQuery = (
+    orderType: number,
+    flowId: string | null | undefined,
+    keyword: string | undefined,
+  ) => {
     return useQuery<IPagingItems<IIntentListItem>>(
-      ['intent-list', orderType, flowId],
+      ['intent-list', orderType, flowId, keyword],
       () =>
         http
           .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
             'Builder/SearchIntent',
-            { sessionToken: token, countPerPage: 50, orderType, flowId },
+            { sessionToken: token, countPerPage: 50, orderType, flowId, keyword },
           )
           .then((res) => res.data.result),
       { refetchOnWindowFocus: false, refetchOnMount: true },

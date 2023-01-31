@@ -10,9 +10,14 @@ export const UtteranceComponent = () => {
   const { getIntentListQuery } = useUtteranceClient();
   const [searchData, setSearchData] = useState<ISearchData>({
     sort: 1,
-    scenarios: null,
+    scenarios: undefined,
+    searchWord: undefined,
   });
-  const { data } = getIntentListQuery(searchData.sort, searchData.scenarios);
+  const { data } = getIntentListQuery(
+    searchData.sort,
+    searchData.scenarios,
+    searchData.searchWord,
+  );
 
   return (
     <div className="utteranceWrap">
@@ -24,7 +29,11 @@ export const UtteranceComponent = () => {
             <UtteranceListHeader />
           </thead>
           <tbody>
-            <UtteranceListItem data={data} />
+            <UtteranceListItem
+              data={data}
+              searchData={searchData}
+              setSearchData={setSearchData}
+            />
           </tbody>
         </table>
       </div>
