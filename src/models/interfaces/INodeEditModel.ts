@@ -1,4 +1,10 @@
-import { IButtonType, ISortableListItem, IThumbnailType, Profile } from './ICard';
+import {
+  IButtonType,
+  ISortableListItem,
+  IThumbnailType,
+  Profile,
+  TNodeTypes,
+} from './ICard';
 import { IScenarioModel } from './IScenarioModel';
 import { IViewBase } from './res/IGetFlowRes';
 
@@ -10,6 +16,7 @@ export interface IGNodeEditModel<T extends IViewBase> {
 }
 export interface INodeEditModel {
   id: string;
+  nodeType: TNodeTypes;
   caption: string;
   title: string;
   view?: IViewBase;

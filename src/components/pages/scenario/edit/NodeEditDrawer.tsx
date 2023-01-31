@@ -31,16 +31,19 @@ export const NodeEditDrawer = () => {
   const schema = yup
     .object({
       title: yup.string().required('말풍선 명은 필수입니다.'),
-      view: yup.object().shape({
-        items: yup.array().of(
-          yup.object().shape({
-            op1: yup.string().required(`변수 입력은 필수 입니다.`),
-            op2: yup.string().required(`변수 입력은 필수 입니다.`),
-            operator: yup.number().required(`Operator 설정은 필수 입니다.`),
-          }),
-        ),
-        trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
-        falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
+      view: yup.object().when('nodeType', {
+        is: NODE_TYPES.CONDITION_NODE,
+        then: yup.object().shape({
+          items: yup.array().of(
+            yup.object().shape({
+              op1: yup.string().required(`변수 입력은 필수 입니다.`),
+              op2: yup.string().required(`변수 입력은 필수 입니다.`),
+              operator: yup.number().required(`Operator 설정은 필수 입니다.`),
+            }),
+          ),
+          trueThenNextNodeId: yup.string().required(`Message connection은 필수입니다.`),
+          falseThenNextNodeId: yup.string().required(`Next message는 필수입니다.`),
+        }),
       }),
     })
     .required();
@@ -61,7 +64,7 @@ export const NodeEditDrawer = () => {
     handleSubmit,
     reset,
     getValues,
-    formState: { errors },
+    formState: { errors, isValid },
   } = formMethods;
 
   const onSubmit = (node: INodeEditModel) => {
@@ -73,79 +76,18 @@ export const NodeEditDrawer = () => {
 
   useEffect(() => {
     if (selectedNode) {
-      console.log(selectedNode.view);
       const model: INodeEditModel = {
         id: selectedNode.id,
+        nodeType: selectedNode.type,
         caption: selectedNode.type,
         title: selectedNode.title || '',
         view: selectedNode.view,
       };
-      // if (selectedNode.type === NODE_TYPES.TEXT_NODE) {
-      //   const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
-      //   if (card) {
-      //     model.view = { text: card.description };
-      //   }
-      // }
-
-      // if (selectedNode.type === NODE_TYPES.BASIC_CARD_NODE) {
-      //   const card: IBasicCardNode = selectedNode.cards?.[0] as IBasicCardNode;
-      //   if (card) {
-      //     model.view = {
-      //       title: card.title,
-      //       description: card.description,
-      //       buttons: card.buttons,
-      //     };
-      //   }
-      // }
-
-      // if (selectedNode.type === NODE_TYPES.LIST_CARD_NODE) {
-      //   const card: IListCardNode = selectedNode.cards?.[0] as IListCardNode;
-      //   console.log('card:', card);
-      //   if (card) {
-      //     model.view = {
-      //       header: { title: card.header?.title },
-      //       items: card.items,
-      //       buttons: card.buttons,
-      //     };
-      //   }
-      // }
-
-      // if (selectedNode.type === NODE_TYPES.PRODUCT_CARD_NODE) {
-      //   const card: IProductCardNode = selectedNode.cards?.[0] as IProductCardNode;
-      //   if (card) {
-      //     model.view = {
-      //       productName: card.productName,
-      //       price: card.price,
-      //       currency: card.currency,
-      //       discount: card.discount,
-      //       discountRate: card.discountRate,
-      //       discountPrice: card.discountPrice,
-      //       profile: {
-      //         brandName: card.profile?.brandName,
-      //         imageUrl: card.profile?.imageUrl,
-      //       },
-      //       buttons: card.buttons,
-      //     };
-      //   }
-      // }
-
-      // if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
-      //   const card: IAnswerNode = selectedNode.cards?.[0] as IAnswerNode;
-      //   if (card) {
-      //     model.view = {
-      //       allowRes: card.allowRes || false,
-      //       label: card.label,
-      //       action: card.action,
-      //       extra: card.extra,
-      //     };
-      //   }
-      // }
 
       reset(model);
     } else {
       handleSubmit(onSubmit)();
-
-      if (errors) {
+      if (!isValid) {
         return;
       }
 
