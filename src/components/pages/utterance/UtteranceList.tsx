@@ -8,7 +8,7 @@ export const UtteranceList = () => {
         <UtteranceListHeader />
       </thead>
       <tbody>
-        <UtteranceListItem data={undefined} />
+        <UtteranceListItem />
       </tbody>
     </table>
   );

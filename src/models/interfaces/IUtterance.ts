@@ -52,5 +52,6 @@ export interface IInputFormModel {
 
 export interface ISearchData {
   sort: number;
-  scenarios?: string | null;
+  scenarios?: string | null | undefined;
+  searchWord?: string | undefined;
 }

@@ -17,20 +17,27 @@ const SORT = [
 
 export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
-  const [scenario, setScenario] = useState<string | null | undefined>(null);
-  console.log(scenario);
+  const [scenario, setScenario] = useState<string | null | undefined>(undefined);
+  const [searchWord, setSearchWord] = useState<string | undefined>('');
 
   const scenarios = data?.items.map((x) => {
     return { value: x.flowId, label: x.flowName };
   });
 
-  // const TEST = { value: null, label: '시나리오 미설정' };
-  // scenarios?.push(TEST);
-  // console.log(scenarios);
+  const utteranceSummary = data?.items.map((x) => {
+    return x.utteranceSummary;
+  });
+
+  const handleReset = () => {
+    setSearchData({ sort: 1, scenarios: undefined, searchWord: undefined });
+    setScenario(undefined);
+    setSearchWord('');
+  };
 
   useEffect(() => {
     setSort(String(searchData.sort));
     setScenario(searchData.scenarios);
+    setSearchWord(searchData.searchWord);
   }, [searchData]);
 
   return (
@@ -61,10 +68,10 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
             <Col>
               <Select
                 options={scenarios}
+                placeholder="시나리오 미선택"
                 value={scenarios?.find((x) => x.value === scenario)}
                 onChange={(e) => {
-                  console.log('e', e);
-                  setScenario(e && e?.value);
+                  setScenario(e?.value);
                 }}
               />
             </Col>
@@ -73,20 +80,27 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
             </Col>
             <Col flex="auto">
               <FormItem>
-                <Input search placeholder="Please enter a search word" />
+                <Input
+                  search
+                  placeholder="Please enter a search word"
+                  value={utteranceSummary?.find((x) => x === searchWord)}
+                  onSearch={(e) => setSearchWord(e)}
+                />
               </FormItem>
             </Col>
           </Row>
           <Row justify="flex-end">
             <Col>
               <Space>
-                <Button onClick={() => setSearchData({ sort: 1, scenarios: null })}>
-                  Reset
-                </Button>
+                <Button onClick={handleReset}>Reset</Button>
                 <Button
                   type="primary"
                   onClick={() =>
-                    setSearchData({ sort: Number(sort), scenarios: scenario })
+                    setSearchData({
+                      sort: Number(sort),
+                      scenarios: scenario,
+                      searchWord: searchWord,
+                    })
                   }
                 >
                   Search

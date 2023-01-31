@@ -7,17 +7,30 @@ import { useRootState, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
   IInputFormModel,
+  IIntentListItem,
+  IPagingItems,
   ISaveIntent,
   IUtteranceModel,
-} from '@models/interfaces/IUtterance';
+} from '@models';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 
-export const UtteranceDetail = () => {
-  const [select, setSelect] = useState('');
+export interface IUtteranceDetailProps {
+  data: IPagingItems<IIntentListItem> | undefined;
+}
+
+export const UtteranceDetail = ({ data }: IUtteranceDetailProps) => {
+  // const [select, setSelect] = useState('');
+  const { getIntentListQuery } = useUtteranceClient();
+
+  const [scenario, setScenario] = useState<string | null | undefined>(null);
+
+  const scenarios = data?.items.map((x) => {
+    return { value: x.flowId, label: x.flowName };
+  });
 
   const { intentMutate } = useUtteranceClient();
 
@@ -134,7 +147,7 @@ export const UtteranceDetail = () => {
                 <span>Connect Scenarios</span>
               </Col>
               <Col flex="auto">
-                <Select defaultInputValue={select} onChange={() => setSelect} />
+                <Select />
               </Col>
             </Row>
           </Space>

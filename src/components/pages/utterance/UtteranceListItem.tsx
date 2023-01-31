@@ -2,16 +2,22 @@ import { icSuccess, icUtteranceEmpty } from '@assets';
 import { useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import { IDeleteIntent, IIntentListItem, IPagingItems } from '@models';
-import { FC, useEffect } from 'react';
+import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 export interface IUtteranceListItemProps {
   data: IPagingItems<IIntentListItem> | undefined;
+  searchData: ISearchData;
+  setSearchData: (data: ISearchData) => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
+  data,
+  searchData,
+  setSearchData,
+}) => {
   const { intentDeleteMutate } = useUtteranceClient();
   const navigate = useNavigate();
   const token = useRootState((state) => state.botBuilderReducer.token);
@@ -35,7 +41,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
         sessionToken: token,
         intentId: intentId,
       };
-      console.log('deleteIntent', deleteIntent);
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
@@ -55,7 +60,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
 
   return (
     <>
-      {data?.items ? (
+      {data?.items && data?.items.length > 0 ? (
         data?.items.map((v, i) => {
           return (
             <tr key={i} className="list">
@@ -81,7 +86,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
-            <span>No registered intents.</span>
+            <span>No search results found.</span>
           </td>
         </tr>
       )}
@@ -97,6 +102,16 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
             </tr>
           );
         })} */}
+      {/* <>
+        {data?.items.filter((x) => x !== searchData) ? (
+          <tr className="emptyList">
+            <td className="empty">
+              <img src={icUtteranceEmpty} alt="empty" />
+              <span>No search results found.</span>
+            </td>
+          </tr>
+        ) : null}
+      </> */}
     </>
   );
 };
