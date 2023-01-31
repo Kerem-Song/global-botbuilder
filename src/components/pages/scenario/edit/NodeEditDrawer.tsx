@@ -75,7 +75,6 @@ export const NodeEditDrawer = () => {
   };
 
   useEffect(() => {
-    console.log(selectedNode);
     if (selectedNode) {
       const model: INodeEditModel = {
         id: selectedNode.id,
@@ -84,7 +83,6 @@ export const NodeEditDrawer = () => {
         title: selectedNode.title || '',
         view: selectedNode.view,
       };
-
       reset(model);
     }
   }, [selectedNode]);

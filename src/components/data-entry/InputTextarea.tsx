@@ -71,7 +71,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
           {...inputProps}
           className={resultClassName}
           style={resultStyle}
-          value={text}
+          //value={text}
           onChange={handleTextArea}
           onInput={handleTextareaHeight}
           placeholder={args.placeholder}

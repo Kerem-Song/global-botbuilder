@@ -1,4 +1,4 @@
-import { InputTextarea } from '@components';
+import { Input, InputTextarea } from '@components';
 import { useFormContext } from 'react-hook-form';
 
 export const TextNodeEdit = () => {

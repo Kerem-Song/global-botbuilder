@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
 
+import { lunaToast } from '../../modules/lunaToast';
 import { nodeHelper } from '../../modules/nodeHelper';
 import { useHttp } from '../useHttp';
 
@@ -287,6 +288,7 @@ export const useScenarioClient = () => {
         flow: result,
       });
       if (res) {
+        lunaToast.success();
         queryClient.invalidateQueries(['scenario', scenarioId]);
         return res;
       }
