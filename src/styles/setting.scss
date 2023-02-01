@@ -1,0 +1,89 @@
+.settingWrap {
+  position: relative;
+  padding: rem(20);
+  padding-top: rem(40);
+  max-width: rem(1140);
+  margin-left: auto;
+  margin-right: auto;
+  .title {
+    width: 100%;
+    font-size: rem(16);
+    font-weight: 700;
+    color: $grayBlack;
+    margin-bottom: 20px;
+  }
+  div {
+    .activateWrap {
+      div {
+        .activateBotHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .botCardContainer {
+          display: flex;
+          gap: rem(12);
+          .botCardWrap {
+            width: 534px;
+            .botCard {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              height: 88px;
+              border: 1px solid #dcdcdc;
+              border-radius: 12px;
+              padding: 20px;
+              .channel {
+                width: rem(178);
+                height: rem(48);
+                display: flex;
+                align-items: center;
+                .channelImg {
+                  margin-right: rem(12);
+                }
+                .channelInfo {
+                  .channelState {
+                    font-size: rem(14);
+                    line-height: rem(17);
+                    font-weight: 500;
+                    margin-bottom: rem(3);
+                  }
+                  .channelName {
+                    font-weight: 500;
+                    font-size: rem(12);
+                    line-height: rem(14);
+                  }
+                }
+              }
+            }
+          }
+        }
+        .import {
+          background-color: yellow;
+        }
+      }
+    }
+    .handleScenariosWrap {
+      div {
+        .handleScenarioInfo {
+          border-bottom: 1px solid $gray200;
+          margin-bottom: rem(6);
+          .infoText {
+            margin-bottom: rem(12);
+            color: $gray300;
+          }
+        }
+        .duplicateScenarios {
+          display: flex;
+          align-items: center;
+          .text {
+            width: rem(140);
+            font-size: rem(13);
+            line-height: rem(16);
+          }
+        }
+      }
+    }
+  }
+}

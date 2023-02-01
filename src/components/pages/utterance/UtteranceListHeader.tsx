@@ -1,6 +1,8 @@
+import { useUtteranceClient } from '@hooks';
 import { useNavigate } from 'react-router';
 
 export const UtteranceListHeader = () => {
+  const { getIntentDetailQuery } = useUtteranceClient();
   const navigate = useNavigate();
   const goToDetail = () => {
     navigate(':utteranceId');

@@ -22,6 +22,7 @@ import icCommerce from '@assets/icons/ic_commerce.svg';
 import icCommerceHover from '@assets/icons/ic_commerce_hover.svg';
 import icCondition from '@assets/icons/ic_condition.svg';
 import icConditionHover from '@assets/icons/ic_condition_hover.svg';
+import icCopy from '@assets/icons/ic_copy.svg';
 import icCount from '@assets/icons/ic_count.svg';
 import icCountHover from '@assets/icons/ic_count_hover.svg';
 import icDataApi from '@assets/icons/ic_data_api_default.svg';
@@ -134,6 +135,7 @@ export {
   icCommerceHover,
   icCondition,
   icConditionHover,
+  icCopy,
   icCount,
   icCountHover,
   icDataApi,
