@@ -236,6 +236,22 @@ export interface IListCardCarouselView extends IViewBase {
   childrenViews: IListCardView[];
 }
 
+export interface IProductCardView extends IViewBase {
+  buttons: IButtonCtrl[];
+  currencyUnit: string;
+  description: string;
+  gross: number;
+  imageCtrl: IImageCtrl;
+  net: number;
+  profileIconUrl: string;
+  profileName: string;
+  seq: number;
+}
+
+export interface IProductCardNode extends INodeBase {
+  view: IProductCardView;
+}
+
 export interface IGetFlowRes {
   alias: string;
   id: string;
