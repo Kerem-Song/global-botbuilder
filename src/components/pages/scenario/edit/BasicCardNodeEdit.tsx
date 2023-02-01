@@ -1,6 +1,8 @@
 import { icImg } from '@assets';
 import {
+  Button,
   Col,
+  Divider,
   FormItem,
   Input,
   InputTextarea,
@@ -8,13 +10,18 @@ import {
   Row,
   Space,
   Switch,
-  Title,
 } from '@components';
-import { IButtonType, IGNodeEditModel } from '@models';
-import { ACTION_TYPES, IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { IGNodeEditModel } from '@models';
+import {
+  ACTION_TYPES,
+  ActionTypes,
+  IBasicCardView,
+} from '@models/interfaces/res/IGetFlowRes';
+import { useEffect, useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { SelectScenario } from './SelectScenario';
 
 const selectOptions = [
   { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: 'Node Redirect' },
@@ -24,6 +31,7 @@ const selectOptions = [
 ];
 
 export const BasicCardNodeEdit = () => {
+  const [buttonType, setButtonType] = useState<ActionTypes>();
   const {
     register,
     getValues,
@@ -55,6 +63,14 @@ export const BasicCardNodeEdit = () => {
       console.log('3개까지 가능');
     }
   };
+
+  const handleDeleteButton = (index: number) => {
+    remove(index);
+  };
+
+  useEffect(() => {
+    console.log('basic card node edit');
+  }, [fields]);
   return (
     <>
       <div className="node-item-wrap">
@@ -109,9 +125,10 @@ export const BasicCardNodeEdit = () => {
       </div>
       <div className="node-item-wrap">
         <p className="m-b-8">
-          <span className="label">텍스트 설정</span>
+          <span className="label">텍스트 설정 </span>
           <span className="required">*</span>
         </p>
+        <Divider />
         <Space direction="vertical">
           <span className="subLabel">타이틀</span>
           <FormItem error={errors.view && errors.view.title}>
@@ -129,24 +146,62 @@ export const BasicCardNodeEdit = () => {
           </FormItem>
         </Space>
       </div>
-      {fields.map((item, i) => (
-        <div className="node-item-wrap" key={item.id}>
-          <p className="m-b-8">
-            <span className="label">버튼</span>
-            <span className="required">*</span>
-          </p>
-          <Space direction="vertical">
-            <span className="subLabel">버튼명</span>
-            <FormItem
-              error={errors.view && errors.view.buttons && errors.view.buttons[i]?.label}
-            >
-              <Input {...register(`view.buttons.${i}.label`)} />
-            </FormItem>
-            <span className="subLabel">버튼타입</span>
-            <ButtonTypeSelector index={i} options={selectOptions} />
+      <div className="node-item-wrap">
+        <p className="m-b-8">
+          <span className="label">버튼</span>
+          <span className="required">*</span>
+        </p>
+        <Divider />
+        {fields.map((item, i) => (
+          <Space direction="vertical" key={item.id}>
+            <Space direction="vertical">
+              <span className="subLabel">버튼명</span>
+              <FormItem
+                error={
+                  errors.view && errors.view.buttons && errors.view.buttons[i]?.label
+                }
+              >
+                <Input {...register(`view.buttons.${i}.label`)} />
+              </FormItem>
+              <span className="subLabel">버튼타입</span>
+              <ButtonTypeSelector
+                index={i}
+                options={selectOptions}
+                setButtonType={setButtonType}
+              />
+              {values.view &&
+                values.view?.buttons &&
+                values.view?.buttons[i]?.actionType ===
+                  ACTION_TYPES.LUNA_NODE_REDIRECT && (
+                  <SelectScenario fieldName={ACTION_TYPES.LUNA_NODE_REDIRECT} />
+                )}
+              {values.view &&
+                values.view?.buttons &&
+                values.view?.buttons[i]?.actionType === ACTION_TYPES.URL && (
+                  <FormItem
+                    error={
+                      errors.view &&
+                      errors.view.buttons &&
+                      errors.view.buttons[i]?.actionValue
+                    }
+                  >
+                    <Input {...register(`view.buttons.${i}.actionValue`)} />
+                  </FormItem>
+                )}
+              <div className="deleteBtn">
+                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
+                  Delete Button
+                </Button>
+              </div>
+            </Space>
           </Space>
-        </div>
-      ))}
+        ))}
+        {fields.length < 3 && (
+          <Button shape="ghost" className="addBtn" onClick={handleAddConditionButton}>
+            <span>+ Add a Button</span>
+          </Button>
+        )}
+      </div>
     </>
   );
 };

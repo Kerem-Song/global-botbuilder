@@ -11,7 +11,7 @@ export const ACTION_TYPES = {
   LUNA_NODE_REDIRECT: 'lunaNodeRedirect',
   ACT_VALUE_IS_UTTR: 'actValueIsUttr',
   LBL_IS_UTTR: 'lblIsUttr',
-  URL: 'Url', //server 확인 필요
+  URL: 'linkWebUrl', //server 확인 필요
 };
 
 export type ActionTypes = ValueOf<typeof ACTION_TYPES>;

@@ -111,15 +111,15 @@ export const ConditionNodeEdit = () => {
                     {errors.view?.items[0]?.operator.message}
                   </p>
                 )}
+                <FormItem
+                  error={errors.view && errors.view.items && errors.view.items[0]?.op2}
+                >
+                  <Input
+                    {...register(`view.items.${0}.op2`)}
+                    placeholder="변수명을 입력해주세요"
+                  />
+                </FormItem>
 
-                <Input
-                  {...register(`view.items.${0}.op2`)}
-                  placeholder="변수명을 입력해주세요"
-                />
-
-                {errors.view && errors.view.items && errors.view?.items[0]?.op2 && (
-                  <p className="error-message">{errors.view?.items[0]?.op2.message}</p>
-                )}
                 <div className="joinWrapper">
                   <label className={classNames(`join`)}>
                     <input
@@ -150,14 +150,15 @@ export const ConditionNodeEdit = () => {
             )}
             {fields.map((item, i) => (
               <Space direction="vertical" key={i}>
-                <Input
-                  {...register(`view.items.${i}.op1`)}
-                  placeholder="변수명을 입력해주세요"
-                />
+                <FormItem
+                  error={errors.view && errors.view.items && errors.view.items[i]?.op2}
+                >
+                  <Input
+                    {...register(`view.items.${i}.op1`)}
+                    placeholder="변수명을 입력해주세요"
+                  />
+                </FormItem>
 
-                {errors.view && errors.view.items && errors.view?.items[i]?.op1 && (
-                  <p className="error-message">{errors.view?.items[i]?.op1?.message}</p>
-                )}
                 <OperatorSelector index={i} />
                 <p className="error-message">
                   {errors.view &&
@@ -165,16 +166,15 @@ export const ConditionNodeEdit = () => {
                     errors.view?.items[i]?.operator &&
                     errors.view?.items[i]?.operator?.message}
                 </p>
-                {/* <FormItem error={errors.view?.items[i].op2}> */}
-                <Input
-                  {...register(`view.items.${i}.op2`)}
-                  placeholder="변수명을 입력해주세요"
-                />
-                {/* </FormItem> */}
+                <FormItem
+                  error={errors.view && errors.view.items && errors.view?.items[i]?.op2}
+                >
+                  <Input
+                    {...register(`view.items.${i}.op2`)}
+                    placeholder="변수명을 입력해주세요"
+                  />
+                </FormItem>
 
-                {errors.view && errors.view.items && errors.view?.items[i]?.op2 && (
-                  <p className="error-message">{errors.view?.items[i]?.op2?.message}</p>
-                )}
                 {values.view?.join !== undefined && i === 0 ? (
                   <div className="joinWrapper">
                     <label className={classNames(`join`)}>
@@ -224,7 +224,7 @@ export const ConditionNodeEdit = () => {
                 )}
                 <div className="deleteBtn">
                   <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                    Delete
+                    Delete Condition
                   </Button>
                 </div>
               </Space>
