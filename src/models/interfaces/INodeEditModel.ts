@@ -8,7 +8,7 @@ import {
   TNodeTypes,
 } from './ICard';
 import { IScenarioModel } from './IScenarioModel';
-import { IViewBase } from './res/IGetFlowRes';
+import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> {
   id: string;
@@ -71,9 +71,9 @@ export interface IAnswerViewModel {
   messageText?: string;
   url?: string;
 }
-const FILE_SIZE = 160 * 1024;
+const FILE_SIZE = 2 * 1024; //2mb제한
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+const SUPPORTED_FORMATS = ['image/jpg', 'image/png']; //jpb, png가능(Line 기준)
 
 export const textNodeEditSchema = yup.object().shape({
   text: yup
@@ -98,14 +98,24 @@ export const basicCardNodeEditSchema = yup.object().shape({
   //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
   //   ),
   imageCtrol: yup.object().shape({
-    imageUrl: yup.string().matches(/^(http(s?)):\/\//i),
+    imageUrl: yup.string().url(),
   }),
-  imageUrl: yup.string().matches(/^(http(s?)):\/\//i),
-  buttons: yup.array().of(
-    yup.object().shape({
-      label: yup.string().required('필수 입력 항목입니다.'),
-    }),
-  ),
+  imageUrl: yup.string().url(),
+  buttons: yup
+    .array()
+    .max(3, '버튼은 3개까지만 가능합니다.')
+    .of(
+      yup.object().shape({
+        label: yup.string().trim().required('필수 입력 항목입니다.'),
+        actionValue: yup.string().when('actionType', {
+          is: ACTION_TYPES.URL,
+          then: yup
+            .string()
+            .url('http, https 형식으로 입력해 주세요')
+            .required('필수 입력 항목입니다.'),
+        }),
+      }),
+    ),
 });
 
 export const listCardNodeEditSchema = yup.object().shape({
@@ -121,7 +131,7 @@ export const listCardNodeEditSchema = yup.object().shape({
     //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
     //   ),
     // imageUrl: yup.string().trim().required(),
-    imageUrl: yup.string().matches(/^(http(s?)):\/\//i),
+    imageUrl: yup.string().url(),
     actionType: yup.string().required(),
     actionValue: yup.string().required(),
   }),
@@ -139,7 +149,7 @@ export const listCardNodeEditSchema = yup.object().shape({
       //     'Unsupported Format',
       //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
       //   ),
-      imageUrl: yup.string().matches(/^(http(s?)):\/\//i),
+      imageUrl: yup.string().url(),
     }),
   ),
   buttons: yup.array().of(

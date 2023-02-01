@@ -1,4 +1,5 @@
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
+import { Dispatch, SetStateAction } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
@@ -72,13 +73,17 @@ interface IReactSelect {
   label: string;
 }
 
+interface IButtonTypeSelector {
+  index: number;
+  options: IReactSelect[];
+  setButtonType: Dispatch<SetStateAction<string | undefined>>;
+}
+
 export const ButtonTypeSelector = ({
   index,
   options,
-}: {
-  index: number;
-  options: IReactSelect[];
-}) => {
+  setButtonType,
+}: IButtonTypeSelector) => {
   const { control } = useFormContext();
   const { field } = useController({
     name: `view.buttons.${index}.actionType`,
@@ -91,7 +96,10 @@ export const ButtonTypeSelector = ({
       options={options}
       styles={reactSelectStyle}
       value={options.find((item) => item.value === field.value)}
-      onChange={(options: any) => field.onChange(options?.value)}
+      onChange={(options: any) => {
+        field.onChange(options?.value);
+        setButtonType(options.value);
+      }}
     />
   );
 };

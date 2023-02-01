@@ -271,7 +271,17 @@
 
       .deleteBtn {
         display: flex;
-        justify-content: right;
+        justify-content: center;
+        margin-bottom: rem(25);
+        
+        button {
+          color: $gray300;
+          text-decoration: underline;
+          
+          &:hover {
+            color: $primary500;
+          }
+        }
       }
     }
   }
