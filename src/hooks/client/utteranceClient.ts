@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 
 import {
   IDeleteIntent,
+  IGetIntent,
   IIntentListItem,
   IResponseIntentData,
   ISaveIntent,
@@ -17,6 +18,7 @@ export const useUtteranceClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
   const token = useRootState((state) => state.botBuilderReducer.token);
+
   const getIntentListQuery = (
     orderType: number,
     flowId: string | null | undefined,
@@ -28,9 +30,32 @@ export const useUtteranceClient = () => {
         http
           .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
             'Builder/SearchIntent',
-            { sessionToken: token, countPerPage: 50, orderType, flowId, keyword },
+            {
+              sessionToken: token,
+              countPerPage: 50,
+              orderType,
+              flowId,
+              keyword,
+            },
           )
           .then((res) => res.data.result),
+      { refetchOnWindowFocus: false, refetchOnMount: true },
+    );
+  };
+
+  const getIntentDetailQuery = (intentId: string | undefined) => {
+    return useQuery<IHasResult<IIntentListItem>>(
+      ['intent-detail', intentId],
+      () =>
+        http
+          .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
+            'Builder/GetIntent',
+            {
+              sessionToken: token,
+              intentId,
+            },
+          )
+          .then((res) => res.data),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );
   };
@@ -40,6 +65,14 @@ export const useUtteranceClient = () => {
       'Builder/SaveIntent',
       intent,
     );
+    return result.data;
+  });
+
+  const intentGetMutate = useMutation(async (intent: IGetIntent) => {
+    const result = await http.post<
+      IGetIntent,
+      AxiosResponse<IHasResult<IIntentListItem>>
+    >('Builder/GetIntent', intent);
     return result.data;
   });
 
@@ -57,7 +90,9 @@ export const useUtteranceClient = () => {
 
   return {
     getIntentListQuery,
+    getIntentDetailQuery,
     intentMutate,
     intentDeleteMutate,
+    intentGetMutate,
   };
 };

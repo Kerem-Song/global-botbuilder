@@ -6,7 +6,7 @@ export interface IIntentListItem {
   flowName: string;
   nodeId: string;
   viewId: string;
-  utterances?: string;
+  utterances?: string[];
   utteranceSummary: string;
 }
 
@@ -14,6 +14,11 @@ export interface ISearchIntent {
   sessionToken: string;
   pageNo?: number;
   countPerPage: number;
+}
+
+export interface IGetIntent {
+  sessionToken: string;
+  intentId: string;
 }
 
 export interface ISaveIntent {

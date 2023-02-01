@@ -97,6 +97,20 @@ a.luna-btn {
   }
 }
 
+.luna-btn-lineblue {
+  border: 1px solid $primary500;
+  background: $grayWhite;
+  color: $primary500;
+  &:hover {
+    background: $primary150;
+    color: $primary500;
+  }
+  &:disabled {
+    background: $grayWhite;
+    color: $primary200;
+  }
+}
+
 .luna-btn-small {
   padding: rem(8) rem(10);
   height: rem(30);

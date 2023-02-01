@@ -13,6 +13,7 @@ import HistoryPage from '../pages/HistoryPage';
 import ScenarioPage from '../pages/ScenarioPage';
 import SettingPage from '../pages/SettingPage';
 import StatisticsPage from '../pages/StatisticsPage';
+import UtteranceDetailPage from '../pages/UtteranceDetailPage';
 import UtterancePage from '../pages/UtterancePage';
 import { LocaleNavigate } from './LocaleNavigate';
 
@@ -51,7 +52,7 @@ const finalRoutes = [
                     },
                     {
                       path: ':utteranceId',
-                      element: <UtteranceDetail />,
+                      element: <UtteranceDetailPage />,
                     },
                   ],
                 },

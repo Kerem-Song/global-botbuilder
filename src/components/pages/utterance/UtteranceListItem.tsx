@@ -2,7 +2,14 @@ import { icSuccess, icUtteranceEmpty } from '@assets';
 import { useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
+import {
+  IDeleteIntent,
+  IGetIntent,
+  IIntentListItem,
+  IPagingItems,
+  ISaveIntent,
+  ISearchData,
+} from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -18,10 +25,18 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   searchData,
   setSearchData,
 }) => {
-  const { intentDeleteMutate } = useUtteranceClient();
+  const { getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
   const navigate = useNavigate();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { confirm } = useSystemModal();
+
+  const observerTagetEl = useRef<HTMLTableRowElement>(null);
+
+  const [isPageEnd, setIsPageEnd] = useState<boolean>(false);
+
+  const handleGetIntent = (intentId: string) => {
+    navigate(intentId);
+  };
 
   const openModal = async (flowName: string, intentId: string) => {
     const result = await confirm({
@@ -60,14 +75,14 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
 
   return (
     <>
-      {data?.items && data?.items.length > 0 ? (
+      {!isPageEnd && data?.items && data?.items.length > 0 ? (
         data?.items.map((v, i) => {
           return (
-            <tr key={i} className="list">
+            <tr key={i} className="list" ref={observerTagetEl}>
               <td
                 role="presentation"
                 className="utteranceList intent"
-                onClick={() => navigate(':utteranceId')}
+                onClick={() => handleGetIntent(v.intentId)}
               >
                 {v.intentName}
               </td>

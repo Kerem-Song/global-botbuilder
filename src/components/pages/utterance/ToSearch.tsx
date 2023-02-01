@@ -1,6 +1,7 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
+import { cornersOfRectangle } from '@dnd-kit/core/dist/utilities/algorithms/helpers';
 import { IIntentListItem, IPagingItems, ISearchData } from '@models';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 
 export interface IToSearchProps {
@@ -19,6 +20,7 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string | null | undefined>(undefined);
   const [searchWord, setSearchWord] = useState<string | undefined>('');
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   const scenarios = data?.items.map((x) => {
     return { value: x.flowId, label: x.flowName };
@@ -29,7 +31,11 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
   });
 
   const handleReset = () => {
-    setSearchData({ sort: 1, scenarios: undefined, searchWord: undefined });
+    setSearchData({
+      sort: 1,
+      scenarios: undefined,
+      searchWord: undefined,
+    });
     setScenario(undefined);
     setSearchWord('');
   };

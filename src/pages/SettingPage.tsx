@@ -1,3 +1,4 @@
+import { Setting } from '@components/pages/bot-setting/Setting';
 import { FC } from 'react';
 
 import { TitleHelmet } from '../components/common/TitleHelmet';
@@ -7,6 +8,7 @@ export const SettingPage: FC = () => {
   return (
     <PageProvider pageName="setting">
       <TitleHelmet />
+      <Setting />
     </PageProvider>
   );
 };

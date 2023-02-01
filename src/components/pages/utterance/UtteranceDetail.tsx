@@ -3,52 +3,58 @@ import { Card } from '@components/data-display';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { useRootState, useSystemModal } from '@hooks';
+import { defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
+import { PageProvider } from '@hooks/providers/PageProvider';
 import {
   IInputFormModel,
   IIntentListItem,
   IPagingItems,
   ISaveIntent,
+  IUtteranceItem,
   IUtteranceModel,
 } from '@models';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 
-export interface IUtteranceDetailProps {
-  data: IPagingItems<IIntentListItem> | undefined;
-}
-
-export const UtteranceDetail = ({ data }: IUtteranceDetailProps) => {
-  // const [select, setSelect] = useState('');
-  const { getIntentListQuery } = useUtteranceClient();
-
-  const [scenario, setScenario] = useState<string | null | undefined>(null);
-
-  const scenarios = data?.items.map((x) => {
-    return { value: x.flowId, label: x.flowName };
-  });
-
-  const { intentMutate } = useUtteranceClient();
-
-  const { confirm } = useSystemModal();
-
-  const { register, handleSubmit, control, getValues, watch } = useForm<IUtteranceModel>({
-    defaultValues: {
-      items: [],
-    },
-  });
-
-  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
-
-  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+export const UtteranceDetail = () => {
+  const { navigate, t, tc } = usePage();
+  const { intentMutate, getIntentDetailQuery } = useUtteranceClient();
+  const { utteranceId, botId } = useParams();
+  const { data } = getIntentDetailQuery(utteranceId);
 
   const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const navigate = useNavigate();
+  const { confirm } = useSystemModal();
+  const { reset, register, handleSubmit, control, getValues, watch } =
+    useForm<IUtteranceModel>({
+      defaultValues: {
+        items: [],
+      },
+    });
+
+  useEffect(() => {
+    if (data) {
+      const resetValue = {
+        name: data.result.intentName,
+        connectScenarioId: data.result.flowId,
+      };
+      reset(resetValue);
+
+      append(
+        data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { utterance: x };
+        }) || [],
+      );
+    }
+  }, [data]);
+
+  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
+  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
 
   const openModal = async () => {
     const result = await confirm({
@@ -87,17 +93,19 @@ export const UtteranceDetail = ({ data }: IUtteranceDetailProps) => {
 
     intentMutate.mutate(newIntent, {
       onSuccess: (submitResult) => {
+        if (submitResult.isSuccess) {
+          const message = '저장되었습니다.';
+          toast.success(message, {
+            position: 'bottom-right',
+            icon: () => <img src={icSuccess} alt="success" />,
+            theme: 'dark',
+            hideProgressBar: true,
+            className: 'luna-toast',
+            bodyClassName: 'luna-toast-body',
+          });
+          navigate(`/${botId}/utterance`);
+        }
         console.log(submitResult);
-        const message = '저장되었습니다.';
-        toast.success(message, {
-          position: 'bottom-right',
-          icon: () => <img src={icSuccess} alt="success" />,
-          theme: 'dark',
-          hideProgressBar: true,
-          className: 'luna-toast',
-          bodyClassName: 'luna-toast-body',
-        });
-        navigate(-1);
       },
     });
   };
@@ -107,13 +115,7 @@ export const UtteranceDetail = ({ data }: IUtteranceDetailProps) => {
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="detailButtons">
           <div>
-            <Button
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              List
-            </Button>
+            <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button>
           </div>
           <div>
             <Button className="deleteBtn">Delete intent</Button>
@@ -193,7 +195,20 @@ export const UtteranceDetail = ({ data }: IUtteranceDetailProps) => {
         </Space>
         <Row style={{ marginTop: '12px' }}>
           <>
-            {fields.length > 0 ? (
+            {/* {data?.result.utterances
+              ? data.result.utterances.map((x, i) => {
+                  return (
+                    <div key={i} className="utteranceItem">
+                      <Checkbox
+                        {...register(`items.${i}.isChecked`)}
+                        style={{ marginLeft: '20px' }}
+                      />
+                      <p className="item">{x}</p>
+                    </div>
+                  );
+                })
+              : null} */}
+            {watch('items').length > 0 ? (
               fields.map((v, i) => {
                 return (
                   <div key={i} className="utteranceItem">
