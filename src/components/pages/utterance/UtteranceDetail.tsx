@@ -3,32 +3,39 @@ import { Card } from '@components/data-display';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
-import { PageProvider } from '@hooks/providers/PageProvider';
 import {
+  IDeleteIntent,
   IInputFormModel,
-  IIntentListItem,
-  IPagingItems,
   ISaveIntent,
   IUtteranceItem,
   IUtteranceModel,
 } from '@models';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 
 export const UtteranceDetail = () => {
   const { navigate, t, tc } = usePage();
-  const { intentMutate, getIntentDetailQuery } = useUtteranceClient();
-  const { utteranceId, botId } = useParams();
-  const { data } = getIntentDetailQuery(utteranceId);
-
+  const { intentMutate, getIntentDetailQuery, intentDeleteMutate, getIntentListQuery } =
+    useUtteranceClient();
+  const { getScenarioList } = useScenarioClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
+  const list = getScenarioList(token);
 
+  const scenarioList =
+    list.data &&
+    list.data.map((x) => {
+      return { value: x.id, label: x.alias };
+    });
+
+  const { utteranceId, botId } = useParams();
+  // const test = utteranceId ? getIntentDetailQuery(utteranceId) : null;
+
+  const { data } = getIntentDetailQuery(utteranceId);
   const { confirm } = useSystemModal();
   const { reset, register, handleSubmit, control, getValues, watch } =
     useForm<IUtteranceModel>({
@@ -41,8 +48,11 @@ export const UtteranceDetail = () => {
     if (data) {
       const resetValue = {
         name: data.result.intentName,
+        intentId: data.result.intentId,
         connectScenarioId: data.result.flowId,
+        connectScenarioName: data.result.flowName,
       };
+
       reset(resetValue);
 
       append(
@@ -54,9 +64,10 @@ export const UtteranceDetail = () => {
   }, [data]);
 
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
+
   const { fields, append, remove } = useFieldArray({ control, name: 'items' });
 
-  const openModal = async () => {
+  const openDeleteCheckboxModal = async () => {
     const result = await confirm({
       title: 'Delete',
       description: (
@@ -78,21 +89,68 @@ export const UtteranceDetail = () => {
     }
   };
 
+  const openDeleteIntentModal = async () => {
+    const result = await confirm({
+      title: 'Delete',
+      description: (
+        <span>
+          There is a scenario associated with scenario 02
+          <br />: Start, Scenario 01
+          <br />
+          Are you sure you want to delete it?
+        </span>
+      ),
+    });
+
+    if (result) {
+      const deleteIntent: IDeleteIntent = {
+        sessionToken: token,
+        intentId: data?.result.intentId,
+      };
+      intentDeleteMutate.mutate(deleteIntent, {
+        onSuccess: (submitResult) => {
+          if (submitResult && submitResult.isSuccess) {
+            const message = '삭제되었습니다.';
+            toast.success(message, {
+              position: 'bottom-right',
+              icon: () => <img src={icSuccess} alt="success" />,
+              theme: 'dark',
+              hideProgressBar: true,
+              className: 'luna-toast',
+              bodyClassName: 'luna-toast-body',
+            });
+            navigate(`/${botId}/utterance`);
+          }
+        },
+      });
+    }
+  };
+
   const handleAddUtternace = (data: IInputFormModel): void => {
     if (!data.utterance || !data.utterance.trim()) return;
     append({ utterance: data.utterance });
     inputForm.reset();
   };
 
-  const handleSave = (data: IUtteranceModel): void => {
+  const handleSave = (itemData: IUtteranceModel): void => {
     const newIntent: ISaveIntent = {
       sessionToken: token,
-      intentName: data.name,
-      utterances: data.items.map((x) => x.utterance),
+      intentName: itemData.name,
+      utterances: itemData.items.map((x) => x.utterance),
+      flowId: data?.result.flowId,
+    };
+
+    const modifyIntent: ISaveIntent = {
+      sessionToken: token,
+      intentId: itemData.intentId,
+      intentName: itemData.name,
+      utterances: itemData.items.map((x) => x.utterance),
+      flowId: itemData.connectScenarioId,
     };
 
     intentMutate.mutate(newIntent, {
       onSuccess: (submitResult) => {
+        console.log('newIntent', submitResult);
         if (submitResult.isSuccess) {
           const message = '저장되었습니다.';
           toast.success(message, {
@@ -105,7 +163,24 @@ export const UtteranceDetail = () => {
           });
           navigate(`/${botId}/utterance`);
         }
-        console.log(submitResult);
+      },
+    });
+
+    intentMutate.mutate(modifyIntent, {
+      onSuccess: (submitResult) => {
+        console.log('modifyIntent', submitResult);
+        if (submitResult.isSuccess) {
+          const message = '저장되었습니다.';
+          toast.success(message, {
+            position: 'bottom-right',
+            icon: () => <img src={icSuccess} alt="success" />,
+            theme: 'dark',
+            hideProgressBar: true,
+            className: 'luna-toast',
+            bodyClassName: 'luna-toast-body',
+          });
+          navigate(`/${botId}/utterance`);
+        }
       },
     });
   };
@@ -118,7 +193,9 @@ export const UtteranceDetail = () => {
             <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button>
           </div>
           <div>
-            <Button className="deleteBtn">Delete intent</Button>
+            <Button className="deleteBtn" onClick={openDeleteIntentModal}>
+              Delete intent
+            </Button>
             <Button large type="primary" htmlType="submit">
               Save
             </Button>
@@ -149,7 +226,13 @@ export const UtteranceDetail = () => {
                 <span>Connect Scenarios</span>
               </Col>
               <Col flex="auto">
-                <Select />
+                <Select
+                  options={scenarioList}
+                  value={scenarioList?.find((x) => x.value === data?.result.flowId)}
+                  onChange={(e) => {
+                    e?.value;
+                  }}
+                />
               </Col>
             </Row>
           </Space>
@@ -191,23 +274,10 @@ export const UtteranceDetail = () => {
             Utterance <span className="utteranceLength">{watch('items').length}</span>
           </span>
           <Input size="small" search placeholder="Input search text" />
-          <button className="icDelete" onClick={openModal} />
+          <button className="icDelete" onClick={openDeleteCheckboxModal} />
         </Space>
         <Row style={{ marginTop: '12px' }}>
           <>
-            {/* {data?.result.utterances
-              ? data.result.utterances.map((x, i) => {
-                  return (
-                    <div key={i} className="utteranceItem">
-                      <Checkbox
-                        {...register(`items.${i}.isChecked`)}
-                        style={{ marginLeft: '20px' }}
-                      />
-                      <p className="item">{x}</p>
-                    </div>
-                  );
-                })
-              : null} */}
             {watch('items').length > 0 ? (
               fields.map((v, i) => {
                 return (
