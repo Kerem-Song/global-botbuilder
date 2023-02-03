@@ -42,7 +42,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
     const startNode = isNextNode
       ? document.querySelector<HTMLDivElement>(`#${updateKey}`)
       : null;
-    addUpdateLines(updateKey || startId, endId, () => {
+    addUpdateLines(updateKey || startId, startId, endId, () => {
       const { setSvgStyle, setArrowStyle, setLinePath } = useElementHelper(
         canvas,
         startId,
@@ -54,7 +54,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       setLinePath(lineRef.current, lineMouseRef.current);
     });
     return () => {
-      removeUpdateLines(updateKey || startId, endId);
+      removeUpdateLines(updateKey || startId, startId, endId);
     };
   }, [svgRef.current, arrowRef.current, lineRef.current, lineMouseRef.current]);
 

@@ -84,7 +84,7 @@ export const ButtonsEdit = () => {
             {values.view &&
               values.view?.buttons &&
               values.view?.buttons[i]?.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-                <SelectScenario fieldName={ACTION_TYPES.LUNA_NODE_REDIRECT} />
+                <SelectScenario fieldName={`buttons.${i}.actionValue`} />
               )}
             {values.view &&
               values.view?.buttons &&

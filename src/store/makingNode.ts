@@ -4,14 +4,16 @@ import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
   ACTION_TYPES,
   IAnswerNode,
+  IAnswerView,
   IBasicCardCarouselNode,
   IBasicCardNode,
+  IBasicCardView,
   IConditionNode,
   INodeBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NODE_PREFIX } from '../modules';
+import { NEXT_BUTTON_PREFIX, NODE_PREFIX } from '../modules';
 import { nodeHelper } from '../modules/nodeHelper';
 
 export interface IBuilderInfo {
@@ -63,56 +65,53 @@ export const makingNodeSlice = createSlice({
         const nodes = [...state.nodes];
         const index = nodes.indexOf(matched);
         const old = nodes[index];
-        //old.view = node.view;
-        // switch (old.type) {
-        //   case NODE_TYPES.TEXT_NODE: {
-        //     const card = old.cards?.[0] as IBasicCardNode;
-        //     const view = node.view as ITextViewModel;
-        //     card.view.description = view.text;
-        //     break;
-        //   }
 
-        //   case NODE_TYPES.BASIC_CARD_NODE: {
-        //     const card = old.cards?.[0] as IBasicCardNode;
-        //     const view = node.view as IBasicCardViewModel;
-        //     card.view.title = view.title;
-        //     card.view.description = view.description;
-        //     //card.view.buttons = [...(view.buttons || [])];
-        //     break;
-        //   }
+        const arrows = [...state.arrows];
 
-        //   case NODE_TYPES.LIST_CARD_NODE: {
-        //     const card = old.cards?.[0] as IListCardNode;
-        //     const view = node.view as IListCardViewModel;
-        //     card.header!.title = view.header?.title;
-        //     card.items = [...(view.items || [])];
-        //     card.buttons = [...(view.buttons || [])];
-        //     break;
-        //   }
+        const removeArrows = state.arrows.filter(
+          (x) => x.updateKey === `${NODE_PREFIX}${node.id}` && x.isNextNode,
+        );
 
-        //   case NODE_TYPES.PRODUCT_CARD_NODE: {
-        //     const card = old.cards?.[0] as IProductCardNode;
-        //     const view = node.view as IProductCardViewModel;
-        //     card.thumbnail = view.thumbnail;
-        //     card.profile!.brandName = view.profile?.brandName;
-        //     card.profile!.imageUrl = view.profile?.imageUrl;
-        //     card.productName = view.productName;
-        //     card.price = view.price;
-        //     card.currency = view.currency;
-        //     card.discount = view.discount;
-        //     card.buttons = [...(view.buttons || [])];
-        //     break;
-        //   }
+        if (removeArrows.length) {
+          removeArrows.forEach((arrow) => {
+            const index = arrows.indexOf(arrow);
+            arrows.splice(index, 1);
+          });
+        }
 
-        //   case NODE_TYPES.ANSWER_NODE: {
-        //     const card = old.cards?.[0] as IAnswerNode;
-        //     const view = node.view as IAnswerViewModel;
-        //     //card.allowRes = view.allowRes;
-        //     //card.extra = view.extra;
-        //     //card.label = view.label || '';
-        //     //card.action = view.action || 'message';
-        //   }
-        // }
+        if (node.nodeType === NODE_TYPES.ANSWER_NODE) {
+          const view = node.view as IAnswerView;
+          view.quicks?.forEach((q) => {
+            if (q.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && q.actionValue) {
+              arrows.push({
+                start: `${NEXT_BUTTON_PREFIX}${q.id}`,
+                end: `${NODE_PREFIX}${q.actionValue}`,
+                updateKey: `${NODE_PREFIX}${node.id}`,
+                isNextNode: true,
+                type: 'blue',
+              });
+            }
+          });
+        }
+
+        if (node.nodeType === NODE_TYPES.BASIC_CARD_NODE) {
+          const view = node.view as IBasicCardView;
+          view.buttons?.forEach((b) => {
+            console.log(b);
+            if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
+              arrows.push({
+                start: `${NEXT_BUTTON_PREFIX}${b.id}`,
+                end: `${NODE_PREFIX}${b.actionValue}`,
+                updateKey: `${NODE_PREFIX}${node.id}`,
+                isNextNode: true,
+                type: 'blue',
+              });
+            }
+          });
+        }
+
+        state.arrows = arrows;
+
         nodes.splice(index, 1, { ...old, title: node.title, view: node.view });
         state.nodes = nodes;
       }
