@@ -134,7 +134,6 @@ export interface IAnswerNode extends INodeBase {
 export interface IAnswerView extends IViewBase {
   quicks?: IButtonCtrl[];
   utteranceParam?: string;
-  useUtteranceParam?: boolean;
 }
 
 export interface IConditionNode extends INodeBase {
