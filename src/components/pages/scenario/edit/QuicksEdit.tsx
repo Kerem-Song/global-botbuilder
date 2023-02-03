@@ -6,7 +6,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { nodeHelper } from '../../../../modules/nodeHelper';
 import { ButtonCtrlSelector } from './ButtonCtrlSelector';
-import { SelectScenario } from './SelectScenario';
+import { SelectNode } from './SelectNode';
 
 export const QuicksEdit = () => {
   const {
@@ -56,7 +56,7 @@ export const QuicksEdit = () => {
             <span className="subLabel">버튼타입</span>
             <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <SelectScenario
+              <SelectNode
                 fieldName={`quicks.${i}.actionValue`}
                 defaultValue={values.view?.quicks?.[i].actionValue}
               />

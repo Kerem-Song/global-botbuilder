@@ -1,0 +1,13 @@
+.collapseWrapper {
+  &[data-collapsed='true'] {
+    display: block;
+    overflow: hidden;
+    transition: max-height .5s ease;
+  }
+  
+  &[data-collapsed='false'] {
+    display: none;
+  }
+}
+
+
