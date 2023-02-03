@@ -1,8 +1,13 @@
-import { icImg } from '@assets';
-import { Col, Divider, Input, Radio, Row, Space } from '@components';
-import { IButtonType } from '@models';
+import { Col, Divider, Input, Row, Space } from '@components';
+import { IGNodeEditModel } from '@models';
+import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
+import { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
+
+import { ButtonsEdit } from './ButtonsEdit';
+import { ImageSetting } from './ImageSetting';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -76,14 +81,17 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ProductCardNodeEdit = () => {
-  const { register, getValues, control } = useFormContext();
+  const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
+  const { register, getValues, control } =
+    useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
   console.log('value.view', values.view);
 
   const { field: currencyField } = useController({
-    name: `view.currency`,
+    name: `view.currencyUnit`,
     control,
   });
+
   return (
     <>
       <div className="node-item-wrap">
@@ -93,52 +101,9 @@ export const ProductCardNodeEdit = () => {
           </Space>
           <Divider />
         </div>
-        <Space direction="vertical">
-          <div className="m-b-8">
-            <span className="subLabel">이미지 업로드 </span>
-            <span className="required">*</span>
-          </div>
-
-          <span className="subLabel">이미지 타입</span>
-          <Row>
-            <Col span={12}>
-              <Radio>
-                <span>직사각형</span>
-              </Radio>
-            </Col>
-            <Col span={12}>
-              <Radio>
-                <span>정사각형</span>
-              </Radio>
-            </Col>
-          </Row>
-          <div
-            style={{
-              height: '118px',
-              border: '1px dashed #DCDCDC',
-              background: '#FFFFFF',
-              borderRadius: '8px',
-              position: 'relative',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                width: '200px',
-                bottom: '50%',
-                right: '50%',
-                transform: 'translate(50%, 50%)',
-              }}
-            >
-              <img src={icImg} alt="icImg" />
-              <br />
-              Recommended
-              <br />
-              Rectangular: 800 x 400
-            </div>
-          </div>
-        </Space>
+        {values.view?.imageCtrl && (
+          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+        )}
       </div>
       <div className="node-item-wrap">
         <Space style={{ alignItems: 'center' }}>
@@ -164,10 +129,7 @@ export const ProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">브랜드 이름</span>
-            <Input
-              {...register(`view.profile.brandName`)}
-              value={values.view?.brandName || ''}
-            />
+            <Input {...register(`view.profileName`)} />
           </Space>
         </div>
       </div>
@@ -182,10 +144,7 @@ export const ProductCardNodeEdit = () => {
               <span className="label">상품명 </span>
               <span className="required">*</span>
             </p>
-            <Input
-              {...register(`view.productName`)}
-              value={values.view?.productName || ''}
-            />
+            <Input {...register(`view.description`)} />
             <p className="m-b-8">
               <span className="label">가격 </span>
               <span className="required">*</span>
@@ -193,7 +152,7 @@ export const ProductCardNodeEdit = () => {
             <div className="m-b-8">
               <Row justify="space-between">
                 <Col span={17}>
-                  <Input {...register(`view.price`)} value={values.view?.price || ''} />
+                  <Input {...register(`view.retailPrice`)} />
                 </Col>
                 <Col>
                   <Select
@@ -211,30 +170,11 @@ export const ProductCardNodeEdit = () => {
             </div>
 
             <span className="label">할인</span>
-            <Input {...register(`view.discount`)} value={values.view?.discountPrice} />
+            <Input {...register(`view.salePrice`)} />
           </Space>
         </div>
       </div>
-      {values.view &&
-        values.view.buttons &&
-        values.view.buttons.map((b: IButtonType, index: number) => {
-          return (
-            <div className="node-item-wrap" key={b.id}>
-              <p className="m-b-8">
-                <span className="label">버튼</span>
-                <span className="required">*</span>
-              </p>
-              <Space direction="vertical">
-                <span className="subLabel">버튼명</span>
-                <Input
-                  {...register(`view.buttons[${index}].label`)}
-                  value={b.label || ''}
-                />
-                <span className="subLabel">버튼타입</span>
-              </Space>
-            </div>
-          );
-        })}
+      {values.view && values.view.buttons && <ButtonsEdit />}
     </>
   );
 };

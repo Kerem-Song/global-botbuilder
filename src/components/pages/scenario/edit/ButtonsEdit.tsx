@@ -4,12 +4,9 @@ import { IGNodeEditModel } from '@models';
 import {
   ACTION_TYPES,
   ActionTypes,
-  IBasicCardView,
   IHasButtonViewBase,
-  IListCardView,
-  IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
-import { PropsWithChildren, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';

@@ -65,8 +65,8 @@ export interface ITesterCard {
   title: string;
   description: string;
   price?: {
-    gross?: number;
-    net?: number;
+    retailPrice?: number;
+    salePrice?: number;
     symbol?: string;
     discount?: number;
   };
@@ -177,8 +177,8 @@ export interface IProductCard extends IHasDebugMeta {
   title: string;
   description: string;
   price?: {
-    gross?: number;
-    net?: number;
+    retailPrice?: number;
+    salePrice?: number;
     symbol?: string;
     discount?: number;
   };

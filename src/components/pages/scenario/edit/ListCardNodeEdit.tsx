@@ -1,32 +1,14 @@
-import { icImg } from '@assets';
-import {
-  Button,
-  Col,
-  Divider,
-  FormItem,
-  Input,
-  Radio,
-  Row,
-  Space,
-  Switch,
-} from '@components';
-import { IButtonType, IGNodeEditModel, ISortableListItem } from '@models';
+import { Button, Col, Divider, Input, Row, Space, Switch } from '@components';
+import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
-import {
-  ACTION_TYPES,
-  ActionTypes,
-  IListCardView,
-} from '@models/interfaces/res/IGetFlowRes';
+import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { ButtonsEdit, selectOptions } from './ButtonsEdit';
-import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSetting } from './ImageSetting';
-import { SelectScenario } from './SelectScenario';
 
 export const ListCardNodeEdit = () => {
-  const [buttonType, setButtonType] = useState<ActionTypes>();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -72,7 +54,7 @@ export const ListCardNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">Head Title</span>
-            <Input {...register('view.header')} value={values.view?.header || ''} />
+            <Input {...register('view.header')} />
           </Space>
         </div>
       </div>
@@ -113,16 +95,13 @@ export const ListCardNodeEdit = () => {
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">List Title</span>
-                <Input {...register(`view.items.${i}.title`)} value={item.title || ''} />
+                <Input {...register(`view.items.${i}.title`)} />
               </Space>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">List Contents</span>
-                <Input
-                  {...register(`view.items.${i}.description`)}
-                  value={item.description || ''}
-                />
+                <Input {...register(`view.items.${i}.description`)} />
               </Space>
             </div>
             <div className="deleteBtn">

@@ -1,13 +1,6 @@
 import * as yup from 'yup';
 
-import {
-  IButtonType,
-  ISortableListItem,
-  IThumbnailType,
-  Profile,
-  TNodeTypes,
-} from './ICard';
-import { IScenarioModel } from './IScenarioModel';
+import { TNodeTypes } from './ICard';
 import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> {
@@ -24,53 +17,6 @@ export interface INodeEditModel {
   view?: IViewBase;
 }
 
-export interface ITextViewModel {
-  text?: string;
-}
-
-export interface IBasicCardViewModel {
-  title?: string;
-  description?: string;
-  buttons?: IButtonType[];
-}
-
-export interface IListCardViewModel {
-  allowHeadImgField: boolean;
-  header?: {
-    title?: string;
-  };
-  items?: ISortableListItem[];
-  buttons?: IButtonType[];
-}
-
-export interface IProductCardViewModel {
-  productName?: string;
-  price?: number;
-  currency?: string;
-  discount?: number;
-  discountRate?: number;
-  discountPrice?: number;
-  thumbnail?: IThumbnailType;
-  profile?: Profile;
-  buttons?: IButtonType[];
-}
-
-export interface IAnswerViewModel {
-  allowRes: boolean;
-  extra?: Record<string, any>;
-  label?: string;
-  action?:
-    | 'linkWebUrl'
-    | 'message'
-    | 'block'
-    | 'phone'
-    | 'operator'
-    | 'osLink'
-    | 'addChannel';
-  connectedScenario?: IScenarioModel;
-  messageText?: string;
-  url?: string;
-}
 const FILE_SIZE = 2 * 1024; //2mb제한
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/png']; //jpb, png가능(Line 기준)
@@ -155,6 +101,8 @@ export const listCardNodeEditSchema = yup.object().shape({
   ),
   buttons: buttonsEditSchema,
 });
+
+export const productCardNodeEditSchema = yup.object().shape({});
 
 export const conditionNodeEditSchema = yup.object().shape({
   items: yup.array().of(

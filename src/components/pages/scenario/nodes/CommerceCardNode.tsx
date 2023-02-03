@@ -52,18 +52,18 @@ export const CommerceCardNode: FC<ICommerceCardNodeProps> = ({ node }) => {
       ) : null}
 
       <div className="priceWrapper">
-        {view.gross !== view.net && (
+        {view.retailPrice !== view.salePrice && (
           <div>
-            <span className="discounted">{view.gross}</span>
+            <span className="discounted">{view.retailPrice}</span>
             <span className="discount">
-              {view.gross - view.net}{' '}
+              {view.retailPrice - view.salePrice}{' '}
               <span className="currency">{view.currencyUnit}</span> Discount
             </span>
           </div>
         )}
         <div className="prices">
           <p>
-            {view.net}
+            {view.salePrice}
             <span className="currency">{view.currencyUnit}</span>
           </p>
         </div>

@@ -187,13 +187,13 @@ export const nodeHelper = {
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
-      gross: 0,
-      net: 0,
+      retailPrice: 0,
+      salePrice: 0,
       profileIconUrl: '',
       profileName: '',
       description: '',
       seq: 0,
-      currencyUnit: 'WON',
+      currencyUnit: 'KRW',
       imageCtrl: {
         imageUrl: '',
         altText: '',

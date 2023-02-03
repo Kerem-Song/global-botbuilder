@@ -104,14 +104,14 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 <div className="productCardPrices">
                   <div className="price">
                     <p className="currentPrice">
-                      {item.price?.net
+                      {item.price?.salePrice
                         ?.toFixed(0)
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                       {item.price?.symbol}
                     </p>
                     <p className="prevPrice">
-                      {item.price?.gross
+                      {item.price?.retailPrice
                         ?.toFixed(0)
                         ?.toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
