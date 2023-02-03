@@ -278,7 +278,7 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.LIST_CARD_NODE:
       case NODE_TYPES.LIST_CAROUSEL:
         return (
-          // <ListCard cards={cards as IListCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
+          <ListCard cards={cards as IListCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
         );
 
       case NODE_TYPES.PRODUCT_CARD_NODE:
