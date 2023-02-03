@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
-import { SelectScenario } from './SelectScenario';
+import { SelectNode } from './SelectNode';
 
 export const selectOptions = [
   { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: 'Node Redirect' },
@@ -81,7 +81,7 @@ export const ButtonsEdit = () => {
             {values.view &&
               values.view?.buttons &&
               values.view?.buttons[i]?.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-                <SelectScenario fieldName={`buttons.${i}.actionValue`} />
+                <SelectNode fieldName={`buttons.${i}.actionValue`} />
               )}
             {values.view &&
               values.view?.buttons &&

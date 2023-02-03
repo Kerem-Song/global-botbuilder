@@ -1,4 +1,5 @@
 import { Divider, FormItem, Input, InputTextarea, Space, Switch } from '@components';
+import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -35,11 +36,15 @@ export const BasicCardNodeEdit = () => {
           <Space style={{ alignItems: 'center' }}>
             <span className="label">이미지 설정</span>
             <Switch {...register('view.imageCtrl')} />
+            <></>
           </Space>
+          <Divider />
         </p>
+        {/* <Collapse> */}
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
+        {/* </Collapse> */}
       </div>
       <div className="node-item-wrap">
         <p className="m-b-8">

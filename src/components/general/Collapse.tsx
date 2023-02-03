@@ -4,7 +4,7 @@ import { Dispatch, FC, SetStateAction, useState } from 'react';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {}
 
 export const Collapse: FC<CollapseProps> = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);

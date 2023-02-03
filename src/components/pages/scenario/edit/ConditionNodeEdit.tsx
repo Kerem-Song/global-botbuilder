@@ -6,11 +6,9 @@ import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
-import Select from 'react-select';
 
-import { reactSelectStyle } from './ButtonTypeSelector';
 import { OperatorSelector } from './OperatorSelector';
-import { SelectScenario } from './SelectScenario';
+import { SelectNode } from './SelectNode';
 interface IReactSelect {
   value: string;
   label: string;
@@ -252,7 +250,7 @@ export const ConditionNodeEdit = () => {
                 trueThenNextNodeIdField.onChange(options?.value)
               }
             /> */}
-            <SelectScenario fieldName={'trueThenNextNodeIdField'} />
+            <SelectNode fieldName={'trueThenNextNodeIdField'} />
           </Space>
 
           <Divider />
@@ -272,7 +270,7 @@ export const ConditionNodeEdit = () => {
               value={scenario.find((item) => item.value === falseThenNextNodeId.value)}
               onChange={(options: any) => falseThenNextNodeId.onChange(options?.value)}
             /> */}
-            <SelectScenario fieldName={'falseThenNextNodeId'} />
+            <SelectNode fieldName={'falseThenNextNodeId'} />
           </Space>
         </div>
       </div>

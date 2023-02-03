@@ -84,6 +84,8 @@ import icSearch from '@assets/icons/ic_search.svg';
 import icSearchActive from '@assets/icons/ic_search_active.svg';
 import icSearchDelete from '@assets/icons/ic_search_delete.svg';
 import icSearchDeleteActive from '@assets/icons/ic_search_delete_active.svg';
+import icSetParameter from '@assets/icons/ic_set_parameter.svg';
+import icSetParameterHover from '@assets/icons/ic_set_parameterHover.svg';
 import icSetting from '@assets/icons/ic_setting_default.svg';
 import icSettingSelected from '@assets/icons/ic_setting_select.svg';
 import icShow from '@assets/icons/ic_show.svg';
@@ -103,8 +105,6 @@ import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.
 import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
 import icUtteranceEmpty from '@assets/icons/ic_utterance_empty.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
-import icSetParameter from '@assets/icons/icSetParameter.svg';
-import icSetParameterHover from '@assets/icons/icSetParameterHover.svg';
 import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';

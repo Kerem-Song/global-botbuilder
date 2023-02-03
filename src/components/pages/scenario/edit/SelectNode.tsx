@@ -1,5 +1,4 @@
-import { useRootState, useScenarioClient } from '@hooks';
-import { useEffect, useState } from 'react';
+import { useRootState } from '@hooks';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -10,7 +9,7 @@ interface IReactSelect {
   label: string;
 }
 
-export const SelectScenario = ({
+export const SelectNode = ({
   fieldName,
   defaultValue,
 }: {
@@ -29,7 +28,7 @@ export const SelectScenario = ({
     value: item.id,
     label: item.title || '',
   }));
-  console.log(scenarios);
+
   return (
     <Select
       {...field}
