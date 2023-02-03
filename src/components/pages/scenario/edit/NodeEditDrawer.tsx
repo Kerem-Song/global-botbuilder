@@ -73,8 +73,6 @@ export const NodeEditDrawer = () => {
   } = formMethods;
 
   const onSubmit = (node: INodeEditModel) => {
-    console.log(node);
-
     dispatch(editNode(node));
     //dispatch(setSelected());
   };

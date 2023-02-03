@@ -10,14 +10,14 @@ interface IReactSelect {
   label: string;
 }
 
-export const SelectScenario = ({ fieldName }: { fieldName: string }) => {
-  const selectedScenario = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
-  const [scenario, setScenario] = useState<IReactSelect[]>([]);
-
-  const { getCachedScenario } = useScenarioClient();
-  const data = getCachedScenario(selectedScenario?.id);
+export const SelectScenario = ({
+  fieldName,
+  defaultValue,
+}: {
+  fieldName: string;
+  defaultValue?: string;
+}) => {
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
   const { control } = useFormContext();
   const { field } = useController({
@@ -25,19 +25,18 @@ export const SelectScenario = ({ fieldName }: { fieldName: string }) => {
     control,
   });
 
-  useEffect(() => {
-    if (data) {
-      setScenario(data.nodes.map((item) => ({ value: item.alias, label: item.alias })));
-    }
-  }, [data]);
-
+  const scenarios: IReactSelect[] = nodes.map((item) => ({
+    value: item.id,
+    label: item.title || '',
+  }));
+  console.log(scenarios);
   return (
     <Select
       {...field}
-      options={scenario}
+      options={scenarios}
       styles={reactSelectStyle}
-      defaultValue={scenario[0]}
-      value={scenario.find((item) => item.value === field.value)}
+      defaultValue={scenarios.find((item) => item.value === defaultValue)}
+      value={scenarios.find((item) => item.value === field.value)}
       onChange={(options: any) => field.onChange(options?.value)}
     />
   );

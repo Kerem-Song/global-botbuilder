@@ -117,17 +117,19 @@ export const nodeHelper = {
     const result: IAnswerView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.ANSWER_VIEW,
-      quicks: [
-        {
-          id: ID_GEN.generate(ID_TYPES.CTRL),
-          label: '퀵 리플라이 1',
-          seq: 0,
-          typeName: CTRL_TYPES.QUICK_CTRL,
-          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
-        },
-      ],
+      quicks: [nodeHelper.createDefaultAnswerQickItem(0)],
     };
 
+    return result;
+  },
+  createDefaultAnswerQickItem: (index: number) => {
+    const result = {
+      id: ID_GEN.generate(ID_TYPES.CTRL),
+      label: `퀵 리플라이 ${index + 1}`,
+      seq: index,
+      typeName: CTRL_TYPES.QUICK_CTRL,
+      actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
+    };
     return result;
   },
   createDefaultParameterSetView: () => {

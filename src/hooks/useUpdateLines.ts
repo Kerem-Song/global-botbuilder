@@ -1,5 +1,10 @@
 let updateStack: { (): void }[] = [];
-const updateLines: { start: string; end: string; update: () => void }[] = [];
+const updateLines: {
+  start: string;
+  startKey: string;
+  end: string;
+  update: () => void;
+}[] = [];
 
 const updateLineAll = () => {
   setTimeout(() => {
@@ -22,16 +27,23 @@ const updateLine = (id: string) => {
   }
 };
 
-const removeUpdateLines = (start: string, end: string) => {
-  const existsIndex = updateLines.findIndex((x) => x.start === start && x.end === end);
+const removeUpdateLines = (start: string, startKey: string, end: string) => {
+  const existsIndex = updateLines.findIndex(
+    (x) => x.start === start && x.end === end && x.startKey === startKey,
+  );
   if (existsIndex >= 0) {
     updateLines.splice(existsIndex, 1);
   }
 };
 
-const addUpdateLines = (start: string, end: string, update: () => void) => {
-  removeUpdateLines(start, end);
-  updateLines.push({ start, end, update });
+const addUpdateLines = (
+  start: string,
+  startKey: string,
+  end: string,
+  update: () => void,
+) => {
+  removeUpdateLines(start, startKey, end);
+  updateLines.push({ start, startKey, end, update });
 };
 
 // const initUpdateLines = () => {
