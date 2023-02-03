@@ -111,7 +111,7 @@ export interface IViewBase {
   typeName: TViewTypes;
 }
 
-export interface IHasButtonViewBase {
+export interface IHasButtonViewBase extends IViewBase {
   buttons?: IButtonCtrl[];
 }
 
@@ -166,7 +166,7 @@ export interface IBasicCardCarouselView extends IViewBase {
   childrenViews: IBasicCardView[];
 }
 
-export interface IBasicCardView extends IViewBase, IHasButtonViewBase {
+export interface IBasicCardView extends IHasButtonViewBase {
   title?: string;
   description?: string;
   imageCtrl?: IImageCtrl;
@@ -220,7 +220,7 @@ export interface IListCardNode extends INodeBase {
 export interface IListCardCarouselNode extends INodeBase {
   view: IListCardCarouselView;
 }
-export interface IListCardView extends IViewBase, IHasButtonViewBase {
+export interface IListCardView extends IHasButtonViewBase {
   header: string;
   imageCtrl: IImageCtrl;
   seq: number;
@@ -242,7 +242,7 @@ export interface IListCardCarouselView extends IViewBase {
   childrenViews: IListCardView[];
 }
 
-export interface IProductCardView extends IViewBase, IHasButtonViewBase {
+export interface IProductCardView extends IHasButtonViewBase {
   currencyUnit: string;
   description: string;
   gross: number;
