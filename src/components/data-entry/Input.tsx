@@ -17,7 +17,7 @@ export interface InputProps extends IDataEntryProp {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string | number>();
 
   useEffect(() => {
     setValue(args.value || args.defaultValue);
