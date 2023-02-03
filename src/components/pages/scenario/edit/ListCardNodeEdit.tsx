@@ -59,23 +59,12 @@ export const ListCardNodeEdit = () => {
           </Space>
         </div>
       </div>
-      <div className="node-item-wrap">
-        <div className="m-b-8">
-          <Space style={{ alignItems: 'center' }}>
-            <span className="label">Head 이미지 설정</span>
-            <Switch {...register('view.imageCtrl')} />
-          </Space>
-        </div>
-        <Divider />
+      <Collapse label={'Head 이미지 설정'} isSwitch={true}>
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
-      </div>
-      <div className="node-item-wrap">
-        <Space style={{ alignItems: 'center' }}>
-          <span className="label">List</span>
-        </Space>
-        <Divider />
+      </Collapse>
+      <Collapse label={'List'} isSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
@@ -119,7 +108,7 @@ export const ListCardNodeEdit = () => {
             </Button>
           ) : null}
         </div>
-      </div>
+      </Collapse>
       {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
       <Collapse label={'버튼'} isSwitch={false}>
         {values.view && values.view.buttons && <ButtonsEdit />}
