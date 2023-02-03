@@ -5,6 +5,7 @@ import {
   ACTION_TYPES,
   ActionTypes,
   IBasicCardView,
+  IHasButtonViewBase,
   IListCardView,
   IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
@@ -21,14 +22,15 @@ export const selectOptions = [
   { value: ACTION_TYPES.URL, label: 'Url 연결' },
 ];
 type ButtonEditView = IBasicCardView | IListCardView;
-export const ButtonsEdit = <P extends IViewBase>({ view }: { view: P }): ReactElement => {
+export const ButtonsEdit = () => {
   const [buttonType, setButtonType] = useState<ActionTypes>();
   const {
     register,
     getValues,
     control,
     formState: { errors },
-  } = useFormContext<IGNodeEditModel<P>>();
+  } = useFormContext<IGNodeEditModel<IHasButtonViewBase>>();
+
   const values = getValues();
   const { fields, append, remove } = useFieldArray({
     name: 'view.buttons',

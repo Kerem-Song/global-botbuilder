@@ -164,65 +164,7 @@ export const ListCardNodeEdit = () => {
           ) : null}
         </div>
       </div>
-      {values.view && values.view.buttons && (
-        <ButtonsEdit<IListCardView> view={values.view} />
-      )}
-
-      <div className="node-item-wrap">
-        <p className="m-b-8">
-          <span className="label">버튼</span>
-          <span className="required">*</span>
-        </p>
-        {buttonFields.map((item, i) => (
-          <Space direction="vertical" key={item.id}>
-            <Space direction="vertical">
-              <span className="subLabel">버튼명</span>
-              <FormItem
-                error={
-                  errors.view && errors.view.buttons && errors.view.buttons[i]?.label
-                }
-              >
-                <Input {...register(`view.buttons.${i}.label`)} />
-              </FormItem>
-              <span className="subLabel">버튼타입</span>
-              <ButtonTypeSelector
-                index={i}
-                options={selectOptions}
-                setButtonType={setButtonType}
-              />
-              {values.view &&
-                values.view?.buttons &&
-                values.view?.buttons[i]?.actionType ===
-                  ACTION_TYPES.LUNA_NODE_REDIRECT && (
-                  <SelectScenario fieldName={ACTION_TYPES.LUNA_NODE_REDIRECT} />
-                )}
-              {values.view &&
-                values.view?.buttons &&
-                values.view?.buttons[i]?.actionType === ACTION_TYPES.URL && (
-                  <FormItem
-                    error={
-                      errors.view &&
-                      errors.view.buttons &&
-                      errors.view.buttons[i]?.actionValue
-                    }
-                  >
-                    <Input {...register(`view.buttons.${i}.actionValue`)} />
-                  </FormItem>
-                )}
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  Delete Button
-                </Button>
-              </div>
-            </Space>
-          </Space>
-        ))}
-        {buttonFields.length < 3 && (
-          <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
-            <span>+ Add a Button</span>
-          </Button>
-        )}
-      </div>
+      {values.view && values.view.buttons && <ButtonsEdit />}
     </>
   );
 };
