@@ -85,7 +85,7 @@ import icSearchActive from '@assets/icons/ic_search_active.svg';
 import icSearchDelete from '@assets/icons/ic_search_delete.svg';
 import icSearchDeleteActive from '@assets/icons/ic_search_delete_active.svg';
 import icSetParameter from '@assets/icons/ic_set_parameter.svg';
-import icSetParameterHover from '@assets/icons/ic_set_parameterHover.svg';
+import icSetParameterHover from '@assets/icons/ic_set_parameter_hover.svg';
 import icSetting from '@assets/icons/ic_setting_default.svg';
 import icSettingSelected from '@assets/icons/ic_setting_select.svg';
 import icShow from '@assets/icons/ic_show.svg';
