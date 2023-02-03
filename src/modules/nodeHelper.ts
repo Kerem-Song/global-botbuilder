@@ -223,6 +223,7 @@ export const nodeHelper = {
       nodeKind: node.nodeKind,
       option: node.option,
       seq: node.seq,
+      nextNodeId: node.nextNodeId,
       view: node.view ? { ...node.view } : undefined,
     };
 

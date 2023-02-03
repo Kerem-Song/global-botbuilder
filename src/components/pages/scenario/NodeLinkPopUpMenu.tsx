@@ -75,8 +75,9 @@ export const NodeLinkPopUpMenu = ({
       name: string;
       type: ItemType;
       data: {
-        action: (name: string, id: string, start?: GuideInfo) => void;
+        action: (name: string, firstNodeId: string, start?: GuideInfo) => void;
         start?: GuideInfo;
+        firstNodeId: string;
       };
     }[]
   >();
@@ -173,30 +174,34 @@ export const NodeLinkPopUpMenu = ({
           data: {
             action: handleMakingOtherFlow,
             start: guideStart,
+            firstNodeId: item.firstNodeId,
           },
         })),
       );
     }
   }, [data, guideStart]);
 
-  const handleMakingOtherFlow = (name: string, id: string, guide?: GuideInfo) => {
-    console.log(id);
+  const handleMakingOtherFlow = (
+    name: string,
+    firstNodeId: string,
+    guide?: GuideInfo,
+  ) => {
+    console.log(firstNodeId);
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = name;
-    const addCard = defaultNode(nodeType);
+    //const addCard = defaultNode(nodeType);
     const view = nodeHelper.createDefaultOtherFlowRedirectView();
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: nodeType,
       title: nodeName,
-      cards: addCard,
       x: popUpPosition.x,
       y: popUpPosition.y,
       option: 64,
       seq: 0,
       nodeKind: getNodeKind(nodeType),
       view,
-      nextNodeId: id,
+      nextNodeId: firstNodeId,
     };
 
     dispatch(appendNode(addNode));
@@ -244,7 +249,7 @@ export const NodeLinkPopUpMenu = ({
                     offset={[200, 20]}
                     popperItems={scenarioList}
                     onChange={(m) => {
-                      m.data?.action?.(m.name, m.id, m.data.start);
+                      m.data?.action?.(m.name, m.data.firstNodeId, m.data.start);
                     }}
                     popup
                     popupList
