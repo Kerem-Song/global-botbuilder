@@ -18,6 +18,8 @@ import icChatbot from '@assets/icons/ic_chatbot.svg';
 import icCheck from '@assets/icons/ic_check.svg';
 import icClosed from '@assets/icons/ic_closed_default.svg';
 import icClosedHover from '@assets/icons/ic_closed_hover.svg';
+import icCollapseClose from '@assets/icons/ic_collapse_close.svg';
+import icCollapseOpen from '@assets/icons/ic_collapse_open.svg';
 import icCommerce from '@assets/icons/ic_commerce.svg';
 import icCommerceHover from '@assets/icons/ic_commerce_hover.svg';
 import icCondition from '@assets/icons/ic_condition.svg';
@@ -109,7 +111,6 @@ import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
-
 export {
   icAdd,
   icBtnTemple,
@@ -131,6 +132,8 @@ export {
   icCheck,
   icClosed,
   icClosedHover,
+  icCollapseClose,
+  icCollapseOpen,
   icCommerce,
   icCommerceHover,
   icCondition,

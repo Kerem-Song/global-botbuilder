@@ -1,4 +1,5 @@
 import { Button, Col, Divider, Input, Row, Space, Switch } from '@components';
+import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -119,7 +120,10 @@ export const ListCardNodeEdit = () => {
           ) : null}
         </div>
       </div>
-      {values.view && values.view.buttons && <ButtonsEdit />}
+      {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
+      <Collapse label={'버튼'} isSwitch={false}>
+        {values.view && values.view.buttons && <ButtonsEdit />}
+      </Collapse>
     </>
   );
 };

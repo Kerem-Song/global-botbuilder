@@ -57,12 +57,7 @@ export const ButtonsEdit = () => {
   };
 
   return (
-    <div className="node-item-wrap">
-      <p className="m-b-8">
-        <span className="label">버튼</span>
-        <span className="required">*</span>
-      </p>
-      <Divider />
+    <>
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
           <Space direction="vertical">
@@ -109,6 +104,6 @@ export const ButtonsEdit = () => {
           <span>+ Add a Button</span>
         </Button>
       )}
-    </div>
+    </>
   );
 };

@@ -115,6 +115,10 @@ export interface IHasButtonViewBase extends IViewBase {
   buttons?: IButtonCtrl[];
 }
 
+export interface IHasImageCtrlViewBase extends IViewBase {
+  imageCtrl?: IImageCtrl;
+}
+
 export interface IIntentNode extends INodeBase {
   view: IIntentView;
 }
