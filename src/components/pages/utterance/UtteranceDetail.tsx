@@ -35,7 +35,7 @@ export const UtteranceDetail = () => {
   const { utteranceId, botId } = useParams();
   // const test = utteranceId ? getIntentDetailQuery(utteranceId) : null;
 
-  const { data } = getIntentDetailQuery(utteranceId);
+  const { data } = getIntentDetailQuery(utteranceId!);
   const { confirm } = useSystemModal();
   const { reset, register, handleSubmit, control, getValues, watch } =
     useForm<IUtteranceModel>({

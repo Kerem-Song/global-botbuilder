@@ -2,7 +2,10 @@ import '../styles.scss';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { InputTextarea } from '../components/data-entry/InputTextarea';
+import {
+  InputTextarea,
+  InputTextareaProps,
+} from '../components/data-entry/InputTextarea';
 import { IDataEntryProp } from '../models/interfaces/IDataEntryProp';
 import { IHasClassNameNStyle } from '../models/interfaces/IHasStyle';
 
@@ -12,9 +15,7 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof InputTextarea>;
 
-const Template: ComponentStory<typeof InputTextarea> = (
-  args: IHasClassNameNStyle & IDataEntryProp,
-) => (
+const Template: ComponentStory<typeof InputTextarea> = (args: InputTextareaProps) => (
   <div>
     <InputTextarea {...args} />
   </div>

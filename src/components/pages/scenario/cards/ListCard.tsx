@@ -44,7 +44,7 @@ export const ListCard: FC<ListCard> = ({ nodeId, cards }) => {
 
           {list.items && list.items.length < 6 ? (
             <div className={'node-draggable-ignore'}>
-              {list.items && <SortableListContainer listItems={list.items} />}
+              {/* {list.items && <SortableListContainer listItems={list.items} />} */}
             </div>
           ) : null}
           <div className="buttonWrapper list node-draggable-ignore">
