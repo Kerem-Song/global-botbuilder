@@ -21,7 +21,7 @@ export const selectOptions = [
   { value: ACTION_TYPES.LBL_IS_UTTR, label: 'Label is Utterance' },
   { value: ACTION_TYPES.URL, label: 'Url 연결' },
 ];
-type ButtonEditView = IBasicCardView | IListCardView;
+
 export const ButtonsEdit = () => {
   const [buttonType, setButtonType] = useState<ActionTypes>();
   const {

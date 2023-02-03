@@ -42,14 +42,6 @@ export const ListCardNodeEdit = () => {
     control,
   });
 
-  const {
-    fields: buttonFields,
-    append: buttonAppend,
-    remove: buttonRemove,
-  } = useFieldArray({
-    name: `view.buttons`,
-    control,
-  });
   const handleAddListButton = () => {
     console.log('handle add list btn');
     // e.preventDefault();
@@ -74,28 +66,6 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
-  const handleAddButton = () => {
-    console.log('handle add condition btn');
-    // e.preventDefault();
-    if (buttonFields.length < 3) {
-      buttonAppend({
-        id: '',
-        typeName: '',
-        label: '',
-        seq: 0,
-        actionType: '',
-        actionValue: '',
-      });
-    } else {
-      //modal alert
-      console.log('3개까지 가능');
-    }
-  };
-
-  const handleDeleteButton = (index: number) => {
-    buttonRemove(index);
-  };
-
   return (
     <>
       <div className="node-item-wrap">
@@ -113,6 +83,7 @@ export const ListCardNodeEdit = () => {
             <Switch {...register('view.imageCtrl')} />
           </Space>
         </div>
+        <Divider />
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
@@ -153,6 +124,11 @@ export const ListCardNodeEdit = () => {
                   value={item.description || ''}
                 />
               </Space>
+            </div>
+            <div className="deleteBtn">
+              <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
+                Delete Button
+              </Button>
             </div>
           </div>
         ))}
