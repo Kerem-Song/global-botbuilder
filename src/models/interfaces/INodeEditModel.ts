@@ -83,6 +83,21 @@ export const textNodeEditSchema = yup.object().shape({
     .required('필수 입력 항목입니다.'),
 });
 
+export const buttonsEditSchema = yup
+  .array()
+  .max(3, '버튼은 3개까지만 가능합니다.')
+  .of(
+    yup.object().shape({
+      label: yup.string().trim().required('필수 입력 항목입니다.'),
+      actionValue: yup.string().when('actionType', {
+        is: ACTION_TYPES.URL,
+        then: yup
+          .string()
+          .url('http, https 형식으로 입력해 주세요')
+          .required('필수 입력 항목입니다.'),
+      }),
+    }),
+  );
 export const basicCardNodeEditSchema = yup.object().shape({
   title: yup.string().nullable().trim().max(20, '20자 이상 입력하실 수 없습니다.'),
   description: yup
@@ -101,21 +116,7 @@ export const basicCardNodeEditSchema = yup.object().shape({
     imageUrl: yup.string().url(),
   }),
   imageUrl: yup.string().url(),
-  buttons: yup
-    .array()
-    .max(3, '버튼은 3개까지만 가능합니다.')
-    .of(
-      yup.object().shape({
-        label: yup.string().trim().required('필수 입력 항목입니다.'),
-        actionValue: yup.string().when('actionType', {
-          is: ACTION_TYPES.URL,
-          then: yup
-            .string()
-            .url('http, https 형식으로 입력해 주세요')
-            .required('필수 입력 항목입니다.'),
-        }),
-      }),
-    ),
+  buttons: buttonsEditSchema,
 });
 
 export const listCardNodeEditSchema = yup.object().shape({
@@ -152,12 +153,7 @@ export const listCardNodeEditSchema = yup.object().shape({
       imageUrl: yup.string().url(),
     }),
   ),
-  buttons: yup.array().of(
-    yup.object().shape({
-      label: yup.string().trim().required('필수 입력 항목입니다.'),
-      actionType: yup.string().required('필수 입력 항목입니다.'),
-    }),
-  ),
+  buttons: buttonsEditSchema,
 });
 
 export const conditionNodeEditSchema = yup.object().shape({
