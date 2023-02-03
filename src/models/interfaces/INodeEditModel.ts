@@ -1,13 +1,6 @@
 import * as yup from 'yup';
 
-import {
-  IButtonType,
-  ISortableListItem,
-  IThumbnailType,
-  Profile,
-  TNodeTypes,
-} from './ICard';
-import { IScenarioModel } from './IScenarioModel';
+import { TNodeTypes } from './ICard';
 import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> {
@@ -24,53 +17,6 @@ export interface INodeEditModel {
   view?: IViewBase;
 }
 
-export interface ITextViewModel {
-  text?: string;
-}
-
-export interface IBasicCardViewModel {
-  title?: string;
-  description?: string;
-  buttons?: IButtonType[];
-}
-
-export interface IListCardViewModel {
-  allowHeadImgField: boolean;
-  header?: {
-    title?: string;
-  };
-  items?: ISortableListItem[];
-  buttons?: IButtonType[];
-}
-
-export interface IProductCardViewModel {
-  productName?: string;
-  price?: number;
-  currency?: string;
-  discount?: number;
-  discountRate?: number;
-  discountPrice?: number;
-  thumbnail?: IThumbnailType;
-  profile?: Profile;
-  buttons?: IButtonType[];
-}
-
-export interface IAnswerViewModel {
-  allowRes: boolean;
-  extra?: Record<string, any>;
-  label?: string;
-  action?:
-    | 'linkWebUrl'
-    | 'message'
-    | 'block'
-    | 'phone'
-    | 'operator'
-    | 'osLink'
-    | 'addChannel';
-  connectedScenario?: IScenarioModel;
-  messageText?: string;
-  url?: string;
-}
 const FILE_SIZE = 2 * 1024; //2mb제한
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/png']; //jpb, png가능(Line 기준)
@@ -83,6 +29,21 @@ export const textNodeEditSchema = yup.object().shape({
     .required('필수 입력 항목입니다.'),
 });
 
+export const buttonsEditSchema = yup
+  .array()
+  .max(3, '버튼은 3개까지만 가능합니다.')
+  .of(
+    yup.object().shape({
+      label: yup.string().trim().required('필수 입력 항목입니다.'),
+      actionValue: yup.string().when('actionType', {
+        is: ACTION_TYPES.URL,
+        then: yup
+          .string()
+          .url('http, https 형식으로 입력해 주세요')
+          .required('필수 입력 항목입니다.'),
+      }),
+    }),
+  );
 export const basicCardNodeEditSchema = yup.object().shape({
   title: yup.string().nullable().trim().max(20, '20자 이상 입력하실 수 없습니다.'),
   description: yup
@@ -101,21 +62,7 @@ export const basicCardNodeEditSchema = yup.object().shape({
     imageUrl: yup.string().url(),
   }),
   imageUrl: yup.string().url(),
-  buttons: yup
-    .array()
-    .max(3, '버튼은 3개까지만 가능합니다.')
-    .of(
-      yup.object().shape({
-        label: yup.string().trim().required('필수 입력 항목입니다.'),
-        actionValue: yup.string().when('actionType', {
-          is: ACTION_TYPES.URL,
-          then: yup
-            .string()
-            .url('http, https 형식으로 입력해 주세요')
-            .required('필수 입력 항목입니다.'),
-        }),
-      }),
-    ),
+  buttons: buttonsEditSchema,
 });
 
 export const listCardNodeEditSchema = yup.object().shape({
@@ -152,13 +99,10 @@ export const listCardNodeEditSchema = yup.object().shape({
       imageUrl: yup.string().url(),
     }),
   ),
-  buttons: yup.array().of(
-    yup.object().shape({
-      label: yup.string().trim().required('필수 입력 항목입니다.'),
-      actionType: yup.string().required('필수 입력 항목입니다.'),
-    }),
-  ),
+  buttons: buttonsEditSchema,
 });
+
+export const productCardNodeEditSchema = yup.object().shape({});
 
 export const conditionNodeEditSchema = yup.object().shape({
   items: yup.array().of(

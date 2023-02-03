@@ -242,11 +242,11 @@ export interface IListCardCarouselView extends IViewBase {
 }
 
 export interface IProductCardView extends IHasButtonViewBase {
-  currencyUnit: string;
+  currencyUnit: 'USD' | 'KRW' | 'JPY';
   description: string;
-  gross: number;
+  retailPrice: number;
   imageCtrl: IImageCtrl;
-  net: number;
+  salePrice: number;
   profileIconUrl: string;
   profileName: string;
   seq: number;

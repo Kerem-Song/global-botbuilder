@@ -1,32 +1,14 @@
-import { icImg } from '@assets';
-import {
-  Button,
-  Col,
-  Divider,
-  FormItem,
-  Input,
-  Radio,
-  Row,
-  Space,
-  Switch,
-} from '@components';
-import { IButtonType, IGNodeEditModel, ISortableListItem } from '@models';
+import { Button, Col, Divider, Input, Row, Space, Switch } from '@components';
+import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
-import {
-  ACTION_TYPES,
-  ActionTypes,
-  IListCardView,
-} from '@models/interfaces/res/IGetFlowRes';
+import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { ButtonsEdit, selectOptions } from './ButtonsEdit';
-import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSetting } from './ImageSetting';
-import { SelectScenario } from './SelectScenario';
 
 export const ListCardNodeEdit = () => {
-  const [buttonType, setButtonType] = useState<ActionTypes>();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -42,14 +24,6 @@ export const ListCardNodeEdit = () => {
     control,
   });
 
-  const {
-    fields: buttonFields,
-    append: buttonAppend,
-    remove: buttonRemove,
-  } = useFieldArray({
-    name: `view.buttons`,
-    control,
-  });
   const handleAddListButton = () => {
     console.log('handle add list btn');
     // e.preventDefault();
@@ -74,35 +48,13 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
-  const handleAddButton = () => {
-    console.log('handle add condition btn');
-    // e.preventDefault();
-    if (buttonFields.length < 3) {
-      buttonAppend({
-        id: '',
-        typeName: '',
-        label: '',
-        seq: 0,
-        actionType: '',
-        actionValue: '',
-      });
-    } else {
-      //modal alert
-      console.log('3개까지 가능');
-    }
-  };
-
-  const handleDeleteButton = (index: number) => {
-    buttonRemove(index);
-  };
-
   return (
     <>
       <div className="node-item-wrap">
         <div className="m-b-8">
           <Space direction="vertical">
             <span className="label">Head Title</span>
-            <Input {...register('view.header')} value={values.view?.header || ''} />
+            <Input {...register('view.header')} />
           </Space>
         </div>
       </div>
@@ -113,6 +65,7 @@ export const ListCardNodeEdit = () => {
             <Switch {...register('view.imageCtrl')} />
           </Space>
         </div>
+        <Divider />
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
@@ -142,17 +95,19 @@ export const ListCardNodeEdit = () => {
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">List Title</span>
-                <Input {...register(`view.items.${i}.title`)} value={item.title || ''} />
+                <Input {...register(`view.items.${i}.title`)} />
               </Space>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">List Contents</span>
-                <Input
-                  {...register(`view.items.${i}.description`)}
-                  value={item.description || ''}
-                />
+                <Input {...register(`view.items.${i}.description`)} />
               </Space>
+            </div>
+            <div className="deleteBtn">
+              <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
+                Delete Button
+              </Button>
             </div>
           </div>
         ))}
