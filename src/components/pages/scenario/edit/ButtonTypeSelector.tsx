@@ -73,7 +73,7 @@ interface IReactSelect {
   label: string;
 }
 
-interface IButtonTypeSelector {
+export interface IButtonTypeSelector {
   index: number;
   options: IReactSelect[];
   setButtonType: Dispatch<SetStateAction<string | undefined>>;

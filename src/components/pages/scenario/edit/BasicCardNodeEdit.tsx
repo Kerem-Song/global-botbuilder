@@ -12,6 +12,7 @@ import {
   Switch,
 } from '@components';
 import { IGNodeEditModel } from '@models';
+import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import {
   ACTION_TYPES,
   ActionTypes,
@@ -21,6 +22,7 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { ImageSetting } from './ImageSetting';
 import { SelectScenario } from './SelectScenario';
 
 const selectOptions = [
@@ -32,6 +34,7 @@ const selectOptions = [
 
 export const BasicCardNodeEdit = () => {
   const [buttonType, setButtonType] = useState<ActionTypes>();
+  const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
     getValues,
@@ -46,7 +49,7 @@ export const BasicCardNodeEdit = () => {
     control,
   });
 
-  const handleAddConditionButton = () => {
+  const handleAddButton = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 3) {
@@ -77,51 +80,12 @@ export const BasicCardNodeEdit = () => {
         <p className="m-b-8">
           <Space style={{ alignItems: 'center' }}>
             <span className="label">이미지 설정</span>
-            <Switch />
+            <Switch {...register('view.imageCtrl')} />
           </Space>
         </p>
-        <Space direction="vertical">
-          <span className="subLabel">이미지 업로드</span>
-          <span className="subLabel">이미지 타입</span>
-          <Row>
-            <Col span={12}>
-              <Radio>
-                <span>직사각형</span>
-              </Radio>
-            </Col>
-            <Col span={12}>
-              <Radio>
-                <span>정사각형</span>
-              </Radio>
-            </Col>
-          </Row>
-          <div
-            style={{
-              height: '118px',
-              border: '1px dashed #DCDCDC',
-              background: '#FFFFFF',
-              borderRadius: '8px',
-              position: 'relative',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                width: '200px',
-                bottom: '50%',
-                right: '50%',
-                transform: 'translate(50%, 50%)',
-              }}
-            >
-              <img src={icImg} alt="icImg" />
-              <br />
-              Recommended
-              <br />
-              Rectangular: 800x400
-            </div>
-          </div>
-        </Space>
+        {values.view?.imageCtrl && (
+          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+        )}
       </div>
       <div className="node-item-wrap">
         <p className="m-b-8">
@@ -197,7 +161,7 @@ export const BasicCardNodeEdit = () => {
           </Space>
         ))}
         {fields.length < 3 && (
-          <Button shape="ghost" className="addBtn" onClick={handleAddConditionButton}>
+          <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
             <span>+ Add a Button</span>
           </Button>
         )}
