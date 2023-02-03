@@ -1,5 +1,5 @@
 import { icSuccess, icUtteranceEmpty } from '@assets';
-import { useSystemModal } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
 import {
@@ -11,22 +11,21 @@ import {
   ISearchData,
 } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
 export interface IUtteranceListItemProps {
-  data: IPagingItems<IIntentListItem> | undefined;
-  searchData: ISearchData;
-  setSearchData: (data: ISearchData) => void;
+  data?: IPagingItems<IIntentListItem>;
+  searchData?: ISearchData;
+  setSearchData?: (data: ISearchData) => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
-  data,
-  searchData,
-  setSearchData,
-}) => {
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
   const { getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { utterancdId, botId } = useParams();
+  const { navigate, t, tc } = usePage();
+
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { confirm } = useSystemModal();
 
@@ -35,7 +34,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const [isPageEnd, setIsPageEnd] = useState<boolean>(false);
 
   const handleGetIntent = (intentId: string) => {
-    navigate(intentId);
+    navigate(`/${botId}/utterance/detail/${intentId}`);
   };
 
   const openModal = async (flowName: string, intentId: string) => {
@@ -81,13 +80,25 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
             <tr key={i} className="list" ref={observerTagetEl}>
               <td
                 role="presentation"
-                className="utteranceList intent"
                 onClick={() => handleGetIntent(v.intentId)}
+                className="utteranceList intent"
               >
                 {v.intentName}
               </td>
-              <td className="utteranceList connectScenarios">{v.flowName}</td>
-              <td className="utteranceList utterance">{v.utteranceSummary}</td>
+              <td
+                role="presentation"
+                className="utteranceList connectScenarios"
+                onClick={() => handleGetIntent(v.intentId)}
+              >
+                {v.flowName}
+              </td>
+              <td
+                role="presentation"
+                className="utteranceList utterance"
+                onClick={() => handleGetIntent(v.intentId)}
+              >
+                {v.utteranceSummary}
+              </td>
               <td className="utteranceList icon">
                 <button
                   className="icDelete"

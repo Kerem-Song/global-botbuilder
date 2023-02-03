@@ -39,6 +39,7 @@ export const Setting = () => {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
+                    height: '34px',
                   }}
                 >
                   <div
@@ -68,7 +69,7 @@ export const Setting = () => {
                 <p style={{ fontSize: '16px', fontWeight: 500 }}>Activate the bot</p>
               </Row>
               <div>
-                <Button type="secondary" style={{ marginRight: '8px' }}>
+                <Button type="secondary" style={{ marginRight: '8px', width: '100px' }}>
                   Deactive
                 </Button>
                 <Button>Bot list</Button>
