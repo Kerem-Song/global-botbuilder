@@ -22,7 +22,7 @@ export const UtteranceComponent = () => {
   return (
     <div className="utteranceWrap">
       <div className="title">Intent Management</div>
-      <ToSearch data={data} searchData={searchData} setSearchData={setSearchData} />
+      <ToSearch sortData={data} searchData={searchData} setSearchData={setSearchData} />
       <div className="utteranceListWrap">
         <table className="utteranceTable">
           <thead>

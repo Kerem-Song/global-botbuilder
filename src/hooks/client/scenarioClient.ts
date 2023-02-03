@@ -65,6 +65,8 @@ export const useScenarioClient = () => {
               !scenarios.find((x) => x.id === selectedScenario.id)
             ) {
               dispatch(setSelectedScenario(fallbackScenario));
+            } else {
+              queryClient.invalidateQueries(['scenario', selectedScenario.id]);
             }
 
             return scenarios

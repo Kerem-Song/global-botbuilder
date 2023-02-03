@@ -1,15 +1,18 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResult } from '@models/interfaces/IHasResult';
+import { IIntentItems } from '@models/interfaces/IIntentItems';
 import { IPagingItems } from '@models/interfaces/IPagingItems';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
+import { IHasResults } from './../../models/interfaces/IHasResults';
 import {
   IDeleteIntent,
   IGetIntent,
   IIntentListItem,
   IResponseIntentData,
   ISaveIntent,
+  IScenarioData,
   ISearchIntent,
 } from './../../models/interfaces/IUtterance';
 import { useHttp } from './../useHttp';
@@ -43,7 +46,8 @@ export const useUtteranceClient = () => {
     );
   };
 
-  const getIntentDetailQuery = (intentId: string | undefined) => {
+  const getIntentDetailQuery = (intentId: string) => {
+    //intentId = intentId ? intentId : '';
     return useQuery<IHasResult<IIntentListItem>>(
       ['intent-detail', intentId],
       () =>

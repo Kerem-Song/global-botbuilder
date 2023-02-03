@@ -111,6 +111,10 @@ export interface IViewBase {
   typeName: TViewTypes;
 }
 
+export interface IHasButtonViewBase {
+  buttons?: IButtonCtrl[];
+}
+
 export interface IIntentNode extends INodeBase {
   view: IIntentView;
 }
@@ -131,6 +135,7 @@ export interface IAnswerNode extends INodeBase {
 export interface IAnswerView extends IViewBase {
   quicks?: IButtonCtrl[];
   utteranceParam?: string;
+  useUtteranceParam?: boolean;
 }
 
 export interface IConditionNode extends INodeBase {
@@ -161,11 +166,10 @@ export interface IBasicCardCarouselView extends IViewBase {
   childrenViews: IBasicCardView[];
 }
 
-export interface IBasicCardView extends IViewBase {
+export interface IBasicCardView extends IViewBase, IHasButtonViewBase {
   title?: string;
   description?: string;
   imageCtrl?: IImageCtrl;
-  buttons?: IButtonCtrl[];
 }
 
 export interface ICtrlBase {
@@ -216,11 +220,10 @@ export interface IListCardNode extends INodeBase {
 export interface IListCardCarouselNode extends INodeBase {
   view: IListCardCarouselView;
 }
-export interface IListCardView extends IViewBase {
+export interface IListCardView extends IViewBase, IHasButtonViewBase {
   header: string;
   imageCtrl: IImageCtrl;
   seq: number;
-  buttons?: IButtonCtrl[];
   items: IListCardItem[];
 }
 
@@ -237,6 +240,21 @@ export interface IListCardCarouselView extends IViewBase {
   isSuffle: boolean;
   count: number;
   childrenViews: IListCardView[];
+}
+
+export interface IProductCardView extends IViewBase, IHasButtonViewBase {
+  currencyUnit: string;
+  description: string;
+  gross: number;
+  imageCtrl: IImageCtrl;
+  net: number;
+  profileIconUrl: string;
+  profileName: string;
+  seq: number;
+}
+
+export interface IProductCardNode extends INodeBase {
+  view: IProductCardView;
 }
 
 export interface IGetFlowRes {

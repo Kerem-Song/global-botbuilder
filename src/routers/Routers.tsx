@@ -51,8 +51,17 @@ const finalRoutes = [
                       element: <UtterancePage />,
                     },
                     {
-                      path: ':utteranceId',
-                      element: <UtteranceDetailPage />,
+                      path: 'detail',
+                      children: [
+                        {
+                          path: '',
+                          element: <UtteranceDetailPage />,
+                        },
+                        {
+                          path: ':utteranceId',
+                          element: <UtteranceDetailPage />,
+                        },
+                      ],
                     },
                   ],
                 },

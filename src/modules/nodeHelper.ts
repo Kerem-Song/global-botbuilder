@@ -24,6 +24,7 @@ import {
   INodeBase,
   IOtherFlowRedirectView,
   IParameterSetView,
+  IProductCardView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
@@ -51,6 +52,8 @@ export const nodeHelper = {
         return nodeHelper.createDefaultParameterSetView();
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return nodeHelper.createDefaultOtherFlowRedirectView();
+      case NODE_TYPES.PRODUCT_CARD_NODE:
+        return nodeHelper.createCommerceView();
       default:
         return undefined;
     }
@@ -180,6 +183,36 @@ export const nodeHelper = {
 
     return result;
   },
+  createCommerceView: () => {
+    const result: IProductCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
+      gross: 0,
+      net: 0,
+      profileIconUrl: '',
+      profileName: '',
+      description: '',
+      seq: 0,
+      currencyUnit: 'WON',
+      imageCtrl: {
+        imageUrl: '',
+        altText: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.IMAGE_CTRL,
+      },
+      buttons: [
+        {
+          id: ID_GEN.generate(ID_TYPES.CTRL),
+          label: '버튼 1',
+          seq: 0,
+          typeName: CTRL_TYPES.BUTTON_CTRL,
+          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
+        },
+      ],
+    };
+
+    return result;
+  },
   convertToINodeBase: (node: INode): INodeBase => {
     const converted: INodeBase = {
       id: node.id,
@@ -190,6 +223,7 @@ export const nodeHelper = {
       nodeKind: node.nodeKind,
       option: node.option,
       seq: node.seq,
+      nextNodeId: node.nextNodeId,
       view: node.view ? { ...node.view } : undefined,
     };
 

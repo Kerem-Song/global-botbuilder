@@ -50,6 +50,7 @@ export const VIEW_TYPES = {
   OTHER_FLOW_REDIRECT_VIEW: 'OtherFlowRedirectView',
   LIST_CARD_VIEW: 'ListCardView',
   LIST_CARD_CAROUSEL_VIEW: 'ListCardCarouselView',
+  PRODUCT_CARD_VIEW: 'ProductCardView',
 };
 
 export const NODE_TYPES = {

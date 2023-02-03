@@ -5,4 +5,6 @@ export interface IScenarioModel {
   isFallbackFlow: boolean;
   isStartFlow: boolean;
   seq: number;
+  nodeOption: number;
+  firstNodeId: string;
 }

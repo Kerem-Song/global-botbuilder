@@ -1,11 +1,12 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { cornersOfRectangle } from '@dnd-kit/core/dist/utilities/algorithms/helpers';
+import { useRootState, useScenarioClient } from '@hooks';
 import { IIntentListItem, IPagingItems, ISearchData } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 
 export interface IToSearchProps {
-  data: IPagingItems<IIntentListItem> | undefined;
+  sortData?: IPagingItems<IIntentListItem>;
   searchData: ISearchData;
   setSearchData: (data: ISearchData) => void;
 }
@@ -16,17 +17,26 @@ const SORT = [
   { value: '3', label: 'Scenario name' },
 ];
 
-export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }) => {
+export const ToSearch: FC<IToSearchProps> = ({ sortData, searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string | null | undefined>(undefined);
   const [searchWord, setSearchWord] = useState<string | undefined>('');
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const scenarios = data?.items.map((x) => {
-    return { value: x.flowId, label: x.flowName };
+  const { getScenarioList } = useScenarioClient();
+  const { data } = getScenarioList(token);
+  console.log('이거는 시나리오 리스트', data);
+
+  const scenarioList = data?.map((x) => {
+    return { value: x.id, label: x.alias };
   });
 
-  const utteranceSummary = data?.items.map((x) => {
+  // const scenarios = sortData?.items.map((x) => {
+  //   return { value: x.flowId, label: x.flowName };
+  // });
+
+  const utteranceSummary = sortData?.items.map((x) => {
     return x.utteranceSummary;
   });
 
@@ -38,6 +48,7 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
     });
     setScenario(undefined);
     setSearchWord('');
+    console.log('reset');
   };
 
   useEffect(() => {
@@ -73,9 +84,9 @@ export const ToSearch: FC<IToSearchProps> = ({ data, searchData, setSearchData }
             </Col>
             <Col>
               <Select
-                options={scenarios}
+                options={scenarioList}
                 placeholder="시나리오 미선택"
-                value={scenarios?.find((x) => x.value === scenario)}
+                value={scenarioList?.find((x) => x.value === scenario)}
                 onChange={(e) => {
                   setScenario(e?.value);
                 }}

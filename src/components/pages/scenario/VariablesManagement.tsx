@@ -31,7 +31,7 @@ export const VariablesManagement = () => {
   return (
     <div className="variableTabWrapper">
       <div className="addVariableBtn">
-        <Button>+ 변수 추가</Button>
+        <Button>엔티티 관리</Button>
       </div>
       <div className="variableWrapper">
         <p>변수 목록</p>
