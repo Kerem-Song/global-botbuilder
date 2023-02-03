@@ -5,6 +5,7 @@ import {
   TViewTypes,
   ValueOf,
 } from '@models';
+import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import { NodeKind } from '@models/enum/NodeKind';
 
 export const ACTION_TYPES = {
@@ -174,12 +175,14 @@ export interface ICtrlBase {
   id: string;
   typeName: CtrlTypes;
 }
+
 export interface IImageCtrl extends ICtrlBase {
   actionType?: ActionTypes;
   actionValue?: string;
   altText: string;
   imageUrl: string;
   previewImageUrl?: string;
+  aspectRatio?: ImageAspectRatio;
 }
 
 export interface IButtonCtrl extends ICtrlBase {

@@ -12,6 +12,7 @@ import {
   Switch,
 } from '@components';
 import { IGNodeEditModel } from '@models';
+import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import {
   ACTION_TYPES,
   ActionTypes,
@@ -20,7 +21,9 @@ import {
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { ButtonsEdit } from './ButtonsEdit';
 import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { ImageSetting } from './ImageSetting';
 import { SelectScenario } from './SelectScenario';
 
 const selectOptions = [
@@ -32,6 +35,7 @@ const selectOptions = [
 
 export const BasicCardNodeEdit = () => {
   const [buttonType, setButtonType] = useState<ActionTypes>();
+  const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
     getValues,
@@ -46,7 +50,7 @@ export const BasicCardNodeEdit = () => {
     control,
   });
 
-  const handleAddConditionButton = () => {
+  const handleAddButton = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 3) {
@@ -77,51 +81,12 @@ export const BasicCardNodeEdit = () => {
         <p className="m-b-8">
           <Space style={{ alignItems: 'center' }}>
             <span className="label">이미지 설정</span>
-            <Switch />
+            <Switch {...register('view.imageCtrl')} />
           </Space>
         </p>
-        <Space direction="vertical">
-          <span className="subLabel">이미지 업로드</span>
-          <span className="subLabel">이미지 타입</span>
-          <Row>
-            <Col span={12}>
-              <Radio>
-                <span>직사각형</span>
-              </Radio>
-            </Col>
-            <Col span={12}>
-              <Radio>
-                <span>정사각형</span>
-              </Radio>
-            </Col>
-          </Row>
-          <div
-            style={{
-              height: '118px',
-              border: '1px dashed #DCDCDC',
-              background: '#FFFFFF',
-              borderRadius: '8px',
-              position: 'relative',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                width: '200px',
-                bottom: '50%',
-                right: '50%',
-                transform: 'translate(50%, 50%)',
-              }}
-            >
-              <img src={icImg} alt="icImg" />
-              <br />
-              Recommended
-              <br />
-              Rectangular: 800x400
-            </div>
-          </div>
-        </Space>
+        {values.view?.imageCtrl && (
+          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+        )}
       </div>
       <div className="node-item-wrap">
         <p className="m-b-8">
@@ -146,62 +111,7 @@ export const BasicCardNodeEdit = () => {
           </FormItem>
         </Space>
       </div>
-      <div className="node-item-wrap">
-        <p className="m-b-8">
-          <span className="label">버튼</span>
-          <span className="required">*</span>
-        </p>
-        <Divider />
-        {fields.map((item, i) => (
-          <Space direction="vertical" key={item.id}>
-            <Space direction="vertical">
-              <span className="subLabel">버튼명</span>
-              <FormItem
-                error={
-                  errors.view && errors.view.buttons && errors.view.buttons[i]?.label
-                }
-              >
-                <Input {...register(`view.buttons.${i}.label`)} />
-              </FormItem>
-              <span className="subLabel">버튼타입</span>
-              <ButtonTypeSelector
-                index={i}
-                options={selectOptions}
-                setButtonType={setButtonType}
-              />
-              {values.view &&
-                values.view?.buttons &&
-                values.view?.buttons[i]?.actionType ===
-                  ACTION_TYPES.LUNA_NODE_REDIRECT && (
-                  <SelectScenario fieldName={ACTION_TYPES.LUNA_NODE_REDIRECT} />
-                )}
-              {values.view &&
-                values.view?.buttons &&
-                values.view?.buttons[i]?.actionType === ACTION_TYPES.URL && (
-                  <FormItem
-                    error={
-                      errors.view &&
-                      errors.view.buttons &&
-                      errors.view.buttons[i]?.actionValue
-                    }
-                  >
-                    <Input {...register(`view.buttons.${i}.actionValue`)} />
-                  </FormItem>
-                )}
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  Delete Button
-                </Button>
-              </div>
-            </Space>
-          </Space>
-        ))}
-        {fields.length < 3 && (
-          <Button shape="ghost" className="addBtn" onClick={handleAddConditionButton}>
-            <span>+ Add a Button</span>
-          </Button>
-        )}
-      </div>
+      {values.view && values.view.buttons && <ButtonsEdit />}
     </>
   );
 };
