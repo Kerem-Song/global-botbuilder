@@ -4,10 +4,10 @@ import {
   IAnswerNode,
   IBasicCardNode,
   IConditionNode,
-  ICountNode,
   IListCardNode,
   IOtherFlowRedirectNode,
   IProductCardNode,
+  IRetryConditionNode,
   NODE_TYPES,
   TNodeTypes,
 } from './ICard';
@@ -31,6 +31,6 @@ export interface INode {
     | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | ICountNode[]
+    | IRetryConditionNode[]
     | IOtherFlowRedirectNode[];
 }

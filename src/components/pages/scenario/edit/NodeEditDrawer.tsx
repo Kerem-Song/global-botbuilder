@@ -125,7 +125,7 @@ export const NodeEditDrawer = () => {
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNodeEdit />;
-      case NODE_TYPES.COUNT:
+      case NODE_TYPES.RETRY_CONDITION:
         return <RetryConditionNodeEdit />;
       default:
         <></>;

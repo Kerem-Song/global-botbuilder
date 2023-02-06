@@ -33,7 +33,7 @@ export const CARD_TYPES = {
   LIST_CAROUSEL: 'List Carousel',
   QUICK_REPLY: 'AnswerNode',
   CONDITION: 'Condition',
-  COUNT: 'Count',
+  RETRY_CONDITION: 'RetryCondition',
 } as const;
 
 export type ValueOf<T> = T[keyof T];
@@ -71,7 +71,7 @@ export const NODE_TYPES = {
   TEXT_NODE: 'TextNode',
   LIST_CARD_NODE: 'ListCardNode',
   LIST_CAROUSEL: 'ListCardCarouselNode',
-  COUNT: 'Count',
+  RETRY_CONDITION: 'RetryCondition',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;
@@ -228,8 +228,8 @@ export interface IConditionNode {
   elseMessage?: string; // else 다음 메시지말풍선 목록 타입으로 변경 요함
 }
 
-export interface ICountNode {
-  type?: typeof NODE_TYPES.COUNT;
+export interface IRetryConditionNode {
+  type?: typeof NODE_TYPES.RETRY_CONDITION;
   title: string;
   yellowNode: string; // 노란색 노드 : 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
   redNode: string; //빨간색 노드 : 횟수 초과시 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함

@@ -4,11 +4,11 @@ import { INode } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
-interface ICountNodeProps {
+interface IRetryConditionProps {
   nodeId: string;
   node: INode;
 }
-export const CountNode: FC<ICountNodeProps> = ({ nodeId, node }) => {
+export const RetryConditionNode: FC<IRetryConditionProps> = ({ nodeId, node }) => {
   const view: IRetryConditionView = node.view as IRetryConditionView;
   console.log('view in count node', view);
   return (
