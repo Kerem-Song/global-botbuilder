@@ -2,36 +2,46 @@ import { icSuccess, icUtteranceEmpty } from '@assets';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import {
-  IDeleteIntent,
-  IGetIntent,
-  IIntentListItem,
-  IPagingItems,
-  ISaveIntent,
-  ISearchData,
-} from '@models';
-import { FC, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
-import { toast } from 'react-toastify';
+import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
+import { FC, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useParams } from 'react-router';
+
+import { lunaToast } from '../../../../src/modules/lunaToast';
 
 export interface IUtteranceListItemProps {
-  data?: IPagingItems<IIntentListItem>;
+  listData?: IPagingItems<IIntentListItem>;
   searchData?: ISearchData;
   setSearchData?: (data: ISearchData) => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
-  const { getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
-  // const navigate = useNavigate();
-  const { utterancdId, botId } = useParams();
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
+  listData,
+  searchData,
+}) => {
+  const [ref, inView] = useInView();
+
+  const { getIntentDetailQuery, intentDeleteMutate, changePageNumberQuery } =
+    useUtteranceClient();
+
+  const { data, hasNextPage, isFetching, fetchNextPage, isSuccess, isLoading } =
+    changePageNumberQuery;
+
+  const { botId } = useParams();
   const { navigate, t, tc } = usePage();
 
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { confirm } = useSystemModal();
 
-  const observerTagetEl = useRef<HTMLTableRowElement>(null);
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
 
-  const [isPageEnd, setIsPageEnd] = useState<boolean>(false);
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   const handleGetIntent = (intentId: string) => {
     navigate(`/${botId}/utterance/detail/${intentId}`);
@@ -58,15 +68,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
-          const message = '삭제되었습니다.';
-          toast.success(message, {
-            position: 'bottom-right',
-            icon: () => <img src={icSuccess} alt="success" />,
-            theme: 'dark',
-            hideProgressBar: true,
-            className: 'luna-toast',
-            bodyClassName: 'luna-toast-body',
-          });
+          lunaToast.success();
         },
       });
     }
@@ -74,41 +76,83 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
 
   return (
     <>
-      {!isPageEnd && data?.items && data?.items.length > 0 ? (
-        data?.items.map((v, i) => {
-          return (
-            <tr key={i} className="list" ref={observerTagetEl}>
-              <td
-                role="presentation"
-                onClick={() => handleGetIntent(v.intentId)}
-                className="utteranceList intent"
-              >
-                {v.intentName}
-              </td>
-              <td
-                role="presentation"
-                className="utteranceList connectScenarios"
-                onClick={() => handleGetIntent(v.intentId)}
-              >
-                {v.flowName}
-              </td>
-              <td
-                role="presentation"
-                className="utteranceList utterance"
-                onClick={() => handleGetIntent(v.intentId)}
-              >
-                {v.utteranceSummary}
-              </td>
-              <td className="utteranceList icon">
-                <button
-                  className="icDelete"
-                  onClick={() => openModal(v.flowName, v.intentId)}
-                />
-              </td>
-            </tr>
-          );
-        })
+      {data && data.pages.length > 0 ? (
+        <>
+          {data?.pages.map((v) => {
+            const pages = v.items;
+            return pages.map((x: any, i: any) => {
+              return (
+                <tr key={i} className="list" ref={ref}>
+                  <td
+                    role="presentation"
+                    onClick={() => handleGetIntent(x.intentId)}
+                    className="utteranceList intent"
+                  >
+                    {x.intentName}
+                  </td>
+                  <td
+                    role="presentation"
+                    onClick={() => handleGetIntent(x.intentId)}
+                    className="utteranceList connectScenarios"
+                  >
+                    {x.flowName}
+                  </td>
+                  <td
+                    role="presentation"
+                    onClick={() => handleGetIntent(x.intentId)}
+                    className="utteranceList utterance"
+                  >
+                    {x.utteranceSummary}
+                  </td>
+                  <td className="utteranceList icon">
+                    <button
+                      className="icDelete"
+                      onClick={() => openModal(x.flowName, x.intentId)}
+                    ></button>
+                  </td>
+                </tr>
+              );
+            });
+          })}
+        </>
       ) : (
+        // {listData?.items && listData?.items.length > 0 ? (
+        //   <>
+        //     {listData?.items.map((v, i) => {
+        //       return (
+        //         <tr key={i} className="list">
+        //           <td
+        //             role="presentation"
+        //             onClick={() => handleGetIntent(v.intentId)}
+        //             className="utteranceList intent"
+        //           >
+        //             {v.intentName}
+        //           </td>
+        //           <td
+        //             role="presentation"
+        //             className="utteranceList connectScenarios"
+        //             onClick={() => handleGetIntent(v.intentId)}
+        //           >
+        //             {v.flowName}
+        //           </td>
+        //           <td
+        //             role="presentation"
+        //             className="utteranceList utterance"
+        //             onClick={() => handleGetIntent(v.intentId)}
+        //           >
+        //             {v.utteranceSummary}
+        //           </td>
+        //           <td className="utteranceList icon">
+        //             <button
+        //               className="icDelete"
+        //               onClick={() => openModal(v.flowName, v.intentId)}
+        //             />
+        //           </td>
+        //         </tr>
+        //       );
+        //     })}
+        //     <tr ref={ref} className="observer"></tr>
+        //   </>
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
@@ -116,28 +160,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ data }) => {
           </td>
         </tr>
       )}
-      {/* {data?.items
-        .filter((x) => x.utteranceSummary.includes(searchKeyword))
-        .map((utterance, i) => {
-          return (
-            <tr key={i} className="emptyList">
-              <td className="empty">
-                <img src={icUtteranceEmpty} alt="empty" />
-                <span>No search results found.</span>
-              </td>
-            </tr>
-          );
-        })} */}
-      {/* <>
-        {data?.items.filter((x) => x !== searchData) ? (
-          <tr className="emptyList">
-            <td className="empty">
-              <img src={icUtteranceEmpty} alt="empty" />
-              <span>No search results found.</span>
-            </td>
-          </tr>
-        ) : null}
-      </> */}
     </>
   );
 };

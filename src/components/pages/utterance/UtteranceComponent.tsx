@@ -30,9 +30,9 @@ export const UtteranceComponent = () => {
           </thead>
           <tbody>
             <UtteranceListItem
-              data={data}
-              searchData={searchData}
-              setSearchData={setSearchData}
+            // listData={data}
+            // searchData={searchData}
+            // setSearchData={setSearchData}
             />
           </tbody>
         </table>

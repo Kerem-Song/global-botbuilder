@@ -1,8 +1,12 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResult } from '@models/interfaces/IHasResult';
-import { IIntentItems } from '@models/interfaces/IIntentItems';
 import { IPagingItems } from '@models/interfaces/IPagingItems';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import { IHasResults } from './../../models/interfaces/IHasResults';
@@ -23,9 +27,9 @@ export const useUtteranceClient = () => {
   const token = useRootState((state) => state.botBuilderReducer.token);
 
   const getIntentListQuery = (
-    orderType: number,
-    flowId: string | null | undefined,
-    keyword: string | undefined,
+    orderType?: number,
+    flowId?: string | null | undefined,
+    keyword?: string | undefined,
   ) => {
     return useQuery<IPagingItems<IIntentListItem>>(
       ['intent-list', orderType, flowId, keyword],
@@ -35,7 +39,7 @@ export const useUtteranceClient = () => {
             'Builder/SearchIntent',
             {
               sessionToken: token,
-              countPerPage: 50,
+              countPerPage: 20,
               orderType,
               flowId,
               keyword,
@@ -46,22 +50,24 @@ export const useUtteranceClient = () => {
     );
   };
 
-  const getIntentDetailQuery = (intentId: string) => {
-    //intentId = intentId ? intentId : '';
-    return useQuery<IHasResult<IIntentListItem>>(
-      ['intent-detail', intentId],
-      () =>
-        http
-          .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
-            'Builder/GetIntent',
-            {
-              sessionToken: token,
-              intentId,
-            },
-          )
-          .then((res) => res.data),
-      { refetchOnWindowFocus: false, refetchOnMount: true },
-    );
+  const getIntentDetailQuery = (intentId?: string) => {
+    if (intentId) {
+      return useQuery<IHasResult<IIntentListItem>>(
+        ['intent-detail', intentId],
+        () =>
+          http
+            .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
+              'Builder/GetIntent',
+              {
+                sessionToken: token,
+                intentId,
+              },
+            )
+            .then((res) => res.data),
+        { refetchOnWindowFocus: false, refetchOnMount: true },
+      );
+    }
+    return null;
   };
 
   const intentMutate = useMutation(async (intent: ISaveIntent) => {
@@ -87,16 +93,59 @@ export const useUtteranceClient = () => {
     );
 
     if (result) {
-      queryClient.invalidateQueries(['intent-list']);
+      queryClient.invalidateQueries(['change-pageNumber']);
       return result.data;
     }
   });
 
+  const getPageQuery = async (
+    pageNo: number,
+    orderType?: number,
+    flowId?: string | null | undefined,
+    keyword?: string | undefined,
+  ) => {
+    return await http
+      .post('Builder/SearchIntent', {
+        sessionToken: token,
+        countPerPage: 20,
+        pageNo: pageNo,
+        orderType,
+        flowId,
+        keyword,
+      })
+      .then((res) => {
+        // console.log('res', res);
+        return res.data.result;
+      });
+  };
+
+  const changePageNumberQuery = useInfiniteQuery(
+    ['change-pageNumber'],
+    async ({ pageParam = 1 }) => {
+      return await getPageQuery(pageParam);
+    },
+    {
+      getNextPageParam: (lastpage, pages) => {
+        if (lastpage.totalPage > 1) {
+          const max = Math.ceil(lastpage.total / 20);
+          const next = pages.length + 1;
+          return next <= max ? next : undefined;
+        }
+      },
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      retry: 1,
+    },
+  );
+
   return {
     getIntentListQuery,
     getIntentDetailQuery,
+    getPageQuery,
     intentMutate,
     intentDeleteMutate,
     intentGetMutate,
+    changePageNumberQuery,
   };
 };

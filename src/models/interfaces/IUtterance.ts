@@ -6,7 +6,12 @@ export interface IIntentListItem {
   flowName: string;
   nodeId: string;
   viewId: string;
-  utterances?: string[];
+  utterances?: [
+    {
+      text: string;
+      id?: string;
+    },
+  ];
   utteranceSummary: string;
 }
 
@@ -25,7 +30,7 @@ export interface ISaveIntent {
   sessionToken: string;
   intentId?: string;
   intentName: string;
-  utterances: string[];
+  utterances: (string | undefined)[];
   flowId?: string;
 }
 
@@ -37,13 +42,14 @@ export interface IResponseIntentData {
 
 export interface IDeleteIntent {
   sessionToken: string;
-  intentId: string | undefined;
+  intentId?: string;
 }
 
 export interface IUtteranceItem {
   isChecked?: boolean;
   intentId?: string;
-  utterance: string;
+  text?: string;
+  id?: string;
 }
 export interface IUtteranceModel {
   id: string;
@@ -60,16 +66,21 @@ export interface IInputFormModel {
 
 export interface ISearchData {
   sort: number;
-  scenarios?: string | null | undefined;
+  scenarios?: string | undefined;
   searchWord?: string | undefined;
 }
 
 export interface IScenarioData {
-  scenarios: string | null | undefined;
+  scenarios: string | undefined;
 }
 
 export interface ICheckUtterance {
   sessionToken: string;
   utteranceId: string;
   text: string;
+}
+
+export interface IReactSelect {
+  value: string;
+  label: string;
 }
