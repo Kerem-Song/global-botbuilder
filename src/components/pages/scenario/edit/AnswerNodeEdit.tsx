@@ -1,4 +1,5 @@
 import { Input, Switch } from '@components';
+import { Collapse } from '@components/general/Collapse';
 import { Divider, Space } from '@components/layout';
 import { IGNodeEditModel } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
@@ -19,32 +20,23 @@ export const AnswerNodeEdit = () => {
 
   return (
     <>
-      <div className="node-item-wrap">
+      <Collapse label={'사용자 응답 받기'} useSwitch={true} field={'utteranceParam'}>
         <div className="m-b-8">
-          <Space direction="vertical">
-            <Space direction="horizontal" style={{ alignItems: 'center' }}>
-              <span className="label">사용자 응답 받기</span>
-              <Switch />
-            </Space>
-            <Divider />
-            <div>
-              <span>변수 설정</span>
-              <span className="required">*</span>
-            </div>
-            <div
-              className={classnames('input', {
-                // 'disabled ': !values.view?.useUtteranceParam,
-              })}
-            >
-              <Input
-                {...register(`view.utteranceParam`)}
-                placeholder="변수명을 입력해주세요"
-                // disabled={!values.view?.useUtteranceParam}
-              />
-            </div>
-          </Space>
+          <span className="subLabel">변수 설정 </span>
+          <span className="required">*</span>
         </div>
-      </div>
+        <div
+          className={classnames('input', {
+            // 'disabled ': !values.view?.useUtteranceParam,
+          })}
+        >
+          <Input
+            {...register(`view.utteranceParam`)}
+            placeholder="변수명을 입력해주세요"
+            // disabled={!values.view?.useUtteranceParam}
+          />
+        </div>
+      </Collapse>
       <QuicksEdit />
     </>
   );

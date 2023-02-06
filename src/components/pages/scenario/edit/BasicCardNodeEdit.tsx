@@ -39,46 +39,12 @@ export const BasicCardNodeEdit = () => {
 
   return (
     <>
-      {/* <div className="node-item-wrap">
-        <p className="m-b-8">
-          <Space style={{ alignItems: 'center' }}>
-            <span className="label">이미지 설정</span>
-            <Switch {...register('view.imageCtrl')} />
-          </Space>
-          <Divider />
-        </p>
-
-        {values.view?.imageCtrl && (
-          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
-        )}
-      </div> */}
-      <Collapse label={'이미지 설정'} useSwitch={true}>
+      <Collapse label={'이미지 설정'} useSwitch={true} field={'imageCtrl'}>
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
       </Collapse>
-      {/* <div className="node-item-wrap">
-        <p className="m-b-8">
-          <span className="label">텍스트 설정 </span>
-        </p>
-        <Divider />
-        <Space direction="vertical">
-          <span className="subLabel">타이틀</span>
-          <FormItem error={errors.view && errors.view.title}>
-            <Input {...register('view.title')} />
-          </FormItem>
-          <span className="subLabel">내용</span>
-          <FormItem error={errors.view && errors.view.description}>
-            <InputTextarea
-              height={100}
-              showCount
-              maxLength={1000}
-              placeholder="Input Text"
-              {...register('view.description')}
-            />
-          </FormItem>
-        </Space>
-      </div> */}
+
       <Collapse label={'텍스트 설정'} useSwitch={false}>
         <Space direction="vertical">
           <span className="subLabel">타이틀</span>
@@ -98,7 +64,6 @@ export const BasicCardNodeEdit = () => {
         </Space>
       </Collapse>
 
-      {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
       <Collapse label={'버튼'} useSwitch={false}>
         {values.view && values.view.buttons && <ButtonsEdit />}
       </Collapse>

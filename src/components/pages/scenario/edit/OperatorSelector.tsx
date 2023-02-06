@@ -22,7 +22,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '220px',
+    width: '100%',
     ':hover': {
       borderColor: '#e7e7e7',
     },

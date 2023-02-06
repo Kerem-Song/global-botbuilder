@@ -119,6 +119,10 @@ export interface IHasImageCtrlViewBase extends IViewBase {
   imageCtrl?: IImageCtrl;
 }
 
+export interface IHasUtteranceViewBase extends IViewBase {
+  utteranceParam?: string;
+}
+
 export interface IIntentNode extends INodeBase {
   view: IIntentView;
 }

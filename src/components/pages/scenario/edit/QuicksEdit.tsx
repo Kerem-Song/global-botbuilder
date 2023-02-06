@@ -1,5 +1,6 @@
 import { Button, Divider, Input, Space } from '@components';
 import { FormItem } from '@components/data-entry';
+import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -39,11 +40,7 @@ export const QuicksEdit = () => {
   };
 
   return (
-    <div className="node-item-wrap">
-      <p className="m-b-8">
-        <span className="label">퀵 리플라이 버튼 설정</span>
-      </p>
-      <Divider />
+    <Collapse label="퀵 리플라이 버튼 설정" useSwitch={false}>
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
           <Space direction="vertical">
@@ -80,9 +77,9 @@ export const QuicksEdit = () => {
       ))}
       {fields.length < 3 && (
         <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
-          <span>+ Add a Button</span>
+          <span>+ Add a Quick Reply</span>
         </Button>
       )}
-    </div>
+    </Collapse>
   );
 };

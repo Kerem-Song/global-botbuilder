@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Input, Row, Space, Switch } from '@components';
+import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
@@ -53,13 +53,12 @@ export const ListCardNodeEdit = () => {
     <>
       <div className="node-item-wrap">
         <div className="m-b-8">
-          <Space direction="vertical">
-            <span className="label">Head Title</span>
-            <Input {...register('view.header')} />
-          </Space>
+          <span className="label">Head Title </span>
+          <span className="required">*</span>
         </div>
+        <Input {...register('view.header')} />
       </div>
-      <Collapse label={'Head 이미지 설정'} useSwitch={true}>
+      <Collapse label={'Head 이미지 설정'} useSwitch={true} field={'imageCtrl'}>
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}

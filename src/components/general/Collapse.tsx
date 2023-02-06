@@ -1,22 +1,26 @@
 import { icCollapseClose, icCollapseOpen } from '@assets';
 import { Button, Col, Divider, Row, Space, Switch } from '@components';
 import { IGNodeEditModel, IHasChildren, IHasClassNameNStyle } from '@models';
-import { IHasImageCtrlViewBase } from '@models/interfaces/res/IGetFlowRes';
+import {
+  IHasImageCtrlViewBase,
+  IHasUtteranceViewBase,
+} from '@models/interfaces/res/IGetFlowRes';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
   useSwitch: boolean;
+  field?: 'imageCtrl' | 'utteranceParam';
 }
 
-export const Collapse: FC<CollapseProps> = ({ label, useSwitch, children }) => {
+export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const {
     register,
     getValues,
     control,
     formState: { errors },
-  } = useFormContext<IGNodeEditModel<IHasImageCtrlViewBase>>();
+  } = useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
@@ -31,7 +35,7 @@ export const Collapse: FC<CollapseProps> = ({ label, useSwitch, children }) => {
             <span className="label" style={{ paddingRight: '10px' }}>
               {label}
             </span>
-            {useSwitch && <Switch {...register('view.imageCtrl')} />}
+            {useSwitch && field && <Switch {...register(`view.${field}`)} />}
           </Col>
           <Col span={4}>
             <Button shape="ghost" onClick={handleCollapse}>
