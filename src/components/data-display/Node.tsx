@@ -168,7 +168,7 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.COUNT:
-        return <CountNode nodeId={`${NODE_PREFIX}${id}`} />;
+        return <CountNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNode node={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:

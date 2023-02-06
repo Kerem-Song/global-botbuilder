@@ -22,6 +22,7 @@ import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
+import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
@@ -124,6 +125,8 @@ export const NodeEditDrawer = () => {
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNodeEdit />;
+      case NODE_TYPES.COUNT:
+        return <RetryConditionNodeEdit />;
       default:
         <></>;
     }

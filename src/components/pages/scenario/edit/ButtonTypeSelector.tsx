@@ -65,6 +65,7 @@ export const reactSelectStyle: StylesConfig = {
     ...provided,
     border: '1px solid #DCDCDC',
     borderRadius: '8px',
+    zIndex: 9999,
   }),
 };
 
@@ -100,6 +101,7 @@ export const ButtonTypeSelector = ({
         field.onChange(options?.value);
         setButtonType(options.value);
       }}
+      minMenuHeight={500}
     />
   );
 };

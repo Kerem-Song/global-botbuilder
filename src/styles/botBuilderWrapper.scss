@@ -120,7 +120,9 @@
   border-left: 1px solid $gray200;
   .wrapper {
     height: calc(100vh - rem(97));
-    overflow: auto;
+    // overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     .header {
       background: $gray100;
       padding: rem(12);
