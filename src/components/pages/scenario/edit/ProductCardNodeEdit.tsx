@@ -1,4 +1,5 @@
 import { Col, Divider, Input, Row, Space } from '@components';
+import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -94,87 +95,80 @@ export const ProductCardNodeEdit = () => {
 
   return (
     <>
-      <div className="node-item-wrap">
-        <div className="m-b-8">
-          <Space style={{ alignItems: 'center' }}>
-            <span className="label">이미지 설정</span>
-          </Space>
-          <Divider />
-        </div>
-        {values.view?.imageCtrl && (
-          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
-        )}
+      <div className="node-item-wrap collapse">
+        <Collapse label={'이미지 설정'} useSwitch={false}>
+          {values.view?.imageCtrl && (
+            <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+          )}
+        </Collapse>
       </div>
-      <div className="node-item-wrap">
-        <Space style={{ alignItems: 'center' }}>
-          <span className="label">프로필</span>
-        </Space>
-        <Divider />
-
-        <div className="m-b-8">
-          <span className="subLabel">프로필 이미지 업로드 </span>
-          <span className="required">*</span>
-        </div>
-        <div className="m-b-8">
-          <Space direction="vertical">
-            <Row align="center" gap={12} style={{ margin: 0 }}>
-              <Col span={8} className="img"></Col>
-              <Col span={14}>
-                <p>Recommended size</p>
-                <p>640 x 640</p>
-              </Col>
-            </Row>
-          </Space>
-        </div>
-        <div className="m-b-8">
-          <Space direction="vertical">
-            <span className="label">브랜드 이름</span>
-            <Input {...register(`view.profileName`)} />
-          </Space>
-        </div>
-      </div>
-      <div className="node-item-wrap">
-        <div className="m-b-8">
-          <Space style={{ alignItems: 'center' }}>
-            <span className="label">상품 정보 설정</span>
-          </Space>
-          <Divider />
-          <Space direction="vertical">
-            <p className="m-b-8">
-              <span className="label">상품명 </span>
-              <span className="required">*</span>
-            </p>
-            <Input {...register(`view.description`)} />
-            <p className="m-b-8">
-              <span className="label">가격 </span>
-              <span className="required">*</span>
-            </p>
-            <div className="m-b-8">
-              <Row justify="space-between">
-                <Col span={17}>
-                  <Input {...register(`view.retailPrice`)} />
-                </Col>
-                <Col>
-                  <Select
-                    {...currencyField}
-                    options={currencyOptions}
-                    styles={reactSelectStyle}
-                    defaultValue={currencyOptions[0]}
-                    value={currencyOptions.find(
-                      (item) => item.value === currencyField.value,
-                    )}
-                    onChange={(options: any) => currencyField.onChange(options?.value)}
-                  />
+      <div className="node-item-wrap collapse">
+        <Collapse label={'프로필'} useSwitch={false}>
+          <div className="m-b-8">
+            <span className="subLabel">프로필 이미지 업로드 </span>
+            <span className="required">*</span>
+          </div>
+          <div className="m-b-8">
+            <Space direction="vertical">
+              <Row align="center" gap={12} style={{ margin: 0 }}>
+                <Col span={8} className="img"></Col>
+                <Col span={14}>
+                  <p>Recommended size</p>
+                  <p>640 x 640</p>
                 </Col>
               </Row>
-            </div>
+            </Space>
+          </div>
+          <div className="m-b-8">
+            <Space direction="vertical">
+              <span className="label">브랜드 이름</span>
+              <Input {...register(`view.profileName`)} />
+            </Space>
+          </div>
+        </Collapse>
+      </div>
+      <div className="node-item-wrap collapse">
+        <div className="m-b-8">
+          <Collapse label={'상품 정보 설정'} useSwitch={false}>
+            <Space direction="vertical">
+              <p className="m-b-8">
+                <span className="label">상품명 </span>
+                <span className="required">*</span>
+              </p>
+              <Input {...register(`view.description`)} />
+              <p className="m-b-8">
+                <span className="label">가격 </span>
+                <span className="required">*</span>
+              </p>
+              <div className="m-b-8">
+                <Row justify="space-between">
+                  <Col span={17}>
+                    <Input {...register(`view.retailPrice`)} />
+                  </Col>
+                  <Col>
+                    <Select
+                      {...currencyField}
+                      options={currencyOptions}
+                      styles={reactSelectStyle}
+                      defaultValue={currencyOptions[0]}
+                      value={currencyOptions.find(
+                        (item) => item.value === currencyField.value,
+                      )}
+                      onChange={(options: any) => currencyField.onChange(options?.value)}
+                    />
+                  </Col>
+                </Row>
+              </div>
 
-            <span className="label">할인</span>
-            <Input {...register(`view.salePrice`)} />
-          </Space>
+              <span className="label">할인</span>
+              <Input {...register(`view.salePrice`)} />
+            </Space>
+          </Collapse>
         </div>
       </div>
-      {values.view && values.view.buttons && <ButtonsEdit />}
+      <Collapse label={'버튼'} useSwitch={false}>
+        {values.view && values.view.buttons && <ButtonsEdit />}
+      </Collapse>
     </>
   );
 };

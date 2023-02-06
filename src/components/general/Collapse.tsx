@@ -6,10 +6,10 @@ import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
-  isSwitch: boolean;
+  useSwitch: boolean;
 }
 
-export const Collapse: FC<CollapseProps> = ({ label, isSwitch, children }) => {
+export const Collapse: FC<CollapseProps> = ({ label, useSwitch, children }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const {
     register,
@@ -22,16 +22,16 @@ export const Collapse: FC<CollapseProps> = ({ label, isSwitch, children }) => {
   };
 
   return (
-    <div className="node-item-wrap">
-      <div className="m-b-8">
+    <div className="node-item-wrap collapse">
+      <div className="collapseHeader">
         <Row
           style={{ justifyContent: 'space-between', alignItems: 'center', width: '100%' }}
         >
-          <Col style={{ display: 'flex', alignItems: 'center' }} span={20} flex={20}>
+          <Col span={20} flex={20} className="collapseTitle">
             <span className="label" style={{ paddingRight: '10px' }}>
               {label}
             </span>
-            {isSwitch && <Switch {...register('view.imageCtrl')} />}
+            {useSwitch && <Switch {...register('view.imageCtrl')} />}
           </Col>
           <Col span={4}>
             <Button shape="ghost" onClick={handleCollapse}>
@@ -39,7 +39,7 @@ export const Collapse: FC<CollapseProps> = ({ label, isSwitch, children }) => {
             </Button>
           </Col>
         </Row>
-        <Divider />
+        <Divider style={{ margin: '0' }} />
       </div>
 
       <div className="collapseWrapper" data-collapsed={isCollapsed}>

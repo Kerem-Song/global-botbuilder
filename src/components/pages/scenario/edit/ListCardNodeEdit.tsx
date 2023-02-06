@@ -59,12 +59,12 @@ export const ListCardNodeEdit = () => {
           </Space>
         </div>
       </div>
-      <Collapse label={'Head 이미지 설정'} isSwitch={true}>
+      <Collapse label={'Head 이미지 설정'} useSwitch={true}>
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
       </Collapse>
-      <Collapse label={'List'} isSwitch={false}>
+      <Collapse label={'List'} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
@@ -110,7 +110,7 @@ export const ListCardNodeEdit = () => {
         </div>
       </Collapse>
       {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
-      <Collapse label={'버튼'} isSwitch={false}>
+      <Collapse label={'버튼'} useSwitch={false}>
         {values.view && values.view.buttons && <ButtonsEdit />}
       </Collapse>
     </>

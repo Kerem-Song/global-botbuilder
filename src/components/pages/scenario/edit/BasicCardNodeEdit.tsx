@@ -52,7 +52,7 @@ export const BasicCardNodeEdit = () => {
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
       </div> */}
-      <Collapse label={'이미지 설정'} isSwitch={true}>
+      <Collapse label={'이미지 설정'} useSwitch={true}>
         {values.view?.imageCtrl && (
           <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
         )}
@@ -79,7 +79,7 @@ export const BasicCardNodeEdit = () => {
           </FormItem>
         </Space>
       </div> */}
-      <Collapse label={'텍스트 설정'} isSwitch={false}>
+      <Collapse label={'텍스트 설정'} useSwitch={false}>
         <Space direction="vertical">
           <span className="subLabel">타이틀</span>
           <FormItem error={errors.view && errors.view.title}>
@@ -99,7 +99,7 @@ export const BasicCardNodeEdit = () => {
       </Collapse>
 
       {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
-      <Collapse label={'버튼'} isSwitch={false}>
+      <Collapse label={'버튼'} useSwitch={false}>
         {values.view && values.view.buttons && <ButtonsEdit />}
       </Collapse>
     </>

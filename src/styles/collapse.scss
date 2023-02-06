@@ -1,13 +1,29 @@
-.collapseWrapper {
-  &[data-collapsed='true'] {
-    display: block;
-    overflow: hidden;
-    transition: max-height .5s ease;
+.node-item-wrap {
+  &.collapse {
+    padding: 0 !important;
+  }
+
+  .collapseTitle {
+    display: flex;
+    align-items: center;
+    padding: rem(12) !important;
   }
   
-  &[data-collapsed='false'] {
-    display: none;
+  .collapseWrapper {
+    padding: rem(12);
+  
+    &[data-collapsed='true'] {
+      display: block;
+      overflow: hidden;
+      transition: max-height .5s ease;
+    }
+    
+    &[data-collapsed='false'] {
+      display: none;
+    }
   }
 }
+
+
 
 
