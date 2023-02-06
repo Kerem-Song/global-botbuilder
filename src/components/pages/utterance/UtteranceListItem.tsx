@@ -1,9 +1,9 @@
-import { icUtteranceEmpty } from '@assets';
+import { icSuccess, icUtteranceEmpty } from '@assets';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
 import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
@@ -20,12 +20,16 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   searchData,
 }) => {
   const [ref, inView] = useInView();
+  const [isValidSearchData, setIsValidSearchData] = useState<boolean>(false);
 
-  const { getIntentDetailQuery, intentDeleteMutate, changePageNumberQuery } =
-    useUtteranceClient();
+  const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
 
-  const { data, hasNextPage, isFetching, fetchNextPage, isSuccess, isLoading } =
-    changePageNumberQuery;
+  const {
+    data: initialData,
+    fetchNextPage,
+    isSuccess,
+    isLoading,
+  } = changePageNumberQuery;
 
   const { botId } = useParams();
   const { navigate, t, tc } = usePage();
@@ -34,7 +38,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const { confirm } = useSystemModal();
 
   useEffect(() => {
-    if (!data) {
+    if (!initialData) {
       return;
     }
 
@@ -42,6 +46,14 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
       fetchNextPage();
     }
   }, [inView]);
+
+  useEffect(() => {
+    // type guard
+    if (searchData !== undefined) {
+      const { sort, searchWord, scenarios } = searchData;
+      setIsValidSearchData(sort === 1 && !searchWord && !scenarios ? false : true);
+    }
+  }, [searchData]);
 
   const handleGetIntent = (intentId: string) => {
     navigate(`/${botId}/utterance/detail/${intentId}`);
@@ -74,55 +86,296 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     }
   };
 
-  return (
-    <>
-      {data && data.pages.length > 0 ? (
-        <>
-          {data?.pages.map((v) => {
-            const pages = v.items;
-            return pages.map((x, i) => {
-              return (
-                <tr key={i} className="list" ref={ref}>
-                  <td
-                    role="presentation"
-                    onClick={() => handleGetIntent(x.intentId)}
-                    className="utteranceList intent"
-                  >
-                    {x.intentName}
-                  </td>
-                  <td
-                    role="presentation"
-                    onClick={() => handleGetIntent(x.intentId)}
-                    className="utteranceList connectScenarios"
-                  >
-                    {x.flowName}
-                  </td>
-                  <td
-                    role="presentation"
-                    onClick={() => handleGetIntent(x.intentId)}
-                    className="utteranceList utterance"
-                  >
-                    {x.utteranceSummary}
-                  </td>
-                  <td className="utteranceList icon">
-                    <button
-                      className="icDelete"
-                      onClick={() => openModal(x.flowName, x.intentId)}
-                    ></button>
-                  </td>
-                </tr>
-              );
-            });
-          })}
-        </>
-      ) : (
-        <tr className="emptyList">
-          <td className="empty">
-            <img src={icUtteranceEmpty} alt="empty" />
-            <span>No search results found.</span>
-          </td>
-        </tr>
-      )}
-    </>
-  );
+  if (initialData && isValidSearchData !== true) {
+    return (
+      <>
+        {initialData?.pages.map((v) => {
+          const pages = v.items;
+          return pages.map((x, i) => {
+            return (
+              <tr key={i} className="list" ref={ref}>
+                <td
+                  role="presentation"
+                  onClick={() => handleGetIntent(x.intentId)}
+                  className="utteranceList intent"
+                >
+                  {x.intentName}
+                </td>
+                <td
+                  role="presentation"
+                  onClick={() => handleGetIntent(x.intentId)}
+                  className="utteranceList connectScenarios"
+                >
+                  {x.flowName}
+                </td>
+                <td
+                  role="presentation"
+                  onClick={() => handleGetIntent(x.intentId)}
+                  className="utteranceList utterance"
+                >
+                  {x.utteranceSummary}
+                </td>
+                <td className="utteranceList icon">
+                  <button
+                    className="icDelete"
+                    onClick={() => openModal(x.flowName, x.intentId)}
+                  ></button>
+                </td>
+              </tr>
+            );
+          });
+        })}
+      </>
+    );
+  } else {
+    return listData?.items && listData?.items.length > 0 ? (
+      <>
+        {listData?.items.map((v, i) => {
+          return (
+            <tr key={i} className="list">
+              <td
+                role="presentation"
+                onClick={() => handleGetIntent(v.intentId)}
+                className="utteranceList intent"
+              >
+                {v.intentName}
+              </td>
+              <td
+                role="presentation"
+                className="utteranceList connectScenarios"
+                onClick={() => handleGetIntent(v.intentId)}
+              >
+                {v.flowName}
+              </td>
+              <td
+                role="presentation"
+                className="utteranceList utterance"
+                onClick={() => handleGetIntent(v.intentId)}
+              >
+                {v.utteranceSummary}
+              </td>
+              <td className="utteranceList icon">
+                <button
+                  className="icDelete"
+                  onClick={() => openModal(v.flowName, v.intentId)}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </>
+    ) : (
+      <tr className="emptyList">
+        <td className="empty">
+          <img src={icUtteranceEmpty} alt="empty" />
+          <span>No search results found.</span>
+        </td>
+      </tr>
+    );
+  }
+
+  // return (
+  //   <>
+  //     {isSearch ? (
+  //       <>
+  //         {/** listData ? : No Seach Data */}
+  //         {listData?.items.map((v, i) => {
+  //           return (
+  //             <tr key={i} className="list">
+  //               <td
+  //                 role="presentation"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //                 className="utteranceList intent"
+  //               >
+  //                 {v.intentName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 className="utteranceList connectScenarios"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //               >
+  //                 {v.flowName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 className="utteranceList utterance"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //               >
+  //                 {v.utteranceSummary}
+  //               </td>
+  //               <td className="utteranceList icon">
+  //                 <button
+  //                   className="icDelete"
+  //                   onClick={() => openModal(v.flowName, v.intentId)}
+  //                 />
+  //               </td>
+  //             </tr>
+  //           );
+  //         })}
+  //       </>
+  //     ) : (
+  //       <>
+  //         {initialData?.pages.map((v) => {
+  //           const pages = v.items;
+  //           return pages.map((x, i) => {
+  //             return (
+  //               <tr key={i} className="list" ref={ref}>
+  //                 <td
+  //                   role="presentation"
+  //                   onClick={() => handleGetIntent(x.intentId)}
+  //                   className="utteranceList intent"
+  //                 >
+  //                   {x.intentName}
+  //                 </td>
+  //                 <td
+  //                   role="presentation"
+  //                   onClick={() => handleGetIntent(x.intentId)}
+  //                   className="utteranceList connectScenarios"
+  //                 >
+  //                   {x.flowName}
+  //                 </td>
+  //                 <td
+  //                   role="presentation"
+  //                   onClick={() => handleGetIntent(x.intentId)}
+  //                   className="utteranceList utterance"
+  //                 >
+  //                   {x.utteranceSummary}
+  //                 </td>
+  //                 <td className="utteranceList icon">
+  //                   <button
+  //                     className="icDelete"
+  //                     onClick={() => openModal(x.flowName, x.intentId)}
+  //                   ></button>
+  //                 </td>
+  //               </tr>
+  //             );
+  //           });
+  //         })}
+  //       </>
+  //     )}
+  //   </>
+
+  // return (
+  //   <>
+  //     {listData?.items && listData?.items.length > 0 && (
+  //       <>
+  //         {listData?.items.map((v, i) => {
+  //           return (
+  //             <tr key={i} className="list">
+  //               <td
+  //                 role="presentation"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //                 className="utteranceList intent"
+  //               >
+  //                 {v.intentName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 className="utteranceList connectScenarios"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //               >
+  //                 {v.flowName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 className="utteranceList utterance"
+  //                 onClick={() => handleGetIntent(v.intentId)}
+  //               >
+  //                 {v.utteranceSummary}
+  //               </td>
+  //               <td className="utteranceList icon">
+  //                 <button
+  //                   className="icDelete"
+  //                   onClick={() => openModal(v.flowName, v.intentId)}
+  //                 />
+  //               </td>
+  //             </tr>
+  //           );
+  //         })}
+  //       </>
+  //     )}
+  //     <>
+  //       {data?.pages.map((v) => {
+  //         const pages = v.items;
+  //         return pages.map((x, i) => {
+  //           return (
+  //             <tr key={i} className="list" ref={ref}>
+  //               <td
+  //                 role="presentation"
+  //                 onClick={() => handleGetIntent(x.intentId)}
+  //                 className="utteranceList intent"
+  //               >
+  //                 {x.intentName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 onClick={() => handleGetIntent(x.intentId)}
+  //                 className="utteranceList connectScenarios"
+  //               >
+  //                 {x.flowName}
+  //               </td>
+  //               <td
+  //                 role="presentation"
+  //                 onClick={() => handleGetIntent(x.intentId)}
+  //                 className="utteranceList utterance"
+  //               >
+  //                 {x.utteranceSummary}
+  //               </td>
+  //               <td className="utteranceList icon">
+  //                 <button
+  //                   className="icDelete"
+  //                   onClick={() => openModal(x.flowName, x.intentId)}
+  //                 ></button>
+  //               </td>
+  //             </tr>
+  //           );
+  //         });
+  //       })}
+  //     </>
+
+  //   // <>
+  //   //   {data && data.pages.length < 0 ? (
+  //     <>
+
+  //   ) : (
+
+  //     // {listData?.items && listData?.items.length > 0 ? (
+  //     //   <>
+  //     // {listData?.items.map((v, i) => {
+  //     //   return (
+  //     //     <tr key={i} className="list">
+  //     //       <td
+  //     //         role="presentation"
+  //     //         onClick={() => handleGetIntent(v.intentId)}
+  //     //         className="utteranceList intent"
+  //     //       >
+  //     //         {v.intentName}
+  //     //       </td>
+  //     //       <td
+  //     //         role="presentation"
+  //     //         className="utteranceList connectScenarios"
+  //     //         onClick={() => handleGetIntent(v.intentId)}
+  //     //       >
+  //     //         {v.flowName}
+  //     //       </td>
+  //     //       <td
+  //     //         role="presentation"
+  //     //         className="utteranceList utterance"
+  //     //         onClick={() => handleGetIntent(v.intentId)}
+  //     //       >
+  //     //         {v.utteranceSummary}
+  //     //       </td>
+  //     //       <td className="utteranceList icon">
+  //     //         <button
+  //     //           className="icDelete"
+  //     //           onClick={() => openModal(v.flowName, v.intentId)}
+  //     //         />
+  //     //       </td>
+  //     //     </tr>
+  //     //   );
+  //     // })}
+  //     //   </>
+  //     // )}
+  //   )}
+  // </>
 };
