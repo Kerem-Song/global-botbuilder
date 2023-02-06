@@ -5,7 +5,7 @@ import {
   TViewTypes,
   ValueOf,
 } from '@models';
-import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { ImageAspectRatio } from '@models/enum';
 import { NodeKind } from '@models/enum/NodeKind';
 
 export const ACTION_TYPES = {

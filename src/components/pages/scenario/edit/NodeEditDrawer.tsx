@@ -6,6 +6,7 @@ import {
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
   INodeEditModel,
+  productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
@@ -49,6 +50,10 @@ export const NodeEditDrawer = () => {
         .when('nodeType', {
           is: NODE_TYPES.CONDITION_NODE,
           then: conditionNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.PRODUCT_CARD_NODE,
+          then: productCardNodeEditSchema,
         }),
     })
     .required();

@@ -1,7 +1,7 @@
-import { Col, Divider, Input, Row, Space } from '@components';
+import { Col, Divider, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
-import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { ImageAspectRatio } from '@models/enum';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
@@ -83,8 +83,12 @@ const reactSelectStyle: StylesConfig = {
 
 export const ProductCardNodeEdit = () => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
-  const { register, getValues, control } =
-    useFormContext<IGNodeEditModel<IProductCardView>>();
+  const {
+    register,
+    getValues,
+    control,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
   console.log('value.view', values.view);
 
@@ -122,7 +126,9 @@ export const ProductCardNodeEdit = () => {
           <div className="m-b-8">
             <Space direction="vertical">
               <span className="label">브랜드 이름</span>
-              <Input {...register(`view.profileName`)} />
+              <FormItem error={errors.view && errors.view.profileName}>
+                <Input {...register(`view.profileName`)} />
+              </FormItem>
             </Space>
           </div>
         </Collapse>
@@ -131,19 +137,23 @@ export const ProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Collapse label={'상품 정보 설정'} useSwitch={false}>
             <Space direction="vertical">
-              <p className="m-b-8">
+              <p>
                 <span className="label">상품명 </span>
                 <span className="required">*</span>
               </p>
-              <Input {...register(`view.description`)} />
-              <p className="m-b-8">
+              <FormItem error={errors.view && errors.view.description}>
+                <Input {...register(`view.description`)} />
+              </FormItem>
+              <p>
                 <span className="label">가격 </span>
                 <span className="required">*</span>
               </p>
               <div className="m-b-8">
                 <Row justify="space-between">
                   <Col span={17}>
-                    <Input {...register(`view.retailPrice`)} />
+                    <FormItem error={errors.view && errors.view.retailPrice}>
+                      <Input {...register(`view.retailPrice`)} />
+                    </FormItem>
                   </Col>
                   <Col>
                     <Select
@@ -161,7 +171,9 @@ export const ProductCardNodeEdit = () => {
               </div>
 
               <span className="label">할인</span>
-              <Input {...register(`view.salePrice`)} />
+              <FormItem error={errors.view && errors.view.salePrice}>
+                <Input {...register(`view.salePrice`)} />
+              </FormItem>
             </Space>
           </Collapse>
         </div>

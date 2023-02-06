@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
-import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { ImageAspectRatio } from '@models/enum';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
