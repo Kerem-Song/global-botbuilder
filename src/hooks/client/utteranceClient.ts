@@ -50,6 +50,49 @@ export const useUtteranceClient = () => {
     );
   };
 
+  const getPageQuery = async (
+    pageNo: number,
+    orderType?: number,
+    flowId?: string | null | undefined,
+    keyword?: string | undefined,
+  ) => {
+    return await http
+      .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
+        'Builder/SearchIntent',
+        {
+          sessionToken: token,
+          countPerPage: 20,
+          pageNo: pageNo,
+          orderType,
+          flowId,
+          keyword,
+        },
+      )
+      .then((res) => {
+        return res.data.result;
+      });
+  };
+
+  const changePageNumberQuery = useInfiniteQuery(
+    ['change-pageNumber'],
+    async ({ pageParam = 1 }) => {
+      return await getPageQuery(pageParam);
+    },
+    {
+      getNextPageParam: (lastpage, pages) => {
+        if (lastpage.totalPage > 1) {
+          const max = Math.ceil(lastpage.total / 20);
+          const next = pages.length + 1;
+          return next <= max ? next : undefined;
+        }
+      },
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      retry: 1,
+    },
+  );
+
   const getIntentDetailQuery = (intentId?: string) => {
     if (intentId) {
       return useQuery<IHasResult<IIntentListItem>>(
@@ -97,47 +140,6 @@ export const useUtteranceClient = () => {
       return result.data;
     }
   });
-
-  const getPageQuery = async (
-    pageNo: number,
-    orderType?: number,
-    flowId?: string | null | undefined,
-    keyword?: string | undefined,
-  ) => {
-    return await http
-      .post('Builder/SearchIntent', {
-        sessionToken: token,
-        countPerPage: 20,
-        pageNo: pageNo,
-        orderType,
-        flowId,
-        keyword,
-      })
-      .then((res) => {
-        // console.log('res', res);
-        return res.data.result;
-      });
-  };
-
-  const changePageNumberQuery = useInfiniteQuery(
-    ['change-pageNumber'],
-    async ({ pageParam = 1 }) => {
-      return await getPageQuery(pageParam);
-    },
-    {
-      getNextPageParam: (lastpage, pages) => {
-        if (lastpage.totalPage > 1) {
-          const max = Math.ceil(lastpage.total / 20);
-          const next = pages.length + 1;
-          return next <= max ? next : undefined;
-        }
-      },
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      retry: 1,
-    },
-  );
 
   return {
     getIntentListQuery,

@@ -1,4 +1,4 @@
-import { icSuccess, icUtteranceEmpty } from '@assets';
+import { icUtteranceEmpty } from '@assets';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -80,7 +80,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
         <>
           {data?.pages.map((v) => {
             const pages = v.items;
-            return pages.map((x: any, i: any) => {
+            return pages.map((x, i) => {
               return (
                 <tr key={i} className="list" ref={ref}>
                   <td
@@ -116,43 +116,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
           })}
         </>
       ) : (
-        // {listData?.items && listData?.items.length > 0 ? (
-        //   <>
-        //     {listData?.items.map((v, i) => {
-        //       return (
-        //         <tr key={i} className="list">
-        //           <td
-        //             role="presentation"
-        //             onClick={() => handleGetIntent(v.intentId)}
-        //             className="utteranceList intent"
-        //           >
-        //             {v.intentName}
-        //           </td>
-        //           <td
-        //             role="presentation"
-        //             className="utteranceList connectScenarios"
-        //             onClick={() => handleGetIntent(v.intentId)}
-        //           >
-        //             {v.flowName}
-        //           </td>
-        //           <td
-        //             role="presentation"
-        //             className="utteranceList utterance"
-        //             onClick={() => handleGetIntent(v.intentId)}
-        //           >
-        //             {v.utteranceSummary}
-        //           </td>
-        //           <td className="utteranceList icon">
-        //             <button
-        //               className="icDelete"
-        //               onClick={() => openModal(v.flowName, v.intentId)}
-        //             />
-        //           </td>
-        //         </tr>
-        //       );
-        //     })}
-        //     <tr ref={ref} className="observer"></tr>
-        //   </>
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
