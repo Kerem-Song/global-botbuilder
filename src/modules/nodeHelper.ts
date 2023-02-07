@@ -383,38 +383,7 @@ export const nodeHelper = {
 
     return arrows;
   },
-  editAnswerViewArrow: (nodeId: string, view: IAnswerView) => {
-    const result: IArrow[] = [];
-    view.quicks?.forEach((q) => {
-      if (q.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && q.actionValue) {
-        result.push({
-          start: `${NEXT_BUTTON_PREFIX}${q.id}`,
-          end: `${NODE_PREFIX}${q.actionValue}`,
-          updateKey: `${NODE_PREFIX}${nodeId}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-    });
 
-    return result;
-  },
-  editBasicCardViewArrow: (nodeId: string, view: IBasicCardView) => {
-    const result: IArrow[] = [];
-    view.buttons?.forEach((b) => {
-      if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-        result.push({
-          start: `${NEXT_BUTTON_PREFIX}${b.id}`,
-          end: `${NODE_PREFIX}${b.actionValue}`,
-          updateKey: `${NODE_PREFIX}${nodeId}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-    });
-
-    return result;
-  },
   initArrows: (node: INodeBase): IArrow[] => {
     const arrows: IArrow[] = [];
     if (node.nextNodeId) {
