@@ -26,6 +26,7 @@ import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
+import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
@@ -124,6 +125,8 @@ export const NodeEditDrawer = () => {
         return <ConditionNodeEdit />;
       case NODE_TYPES.RETRY_CONDITION:
         return <RetryConditionNodeEdit />;
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        return <ParameterSetNodeEdit />;
       default:
         <></>;
     }

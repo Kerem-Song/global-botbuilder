@@ -9,13 +9,12 @@ import { NODE_PREFIX } from '../../../../modules';
 export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
   const view = node.view as IParameterSetView;
 
-  // console.log(view);
   return (
     <Card>
       <div className="countConditionWrapper">
-        {Object.keys(view.parameters).map((key: string) => {
-          return <p key={key}>{`{{${key}}} = ${view.parameters[key]}`}</p>;
-        })}
+        {view.parameters.map((item) => (
+          <p key={item.name}>{`{{${item.name}}} = ${item.value}`}</p>
+        ))}
       </div>
       <NextNodeButton
         ctrlId={`${node.id}`}
