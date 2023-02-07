@@ -21,6 +21,8 @@ import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 
+let dirtySelect: string | undefined;
+
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
@@ -130,7 +132,10 @@ export const Botbuilder = () => {
   };
 
   const handleNodeClick = (id: string) => {
-    console.log('handleNodeClick');
+    if (dirtySelect === id) {
+      dirtySelect = undefined;
+      return;
+    }
     if (!isEditDrawerOpen) {
       const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
       nodeElements.forEach((n) => {
@@ -189,6 +194,8 @@ export const Botbuilder = () => {
       y,
     };
     dispatch(updateNode(node));
+
+    dirtySelect = node.id;
   };
 
   return (
