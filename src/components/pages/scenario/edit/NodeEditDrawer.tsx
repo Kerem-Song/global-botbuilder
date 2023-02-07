@@ -78,6 +78,7 @@ export const NodeEditDrawer = () => {
   };
 
   useEffect(() => {
+    console.log(selectedNode);
     if (selectedNode) {
       const model: INodeEditModel = {
         id: selectedNode.id,
@@ -93,15 +94,19 @@ export const NodeEditDrawer = () => {
   useEffect(() => {
     if (isEditDrawerOpen) {
       setIsOpen(true);
-    } else if (selectedNode) {
-      handleSubmit(onSubmit)();
-      if (isValid) {
-        reset({ id: '', title: '' });
-        setIsOpen(false);
-        dispatch(setSelected());
-      } else {
-        dispatch(setEditDrawerToggle(true));
+    } else {
+      if (selectedNode) {
+        handleSubmit(onSubmit)();
+        if (isValid) {
+          reset({ id: '', title: '' });
+          setIsOpen(false);
+          dispatch(setSelected());
+        }
       }
+      setIsOpen(false);
+      // else {
+      //   dispatch(setEditDrawerToggle(true));
+      // }
     }
   }, [isEditDrawerOpen]);
 

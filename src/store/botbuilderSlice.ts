@@ -55,13 +55,11 @@ export const botbuilderSlice = createSlice({
       state.scale = scale;
     },
     setSelected: (state, action: PayloadAction<string | IArrow | undefined>) => {
-      if (state.isEditDrawerOpen && action.payload !== state.selected) {
-        state.isEditDrawerOpen = false;
+      state.selected = action.payload;
+      if (typeof action.payload === 'string') {
+        state.isEditDrawerOpen = true;
       } else {
-        state.selected = action.payload;
-        if (typeof action.payload === 'string') {
-          state.isEditDrawerOpen = true;
-        }
+        state.isEditDrawerOpen = false;
       }
     },
     setEditDrawerToggle: (state, action: PayloadAction<boolean | undefined>) => {

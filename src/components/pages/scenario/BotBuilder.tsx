@@ -130,6 +130,7 @@ export const Botbuilder = () => {
   };
 
   const handleNodeClick = (id: string) => {
+    console.log('handleNodeClick');
     if (!isEditDrawerOpen) {
       const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
       nodeElements.forEach((n) => {
@@ -231,6 +232,7 @@ export const Botbuilder = () => {
                 }
               }}
               onStop={(e) => {
+                console.log('onStop');
                 handleUpdateNodePosition(i, item);
                 e.stopPropagation();
               }}

@@ -344,7 +344,9 @@ export const Node: FC<INodeProps> = ({
             m.data?.action?.();
           }}
         >
-          <i className="fa-solid fa-ellipsis-vertical" />
+          <Button shape="ghost" small>
+            <i className="fa-solid fa-ellipsis-vertical" />
+          </Button>
         </Popper>
       </div>
       <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
