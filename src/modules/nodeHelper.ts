@@ -142,7 +142,7 @@ export const nodeHelper = {
     const result: IParameterSetView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.ANSWER_VIEW,
-      parameters: {},
+      parameters: [{ name: '', value: '' }],
     };
 
     return result;

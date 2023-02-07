@@ -216,12 +216,10 @@ export interface IParameterSetNode extends INodeBase {
 }
 
 export interface IParameterSetView extends IViewBase {
-  parameters: [
-    {
-      name: string;
-      value: string;
-    },
-  ];
+  parameters: {
+    name: string;
+    value: string;
+  }[];
 }
 
 export interface IOtherFlowRedirectNode extends INodeBase {
