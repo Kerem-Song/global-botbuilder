@@ -48,7 +48,7 @@ const cardTypeValue = [
   },
   { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
   { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
-  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION, nodeName: 'Count' },
+  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: 'Count' },
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
@@ -103,13 +103,11 @@ export const NodeLinkPopUpMenu = ({
     const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
     const nodeName = e.currentTarget.dataset.nodename;
 
-    const addCard = defaultNode(nodeType);
     const nodeView = nodeHelper.createDefaultView(nodeType);
     const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: nodeType,
       title: nodeName,
-      cards: addCard,
       view: nodeView,
       option: 1,
       seq: 0,
@@ -189,7 +187,7 @@ export const NodeLinkPopUpMenu = ({
     console.log(firstNodeId);
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = name;
-    //const addCard = defaultNode(nodeType);
+
     const view = nodeHelper.createDefaultOtherFlowRedirectView();
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),

@@ -158,7 +158,6 @@ export const Botbuilder = () => {
     }
     const nodeName = e.dataTransfer.getData('nodeName') as string;
 
-    const addCard = defaultNode(cardType);
     const nodeView = nodeHelper.createDefaultView(cardType);
 
     const addNode: INode = {
@@ -167,7 +166,6 @@ export const Botbuilder = () => {
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
       title: nodeName,
-      cards: addCard,
       nodeKind: getNodeKind(cardType),
       view: nodeView,
       option: 1,
@@ -255,7 +253,6 @@ export const Botbuilder = () => {
                   id={item.id}
                   key={item.id}
                   title={item.title}
-                  cards={item.cards}
                   node={item}
                   active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}

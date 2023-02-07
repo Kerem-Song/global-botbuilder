@@ -51,6 +51,7 @@ export const VIEW_TYPES = {
   LIST_CARD_VIEW: 'ListCardView',
   LIST_CARD_CAROUSEL_VIEW: 'ListCardCarouselView',
   PRODUCT_CARD_VIEW: 'ProductCardView',
+  RETRY_CONDITION_VIEW: 'RetryConditionView',
 };
 
 export const NODE_TYPES = {
@@ -71,12 +72,13 @@ export const NODE_TYPES = {
   TEXT_NODE: 'TextNode',
   LIST_CARD_NODE: 'ListCardNode',
   LIST_CAROUSEL: 'ListCardCarouselNode',
-  RETRY_CONDITION: 'RetryCondition',
+  RETRY_CONDITION_NODE: 'RetryConditionNode',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;
 export type TNodeTypes = ValueOf<typeof NODE_TYPES>;
 export const getNodeKind = (nodeType: TNodeTypes) => {
+  console.log('nodetype in get node kind', nodeType);
   switch (nodeType) {
     case NODE_TYPES.ANSWER_NODE:
       return NodeKind.AnswerNode;
@@ -229,7 +231,7 @@ export interface IConditionNode {
 }
 
 export interface IRetryConditionNode {
-  type?: typeof NODE_TYPES.RETRY_CONDITION;
+  type?: typeof NODE_TYPES.RETRY_CONDITION_NODE;
   title: string;
   yellowNode: string; // 노란색 노드 : 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함
   redNode: string; //빨간색 노드 : 횟수 초과시 응답할 말풍선 연결 - 말풍선 목록 타입으로 변경 요함

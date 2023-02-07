@@ -123,7 +123,7 @@ export const NodeEditDrawer = () => {
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNodeEdit />;
-      case NODE_TYPES.RETRY_CONDITION:
+      case NODE_TYPES.RETRY_CONDITION_NODE:
         return <RetryConditionNodeEdit />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNodeEdit />;

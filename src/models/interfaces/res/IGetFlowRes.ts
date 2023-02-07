@@ -159,8 +159,10 @@ export interface IConditionView extends IViewBase {
 export interface IRetryConditionNode extends INodeBase {
   view: IRetryConditionView;
 }
-export interface IRetryConditionView extends IConditionView {
+export interface IRetryConditionView extends IViewBase {
   count: number;
+  falseThenNextNodeId?: string;
+  trueThenNextNodeId?: string;
 }
 
 export interface ITextNode extends INodeBase {
