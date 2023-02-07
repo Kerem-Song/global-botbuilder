@@ -32,7 +32,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     //useImperativeHandle(ref, () => textareaRef.current!, [textareaRef.current]);
-    const { style, height, showCount, autoHeight, ...inputProps } = args;
+    const { style, height, isError, showCount, autoHeight, ...inputProps } = args;
     const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.target.value);
       args.onChange?.(e);

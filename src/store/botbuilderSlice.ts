@@ -23,12 +23,14 @@ export interface BotBuilderMaker {
   token: string;
   selectedScenario?: IScenarioModel;
   basicScenarios?: IScenarioModel[];
+  invalidateNodes: Record<string, boolean>;
 }
 
 const initialState: BotBuilderMaker = {
   scale: 1.0,
   isEditDrawerOpen: false,
   token: '',
+  invalidateNodes: {},
 };
 
 export const botbuilderSlice = createSlice({
@@ -75,6 +77,16 @@ export const botbuilderSlice = createSlice({
         state.savedGuideInfo = action.payload;
       }
     },
+    setInvalidateNode: (
+      state,
+      action: PayloadAction<{ id: string; isValid: boolean }>,
+    ) => {
+      const { id, isValid } = action.payload;
+      console.log(action.payload);
+      const result = { ...state.invalidateNodes };
+      result[id] = !isValid;
+      state.invalidateNodes = result;
+    },
     // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
     //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
     //   const cr = canvas?.getBoundingClientRect() || new DOMRect();
@@ -101,6 +113,7 @@ export const {
   setEditDrawerToggle,
   setGuideStartNode,
   setSesstionToken,
+  setInvalidateNode,
   // setGuidePosition,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;

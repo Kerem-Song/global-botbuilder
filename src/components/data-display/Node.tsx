@@ -89,12 +89,16 @@ export const Node: FC<INodeProps> = ({
 }) => {
   const dispatch = useDispatch();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const invalidate = useRootState(
+    (state) => state.botBuilderReducer.invalidateNodes[node.id],
+  );
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
     'luna-node-hoverble': hoverable,
     [`border-radious-${radius}`]: radius !== 'none',
     'luna-node-active': active,
+    'luna-node-invalidate': invalidate,
   });
 
   const titleClass = classNames('luna-node-head');
