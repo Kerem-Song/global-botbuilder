@@ -6,17 +6,13 @@ import {
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
   INodeEditModel,
+  parameterSetNodeEditSchema,
   productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
-import {
-  setEditDrawerToggle,
-  setInvalidateNode,
-  setSelected,
-} from '@store/botbuilderSlice';
+import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
-import classNames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
@@ -60,6 +56,10 @@ export const NodeEditDrawer = () => {
         .when('nodeType', {
           is: NODE_TYPES.PRODUCT_CARD_NODE,
           then: productCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.PARAMETER_SET_NODE,
+          then: parameterSetNodeEditSchema,
         }),
     })
     .required();

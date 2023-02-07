@@ -24,6 +24,7 @@ import {
   IListCardView,
   INodeBase,
   IOtherFlowRedirectView,
+  IParameterSetParams,
   IParameterSetView,
   IProductCardView,
   IRetryConditionNode,
@@ -153,10 +154,18 @@ export const nodeHelper = {
     return result;
   },
   createDefaultParameterSetView: () => {
-    const result: IParameterSetView = {
+    const result = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
-      typeName: VIEW_TYPES.ANSWER_VIEW,
+      typeName: VIEW_TYPES.PARAMETER_SET_NODE_VIEW,
       parameters: [{ name: '', value: '' }],
+    };
+
+    return result;
+  },
+  createDefaultParameterSetParams: () => {
+    const result: IParameterSetParams = {
+      name: '',
+      value: '',
     };
 
     return result;
