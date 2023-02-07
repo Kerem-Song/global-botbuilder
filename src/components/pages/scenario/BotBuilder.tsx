@@ -21,6 +21,8 @@ import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 
+let dirtySelect: string | undefined;
+
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
@@ -130,7 +132,10 @@ export const Botbuilder = () => {
   };
 
   const handleNodeClick = (id: string) => {
-    console.log('handleNodeClick');
+    if (dirtySelect === id) {
+      dirtySelect = undefined;
+      return;
+    }
     if (!isEditDrawerOpen) {
       const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
       nodeElements.forEach((n) => {
@@ -167,7 +172,7 @@ export const Botbuilder = () => {
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
       title: nodeName,
-      cards: addCard,
+      //cards: addCard,
       nodeKind: getNodeKind(cardType),
       view: nodeView,
       option: 1,
@@ -191,6 +196,8 @@ export const Botbuilder = () => {
       y,
     };
     dispatch(updateNode(node));
+
+    dirtySelect = node.id;
   };
 
   return (
@@ -255,7 +262,7 @@ export const Botbuilder = () => {
                   id={item.id}
                   key={item.id}
                   title={item.title}
-                  cards={item.cards}
+                  //cards={item.cards}
                   node={item}
                   active={selected === item.id}
                   onClick={() => handleNodeClick(item.id)}
