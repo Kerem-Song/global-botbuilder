@@ -5,7 +5,7 @@ import {
   TViewTypes,
   ValueOf,
 } from '@models';
-import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { ImageAspectRatio } from '@models/enum';
 import { NodeKind } from '@models/enum/NodeKind';
 
 export const ACTION_TYPES = {
@@ -156,6 +156,13 @@ export interface IConditionView extends IViewBase {
   items?: IConditionItem[];
 }
 
+export interface IRetryConditionNode extends INodeBase {
+  view: IRetryConditionView;
+}
+export interface IRetryConditionView extends IConditionView {
+  count: number;
+}
+
 export interface ITextNode extends INodeBase {
   view: ITextView;
 }
@@ -227,6 +234,7 @@ export interface IListCardNode extends INodeBase {
 export interface IListCardCarouselNode extends INodeBase {
   view: IListCardCarouselView;
 }
+
 export interface IListCardView extends IHasButtonViewBase {
   header: string;
   imageCtrl: IImageCtrl;

@@ -1,6 +1,6 @@
 import { icImg } from '@assets';
 import { Col, Row, Space } from '@components/layout';
-import { ImageAspectRatio } from '@models/enum/ImageAspectRatio';
+import { ImageAspectRatio } from '@models/enum';
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
 

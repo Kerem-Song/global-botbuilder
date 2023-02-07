@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 import { TNodeTypes } from './ICard';
-import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
+import { ACTION_TYPES, IProductCardView, IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> {
   id: string;
@@ -102,14 +102,52 @@ export const listCardNodeEditSchema = yup.object().shape({
   buttons: buttonsEditSchema,
 });
 
-export const productCardNodeEditSchema = yup.object().shape({});
+export const productCardNodeEditSchema = yup.object().shape({
+  imageCtrl: yup.object().shape({
+    // imageUrl: yup
+    //   .mixed()
+    //   .required()
+    //   .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
+    //   .test(
+    //     'fileFormat',
+    //     'Unsupported Format',
+    //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
+    //   ),
+    // imageUrl: yup.string().trim().required(),
+    imageUrl: yup.string().url(),
+    actionType: yup.string().required(),
+    actionValue: yup.string().required(),
+  }),
+  profileIconUrl: yup.string().url(),
+  profileName: yup
+    .string()
+    .trim()
+    .max(15, '15자를 초과할 수 없습니다.')
+    .required(`필수 입력 항목입니다.`),
+  description: yup.string().trim().required(`필수 입력 항목입니다.`),
+  retailPrice: yup
+    .number()
+    .transform((value, originalValue) => {
+      return originalValue === '' ? undefined : value;
+    })
+    .typeError('숫자만 입력하실 수 있습니다.')
+    .required(`필수 입력 항목입니다.`),
+  salePrice: yup
+    .number()
+    .transform((value, originalValue) => {
+      return originalValue === '' ? undefined : value;
+    })
+    .typeError('숫자만 입력하실 수 있습니다.')
+    .required(`필수 입력 항목입니다.`),
+  currencyUnit: yup.mixed().oneOf(['USD', 'KRW', 'JPY']),
+  buttons: buttonsEditSchema,
+});
 
 export const conditionNodeEditSchema = yup.object().shape({
   items: yup.array().of(
     yup.object().shape({
       op1: yup.string().trim().required(`필수 입력 항목입니다.`),
       op2: yup.string().trim().required(`필수 입력 항목입니다.`),
-      operator: yup.number().required(`필수 입력 항목입니다.`),
     }),
   ),
 });

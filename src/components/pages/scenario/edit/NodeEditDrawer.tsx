@@ -6,6 +6,7 @@ import {
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
   INodeEditModel,
+  productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
 import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
@@ -21,6 +22,7 @@ import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
+import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
@@ -49,6 +51,10 @@ export const NodeEditDrawer = () => {
         .when('nodeType', {
           is: NODE_TYPES.CONDITION_NODE,
           then: conditionNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.PRODUCT_CARD_NODE,
+          then: productCardNodeEditSchema,
         }),
     })
     .required();
@@ -124,6 +130,8 @@ export const NodeEditDrawer = () => {
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNodeEdit />;
+      case NODE_TYPES.RETRY_CONDITION:
+        return <RetryConditionNodeEdit />;
       default:
         <></>;
     }

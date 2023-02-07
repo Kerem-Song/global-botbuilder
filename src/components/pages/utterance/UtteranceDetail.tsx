@@ -1,6 +1,6 @@
 import { icEnter, icSuccess, icUtteranceEmpty } from '@assets';
 import { Card } from '@components/data-display';
-import { Checkbox, Input } from '@components/data-entry';
+import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
@@ -8,24 +8,29 @@ import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
   IDeleteIntent,
   IInputFormModel,
+  IReactSelect,
   ISaveIntent,
   IUtteranceItem,
   IUtteranceModel,
 } from '@models';
-import { useEffect } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
-import { toast } from 'react-toastify';
+import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers';
+import { optionCSS } from 'react-select/dist/declarations/src/components/Option';
+
+import { lunaToast } from '../../../../src/modules/lunaToast';
+// import { toast } from 'react-toastify';
 
 export const UtteranceDetail = () => {
+  const [searchWord, setSearchWord] = useState<string | undefined>('');
   const { navigate, t, tc } = usePage();
   const { intentMutate, getIntentDetailQuery, intentDeleteMutate, getIntentListQuery } =
     useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const list = getScenarioList(token);
-
   const scenarioList =
     list.data &&
     list.data.map((x) => {
@@ -33,10 +38,10 @@ export const UtteranceDetail = () => {
     });
 
   const { utteranceId, botId } = useParams();
-  // const test = utteranceId ? getIntentDetailQuery(utteranceId) : null;
 
-  const { data } = getIntentDetailQuery(utteranceId!);
+  const hasUtteranceId = getIntentDetailQuery(utteranceId);
   const { confirm } = useSystemModal();
+
   const { reset, register, handleSubmit, control, getValues, watch } =
     useForm<IUtteranceModel>({
       defaultValues: {
@@ -44,24 +49,28 @@ export const UtteranceDetail = () => {
       },
     });
 
-  useEffect(() => {
-    if (data) {
-      const resetValue = {
-        name: data.result.intentName,
-        intentId: data.result.intentId,
-        connectScenarioId: data.result.flowId,
-        connectScenarioName: data.result.flowName,
-      };
+  const { field: scenarioListField } = useController({
+    name: `connectScenarioId`,
+    control,
+  });
 
+  useEffect(() => {
+    if (hasUtteranceId && hasUtteranceId.data) {
+      const resetValue = {
+        name: hasUtteranceId.data.result.intentName,
+        intentId: hasUtteranceId.data.result.intentId,
+        connectScenarioId: hasUtteranceId.data.result.flowId,
+        connectScenarioName: hasUtteranceId.data.result.flowName,
+      };
       reset(resetValue);
 
       append(
-        data.result.utterances?.map<IUtteranceItem>((x) => {
-          return { utterance: x };
+        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { text: x.text, id: x.id };
         }) || [],
       );
     }
-  }, [data]);
+  }, [hasUtteranceId?.data]);
 
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
@@ -105,20 +114,12 @@ export const UtteranceDetail = () => {
     if (result) {
       const deleteIntent: IDeleteIntent = {
         sessionToken: token,
-        intentId: data?.result.intentId,
+        intentId: hasUtteranceId!.data?.result.intentId,
       };
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           if (submitResult && submitResult.isSuccess) {
-            const message = '삭제되었습니다.';
-            toast.success(message, {
-              position: 'bottom-right',
-              icon: () => <img src={icSuccess} alt="success" />,
-              theme: 'dark',
-              hideProgressBar: true,
-              className: 'luna-toast',
-              bodyClassName: 'luna-toast-body',
-            });
+            lunaToast.success();
             navigate(`/${botId}/utterance`);
           }
         },
@@ -128,7 +129,7 @@ export const UtteranceDetail = () => {
 
   const handleAddUtternace = (data: IInputFormModel): void => {
     if (!data.utterance || !data.utterance.trim()) return;
-    append({ utterance: data.utterance });
+    append({ text: data.utterance });
     inputForm.reset();
   };
 
@@ -136,15 +137,9 @@ export const UtteranceDetail = () => {
     const newIntent: ISaveIntent = {
       sessionToken: token,
       intentName: itemData.name,
-      utterances: itemData.items.map((x) => x.utterance),
-      flowId: data?.result.flowId,
-    };
-
-    const modifyIntent: ISaveIntent = {
-      sessionToken: token,
-      intentId: itemData.intentId,
-      intentName: itemData.name,
-      utterances: itemData.items.map((x) => x.utterance),
+      utterances: itemData.items.map((x) => {
+        return x.text;
+      }),
       flowId: itemData.connectScenarioId,
     };
 
@@ -152,37 +147,34 @@ export const UtteranceDetail = () => {
       onSuccess: (submitResult) => {
         console.log('newIntent', submitResult);
         if (submitResult.isSuccess) {
-          const message = '저장되었습니다.';
-          toast.success(message, {
-            position: 'bottom-right',
-            icon: () => <img src={icSuccess} alt="success" />,
-            theme: 'dark',
-            hideProgressBar: true,
-            className: 'luna-toast',
-            bodyClassName: 'luna-toast-body',
-          });
+          lunaToast.success();
           navigate(`/${botId}/utterance`);
         }
       },
     });
 
-    intentMutate.mutate(modifyIntent, {
-      onSuccess: (submitResult) => {
-        console.log('modifyIntent', submitResult);
-        if (submitResult.isSuccess) {
-          const message = '저장되었습니다.';
-          toast.success(message, {
-            position: 'bottom-right',
-            icon: () => <img src={icSuccess} alt="success" />,
-            theme: 'dark',
-            hideProgressBar: true,
-            className: 'luna-toast',
-            bodyClassName: 'luna-toast-body',
-          });
-          navigate(`/${botId}/utterance`);
-        }
-      },
-    });
+    if (itemData.intentId) {
+      const modifyIntent: ISaveIntent = {
+        sessionToken: token,
+        intentId: itemData.intentId,
+        intentName: itemData.name,
+        utterances: itemData.items.map((x) => {
+          return x.text;
+        }),
+        flowId: itemData.connectScenarioId,
+      };
+
+      intentMutate.mutate(modifyIntent, {
+        onSuccess: (submitResult) => {
+          console.log('modifyIntent', submitResult);
+          if (submitResult.isSuccess) {
+            lunaToast.success();
+
+            navigate(`/${botId}/utterance`);
+          }
+        },
+      });
+    }
   };
 
   return (
@@ -227,11 +219,12 @@ export const UtteranceDetail = () => {
               </Col>
               <Col flex="auto">
                 <Select
+                  {...scenarioListField}
                   options={scenarioList}
-                  value={scenarioList?.find((x) => x.value === data?.result.flowId)}
-                  onChange={(e) => {
-                    e?.value;
-                  }}
+                  value={scenarioList?.find(
+                    (item) => item.value === scenarioListField.value,
+                  )}
+                  onChange={(options: any) => scenarioListField.onChange(options.value)}
                 />
               </Col>
             </Row>
@@ -273,7 +266,14 @@ export const UtteranceDetail = () => {
           <span className="title">
             Utterance <span className="utteranceLength">{watch('items').length}</span>
           </span>
-          <Input size="small" search placeholder="Input search text" />
+          <FormItem>
+            <Input
+              size="small"
+              search
+              placeholder="Input search text"
+              value={fields.map((x) => x.text).find((x) => x === searchWord)}
+            />
+          </FormItem>
           <button className="icDelete" onClick={openDeleteCheckboxModal} />
         </Space>
         <Row style={{ marginTop: '12px' }}>
@@ -286,7 +286,7 @@ export const UtteranceDetail = () => {
                       {...register(`items.${i}.isChecked`)}
                       style={{ marginLeft: '20px' }}
                     />
-                    <p className="item">{v.utterance}</p>
+                    <p className="item">{v.text}</p>
                   </div>
                 );
               })

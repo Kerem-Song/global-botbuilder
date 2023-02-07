@@ -1,11 +1,11 @@
 import { Button, Card } from '@components';
 import { NextNodeButton } from '@components/data-display/NextNodeButton';
-import { ICountNode } from '@models';
+import { IRetryConditionNode } from '@models';
 import { FC } from 'react';
 
 interface Count {
   nodeId: string;
-  cards: ICountNode[];
+  cards: IRetryConditionNode[];
 }
 export const Count: FC<Count> = ({ nodeId, cards }) => {
   return (

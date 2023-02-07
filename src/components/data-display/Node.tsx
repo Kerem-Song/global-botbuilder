@@ -5,11 +5,11 @@ import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCar
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
 import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
-import { CountNode } from '@components/pages/scenario/nodes/CountNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
 import { ListCardCarouselNode } from '@components/pages/scenario/nodes/ListCardCarouselNode';
 import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
+import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
@@ -32,10 +32,10 @@ import {
   IAnswerNode,
   IBasicCardNode,
   IConditionNode,
-  ICountNode,
   IListCardNode,
   IOtherFlowRedirectNode,
   IProductCardNode,
+  IRetryConditionNode,
   NODE_TYPES,
 } from '../../models/interfaces/ICard';
 import { SizeType } from '../../models/types/SizeType';
@@ -63,7 +63,7 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
     | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | ICountNode[]
+    | IRetryConditionNode[]
     | IOtherFlowRedirectNode[];
   node: INode;
   onClick?: (e?: any) => void;
@@ -167,8 +167,8 @@ export const Node: FC<INodeProps> = ({
         return <IntentNode id={id} />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
-      case NODE_TYPES.COUNT:
-        return <CountNode nodeId={`${NODE_PREFIX}${id}`} />;
+      case NODE_TYPES.RETRY_CONDITION:
+        return <RetryConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNode node={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:

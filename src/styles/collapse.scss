@@ -14,7 +14,7 @@
   
     &[data-collapsed='true'] {
       display: block;
-      overflow: hidden;
+      // overflow: hidden;
       transition: max-height .5s ease;
     }
     

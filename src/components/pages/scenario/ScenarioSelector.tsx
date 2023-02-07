@@ -1,18 +1,11 @@
-import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
-import { Button } from '@components/general';
-import { Col, Row } from '@components/layout';
-import { IPopperItem, IPopperSelectItem, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
-import { getNodeKind, IScenarioModel, TNodeTypes } from '@models';
+import { IScenarioModel } from '@models';
 import { GuideInfo } from '@store/botbuilderSlice';
-import { addArrow, appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-
-import { ID_GEN } from '../../../modules';
 
 interface IScenarioSelectorFormValue {
   scenarioList: IScenarioModel[];
