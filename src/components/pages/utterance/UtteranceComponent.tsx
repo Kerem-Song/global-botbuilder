@@ -13,6 +13,7 @@ export const UtteranceComponent = () => {
     scenarios: undefined,
     searchWord: undefined,
   });
+
   const { data } = getIntentListQuery(
     searchData.sort,
     searchData.scenarios,
@@ -30,7 +31,7 @@ export const UtteranceComponent = () => {
           </thead>
           <tbody>
             <UtteranceListItem
-              data={data}
+              listData={data}
               searchData={searchData}
               setSearchData={setSearchData}
             />

@@ -75,8 +75,9 @@ export const BasicCard: FC<BasicCard> = ({ nodeId, cards, isCarousel }) => {
   };
 
   return (
-    <Carousel nodeId={nodeId} addCarousel={isCarousel}>
-      {cards.map((item, i) => card(item, i))}
-    </Carousel>
+    // <Carousel nodeId={nodeId} addCarousel={isCarousel}>
+    //   {cards.map((item, i) => card(item, i))}
+    // </Carousel>
+    <></>
   );
 };

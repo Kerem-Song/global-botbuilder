@@ -11,7 +11,7 @@ import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
   children: ReactNode[];
   nodeId: string;
-  addCarousel?: boolean;
+  addCarousel?: () => void;
 }
 
 export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) => {
@@ -31,7 +31,18 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
     updateLine(nodeId);
   }, [current]);
 
+  const NextDisabled = () => {
+    if (current + 1 > Math.min(current + 1, length - 1, 9)) {
+      return true;
+    }
+
+    return false;
+  };
+
   const handleNextClick = () => {
+    if (NextDisabled()) {
+      return;
+    }
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
@@ -66,12 +77,10 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
             <button
               className="carouselBtn next"
               onClick={handleNextClick}
-              disabled={current + 1 === length}
+              disabled={NextDisabled()}
             >
               <img
-                src={
-                  current + 1 === length ? icCarouselNextInactive : icCarouselNextActive
-                }
+                src={NextDisabled() ? icCarouselNextInactive : icCarouselNextActive}
                 alt="carouselNextBtn"
               />
             </button>
@@ -89,7 +98,9 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
           })}
           <div style={{ width: '190px', flex: 'none' }}>
             <div style={{ width: '190px' }}>
-              <Button block>말풍선 추가</Button>
+              <Button block onClick={addCarousel}>
+                말풍선 추가
+              </Button>
             </div>
           </div>
         </div>

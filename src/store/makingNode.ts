@@ -65,52 +65,12 @@ export const makingNodeSlice = createSlice({
         const nodes = [...state.nodes];
         const index = nodes.indexOf(matched);
         const old = nodes[index];
-
         const arrows = [...state.arrows];
+        const updateArrows = nodeHelper.editArrows(node, arrows);
 
-        const removeArrows = state.arrows.filter(
-          (x) => x.updateKey === `${NODE_PREFIX}${node.id}` && x.isNextNode,
-        );
-
-        if (removeArrows.length) {
-          removeArrows.forEach((arrow) => {
-            const index = arrows.indexOf(arrow);
-            arrows.splice(index, 1);
-          });
+        if (updateArrows) {
+          state.arrows = updateArrows;
         }
-
-        if (node.nodeType === NODE_TYPES.ANSWER_NODE) {
-          const view = node.view as IAnswerView;
-          view.quicks?.forEach((q) => {
-            if (q.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && q.actionValue) {
-              arrows.push({
-                start: `${NEXT_BUTTON_PREFIX}${q.id}`,
-                end: `${NODE_PREFIX}${q.actionValue}`,
-                updateKey: `${NODE_PREFIX}${node.id}`,
-                isNextNode: true,
-                type: 'blue',
-              });
-            }
-          });
-        }
-
-        if (node.nodeType === NODE_TYPES.BASIC_CARD_NODE) {
-          const view = node.view as IBasicCardView;
-          view.buttons?.forEach((b) => {
-            console.log(b);
-            if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-              arrows.push({
-                start: `${NEXT_BUTTON_PREFIX}${b.id}`,
-                end: `${NODE_PREFIX}${b.actionValue}`,
-                updateKey: `${NODE_PREFIX}${node.id}`,
-                isNextNode: true,
-                type: 'blue',
-              });
-            }
-          });
-        }
-
-        state.arrows = arrows;
 
         nodes.splice(index, 1, { ...old, title: node.title, view: node.view });
         state.nodes = nodes;

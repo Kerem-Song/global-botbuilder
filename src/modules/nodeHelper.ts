@@ -3,6 +3,7 @@ import {
   ConditionOperator,
   IArrow,
   INode,
+  INodeEditModel,
   NODE_TYPES,
   NodeKind,
   TNodeTypes,
@@ -28,8 +29,13 @@ import {
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
-import { NODE_PREFIX } from './constants';
+import { NEXT_BUTTON_PREFIX, NODE_PREFIX } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
+
+const editableArrowNodeTypes: string[] = [
+  NODE_TYPES.ANSWER_NODE,
+  NODE_TYPES.BASIC_CARD_NODE,
+];
 
 export const nodeHelper = {
   createDefaultView: (nodeType: TNodeTypes) => {
@@ -326,6 +332,64 @@ export const nodeHelper = {
         .map((view) => nodeHelper.createBasicCardArrow(nodeId, view))
         .flat(1),
     );
+    return result;
+  },
+  editArrows: (node: INodeEditModel, arrows: IArrow[]): IArrow[] | undefined => {
+    if (!editableArrowNodeTypes.includes(node.nodeType)) {
+      return undefined;
+    }
+
+    const removeArrows = arrows.filter(
+      (x) => x.updateKey === `${NODE_PREFIX}${node.id}` && x.isNextNode,
+    );
+
+    if (removeArrows.length) {
+      removeArrows.forEach((arrow) => {
+        const index = arrows.indexOf(arrow);
+        arrows.splice(index, 1);
+      });
+    }
+
+    if (node.nodeType === NODE_TYPES.ANSWER_NODE) {
+      nodeHelper.editAnswerViewArrow(node.id, node.view as IAnswerView);
+    }
+
+    if (node.nodeType === NODE_TYPES.BASIC_CARD_NODE) {
+      nodeHelper.editBasicCardViewArrow(node.id, node.view as IBasicCardView);
+    }
+
+    return arrows;
+  },
+  editAnswerViewArrow: (nodeId: string, view: IAnswerView) => {
+    const result: IArrow[] = [];
+    view.quicks?.forEach((q) => {
+      if (q.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && q.actionValue) {
+        result.push({
+          start: `${NEXT_BUTTON_PREFIX}${q.id}`,
+          end: `${NODE_PREFIX}${q.actionValue}`,
+          updateKey: `${NODE_PREFIX}${nodeId}`,
+          isNextNode: true,
+          type: 'blue',
+        });
+      }
+    });
+
+    return result;
+  },
+  editBasicCardViewArrow: (nodeId: string, view: IBasicCardView) => {
+    const result: IArrow[] = [];
+    view.buttons?.forEach((b) => {
+      if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
+        result.push({
+          start: `${NEXT_BUTTON_PREFIX}${b.id}`,
+          end: `${NODE_PREFIX}${b.actionValue}`,
+          updateKey: `${NODE_PREFIX}${nodeId}`,
+          isNextNode: true,
+          type: 'blue',
+        });
+      }
+    });
+
     return result;
   },
   initArrows: (node: INodeBase): IArrow[] => {

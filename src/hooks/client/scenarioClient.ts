@@ -274,21 +274,12 @@ export const useScenarioClient = () => {
         return converted;
       });
       const result = { ...old, nodes: resultNodes };
-      // nodes.forEach((node) => {
-      //   const oldNode = old?.nodes.find((x) => x.id === node.id);
-      //   console.log(oldNode);
-      //   console.log(node);
-      //   if (oldNode) {
-      //     oldNode.alias = node.title || '';
-      //     oldNode.top = node.y;
-      //     oldNode.left = node.x;
-      //   }
-      // });
 
       const res = await http.post('builder/updateflow', {
         sessionToken: token,
         flow: result,
       });
+      console.log('====================', res);
       if (res) {
         lunaToast.success();
         queryClient.invalidateQueries(['scenario', scenarioId]);

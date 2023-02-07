@@ -32,6 +32,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
     function (response) {
       if (!response.data.isSuccess) {
         error({ title: 'error', description: response.data.exception.message });
+        return Promise.reject(new Error(response.data.exception.message));
       }
       return response;
     },

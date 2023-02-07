@@ -25,12 +25,12 @@ export interface INode {
   y: number;
   view?: IViewBase;
   nextNodeId?: string;
-  cards?:
-    | IBasicCardNode[]
-    | IProductCardNode[]
-    | IListCardNode[]
-    | IAnswerNode[]
-    | IConditionNode[]
-    | IRetryConditionNode[]
-    | IOtherFlowRedirectNode[];
+  // cards?:
+  //   | IBasicCardNode[]
+  //   | IProductCardNode[]
+  //   | IListCardNode[]
+  //   | IAnswerNode[]
+  //   | IConditionNode[]
+  //   | IRetryConditionNode[]
+  //   | IOtherFlowRedirectNode[];
 }

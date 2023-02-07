@@ -1,7 +1,7 @@
 import { FormItem, Input } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
-import { NODE_TYPES } from '@models';
+import { INode, NODE_TYPES } from '@models';
 import {
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
@@ -9,8 +9,13 @@ import {
   productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
-import { setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
+import {
+  setEditDrawerToggle,
+  setInvalidateNode,
+  setSelected,
+} from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
+import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
@@ -28,12 +33,11 @@ import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const [node, setNode] = useState<INode>();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
-
   const selected = useRootState((state) => state.botBuilderReducer.selected);
 
   const schema = yup
@@ -94,23 +98,16 @@ export const NodeEditDrawer = () => {
         view: selectedNode.view,
       };
       reset(model);
-    }
-  }, [selectedNode]);
-
-  useEffect(() => {
-    if (isEditDrawerOpen) {
-      setIsOpen(true);
-    } else if (selectedNode) {
-      handleSubmit(onSubmit)();
-      if (isValid) {
+    } else {
+      if (node) {
+        handleSubmit(onSubmit)();
+        dispatch(setInvalidateNode({ id: node.id, isValid }));
         reset({ id: '', title: '' });
-        setIsOpen(false);
-        dispatch(setSelected());
-      } else {
-        dispatch(setEditDrawerToggle(true));
       }
     }
-  }, [isEditDrawerOpen]);
+
+    setNode(selectedNode);
+  }, [selectedNode]);
 
   const editItem = () => {
     switch (selectedNode?.type) {
@@ -138,7 +135,7 @@ export const NodeEditDrawer = () => {
   return (
     <Drawer
       className="botBuilderDrawer"
-      open={isOpen}
+      open={isEditDrawerOpen}
       direction="right"
       enableOverlay={false}
       duration={200}

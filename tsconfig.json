@@ -21,6 +21,8 @@
       "@components/*": ["src/components/*"],
       "@models": ["src/models"],
       "@models/*": ["src/models/*"],
+      "@modules": ["src/modules"],
+      "@modules/*": ["src/modules/*"],
       "@assets": ["src/assets"],
       "@assets/*": ["src/assets/*"],
       "@hooks": ["src/hooks"],
