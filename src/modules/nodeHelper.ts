@@ -35,6 +35,8 @@ import { ID_GEN, ID_TYPES } from './idGen';
 const editableArrowNodeTypes: string[] = [
   NODE_TYPES.ANSWER_NODE,
   NODE_TYPES.BASIC_CARD_NODE,
+  NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+  NODE_TYPES.CONDITION_NODE,
 ];
 
 export const nodeHelper = {
@@ -267,13 +269,13 @@ export const nodeHelper = {
       type: 'blue',
     };
   },
-  createAnswerNodeArrow: (node: IAnswerNode): IArrow[] => {
+  createAnswerNodeArrow: (nodeId: string, view: IAnswerView): IArrow[] => {
     const result: IArrow[] = [];
-    node.view.quicks?.map((x) => {
+    view.quicks?.map((x) => {
       if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && x.actionValue) {
         result.push({
-          start: `next-${x.id}`,
-          updateKey: `${NODE_PREFIX}${node.id}`,
+          start: `${NEXT_BUTTON_PREFIX}${x.id}`,
+          updateKey: `${NODE_PREFIX}${nodeId}`,
           end: `${NODE_PREFIX}${x.actionValue}`,
           isNextNode: true,
           type: 'blue',
@@ -283,23 +285,23 @@ export const nodeHelper = {
 
     return result;
   },
-  createConditionNodeArrow: (node: IConditionNode): IArrow[] => {
+  createConditionNodeArrow: (nodeId: string, view: IConditionView): IArrow[] => {
     const result: IArrow[] = [];
-    if (node.view.falseThenNextNodeId) {
+    if (view.falseThenNextNodeId) {
       result.push({
-        start: `next-node-${node.id}-false`,
-        updateKey: `${NODE_PREFIX}${node.id}`,
-        end: `${NODE_PREFIX}${node.view.falseThenNextNodeId}`,
+        start: `next-node-${nodeId}-false`,
+        updateKey: `${NODE_PREFIX}${nodeId}`,
+        end: `${NODE_PREFIX}${view.falseThenNextNodeId}`,
         isNextNode: true,
         type: 'red',
       });
     }
 
-    if (node.view.trueThenNextNodeId) {
+    if (view.trueThenNextNodeId) {
       result.push({
-        start: `next-node-${node.id}-true`,
-        updateKey: `${NODE_PREFIX}${node.id}`,
-        end: `${NODE_PREFIX}${node.view.trueThenNextNodeId}`,
+        start: `next-node-${nodeId}-true`,
+        updateKey: `${NODE_PREFIX}${nodeId}`,
+        end: `${NODE_PREFIX}${view.trueThenNextNodeId}`,
         isNextNode: true,
         type: 'green',
       });
@@ -350,48 +352,38 @@ export const nodeHelper = {
       });
     }
 
-    if (node.nodeType === NODE_TYPES.ANSWER_NODE) {
-      nodeHelper.editAnswerViewArrow(node.id, node.view as IAnswerView);
-    }
-
-    if (node.nodeType === NODE_TYPES.BASIC_CARD_NODE) {
-      nodeHelper.editBasicCardViewArrow(node.id, node.view as IBasicCardView);
+    switch (node.nodeType) {
+      case NODE_TYPES.ANSWER_NODE:
+        arrows.push(
+          ...nodeHelper.createAnswerNodeArrow(node.id, node.view as IAnswerView),
+        );
+        break;
+      case NODE_TYPES.BASIC_CARD_NODE:
+        arrows.push(
+          ...nodeHelper.createBasicCardArrow(node.id, node.view as IBasicCardView),
+        );
+        break;
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+        arrows.push(
+          ...nodeHelper.createBasicCardCarouselArrow(
+            node.id,
+            node.view as IBasicCardCarouselView,
+          ),
+        );
+        break;
+      case NODE_TYPES.CONDITION_NODE:
+        arrows.push(
+          ...nodeHelper.createConditionNodeArrow(
+            node.id,
+            node.view as IBasicCardCarouselView,
+          ),
+        );
+        break;
     }
 
     return arrows;
   },
-  editAnswerViewArrow: (nodeId: string, view: IAnswerView) => {
-    const result: IArrow[] = [];
-    view.quicks?.forEach((q) => {
-      if (q.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && q.actionValue) {
-        result.push({
-          start: `${NEXT_BUTTON_PREFIX}${q.id}`,
-          end: `${NODE_PREFIX}${q.actionValue}`,
-          updateKey: `${NODE_PREFIX}${nodeId}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-    });
 
-    return result;
-  },
-  editBasicCardViewArrow: (nodeId: string, view: IBasicCardView) => {
-    const result: IArrow[] = [];
-    view.buttons?.forEach((b) => {
-      if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-        result.push({
-          start: `${NEXT_BUTTON_PREFIX}${b.id}`,
-          end: `${NODE_PREFIX}${b.actionValue}`,
-          updateKey: `${NODE_PREFIX}${nodeId}`,
-          isNextNode: true,
-          type: 'blue',
-        });
-      }
-    });
-
-    return result;
-  },
   initArrows: (node: INodeBase): IArrow[] => {
     const arrows: IArrow[] = [];
     if (node.nextNodeId) {
@@ -404,12 +396,14 @@ export const nodeHelper = {
 
     if (node.typeName === NODE_TYPES.ANSWER_NODE) {
       const answerNode: IAnswerNode = node as IAnswerNode;
-      arrows.push(...nodeHelper.createAnswerNodeArrow(answerNode));
+      arrows.push(...nodeHelper.createAnswerNodeArrow(answerNode.id, answerNode.view));
     }
 
     if (node.typeName === NODE_TYPES.CONDITION_NODE) {
       const conditionNode: IConditionNode = node as IConditionNode;
-      arrows.push(...nodeHelper.createConditionNodeArrow(conditionNode));
+      arrows.push(
+        ...nodeHelper.createConditionNodeArrow(conditionNode.id, conditionNode.view),
+      );
     }
 
     if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
