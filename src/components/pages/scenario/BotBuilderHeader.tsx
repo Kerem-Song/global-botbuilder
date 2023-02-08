@@ -38,7 +38,7 @@ const carousleNodes = [
 const buttonNodes = [
   { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
   { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
-  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION, nodeName: 'Count' },
+  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: 'Count' },
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
@@ -87,7 +87,6 @@ export const BotBuilderHeader = () => {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: cardType,
       title: nodeName,
-      cards: addCard,
       view: nodeView,
       nodeKind: getNodeKind(cardType),
       option: 1,

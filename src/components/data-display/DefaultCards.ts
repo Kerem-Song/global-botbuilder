@@ -4,7 +4,7 @@ import {
   IConditionNode,
   IListCardNode,
   IProductCardNode,
-  IRetryCondition,
+  IRetryConditionNode,
   NODE_TYPES,
 } from '@models/interfaces/ICard';
 
@@ -19,7 +19,7 @@ export const defaultNode = (nodeType: TNodeTypes) => {
     | IListCardNode[]
     | IAnswerNode[]
     | IConditionNode[]
-    | IRetryCondition[]
+    | IRetryConditionNode[]
     | IOtherFlowRedirectNode[] = [];
 
   switch (nodeType) {
@@ -166,10 +166,10 @@ export const defaultNode = (nodeType: TNodeTypes) => {
       ];
       break;
 
-    case NODE_TYPES.RETRY_CONDITION:
+    case NODE_TYPES.RETRY_CONDITION_NODE:
       addNode = [
         {
-          type: NODE_TYPES.RETRY_CONDITION,
+          type: NODE_TYPES.RETRY_CONDITION_NODE,
           title: '',
           yellowNode: '',
           redNode: '',

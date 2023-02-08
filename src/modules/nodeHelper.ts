@@ -24,8 +24,11 @@ import {
   IListCardView,
   INodeBase,
   IOtherFlowRedirectView,
+  IParameterSetParams,
   IParameterSetView,
   IProductCardView,
+  IRetryConditionNode,
+  IRetryConditionView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 
@@ -37,6 +40,7 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.BASIC_CARD_NODE,
   NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
   NODE_TYPES.CONDITION_NODE,
+  NODE_TYPES.RETRY_CONDITION_NODE,
 ];
 
 export const nodeHelper = {
@@ -121,6 +125,15 @@ export const nodeHelper = {
 
     return result;
   },
+  createDefaultRetryConditionView: () => {
+    const result: IRetryConditionView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.RETRY_CONDITION_VIEW,
+      count: 0,
+    };
+
+    return result;
+  },
   createDefaultAnswerView: () => {
     const result: IAnswerView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
@@ -141,10 +154,18 @@ export const nodeHelper = {
     return result;
   },
   createDefaultParameterSetView: () => {
-    const result: IParameterSetView = {
+    const result = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
-      typeName: VIEW_TYPES.ANSWER_VIEW,
+      typeName: VIEW_TYPES.PARAMETER_SET_NODE_VIEW,
       parameters: [{ name: '', value: '' }],
+    };
+
+    return result;
+  },
+  createDefaultParameterSetParams: () => {
+    const result: IParameterSetParams = {
+      name: '',
+      value: '',
     };
 
     return result;
@@ -188,7 +209,7 @@ export const nodeHelper = {
       typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
       childrenViews: [nodeHelper.createDefaultListCardView()],
       isSuffle: false,
-      count: 0,
+      count: 1,
     };
 
     return result;
@@ -309,6 +330,36 @@ export const nodeHelper = {
 
     return result;
   },
+  createRetryConditionNodeArrow: (
+    nodeId: string,
+    view: IRetryConditionView,
+  ): IArrow[] => {
+    const result: IArrow[] = [];
+    console.log('view in create retry condition node arrow', view);
+    if (view.falseThenNextNodeId) {
+      console.log('view.falseThenNextNodeId', view.falseThenNextNodeId);
+      result.push({
+        start: `next-node-${nodeId}-false`,
+        updateKey: `${NODE_PREFIX}${nodeId}`,
+        end: `${NODE_PREFIX}${view.falseThenNextNodeId}`,
+        isNextNode: true,
+        type: 'yellow',
+      });
+    }
+
+    if (view.trueThenNextNodeId) {
+      console.log('view.trueThenNextNodeId', view.trueThenNextNodeId);
+      result.push({
+        start: `next-node-${nodeId}-true`,
+        updateKey: `${NODE_PREFIX}${nodeId}`,
+        end: `${NODE_PREFIX}${view.trueThenNextNodeId}`,
+        isNextNode: true,
+        type: 'green',
+      });
+    }
+
+    return result;
+  },
   createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
     const result: IArrow[] = [];
     view.buttons?.forEach((b) => {
@@ -373,9 +424,14 @@ export const nodeHelper = {
         break;
       case NODE_TYPES.CONDITION_NODE:
         arrows.push(
-          ...nodeHelper.createConditionNodeArrow(
+          ...nodeHelper.createConditionNodeArrow(node.id, node.view as IConditionView),
+        );
+        break;
+      case NODE_TYPES.RETRY_CONDITION_NODE:
+        arrows.push(
+          ...nodeHelper.createRetryConditionNodeArrow(
             node.id,
-            node.view as IBasicCardCarouselView,
+            node.view as IRetryConditionView,
           ),
         );
         break;
@@ -403,6 +459,16 @@ export const nodeHelper = {
       const conditionNode: IConditionNode = node as IConditionNode;
       arrows.push(
         ...nodeHelper.createConditionNodeArrow(conditionNode.id, conditionNode.view),
+      );
+    }
+
+    if (node.typeName === NODE_TYPES.RETRY_CONDITION_NODE) {
+      const retryConditionNode: IRetryConditionNode = node as IRetryConditionNode;
+      arrows.push(
+        ...nodeHelper.createRetryConditionNodeArrow(
+          retryConditionNode.id,
+          retryConditionNode.view,
+        ),
       );
     }
 

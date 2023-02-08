@@ -56,7 +56,7 @@ export const RetryConditionNodeEdit = () => {
               <span className="label">재질문할 메시지 연결 </span>
               <span className="required">*</span>
             </div>
-            <SelectNode fieldName={'trueThenNextNodeIdField'} />
+            <SelectNode fieldName={'trueThenNextNodeId'} />
           </Space>
 
           <Divider />

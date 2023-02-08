@@ -151,3 +151,16 @@ export const conditionNodeEditSchema = yup.object().shape({
     }),
   ),
 });
+
+export const parameterSetNodeEditSchema = yup.object().shape({
+  parameters: yup.array().of(
+    yup.object().shape({
+      name: yup
+        .string()
+        .trim()
+        .matches(/^[a-z0-9_]*$/, `영어 소문자, 숫자, 특수문자 _ 만 입력 가능합니다.`)
+        .required(`필수 입력 항목입니다.`),
+      value: yup.string().trim().required(`필수 입력 항목입니다.`),
+    }),
+  ),
+});

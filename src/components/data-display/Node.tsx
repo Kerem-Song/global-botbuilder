@@ -171,7 +171,7 @@ export const Node: FC<INodeProps> = ({
         return <IntentNode id={id} />;
       case NODE_TYPES.CONDITION_NODE:
         return <ConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
-      case NODE_TYPES.RETRY_CONDITION:
+      case NODE_TYPES.RETRY_CONDITION_NODE:
         return <RetryConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNode node={node} />;

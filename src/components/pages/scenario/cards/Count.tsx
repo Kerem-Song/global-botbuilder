@@ -1,6 +1,5 @@
 import { Button, Card } from '@components';
 import { NextNodeButton } from '@components/data-display/NextNodeButton';
-import { IRetryConditionNode } from '@models';
 import { FC } from 'react';
 
 interface Count {

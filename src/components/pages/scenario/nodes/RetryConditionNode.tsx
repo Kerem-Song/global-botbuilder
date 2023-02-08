@@ -10,7 +10,7 @@ interface IRetryConditionProps {
 }
 export const RetryConditionNode: FC<IRetryConditionProps> = ({ nodeId, node }) => {
   const view: IRetryConditionView = node.view as IRetryConditionView;
-  console.log('view in count node', view);
+
   return (
     <Card>
       <div className="countConditionWrapper">Retry {view?.count && view?.count}</div>
