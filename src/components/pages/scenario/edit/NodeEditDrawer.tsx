@@ -66,6 +66,10 @@ export const NodeEditDrawer = () => {
 
   const selectedNode = nodes.find((x) => x.id === selected);
 
+  const invalidateNodes = useRootState(
+    (state) => state.botBuilderReducer.invalidateNodes,
+  );
+
   const formMethods = useForm<INodeEditModel>({
     mode: 'onSubmit',
     defaultValues: {
@@ -88,6 +92,8 @@ export const NodeEditDrawer = () => {
     //dispatch(setSelected());
   };
 
+  const onFakeSubmit = (node: INodeEditModel) => {};
+
   useEffect(() => {
     if (selectedNode) {
       const model: INodeEditModel = {
@@ -98,9 +104,15 @@ export const NodeEditDrawer = () => {
         view: selectedNode.view,
       };
       reset(model);
+      if (invalidateNodes[selectedNode.id]) {
+        handleSubmit(onFakeSubmit)();
+      }
     } else {
       if (node) {
         handleSubmit(onSubmit)();
+        if (!isValid) {
+          onSubmit(getValues());
+        }
         dispatch(setInvalidateNode({ id: node.id, isValid }));
         reset({ id: '', title: '' });
       }
@@ -143,19 +155,22 @@ export const NodeEditDrawer = () => {
     >
       <div className="wrapper">
         <FormProvider {...formMethods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <div className="header">
               <span>{getValues().caption}</span>
             </div>
-            <div className="node-item-wrap">
-              <p className="m-b-8">
-                <span className="label">말풍선명</span>
-                <span className="required">*</span>
-              </p>
-              <FormItem error={errors.title}>
-                <Input placeholder="Input Chat Bubble name" {...register('title')} />
-              </FormItem>
-            </div>
+            {selectedNode?.type !== NODE_TYPES.INTENT_NODE && (
+              <div className="node-item-wrap">
+                <p className="m-b-8">
+                  <span className="label">말풍선명</span>
+                  <span className="required">*</span>
+                </p>
+                <FormItem error={errors.title}>
+                  <Input placeholder="Input Chat Bubble name" {...register('title')} />
+                </FormItem>
+              </div>
+            )}
+
             {editItem()}
           </form>
         </FormProvider>
