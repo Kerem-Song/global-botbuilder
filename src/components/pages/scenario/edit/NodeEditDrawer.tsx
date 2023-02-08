@@ -92,7 +92,9 @@ export const NodeEditDrawer = () => {
     //dispatch(setSelected());
   };
 
-  const onFakeSubmit = (node: INodeEditModel) => {};
+  const onFakeSubmit = (node: INodeEditModel) => {
+    console.log('fake');
+  };
 
   useEffect(() => {
     if (selectedNode) {

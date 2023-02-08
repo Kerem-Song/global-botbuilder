@@ -445,7 +445,7 @@ export const nodeHelper = {
     if (node.nextNodeId) {
       if (node.nodeKind === NodeKind.InputNode) {
         arrows.push(nodeHelper.createConnectArrow(node.id, node.nextNodeId));
-      } else {
+      } else if (node.typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
         arrows.push(nodeHelper.createNextArrow(node.id, node.nextNodeId));
       }
     }

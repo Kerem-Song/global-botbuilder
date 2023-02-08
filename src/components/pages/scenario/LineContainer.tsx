@@ -3,6 +3,7 @@ import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
 import { setSelected } from '@store/botbuilderSlice';
+import { removeItem } from '@store/makingNode';
 import { FC, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -17,10 +18,15 @@ export const LineContainer: FC = () => {
 
   useEffect(() => {
     updateLineAll();
+    console.log(lines);
   }, [lines]);
 
   const handleLineClick = useCallback((l: IArrow) => {
     dispatch(setSelected(l));
+  }, []);
+
+  const handleLineDelete = useCallback((l: IArrow) => {
+    dispatch(removeItem(l));
   }, []);
 
   return (
@@ -37,6 +43,7 @@ export const LineContainer: FC = () => {
           type={l.type}
           isNextNode={l.isNextNode}
           active={selectedLine === l}
+          onDelete={() => handleLineDelete(l)}
         />
       ))}
       {guideInfo ? (

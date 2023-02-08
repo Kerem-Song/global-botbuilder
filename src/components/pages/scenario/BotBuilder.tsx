@@ -64,20 +64,6 @@ export const Botbuilder = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const event = (e: KeyboardEvent) => {
-  //     if (e.key === 'Delete') {
-  //       dispatch(removeItem(selected));
-  //       dispatch(setSelected());
-  //     }
-  //   };
-  //   window.addEventListener('keydown', event);
-
-  //   return () => {
-  //     window.removeEventListener('keydown', event);
-  //   };
-  // }, [selected]);
-
   const handleAddArrows = (arrow: IArrow) => {
     dispatch(addArrow(arrow));
   };
@@ -119,10 +105,6 @@ export const Botbuilder = () => {
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    // if (isEditDrawerOpen) {
-    //   dispatch(setEditDrawerToggle(false));
-    //   return;
-    // }
     dispatch(setSelected());
     if (e.buttons === 1) {
       setIsPanning(true);

@@ -10,6 +10,7 @@ interface IConnectLineProps {
   active?: boolean;
   type: 'blue' | 'green' | 'red' | 'yellow';
   onClick?: () => void;
+  onDelete: () => void;
 }
 
 const strokes = {
@@ -27,11 +28,13 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   active,
   type,
   onClick,
+  onDelete,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGPathElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
   const lineMouseRef = useRef<SVGPathElement>(null);
+  const deleteRef = useRef<SVGGeometryElement>(null);
 
   const stroke = strokes[type][active ? 1 : 0];
 
@@ -51,7 +54,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       );
       setSvgStyle(svgRef.current);
       setArrowStyle(arrowRef.current);
-      setLinePath(lineRef.current, lineMouseRef.current);
+      setLinePath(lineRef.current, lineMouseRef.current, deleteRef.current);
     });
     return () => {
       removeUpdateLines(updateKey || startId, startId, endId);
@@ -104,6 +107,37 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         strokeWidth="10"
         fill="none"
       />
+      <g
+        ref={deleteRef}
+        opacity={active ? 1 : 0}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (active) {
+            onDelete();
+          } else {
+            onClick?.();
+          }
+        }}
+        style={{ pointerEvents: 'all', cursor: 'pointer' }}
+      >
+        <circle cx={8} cy={8} r={14} fill="#323232" opacity={0.9} />
+        <path
+          d="M3.33337 4.66669H12.6667V13.3334C12.6667 13.687 12.5261 14.0261 12.2761 14.2761C12.026 14.5262 11.687 14.6667 11.3334 14.6667H4.66671C4.31309 14.6667 3.97388 14.5262 3.72384 14.2761C3.47379 14.0261 3.33337 13.687 3.33337 13.3334V4.66669Z"
+          stroke="#FFFFFF"
+          fill="transparent"
+          strokeWidth="1.2"
+          strokeMiterlimit="10"
+        />
+        <path
+          d="M1.33337 4.66666H3.76664C4.03178 4.66612 4.29077 4.58658 4.51046 4.43815C4.73014 4.28971 4.90062 4.07911 5.00004 3.83333L5.66671 2.17333C5.76509 1.9263 5.93505 1.71429 6.15483 1.56461C6.3746 1.41493 6.63404 1.3344 6.89994 1.33333H9.09998C9.36588 1.3344 9.62532 1.41493 9.84509 1.56461C10.0649 1.71429 10.235 1.9263 10.3334 2.17333L11 3.83333C11.0999 4.08017 11.2712 4.2915 11.4922 4.44002C11.7132 4.58854 11.9737 4.66745 12.2399 4.66666H14.6667"
+          stroke="#FFFFFF"
+          fill="transparent"
+          strokeWidth="1.2"
+          strokeMiterlimit="10"
+        />
+      </g>
     </svg>
   );
 };

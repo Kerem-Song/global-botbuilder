@@ -12,7 +12,7 @@ export const useElementHelper = (
   const er = end?.getBoundingClientRect() || new DOMRect();
   const snr = startNode?.getBoundingClientRect() || new DOMRect();
 
-  const lineOffset = 5;
+  const lineOffset = 15;
   const minLine = 50;
   const arrowSize = isNextNode ? { width: 6, height: 12 } : { width: 12, height: 6 };
   const outSize = { width: 50, height: 50 };
@@ -83,6 +83,7 @@ export const useElementHelper = (
   const setLinePath = (
     element: SVGPathElement | null,
     mouseElement: SVGPathElement | null,
+    deleteElement: SVGGeometryElement | null,
   ) => {
     if (!start || !end) {
       if (element) {
@@ -120,6 +121,15 @@ export const useElementHelper = (
     let line2 = '';
     let line3 = '';
     let line4 = '';
+
+    console.log(startPoint);
+    console.log(endPoint);
+    const deletePoint = {
+      x: startPoint.x + Math.round((endPoint.x - startPoint.x) / 2) - 8,
+      y: startPoint.y + Math.round((endPoint.y - startPoint.y) / 2) - 8,
+    };
+
+    console.log(deletePoint);
 
     if (isNextNode) {
       if (startPoint.x + minLine > endPoint.x) {
@@ -159,6 +169,9 @@ export const useElementHelper = (
         line4 = `L ${point4.x} ${point4.y + arcSize} Q ${point4.x},${point4.y} ${
           point4.x + arcSize
         },${point4.y}`;
+
+        deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
+        deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
       } else if (Math.abs(startPoint.y - endPoint.y) > 10) {
         const x =
           Math.min(startPoint.x, endPoint.x) +
@@ -184,6 +197,9 @@ export const useElementHelper = (
         line2 = `L ${point2.x} ${
           point2.y + (startPoint.y < endPoint.y ? -computeArcSize : computeArcSize)
         } Q ${point2.x},${point2.y} ${point2.x + computeArcSize},${point2.y}`;
+
+        deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
+        deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
       }
     } else {
       if (startPoint.y + minLine > endPoint.y) {
@@ -230,6 +246,9 @@ export const useElementHelper = (
         line4 = `L ${point4.x + arcSize * directionFactor} ${point4.y} Q ${point4.x},${
           point4.y
         } ${point4.x},${point4.y + arcSize}`;
+
+        deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
+        deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
       } else if (Math.abs(startPoint.x - endPoint.x) > 10) {
         const y =
           Math.min(startPoint.y, endPoint.y) +
@@ -255,6 +274,9 @@ export const useElementHelper = (
         line2 = `L ${
           point2.x + (startPoint.x < endPoint.x ? -computeArcSize : computeArcSize)
         } ${point2.y} Q ${point2.x},${point2.y} ${point2.x},${point2.y + computeArcSize}`;
+
+        deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
+        deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
       }
     }
 
@@ -272,6 +294,12 @@ export const useElementHelper = (
         'd',
         `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
       );
+    }
+
+    console.log(deletePoint);
+
+    if (deleteElement) {
+      deleteElement.style.transform = `translate(${deletePoint.x}px, ${deletePoint.y}px)`;
     }
   };
 
