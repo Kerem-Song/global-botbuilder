@@ -10,7 +10,7 @@ interface IConnectLineProps {
   active?: boolean;
   type: 'blue' | 'green' | 'red' | 'yellow';
   onClick?: () => void;
-  onDelete: () => void;
+  onDelete?: () => void;
 }
 
 const strokes = {
@@ -59,7 +59,13 @@ export const ConnectLine: FC<IConnectLineProps> = ({
     return () => {
       removeUpdateLines(updateKey || startId, startId, endId);
     };
-  }, [svgRef.current, arrowRef.current, lineRef.current, lineMouseRef.current]);
+  }, [
+    svgRef.current,
+    arrowRef.current,
+    lineRef.current,
+    lineMouseRef.current,
+    deleteRef.current,
+  ]);
 
   return (
     <svg
@@ -115,7 +121,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
           e.preventDefault();
           e.stopPropagation();
           if (active) {
-            onDelete();
+            onDelete?.();
           } else {
             onClick?.();
           }
