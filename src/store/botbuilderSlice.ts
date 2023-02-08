@@ -42,6 +42,7 @@ export const botbuilderSlice = createSlice({
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       state.selectedScenario = action.payload;
+      state.isEditDrawerOpen = false;
     },
     setSesstionToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
