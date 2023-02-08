@@ -22,6 +22,7 @@ import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
+import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
 import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
@@ -141,6 +142,8 @@ export const NodeEditDrawer = () => {
         return <RetryConditionNodeEdit />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNodeEdit />;
+      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
+        return <OtherFlowRedirectNodeEdit />;
       default:
         <></>;
     }

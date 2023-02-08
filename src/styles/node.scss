@@ -20,6 +20,12 @@
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
+  &-invalidate {
+    outline: rem(2) solid #FF4975;
+    outline-offset: -1px;
+    box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
+  }
+
   .icNodeBottom {
     display: inline-block;
     position: absolute;
