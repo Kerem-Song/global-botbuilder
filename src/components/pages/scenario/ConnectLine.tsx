@@ -1,4 +1,4 @@
-import useElementHelper from '@hooks/useArrowHelper';
+import { useElementHelper } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { FC, useEffect, useRef } from 'react';
 

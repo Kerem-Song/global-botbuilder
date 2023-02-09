@@ -73,6 +73,7 @@ export const botbuilderSlice = createSlice({
       }
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
+      console.log(action.payload);
       state.guideInfo = action.payload;
       if (action.payload) {
         state.savedGuideInfo = action.payload;

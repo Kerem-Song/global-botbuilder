@@ -28,10 +28,12 @@ import { SortableButtonCtrlItem } from './SortableButtonCtrlItem';
 
 interface ISortableButtonCtrlContainerProps {
   nodeId: string;
+  nextNodeOffset?: number;
   buttonList?: IButtonCtrl[];
 }
 export const SortableButtonCtrlContainer = ({
   nodeId,
+  nextNodeOffset,
   buttonList,
 }: ISortableButtonCtrlContainerProps) => {
   const { updateLine } = useUpdateLines();
@@ -103,9 +105,7 @@ export const SortableButtonCtrlContainer = ({
                   nodeId={nodeId}
                   type="blue"
                   key={`card-${nodeId}-button-${item.id}-nodeButton-${item.id}`}
-                  offset={
-                    item.typeName === CTRL_TYPES.QUICK_CTRL ? i * 40 + 66 : undefined
-                  }
+                  offset={nextNodeOffset ? i * 40 + nextNodeOffset : undefined}
                 />
               </div>
             ),

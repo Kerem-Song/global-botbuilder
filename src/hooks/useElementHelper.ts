@@ -122,14 +122,10 @@ export const useElementHelper = (
     let line3 = '';
     let line4 = '';
 
-    console.log(startPoint);
-    console.log(endPoint);
     const deletePoint = {
       x: startPoint.x + Math.round((endPoint.x - startPoint.x) / 2) - 8,
       y: startPoint.y + Math.round((endPoint.y - startPoint.y) / 2) - 8,
     };
-
-    console.log(deletePoint);
 
     if (isNextNode) {
       if (startPoint.x + minLine > endPoint.x) {
@@ -295,8 +291,6 @@ export const useElementHelper = (
         `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
       );
     }
-
-    console.log(deletePoint);
 
     if (deleteElement) {
       deleteElement.style.transform = `translate(${deletePoint.x}px, ${deletePoint.y}px)`;

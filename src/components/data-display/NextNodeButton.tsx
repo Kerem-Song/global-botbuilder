@@ -22,10 +22,13 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
   const dispatch = useDispatch();
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const isEditting = useRootState((state) => state.botBuilderReducer.isEditDrawerOpen);
   const { updateLine } = useUpdateLines();
 
   const StartDrag = (e: DragEvent<HTMLDivElement>) => {
-    console.log(arrows);
+    if (isEditting) {
+      return;
+    }
     if (arrows.find((x) => x.start === `next-${ctrlId}`)) {
       e.stopPropagation();
       e.preventDefault();
@@ -69,7 +72,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
         className={classNames('nextNodeDrag')}
         style={{ top: offset !== undefined ? `${offset}px` : undefined }}
         id={`next-${ctrlId}`}
-        draggable
+        draggable={!isEditting}
         onDragStart={StartDrag}
         onDragEnd={() => {
           dispatch(setGuideStartNode());

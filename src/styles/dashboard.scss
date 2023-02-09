@@ -57,6 +57,18 @@
     height: rem(219);
     transition: all 0.3s ease-out;
     cursor: pointer;
+    .active {
+      background: #ffe4e9;
+      padding: rem(4) rem(8);
+      font-weight: 700;
+      font-size: rem(14);
+      color: #ff5473;
+      width: rem(59);
+      height: rem(25);
+      text-align: center;
+      border-radius: rem(4);
+      margin-right: rem(4);
+    }
     .title {
       height: rem(89);
       padding: rem(20);

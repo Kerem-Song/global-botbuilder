@@ -184,7 +184,7 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectCard />;
       case NODE_TYPES.ANSWER_NODE:
-        return <AnswerNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
+        return <AnswerNode nodeId={`${id}`} node={node} />;
       case NODE_TYPES.TEXT_NODE:
         return <TextNode node={node} />;
       case NODE_TYPES.BASIC_CARD_NODE:

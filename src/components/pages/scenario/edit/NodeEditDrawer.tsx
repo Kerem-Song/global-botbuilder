@@ -10,6 +10,7 @@ import {
   productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
+import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
 import { useEffect, useState } from 'react';
@@ -106,6 +107,15 @@ export const NodeEditDrawer = () => {
         title: selectedNode.title || '',
         view: selectedNode.view,
       };
+
+      if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
+        const view = model.view as IAnswerView;
+        model.view = {
+          ...view,
+          useUtteranceParam: view?.utteranceParam,
+        } as IAnswerView;
+      }
+
       reset(model);
       if (invalidateNodes[selectedNode.id]) {
         handleSubmit(onFakeSubmit)();

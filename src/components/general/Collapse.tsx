@@ -10,7 +10,7 @@ import { useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
   useSwitch: boolean;
-  field?: 'imageCtrl' | 'utteranceParam';
+  field?: 'imageCtrl' | 'useUtteranceParam';
 }
 
 export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children }) => {

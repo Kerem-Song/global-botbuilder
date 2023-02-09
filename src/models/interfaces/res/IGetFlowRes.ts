@@ -121,6 +121,7 @@ export interface IHasImageCtrlViewBase extends IViewBase {
 
 export interface IHasUtteranceViewBase extends IViewBase {
   utteranceParam?: string;
+  useUtteranceParam?: boolean;
 }
 
 export interface IIntentNode extends INodeBase {
@@ -140,9 +141,8 @@ export interface IAnswerNode extends INodeBase {
   view: IAnswerView;
 }
 
-export interface IAnswerView extends IViewBase {
+export interface IAnswerView extends IHasUtteranceViewBase {
   quicks?: IButtonCtrl[];
-  utteranceParam?: string;
 }
 
 export interface IConditionNode extends INodeBase {

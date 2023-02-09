@@ -16,9 +16,14 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
         <Row align="center" justify="space-between">
           <Col>
             <Space direction="vertical">
-              <span className="created">{`${tc('intlDateTime', {
-                val: model.updateDate ? new Date(model.updateDate) : '',
-              })}`}</span>
+              <Row align="center">
+                <Col>{model.activated && <div className="active">Active</div>}</Col>
+                <Col>
+                  <span className="created">{`${tc('intlDateTime', {
+                    val: model.lastDeployUTC ? new Date(model.lastDeployUTC) : '',
+                  })}`}</span>
+                </Col>
+              </Row>
               <span className="bot-name">{model.botName}</span>
             </Space>
           </Col>
