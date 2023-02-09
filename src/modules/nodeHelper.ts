@@ -26,6 +26,7 @@ import {
   IOtherFlowRedirectView,
   IParameterSetParams,
   IParameterSetView,
+  IProductCardCarouselView,
   IProductCardView,
   IRetryConditionNode,
   IRetryConditionView,
@@ -66,6 +67,8 @@ export const nodeHelper = {
         return nodeHelper.createDefaultOtherFlowRedirectView();
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return nodeHelper.createCommerceView();
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+        return nodeHelper.createCommerceCarouselView();
       default:
         return undefined;
     }
@@ -110,7 +113,7 @@ export const nodeHelper = {
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
       childrenViews: [nodeHelper.createDefaultBasicCardView()],
       isSuffle: false,
-      count: 0,
+      count: 10,
     };
 
     return result;
@@ -209,7 +212,7 @@ export const nodeHelper = {
       typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
       childrenViews: [nodeHelper.createDefaultListCardView()],
       isSuffle: false,
-      count: 1,
+      count: 10,
     };
 
     return result;
@@ -242,6 +245,16 @@ export const nodeHelper = {
       ],
     };
 
+    return result;
+  },
+  createCommerceCarouselView: () => {
+    const result: IProductCardCarouselView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW,
+      childrenViews: [nodeHelper.createCommerceView()],
+      isSuffle: false,
+      count: 10,
+    };
     return result;
   },
   convertToINodeBase: (node: INode): INodeBase => {

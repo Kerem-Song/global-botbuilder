@@ -13,6 +13,7 @@ export const ScenarioManagement: FC<{
 }> = ({ scenarios }) => {
   const dispatch = useDispatch();
   const [isActivated, setIsActivated] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState<string>();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
 
@@ -70,7 +71,11 @@ export const ScenarioManagement: FC<{
           {scenarios ? (
             // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
             <SortableScenarioListContainer
-              scenarioList={scenarios.filter((x) => !isActivated || x.activated)}
+              scenarioList={scenarios.filter(
+                (x) =>
+                  (!isActivated || x.activated) &&
+                  (!searchKeyword || x.alias.includes(searchKeyword)),
+              )}
             />
           ) : (
             <div className="noResults"></div>
@@ -78,7 +83,12 @@ export const ScenarioManagement: FC<{
         </Space>
       </div>
       <div className="search">
-        <Input placeholder="시나리오명을 입력해주세요. " search />
+        <Input
+          placeholder="시나리오명을 입력해주세요. "
+          search
+          value={searchKeyword}
+          onSearch={setSearchKeyword}
+        />
       </div>
     </div>
   );

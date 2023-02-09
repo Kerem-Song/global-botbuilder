@@ -212,6 +212,7 @@ export const Botbuilder = () => {
               scale={scale}
               bounds={{ top: -4000, left: -4000, right: 4000 }}
               key={item.id}
+              enableUserSelectHack={true}
               onDrag={(e) => {
                 e.stopPropagation();
                 if (e.isTrusted) {

@@ -275,7 +275,13 @@ export interface IProductCardView extends IHasButtonViewBase {
 }
 
 export interface IProductCardNode extends INodeBase {
-  view: IProductCardView;
+  view: IProductCardCarouselView;
+}
+
+export interface IProductCardCarouselView extends IViewBase {
+  isSuffle: boolean;
+  count: number;
+  childrenViews: IProductCardView[];
 }
 
 export interface IGetFlowRes {
