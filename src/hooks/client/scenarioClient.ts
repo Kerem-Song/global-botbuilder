@@ -186,19 +186,19 @@ export const useScenarioClient = () => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
       const resultNodes = nodes.map((x) => {
         const converted = nodeHelper.convertToINodeBase(x);
-        const arrow = arrows.find((a) => a.start.substring(5) === x.id);
-        if (arrow) {
-          converted.nextNodeId = arrow.end.substring(5);
-        }
+        // const arrow = arrows.find((a) => a.start.substring(5) === x.id);
+        // if (arrow) {
+        //   converted.nextNodeId = arrow.end.substring(5);
+        // }
 
-        if (converted.typeName === NODE_TYPES.BASIC_CARD_NODE && converted.view) {
-          const view = converted.view as IBasicCardView;
-          const buttons = view.buttons?.map((b) => {
-            const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
-            return { ...b, actionValue: buttonArrow?.end.substring(5) };
-          });
-          converted.view = { ...view, buttons: buttons } as IBasicCardView;
-        }
+        // if (converted.typeName === NODE_TYPES.BASIC_CARD_NODE && converted.view) {
+        //   const view = converted.view as IBasicCardView;
+        //   const buttons = view.buttons?.map((b) => {
+        //     const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+        //     return { ...b, actionValue: buttonArrow?.end.substring(5) };
+        //   });
+        //   converted.view = { ...view, buttons: buttons } as IBasicCardView;
+        // }
 
         if (
           converted.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE &&

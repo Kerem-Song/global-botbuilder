@@ -94,13 +94,11 @@ export const makingNodeSlice = createSlice({
       // arrow  와 action value 동기화
       const nodeId = arrow.updateKey || arrow.start;
       const node = state.nodes.find((x) => x.id === nodeId.substring(5));
-      if (node && node.type === NODE_TYPES.ANSWER_NODE) {
-        const view = node.view as IAnswerView;
-        const found = view.quicks?.find((x) => x.id === arrow.start.substring(5));
-        if (found) {
-          found.actionType = ACTION_TYPES.LUNA_NODE_REDIRECT;
-          found.actionValue = arrow.end.substring(5);
-        }
+
+      const endNode = state.nodes.find((x) => x.id === arrow.end.substring(5));
+
+      if (node) {
+        nodeHelper.syncArrow(arrow, node, endNode);
       }
 
       state.arrows = [...arrows, arrow];

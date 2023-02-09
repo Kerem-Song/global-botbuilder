@@ -502,4 +502,39 @@ export const nodeHelper = {
 
     return arrows;
   },
+
+  syncArrow: (arrow: IArrow, node: INode, endNode?: INode) => {
+    if (endNode) {
+      node.nextNodeId = endNode.id;
+    }
+
+    switch (node.type) {
+      case NODE_TYPES.ANSWER_NODE:
+        nodeHelper.syncAnswerNodeArrow(arrow, node.view as IAnswerView);
+        break;
+      case NODE_TYPES.BASIC_CARD_NODE:
+        nodeHelper.syncBasicCardArrow(arrow, node.view as IBasicCardView);
+        break;
+    }
+  },
+  syncAnswerNodeArrow: (arrow: IArrow, view?: IAnswerView) => {
+    if (!view) {
+      return;
+    }
+    const found = view.quicks?.find((x) => x.id === arrow.start.substring(5));
+    if (found) {
+      found.actionType = ACTION_TYPES.LUNA_NODE_REDIRECT;
+      found.actionValue = arrow.end.substring(5);
+    }
+  },
+  syncBasicCardArrow: (arrow: IArrow, view?: IBasicCardView) => {
+    if (!view) {
+      return;
+    }
+    const found = view.buttons?.find((x) => x.id === arrow.start.substring(5));
+    if (found) {
+      found.actionType = ACTION_TYPES.LUNA_NODE_REDIRECT;
+      found.actionValue = arrow.end.substring(5);
+    }
+  },
 };

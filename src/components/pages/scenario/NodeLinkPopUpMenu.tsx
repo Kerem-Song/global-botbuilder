@@ -111,8 +111,8 @@ export const NodeLinkPopUpMenu = ({
       view: nodeView,
       option: 1,
       seq: 0,
-      x: popUpPosition.x,
-      y: popUpPosition.y,
+      x: Math.round(popUpPosition.x),
+      y: Math.round(popUpPosition.y),
       nodeKind: getNodeKind(nodeType),
     };
 
