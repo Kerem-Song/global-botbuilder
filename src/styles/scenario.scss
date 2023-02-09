@@ -166,7 +166,7 @@
       height: 100%;
     }
 
-    .addVariableBtn {
+    .addEntityBtn {
       padding: rem(10);
 
       & button {
@@ -179,24 +179,36 @@
 
     .variableWrapper {
       padding: rem(10);
-      border-bottom: 1px solid $gray200;
 
-      & p {
-        padding-bottom: rem(15);
-        font-size: rem(20);
+      .variableHeader {
+        width: rem(196);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: rem(10);
+
+        .title {
+          font-size: rem(14);
+          font-weight: rem(500);
+        }
+      }
+
+      .addVariableBtn {
+        display: flex;
       }
     }
 
     .variableListWrapper {
-      border-top: 1px solid $gray200;
-      padding-top: rem(10);
+      border: 1px solid $gray200;
+      border-radius: rem(6);
+      background-color: $grayWhite;
 
       .variableListHeader {
+        padding: rem(10);
         display: grid;
         align-items: center;
         grid-template-columns: 5fr 5fr 1fr;
-        padding-bottom: rem(10);
-        border-bottom: 1px solid $gray200;
+        background-color: $gray150;
 
         .variableName {
           grid-column: 1/1;
@@ -212,11 +224,20 @@
         overflow-y: auto;
 
         .variableList {
-          padding-top: rem(10);
+          height: rem(38);
           display: grid;
           grid-template-columns: 5fr 5fr 1fr;
           align-items: center;
           word-break: break-all;
+          padding: 0 rem(10);
+
+          span {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            // max-width: rem(110);
+            white-space: nowrap;
+            margin-right: rem(2);
+          }
 
           & i {
             text-align: center;
