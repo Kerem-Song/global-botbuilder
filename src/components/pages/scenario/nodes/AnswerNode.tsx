@@ -31,7 +31,7 @@ export const AnswerNode: FC<AnswerNodeProps> = ({ nodeId, node }) => {
         ) : undefined}
         <SortableButtonCtrlContainer
           buttonList={view.quicks}
-          nodeId={nodeId}
+          nodeId={`${NODE_PREFIX}${nodeId}`}
           nextNodeOffset={view.utteranceParam ? 102 : 66}
         />
       </div>

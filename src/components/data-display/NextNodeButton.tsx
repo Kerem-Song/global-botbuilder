@@ -29,11 +29,6 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
     if (isEditting) {
       return;
     }
-    if (arrows.find((x) => x.start === `next-${ctrlId}`)) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
 
     //const img = new Image();
     e.dataTransfer.setData('id', `next-${ctrlId}`);
