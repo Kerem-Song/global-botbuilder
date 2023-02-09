@@ -3,6 +3,7 @@ import { Button, IPopperItem, Popper } from '@components';
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
+import { CommerceCardCarouselNode } from '@components/pages/scenario/nodes/CommerceCardCarouselNode';
 import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
@@ -197,6 +198,8 @@ export const Node: FC<INodeProps> = ({
         return <ListCardCarouselNode node={node} />;
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <CommerceCardNode node={node} />;
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+        return <CommerceCardCarouselNode node={node} />;
       default:
         return handleShowingCards();
     }
