@@ -1,11 +1,11 @@
 import { Button } from '@components/general';
-import { SizeType } from '@models';
+import { IHasChildren, IHasClassNameNStyle, SizeType } from '@models';
 import classNames from 'classnames';
 import { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useState } from 'react';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
-export interface InputProps extends IDataEntryProp {
+export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   maxLength?: number;
   placeholder?: string;
   showCount?: boolean;
@@ -51,6 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const inputClassName = classNames('luna-input', {
     'luna-input-error': isError,
     'luna-input-large': size === 'large',
+    'luna-input-normal': size === 'normal',
   });
   const inputWrapClassName = classNames('luna-input-wrap', {
     'luna-input-error': isError,
