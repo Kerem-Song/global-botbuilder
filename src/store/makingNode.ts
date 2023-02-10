@@ -46,6 +46,7 @@ export const makingNodeSlice = createSlice({
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
+      console.log(node);
       state.nodes = [...state.nodes, node];
     },
     updateNode: (state, action: PayloadAction<INode>) => {
@@ -95,10 +96,8 @@ export const makingNodeSlice = createSlice({
       const nodeId = arrow.updateKey || arrow.start;
       const node = state.nodes.find((x) => x.id === nodeId.substring(5));
 
-      const endNode = state.nodes.find((x) => x.id === arrow.end.substring(5));
-
       if (node) {
-        nodeHelper.syncArrow(arrow, node, endNode);
+        nodeHelper.syncArrow(arrow.start, arrow.end, node);
       }
 
       state.arrows = [...arrows, arrow];
@@ -148,6 +147,14 @@ export const makingNodeSlice = createSlice({
           const index = state.arrows.indexOf(found);
           const arrows = [...state.arrows];
           arrows.splice(index, 1);
+
+          const nodeId = arrow.updateKey || arrow.start;
+          const node = state.nodes.find((x) => x.id === nodeId.substring(5));
+
+          if (node) {
+            nodeHelper.syncArrow(arrow.start, undefined, node);
+          }
+
           state.arrows = arrows;
         }
       }

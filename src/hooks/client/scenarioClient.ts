@@ -200,76 +200,76 @@ export const useScenarioClient = () => {
         //   converted.view = { ...view, buttons: buttons } as IBasicCardView;
         // }
 
-        if (
-          converted.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE &&
-          converted.view
-        ) {
-          const carouselView = converted.view as IBasicCardCarouselView;
+        // if (
+        //   converted.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE &&
+        //   converted.view
+        // ) {
+        //   const carouselView = converted.view as IBasicCardCarouselView;
 
-          const childrenViews = carouselView.childrenViews.map((view) => {
-            const buttons = view.buttons?.map((b) => {
-              const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
-              return { ...b, actionValue: buttonArrow?.end.substring(5) };
-            });
-            return { ...view, buttons };
-          });
+        //   const childrenViews = carouselView.childrenViews.map((view) => {
+        //     const buttons = view.buttons?.map((b) => {
+        //       const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+        //       return { ...b, actionValue: buttonArrow?.end.substring(5) };
+        //     });
+        //     return { ...view, buttons };
+        //   });
 
-          converted.view = { ...carouselView, childrenViews } as IBasicCardCarouselView;
-        }
+        //   converted.view = { ...carouselView, childrenViews } as IBasicCardCarouselView;
+        // }
 
-        if (converted.typeName === NODE_TYPES.LIST_CARD_NODE && converted.view) {
-          const view = converted.view as IListCardView;
-          const buttons = view.buttons?.map((b) => {
-            console.log(arrows);
-            console.log(b.id);
-            const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
-            console.log(buttonArrow);
-            return { ...b, actionValue: buttonArrow?.end.substring(5) };
-          });
-          converted.view = { ...view, buttons: buttons } as IListCardView;
-        }
+        // if (converted.typeName === NODE_TYPES.LIST_CARD_NODE && converted.view) {
+        //   const view = converted.view as IListCardView;
+        //   const buttons = view.buttons?.map((b) => {
+        //     console.log(arrows);
+        //     console.log(b.id);
+        //     const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+        //     console.log(buttonArrow);
+        //     return { ...b, actionValue: buttonArrow?.end.substring(5) };
+        //   });
+        //   converted.view = { ...view, buttons: buttons } as IListCardView;
+        // }
 
-        if (converted.typeName === NODE_TYPES.LIST_CAROUSEL && converted.view) {
-          const carouselView = converted.view as IListCardCarouselView;
+        // if (converted.typeName === NODE_TYPES.LIST_CAROUSEL && converted.view) {
+        //   const carouselView = converted.view as IListCardCarouselView;
 
-          const childrenViews = carouselView.childrenViews.map((view) => {
-            const buttons = view.buttons?.map((b) => {
-              const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
-              return { ...b, actionValue: buttonArrow?.end.substring(5) };
-            });
-            return { ...view, buttons };
-          });
+        //   const childrenViews = carouselView.childrenViews.map((view) => {
+        //     const buttons = view.buttons?.map((b) => {
+        //       const buttonArrow = arrows.find((a) => a.start.substring(5) === b.id);
+        //       return { ...b, actionValue: buttonArrow?.end.substring(5) };
+        //     });
+        //     return { ...view, buttons };
+        //   });
 
-          converted.view = { ...carouselView, childrenViews } as IListCardCarouselView;
-        }
+        //   converted.view = { ...carouselView, childrenViews } as IListCardCarouselView;
+        // }
 
-        if (converted.typeName === NODE_TYPES.CONDITION_NODE && converted.view) {
-          const view: IConditionView = converted.view;
+        // if (converted.typeName === NODE_TYPES.CONDITION_NODE && converted.view) {
+        //   const view: IConditionView = converted.view;
 
-          const trueArrow = arrows.find(
-            (a) => a.start.substring(10) === `${converted.id}-true`,
-          );
+        //   const trueArrow = arrows.find(
+        //     (a) => a.start.substring(10) === `${converted.id}-true`,
+        //   );
 
-          const falseArrow = arrows.find(
-            (a) => a.start.substring(10) === `${converted.id}-false`,
-          );
+        //   const falseArrow = arrows.find(
+        //     (a) => a.start.substring(10) === `${converted.id}-false`,
+        //   );
 
-          converted.view = {
-            ...view,
-            trueThenNextNodeId: trueArrow ? trueArrow.end.substring(5) : undefined,
-            falseThenNextNodeId: falseArrow ? falseArrow.end.substring(5) : undefined,
-          } as IConditionView;
-        }
+        //   converted.view = {
+        //     ...view,
+        //     trueThenNextNodeId: trueArrow ? trueArrow.end.substring(5) : undefined,
+        //     falseThenNextNodeId: falseArrow ? falseArrow.end.substring(5) : undefined,
+        //   } as IConditionView;
+        // }
 
-        if (converted.typeName === NODE_TYPES.ANSWER_NODE && converted.view) {
-          const view: IAnswerView = converted.view;
-          const quicks = view.quicks?.map((q) => {
-            const arrow = arrows.find((a) => a.start.substring(5) === q.id);
-            return { ...q, actionValue: arrow?.end.substring(5) };
-          });
+        // if (converted.typeName === NODE_TYPES.ANSWER_NODE && converted.view) {
+        //   const view: IAnswerView = converted.view;
+        //   const quicks = view.quicks?.map((q) => {
+        //     const arrow = arrows.find((a) => a.start.substring(5) === q.id);
+        //     return { ...q, actionValue: arrow?.end.substring(5) };
+        //   });
 
-          converted.view = { ...view, quicks } as IAnswerView;
-        }
+        //   converted.view = { ...view, quicks } as IAnswerView;
+        // }
 
         return converted;
       });

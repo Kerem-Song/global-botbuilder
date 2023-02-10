@@ -1,6 +1,7 @@
 import { Button } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
+import { NEXT_BUTTON_PREFIX } from '@modules';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { DragEvent, FC } from 'react';
@@ -31,13 +32,14 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
     }
 
     //const img = new Image();
-    e.dataTransfer.setData('id', `next-${ctrlId}`);
+    console.log(ctrlId);
+    e.dataTransfer.setData('id', `${NEXT_BUTTON_PREFIX}${ctrlId}`);
     e.dataTransfer.setData('nodeId', nodeId);
     e.dataTransfer.setData('pointType', type);
     e.dataTransfer.setData('isNext', '1');
     dispatch(
       setGuideStartNode({
-        startId: `next-${ctrlId}`,
+        startId: `${NEXT_BUTTON_PREFIX}${ctrlId}`,
         nodeId,
         isNext: true,
         type,

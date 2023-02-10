@@ -149,9 +149,7 @@ export interface IConditionNode extends INodeBase {
   view: IConditionView;
 }
 
-export interface IConditionView extends IViewBase {
-  falseThenNextNodeId?: string;
-  trueThenNextNodeId?: string;
+export interface IConditionView extends ITrueFalseViewBase {
   join?: ConditionJoin;
   items?: IConditionItem[];
 }
@@ -159,8 +157,11 @@ export interface IConditionView extends IViewBase {
 export interface IRetryConditionNode extends INodeBase {
   view: IRetryConditionView;
 }
-export interface IRetryConditionView extends IViewBase {
+export interface IRetryConditionView extends ITrueFalseViewBase {
   count: number;
+}
+
+export interface ITrueFalseViewBase extends IViewBase {
   falseThenNextNodeId?: string;
   trueThenNextNodeId?: string;
 }
@@ -176,7 +177,7 @@ export interface IBasicCardCarouselNode extends INodeBase {
   view: IBasicCardCarouselView;
 }
 
-export interface IBasicCardCarouselView extends IViewBase {
+export interface IBasicCardCarouselView extends IHasButtonCarouselViewBase {
   isSuffle: boolean;
   count: number;
   childrenViews: IBasicCardView[];
@@ -257,7 +258,7 @@ export interface IListCardItem extends ICtrlBase {
   title: string;
 }
 
-export interface IListCardCarouselView extends IViewBase {
+export interface IListCardCarouselView extends IHasButtonCarouselViewBase {
   isSuffle: boolean;
   count: number;
   childrenViews: IListCardView[];
@@ -278,10 +279,14 @@ export interface IProductCardNode extends INodeBase {
   view: IProductCardCarouselView;
 }
 
-export interface IProductCardCarouselView extends IViewBase {
+export interface IProductCardCarouselView extends IHasButtonCarouselViewBase {
   isSuffle: boolean;
   count: number;
   childrenViews: IProductCardView[];
+}
+
+export interface IHasButtonCarouselViewBase extends IViewBase {
+  childrenViews: IHasButtonViewBase[];
 }
 
 export interface IGetFlowRes {

@@ -7,6 +7,7 @@ import {
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useUpdateLines } from '@hooks/useUpdateLines';
+import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
 export interface CarouselProps {
   children: ReactNode[];
@@ -29,6 +30,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });
     updateLine(nodeId);
+    setCarouselIndex({ id: nodeId, index: current });
   }, [current]);
 
   const NextDisabled = () => {
