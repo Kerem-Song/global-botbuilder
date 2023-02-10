@@ -285,6 +285,31 @@
           }
         }
       }
+
+      .imgUploadLabel {
+        &:hover {
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          border: rem(1) dashed $primary300;
+          border-radius: rem(8);
+          
+          .imgUploadSkeleton {
+            display: none;
+          }
+
+          .imgUploadWrapper {           
+            background: $primary100;
+            background-image: url('@assets/icons/ic_img_add_hover.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+        }
+
+        .imgUploadWrapper {
+          background: $grayWhite;
+        }
+      }
     }
   }
 }

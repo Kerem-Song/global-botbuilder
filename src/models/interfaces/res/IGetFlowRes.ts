@@ -123,6 +123,10 @@ export interface IHasUtteranceViewBase extends IViewBase {
   utteranceParam?: string;
 }
 
+export interface IHasChildrenView extends IViewBase {
+  childrenViews: IBasicCardView[] | IListCardView[] | IProductCardView[];
+}
+
 export interface IIntentNode extends INodeBase {
   view: IIntentView;
 }
@@ -209,6 +213,11 @@ export interface IButtonCtrl extends ICtrlBase {
   seq: number;
 }
 
+export interface ICarouselCtrl extends ICtrlBase {
+  childrenViews: IBasicCardView[] | IListCardView[] | IProductCardView[];
+  typeName: TViewTypes;
+}
+
 export interface IBasicCardNode extends INodeBase {
   view: IBasicCardView;
 }
@@ -276,6 +285,16 @@ export interface IProductCardView extends IHasButtonViewBase {
 
 export interface IProductCardNode extends INodeBase {
   view: IProductCardView;
+}
+
+export interface IProductCardCarouselNode extends INodeBase {
+  view: IProductCardCarouselView;
+}
+
+export interface IProductCardCarouselView extends IViewBase {
+  isSuffle: boolean;
+  count: number;
+  childrenViews: IProductCardView[];
 }
 
 export interface IGetFlowRes {

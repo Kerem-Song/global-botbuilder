@@ -17,9 +17,34 @@ export interface INodeEditModel {
   view?: IViewBase;
 }
 
-const FILE_SIZE = 2 * 1024; //2mb제한
+const FILE_SIZE = 2 * 1024 * 1024; //2mb제한
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/png']; //jpb, png가능(Line 기준)
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpb, png가능(Line 기준)
+
+export function checkFileSize(files?: [File]): boolean {
+  let valid = true;
+  if (files) {
+    files.map((file) => {
+      const size = file.size / 1024 / 1024;
+      if (size > 2) {
+        valid = false;
+      }
+    });
+  }
+  return valid;
+}
+
+export function checkFileType(files?: [File]): boolean {
+  let valid = true;
+  if (files) {
+    files.map((file) => {
+      if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
+        valid = false;
+      }
+    });
+  }
+  return valid;
+}
 
 export const textNodeEditSchema = yup.object().shape({
   text: yup
@@ -44,22 +69,27 @@ export const buttonsEditSchema = yup
       }),
     }),
   );
+
 export const basicCardNodeEditSchema = yup.object().shape({
   title: yup.string().nullable().trim().max(20, '20자 이상 입력하실 수 없습니다.'),
   description: yup
     .string()
     .max(230, '230자 이상 입력하실 수 없습니다.')
     .required('필수 입력 항목입니다.'),
-  // imageCtrl: yup
-  //   .mixed()
-  //   .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
-  //   .test(
-  //     'fileFormat',
-  //     'Unsupported Format',
-  //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
-  //   ),
-  imageCtrol: yup.object().shape({
-    imageUrl: yup.string().url(),
+  imageCtrl: yup.object().shape({
+    imageFile: yup
+      .mixed()
+      .nullable()
+      .test(
+        'fileSize',
+        '2MB이상은 업로드 할 수 없습니다.',
+        (value) => !value || (value && value[0].size <= FILE_SIZE),
+      )
+      .test(
+        'filetype',
+        'jpg, jpeg, png 형식의 파일만 가능합니다.',
+        (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type)),
+      ),
   }),
   imageUrl: yup.string().url(),
   buttons: buttonsEditSchema,

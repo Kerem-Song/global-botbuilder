@@ -1,5 +1,12 @@
-import { icCardDelete, icCardDuplication, icCardPaste, icNodeBottom } from '@assets';
+import {
+  icCardDelete,
+  icCardDuplication,
+  icCardPaste,
+  icEditCarousel,
+  icNodeBottom,
+} from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
@@ -11,13 +18,14 @@ import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
-import { useRootState } from '@hooks';
+import { useModalOpen, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import {
   IBasicCardCarouselView,
   IBasicCardView,
+  IHasChildrenView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
@@ -87,6 +95,7 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
+  const { isOpen, handleIsOpen } = useModalOpen();
   const dispatch = useDispatch();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const invalidate = useRootState(
@@ -115,6 +124,11 @@ export const Node: FC<INodeProps> = ({
   const handleDeleteCard = () => {
     console.log('handle delete card');
     dispatch(removeItem(id));
+  };
+
+  const handleChangeCarouselOrder = () => {
+    console.log('handle change carousel order');
+    handleIsOpen(true);
   };
 
   const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
@@ -160,6 +174,15 @@ export const Node: FC<INodeProps> = ({
       icon: icCardDelete,
       data: {
         action: handleDeleteCard,
+      },
+    },
+    {
+      id: 'carousel',
+      name: 'Carousel',
+      type: 'icon-front',
+      icon: icEditCarousel,
+      data: {
+        action: handleChangeCarouselOrder,
       },
     },
   ];
@@ -305,83 +328,94 @@ export const Node: FC<INodeProps> = ({
   };
 
   return (
-    <div
-      onDragOver={(e) => {
-        e.preventDefault();
-      }}
-      onDrop={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        const from = e.dataTransfer.getData('id');
-        if (!from || id === from) {
-          return;
-        }
+    <>
+      <div
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDrop={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const from = e.dataTransfer.getData('id');
+          if (!from || id === from) {
+            return;
+          }
 
-        const nodeId = e.dataTransfer.getData('nodeId');
-        const isNext = e.dataTransfer.getData('isNext');
-        const pointType = e.dataTransfer.getData('pointType');
+          const nodeId = e.dataTransfer.getData('nodeId');
+          const isNext = e.dataTransfer.getData('isNext');
+          const pointType = e.dataTransfer.getData('pointType');
 
-        addArrow?.({
-          start: from,
-          end: `${NODE_PREFIX}${id}`,
-          updateKey: nodeId,
-          isNextNode: isNext === '1',
-          type: pointType as 'blue',
-        });
-      }}
-      id={`${NODE_PREFIX}${id}`}
-      className={wrapClass}
-      style={style}
-      role="presentation"
-      onClick={HandleNodeSelect}
-      onMouseUp={(e) => e.stopPropagation()}
-    >
-      <div className={titleClass}>
-        {title ? <p>{title}</p> : undefined}
-        <Popper
-          placement="right-start"
-          // offset={[-10, 15]}
-          popup
-          popupList
-          popperItems={nodeMenu}
-          onChange={(m) => {
-            m.data?.action?.();
-          }}
-        >
-          <Button shape="ghost" small>
-            <i className="fa-solid fa-ellipsis-vertical" />
-          </Button>
-        </Popper>
-      </div>
-      <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
-      {nodekind === NodeKind.InputNode && (
-        <Button shape="ghost" className="icNodeBottom">
-          <div
-            id={`${NODE_PREFIX}bottom-${id}`}
-            role="presentation"
-            className="node-draggable-ignore"
-            draggable
-            onDragStart={(e) => {
-              e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
-              e.dataTransfer.setData('pointType', 'blue');
-              dispatch(
-                setGuideStartNode({
-                  startId: `${NODE_PREFIX}${id}`,
-                  isNext: false,
-                  type: 'blue',
-                }),
-              );
+          addArrow?.({
+            start: from,
+            end: `${NODE_PREFIX}${id}`,
+            updateKey: nodeId,
+            isNextNode: isNext === '1',
+            type: pointType as 'blue',
+          });
+        }}
+        id={`${NODE_PREFIX}${id}`}
+        className={wrapClass}
+        style={style}
+        role="presentation"
+        onClick={HandleNodeSelect}
+        onMouseUp={(e) => e.stopPropagation()}
+      >
+        <div className={titleClass}>
+          {title ? <p>{title}</p> : undefined}
+          <Popper
+            placement="right-start"
+            // offset={[-10, 15]}
+            popup
+            popupList
+            popperItems={nodeMenu}
+            onChange={(m) => {
+              m.data?.action?.();
             }}
-            onDragEnd={() => {
-              dispatch(setGuideStartNode());
-            }}
-            onDrag={handleBottomDrag}
-            onMouseDown={(e) => e.stopPropagation()}
           >
-            <img src={icNodeBottom} alt="icNodeBottom" />
-          </div>
-        </Button>
-      )}
-    </div>
+            <Button shape="ghost" small>
+              <i className="fa-solid fa-ellipsis-vertical" />
+            </Button>
+          </Popper>
+        </div>
+        <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
+        {nodekind === NodeKind.InputNode && (
+          <Button shape="ghost" className="icNodeBottom">
+            <div
+              id={`${NODE_PREFIX}bottom-${id}`}
+              role="presentation"
+              className="node-draggable-ignore"
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
+                e.dataTransfer.setData('pointType', 'blue');
+                dispatch(
+                  setGuideStartNode({
+                    startId: `${NODE_PREFIX}${id}`,
+                    isNext: false,
+                    type: 'blue',
+                  }),
+                );
+              }}
+              onDragEnd={() => {
+                dispatch(setGuideStartNode());
+              }}
+              onDrag={handleBottomDrag}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <img src={icNodeBottom} alt="icNodeBottom" />
+            </div>
+          </Button>
+        )}
+      </div>
+
+      <CarouselOrderPopup
+        isOpen={isOpen}
+        handleIsOpen={handleIsOpen}
+        handleSave={handleChangeCarouselOrder}
+        nodeView={node.view! as IHasChildrenView}
+        nodeId={`${NODE_PREFIX}${id}`}
+        node={node}
+      />
+    </>
   );
 };

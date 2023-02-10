@@ -33,6 +33,7 @@ import icDelete from '@assets/icons/ic_delete.svg';
 import icDeploy from '@assets/icons/ic_deploy_default.svg';
 import icDeploySelected from '@assets/icons/ic_deploy_select.svg';
 import icDuplication from '@assets/icons/ic_duplication.svg';
+import icEditCarousel from '@assets/icons/ic_edit_carousel.svg';
 import icEmptyBot from '@assets/icons/ic_empty_bot.svg';
 import icEnter from '@assets/icons/ic_enter.svg';
 import icHelp from '@assets/icons/ic_help_default.svg';
@@ -147,6 +148,7 @@ export {
   icDeploy,
   icDeploySelected,
   icDuplication,
+  icEditCarousel,
   icEmptyBot,
   icEnter,
   icHelp,

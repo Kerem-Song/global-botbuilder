@@ -21,8 +21,10 @@
   }
 
   &-invalidate {
-    outline: rem(2) solid #FF4975;
-    outline-offset: -1px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: rem(2) solid rgba(255, 73, 117, 0.5);
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 

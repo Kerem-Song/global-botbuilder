@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
+import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
@@ -93,7 +94,9 @@ export const NodeEditDrawer = () => {
     //dispatch(setSelected());
   };
 
-  const onFakeSubmit = (node: INodeEditModel) => {};
+  const onFakeSubmit = (node: INodeEditModel) => {
+    console.log('onFake');
+  };
 
   useEffect(() => {
     if (selectedNode) {
@@ -132,6 +135,8 @@ export const NodeEditDrawer = () => {
         return <ListCardNodeEdit />;
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <ProductCardNodeEdit />;
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+        return <BasicCardCarousleNodeEdit />;
       case NODE_TYPES.ANSWER_NODE:
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:

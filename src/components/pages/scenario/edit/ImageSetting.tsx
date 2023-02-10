@@ -1,5 +1,7 @@
 import { icImg } from '@assets';
 import { Col, Row, Space } from '@components/layout';
+import { useHttp, useRootState } from '@hooks';
+import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { ImageAspectRatio } from '@models/enum';
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -10,8 +12,45 @@ interface IImageSetting {
 }
 
 export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
-  const { register, getValues } = useFormContext();
+  const { register, getValues, setValue } = useFormContext();
   const values = getValues();
+
+  const { imageUploadAsync } = imageUploadClient();
+  const token = useRootState((state) => state.botBuilderReducer.token);
+
+  const ctrlId = values.view.imageCtrl.id;
+  console.log('ctrl id', ctrlId);
+
+  const handleUploadImage = async () => {
+    if (getValues('view.imageCtrl.imageFile').length > 0) {
+      const formData = new FormData();
+      formData.append('File', getValues('view.imageCtrl.imageFile')[0]);
+      formData.append('SessionToken', token);
+      formData.append('CtrlId', ctrlId);
+
+      imageUploadAsync({ formData })
+        .then((res) => {
+          console.log('res.data image', res?.data);
+          setValue('view.imageCtrl.imageUrl', res?.data.result);
+          setValue('view.imageCtrl.imageFile', null);
+        })
+        .catch((err) => {
+          setValue('view.imageCtrl.imageUrl', null);
+          setValue('view.imageCtrl.imageFile', null);
+          //modal 띄우기?
+          console.log('upload 실패', err);
+        });
+    } else {
+      console.log('upload 파일이 없음');
+    }
+  };
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      console.log('file', e.target.files);
+      setValue('view.imageCtrl.imageFile', e.target.files);
+    }
+  };
 
   return (
     <Space direction="vertical">
@@ -49,32 +88,52 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
           <span>정사각형</span>
         </Col>
       </Row>
-      <div
-        style={{
-          height: imageRatio === ImageAspectRatio.Rectangle ? `118px` : '200px',
-          border: '1px dashed #DCDCDC',
-          background: '#FFFFFF',
-          borderRadius: '8px',
-          position: 'relative',
-        }}
-      >
+
+      <label htmlFor="imgUpload" className="imgUploadLabel">
         <div
+          className="imgUploadWrapper"
           style={{
-            position: 'absolute',
-            textAlign: 'center',
-            width: '200px',
-            bottom: '50%',
-            right: '50%',
-            transform: 'translate(50%, 50%)',
+            height: imageRatio === ImageAspectRatio.Rectangle ? `118px` : '200px',
+            border: '1px dashed #DCDCDC',
+
+            borderRadius: '8px',
+            position: 'relative',
           }}
         >
-          <img src={icImg} alt="icImg" />
-          <br />
-          Recommended
-          <br />
-          Rectangular: 800 x 400
+          <div
+            className="imgUploadSkeleton"
+            style={{
+              position: 'absolute',
+              textAlign: 'center',
+              width: '200px',
+              bottom: '50%',
+              right: '50%',
+              transform: 'translate(50%, 50%)',
+            }}
+          >
+            {values.view.imageCtrl.imageUrl ? (
+              <img src={values.view.imageCtrl.imageUrl} alt="templateImage" />
+            ) : (
+              <img src={icImg} alt="icImg" />
+            )}
+            <br />
+            Recommended
+            <br />
+            Rectangular: 800 x 400
+            <input
+              type="file"
+              id="imgUpload"
+              accept="image/png, image/jpeg, image/jpg"
+              className="file-name-input"
+              onChange={handleChangeFile}
+              style={{ display: 'none' }}
+            />
+          </div>
         </div>
-      </div>
+      </label>
+      <button onClick={handleUploadImage} type="button">
+        test
+      </button>
     </Space>
   );
 };

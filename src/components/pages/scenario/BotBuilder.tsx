@@ -17,6 +17,7 @@ import { ID_GEN, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
+import { CarouselOrderPopup } from './edit/CarousleOrderPopup';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';

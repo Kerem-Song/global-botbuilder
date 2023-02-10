@@ -51,6 +51,7 @@ export const VIEW_TYPES = {
   LIST_CARD_VIEW: 'ListCardView',
   LIST_CARD_CAROUSEL_VIEW: 'ListCardCarouselView',
   PRODUCT_CARD_VIEW: 'ProductCardView',
+  PRODUCT_CARD_CAROUSEL_VIEW: 'ProductCardCarouselView',
   RETRY_CONDITION_VIEW: 'RetryConditionView',
   PARAMETER_SET_NODE_VIEW: 'ParameterSetView',
 };

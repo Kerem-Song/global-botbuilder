@@ -11,6 +11,14 @@
   "scenarios": {
     "TITLE": "scenarios"
   },
+  "scenario": {
+    "TITLE": "Scenario",
+    "CAROUSEL": "Carousel",
+    "CAROUSEL_WARNING_FIRST": "※ Only the order of the carousel can be changed in this pop-up.",
+    "CAROUSEL_WARNING_SECOND": "Please close the pop-up for detailed settings and edit the speech bubble keller by editing it.",
+    "ADD_CAHTBUBBLE_BTN": "Chatbubble",
+    "CONFIRM_CAROUSEL_POPUP": "Confirm"
+  },
   "test": {
     "TITLE": "test page"
   },
