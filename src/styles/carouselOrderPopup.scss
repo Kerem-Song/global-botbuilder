@@ -29,6 +29,8 @@
 
   .carouselWrapper {
     padding: rem(20);
+    max-height: rem(699);
+    overflow: auto;
 
     .carouselName {
       font-size: rem(20);
@@ -87,6 +89,10 @@
         }
       }
     }
+  }
+
+  .carouselWrapper::-webkit-scrollbar {
+    width:1px
   }
 
   .luna-card {

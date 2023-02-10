@@ -35,10 +35,8 @@ export const SoratbleCarouselCtrlContainer = ({
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
 
   useEffect(() => {
-    if (nodeView) {
-      setCarouselNode(nodeView.childrenViews);
-    }
-  }, [carouselNode]);
+    setCarouselNode(nodeView.childrenViews || []);
+  }, [nodeView.childrenViews]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -66,6 +64,7 @@ export const SoratbleCarouselCtrlContainer = ({
         if (items) {
           const oldIndex = items.findIndex((item) => item.id === active.id);
           const newIndex = items.findIndex((item) => item.id === over.id);
+          console.log('old index', oldIndex), console.log('new index', newIndex);
           return arrayMove(items, oldIndex, newIndex);
         }
       });
@@ -90,7 +89,7 @@ export const SoratbleCarouselCtrlContainer = ({
       {nodeView.childrenViews && (
         <SortableContext items={nodeView.childrenViews}>
           <SoratbleGrid columns={5}>
-            {nodeView.childrenViews.map((item, i: number) => (
+            {carouselNode?.map((item, i: number) => (
               <SortableCarouselCtrlItem
                 key={item.id}
                 typeName={item.typeName}

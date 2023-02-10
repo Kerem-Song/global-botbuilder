@@ -30,7 +30,7 @@ export const CarouselOrderPopup: FC<{
   nodeView: IHasChildrenView;
   node: INode;
 }> = ({ isOpen, handleIsOpen, handleSave, nodeId, nodeView, node }) => {
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const {
     register,
     handleSubmit,
@@ -51,13 +51,16 @@ export const CarouselOrderPopup: FC<{
     const type = nodeView.typeName;
 
     const view = node.view as IBasicCardCarouselView;
-    const childrenViews: IBasicCardView[] = [
+    const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
       nodeHelper.createDefaultBasicCardView(),
     ];
     const upNode = {
       ...node,
-      view: { ...view, childrenViews } as IBasicCardCarouselView,
+      view: { ...view, childrenViews } as
+        | IBasicCardCarouselView
+        | IListCardCarouselView
+        | IProductCardCarouselView,
     };
 
     dispatch(updateNode(upNode));
@@ -120,44 +123,46 @@ export const CarouselOrderPopup: FC<{
       isOpen={isOpen}
       className="carouselOrderPopupWrapper node-draggable-ignore"
     >
-      <Row justify="space-between" align="center" className="titleWrapper">
-        <Col>
-          <p className="carouselTitle">
-            {carouselType} {t('CAROUSEL')}
-          </p>
-        </Col>
-        <Col>
-          <Button shape="ghost" onClick={handleClose} className="closeBtn">
-            <img src={icClosed} alt="icClosed" />
-          </Button>
-        </Col>
-      </Row>
-
-      <Divider />
-      <div className="carouselWrapper">
-        <p className="carouselName">{carouselName}</p>
-        <Row justify="space-between" align="center">
-          <Col className="warning">
-            <p>{t('CAROUSEL_WARNING_FIRST')}</p>
-            <p>{t('CAROUSEL_WARNING_SECOND')}</p>
+      <div onWheel={(e) => e.stopPropagation()}>
+        <Row justify="space-between" align="center" className="titleWrapper">
+          <Col>
+            <p className="carouselTitle">
+              {carouselType} {t('CAROUSEL')}
+            </p>
           </Col>
-          <Col className="buttonWrapper">
-            {nodeView.childrenViews?.length < 10 && (
-              <Button
-                shape="ghost"
-                className="carouselBtn add"
-                onClick={() => HandleAddCarousel()}
-              >
-                + {t('ADD_CAHTBUBBLE_BTN')}
-              </Button>
-            )}
-            <Button shape="ghost" className="carouselBtn confirm">
-              {t('CONFIRM_CAROUSEL_POPUP')}
+          <Col>
+            <Button shape="ghost" onClick={handleClose} className="closeBtn">
+              <img src={icClosed} alt="icClosed" />
             </Button>
           </Col>
         </Row>
-        <div>
-          <SoratbleCarouselCtrlContainer nodeId={nodeId} nodeView={nodeView} />
+
+        <Divider />
+        <div className="carouselWrapper">
+          <p className="carouselName">{carouselName}</p>
+          <Row justify="space-between" align="center">
+            <Col className="warning">
+              <p>{t('CAROUSEL_WARNING_FIRST')}</p>
+              <p>{t('CAROUSEL_WARNING_SECOND')}</p>
+            </Col>
+            <Col className="buttonWrapper">
+              {nodeView.childrenViews?.length < 10 && (
+                <Button
+                  shape="ghost"
+                  className="carouselBtn add"
+                  onClick={() => HandleAddCarousel()}
+                >
+                  + {t('ADD_CAHTBUBBLE_BTN')}
+                </Button>
+              )}
+              <Button shape="ghost" className="carouselBtn confirm">
+                {t('CONFIRM_CAROUSEL_POPUP')}
+              </Button>
+            </Col>
+          </Row>
+          <div>
+            <SoratbleCarouselCtrlContainer nodeId={nodeId} nodeView={nodeView} />
+          </div>
         </div>
       </div>
     </ReactModal>
