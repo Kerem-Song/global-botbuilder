@@ -26,6 +26,7 @@
     "ADD_VARIABLE": "변수 추가",
     "VARIABLE_NAME": "변수 이름",
     "VARIABLE_FORMAT": "변수 포맷",
+    "VARIABLE_FORMAT_PLACEHOLDER": "변수 포맷을 선택해주세요.",
     "DEFAULT_VALUE": "기본 값",
     "INPUT_VARIABLE_NAME_IN_ENGLISH": "변수명을 영어로 입력해주세요.",
     "INPUT_VARIABLE": "값을 입력해주세요.",

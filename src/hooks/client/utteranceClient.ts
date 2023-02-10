@@ -9,14 +9,12 @@ import {
 } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-import { IHasResults } from './../../models/interfaces/IHasResults';
 import {
   IDeleteIntent,
   IGetIntent,
   IIntentListItem,
   IResponseIntentData,
   ISaveIntent,
-  IScenarioData,
   ISearchIntent,
 } from './../../models/interfaces/IUtterance';
 import { useHttp } from './../useHttp';

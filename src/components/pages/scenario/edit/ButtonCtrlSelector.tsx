@@ -1,5 +1,4 @@
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import { Dispatch, SetStateAction } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
@@ -20,6 +19,7 @@ export const reactSelectStyle: StylesConfig = {
 
   dropdownIndicator: () => ({
     color: '#B5B4B4',
+    marginRight: '10px',
   }),
   indicatorsContainer: () => ({}),
   valueContainer: (provided) => ({
@@ -29,7 +29,7 @@ export const reactSelectStyle: StylesConfig = {
   placeholder: (provided) => ({
     ...provided,
     whiteSpace: 'nowrap',
-    color: '#000',
+    color: '#dcdcdc',
   }),
   input: (provided) => ({
     ...provided,

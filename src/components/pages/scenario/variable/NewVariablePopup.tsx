@@ -1,8 +1,14 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
+import { useVariableClient } from '@hooks/client/variableClient';
+import { ISaveParameter, ISaveParameterData } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
+
+import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
 
 export interface NewVariablePopupProps {
   isOpen: boolean;
@@ -10,9 +16,40 @@ export interface NewVariablePopupProps {
 }
 
 export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOpen }) => {
+  const { variableMutate } = useVariableClient();
   const { t, tc } = usePage();
+
+  const token = useRootState((state) => state.botBuilderReducer.token);
+  const { reset, register, handleSubmit } = useForm<ISaveParameterData>({
+    defaultValues: {},
+  });
+
   const handleClose = () => {
     handleIsOpen(false);
+    reset();
+  };
+
+  const handleSave = (variable: ISaveParameterData): void => {
+    const newVariable: ISaveParameter = {
+      sessionToken: token,
+      data: {
+        name: variable.name,
+        defaultValue: variable.defaultValue,
+        // formatType: variable.formatType,
+        formatType: 2,
+      },
+    };
+
+    variableMutate.mutate(newVariable, {
+      onSuccess: (submitResult) => {
+        console.log('newVariable', submitResult);
+        if (submitResult && submitResult.isSuccess) {
+          lunaToast.success();
+          handleClose();
+          reset();
+        }
+      },
+    });
   };
 
   return (
@@ -32,12 +69,15 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
         <Title level={4}>{t('ADD_VARIABLE')}</Title>
       </div>
       <Divider />
-      <form>
+      <form onSubmit={handleSubmit(handleSave)}>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
           <Col span={6}>{t('VARIABLE_NAME')}</Col>
           <Col span={18}>
             <FormItem>
-              <Input placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')} />
+              <Input
+                {...register('name')}
+                placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
+              />
             </FormItem>
           </Col>
         </Row>
@@ -45,8 +85,10 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
           <Col span={6}>{t('VARIABLE_FORMAT')}</Col>
           <Col span={18}>
             <FormItem>
-              {/* <Input placeholder={t('BOT_NAME_PLACEHOLDER')} maxLength={20} showCount /> */}
-              <Select></Select>
+              <Select
+                styles={reactSelectStyle}
+                placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
+              ></Select>
             </FormItem>
           </Col>
         </Row>
@@ -54,7 +96,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
           <Col span={6}>{t('DEFAULT_VALUE')}</Col>
           <Col span={18}>
             <FormItem>
-              <Input placeholder={t('INPUT_VARIABLE')} />
+              <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
             </FormItem>
           </Col>
         </Row>
