@@ -178,6 +178,18 @@ export const Node: FC<INodeProps> = ({
     },
   ];
 
+  const popperMenu = () => {
+    console.log('typename', typeName);
+    switch (typeName) {
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+        return nodeMenu;
+      default:
+        return nodeMenu.slice(0, 3);
+    }
+  };
+
   const handleShowingNodesWithoutCards = () => {
     // console.log(node);
     switch (typeName) {
@@ -260,7 +272,7 @@ export const Node: FC<INodeProps> = ({
             // offset={[-10, 15]}
             popup
             popupList
-            popperItems={nodeMenu}
+            popperItems={popperMenu()}
             onChange={(m) => {
               m.data?.action?.();
             }}
