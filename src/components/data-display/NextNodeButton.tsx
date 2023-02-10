@@ -1,6 +1,7 @@
 import { Button } from '@components';
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
+import { NEXT_BUTTON_PREFIX } from '@modules';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { DragEvent, FC } from 'react';
@@ -22,24 +23,23 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
   const dispatch = useDispatch();
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const isEditting = useRootState((state) => state.botBuilderReducer.isEditDrawerOpen);
   const { updateLine } = useUpdateLines();
 
   const StartDrag = (e: DragEvent<HTMLDivElement>) => {
-    console.log(arrows);
-    if (arrows.find((x) => x.start === `next-${ctrlId}`)) {
-      e.stopPropagation();
-      e.preventDefault();
+    if (isEditting) {
       return;
     }
 
     //const img = new Image();
-    e.dataTransfer.setData('id', `next-${ctrlId}`);
+    console.log(ctrlId);
+    e.dataTransfer.setData('id', `${NEXT_BUTTON_PREFIX}${ctrlId}`);
     e.dataTransfer.setData('nodeId', nodeId);
     e.dataTransfer.setData('pointType', type);
     e.dataTransfer.setData('isNext', '1');
     dispatch(
       setGuideStartNode({
-        startId: `next-${ctrlId}`,
+        startId: `${NEXT_BUTTON_PREFIX}${ctrlId}`,
         nodeId,
         isNext: true,
         type,
@@ -69,7 +69,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
         className={classNames('nextNodeDrag')}
         style={{ top: offset !== undefined ? `${offset}px` : undefined }}
         id={`next-${ctrlId}`}
-        draggable
+        draggable={!isEditting}
         onDragStart={StartDrag}
         onDragEnd={() => {
           dispatch(setGuideStartNode());

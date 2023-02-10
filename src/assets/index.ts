@@ -59,6 +59,8 @@ import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
 import icPlus from '@assets/icons/ic_plus.svg';
+import icPlusWhite from '@assets/icons/ic_plus_white.svg';
+import icPopupClose from '@assets/icons/ic_popup_close.svg';
 import icPreview from '@assets/icons/ic_preview.svg';
 import icPreviewActive from '@assets/icons/ic_preview_active.svg';
 import icQuickBtn from '@assets/icons/ic_quick_btn.svg';
@@ -112,6 +114,7 @@ import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
+
 export {
   icAdd,
   icBtnTemple,
@@ -176,6 +179,8 @@ export {
   icPen,
   icPenActive,
   icPlus,
+  icPlusWhite,
+  icPopupClose,
   icPreview,
   icPreviewActive,
   icQuickBtn,

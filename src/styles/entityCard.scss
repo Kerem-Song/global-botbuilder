@@ -1,0 +1,65 @@
+.entityWrapper {
+  div {
+    div {
+      .entityCard {
+        width: rem(251);
+        height: rem(162);
+        border: 1px solid $gray200;
+        border-radius: rem(8);
+        padding: rem(20);
+        cursor: pointer;
+        .cardHeader {
+          width: rem(211);
+          height: rem(38);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: rem(16);
+          .title {
+            font-size: rem(16);
+            font-weight: 500;
+            line-height: rem(19);
+          }
+          .icDelete {
+            width: rem(38);
+            height: rem(38);
+            padding: rem(8);
+            background-color: $grayWhite;
+            border: 1px solid $gray200;
+            border-radius: rem(8);
+            cursor: pointer;
+            background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            &:hover {
+              background-color: $primary100;
+            }
+            &:disabled {
+              background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+              background-position: center;
+              background-repeat: no-repeat;
+              &:hover {
+                background-color: $grayWhite;
+              }
+            }
+          }
+        }
+        .entries {
+          height: rem(68);
+          overflow: hidden;
+          white-space: normal;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          .entry {
+            color: $gray500;
+          }
+        }
+        &:hover {
+          background-color: $primary100;
+        }
+      }
+    }
+  }
+}

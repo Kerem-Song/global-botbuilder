@@ -1,7 +1,9 @@
 import { Button, Card } from '@components';
+import { NextNodeButton } from '@components/data-display/NextNodeButton';
 import { SortableButtonCtrlContainer } from '@components/data-display/SortableButtonCtrlContainer';
 import { INode } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 
 interface AnswerNodeProps {
@@ -15,11 +17,23 @@ export const AnswerNode: FC<AnswerNodeProps> = ({ nodeId, node }) => {
     <Card>
       <div className="quickReplyWrapper node-draggable-ignore">
         {view.utteranceParam ? (
-          <Button key={`${nodeId}-quickReply-answer`} className="btnQuickRelply">
-            {`{{${view.utteranceParam || ''}}}`}
-          </Button>
+          <>
+            <Button key={`${nodeId}-quickReply-answer`} className="btnQuickRelply">
+              {`{{${view.utteranceParam || ''}}}`}
+            </Button>
+            <NextNodeButton
+              ctrlId={`${nodeId}`}
+              nodeId={`${NODE_PREFIX}${nodeId}`}
+              type="blue"
+              offset={60}
+            />
+          </>
         ) : undefined}
-        <SortableButtonCtrlContainer buttonList={view.quicks} nodeId={nodeId} />
+        <SortableButtonCtrlContainer
+          buttonList={view.quicks}
+          nodeId={`${NODE_PREFIX}${nodeId}`}
+          nextNodeOffset={view.utteranceParam ? 102 : 66}
+        />
       </div>
     </Card>
   );

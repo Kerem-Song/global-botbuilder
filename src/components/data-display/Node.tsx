@@ -10,11 +10,13 @@ import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrde
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
+import { CommerceCardCarouselNode } from '@components/pages/scenario/nodes/CommerceCardCarouselNode';
 import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
 import { ListCardCarouselNode } from '@components/pages/scenario/nodes/ListCardCarouselNode';
 import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
+import { OtherFlowRedirectNode } from '@components/pages/scenario/nodes/OtherFlowRedirectNode';
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
@@ -22,12 +24,7 @@ import { useModalOpen, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
-import {
-  IBasicCardCarouselView,
-  IBasicCardView,
-  IHasChildrenView,
-  ITextView,
-} from '@models/interfaces/res/IGetFlowRes';
+import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -48,12 +45,6 @@ import {
 } from '../../models/interfaces/ICard';
 import { SizeType } from '../../models/types/SizeType';
 import { NODE_PREFIX } from '../../modules';
-import {
-  BasicCard,
-  CommerceCard,
-  ListCard,
-  OtherFlowRedirectCard,
-} from '../pages/scenario/cards';
 import { NextNodeButton } from './NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
@@ -193,9 +184,9 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.INTENT_NODE:
         return <IntentNode id={id} />;
       case NODE_TYPES.CONDITION_NODE:
-        return <ConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
+        return <ConditionNode node={node} />;
       case NODE_TYPES.RETRY_CONDITION_NODE:
-        return <RetryConditionNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
+        return <RetryConditionNode node={node} />;
       case NODE_TYPES.PARAMETER_SET_NODE:
         return <ParameterSetNode node={node} />;
       case NODE_TYPES.JSON_REQUEST_NODE:
@@ -205,9 +196,9 @@ export const Node: FC<INodeProps> = ({
           </div>
         );
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return <OtherFlowRedirectCard />;
+        return <OtherFlowRedirectNode />;
       case NODE_TYPES.ANSWER_NODE:
-        return <AnswerNode nodeId={`${NODE_PREFIX}${id}`} node={node} />;
+        return <AnswerNode nodeId={`${id}`} node={node} />;
       case NODE_TYPES.TEXT_NODE:
         return <TextNode node={node} />;
       case NODE_TYPES.BASIC_CARD_NODE:
@@ -220,107 +211,9 @@ export const Node: FC<INodeProps> = ({
         return <ListCardCarouselNode node={node} />;
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <CommerceCardNode node={node} />;
-      default:
-        return handleShowingCards();
-    }
-  };
-
-  const handleShowingCards = () => {
-    if (node.type === NODE_TYPES.TEXT_NODE) {
-      const view = node.view as ITextView;
-
-      if (view) {
-        const textCards: IBasicCardNode[] = [
-          { type: NODE_TYPES.TEXT_NODE, description: view.text },
-        ];
-        return <BasicCard cards={textCards} nodeId={`${NODE_PREFIX}${id}`} />;
-      }
-    }
-
-    if (node.type === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
-      const view = node.view as IBasicCardCarouselView;
-      const basicCards: IBasicCardNode[] = view.childrenViews.map((x) => {
-        return {
-          type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-          title: x.title || '',
-          thumbnail: x.imageCtrl
-            ? {
-                imageUrl: x.imageCtrl?.imageUrl,
-              }
-            : undefined,
-          buttons: x.buttons?.map((b) => {
-            return {
-              id: b.id,
-              label: b.label,
-              actionValue: b.actionValue,
-              action: b.actionType as 'linkWebUrl',
-            };
-          }),
-        };
-      });
-
-      return <BasicCard cards={basicCards} nodeId={`${NODE_PREFIX}${id}`} isCarousel />;
-    }
-
-    if (node.type === NODE_TYPES.BASIC_CARD_NODE) {
-      const view = node.view as IBasicCardView;
-      const basicCards: IBasicCardNode[] = [
-        {
-          type: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-          title: view.title,
-          description: view.description,
-          thumbnail: view.imageCtrl
-            ? {
-                imageUrl: view.imageCtrl.imageUrl,
-              }
-            : undefined,
-          buttons: view.buttons?.map((b) => {
-            return {
-              id: b.id,
-              label: b.label,
-              actionValue: b.actionValue,
-              action: b.actionType as 'linkWebUrl',
-            };
-          }),
-        },
-      ];
-
-      return <BasicCard cards={basicCards} nodeId={`${NODE_PREFIX}${id}`} />;
-    }
-
-    if (!cards) {
-      return <div></div>;
-    }
-
-    switch (typeName) {
-      //case NODE_TYPES.TEXT_NODE:
-      case NODE_TYPES.IMAGE_NODE:
-      case NODE_TYPES.BASIC_CARD_NODE:
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
-        return (
-          <BasicCard cards={cards as IBasicCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
-        );
-
-      case NODE_TYPES.LIST_CARD_NODE:
-      case NODE_TYPES.LIST_CAROUSEL:
-        return (
-          <ListCard cards={cards as IListCardNode[]} nodeId={`${NODE_PREFIX}${id}`} />
-        );
-
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-      case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
-        return (
-          <CommerceCard
-            cards={cards as IProductCardNode[]}
-            nodeId={`${NODE_PREFIX}${id}`}
-          />
-        );
+        return <CommerceCardCarouselNode node={node} />;
     }
-
-    return <div></div>;
   };
 
   const HandleNodeSelect = async (e: React.MouseEvent<HTMLDivElement>) => {

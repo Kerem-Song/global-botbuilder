@@ -1,5 +1,5 @@
 import { FC } from 'react';
 
-export const OtherFlowRedirectCard: FC = () => {
+export const OtherFlowRedirectNode: FC = () => {
   return <div className="command-node"></div>;
 };

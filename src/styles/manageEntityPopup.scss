@@ -1,0 +1,168 @@
+.entityModal {
+  width: rem(1080);
+  height: rem(652);
+  margin: auto;
+  margin-top: calc(100vh - rem(780));
+  padding: 0;
+  border-radius: rem(12);
+  background-color: $grayWhite;
+  overflow-y: scroll;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $gray150;
+    padding: rem(20) rem(20) 0 rem(20);
+    cursor: pointer;
+    .title {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      li {
+        height: rem(40);
+        font-size: rem(16);
+        line-height: rem(19);
+        padding: 0 rem(20);
+      }
+      .is-active {
+        border-bottom: 4px solid $primary500;
+      }
+    }
+    .closeBtn {
+      width: rem(20);
+      height: rem(20);
+      border: none;
+      background-color: $grayWhite;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .detail {
+    border-bottom: 1px solid $gray150;
+    padding: rem(20);
+  }
+  .entitiesWrapper {
+    padding: rem(20);
+    .entitiesTitle {
+      margin-bottom: rem(12);
+    }
+    .entity {
+      margin-bottom: rem(12);
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .entityDetailHeader {
+      display: flex;
+      justify-content: space-between;
+    }
+    .searchInput {
+      margin: rem(12) 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .registerEntry {
+      div {
+        div {
+          div {
+            div {
+              display: flex;
+              .entryList {
+                width: rem(744);
+                margin-right: rem(8);
+                border: 1px solid #dcdcdc;
+                border-radius: rem(8);
+                display: flex;
+                align-items: center;
+                .addEntry {
+                  display: inline-block;
+                  margin-left: rem(4);
+                  padding: 0 rem(4);
+                  max-width: calc(100% - rem(32));
+                  min-width: rem(98);
+                  height: rem(25);
+                  line-height: rem(25);
+                  border-radius: rem(8);
+                  background-color: $primary150;
+                  overflow: hidden;
+                  white-space: nowrap;
+                }
+                .addBtnWrapper {
+                  position: relative;
+                  margin-left: rem(8);
+                  display: flex;
+                  justify-items: center;
+                  align-items: center;
+                  width: rem(63);
+                  height: rem(24);
+                  border: 1px solid $gray200;
+                  border-radius: rem(99);
+                  background-color: $grayWhite;
+                  .addBtn {
+                    z-index: 100;
+                    position: absolute;
+                    margin-left: rem(7);
+                    margin-right: rem(4);
+                    display: flex;
+                    justify-items: center;
+                    align-items: center;
+                    width: rem(16);
+                    height: rem(16);
+                    border: none;
+                    background-color: $grayWhite;
+                    background-image: url('@assets/icons/ic_utterance_add.svg');
+                    cursor: pointer;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    span {
+                      margin-left: rem(20);
+                    }
+                  }
+                }
+              }
+              .icDelete {
+                width: rem(38);
+                height: rem(38);
+                padding: rem(8);
+                background-color: $grayWhite;
+                border: 1px solid $gray200;
+                border-radius: rem(8);
+                cursor: pointer;
+                background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                &:hover {
+                  background-color: $primary100;
+                }
+                &:disabled {
+                  background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  &:hover {
+                    background-color: $grayWhite;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.detail {
+}
+
+// 추후 스크롤바 css
+// .entityModal::-webkit-scrollbar {
+// }
+
+// .entityModal::-webkit-scrollbar-thumb {
+//   &:hover {
+//   }
+// }

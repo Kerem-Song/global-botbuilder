@@ -24,6 +24,7 @@ export interface BotBuilderMaker {
   selectedScenario?: IScenarioModel;
   basicScenarios?: IScenarioModel[];
   invalidateNodes: Record<string, boolean>;
+  carouselIndex: Record<string, number>;
 }
 
 const initialState: BotBuilderMaker = {
@@ -31,6 +32,7 @@ const initialState: BotBuilderMaker = {
   isEditDrawerOpen: false,
   token: '',
   invalidateNodes: {},
+  carouselIndex: {},
 };
 
 export const botbuilderSlice = createSlice({
@@ -42,6 +44,7 @@ export const botbuilderSlice = createSlice({
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       state.selectedScenario = action.payload;
+      state.isEditDrawerOpen = false;
     },
     setSesstionToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
@@ -72,6 +75,7 @@ export const botbuilderSlice = createSlice({
       }
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
+      console.log(action.payload);
       state.guideInfo = action.payload;
       if (action.payload) {
         state.savedGuideInfo = action.payload;
@@ -82,10 +86,15 @@ export const botbuilderSlice = createSlice({
       action: PayloadAction<{ id: string; isValid: boolean }>,
     ) => {
       const { id, isValid } = action.payload;
-      console.log(action.payload);
       const result = { ...state.invalidateNodes };
       result[id] = !isValid;
       state.invalidateNodes = result;
+    },
+    setCarouselIndex: (state, action: PayloadAction<{ id: string; index: number }>) => {
+      const { id, index } = action.payload;
+      const result = { ...state.carouselIndex };
+      result[id] = index;
+      state.carouselIndex = result;
     },
     // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
     //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
@@ -114,6 +123,7 @@ export const {
   setGuideStartNode,
   setSesstionToken,
   setInvalidateNode,
+  setCarouselIndex,
   // setGuidePosition,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
