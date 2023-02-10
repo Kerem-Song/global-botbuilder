@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import usePage from '../../../hooks/usePage';
 import { ScenarioManagement } from './ScenarioManagement';
-import { VariablesManagement } from './VariablesManagement';
+import { VariablesManagement } from './variable/VariablesManagement';
+
 export const ManagementComponent = () => {
   const { t } = usePage();
   const token = useRootState((state) => state.botBuilderReducer.token);

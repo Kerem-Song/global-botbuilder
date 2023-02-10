@@ -2,7 +2,7 @@
   width: rem(1080);
   height: rem(652);
   margin: auto;
-  margin-top: rem(200);
+  margin-top: calc(100vh - rem(780));
   padding: 0;
   border-radius: rem(12);
   background-color: $grayWhite;
@@ -13,6 +13,7 @@
     justify-content: space-between;
     border-bottom: 1px solid $gray150;
     padding: rem(20) rem(20) 0 rem(20);
+    cursor: pointer;
     .title {
       width: 100%;
       display: flex;
@@ -157,19 +158,11 @@
 .detail {
 }
 
+// 추후 스크롤바 css
 // .entityModal::-webkit-scrollbar {
-//   width: rem(8);
-//   height: rem(0);
-//   background-color: rgba(208, 221, 255, 0);
 // }
 
 // .entityModal::-webkit-scrollbar-thumb {
-//   height: 30%;
-//   background-color: rgba(208, 221, 255, 0);
-//   border-radius: rem(18);
-//   transition: background-color 3s ease-out;
-
 //   &:hover {
-//     background-color: rgba(298, 221, 255, 0.8);
 //   }
 // }

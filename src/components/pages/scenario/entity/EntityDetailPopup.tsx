@@ -10,12 +10,7 @@ export interface EntityDetailProps {
   onChange?: Dispatch<React.SetStateAction<string>>;
 }
 
-export const EntityDetailPopup: FC<EntityDetailProps> = ({
-  isOpen,
-  handleIsOpen,
-  value,
-  onChange,
-}) => {
+export const EntityDetailPopup: FC<EntityDetailProps> = ({ isOpen, handleIsOpen }) => {
   const handleClose = () => {
     handleIsOpen(false);
   };

@@ -1,5 +1,4 @@
-import { icDelete, icPlusWhite, icPopupClose, icSearchDelete } from '@assets';
-import { Button, Col, Divider, Input, Row, Title } from '@components';
+import { icPopupClose } from '@assets';
 import { usePage } from '@hooks';
 import { useState } from 'react';
 import { FC } from 'react';

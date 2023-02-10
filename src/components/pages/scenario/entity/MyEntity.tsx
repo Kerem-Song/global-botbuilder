@@ -1,12 +1,9 @@
-import { icDelete, icPlusWhite, icPopupClose, icSearchDelete } from '@assets';
-import { Button, Col, Divider, Input, Row, Title } from '@components';
-import { useModalOpen, usePage } from '@hooks';
+import { icPlusWhite } from '@assets';
+import { Button, Col, Input, Row, Title } from '@components';
+import { useModalOpen } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { FC } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import ReactModal from 'react-modal';
 
 import { EntityDetailPopup } from './EntityDetailPopup';
 export const MyEntity = () => {

@@ -204,7 +204,7 @@
       background-color: $grayWhite;
 
       .variableListHeader {
-        padding: rem(10);
+        padding: rem(12);
         display: grid;
         align-items: center;
         grid-template-columns: 5fr 5fr 1fr;
@@ -220,7 +220,7 @@
       }
 
       .variableLists {
-        max-height: rem(400);
+        max-height: calc(100vh - rem(230));
         overflow-y: auto;
 
         .variableList {
@@ -229,18 +229,33 @@
           grid-template-columns: 5fr 5fr 1fr;
           align-items: center;
           word-break: break-all;
-          padding: 0 rem(10);
+          padding: 0 rem(12);
+          cursor: pointer;
+
+          &:hover {
+            background-color: $primary100;
+          }
 
           span {
             text-overflow: ellipsis;
             overflow: hidden;
-            // max-width: rem(110);
             white-space: nowrap;
             margin-right: rem(2);
           }
+          .deleteBtn {
+            border: none;
+            background-color: transparent;
+          }
+        }
 
-          & i {
-            text-align: center;
+        .emptyVariableList {
+          height: rem(50);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          span {
+            color: $gray300;
           }
         }
       }
