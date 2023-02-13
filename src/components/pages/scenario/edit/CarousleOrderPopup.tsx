@@ -62,6 +62,7 @@ export const CarouselOrderPopup: FC<{
           return nodeHelper.createDefaultBasicCardView();
       }
     };
+
     const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
       defaultView(),
@@ -76,52 +77,6 @@ export const CarouselOrderPopup: FC<{
     };
 
     dispatch(updateNode(upNode));
-    // switch (type) {
-    //   case VIEW_TYPES.BASIC_CARD_CAROUSEL_VIEW:
-    //     return () => {
-    //       const view = node.view as IBasicCardCarouselView;
-    //       const childrenViews: IBasicCardView[] = [
-    //         ...view.childrenViews,
-    //         nodeHelper.createDefaultBasicCardView(),
-    //       ];
-    //       const upNode = {
-    //         ...node,
-    //         view: { ...view, childrenViews } as IBasicCardCarouselView,
-    //       };
-
-    //       dispatch(updateNode(upNode));
-    //     };
-
-    // case VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW:
-    //   return () => {
-    //     const view = node.view as IListCardCarouselView;
-    //     const childrenViews: IListCardView[] = [
-    //       ...view.childrenViews,
-    //       nodeHelper.createDefaultListCardView(),
-    //     ];
-    //     const upNode = {
-    //       ...node,
-    //       view: { ...view, childrenViews } as IListCardCarouselView,
-    //     };
-
-    //     dispatch(updateNode(upNode));
-    //   };
-
-    // case VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW:
-    //   return () => {
-    //     const view = node.view as IProductCardCarouselView;
-    //     const childrenViews: IProductCardView[] = [
-    //       ...view.childrenViews,
-    //       nodeHelper.createCommerceView(),
-    //     ];
-    //     const upNode = {
-    //       ...node,
-    //       view: { ...view, childrenViews } as IProductCardCarouselView,
-    //     };
-
-    //     dispatch(updateNode(upNode));
-    //   };
-    // }
   };
 
   console.log('nodeView', nodeView);
