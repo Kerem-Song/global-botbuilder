@@ -21,7 +21,7 @@ export const ScenarioSelector = ({ children }: any) => {
   const scenarioSelectorRef = useRef<HTMLDivElement | null>(null);
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
+  const { data } = getScenarioList();
   const [scenarioList, setScenarioList] = useState<IScenarioModel[] | undefined>(data);
   const dispatch = useDispatch();
 

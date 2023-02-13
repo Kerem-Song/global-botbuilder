@@ -26,10 +26,12 @@ export const ScenarioManagement: FC<{
   };
 
   const handleNewScenario = async () => {
-    await scenarioCreateAsync({
-      token,
-      scenarioName: `scenario ${(scenarios?.length || 0) + 1}`,
-    });
+    if (token) {
+      await scenarioCreateAsync({
+        token,
+        scenarioName: `scenario ${(scenarios?.length || 0) + 1}`,
+      });
+    }
   };
 
   return (

@@ -22,7 +22,7 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
   console.log('ctrl id', ctrlId);
 
   const handleUploadImage = async () => {
-    if (getValues('view.imageCtrl.imageFile').length > 0) {
+    if (token && getValues('view.imageCtrl.imageFile').length > 0) {
       const formData = new FormData();
       formData.append('File', getValues('view.imageCtrl.imageFile')[0]);
       formData.append('SessionToken', token);

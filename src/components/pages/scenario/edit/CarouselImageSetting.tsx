@@ -27,7 +27,10 @@ export const CarouselImageSetting = ({
   console.log('ctrl id', ctrlId);
 
   const handleUploadImage = async () => {
-    if (getValues(`view.childrenViews.${index}.imageCtrl.imageFile`).length > 0) {
+    if (
+      token &&
+      getValues(`view.childrenViews.${index}.imageCtrl.imageFile`).length > 0
+    ) {
       const formData = new FormData();
       formData.append(
         'File',
