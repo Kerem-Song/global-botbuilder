@@ -10,10 +10,15 @@ export const DefaultLayout = () => {
 
   return (
     <>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
+      <Aside />
+      <div id="layout">
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+      <ToastContainer />
+      <SystemModalContainer />
     </>
   );
 };

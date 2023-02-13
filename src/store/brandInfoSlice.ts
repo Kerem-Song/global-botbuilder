@@ -7,7 +7,7 @@ const initialState: IBrandInfo = {
   brandId: 'lunasoft',
 };
 
-export const BrandInfoSlice = createSlice({
+export const brandInfoSlice = createSlice({
   name: 'brandInfo',
   initialState,
   reducers: {
@@ -19,5 +19,5 @@ export const BrandInfoSlice = createSlice({
   },
 });
 
-export const { setBrandInfo } = BrandInfoSlice.actions;
-export default BrandInfoSlice.reducer;
+export const { setBrandInfo } = brandInfoSlice.actions;
+export default brandInfoSlice.reducer;

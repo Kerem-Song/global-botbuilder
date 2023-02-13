@@ -1,25 +1,25 @@
-import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
-import { setSesstionToken } from '@store/botbuilderSlice';
-import { useDispatch } from 'react-redux';
+import { SystemModalContainer } from '@components/modal/SystemModalContainer';
+import { useRootState } from '@hooks';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
+import { BotAside } from './BotAside';
 import { Header } from './Header';
 
 export const BotLayout = () => {
-  const { token, isFetching } = useSessionTokenClient();
-
-  const dispatch = useDispatch();
-  if (isFetching) {
-    return <></>;
-  }
-
-  dispatch(setSesstionToken(token));
+  console.log('BotLayout');
+  const token = useRootState((state) => state.botBuilderReducer.token);
   return (
     <>
-      <Header isBotPage />
-      <main>
-        <Outlet />
-      </main>
+      <>
+        <BotAside />
+        <div id="layout">
+          <Header isBotPage />
+          <main>{token ? <Outlet /> : <></>}</main>
+        </div>
+        <ToastContainer />
+        <SystemModalContainer />
+      </>
     </>
   );
 };

@@ -22,10 +22,9 @@ export const ToSearch: FC<IToSearchProps> = ({ sortData, searchData, setSearchDa
   const [scenario, setScenario] = useState<string | undefined>(undefined);
   const [searchWord, setSearchWord] = useState<string | undefined>('');
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const token = useRootState((state) => state.botBuilderReducer.token);
 
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
+  const { data } = getScenarioList();
 
   const scenarioList = data?.map((x) => {
     return { value: x.id, label: x.alias };

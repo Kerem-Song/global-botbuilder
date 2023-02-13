@@ -9,12 +9,7 @@ export const Layout = () => {
 
   return (
     <>
-      <Aside />
-      <div id="layout">
-        <Outlet />
-      </div>
-      <ToastContainer />
-      <SystemModalContainer />
+      <Outlet />
     </>
   );
 };

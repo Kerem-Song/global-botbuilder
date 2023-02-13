@@ -51,24 +51,21 @@ aside {
       }
     }
 
-    & a {
+    .headerName {
       color: $grayWhite;
-
-      .headerName {
-        position: relative;
-        padding-right: rem(12);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        &::after {
-          display: inline-block;
-          position: absolute;
-          top: rem(1);
-          right: 0;
-          content: url('@assets/icons/ic_show.svg');
-          width: rem(12);
-          height: rem(12);
-        }
+      position: relative;
+      padding-right: rem(12);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      &::after {
+        display: inline-block;
+        position: absolute;
+        top: rem(1);
+        right: 0;
+        content: url('@assets/icons/ic_show.svg');
+        width: rem(12);
+        height: rem(12);
       }
     }
   }

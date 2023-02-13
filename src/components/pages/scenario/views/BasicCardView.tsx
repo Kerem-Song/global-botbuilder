@@ -1,5 +1,4 @@
 import { Card } from '@components/data-display';
-import { SortableButtonContainer } from '@components/data-display/SortableButtonContainer';
 import { SortableButtonCtrlContainer } from '@components/data-display/SortableButtonCtrlContainer';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';

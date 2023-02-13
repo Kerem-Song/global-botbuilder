@@ -38,10 +38,8 @@
     "MY_ENTITY": "나의 엔티티",
     "SYSTEM_ENTITY": "시스템 엔티티"
   },
-  "test": {
-    "TITLE": "테스트페이지"
-  },
   "sidebar": {
+    "PARTNERS_CENTER": "파트너스 센터",
     "DASHBOARD": "대시보드",
     "SCENARIO": "시나리오",
     "IMAGEEDITOR": "이미지 에디터",
