@@ -1,22 +1,17 @@
 import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
-import { Button, Title } from '@components/general';
+import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
 import { usePage } from '@hooks';
-import { INode, VIEW_TYPES } from '@models';
+import { INode } from '@models';
 import {
   IBasicCardCarouselView,
-  IBasicCardView,
   IHasChildrenView,
   IListCardCarouselView,
-  IListCardView,
   IProductCardCarouselView,
-  IProductCardView,
-  IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { updateNode } from '@store/makingNode';
-import { useEffect } from '@storybook/addons';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -50,7 +45,10 @@ export const CarouselOrderPopup: FC<{
   const HandleAddCarousel = () => {
     const type = nodeView.typeName;
 
-    const view = node.view as IBasicCardCarouselView;
+    const view = node.view as
+      | IBasicCardCarouselView
+      | IListCardCarouselView
+      | IProductCardCarouselView;
     const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
       nodeHelper.createDefaultBasicCardView(),
