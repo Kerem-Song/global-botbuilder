@@ -125,7 +125,7 @@ export interface IHasUtteranceViewBase extends IViewBase {
 }
 
 export interface IHasChildrenView extends IViewBase {
-  childrenViews: IBasicCardView[] | IListCardView[] | IProductCardView[];
+  childrenViews: (IBasicCardView | IListCardView | IProductCardView)[];
 }
 
 export interface IIntentNode extends INodeBase {

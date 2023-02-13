@@ -1,5 +1,6 @@
 import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { BasicCardView } from '@components/pages/scenario/views/BasicCardView';
+import { CommerceCardView } from '@components/pages/scenario/views/CommerceCardView';
 import { ListCardView } from '@components/pages/scenario/views/ListCardView';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
@@ -39,7 +40,9 @@ export const SortableCarouselCtrlItem = ({
       {typeName === 'ListCardView' && (
         <ListCardView key={id} nodeId={nodeId} view={item as IListCardView} />
       )}
-      {/* {typeName === 'ProductCardView' && <CommerceCardNode key={id} node={item} />} */}
+      {typeName === 'ProductCardView' && (
+        <CommerceCardView nodeId={nodeId} view={item as IProductCardView} />
+      )}
     </div>
   );
 };

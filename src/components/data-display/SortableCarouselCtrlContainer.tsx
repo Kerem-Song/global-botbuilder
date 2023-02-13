@@ -64,7 +64,7 @@ export const SoratbleCarouselCtrlContainer = ({
         if (items) {
           const oldIndex = items.findIndex((item) => item.id === active.id);
           const newIndex = items.findIndex((item) => item.id === over.id);
-          console.log('old index', oldIndex), console.log('new index', newIndex);
+
           return arrayMove(items, oldIndex, newIndex);
         }
       });

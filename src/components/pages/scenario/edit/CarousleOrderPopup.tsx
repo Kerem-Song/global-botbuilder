@@ -1,22 +1,17 @@
 import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
-import { Button, Title } from '@components/general';
+import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
 import { usePage } from '@hooks';
-import { INode, VIEW_TYPES } from '@models';
+import { INode } from '@models';
 import {
   IBasicCardCarouselView,
-  IBasicCardView,
   IHasChildrenView,
   IListCardCarouselView,
-  IListCardView,
   IProductCardCarouselView,
-  IProductCardView,
-  IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { updateNode } from '@store/makingNode';
-import { useEffect } from '@storybook/addons';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -47,13 +42,31 @@ export const CarouselOrderPopup: FC<{
 
   const dispatch = useDispatch();
 
+  const defaultView = (type: string) => {
+    switch (type) {
+      case 'BasicCardCarouselView':
+        return nodeHelper.createDefaultBasicCardView();
+      case 'ListCardCarouselView':
+        return nodeHelper.createDefaultListCardView();
+      case 'ProductCardCarouselView':
+        return nodeHelper.createCommerceView();
+      default:
+        return nodeHelper.createDefaultBasicCardView();
+    }
+  };
+
   const HandleAddCarousel = () => {
     const type = nodeView.typeName;
 
-    const view = node.view as IBasicCardCarouselView;
+    const view = node.view as
+      | IBasicCardCarouselView
+      | IListCardCarouselView
+      | IProductCardCarouselView;
+
     const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
-      nodeHelper.createDefaultBasicCardView(),
+      defaultView(type),
+      // defaultView(),
     ];
     const upNode = {
       ...node,
@@ -64,53 +77,10 @@ export const CarouselOrderPopup: FC<{
     };
 
     dispatch(updateNode(upNode));
-    // switch (type) {
-    //   case VIEW_TYPES.BASIC_CARD_CAROUSEL_VIEW:
-    //     return () => {
-    //       const view = node.view as IBasicCardCarouselView;
-    //       const childrenViews: IBasicCardView[] = [
-    //         ...view.childrenViews,
-    //         nodeHelper.createDefaultBasicCardView(),
-    //       ];
-    //       const upNode = {
-    //         ...node,
-    //         view: { ...view, childrenViews } as IBasicCardCarouselView,
-    //       };
-
-    //       dispatch(updateNode(upNode));
-    //     };
-
-    // case VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW:
-    //   return () => {
-    //     const view = node.view as IListCardCarouselView;
-    //     const childrenViews: IListCardView[] = [
-    //       ...view.childrenViews,
-    //       nodeHelper.createDefaultListCardView(),
-    //     ];
-    //     const upNode = {
-    //       ...node,
-    //       view: { ...view, childrenViews } as IListCardCarouselView,
-    //     };
-
-    //     dispatch(updateNode(upNode));
-    //   };
-
-    // case VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW:
-    //   return () => {
-    //     const view = node.view as IProductCardCarouselView;
-    //     const childrenViews: IProductCardView[] = [
-    //       ...view.childrenViews,
-    //       nodeHelper.createCommerceView(),
-    //     ];
-    //     const upNode = {
-    //       ...node,
-    //       view: { ...view, childrenViews } as IProductCardCarouselView,
-    //     };
-
-    //     dispatch(updateNode(upNode));
-    //   };
-    // }
   };
+
+  console.log('nodeView', nodeView);
+  console.log('node', node);
 
   const carouselType = 'List';
   const carouselName = ' Carousel Name 02';
@@ -126,9 +96,7 @@ export const CarouselOrderPopup: FC<{
       <div onWheel={(e) => e.stopPropagation()}>
         <Row justify="space-between" align="center" className="titleWrapper">
           <Col>
-            <p className="carouselTitle">
-              {carouselType} {t('CAROUSEL')}
-            </p>
+            <p className="carouselTitle">{node.title}</p>
           </Col>
           <Col>
             <Button shape="ghost" onClick={handleClose} className="closeBtn">
@@ -139,8 +107,7 @@ export const CarouselOrderPopup: FC<{
 
         <Divider />
         <div className="carouselWrapper">
-          <p className="carouselName">{carouselName}</p>
-          <Row justify="space-between" align="center">
+          <Row justify="space-between" align="center" className="warningRow">
             <Col className="warning">
               <p>{t('CAROUSEL_WARNING_FIRST')}</p>
               <p>{t('CAROUSEL_WARNING_SECOND')}</p>
