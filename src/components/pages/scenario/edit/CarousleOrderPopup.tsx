@@ -49,9 +49,23 @@ export const CarouselOrderPopup: FC<{
       | IBasicCardCarouselView
       | IListCardCarouselView
       | IProductCardCarouselView;
+
+    const defaultView = () => {
+      switch (type) {
+        case 'BasicCardCarouselView':
+          return nodeHelper.createDefaultBasicCardView();
+        case 'ListCardCarouselView':
+          return nodeHelper.createDefaultListCardView();
+        case 'ProductCardCarouselView':
+          return nodeHelper.createCommerceCarouselView();
+        default:
+          return nodeHelper.createDefaultBasicCardView();
+      }
+    };
     const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
-      nodeHelper.createDefaultBasicCardView(),
+      defaultView(),
+      // defaultView(),
     ];
     const upNode = {
       ...node,
@@ -110,6 +124,9 @@ export const CarouselOrderPopup: FC<{
     // }
   };
 
+  console.log('nodeView', nodeView);
+  console.log('node', node);
+
   const carouselType = 'List';
   const carouselName = ' Carousel Name 02';
 
@@ -124,9 +141,7 @@ export const CarouselOrderPopup: FC<{
       <div onWheel={(e) => e.stopPropagation()}>
         <Row justify="space-between" align="center" className="titleWrapper">
           <Col>
-            <p className="carouselTitle">
-              {carouselType} {t('CAROUSEL')}
-            </p>
+            <p className="carouselTitle">{node.type}</p>
           </Col>
           <Col>
             <Button shape="ghost" onClick={handleClose} className="closeBtn">
@@ -137,7 +152,7 @@ export const CarouselOrderPopup: FC<{
 
         <Divider />
         <div className="carouselWrapper">
-          <p className="carouselName">{carouselName}</p>
+          <p className="carouselName">{node.title}</p>
           <Row justify="space-between" align="center">
             <Col className="warning">
               <p>{t('CAROUSEL_WARNING_FIRST')}</p>

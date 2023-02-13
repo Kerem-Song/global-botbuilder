@@ -105,6 +105,19 @@
       width: rem(214);
       padding: rem(12);
 
+      .thumbnail {
+        height: rem(96);
+
+        .skeleton {
+          height: 100%;
+          background-color: $gray150;
+          background-image: url('@assets/icons/ic_img.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          border-radius: rem(8) rem(8) 0 0;
+        }
+      }
+
       .buttonWrapper {
         display: block;
         & :first-child {
