@@ -14,7 +14,8 @@ export const DashboardComponent = () => {
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
 
-  const { data, isFetching, botSaveAsync } = useBotClient();
+  const { getBotListQuery, botSaveAsync } = useBotClient();
+  const { data, isFetching } = getBotListQuery();
 
   const handleSave = async (model: IBotInput) => {
     const result = await botSaveAsync(model);

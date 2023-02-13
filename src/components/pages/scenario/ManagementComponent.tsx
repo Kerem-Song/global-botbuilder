@@ -9,11 +9,10 @@ import { VariablesManagement } from './variable/VariablesManagement';
 
 export const ManagementComponent = () => {
   const { t } = usePage();
-  const token = useRootState((state) => state.botBuilderReducer.token);
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const scenarioName = '시나리오';
   const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList(token);
+  const { data } = getScenarioList();
   const handleScenarioNameTags = () => {
     setScenarioTab(!scenarioTab);
   };

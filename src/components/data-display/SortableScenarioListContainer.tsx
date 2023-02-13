@@ -14,6 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
 import { useEffect, useState } from 'react';
 
@@ -25,7 +26,7 @@ interface ISortableContainer {
 
 export const SortableScenarioListContainer = ({ scenarioList }: ISortableContainer) => {
   const [list, setList] = useState<IScenarioModel[]>();
-
+  const { scenarioSortAsync } = useScenarioClient();
   useEffect(() => {
     setList(scenarioList);
   }, [scenarioList]);
@@ -47,13 +48,11 @@ export const SortableScenarioListContainer = ({ scenarioList }: ISortableContain
     if (!over?.id) return;
 
     if (active.id !== over.id && list) {
-      setList((items) => {
-        if (items) {
-          const oldIndex = items.findIndex((item) => item.id === active.id);
-          const newIndex = items.findIndex((item) => item.id === over.id);
-          return arrayMove(items, oldIndex, newIndex);
-        }
-      });
+      const oldIndex = list.findIndex((item) => item.id === active.id);
+      const newIndex = list.findIndex((item) => item.id === over.id);
+      const sortedList = arrayMove(list, oldIndex, newIndex);
+      setList(sortedList);
+      scenarioSortAsync(sortedList);
     }
   };
 

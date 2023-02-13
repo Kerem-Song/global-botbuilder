@@ -1,4 +1,4 @@
-import { IArrow, IScenarioModel } from '@models';
+import { IArrow, IBotModel, IScenarioModel } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
@@ -20,17 +20,18 @@ export interface BotBuilderMaker {
   isEditDrawerOpen: boolean;
   guideInfo?: GuideInfo;
   savedGuideInfo?: GuideInfo;
-  token: string;
   selectedScenario?: IScenarioModel;
   basicScenarios?: IScenarioModel[];
   invalidateNodes: Record<string, boolean>;
   carouselIndex: Record<string, number>;
+
+  token?: string;
+  botInfo?: IBotModel;
 }
 
 const initialState: BotBuilderMaker = {
   scale: 1.0,
   isEditDrawerOpen: false,
-  token: '',
   invalidateNodes: {},
   carouselIndex: {},
 };
@@ -50,6 +51,9 @@ export const botbuilderSlice = createSlice({
       state.token = action.payload;
       state.selectedScenario = undefined;
       state.selected = undefined;
+    },
+    setBotInfo: (state, action: PayloadAction<IBotModel | undefined>) => {
+      state.botInfo = action.payload;
     },
     zoomIn: (state) => {
       const scale = Math.min(state.scale + 0.25, transformOptions.maxScale);
@@ -122,6 +126,7 @@ export const {
   setEditDrawerToggle,
   setGuideStartNode,
   setSesstionToken,
+  setBotInfo,
   setInvalidateNode,
   setCarouselIndex,
   // setGuidePosition,

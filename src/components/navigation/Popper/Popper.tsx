@@ -58,12 +58,13 @@ export const Popper = <T extends object>({
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
 
-  const { styles, attributes } = usePopper(
+  const { styles, attributes, update } = usePopper(
     referenceElement.current,
     popperElement.current,
     {
       placement: placement,
       modifiers: [{ name: 'offset', options: { offset } }],
+      strategy: 'fixed',
     },
   );
 
@@ -73,6 +74,7 @@ export const Popper = <T extends object>({
   };
 
   const handlePopper = () => {
+    update?.();
     setShowPopper(!showPopper);
   };
 
