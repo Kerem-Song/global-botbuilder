@@ -38,9 +38,13 @@
       color: #222222;
       line-height: rem(24);
     }
+    
+    .warningRow {
+      padding-bottom: rem(15);
+    }
 
     .warning {
-      padding: rem(15) 0 !important;
+      padding-top: rem(3);
       font-size: rem(13);
       font-weight: 400;
       color: $gray500;
