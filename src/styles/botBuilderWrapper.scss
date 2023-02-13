@@ -303,11 +303,20 @@
             background-image: url('@assets/icons/ic_img_add_hover.svg');
             background-repeat: no-repeat;
             background-position: center;
+
+       
           }
         }
 
         .imgUploadWrapper {
           background: $grayWhite;
+
+          .imgUploadSkeleton {
+            img {
+              max-width: rem(200);
+              max-height: rem(180);
+            }
+          }
         }
       }
     }

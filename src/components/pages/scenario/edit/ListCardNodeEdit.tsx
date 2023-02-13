@@ -1,6 +1,6 @@
 import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { IGNodeEditModel } from '@models';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSetting } from './ImageSetting';
+import { ImageSettings } from './ImageSettings';
 
 export const ListCardNodeEdit = () => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -60,7 +61,11 @@ export const ListCardNodeEdit = () => {
       </div>
       <Collapse label={'Head 이미지 설정'} useSwitch={true} field={'imageCtrl'}>
         {values.view?.imageCtrl && (
-          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+          <ImageSettings
+            imageRatio={imageRatio}
+            setImageRatio={setImageRatio}
+            imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+          />
         )}
       </Collapse>
       <Collapse label={'List'} useSwitch={false}>

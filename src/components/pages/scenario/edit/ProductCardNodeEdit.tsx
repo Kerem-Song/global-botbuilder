@@ -1,6 +1,6 @@
 import { Col, Divider, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { IGNodeEditModel } from '@models';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSetting } from './ImageSetting';
+import { ImageSettings } from './ImageSettings';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -102,7 +103,11 @@ export const ProductCardNodeEdit = () => {
       <div className="node-item-wrap collapse">
         <Collapse label={'이미지 설정'} useSwitch={false}>
           {values.view?.imageCtrl && (
-            <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
+            <ImageSettings
+              imageRatio={imageRatio}
+              setImageRatio={setImageRatio}
+              imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+            />
           )}
         </Collapse>
       </div>

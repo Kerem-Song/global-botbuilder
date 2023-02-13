@@ -3,18 +3,20 @@ import { Col, Row, Space } from '@components/layout';
 import { useHttp, useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { ImageAspectRatio } from '@models/enum';
+import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
-
 interface IImageSetting {
   imageRatio: ImageAspectRatio | undefined;
   setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
-  index: number;
+  imageCtrl: TImageTypes;
+  index?: number;
 }
 
-export const CarouselImageSetting = ({
+export const ImageSettings = ({
   imageRatio,
   setImageRatio,
+  imageCtrl,
   index,
 }: IImageSetting) => {
   const { register, getValues, setValue } = useFormContext();
@@ -23,31 +25,54 @@ export const CarouselImageSetting = ({
   const { imageUploadAsync } = imageUploadClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const ctrlId = values.view.childrenViews[index].imageCtrl.id;
-  console.log('ctrl id', ctrlId);
+  console.log('image ctrl', imageCtrl);
+  const handleImageCtrlIdPath = () => {
+    switch (imageCtrl) {
+      case IMAGE_CTRL_TYPES.IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.imageCtrl,
+          imageFilePath: 'view.imageCtrl',
+        };
+
+      case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.childrenViews[index!].imageCtrl,
+          imageFilePath: `view.childrenViews.${index}.imageCtrl`,
+        };
+
+      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.childrenViews[index!].items[index!],
+          imageFilePath: `view.childrenViews.${index}.items.${index}`,
+        };
+
+      default:
+        return { imageCtrlIdPath: '', imageFilePath: '' };
+    }
+  };
 
   const handleUploadImage = async () => {
     if (
       token &&
-      getValues(`view.childrenViews.${index}.imageCtrl.imageFile`).length > 0
+      getValues(handleImageCtrlIdPath().imageFilePath + `.imageFile`).length > 0
     ) {
       const formData = new FormData();
       formData.append(
         'File',
-        getValues(`view.childrenViews.${index}.imageCtrl.imageFile`)[0],
+        getValues(handleImageCtrlIdPath().imageFilePath + `.imageFile`)[0],
       );
       formData.append('SessionToken', token);
-      formData.append('CtrlId', ctrlId);
+      formData.append('CtrlId', handleImageCtrlIdPath().imageCtrl.id);
 
       imageUploadAsync({ formData })
         .then((res) => {
           console.log('res.data image', res?.data);
-          setValue(`view.childrenViews.${index}.imageCtrl.imageUrl`, res?.data.result);
-          setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, null);
+          setValue(handleImageCtrlIdPath().imageFilePath + `.imageUrl`, res?.data.result);
+          setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, null);
         })
         .catch((err) => {
-          setValue(`view.childrenViews.${index}.imageCtrl.imageUrl`, null);
-          setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, null);
+          setValue(handleImageCtrlIdPath().imageFilePath + `.imageUrl`, null);
+          setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, null);
           //modal 띄우기?
           console.log('upload 실패', err);
         });
@@ -59,7 +84,12 @@ export const CarouselImageSetting = ({
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       console.log('file', e.target.files);
-      setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, e.target.files);
+      setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, e.target.files);
+
+      console.log(
+        'handleImageCtrlIdPath',
+        handleImageCtrlIdPath().imageFilePath + `.imageFile`,
+      );
     }
   };
 
@@ -75,13 +105,13 @@ export const CarouselImageSetting = ({
         <Col span={12} className="radioContainer">
           <input
             className="radio"
-            {...register(`view.childrenViews.${index}.imageCtrl.aspectRatio`, {
+            {...register(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`, {
               valueAsNumber: true,
             })}
             type="radio"
             value={ImageAspectRatio.Rectangle}
             checked={
-              Number(values.view.childrenViews[index].imageCtrl.aspectRatio) ===
+              Number(handleImageCtrlIdPath().imageCtrl.aspectRatio) ===
               ImageAspectRatio.Rectangle
             }
             onClick={() => setImageRatio(ImageAspectRatio.Rectangle)}
@@ -91,13 +121,13 @@ export const CarouselImageSetting = ({
         <Col span={12} className="radioContainer">
           <input
             className="radio"
-            {...register(`view.childrenViews.${index}.imageCtrl.aspectRatio`, {
+            {...register(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`, {
               valueAsNumber: true,
             })}
             type="radio"
             value={ImageAspectRatio.Square}
             checked={
-              Number(values.view.childrenViews[index].imageCtrl.aspectRatio) ===
+              Number(handleImageCtrlIdPath().imageCtrl.aspectRatio) ===
               ImageAspectRatio.Square
             }
             onClick={() => setImageRatio(ImageAspectRatio.Square)}
@@ -128,18 +158,18 @@ export const CarouselImageSetting = ({
               transform: 'translate(50%, 50%)',
             }}
           >
-            {values.view.childrenViews[index].imageCtrl.imageUrl ? (
-              <img
-                src={values.view.childrenViews[index].imageCtrl.imageUrl}
-                alt="templateImage"
-              />
+            {handleImageCtrlIdPath().imageCtrl.imageUrl ? (
+              <img src={handleImageCtrlIdPath().imageCtrl.imageUrl} alt="templateImage" />
             ) : (
-              <img src={icImg} alt="icImg" />
+              <>
+                <img src={icImg} alt="icImg" />
+                <br />
+                Recommended
+                <br />
+                Rectangular: 800 x 400
+              </>
             )}
-            <br />
-            Recommended
-            <br />
-            Rectangular: 800 x 400
+
             <input
               type="file"
               id="imgUpload"

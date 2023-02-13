@@ -8,7 +8,7 @@ import {
   Switch,
 } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { IGNodeEditModel } from '@models';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSetting } from './ImageSetting';
+import { ImageSettings } from './ImageSettings';
 
 export const BasicCardNodeEdit = () => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -40,9 +41,11 @@ export const BasicCardNodeEdit = () => {
   return (
     <>
       <Collapse label={'이미지 설정'} useSwitch={true} field={'imageCtrl'}>
-        {values.view?.imageCtrl && (
-          <ImageSetting imageRatio={imageRatio} setImageRatio={setImageRatio} />
-        )}
+        <ImageSettings
+          imageRatio={imageRatio}
+          setImageRatio={setImageRatio}
+          imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+        />
       </Collapse>
 
       <Collapse label={'텍스트 설정'} useSwitch={false}>

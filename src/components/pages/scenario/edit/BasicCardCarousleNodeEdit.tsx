@@ -37,13 +37,15 @@ export const BasicCardCarousleNodeEdit = (selectedNode: IBasicCardCarouselView) 
   return (
     <>
       <Collapse label={'이미지 설정'} useSwitch={true} field={'imageCtrl'}>
-        {values.view?.childrenViews[index]?.imageCtrl && (
-          <CarouselImageSetting
-            imageRatio={imageRatio}
-            setImageRatio={setImageRatio}
-            index={index}
-          />
-        )}
+        {values.view &&
+          values.view?.childrenViews &&
+          values.view?.childrenViews[index]?.imageCtrl && (
+            <CarouselImageSetting
+              imageRatio={imageRatio}
+              setImageRatio={setImageRatio}
+              index={index}
+            />
+          )}
       </Collapse>
 
       <Collapse label={'텍스트 설정'} useSwitch={false}>
