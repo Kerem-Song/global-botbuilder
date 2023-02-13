@@ -11,6 +11,7 @@ import {
   IProductCardCarouselView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
+import { setCarouselIndex } from '@store/botbuilderSlice';
 import { updateNode } from '@store/makingNode';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -29,6 +30,7 @@ export const CarouselOrderPopup: FC<{
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<any>();
 
@@ -66,8 +68,8 @@ export const CarouselOrderPopup: FC<{
     const childrenViews: IHasChildrenView['childrenViews'] = [
       ...view.childrenViews,
       defaultView(type),
-      // defaultView(),
     ];
+
     const upNode = {
       ...node,
       view: { ...view, childrenViews } as
@@ -82,12 +84,6 @@ export const CarouselOrderPopup: FC<{
   console.log('nodeView', nodeView);
   console.log('node', node);
 
-  const carouselType = 'List';
-  const carouselName = ' Carousel Name 02';
-
-  // useEffect(() => {
-  //   console.log('life cycle');
-  // }, [HandleAddCarousel]);
   return (
     <ReactModal
       isOpen={isOpen}

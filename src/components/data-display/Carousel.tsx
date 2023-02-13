@@ -9,6 +9,7 @@ import { Col, Row } from '@components/layout';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 export interface CarouselProps {
   children: ReactNode[];
   nodeId: string;
@@ -26,11 +27,12 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
   const { updateLine } = useUpdateLines();
 
   const length = children.length + (addCarousel ? 1 : 0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });
     updateLine(nodeId);
-    setCarouselIndex({ id: nodeId, index: current });
+    dispatch(setCarouselIndex({ id: nodeId, index: current }));
   }, [current]);
 
   const NextDisabled = () => {

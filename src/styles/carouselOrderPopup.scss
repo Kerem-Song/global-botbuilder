@@ -52,6 +52,7 @@
 
     .buttonWrapper {
       display: flex;
+      padding-top: rem(8);
       gap: rem(4);
 
       .addBtn {
@@ -111,6 +112,12 @@
 
       .thumbnail {
         height: rem(96);
+       
+
+        img {
+          border-radius: rem(8) rem(8) 0 0;
+          max-width: rem(190);
+        }
 
         .skeleton {
           height: 100%;
@@ -126,6 +133,47 @@
         display: block;
         & :first-child {
           display: block !important;
+        }
+      }
+
+      .title {
+        padding-top: rem(12);
+        color: $grayBlack;
+        font-size: rem(13);
+        font-weight: 500;
+        line-height: rem(16);
+
+        &.empty {
+          color: $gray300;
+        }
+
+        &.none {
+          display: none;
+        }
+
+        &.list {
+          padding: 0 0 rem(12) 0;
+        }
+      }
+
+      .description {
+        padding-top: rem(8);
+        color: $gray500;
+        font-size: rem(12);
+        font-weight: 500;
+
+        &.empty {
+          color: $gray300;
+          font-weight: 400;
+        }
+
+        &.none {
+          display: none;
+        }
+
+        p {
+          white-space: pre-line;
+          word-break: break-all;
         }
       }
       

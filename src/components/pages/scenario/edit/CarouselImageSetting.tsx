@@ -9,34 +9,42 @@ import { useFormContext } from 'react-hook-form';
 interface IImageSetting {
   imageRatio: ImageAspectRatio | undefined;
   setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
+  index: number;
 }
 
-export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
+export const CarouselImageSetting = ({
+  imageRatio,
+  setImageRatio,
+  index,
+}: IImageSetting) => {
   const { register, getValues, setValue } = useFormContext();
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const ctrlId = values.view.imageCtrl.id;
+  const ctrlId = values.view.childrenViews[index].imageCtrl.id;
   console.log('ctrl id', ctrlId);
 
   const handleUploadImage = async () => {
-    if (getValues('view.imageCtrl.imageFile').length > 0) {
+    if (getValues(`view.childrenViews.${index}.imageCtrl.imageFile`).length > 0) {
       const formData = new FormData();
-      formData.append('File', getValues('view.imageCtrl.imageFile')[0]);
+      formData.append(
+        'File',
+        getValues(`view.childrenViews.${index}.imageCtrl.imageFile`)[0],
+      );
       formData.append('SessionToken', token);
       formData.append('CtrlId', ctrlId);
 
       imageUploadAsync({ formData })
         .then((res) => {
           console.log('res.data image', res?.data);
-          setValue('view.imageCtrl.imageUrl', res?.data.result);
-          setValue('view.imageCtrl.imageFile', null);
+          setValue(`view.childrenViews.${index}.imageCtrl.imageUrl`, res?.data.result);
+          setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, null);
         })
         .catch((err) => {
-          setValue('view.imageCtrl.imageUrl', null);
-          setValue('view.imageCtrl.imageFile', null);
+          setValue(`view.childrenViews.${index}.imageCtrl.imageUrl`, null);
+          setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, null);
           //modal 띄우기?
           console.log('upload 실패', err);
         });
@@ -48,7 +56,7 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       console.log('file', e.target.files);
-      setValue('view.imageCtrl.imageFile', e.target.files);
+      setValue(`view.childrenViews.${index}.imageCtrl.imageFile`, e.target.files);
     }
   };
 
@@ -64,7 +72,9 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
         <Col span={12} className="radioContainer">
           <input
             className="radio"
-            {...register('view.imageCtrl.aspectRatio', { valueAsNumber: true })}
+            {...register(`view.childrenViews.${index}.imageCtrl.aspectRatio`, {
+              valueAsNumber: true,
+            })}
             type="radio"
             value={ImageAspectRatio.Rectangle}
             checked={
@@ -77,7 +87,9 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
         <Col span={12} className="radioContainer">
           <input
             className="radio"
-            {...register('view.imageCtrl.aspectRatio', { valueAsNumber: true })}
+            {...register(`view.childrenViews.${index}.imageCtrl.aspectRatio`, {
+              valueAsNumber: true,
+            })}
             type="radio"
             value={ImageAspectRatio.Square}
             checked={
