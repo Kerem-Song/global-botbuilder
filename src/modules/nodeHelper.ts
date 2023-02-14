@@ -57,7 +57,7 @@ export const nodeHelper = {
         return nodeHelper.createDefaultBasicCardCarouselView();
       case NODE_TYPES.LIST_CARD_NODE:
         return nodeHelper.createDefaultListCardView();
-      case NODE_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
         return nodeHelper.createDefaultListCardCarouselView();
       case NODE_TYPES.CONDITION_NODE:
         return nodeHelper.createDefaultConditionView();
@@ -536,7 +536,7 @@ export const nodeHelper = {
         nodeHelper.syncHasButtonArrow(startId, endId, node.view as IHasButtonViewBase);
         break;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         nodeHelper.syncHasButtonCarouselArrow(
           startId,

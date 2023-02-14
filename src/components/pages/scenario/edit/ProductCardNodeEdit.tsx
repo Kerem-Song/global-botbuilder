@@ -1,4 +1,4 @@
-import { Col, Divider, FormItem, Input, Row, Space } from '@components';
+import { Col, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
@@ -8,7 +8,6 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { ImageSetting } from './ImageSetting';
 import { ImageSettings } from './ImageSettings';
 
 const currencyOptions = [

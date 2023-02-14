@@ -1,6 +1,6 @@
 import { icImg } from '@assets';
 import { Col, Row, Space } from '@components/layout';
-import { useHttp, useRootState } from '@hooks';
+import { useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { ImageAspectRatio } from '@models/enum';
 import { Dispatch, SetStateAction } from 'react';

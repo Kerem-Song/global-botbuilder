@@ -39,7 +39,11 @@ const cardTypeValue = [
     value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
     nodeName: 'Carousel',
   },
-  { className: 'icCaroList', value: NODE_TYPES.LIST_CAROUSEL, nodeName: 'List Carousel' },
+  {
+    className: 'icCaroList',
+    value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
+    nodeName: 'List Carousel',
+  },
   {
     className: 'icCaroCommerce',
     value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,

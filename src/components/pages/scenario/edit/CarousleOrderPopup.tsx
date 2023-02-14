@@ -81,8 +81,8 @@ export const CarouselOrderPopup: FC<{
     dispatch(updateNode(upNode));
   };
 
-  console.log('nodeView', nodeView);
-  console.log('node', node);
+  // console.log('nodeView', nodeView);
+  // console.log('node', node);
 
   return (
     <ReactModal

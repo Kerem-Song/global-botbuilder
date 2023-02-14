@@ -2,12 +2,12 @@ import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
-import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
+import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
+import { ID_GEN, ID_TYPES } from '@modules';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { ImageSetting } from './ImageSetting';
 import { ImageSettings } from './ImageSettings';
 
 export const ListCardNodeEdit = () => {
@@ -31,8 +31,8 @@ export const ListCardNodeEdit = () => {
     // e.preventDefault();
     if (fields.length < 5) {
       append({
-        id: '',
-        typeName: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
         description: '',
         imageUrl: '',
         title: '',
