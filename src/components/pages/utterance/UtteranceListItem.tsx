@@ -83,32 +83,28 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
           const pages = v.items;
           return pages.map((x, i) => {
             return (
-              <tr key={i} className="list" ref={ref}>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList intent"
-                >
+              <tr
+                key={i}
+                className="list"
+                ref={ref}
+                onClick={() => handleGetIntent(x.intentId)}
+              >
+                <td role="presentation" className="utteranceList intent">
                   {x.intentName}
                 </td>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList connectScenarios"
-                >
+                <td role="presentation" className="utteranceList connectScenarios">
                   {x.flowName}
                 </td>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList utterance"
-                >
+                <td role="presentation" className="utteranceList utterance">
                   {x.utteranceSummary}
                 </td>
                 <td className="utteranceList icon">
                   <button
                     className="icDelete"
-                    onClick={() => openModal(x.intentId)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(x.intentId);
+                    }}
                   ></button>
                 </td>
               </tr>
