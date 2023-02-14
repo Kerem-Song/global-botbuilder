@@ -1,7 +1,5 @@
 import {
   icChatbot,
-  icDataApi,
-  icDataApiSelcted,
   icDeploy,
   icDeploySelected,
   icHelp,
@@ -20,15 +18,14 @@ import {
   icUtterance,
   icUtteranceSelected,
 } from '@assets/index';
-import { ItemType, Popper } from '@components/navigation';
+import { Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
 import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
-import { setBotInfo } from '@store/botbuilderSlice';
+import { setBotInfo, setSesstionToken } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink, useLocation, useMatches, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -36,6 +33,7 @@ import { setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const BotAside = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { botId } = useParams();
   const [page, setPage] = useState<string>();
@@ -102,6 +100,15 @@ export const BotAside = () => {
       name: x.botName,
       select: x.botName,
       icon: icLine,
+      data: {
+        action: (id: string) => {
+          if (botId === id) {
+            return;
+          }
+          navigate(`/${i18n.language}/${id}/scenario`);
+          dispatch(setSesstionToken());
+        },
+      },
     };
   });
 
@@ -130,7 +137,7 @@ export const BotAside = () => {
           popupList
           popperSelect={botList}
           onChange={(e) => {
-            console.log(e);
+            e.data?.action(e.id);
           }}
         >
           <div className="lnbHeader" data-sidebar={sidebarStatus}>

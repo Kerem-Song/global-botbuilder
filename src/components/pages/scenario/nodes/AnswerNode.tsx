@@ -1,6 +1,6 @@
 import { Button, Card } from '@components';
-import { NextNodeButton } from '@components/data-display/NextNodeButton';
-import { SortableButtonCtrlContainer } from '@components/data-display/SortableButtonCtrlContainer';
+import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
+import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
 import { INode } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';

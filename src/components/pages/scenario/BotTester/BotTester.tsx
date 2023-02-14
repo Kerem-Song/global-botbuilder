@@ -1,9 +1,9 @@
 import { Col } from '@components/layout';
 import { useRootState } from '@hooks';
-import { useBotTesterClient } from '@hooks/client/botTesterClient';
-// import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
+import { useBotTesterClient } from '@hooks';
 import {
   IQuickRepliesContent,
+  ISendMessage,
   ITesterDataType,
   ITesterDebugMeta,
   TESTER_DATA_TYPES,
@@ -11,6 +11,7 @@ import {
 import { initMessages, setTesterData } from '@store/botTesterSlice';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
@@ -22,9 +23,8 @@ export interface IBotTesterProps {
 }
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
+  const { t } = useTranslation('botTest');
   const { botTesterMutate } = useBotTesterClient();
-  // const { token } = useSessionTokenClient();
-  // console.log(token);
   const token = useRootState((state) => state.botBuilderReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
@@ -56,8 +56,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     if (!text || !text.trim()) return;
     dispatch(setTesterData([newMessage]));
 
-    const sendMessage = {
-      sessionToken: token,
+    const sendMessage: ISendMessage = {
+      sessionToken: token!,
       lunaMessage: {
         id: 'utterance',
         utterance: {
@@ -110,7 +110,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
         <Draggable onDrag={undefined}>
           <div className="botTester">
             <Col className="botTesterHeader">
-              <Col className="text">Testing the Bot</Col>
+              <Col className="text">{t('HEADER')}</Col>
               <button className="icon refreshBtn" onClick={handleRefresh} />
               <button className="icon closeBtn" onClick={handleClose} />
             </Col>
@@ -143,10 +143,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 value={text}
                 type="text"
                 onChange={handleText}
-                placeholder="Please enter text."
+                placeholder={t('ENTER_TEXT')}
               />
               <button className="sendBtn" onClick={handleSend}>
-                Send
+                {t('SEND')}
               </button>
             </form>
             {debugMeta && (

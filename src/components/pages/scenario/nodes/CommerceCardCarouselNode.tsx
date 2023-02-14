@@ -1,4 +1,4 @@
-import { Carousel } from '@components/data-display/Carousel';
+import { Carousel } from '@components/pages/scenario/Carousel';
 import { INode } from '@models';
 import {
   IProductCardCarouselView,

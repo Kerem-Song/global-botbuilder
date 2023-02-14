@@ -40,17 +40,31 @@ export const botbuilderSlice = createSlice({
   name: 'botbuilderCardType',
   initialState,
   reducers: {
+    initBotBuilder: (state) => {
+      state.scale = 1.0;
+      state.selectedScenario = undefined;
+      state.selected = undefined;
+      state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
+    },
     setBasicScenarios: (state, action: PayloadAction<IScenarioModel[]>) => {
       state.basicScenarios = action.payload;
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       state.selectedScenario = action.payload;
+      state.selected = undefined;
       state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
     },
-    setSesstionToken: (state, action: PayloadAction<string>) => {
+    setSesstionToken: (state, action: PayloadAction<string | undefined>) => {
       state.token = action.payload;
       state.selectedScenario = undefined;
       state.selected = undefined;
+      state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
     },
     setBotInfo: (state, action: PayloadAction<IBotModel | undefined>) => {
       state.botInfo = action.payload;
@@ -104,6 +118,7 @@ export const botbuilderSlice = createSlice({
 });
 
 export const {
+  initBotBuilder,
   setSelectedScenario,
   setBasicScenarios,
   zoomIn,

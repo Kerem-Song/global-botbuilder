@@ -1,4 +1,3 @@
-import { Node } from '@components/data-display';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
@@ -14,6 +13,7 @@ import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
+import { Node } from './nodes';
 
 let dirtySelect: string | undefined;
 
@@ -175,8 +175,6 @@ export const Botbuilder = () => {
 
   return (
     <>
-      <BotBuilderZoomBtn />
-
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
@@ -190,6 +188,7 @@ export const Botbuilder = () => {
           e.preventDefault();
         }}
       >
+        <BotBuilderZoomBtn />
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}

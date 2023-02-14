@@ -10,16 +10,14 @@
     "BOT_NAME_LABEL": "봇 이름",
     "PROD_CHANNEL": "운영채널",
     "TEST_CHANNEL": "테스트채널",
-    "EMPTY_DESCRIPTION": "No search results found."
+    "EMPTY_DESCRIPTION": "No search results found.",
+    "REQUIRE_BOT_NAME": "봇 이름은 필수입니다."
   },
   "common": {
     "intlDateTime": "{{val, datetime}}",
     "SAVE": "저장",
     "OK": "확인",
     "CANCEL": "취소"
-  },
-  "scenarios": {
-    "TITLE": "시나리오"
   },
   "scenario": {
     "TITLE": "시나리오",
@@ -38,7 +36,10 @@
     "MY_ENTITY": "나의 엔티티",
     "SYSTEM_ENTITY": "시스템 엔티티",
     "SCENARIO": "시나리오",
-    "VARIABLE": "변수"
+    "VARIABLE": "변수",
+    "USER_ANSWER": "사용자 응답 받기",
+    "VARIABLE_SETTING": "변수 설정",
+    "INPUT_VARIABLE_PLACEHOLDER": "변수명을 입력해주세요"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",
@@ -55,5 +56,16 @@
   },
   "imgeditor": {
     "TITLE": "이미지 편집"
+  },
+  "botTest": {
+    "HEADER": "Testing the Bot",
+    "ENTER_TEXT": "Please enter text.",
+    "SEND": "Send",
+    "DEBUG_HEADER": "Test Information",
+    "SCENARIO_NAME": "Scenario name",
+    "CHATBUBBLE_NAME": "Chatbubble name"
+  },
+  "utterance": {
+    "DELETE_HEADER": "인텐트 삭제"
   }
 }

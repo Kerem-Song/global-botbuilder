@@ -1,4 +1,4 @@
-import { NextNodeButton } from '@components/data-display/NextNodeButton';
+import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { FC } from 'react';
 
 import { NODE_PREFIX } from '../../../../modules';

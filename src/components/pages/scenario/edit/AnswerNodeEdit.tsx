@@ -1,6 +1,6 @@
-import { Input, Switch } from '@components';
+import { Input } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { Divider, Space } from '@components/layout';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
@@ -10,6 +10,7 @@ import { useFormContext } from 'react-hook-form';
 import { QuicksEdit } from './QuicksEdit';
 
 export const AnswerNodeEdit = () => {
+  const { t } = usePage();
   const {
     trigger,
     register,
@@ -19,7 +20,6 @@ export const AnswerNodeEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IAnswerView>>();
-
   const use = watch('view.useUtteranceParam');
 
   useEffect(() => {
@@ -37,15 +37,15 @@ export const AnswerNodeEdit = () => {
 
   return (
     <>
-      <Collapse label={'사용자 응답 받기'} useSwitch={true} field={'useUtteranceParam'}>
+      <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
         <div className="m-b-8">
-          <span className="subLabel">변수 설정 </span>
+          <span className="subLabel">{t('VARIABLE_SETTING')} </span>
           <span className="required">*</span>
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
           <Input
             {...register(`view.utteranceParam`)}
-            placeholder="변수명을 입력해주세요"
+            placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
             disabled={!use}
           />
         </div>

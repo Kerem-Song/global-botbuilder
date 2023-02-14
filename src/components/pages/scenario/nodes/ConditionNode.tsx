@@ -1,5 +1,5 @@
 import { Card } from '@components';
-import { NextNodeButton } from '@components/data-display/NextNodeButton';
+import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { ConditionJoin, ConditionOperator, INode } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';

@@ -1,41 +1,27 @@
-import { icSuccess, icUtteranceEmpty } from '@assets';
+import { icUtteranceEmpty } from '@assets';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
-import { FC, useEffect, useState } from 'react';
+import { IDeleteIntent, ISearchData } from '@models';
+import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
 
 export interface IUtteranceListItemProps {
-  listData?: IPagingItems<IIntentListItem>;
   searchData?: ISearchData;
-  setSearchData?: (data: ISearchData) => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
-  listData,
-  searchData,
-}) => {
-  const [ref, inView] = useInView();
-  const [isValidSearchData, setIsValidSearchData] = useState<boolean>(false);
-
-  const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
-
-  const {
-    data: initialData,
-    fetchNextPage,
-    isSuccess,
-    isLoading,
-  } = changePageNumberQuery;
-
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) => {
   const { botId } = useParams();
-  const { navigate, t, tc } = usePage();
-
+  const { navigate, t } = usePage();
+  const [ref, inView] = useInView();
   const token = useRootState((state) => state.botBuilderReducer.token);
   const { confirm } = useSystemModal();
+  const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
+
+  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchData!);
 
   useEffect(() => {
     if (!initialData) {
@@ -47,34 +33,25 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     }
   }, [inView]);
 
-  useEffect(() => {
-    // type guard
-    if (searchData !== undefined) {
-      const { sort, searchWord, scenarios } = searchData;
-      setIsValidSearchData(sort === 1 && !searchWord && !scenarios ? false : true);
-    }
-  }, [searchData]);
-
   const handleGetIntent = (intentId: string) => {
     navigate(`/${botId}/utterance/detail/${intentId}`);
   };
 
-  const openModal = async (flowName: string, intentId: string) => {
+  const openModal = async (intentId: string) => {
     const result = await confirm({
-      title: 'Delete',
+      title: t('DELETE_HEADER'),
       description: (
         <span>
-          There is a scenario associated with scenario 02
-          <br />: {flowName}
+          인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.
           <br />
-          Are you sure you want to delete it?
+          삭제하시겠습니까?
         </span>
       ),
     });
 
     if (result) {
       const deleteIntent: IDeleteIntent = {
-        sessionToken: token,
+        sessionToken: token!,
         intentId: intentId,
       };
       intentDeleteMutate.mutate(deleteIntent, {
@@ -86,39 +63,35 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     }
   };
 
-  if (initialData && isValidSearchData !== true) {
+  if (initialData) {
     return (
       <>
         {initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
             return (
-              <tr key={i} className="list" ref={ref}>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList intent"
-                >
+              <tr
+                key={i}
+                className="list"
+                ref={ref}
+                onClick={() => handleGetIntent(x.intentId)}
+              >
+                <td role="presentation" className="utteranceList intent">
                   {x.intentName}
                 </td>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList connectScenarios"
-                >
+                <td role="presentation" className="utteranceList connectScenarios">
                   {x.flowName}
                 </td>
-                <td
-                  role="presentation"
-                  onClick={() => handleGetIntent(x.intentId)}
-                  className="utteranceList utterance"
-                >
+                <td role="presentation" className="utteranceList utterance">
                   {x.utteranceSummary}
                 </td>
                 <td className="utteranceList icon">
                   <button
                     className="icDelete"
-                    onClick={() => openModal(x.flowName, x.intentId)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(x.intentId);
+                    }}
                   ></button>
                 </td>
               </tr>
@@ -128,49 +101,15 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
       </>
     );
   } else {
-    return listData?.items && listData?.items.length > 0 ? (
+    return (
       <>
-        {listData?.items.map((v, i) => {
-          return (
-            <tr key={i} className="list">
-              <td
-                role="presentation"
-                onClick={() => handleGetIntent(v.intentId)}
-                className="utteranceList intent"
-              >
-                {v.intentName}
-              </td>
-              <td
-                role="presentation"
-                className="utteranceList connectScenarios"
-                onClick={() => handleGetIntent(v.intentId)}
-              >
-                {v.flowName}
-              </td>
-              <td
-                role="presentation"
-                className="utteranceList utterance"
-                onClick={() => handleGetIntent(v.intentId)}
-              >
-                {v.utteranceSummary}
-              </td>
-              <td className="utteranceList icon">
-                <button
-                  className="icDelete"
-                  onClick={() => openModal(v.flowName, v.intentId)}
-                />
-              </td>
-            </tr>
-          );
-        })}
+        <tr className="emptyList">
+          <td className="empty">
+            <img src={icUtteranceEmpty} alt="empty" />
+            <span>No search results found.</span>
+          </td>
+        </tr>
       </>
-    ) : (
-      <tr className="emptyList">
-        <td className="empty">
-          <img src={icUtteranceEmpty} alt="empty" />
-          <span>No search results found.</span>
-        </td>
-      </tr>
     );
   }
 };
