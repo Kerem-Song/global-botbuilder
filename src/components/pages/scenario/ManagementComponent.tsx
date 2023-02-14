@@ -35,7 +35,13 @@ export const ManagementComponent = () => {
           ></div>
         </div>
       </div>
-      {scenarioTab ? <ScenarioManagement scenarios={data} /> : <VariablesManagement />}
+      {scenarioTab ? (
+        <ScenarioManagement
+          scenarios={data?.filter((x) => !x.isFallbackFlow && !x.isStartFlow)}
+        />
+      ) : (
+        <VariablesManagement />
+      )}
     </div>
   );
 };

@@ -17,7 +17,7 @@ export const OtherFlowRedirectNodeEdit = () => {
 
   const { getValues, control } = useFormContext();
   const { field } = useController({
-    name: `view.otherNodeId`,
+    name: `view.otherFlowId`,
     control,
   });
 
