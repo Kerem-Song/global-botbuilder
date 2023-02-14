@@ -215,7 +215,7 @@ export interface IButtonCtrl extends ICtrlBase {
 }
 
 export interface ICarouselCtrl extends ICtrlBase {
-  childrenViews: IBasicCardView[] | IListCardView[] | IProductCardView[];
+  childrenViews: (IBasicCardView | IListCardView | IProductCardView)[];
   typeName: TViewTypes;
 }
 

@@ -1,6 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ISortableListItem } from '@models';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 
 import { SortableListCardItem } from './SortableListCardItem';

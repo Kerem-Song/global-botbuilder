@@ -1,4 +1,3 @@
-import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { BasicCardView } from '@components/pages/scenario/views/BasicCardView';
 import { CommerceCardView } from '@components/pages/scenario/views/CommerceCardView';
 import { ListCardView } from '@components/pages/scenario/views/ListCardView';

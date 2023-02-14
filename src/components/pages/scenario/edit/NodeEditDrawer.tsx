@@ -142,7 +142,6 @@ export const NodeEditDrawer = () => {
       }
     } else {
       if (node) {
-        console.log('asdfasdf');
         handleSubmit(onSubmit)();
         if (!isValid) {
           onSubmit(getValues()); // carousel 생성문제

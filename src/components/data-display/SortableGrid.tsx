@@ -1,5 +1,4 @@
 import { IHasChildren } from '@models';
-import { ReactNode } from 'react';
 
 interface ISortableGrid extends IHasChildren {
   columns: number;

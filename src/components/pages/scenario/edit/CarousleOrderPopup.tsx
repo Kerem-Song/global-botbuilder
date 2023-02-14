@@ -6,14 +6,18 @@ import { usePage } from '@hooks';
 import { INode } from '@models';
 import {
   IBasicCardCarouselView,
+  IBasicCardView,
   IHasChildrenView,
   IListCardCarouselView,
+  IListCardView,
   IProductCardCarouselView,
+  IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
+import { viewport } from '@popperjs/core';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { updateNode } from '@store/makingNode';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
@@ -26,23 +30,17 @@ export const CarouselOrderPopup: FC<{
   nodeView: IHasChildrenView;
   node: INode;
 }> = ({ isOpen, handleIsOpen, handleSave, nodeId, nodeView, node }) => {
+  const [carouselNode, setCarouselNode] = useState<IHasChildrenView['childrenViews']>([]);
   const { t } = usePage();
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<any>();
+  const dispatch = useDispatch();
 
-  const onSubmit = async (data: any) => {
-    await handleSave(data);
-  };
+  useEffect(() => {
+    setCarouselNode(nodeView.childrenViews || []);
+  }, [nodeView.childrenViews]);
 
   const handleClose = () => {
     handleIsOpen(false);
   };
-
-  const dispatch = useDispatch();
 
   const defaultView = (type: string) => {
     switch (type) {
@@ -60,25 +58,22 @@ export const CarouselOrderPopup: FC<{
   const HandleAddCarousel = () => {
     const type = nodeView.typeName;
 
+    setCarouselNode([...carouselNode, defaultView(type)]);
+  };
+
+  const handleConfirm = () => {
     const view = node.view as
       | IBasicCardCarouselView
       | IListCardCarouselView
       | IProductCardCarouselView;
 
-    const childrenViews: IHasChildrenView['childrenViews'] = [
-      ...view.childrenViews,
-      defaultView(type),
-    ];
-
     const upNode = {
       ...node,
-      view: { ...view, childrenViews } as
-        | IBasicCardCarouselView
-        | IListCardCarouselView
-        | IProductCardCarouselView,
+      view: { ...view, childrenViews: carouselNode },
     };
 
     dispatch(updateNode(upNode));
+    handleIsOpen(false);
   };
 
   // console.log('nodeView', nodeView);
@@ -113,18 +108,27 @@ export const CarouselOrderPopup: FC<{
                 <Button
                   shape="ghost"
                   className="carouselBtn add"
-                  onClick={() => HandleAddCarousel()}
+                  onClick={HandleAddCarousel}
                 >
                   + {t('ADD_CAHTBUBBLE_BTN')}
                 </Button>
               )}
-              <Button shape="ghost" className="carouselBtn confirm">
+              <Button
+                shape="ghost"
+                className="carouselBtn confirm"
+                onClick={handleConfirm}
+              >
                 {t('CONFIRM_CAROUSEL_POPUP')}
               </Button>
             </Col>
           </Row>
           <div>
-            <SoratbleCarouselCtrlContainer nodeId={nodeId} nodeView={nodeView} />
+            <SoratbleCarouselCtrlContainer
+              nodeId={nodeId}
+              nodeView={nodeView}
+              carouselNode={carouselNode}
+              setCarouselNode={setCarouselNode}
+            />
           </div>
         </div>
       </div>

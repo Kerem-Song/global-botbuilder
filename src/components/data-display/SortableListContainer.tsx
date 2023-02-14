@@ -14,7 +14,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { IListCard } from '@models';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 

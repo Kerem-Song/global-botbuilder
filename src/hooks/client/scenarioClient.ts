@@ -174,7 +174,7 @@ export const useScenarioClient = () => {
   );
 
   const scenarioSaveMutate = useMutation(
-    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+    async ({ scenarioId }: { scenarioId: string }) => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
       const resultNodes = nodes.map((x) => {
         const converted = nodeHelper.convertToINodeBase(x);

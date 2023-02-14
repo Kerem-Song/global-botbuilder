@@ -1,5 +1,4 @@
 import { Col, Row } from '@components/layout';
-import { ISortableListItem } from '@models';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 
 export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
