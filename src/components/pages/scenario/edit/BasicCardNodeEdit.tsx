@@ -1,12 +1,4 @@
-import {
-  Button,
-  Divider,
-  FormItem,
-  Input,
-  InputTextarea,
-  Space,
-  Switch,
-} from '@components';
+import { FormItem, Input, InputTextarea, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
@@ -15,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { ImageSetting } from './ImageSetting';
 import { ImageSettings } from './ImageSettings';
 
 export const BasicCardNodeEdit = () => {

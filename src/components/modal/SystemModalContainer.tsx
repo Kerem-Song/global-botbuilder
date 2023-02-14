@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Space, Title } from '@components';
+import { Button, Divider, Row, Space, Title } from '@components';
 import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';

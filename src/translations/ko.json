@@ -36,7 +36,9 @@
     "INPUT_VARIABLE_NAME_IN_ENGLISH": "변수명을 영어로 입력해주세요.",
     "INPUT_VARIABLE": "값을 입력해주세요.",
     "MY_ENTITY": "나의 엔티티",
-    "SYSTEM_ENTITY": "시스템 엔티티"
+    "SYSTEM_ENTITY": "시스템 엔티티",
+    "SCENARIO": "시나리오",
+    "VARIABLE": "변수"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",

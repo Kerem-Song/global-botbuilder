@@ -12,7 +12,7 @@ export const Aside = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState<string>();
 
-  const { i18n, t, ts } = useI18n();
+  const { i18n, ts } = useI18n();
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
 
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);

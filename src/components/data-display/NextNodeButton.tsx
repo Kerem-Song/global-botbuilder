@@ -21,7 +21,6 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
   type,
 }) => {
   const dispatch = useDispatch();
-  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const isEditting = useRootState((state) => state.botBuilderReducer.isEditDrawerOpen);
   const { updateLine } = useUpdateLines();

@@ -100,20 +100,6 @@ export const botbuilderSlice = createSlice({
       result[id] = index;
       state.carouselIndex = result;
     },
-    // setGuidePosition: (state, action: PayloadAction<{ x: number; y: number }>) => {
-    //   const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
-    //   const cr = canvas?.getBoundingClientRect() || new DOMRect();
-    //   const newPosition = {
-    //     x: action.payload.x - cr.x - 10,
-    //     y: action.payload.y - cr.y - 10,
-    //   };
-
-    //   if (state.guide.x === newPosition.x && state.guide.y === newPosition.y) {
-    //     return;
-    //   }
-    //   state.guide.x = newPosition.x;
-    //   state.guide.y = newPosition.y;
-    // },
   },
 });
 
@@ -129,6 +115,5 @@ export const {
   setBotInfo,
   setInvalidateNode,
   setCarouselIndex,
-  // setGuidePosition,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;

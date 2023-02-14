@@ -1,4 +1,3 @@
-import { defaultNode } from '@components/data-display/DefaultCards';
 import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';

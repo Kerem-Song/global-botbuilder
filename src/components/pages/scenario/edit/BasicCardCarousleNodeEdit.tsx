@@ -2,14 +2,13 @@ import { FormItem, Input, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Space } from '@components/layout';
 import { useRootState } from '@hooks';
-import { IGNodeEditModel, ImageAspectRatio, INode } from '@models';
+import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { CarouselImageSetting } from './CarouselImageSetting';
-import { ImageSetting } from './ImageSetting';
 
 export const BasicCardCarousleNodeEdit = (selectedNode: IBasicCardCarouselView) => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();

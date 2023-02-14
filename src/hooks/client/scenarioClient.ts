@@ -84,7 +84,7 @@ export const useScenarioClient = () => {
     return queryClient.getQueryData<IScenarioModel[]>(['scenario-list', botId]);
   };
 
-  const getScenario = (token: string, scenarioId?: string) => {
+  const getScenario = (scenarioId?: string) => {
     return useQuery<IGetFlowRes>(
       ['scenario', scenarioId],
       async () => {
