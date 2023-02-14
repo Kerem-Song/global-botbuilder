@@ -21,11 +21,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const { confirm } = useSystemModal();
   const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
 
-  const {
-    data: initialData,
-    fetchNextPage,
-    refetch,
-  } = changePageNumberQuery(searchData!);
+  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchData!);
 
   useEffect(() => {
     if (!initialData) {
@@ -33,16 +29,9 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
 
     if (inView) {
-      console.log('inView');
       fetchNextPage();
     }
   }, [inView]);
-
-  useEffect(() => {
-    if (searchData) {
-      refetch({ refetchPage: (page, index) => index === 0 });
-    }
-  }, [searchData]);
 
   const handleGetIntent = (intentId: string) => {
     navigate(`/${botId}/utterance/detail/${intentId}`);

@@ -15,6 +15,8 @@
 
 .botBuilderCanvasBtn {
   padding: rem(12);
+  position: relative;
+  z-index: 200;
 }
 
 .botBuilderZoomBtn {
@@ -93,7 +95,7 @@
 
 .botBuilderMain {
   padding-left: rem(12);
-  height: 88%;
+  height: 100%;
 
   overflow: hidden;
 
@@ -168,7 +170,7 @@
         width: 100%;
         height: rem(40);
         background-color: $grayWhite;
-        border: rem(1) dashed #B5B4B4;
+        border: rem(1) dashed #b5b4b4;
         border-radius: rem(8);
 
         &:hover {
@@ -224,7 +226,7 @@
             align-items: center;
 
             &[data-join='and'] {
-              border-radius:  rem(8) 0  0 rem(8);
+              border-radius: rem(8) 0 0 rem(8);
               position: relative;
               &::after {
                 position: absolute;
@@ -235,13 +237,13 @@
                 background-color: $gray200;
               }
             }
-  
+
             &[data-join='or'] {
               border-radius: 0 rem(8) rem(8) 0;
             }
           }
-          
-          input[type="radio"] {
+
+          input[type='radio'] {
             display: none;
             border-radius: rem(8);
             width: 100%;
@@ -253,16 +255,15 @@
             height: rem(32);
           }
 
-          input[type='radio']:checked + div{
+          input[type='radio']:checked + div {
             width: 100%;
             background-color: $primary500;
             color: $grayWhite;
-            &::after { 
+            &::after {
               display: none;
             }
-
           }
-        
+
           &.button {
             justify-content: center;
             width: 100%;
@@ -275,11 +276,11 @@
         display: flex;
         justify-content: center;
         margin-bottom: rem(25);
-        
+
         button {
           color: $gray300;
           text-decoration: underline;
-          
+
           &:hover {
             color: $primary500;
           }
@@ -293,18 +294,16 @@
           -webkit-box-sizing: border-box;
           border: rem(1) dashed $primary300;
           border-radius: rem(8);
-          
+
           .imgUploadSkeleton {
             display: none;
           }
 
-          .imgUploadWrapper {           
+          .imgUploadWrapper {
             background: $primary100;
             background-image: url('@assets/icons/ic_img_add_hover.svg');
             background-repeat: no-repeat;
             background-position: center;
-
-       
           }
         }
 

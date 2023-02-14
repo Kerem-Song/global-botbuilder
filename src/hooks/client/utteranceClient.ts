@@ -78,6 +78,15 @@ export const useUtteranceClient = () => {
       });
   };
 
+  const invalidateIntentQuery = (searchData: ISearchData) => {
+    queryClient.invalidateQueries([
+      'change-pageNumber',
+      searchData.sort,
+      searchData.scenarios,
+      searchData.searchWord,
+    ]);
+  };
+
   const changePageNumberQuery = (searchData: ISearchData) => {
     return useInfiniteQuery(
       ['change-pageNumber', searchData.sort, searchData.scenarios, searchData.searchWord],
@@ -156,5 +165,6 @@ export const useUtteranceClient = () => {
     intentDeleteMutate,
     intentGetMutate,
     changePageNumberQuery,
+    invalidateIntentQuery,
   };
 };

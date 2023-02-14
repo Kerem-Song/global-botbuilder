@@ -1,4 +1,4 @@
-import { icEnter, icSuccess, icUtteranceEmpty } from '@assets';
+import { icEnter, icUtteranceEmpty } from '@assets';
 import { Card } from '@components/data-display';
 import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
@@ -8,7 +8,6 @@ import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
   IDeleteIntent,
   IInputFormModel,
-  IReactSelect,
   ISaveIntent,
   IUtteranceItem,
   IUtteranceModel,
@@ -17,8 +16,6 @@ import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
-import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers';
-import { optionCSS } from 'react-select/dist/declarations/src/components/Option';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
 // import { toast } from 'react-toastify';
@@ -30,7 +27,7 @@ export const UtteranceDetail = () => {
     useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
-  const list = getScenarioList(token);
+  const list = getScenarioList();
   const scenarioList =
     list.data &&
     list.data.map((x) => {
@@ -113,7 +110,7 @@ export const UtteranceDetail = () => {
 
     if (result) {
       const deleteIntent: IDeleteIntent = {
-        sessionToken: token,
+        sessionToken: token!,
         intentId: hasUtteranceId!.data?.result.intentId,
       };
       intentDeleteMutate.mutate(deleteIntent, {
@@ -135,7 +132,7 @@ export const UtteranceDetail = () => {
 
   const handleSave = (itemData: IUtteranceModel): void => {
     const newIntent: ISaveIntent = {
-      sessionToken: token,
+      sessionToken: token!,
       intentName: itemData.name,
       utterances: itemData.items.map((x) => {
         return x.text;
@@ -155,7 +152,7 @@ export const UtteranceDetail = () => {
 
     if (itemData.intentId) {
       const modifyIntent: ISaveIntent = {
-        sessionToken: token,
+        sessionToken: token!,
         intentId: itemData.intentId,
         intentName: itemData.name,
         utterances: itemData.items.map((x) => {

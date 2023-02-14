@@ -175,8 +175,6 @@ export const Botbuilder = () => {
 
   return (
     <>
-      <BotBuilderZoomBtn />
-
       <div
         className="botBuilderMain"
         onWheel={outterMouseWheelHandler}
@@ -190,6 +188,7 @@ export const Botbuilder = () => {
           e.preventDefault();
         }}
       >
+        <BotBuilderZoomBtn />
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}

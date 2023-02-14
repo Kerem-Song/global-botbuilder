@@ -1,5 +1,5 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
-import { useScenarioClient } from '@hooks';
+import { useScenarioClient, useUtteranceClient } from '@hooks';
 import { ISearchData } from '@models';
 import { FC, useEffect, useState } from 'react';
 import Select from 'react-select';
@@ -18,8 +18,8 @@ const SORT = [
 export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string | undefined>(undefined);
-  const [searchWord, setSearchWord] = useState<string | undefined>('');
-
+  const [searchWord, setSearchWord] = useState<string | undefined>(undefined);
+  const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList();
 
@@ -32,14 +32,8 @@ export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
       sort: 1,
     });
     setScenario(undefined);
-    setSearchWord('');
+    setSearchWord(undefined);
   };
-
-  useEffect(() => {
-    setSort(String(searchData.sort));
-    setScenario(searchData.scenarios);
-    setSearchWord(searchData.searchWord);
-  }, [searchData]);
 
   return (
     <Card
@@ -95,13 +89,15 @@ export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
                 <Button onClick={handleReset}>Reset</Button>
                 <Button
                   type="primary"
-                  onClick={() =>
-                    setSearchData({
+                  onClick={() => {
+                    const searchData = {
                       sort: Number(sort),
                       scenarios: scenario,
                       searchWord: searchWord,
-                    })
-                  }
+                    };
+                    setSearchData(searchData);
+                    invalidateIntentQuery(searchData);
+                  }}
                 >
                   Search
                 </Button>
