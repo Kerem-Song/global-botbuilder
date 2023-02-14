@@ -34,13 +34,19 @@ export const ImageSettings = ({
           imageFilePath: 'view.imageCtrl',
         };
 
+      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.items[index!],
+          imageFilePath: `view.items.${index}`,
+        };
+
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
           imageCtrl: values.view.childrenViews[index!].imageCtrl,
           imageFilePath: `view.childrenViews.${index}.imageCtrl`,
         };
 
-      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
+      case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
           imageCtrl: values.view.childrenViews[index!].items[index!],
           imageFilePath: `view.childrenViews.${index}.items.${index}`,
