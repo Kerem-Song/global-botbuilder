@@ -42,10 +42,10 @@ import {
   IProductCardNode,
   IRetryConditionNode,
   NODE_TYPES,
-} from '../../models/interfaces/ICard';
-import { SizeType } from '../../models/types/SizeType';
-import { NODE_PREFIX } from '../../modules';
-import { NextNodeButton } from './NextNodeButton';
+} from '../../../../models/interfaces/ICard';
+import { SizeType } from '../../../../models/types/SizeType';
+import { NODE_PREFIX } from '../../../../modules';
+import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;

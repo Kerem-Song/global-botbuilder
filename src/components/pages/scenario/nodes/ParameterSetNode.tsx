@@ -1,5 +1,5 @@
 import { Card } from '@components/data-display';
-import { NextNodeButton } from '@components/data-display/NextNodeButton';
+import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { INode } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';

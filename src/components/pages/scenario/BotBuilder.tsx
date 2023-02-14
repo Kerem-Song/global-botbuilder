@@ -1,4 +1,3 @@
-import { Node } from '@components/data-display';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
@@ -14,6 +13,7 @@ import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
+import { Node } from './nodes';
 
 let dirtySelect: string | undefined;
 

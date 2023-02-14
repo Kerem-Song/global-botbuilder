@@ -3,6 +3,7 @@ import { useRootState } from '@hooks/useRootState';
 import {
   IHasClassNameNStyle,
   IQuickRepliesContent,
+  ISendMessage,
   ITesterDataType,
   ITesterQuickReply,
   TESTER_DATA_TYPES,
@@ -41,8 +42,8 @@ export const TesterMessagesItemButton = ({
     };
     dispatch(setTesterData([replyNodeLink]));
 
-    const sendLunaNodeLink = {
-      sessionToken: token,
+    const sendLunaNodeLink: ISendMessage = {
+      sessionToken: token!,
       lunaMessage: {
         id: 'lunaNodeLink',
         postback: {

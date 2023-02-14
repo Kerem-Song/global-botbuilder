@@ -1,7 +1,5 @@
 import {
   icChatbot,
-  icDataApi,
-  icDataApiSelcted,
   icDeploy,
   icDeploySelected,
   icHelp,
@@ -20,15 +18,14 @@ import {
   icUtterance,
   icUtteranceSelected,
 } from '@assets/index';
-import { ItemType, Popper } from '@components/navigation';
+import { Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
 import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { setBotInfo } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink, useLocation, useMatches, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';

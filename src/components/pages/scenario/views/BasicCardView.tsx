@@ -1,5 +1,5 @@
 import { Card } from '@components/data-display';
-import { SortableButtonCtrlContainer } from '@components/data-display/SortableButtonCtrlContainer';
+import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
