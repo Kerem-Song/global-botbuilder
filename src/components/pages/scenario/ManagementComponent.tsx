@@ -1,4 +1,3 @@
-import { useRootState } from '@hooks';
 import classNames from 'classnames';
 import { useState } from 'react';
 
@@ -10,7 +9,6 @@ import { VariablesManagement } from './variable/VariablesManagement';
 export const ManagementComponent = () => {
   const { t } = usePage();
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
-  const scenarioName = '시나리오';
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList();
   const handleScenarioNameTags = () => {
@@ -21,7 +19,7 @@ export const ManagementComponent = () => {
     <div className="managementWrapper">
       <div className="scenarioName">
         <p>
-          {scenarioTab ? scenarioName : '변수'}
+          {scenarioTab ? t('SCENARIO') : t('VARIABLE')}
           {scenarioTab ? <span>{data?.length}</span> : null}
         </p>
         <div className="scenarioNameTabs">

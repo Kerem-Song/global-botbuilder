@@ -1,4 +1,3 @@
-import { defaultNode } from '@components/data-display/DefaultCards';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState, useScenarioClient } from '@hooks';
@@ -75,7 +74,6 @@ export const BotBuilderHeader = () => {
     const cardType = e.currentTarget.value as TNodeTypes;
     const nodeName = e.currentTarget.getAttribute('data') as string;
 
-    const addCard = defaultNode(cardType);
     const nodeView = nodeHelper.createDefaultView(cardType);
 
     const view = document.querySelector('.botBuilderMain');

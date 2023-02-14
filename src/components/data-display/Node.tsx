@@ -56,16 +56,8 @@ export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   hoverable?: boolean;
   active?: boolean;
   radius?: SizeType;
-  cards?:
-    | IBasicCardNode[]
-    | IProductCardNode[]
-    | IListCardNode[]
-    | IAnswerNode[]
-    | IConditionNode[]
-    | IRetryConditionNode[]
-    | IOtherFlowRedirectNode[];
   node: INode;
-  onClick?: (e?: any) => void;
+  onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   addArrow?: (arrow: IArrow) => void;
   ref?: React.RefObject<HTMLDivElement | null>[];
 }
@@ -74,7 +66,6 @@ export const Node: FC<INodeProps> = ({
   id,
   typeName,
   nodekind,
-  cards,
   node,
   className,
   style,
@@ -312,15 +303,16 @@ export const Node: FC<INodeProps> = ({
           </Button>
         )}
       </div>
-
-      <CarouselOrderPopup
-        isOpen={isOpen}
-        handleIsOpen={handleIsOpen}
-        handleSave={handleChangeCarouselOrder}
-        nodeView={node.view! as IHasChildrenView}
-        nodeId={`${NODE_PREFIX}${id}`}
-        node={node}
-      />
+      {node.view && (
+        <CarouselOrderPopup
+          isOpen={isOpen}
+          handleIsOpen={handleIsOpen}
+          handleSave={handleChangeCarouselOrder}
+          nodeView={node.view as IHasChildrenView}
+          nodeId={`${NODE_PREFIX}${id}`}
+          node={node}
+        />
+      )}
     </>
   );
 };

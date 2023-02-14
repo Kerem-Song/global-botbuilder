@@ -1,14 +1,8 @@
 import { Node } from '@components/data-display';
-import { defaultNode } from '@components/data-display/DefaultCards';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
-import {
-  setEditDrawerToggle,
-  setSelected,
-  zoomIn,
-  zoomOut,
-} from '@store/botbuilderSlice';
+import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
@@ -17,7 +11,6 @@ import { ID_GEN, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
-import { CarouselOrderPopup } from './edit/CarousleOrderPopup';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
@@ -48,10 +41,9 @@ export const Botbuilder = () => {
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
-  const token = useRootState((state) => state.botBuilderReducer.token);
 
   const { getScenario } = useScenarioClient();
-  getScenario(token, selectedScenario?.id);
+  getScenario(selectedScenario?.id);
 
   const { isOpen, handleIsOpen } = useModalOpen();
 

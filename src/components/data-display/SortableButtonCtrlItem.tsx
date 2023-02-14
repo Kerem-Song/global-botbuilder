@@ -33,11 +33,6 @@ export const SortableButtonCtrlItem = ({
     paddingTop: '4px',
   };
 
-  const handleBlueNodeBtn = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {typeName !== CTRL_TYPES.QUICK_CTRL ? (

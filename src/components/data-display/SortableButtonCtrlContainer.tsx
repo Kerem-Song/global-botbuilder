@@ -16,11 +16,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import {
-  ACTION_TYPES,
-  CTRL_TYPES,
-  IButtonCtrl,
-} from '@models/interfaces/res/IGetFlowRes';
+import { ACTION_TYPES, IButtonCtrl } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 
 import { NextNodeButton } from './NextNodeButton';

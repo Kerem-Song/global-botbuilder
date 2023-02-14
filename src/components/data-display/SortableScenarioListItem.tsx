@@ -1,8 +1,7 @@
-import { Col, Row } from '@components/layout';
 import { ScenarioItem } from '@components/pages/scenario/ScenarioItem';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { IScenarioModel, ISortableListItem } from '@models';
+import { IScenarioModel } from '@models';
 
 export const SortableScenarioListItem = ({ item }: { item: IScenarioModel }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
