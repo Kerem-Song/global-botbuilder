@@ -1,14 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
-import { IHasResults, IScenarioModel, NODE_TYPES } from '@models';
-import {
-  IAnswerView,
-  IBasicCardCarouselView,
-  IBasicCardView,
-  IConditionView,
-  IGetFlowRes,
-  IListCardCarouselView,
-  IListCardView,
-} from '@models/interfaces/res/IGetFlowRes';
+import { IHasResults, IScenarioModel } from '@models';
+import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
 import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
