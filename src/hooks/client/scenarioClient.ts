@@ -61,9 +61,10 @@ export const useScenarioClient = () => {
               queryClient.invalidateQueries(['scenario', selectedScenario.id]);
             }
 
-            return scenarios
+            const restScenarios = scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
+            return [...basicScenarios, ...restScenarios];
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
     );

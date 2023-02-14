@@ -240,7 +240,11 @@ export interface IOtherFlowRedirectNode extends INodeBase {
 }
 
 export interface IOtherFlowRedirectView extends IViewBase {
-  title?: string;
+  otherFlowAlias: string;
+  otherFlowId: string;
+  otherNodeAlias: string;
+  otherNodeId: string;
+  otherNodeOption: number;
 }
 
 export interface IListCardNode extends INodeBase {
