@@ -64,5 +64,8 @@
     "DEBUG_HEADER": "Test Information",
     "SCENARIO_NAME": "Scenario name",
     "CHATBUBBLE_NAME": "Chatbubble name"
+  },
+  "utterance": {
+    "DELETE_HEADER": "인텐트 삭제"
   }
 }

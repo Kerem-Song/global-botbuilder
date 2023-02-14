@@ -40,6 +40,10 @@ export const botbuilderSlice = createSlice({
   name: 'botbuilderCardType',
   initialState,
   reducers: {
+    initBotBuilder: (state) => {
+      state.selectedScenario = undefined;
+      state.selected = undefined;
+    },
     setBasicScenarios: (state, action: PayloadAction<IScenarioModel[]>) => {
       state.basicScenarios = action.payload;
     },
@@ -104,6 +108,7 @@ export const botbuilderSlice = createSlice({
 });
 
 export const {
+  initBotBuilder,
   setSelectedScenario,
   setBasicScenarios,
   zoomIn,

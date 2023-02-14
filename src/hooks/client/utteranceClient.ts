@@ -15,6 +15,7 @@ import {
   IIntentListItem,
   IResponseIntentData,
   ISaveIntent,
+  ISearchData,
   ISearchIntent,
 } from './../../models/interfaces/IUtterance';
 import { useHttp } from './../useHttp';
@@ -48,12 +49,18 @@ export const useUtteranceClient = () => {
     );
   };
 
-  const getPageQuery = async (
-    pageNo: number,
-    orderType?: number,
-    flowId?: string | null | undefined,
-    keyword?: string | undefined,
-  ) => {
+  const getPageQuery = async ({
+    pageNo,
+    sort,
+    scenarios,
+    searchWord,
+  }: {
+    pageNo: number;
+    sort: number;
+    scenarios?: string;
+    searchWord?: string;
+  }) => {
+    console.log(sort);
     return await http
       .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
         'Builder/SearchIntent',
@@ -61,9 +68,9 @@ export const useUtteranceClient = () => {
           sessionToken: token,
           countPerPage: 20,
           pageNo: pageNo,
-          orderType,
-          flowId,
-          keyword,
+          orderType: sort,
+          flowId: scenarios,
+          keyword: searchWord,
         },
       )
       .then((res) => {
@@ -71,25 +78,27 @@ export const useUtteranceClient = () => {
       });
   };
 
-  const changePageNumberQuery = useInfiniteQuery(
-    ['change-pageNumber'],
-    async ({ pageParam = 1 }) => {
-      return await getPageQuery(pageParam);
-    },
-    {
-      getNextPageParam: (lastpage, pages) => {
-        if (lastpage.totalPage > 1) {
-          const max = Math.ceil(lastpage.total / 20);
-          const next = pages.length + 1;
-          return next <= max ? next : undefined;
-        }
+  const changePageNumberQuery = (searchData: ISearchData) => {
+    return useInfiniteQuery(
+      ['change-pageNumber', searchData.sort, searchData.scenarios, searchData.searchWord],
+      async ({ pageParam = 1 }) => {
+        return await getPageQuery({ pageNo: pageParam, ...searchData });
       },
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      retry: 1,
-    },
-  );
+      {
+        getNextPageParam: (lastpage, pages) => {
+          if (lastpage.totalPage > 1) {
+            const max = Math.ceil(lastpage.total / 20);
+            const next = pages.length + 1;
+            return next <= max ? next : undefined;
+          }
+        },
+        refetchOnMount: true,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
+        retry: 1,
+      },
+    );
+  };
 
   const getIntentDetailQuery = (intentId?: string) => {
     if (intentId) {

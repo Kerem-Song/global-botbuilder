@@ -1,12 +1,10 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
-import { cornersOfRectangle } from '@dnd-kit/core/dist/utilities/algorithms/helpers';
-import { useRootState, useScenarioClient } from '@hooks';
-import { IIntentListItem, IPagingItems, ISearchData } from '@models';
-import { FC, useEffect, useRef, useState } from 'react';
+import { useScenarioClient } from '@hooks';
+import { ISearchData } from '@models';
+import { FC, useEffect, useState } from 'react';
 import Select from 'react-select';
 
 export interface IToSearchProps {
-  sortData?: IPagingItems<IIntentListItem>;
   searchData: ISearchData;
   setSearchData: (data: ISearchData) => void;
 }
@@ -17,21 +15,16 @@ const SORT = [
   { value: '3', label: 'Scenario name' },
 ];
 
-export const ToSearch: FC<IToSearchProps> = ({ sortData, searchData, setSearchData }) => {
+export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string | undefined>(undefined);
   const [searchWord, setSearchWord] = useState<string | undefined>('');
-  const [pageNumber, setPageNumber] = useState<number>(1);
 
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList();
 
   const scenarioList = data?.map((x) => {
     return { value: x.id, label: x.alias };
-  });
-
-  const utteranceSummary = sortData?.items.map((x) => {
-    return x.utteranceSummary;
   });
 
   const handleReset = () => {
@@ -91,7 +84,6 @@ export const ToSearch: FC<IToSearchProps> = ({ sortData, searchData, setSearchDa
                 <Input
                   search
                   placeholder="Please enter a search word"
-                  value={utteranceSummary?.find((x) => x === searchWord)}
                   onSearch={(e) => setSearchWord(e)}
                 />
               </FormItem>
