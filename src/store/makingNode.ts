@@ -1,19 +1,9 @@
-import { IArrow, INode, NodeKind } from '@models';
-import { NODE_TYPES } from '@models/interfaces/ICard';
+import { IArrow, INode } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
-import {
-  ACTION_TYPES,
-  IAnswerNode,
-  IAnswerView,
-  IBasicCardCarouselNode,
-  IBasicCardNode,
-  IBasicCardView,
-  IConditionNode,
-  INodeBase,
-} from '@models/interfaces/res/IGetFlowRes';
+import { INodeBase } from '@models/interfaces/res/IGetFlowRes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NEXT_BUTTON_PREFIX, NODE_PREFIX } from '../modules';
+import { NODE_PREFIX } from '../modules';
 import { nodeHelper } from '../modules/nodeHelper';
 
 export interface IBuilderInfo {

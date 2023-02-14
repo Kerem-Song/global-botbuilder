@@ -1,7 +1,6 @@
 import { DefaultLayout } from '@components';
 import { BotLayout } from '@components/layout/BotLayout';
 import { Layout } from '@components/layout/Layout';
-import { UtteranceDetail } from '@components/pages/utterance/UtteranceDetail';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';

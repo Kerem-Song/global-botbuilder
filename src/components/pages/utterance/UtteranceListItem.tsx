@@ -25,8 +25,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     data: initialData,
     fetchNextPage,
     refetch,
-    isSuccess,
-    isLoading,
   } = changePageNumberQuery(searchData!);
 
   useEffect(() => {

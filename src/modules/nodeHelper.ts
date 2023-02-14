@@ -27,7 +27,6 @@ import {
   INodeBase,
   IOtherFlowRedirectView,
   IParameterSetParams,
-  IParameterSetView,
   IProductCardCarouselView,
   IProductCardView,
   IRetryConditionNode,
