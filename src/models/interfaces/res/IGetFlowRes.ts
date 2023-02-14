@@ -265,6 +265,7 @@ export interface IListCardItem extends ICtrlBase {
   imageUrl: string;
   seq: number;
   title: string;
+  aspectRatio?: ImageAspectRatio;
 }
 
 export interface IListCardCarouselView extends IHasButtonCarouselViewBase {

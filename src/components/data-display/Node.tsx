@@ -173,7 +173,7 @@ export const Node: FC<INodeProps> = ({
     console.log('typename', typeName);
     switch (typeName) {
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         return nodeMenu;
       default:
@@ -210,7 +210,7 @@ export const Node: FC<INodeProps> = ({
         return <BasicCardCarouselNode node={node} />;
       case NODE_TYPES.LIST_CARD_NODE:
         return <ListCardNode node={node} />;
-      case NODE_TYPES.LIST_CAROUSEL:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
         return <ListCardCarouselNode node={node} />;
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <CommerceCardNode node={node} />;

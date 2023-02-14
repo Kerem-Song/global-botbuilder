@@ -6,6 +6,7 @@ import {
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
   INodeEditModel,
+  listCardNodeEditSchema,
   parameterSetNodeEditSchema,
   productCardNodeEditSchema,
   textNodeEditSchema,
@@ -23,9 +24,11 @@ import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
+import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
 import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
+import { ProductCardCarouselNodeEdit } from './ProductCardCarouselNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
@@ -53,12 +56,28 @@ export const NodeEditDrawer = () => {
           then: basicCardNodeEditSchema,
         })
         .when('nodeType', {
-          is: NODE_TYPES.CONDITION_NODE,
-          then: conditionNodeEditSchema,
+          is: NODE_TYPES.LIST_CARD_NODE,
+          then: listCardNodeEditSchema,
         })
         .when('nodeType', {
           is: NODE_TYPES.PRODUCT_CARD_NODE,
           then: productCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+          then: basicCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
+          then: listCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+          then: productCardNodeEditSchema,
+        })
+        .when('nodeType', {
+          is: NODE_TYPES.CONDITION_NODE,
+          then: conditionNodeEditSchema,
         })
         .when('nodeType', {
           is: NODE_TYPES.PARAMETER_SET_NODE,
@@ -123,9 +142,10 @@ export const NodeEditDrawer = () => {
       }
     } else {
       if (node) {
+        console.log('asdfasdf');
         handleSubmit(onSubmit)();
         if (!isValid) {
-          onSubmit(getValues());
+          onSubmit(getValues()); // carousel 생성문제
         }
         dispatch(setInvalidateNode({ id: node.id, isValid }));
         reset({ id: '', title: '' });
@@ -147,6 +167,10 @@ export const NodeEditDrawer = () => {
         return <ProductCardNodeEdit />;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
         return <BasicCardCarousleNodeEdit />;
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
+        return <ListCardCarouselNodeEdit />;
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+        return <ProductCardCarouselNodeEdit />;
       case NODE_TYPES.ANSWER_NODE:
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
@@ -161,6 +185,7 @@ export const NodeEditDrawer = () => {
         <></>;
     }
   };
+
   console.log('errors in edit drawer', errors);
   return (
     <Drawer

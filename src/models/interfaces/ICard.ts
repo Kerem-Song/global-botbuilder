@@ -30,7 +30,7 @@ export const CARD_TYPES = {
   COMMERCE: 'Commerce',
   COMMERCE_CAROUSEL: 'Commerce Carousel',
   LIST_CARD_NODE: 'List',
-  LIST_CAROUSEL: 'List Carousel',
+  LIST_CARD_CAROUSEL_NODE: 'List Carousel',
   QUICK_REPLY: 'AnswerNode',
   CONDITION: 'Condition',
   RETRY_CONDITION: 'RetryCondition',
@@ -73,7 +73,7 @@ export const NODE_TYPES = {
   PRODUCT_CARD_TEMPLATE_NODE: 'ProductCardTemplateNode',
   TEXT_NODE: 'TextNode',
   LIST_CARD_NODE: 'ListCardNode',
-  LIST_CAROUSEL: 'ListCardCarouselNode',
+  LIST_CARD_CAROUSEL_NODE: 'ListCardCarouselNode',
   RETRY_CONDITION_NODE: 'RetryConditionNode',
 } as const;
 
@@ -88,7 +88,7 @@ export const getNodeKind = (nodeType: TNodeTypes) => {
     case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
     case NODE_TYPES.BASIC_CARD_NODE:
     case NODE_TYPES.IMAGE_NODE:
-    case NODE_TYPES.LIST_CAROUSEL:
+    case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
     case NODE_TYPES.LIST_CARD_NODE:
     case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
     case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
@@ -138,7 +138,7 @@ export interface ISortableListItem {
 }
 
 export interface IListCard {
-  type?: typeof CARD_TYPES.LIST_CARD_NODE | typeof CARD_TYPES.LIST_CAROUSEL;
+  type?: typeof CARD_TYPES.LIST_CARD_NODE | typeof CARD_TYPES.LIST_CARD_CAROUSEL_NODE;
   header?: {
     title?: string;
   };
@@ -188,7 +188,7 @@ export interface IProductCardNode {
 }
 
 export interface IListCardNode {
-  type?: typeof NODE_TYPES.LIST_CARD_NODE | typeof NODE_TYPES.LIST_CAROUSEL;
+  type?: typeof NODE_TYPES.LIST_CARD_NODE | typeof NODE_TYPES.LIST_CARD_CAROUSEL_NODE;
   allowHeadImgField?: boolean;
   header?: {
     title?: string;

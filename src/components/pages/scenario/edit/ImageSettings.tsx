@@ -1,6 +1,6 @@
 import { icImg } from '@assets';
 import { Col, Row, Space } from '@components/layout';
-import { useHttp, useRootState } from '@hooks';
+import { useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
@@ -42,13 +42,13 @@ export const ImageSettings = ({
 
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.childrenViews[index!].imageCtrl,
-          imageFilePath: `view.childrenViews.${index}.imageCtrl`,
+          imageCtrl: values.view.childrenViews[index!],
+          imageFilePath: `view.childrenViews.${index}`,
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.childrenViews[index!].items[index!],
+          imageCtrl: values.view.childrenViews[index!]?.items[index!],
           imageFilePath: `view.childrenViews.${index}.items.${index}`,
         };
 
