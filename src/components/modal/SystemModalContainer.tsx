@@ -37,7 +37,11 @@ export const SystemModalContainer = () => {
   }, [modalInfo.isOpen]);
 
   return (
-    <ReactModal className="luna-system-modal" isOpen={modalInfo.isOpen}>
+    <ReactModal
+      className="luna-system-modal"
+      isOpen={modalInfo.isOpen}
+      overlayClassName="luna-system-modal-overlay"
+    >
       <div className="title">
         <Title level={4}>{modalInfo.message}</Title>
       </div>
