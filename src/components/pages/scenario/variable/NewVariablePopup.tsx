@@ -31,7 +31,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
 
   const handleSave = (variable: ISaveParameterData): void => {
     const newVariable: ISaveParameter = {
-      sessionToken: token,
+      sessionToken: token!,
       data: {
         name: variable.name,
         defaultValue: variable.defaultValue,

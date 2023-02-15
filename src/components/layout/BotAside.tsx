@@ -132,13 +132,14 @@ export const BotAside = () => {
         <Popper
           placement="right-start"
           offset={[10, -10]}
-          //showBullet
+          showBullet
           popup
           popupList
           popperSelect={botList}
           onChange={(e) => {
             e.data?.action(e.id);
           }}
+          selectedId={botId}
         >
           <div className="lnbHeader" data-sidebar={sidebarStatus}>
             {sidebarStatus ? (

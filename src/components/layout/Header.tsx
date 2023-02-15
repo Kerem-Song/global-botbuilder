@@ -79,6 +79,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
             onChange={(e) => {
               changeLanguageHandler(e.id);
             }}
+            selectedId={language}
           >
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>

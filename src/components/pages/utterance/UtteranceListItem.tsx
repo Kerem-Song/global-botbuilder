@@ -106,7 +106,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
-            <span>No search results found.</span>
+            <span>No registered intents.</span>
           </td>
         </tr>
       </>

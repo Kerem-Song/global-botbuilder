@@ -18,26 +18,23 @@ import { useParams } from 'react-router';
 import Select from 'react-select';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
-// import { toast } from 'react-toastify';
+import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export const UtteranceDetail = () => {
-  const [searchWord, setSearchWord] = useState<string | undefined>('');
+  const { utteranceId, botId } = useParams();
   const { navigate, t, tc } = usePage();
-  const { intentMutate, getIntentDetailQuery, intentDeleteMutate, getIntentListQuery } =
-    useUtteranceClient();
-  const { getScenarioList } = useScenarioClient();
   const token = useRootState((state) => state.botBuilderReducer.token);
+  const { confirm } = useSystemModal();
+  const [searchWord, setSearchWord] = useState<string | undefined>('');
+  const { intentMutate, getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
+  const { getScenarioList } = useScenarioClient();
+  const hasUtteranceId = getIntentDetailQuery(utteranceId);
   const list = getScenarioList();
   const scenarioList =
     list.data &&
     list.data.map((x) => {
       return { value: x.id, label: x.alias };
     });
-
-  const { utteranceId, botId } = useParams();
-
-  const hasUtteranceId = getIntentDetailQuery(utteranceId);
-  const { confirm } = useSystemModal();
 
   const { reset, register, handleSubmit, control, getValues, watch } =
     useForm<IUtteranceModel>({
@@ -50,6 +47,9 @@ export const UtteranceDetail = () => {
     name: `connectScenarioId`,
     control,
   });
+
+  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
+  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
 
   useEffect(() => {
     if (hasUtteranceId && hasUtteranceId.data) {
@@ -68,10 +68,6 @@ export const UtteranceDetail = () => {
       );
     }
   }, [hasUtteranceId?.data]);
-
-  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
-
-  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
 
   const openDeleteCheckboxModal = async () => {
     const result = await confirm({
@@ -217,6 +213,7 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <Select
                   {...scenarioListField}
+                  styles={reactSelectStyle}
                   options={scenarioList}
                   value={scenarioList?.find(
                     (item) => item.value === scenarioListField.value,
