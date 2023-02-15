@@ -2,7 +2,7 @@ import { Input } from '@components/data-entry';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
@@ -35,7 +35,7 @@ export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   popperSelect?: IPopperSelectItem<T>[];
   showBullet?: boolean;
   onChange?: (item: IPopperItem<T> | IPopperSelectItem<T>) => void;
-  selectedItem?: IPopperItem<T>;
+  selectedId?: string;
   popup?: boolean;
   popupList?: boolean;
   offset?: [number, number];
@@ -52,7 +52,9 @@ export const Popper = <T extends object>({
   popperSelect,
   offset,
   onChange,
+  selectedId,
 }: IPopperProps<T>) => {
+  const [selected, setSelected] = useState<string>();
   const [showPopper, setShowPopper] = useState<boolean>(false);
 
   const referenceElement = useRef<HTMLDivElement>(null);
@@ -70,6 +72,7 @@ export const Popper = <T extends object>({
 
   const handleSelect = (item: IPopperItem<T> | IPopperSelectItem<T>) => {
     setShowPopper(false);
+    setSelected(item.id);
     onChange?.(item);
   };
 
@@ -119,6 +122,12 @@ export const Popper = <T extends object>({
       setItems(popperItems);
     }
   };
+
+  useEffect(() => {
+    if (popperSelect) {
+      setSelected(selectedId);
+    }
+  }, [popperSelect]);
 
   return (
     <div ref={outsideClickRef}>
@@ -170,6 +179,7 @@ export const Popper = <T extends object>({
             showBullet={showBullet}
             popupList={popupList}
             handleSelect={handleSelect}
+            checked={item.id === selected}
           />
         ))}
       </div>

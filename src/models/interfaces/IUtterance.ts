@@ -27,7 +27,7 @@ export interface IGetIntent {
 }
 
 export interface ISaveIntent {
-  sessionToken: string;
+  sessionToken?: string;
   intentId?: string;
   intentName: string;
   utterances: (string | undefined)[];
@@ -41,7 +41,7 @@ export interface IResponseIntentData {
 }
 
 export interface IDeleteIntent {
-  sessionToken: string;
+  sessionToken?: string;
   intentId?: string;
 }
 

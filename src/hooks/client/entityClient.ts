@@ -1,7 +1,21 @@
 import { useHttp, useRootState } from '@hooks';
-import { IHasResult, IPagingItems } from '@models';
-import { IResponseEntryItems, ISearchEntryGroup } from '@models/interfaces/IEntity';
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { HttpContext } from '@hooks/providers/HttpProvider';
+import {
+  IDeleteEntryGroup,
+  IGetEntryGroup,
+  IHasResult,
+  IPagingItems,
+  IResponseEntryItems,
+  IResponseSaveEntryGroup,
+  ISaveEntryGroup,
+  ISearchEntryGroup,
+} from '@models';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 export const useEntityClient = () => {
@@ -9,8 +23,8 @@ export const useEntityClient = () => {
   const http = useHttp();
   const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const getEntityListQuery = async (pageNo: number) => {
-    return await http
+  const getEntityListQuery = (pageNo: number) => {
+    return http
       .post<
         ISearchEntryGroup,
         AxiosResponse<IHasResult<IPagingItems<IResponseEntryItems>>>
@@ -44,8 +58,65 @@ export const useEntityClient = () => {
     },
   );
 
+  const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
+    const result = await http.post<
+      ISaveEntryGroup,
+      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
+    >('Builder/SaveEntryGroup', entry);
+
+    if (result) {
+      queryClient.invalidateQueries(['change-pageNumber']);
+      return result.data;
+    }
+  });
+
+  const entryGroupDeleteMutate = useMutation(async (deleteEntry: IDeleteEntryGroup) => {
+    const result = await http.post<
+      IDeleteEntryGroup,
+      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
+    >('Builder/DeleteEntryGroup', deleteEntry);
+
+    if (result) {
+      queryClient.invalidateQueries(['change-pageNumber']);
+      return result.data;
+    }
+  });
+
+  const entryGroupGetMutate = useMutation(async (getEntry: IGetEntryGroup) => {
+    const result = await http.post<
+      IGetEntryGroup,
+      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
+    >('Builder/GetEntryGroup', getEntry);
+    return result.data;
+  });
+
+  const getEntryDetailQuery = (entryId?: string) => {
+    if (entryId) {
+      return useQuery<IHasResult<IResponseSaveEntryGroup>>(
+        ['entry-detail', entryId],
+        () =>
+          http
+            .post<IGetEntryGroup, AxiosResponse<IHasResult<IResponseSaveEntryGroup>>>(
+              'Builder/GetEntryGroup',
+              {
+                sessionToken: token,
+                entryGroupId: entryId,
+                isSys: false,
+              },
+            )
+            .then((res) => res.data),
+        { refetchOnWindowFocus: false, refetchOnMount: true },
+      );
+    }
+    return null;
+  };
+
   return {
     getEntityListQuery,
     changePageNumberQuery,
+    entryGroupMutate,
+    entryGroupGetMutate,
+    entryGroupDeleteMutate,
+    getEntryDetailQuery,
   };
 };

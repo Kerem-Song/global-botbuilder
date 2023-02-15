@@ -25,30 +25,6 @@ export const useUtteranceClient = () => {
   const http = useHttp();
   const token = useRootState((state) => state.botBuilderReducer.token);
 
-  const getIntentListQuery = (
-    orderType?: number,
-    flowId?: string | null | undefined,
-    keyword?: string | undefined,
-  ) => {
-    return useQuery<IPagingItems<IIntentListItem>>(
-      ['intent-list', orderType, flowId, keyword],
-      () =>
-        http
-          .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
-            'Builder/SearchIntent',
-            {
-              sessionToken: token,
-              countPerPage: 20,
-              orderType,
-              flowId,
-              keyword,
-            },
-          )
-          .then((res) => res.data.result),
-      { refetchOnWindowFocus: false, refetchOnMount: true },
-    );
-  };
-
   const getPageQuery = async ({
     pageNo,
     sort,
@@ -60,7 +36,6 @@ export const useUtteranceClient = () => {
     scenarios?: string;
     searchWord?: string;
   }) => {
-    console.log(sort);
     return await http
       .post<ISearchIntent, AxiosResponse<IHasResult<IPagingItems<IIntentListItem>>>>(
         'Builder/SearchIntent',
@@ -158,7 +133,6 @@ export const useUtteranceClient = () => {
   });
 
   return {
-    getIntentListQuery,
     getIntentDetailQuery,
     getPageQuery,
     intentMutate,

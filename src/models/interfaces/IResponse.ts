@@ -1,4 +1,4 @@
 export interface IResponse {
-  exception: string;
+  exception: string | null;
   isSuccess: boolean;
 }
