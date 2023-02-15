@@ -30,9 +30,9 @@ export const BasicCardCarousleNodeEdit = () => {
     control,
   });
 
-  // useEffect(() => {
-  //   console.log('basic card caro index', index);
-  // }, [index]);
+  useEffect(() => {
+    console.log('basic card caro index', index);
+  }, [index]);
 
   return (
     <>
