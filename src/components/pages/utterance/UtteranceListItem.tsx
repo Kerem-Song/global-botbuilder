@@ -17,7 +17,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const { botId } = useParams();
   const { navigate, t } = usePage();
   const [ref, inView] = useInView();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
   const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
 

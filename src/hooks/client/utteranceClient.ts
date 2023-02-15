@@ -23,7 +23,7 @@ import { useHttp } from './../useHttp';
 export const useUtteranceClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const getPageQuery = async ({
     pageNo,

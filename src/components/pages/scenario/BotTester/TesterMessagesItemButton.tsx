@@ -27,7 +27,7 @@ export const TesterMessagesItemButton = ({
   className,
 }: TesterMessagesItemButtonProps) => {
   const { botTesterMutate } = useBotTesterClient();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const actionType = item.actionType;
   const lunaNodeLink = item.postback?.lunaNodeLink;
   const webLinkUrl = item.postback?.webLinkUrl;

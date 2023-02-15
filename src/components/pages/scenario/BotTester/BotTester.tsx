@@ -25,7 +25,7 @@ export interface IBotTesterProps {
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { t } = useTranslation('botTest');
   const { botTesterMutate } = useBotTesterClient();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);

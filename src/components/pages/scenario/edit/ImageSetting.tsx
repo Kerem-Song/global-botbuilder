@@ -16,7 +16,7 @@ export const ImageSetting = ({ imageRatio, setImageRatio }: IImageSetting) => {
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const ctrlId = values.view.imageCtrl.id;
   console.log('ctrl id', ctrlId);

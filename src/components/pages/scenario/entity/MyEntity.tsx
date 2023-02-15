@@ -15,7 +15,7 @@ export const MyEntity = () => {
   const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
   const { data: initialData, fetchNextPage } = changePageNumberQuery;
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
 

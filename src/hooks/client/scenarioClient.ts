@@ -21,7 +21,7 @@ export const useScenarioClient = () => {
   const http = useHttp();
   const { botId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );

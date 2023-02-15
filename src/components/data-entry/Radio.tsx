@@ -12,18 +12,9 @@ export interface IRadioProps extends IHasChildren, IDataEntryProp {
 
 export const Radio = forwardRef<HTMLInputElement, IRadioProps>((args, ref) => {
   const { children, ...inputArgs } = args;
-
   return (
     <div className="radioContainer">
-      <input
-        {...inputArgs}
-        className="radio"
-        type="radio"
-        name="radio"
-        value={args.value}
-        checked={args.checked}
-        ref={ref}
-      />
+      <input {...inputArgs} className="radio" type="radio" name="radio" ref={ref} />
       {children}
     </div>
   );

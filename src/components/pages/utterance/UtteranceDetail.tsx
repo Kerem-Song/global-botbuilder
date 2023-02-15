@@ -23,7 +23,7 @@ import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 export const UtteranceDetail = () => {
   const { utteranceId, botId } = useParams();
   const { navigate, t, tc } = usePage();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
   const [searchWord, setSearchWord] = useState<string | undefined>('');
   const { intentMutate, getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();

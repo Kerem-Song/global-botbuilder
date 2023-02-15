@@ -20,8 +20,7 @@ import {
 } from '@assets/index';
 import { Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
-import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
-import { setBotInfo, setSesstionToken } from '@store/botbuilderSlice';
+import { setSesstionToken } from '@store/botInfoSlice';
 import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -41,15 +40,13 @@ export const BotAside = () => {
   const { i18n, t, ts } = useI18n();
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
-  const botInfo = useRootState((state) => state.botBuilderReducer.botInfo);
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
 
   const { getBotListQuery } = useBotClient();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
-  const { getSessionToken } = useSessionTokenClient();
-  getSessionToken();
+
   const { data } = getBotListQuery();
-  dispatch(setBotInfo(data?.find((x) => x.id === botId)));
 
   useEffect(() => {
     const pageName = location.pathname.split('/').slice(-1)[0];

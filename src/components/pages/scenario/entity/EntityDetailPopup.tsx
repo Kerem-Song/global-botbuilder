@@ -22,7 +22,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 }) => {
   const { entryGroupMutate, entryGroupGetMutate } = useEntityClient();
 
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const { reset, register, control, handleSubmit, getValues, watch } =
     useForm<ISaveEntryGroup>({

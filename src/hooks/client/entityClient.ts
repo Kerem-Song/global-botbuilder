@@ -21,7 +21,7 @@ import { AxiosResponse } from 'axios';
 export const useEntityClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const getEntityListQuery = (pageNo: number) => {
     return http

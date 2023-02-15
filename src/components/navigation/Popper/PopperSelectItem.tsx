@@ -48,7 +48,16 @@ export const PopperSelectItem = <T extends object>({
             role="presentation"
             onClick={() => handleCheckChange()}
           >
-            {showBullet && <Radio ref={radioRef} value={item.id} checked={checked} />}
+            {showBullet && (
+              <Radio
+                ref={radioRef}
+                value={item.id}
+                checked={checked}
+                onChange={() => {
+                  console.log('radio');
+                }}
+              />
+            )}
             <div
               className="items-name"
               role="presentation"

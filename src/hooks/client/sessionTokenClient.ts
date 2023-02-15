@@ -1,4 +1,4 @@
-import { setSesstionToken } from '@store/botbuilderSlice';
+import { setSesstionToken } from '@store/botInfoSlice';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';

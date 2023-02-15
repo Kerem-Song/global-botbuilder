@@ -16,7 +16,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActiveAsync } =
     useScenarioClient();
 
@@ -29,7 +29,11 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   }, [isEditing]);
 
   const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await scenarioActiveAsync({ token, flowId: item.id, activated: e.target.checked });
+    await scenarioActiveAsync({
+      token: token!,
+      flowId: item.id,
+      activated: e.target.checked,
+    });
     //console.log('switch toggle');
   };
 
@@ -48,7 +52,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     });
 
     if (result) {
-      await scenarioDeleteAsync({ token, scenarioId: item.id });
+      await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
     }
   };
 
@@ -62,7 +66,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       return;
     }
     const res = await scenarioRenameAsync({
-      token,
+      token: token!,
       scenario: { ...item, alias: scenarioName },
     });
     if (res) {
