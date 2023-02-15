@@ -11,7 +11,7 @@ import {
   productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
-import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
+import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
 import { useEffect, useState } from 'react';
@@ -41,7 +41,8 @@ export const NodeEditDrawer = () => {
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
   const selected = useRootState((state) => state.botBuilderReducer.selected);
-
+  const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
+  const index = Object.values(carouselIndexObj)[0];
   const schema = yup
     .object({
       title: yup.string().required('말풍선 명은 필수입니다.'),
@@ -144,7 +145,16 @@ export const NodeEditDrawer = () => {
       if (node) {
         handleSubmit(onSubmit)();
         if (!isValid) {
-          onSubmit(getValues()); // carousel 생성문제
+          const view = node.view as IHasChildrenView;
+          console.log('view length', view.childrenViews.length);
+          console.log('index', index);
+          if (view.childrenViews && view.childrenViews.length < index) {
+            return;
+          } else {
+            onSubmit(getValues());
+          }
+
+          // onSubmit(getValues()); // carousel 생성문제
         }
         dispatch(setInvalidateNode({ id: node.id, isValid }));
         reset({ id: '', title: '' });
@@ -152,7 +162,7 @@ export const NodeEditDrawer = () => {
     }
 
     setNode(selectedNode);
-  }, [selectedNode]);
+  }, [selectedNode, index]);
 
   const editItem = () => {
     switch (selectedNode?.type) {
