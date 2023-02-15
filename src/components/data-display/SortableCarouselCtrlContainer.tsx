@@ -70,8 +70,8 @@ export const SoratbleCarouselCtrlContainer = ({
       collisionDetection={closestCenter}
       // modifiers={[restrictToParentElement]}
     >
-      {nodeView.childrenViews && (
-        <SortableContext items={nodeView.childrenViews}>
+      {carouselNode && (
+        <SortableContext items={carouselNode}>
           <SoratbleGrid columns={5}>
             {carouselNode?.map((item, i: number) => (
               <SortableCarouselCtrlItem
