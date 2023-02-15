@@ -1,7 +1,7 @@
 import { icPopupClose, icUtteranceEmpty } from '@assets';
 import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
 import { useEntityClient, useRootState } from '@hooks';
-import { IEntryFormModel, ISaveEntryGroup } from '@models';
+import { IEntriesModel, IEntryFormModel, ISaveEntryGroup } from '@models';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -12,34 +12,31 @@ export interface EntityDetailProps {
   value?: string;
   onChange?: Dispatch<React.SetStateAction<string>>;
   entryId?: string;
-  setEntryId?: (value: string) => void;
+  setEntryId: (value: string) => void;
+  selectedOption?: string;
 }
 
 export const EntityDetailPopup: FC<EntityDetailProps> = ({
   isOpen,
   handleIsOpen,
   entryId,
+  setEntryId,
+  selectedOption,
 }) => {
-  const { entryGroupMutate, entryGroupGetMutate } = useEntityClient();
-
+  const { entryGroupMutate, entryGroupGetMutate, getEntryDetailQuery } =
+    useEntityClient();
   const token = useRootState((state) => state.botInfoReducer.token);
-
+  const entryDetails = getEntryDetailQuery(entryId);
   const { reset, register, control, handleSubmit, getValues, watch } =
     useForm<ISaveEntryGroup>({
       defaultValues: {
-        name: '',
+        name: entryId,
         isRegex: false,
         entries: [],
       },
     });
-
   const entryForm = useForm<IEntryFormModel>({ defaultValues: { entry: '' } });
   const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
-
-  const handleRegisterEntry = (data: IEntryFormModel): void => {
-    append({ representativeEntry: data.entry });
-    entryForm.reset();
-  };
 
   const handleSave = (entryData: ISaveEntryGroup): void => {
     const newEntry: ISaveEntryGroup = {
@@ -78,10 +75,28 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   };
 
+  const handleRegisterEntry = (data: IEntryFormModel): void => {
+    append({ representativeEntry: data.entry });
+    entryForm.reset();
+  };
+
   const handleClose = () => {
     handleIsOpen(false);
+    setEntryId('');
     remove();
+    reset();
   };
+
+  useEffect(() => {
+    if (entryDetails && entryDetails.data) {
+      const resetValue = {
+        name: entryDetails.data.result.name,
+        isRegex: false,
+        entries: entryDetails.data.result.entries,
+      };
+      reset(resetValue);
+    }
+  }, [entryDetails?.data]);
 
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
@@ -165,58 +180,57 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     </Button>
                   </Col>
                 </Row>
-                <Row>
+              </form>
+            </Space>
+            <Row gap={8}>
+              <>
+                {watch('entries').length > 0 ? (
                   <>
-                    {watch('entries').length > 0 ? (
-                      fields.map((v, i) => {
-                        return (
-                          <Col key={i}>
-                            {/* <Input
-                              size="normal"
-                              style={{ width: '200px', marginRight: '8px' }}
-                            >
-                              {v.representativeEntry}
-                            </Input> */}
-                            <div
-                              style={{
-                                width: '200px',
-                                marginRight: '8px',
-                              }}
-                            >
-                              {v.representativeEntry}
-                            </div>
-                            <div className="entryList">
+                    {fields.map((v, i) => {
+                      return (
+                        <Col key={i}>
+                          <Input
+                            size="normal"
+                            style={{
+                              width: '200px',
+                              marginRight: '8px',
+                            }}
+                            defaultValue={v.representativeEntry}
+                          ></Input>
+                          <div className="entryList">
+                            <div className="entries">
+                              <div>{v.synonym}</div>
                               <div className="addBtnWrapper">
                                 <button className="addBtn">
                                   <span>Add</span>
                                 </button>
                               </div>
                             </div>
-                            <button className="icDelete" />
-                          </Col>
-                        );
-                      })
-                    ) : (
-                      <Row
-                        style={{
-                          width: '100%',
-                          marginTop: '12px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <div className="emptyList">
-                          <div className="empty">
-                            <img src={icUtteranceEmpty} alt="empty" />
-                            <span>No entries registered</span>
                           </div>
-                        </div>
-                      </Row>
-                    )}
+                          <button className="icDelete" />
+                        </Col>
+                      );
+                    })}
                   </>
-                </Row>
-              </form>
-            </Space>
+                ) : (
+                  <Row
+                    style={{
+                      width: '100%',
+                      marginTop: '12px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <div className="emptyList">
+                      <div className="empty">
+                        <img src={icUtteranceEmpty} alt="empty" />
+                        <span>No entries registered</span>
+                      </div>
+                    </div>
+                  </Row>
+                )}
+              </>
+            </Row>
           </Card>
         </div>
       </div>

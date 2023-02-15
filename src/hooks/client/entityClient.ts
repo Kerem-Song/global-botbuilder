@@ -1,5 +1,4 @@
 import { useHttp, useRootState } from '@hooks';
-import { HttpContext } from '@hooks/providers/HttpProvider';
 import {
   IDeleteEntryGroup,
   IGetEntryGroup,

@@ -2,7 +2,7 @@
   width: rem(1080);
   height: rem(652);
   margin: auto;
-  margin-top: calc(100vh - rem(780));
+  margin-top: calc(100vh - rem(740));
   padding: 0;
   border-radius: rem(12);
   background-color: $grayWhite;
@@ -72,104 +72,112 @@
             form {
               div {
                 display: flex;
-                .entryList {
-                  width: rem(744);
-                  margin-right: rem(8);
-                  border: 1px solid #dcdcdc;
-                  border-radius: rem(8);
+              }
+            }
+            display: flex;
+            .entryList {
+              width: rem(744);
+              flex-wrap: wrap;
+              min-height: rem(38);
+              height: fit-content;
+              margin-right: rem(8);
+              border: 1px solid #dcdcdc;
+              border-radius: rem(8);
+              display: flex;
+              align-items: center;
+              .entries {
+                width: rem(744);
+                flex-wrap: wrap;
+              }
+
+              .addEntry {
+                margin-left: rem(4);
+                padding: 0 rem(4);
+                max-width: calc(100% - rem(32));
+                min-width: rem(98);
+                height: rem(25);
+                line-height: rem(25);
+                border-radius: rem(8);
+                background-color: $primary150;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+              .addBtnWrapper {
+                position: relative;
+                margin-left: rem(8);
+                display: flex;
+                justify-items: center;
+                align-items: center;
+                width: rem(63);
+                height: rem(24);
+                border: 1px solid $gray200;
+                border-radius: rem(99);
+                background-color: $grayWhite;
+                .addBtn {
+                  z-index: 100;
+                  position: absolute;
+                  margin-left: rem(7);
+                  margin-right: rem(4);
                   display: flex;
+                  justify-items: center;
                   align-items: center;
-                  .addEntry {
-                    display: inline-block;
-                    margin-left: rem(4);
-                    padding: 0 rem(4);
-                    max-width: calc(100% - rem(32));
-                    min-width: rem(98);
-                    height: rem(25);
-                    line-height: rem(25);
-                    border-radius: rem(8);
-                    background-color: $primary150;
-                    overflow: hidden;
-                    white-space: nowrap;
-                  }
-                  .addBtnWrapper {
-                    position: relative;
-                    margin-left: rem(8);
-                    display: flex;
-                    justify-items: center;
-                    align-items: center;
-                    width: rem(63);
-                    height: rem(24);
-                    border: 1px solid $gray200;
-                    border-radius: rem(99);
-                    background-color: $grayWhite;
-                    .addBtn {
-                      z-index: 100;
-                      position: absolute;
-                      margin-left: rem(7);
-                      margin-right: rem(4);
-                      display: flex;
-                      justify-items: center;
-                      align-items: center;
-                      width: rem(16);
-                      height: rem(16);
-                      border: none;
-                      background-color: $grayWhite;
-                      background-image: url('@assets/icons/ic_utterance_add.svg');
-                      cursor: pointer;
-                      background-position: center;
-                      background-repeat: no-repeat;
-                      span {
-                        margin-left: rem(20);
-                      }
-                    }
-                  }
-                }
-                .icDelete {
-                  width: rem(38);
-                  height: rem(38);
-                  padding: rem(8);
+                  width: rem(16);
+                  height: rem(16);
+                  border: none;
                   background-color: $grayWhite;
-                  border: 1px solid $gray200;
-                  border-radius: rem(8);
+                  background-image: url('@assets/icons/ic_utterance_add.svg');
                   cursor: pointer;
-                  background-image: url('@assets/icons/ic_utterance_delete_default.svg');
                   background-position: center;
                   background-repeat: no-repeat;
-                  &:hover {
-                    background-color: $primary100;
-                  }
-                  &:disabled {
-                    background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    &:hover {
-                      background-color: $grayWhite;
-                    }
+                  span {
+                    margin-left: rem(20);
                   }
                 }
               }
-              .emptyList {
-                height: rem(207);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                .empty {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  img {
-                    width: rem(56);
-                    height: rem(56);
-                  }
-                  span {
-                    margin-top: rem(10);
-                    font-size: rem(14);
-                    font-weight: rem(500);
-                    line-height: rem(25);
-                  }
+            }
+            .icDelete {
+              width: rem(38);
+              height: rem(38);
+              padding: rem(8);
+              background-color: $grayWhite;
+              border: 1px solid $gray200;
+              border-radius: rem(8);
+              cursor: pointer;
+              background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+              background-position: center;
+              background-repeat: no-repeat;
+              &:hover {
+                background-color: $primary100;
+              }
+              &:disabled {
+                background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                &:hover {
+                  background-color: $grayWhite;
                 }
+              }
+            }
+          }
+          .emptyList {
+            height: rem(207);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .empty {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              img {
+                width: rem(56);
+                height: rem(56);
+              }
+              span {
+                margin-top: rem(10);
+                font-size: rem(14);
+                font-weight: rem(500);
+                line-height: rem(25);
               }
             }
           }

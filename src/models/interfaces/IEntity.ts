@@ -30,7 +30,7 @@ export interface IResponseSaveEntryGroup {
   entryGroupType: number;
   usingName: string;
   entryStr: string;
-  entries?: IEntriesModel[] | string;
+  entries?: IEntriesModel[];
 }
 
 export interface IEntryFormModel {
