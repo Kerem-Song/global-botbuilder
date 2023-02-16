@@ -80,6 +80,7 @@ export const useUtteranceClient = () => {
         refetchOnWindowFocus: false,
         refetchOnReconnect: true,
         retry: 1,
+        enabled: token !== undefined,
       },
     );
   };
@@ -98,7 +99,11 @@ export const useUtteranceClient = () => {
               },
             )
             .then((res) => res.data),
-        { refetchOnWindowFocus: false, refetchOnMount: true },
+        {
+          refetchOnWindowFocus: false,
+          refetchOnMount: true,
+          enabled: token !== undefined,
+        },
       );
     }
     return null;

@@ -1,6 +1,6 @@
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import { useRef } from 'react';
+import { MouseEvent, useRef } from 'react';
 
 import { IPopperItem } from './Popper';
 
@@ -21,7 +21,8 @@ export const PopperListItem = <T extends object>({
     'luna-popup-list': popupList,
   });
 
-  const handleCheckChange = () => {
+  const handleCheckChange = (e: MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
+    e.stopPropagation();
     if (radioRef.current) {
       radioRef.current.checked = true;
     }
@@ -32,7 +33,7 @@ export const PopperListItem = <T extends object>({
     switch (item.type) {
       case 'button':
         return (
-          <button className="list-view-btn" onClick={() => handleCheckChange()}>
+          <button className="list-view-btn" onClick={handleCheckChange}>
             {item.name}
           </button>
         );
@@ -40,11 +41,7 @@ export const PopperListItem = <T extends object>({
         return (
           <div className={popperList}>
             <img src={item.icon} alt="icon" />
-            <div
-              className="items-name"
-              role="presentation"
-              onClick={() => handleCheckChange()}
-            >
+            <div className="items-name" role="presentation" onClick={handleCheckChange}>
               {item.name}
             </div>
           </div>
@@ -57,7 +54,7 @@ export const PopperListItem = <T extends object>({
             role="presentation"
             data-nodename={item.name}
             className={popperList}
-            onClick={() => handleCheckChange()}
+            onClick={handleCheckChange}
           >
             <div className="items-name">{item.name}</div>
           </div>
@@ -65,11 +62,7 @@ export const PopperListItem = <T extends object>({
       }
       default:
         return (
-          <div
-            className={popperList}
-            role="presentation"
-            onClick={() => handleCheckChange()}
-          >
+          <div className={popperList} role="presentation" onClick={handleCheckChange}>
             <div className="items-name">{item.name}</div>
           </div>
         );

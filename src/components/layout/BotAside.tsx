@@ -20,6 +20,7 @@ import {
 } from '@assets/index';
 import { Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
+import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
 import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
@@ -104,6 +105,7 @@ export const BotAside = () => {
           }
           navigate(`/${i18n.language}/${id}/scenario`);
           dispatch(setSesstionToken());
+          dispatch(initBotBuilder());
         },
       },
     };

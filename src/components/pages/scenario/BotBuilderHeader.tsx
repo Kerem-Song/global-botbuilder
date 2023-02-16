@@ -58,7 +58,6 @@ export const BotBuilderHeader = () => {
   const cardNum = useRootState(
     (state) => state.makingNodeSliceReducer.present.nodes,
   ).length;
-  const token = useRootState((state) => state.botInfoReducer.token);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -67,7 +66,7 @@ export const BotBuilderHeader = () => {
   const { scenarioSaveAsync } = useScenarioClient();
 
   const handleScenarioSave = () => {
-    if (token && selectedScenario) {
+    if (selectedScenario) {
       scenarioSaveAsync({ scenarioId: selectedScenario.id });
     }
   };

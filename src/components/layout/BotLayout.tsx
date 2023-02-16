@@ -17,12 +17,6 @@ export const BotLayout = () => {
   getSessionToken();
   getBotInfoQuery(botId!);
 
-  const token = useRootState((state) => state.botInfoReducer.token);
-
-  if (!token) {
-    return <></>;
-  }
-
   return (
     <>
       <>
