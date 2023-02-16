@@ -83,6 +83,7 @@ export const SoratbleCarouselCtrlContainer = ({
     console.log('delete card');
     console.log('right in handle delete card:', rightClickViewId);
     setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
+    setRightClickViewId('');
   };
 
   const contextMenu: IPopperItem<{ action: () => void }>[] = [

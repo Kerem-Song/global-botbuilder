@@ -98,15 +98,15 @@ export const CarouselOrderPopup: FC<{
               <p>{t('CAROUSEL_WARNING_SECOND')}</p>
             </Col>
             <Col className="buttonWrapper">
-              {nodeView.childrenViews?.length < 10 && (
-                <Button
-                  shape="ghost"
-                  className="carouselBtn add"
-                  onClick={HandleAddCarousel}
-                >
-                  + {t('ADD_CAHTBUBBLE_BTN')}
-                </Button>
-              )}
+              <Button
+                shape="ghost"
+                className="carouselBtn add"
+                onClick={HandleAddCarousel}
+                disabled={carouselNode?.length < 10}
+              >
+                + {t('ADD_CAHTBUBBLE_BTN')}
+              </Button>
+
               <Button
                 shape="ghost"
                 className="carouselBtn confirm"
