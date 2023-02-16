@@ -6,19 +6,13 @@ import { usePage } from '@hooks';
 import { INode } from '@models';
 import {
   IBasicCardCarouselView,
-  IBasicCardView,
   IHasChildrenView,
   IListCardCarouselView,
-  IListCardView,
   IProductCardCarouselView,
-  IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
-import { viewport } from '@popperjs/core';
-import { setCarouselIndex } from '@store/botbuilderSlice';
 import { updateNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 

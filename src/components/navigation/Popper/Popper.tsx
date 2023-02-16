@@ -141,6 +141,10 @@ export const Popper = <T extends object>({
         }}
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}
+        onContextMenu={(e) => {
+          e.stopPropagation();
+          handlePopper();
+        }}
       >
         {children}
       </div>

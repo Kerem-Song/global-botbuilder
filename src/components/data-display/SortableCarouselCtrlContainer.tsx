@@ -1,10 +1,11 @@
+import { icCardDelete, icCardDuplication } from '@assets';
+import { IPopperItem, Popper } from '@components/navigation';
 import {
   closestCenter,
   DndContext,
   DragEndEvent,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -20,7 +21,6 @@ import {
   IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';
@@ -38,6 +38,17 @@ export const SoratbleCarouselCtrlContainer = ({
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
+  const [rightClickViewId, setRightClickViewId] = useState<string>();
+
+  useEffect(() => {
+    if (rightClickViewId) {
+      document.addEventListener('click', handleDeleteCard);
+      return () => {
+        document.removeEventListener('click', handleDeleteCard);
+      };
+    }
+  }, [rightClickViewId, setCarouselNode]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -62,7 +73,39 @@ export const SoratbleCarouselCtrlContainer = ({
     }
   };
 
-  console.log('carousel node', carouselNode);
+  const handleDuplicationCard = () => {
+    console.log('duplicate');
+    // const copyRef = carouselNode.find((item) => item.id === rightClickViewId);
+    // setCarouselNode([...carouselNode]);
+  };
+
+  const handleDeleteCard = () => {
+    console.log('delete card');
+    console.log('right in handle delete card:', rightClickViewId);
+    setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
+  };
+
+  const contextMenu: IPopperItem<{ action: () => void }>[] = [
+    {
+      id: 'duplication-carosel',
+      name: 'Duplication',
+      type: 'icon-front',
+      icon: icCardDuplication,
+      data: {
+        action: handleDuplicationCard,
+      },
+    },
+    {
+      id: 'delete-carosel',
+      name: 'Delete',
+      type: 'icon-front',
+      icon: icCardDelete,
+      data: {
+        action: handleDeleteCard,
+      },
+    },
+  ];
+
   return (
     <DndContext
       onDragEnd={(e) => handleDragEnd(e)}
@@ -74,13 +117,32 @@ export const SoratbleCarouselCtrlContainer = ({
         <SortableContext items={carouselNode}>
           <SoratbleGrid columns={5}>
             {carouselNode?.map((item, i: number) => (
-              <SortableCarouselCtrlItem
-                key={item.id}
-                typeName={item.typeName}
-                nodeId={nodeId}
-                id={item.id}
-                item={item}
-              />
+              <Popper
+                placement="right"
+                offset={[0, -100]}
+                popup
+                popupList
+                popperItems={contextMenu}
+                onChange={(m) => {
+                  m.data?.action?.();
+                }}
+                key={i}
+              >
+                <div
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setRightClickViewId(item.id);
+                  }}
+                >
+                  <SortableCarouselCtrlItem
+                    key={item.id}
+                    typeName={item.typeName}
+                    nodeId={nodeId}
+                    id={item.id}
+                    item={item}
+                  />
+                </div>
+              </Popper>
             ))}
           </SoratbleGrid>
         </SortableContext>
