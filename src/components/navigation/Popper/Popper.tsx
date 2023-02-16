@@ -137,7 +137,11 @@ export const Popper = <T extends object>({
         role="presentation"
         onClick={(e) => {
           e.stopPropagation();
-          handlePopper();
+          if (className === 'onContextMenu') {
+            return;
+          } else {
+            handlePopper();
+          }
         }}
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}

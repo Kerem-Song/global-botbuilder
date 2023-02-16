@@ -50,7 +50,7 @@ export const SoratbleCarouselCtrlContainer = ({
         document.removeEventListener('click', handleDeleteCard);
       };
     }
-  }, [rightClickViewId]);
+  }, [rightClickViewId, setCarouselNode]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -62,11 +62,6 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
-  useOutsideClick(popperRef, () => {
-    console.log('outside!!!');
-    setRightClickViewId('');
-  });
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -92,7 +87,9 @@ export const SoratbleCarouselCtrlContainer = ({
     console.log('right in handle delete card:', rightClickViewId);
     const target = carouselNode.find((item) => item.id === rightClickViewId);
     console.log('target', target);
-
+    // const temp = [...carouselNode];
+    // const test = temp.slice(target, 1);
+    // console.log('test:', test);
     if (target) {
       setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
       setRightClickViewId('');
@@ -148,6 +145,7 @@ export const SoratbleCarouselCtrlContainer = ({
                     e.preventDefault();
                     setRightClickViewId(item.id);
                   }}
+                  ref={popperRef}
                 >
                   <SortableCarouselCtrlItem
                     key={item.id}
