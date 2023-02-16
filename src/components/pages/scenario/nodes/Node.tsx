@@ -28,21 +28,12 @@ import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { IHasChildren } from 'src/models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 
-import {
-  IAnswerNode,
-  IBasicCardNode,
-  IConditionNode,
-  IListCardNode,
-  IOtherFlowRedirectNode,
-  IProductCardNode,
-  IRetryConditionNode,
-  NODE_TYPES,
-} from '../../../../models/interfaces/ICard';
+import { NODE_TYPES } from '../../../../models/interfaces/ICard';
 import { SizeType } from '../../../../models/types/SizeType';
 import { NODE_PREFIX } from '../../../../modules';
 import { NextNodeButton } from '../NextNodeButton';
@@ -223,9 +214,19 @@ export const Node: FC<INodeProps> = ({
     onClick?.(e);
   };
 
+  const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Delete') {
+      dispatch(removeItem(node.id));
+    } else if (e.key === 'c' && e.ctrlKey) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <div
+        tabIndex={0}
+        onKeyDown={keyEvent}
         onDragOver={(e) => {
           e.preventDefault();
         }}
@@ -252,7 +253,7 @@ export const Node: FC<INodeProps> = ({
         id={`${NODE_PREFIX}${id}`}
         className={wrapClass}
         style={style}
-        role="presentation"
+        role="button"
         onClick={HandleNodeSelect}
         onMouseUp={(e) => e.stopPropagation()}
       >

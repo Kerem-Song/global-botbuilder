@@ -634,4 +634,24 @@ export const nodeHelper = {
       }
     });
   },
+  validateArrows: (startId: string, endId: string, nodes: INode[], isNext?: boolean) => {
+    if (startId === endId) {
+      return false;
+    }
+
+    const startNode = nodes.find((x) => x.id === startId.substring(5));
+    const endNode = nodes.find((x) => x.id === endId.substring(5));
+
+    // 노드가 없는경우
+    if (!startNode || !endNode) {
+      return false;
+    }
+
+    // Answer노드 앞에 응답이 없는경우
+    if (isNext && endNode.type === NODE_TYPES.ANSWER_NODE) {
+      return false;
+    }
+
+    return true;
+  },
 };

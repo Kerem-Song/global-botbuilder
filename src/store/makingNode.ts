@@ -70,6 +70,16 @@ export const makingNodeSlice = createSlice({
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
 
+      if (
+        !nodeHelper.validateArrows(
+          arrow.updateKey || arrow.start,
+          arrow.end,
+          state.nodes,
+          arrow.isNextNode,
+        )
+      ) {
+        return;
+      }
       if (arrow.start === arrow.end) {
         return;
       }
