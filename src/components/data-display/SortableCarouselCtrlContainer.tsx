@@ -34,24 +34,10 @@ interface ISortableContainer {
 }
 
 export const SoratbleCarouselCtrlContainer = ({
-  nodeView,
   nodeId,
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
-  const [rightClickViewId, setRightClickViewId] = useState<string>();
-  const popperRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (rightClickViewId) {
-      console.log('rightclick', rightClickViewId);
-      document.addEventListener('click', handleDeleteCard);
-
-      return () => {
-        document.removeEventListener('click', handleDeleteCard);
-      };
-    }
-  }, [rightClickViewId, setCarouselNode]);
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -76,29 +62,31 @@ export const SoratbleCarouselCtrlContainer = ({
     }
   };
 
-  const handleDuplicationCard = () => {
+  const handleDuplicationCard = (id: string) => {
     console.log('duplicate');
     // const copyRef = carouselNode.find((item) => item.id === rightClickViewId);
     // setCarouselNode([...carouselNode]);
   };
 
-  const handleDeleteCard = () => {
-    console.log('delete card');
-    console.log('right in handle delete card:', rightClickViewId);
-    const target = carouselNode.find((item) => item.id === rightClickViewId);
-    console.log('target', target);
-    // const temp = [...carouselNode];
-    // const test = temp.slice(target, 1);
-    // console.log('test:', test);
+  const handleDeleteCard = (
+    id: string,
+    node: (IBasicCardView | IListCardView | IProductCardView)[],
+  ) => {
+    const target = node.findIndex((item) => item.id === id);
+
     if (target) {
-      setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
-      setRightClickViewId('');
+      setCarouselNode(node.filter((item) => item.id !== id));
     }
   };
 
-  const contextMenu: IPopperItem<{ action: () => void }>[] = [
+  const contextMenu: IPopperItem<{
+    action: (
+      id: string,
+      node: (IBasicCardView | IListCardView | IProductCardView)[],
+    ) => void;
+  }>[] = [
     {
-      id: 'duplication-carosel',
+      id: 'duplicate-carousel',
       name: 'Duplication',
       type: 'icon-front',
       icon: icCardDuplication,
@@ -136,16 +124,14 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
-                  m.data?.action?.();
+                  m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
               >
                 <div
                   onContextMenu={(e) => {
                     e.preventDefault();
-                    setRightClickViewId(item.id);
                   }}
-                  ref={popperRef}
                 >
                   <SortableCarouselCtrlItem
                     key={item.id}

@@ -82,9 +82,6 @@ export const CarouselOrderPopup: FC<{
     handleIsOpen(false);
   };
 
-  // console.log('nodeView', nodeView);
-  console.log('node', carouselNode);
-
   return (
     <ReactModal
       isOpen={isOpen}
