@@ -2,23 +2,17 @@ import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
 import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
-import { usePage } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { INode } from '@models';
 import {
   IBasicCardCarouselView,
-  IBasicCardView,
   IHasChildrenView,
   IListCardCarouselView,
-  IListCardView,
   IProductCardCarouselView,
-  IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
-import { viewport } from '@popperjs/core';
-import { setCarouselIndex } from '@store/botbuilderSlice';
 import { updateNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
@@ -33,12 +27,24 @@ export const CarouselOrderPopup: FC<{
   const [carouselNode, setCarouselNode] = useState<IHasChildrenView['childrenViews']>([]);
   const { t } = usePage();
   const dispatch = useDispatch();
-
+  const { confirm } = useSystemModal();
   useEffect(() => {
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    if (nodeView.childrenViews !== carouselNode) {
+      const checkSaving = await confirm({
+        title: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_TITLE`),
+        description: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_DESCRIPTION`),
+      });
+      if (checkSaving) {
+        setCarouselNode(nodeView.childrenViews);
+        handleIsOpen(false);
+      }
+    } else {
+      handleIsOpen(false);
+    }
     handleIsOpen(false);
   };
 
@@ -76,9 +82,6 @@ export const CarouselOrderPopup: FC<{
     handleIsOpen(false);
   };
 
-  // console.log('nodeView', nodeView);
-  // console.log('node', node);
-
   return (
     <ReactModal
       isOpen={isOpen}
@@ -104,15 +107,15 @@ export const CarouselOrderPopup: FC<{
               <p>{t('CAROUSEL_WARNING_SECOND')}</p>
             </Col>
             <Col className="buttonWrapper">
-              {nodeView.childrenViews?.length < 10 && (
-                <Button
-                  shape="ghost"
-                  className="carouselBtn add"
-                  onClick={HandleAddCarousel}
-                >
-                  + {t('ADD_CAHTBUBBLE_BTN')}
-                </Button>
-              )}
+              <Button
+                shape="ghost"
+                className="carouselBtn add"
+                onClick={HandleAddCarousel}
+                disabled={carouselNode?.length >= 10}
+              >
+                + {t('ADD_CAHTBUBBLE_BTN')}
+              </Button>
+
               <Button
                 shape="ghost"
                 className="carouselBtn confirm"

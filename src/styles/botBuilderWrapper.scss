@@ -120,11 +120,19 @@
   box-shadow: none !important;
   background: $gray150 !important;
   border-left: 1px solid $gray200;
+
+  
+  .wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
   .wrapper {
     height: calc(100vh - rem(97));
     // overflow: auto;
     overflow-y: scroll;
     overflow-x: hidden;
+    scrollbar-width: none;
+
     .header {
       background: $gray100;
       padding: rem(12);
