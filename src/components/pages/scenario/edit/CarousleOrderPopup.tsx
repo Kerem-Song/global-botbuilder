@@ -2,7 +2,7 @@ import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
 import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
-import { usePage } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { INode } from '@models';
 import {
   IBasicCardCarouselView,
@@ -27,12 +27,24 @@ export const CarouselOrderPopup: FC<{
   const [carouselNode, setCarouselNode] = useState<IHasChildrenView['childrenViews']>([]);
   const { t } = usePage();
   const dispatch = useDispatch();
-
+  const { confirm } = useSystemModal();
   useEffect(() => {
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    if (nodeView.childrenViews !== carouselNode) {
+      const checkSaving = await confirm({
+        title: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_TITLE`),
+        description: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_DESCRIPTION`),
+      });
+      if (checkSaving) {
+        setCarouselNode(nodeView.childrenViews);
+        handleIsOpen(false);
+      }
+    } else {
+      handleIsOpen(false);
+    }
     handleIsOpen(false);
   };
 
@@ -71,7 +83,7 @@ export const CarouselOrderPopup: FC<{
   };
 
   // console.log('nodeView', nodeView);
-  // console.log('node', node);
+  console.log('node', carouselNode);
 
   return (
     <ReactModal
@@ -102,7 +114,7 @@ export const CarouselOrderPopup: FC<{
                 shape="ghost"
                 className="carouselBtn add"
                 onClick={HandleAddCarousel}
-                disabled={carouselNode?.length < 10}
+                disabled={carouselNode?.length >= 10}
               >
                 + {t('ADD_CAHTBUBBLE_BTN')}
               </Button>

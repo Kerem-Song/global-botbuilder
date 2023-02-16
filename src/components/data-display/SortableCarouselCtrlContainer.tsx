@@ -14,13 +14,14 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
+import { useOutsideClick } from '@hooks/useOutsideClick';
 import {
   IBasicCardView,
   IHasChildrenView,
   IListCardView,
   IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';
@@ -39,15 +40,17 @@ export const SoratbleCarouselCtrlContainer = ({
   setCarouselNode,
 }: ISortableContainer) => {
   const [rightClickViewId, setRightClickViewId] = useState<string>();
-
+  const popperRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (rightClickViewId) {
+      console.log('rightclick', rightClickViewId);
       document.addEventListener('click', handleDeleteCard);
+
       return () => {
         document.removeEventListener('click', handleDeleteCard);
       };
     }
-  }, [rightClickViewId, setCarouselNode]);
+  }, [rightClickViewId]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -59,6 +62,11 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  useOutsideClick(popperRef, () => {
+    console.log('outside!!!');
+    setRightClickViewId('');
+  });
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -82,8 +90,13 @@ export const SoratbleCarouselCtrlContainer = ({
   const handleDeleteCard = () => {
     console.log('delete card');
     console.log('right in handle delete card:', rightClickViewId);
-    setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
-    setRightClickViewId('');
+    const target = carouselNode.find((item) => item.id === rightClickViewId);
+    console.log('target', target);
+
+    if (target) {
+      setCarouselNode(carouselNode.filter((item) => item.id !== rightClickViewId));
+      setRightClickViewId('');
+    }
   };
 
   const contextMenu: IPopperItem<{ action: () => void }>[] = [
