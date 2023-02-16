@@ -39,12 +39,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     },
   });
   const { reset, register, control, handleSubmit, watch } = formMethods;
-
-  const entryForm = useForm<IEntryFormModel>({ defaultValues: { entry: '' } });
   const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
-
+  const entryForm = useForm<IEntryFormModel>({ defaultValues: { entry: '' } });
   const handleSave = (entryData: ISaveEntryGroup): void => {
-    console.log(entryData);
     return;
     const newEntry: ISaveEntryGroup = {
       sessionToken: token,
@@ -112,8 +109,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   }, [entryDetails?.data]);
 
-  console.log(fields);
-
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
@@ -177,16 +172,15 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   </Col>
                 </Row>
                 {/* <Row align="center" gap={10}>
-                <Col style={{ width: '140px' }}>
-                  <span>Regular expression</span>
-                </Col>
-                <Col flex="auto">
-                  <Input placeholder="Input Intent Name" showCount maxLength={20} />
-                </Col>
-              </Row> */}
+                  <Col style={{ width: '140px' }}>
+                    <span>Regular expression</span>
+                  </Col>
+                  <Col flex="auto">
+                    <Input placeholder="Input Intent Name" showCount maxLength={20} />
+                  </Col>
+                </Row> */}
               </Space>
             </Card>
-
             <div className="searchInput">
               <Input size="small" search></Input>
             </div>
@@ -224,44 +218,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           return (
                             <EntityDetailItem entryGroup={entryGroup} index={i} key={i} />
                           );
-                          // return (
-                          //   <Col key={i}>
-                          //     <Input
-                          //       size="normal"
-                          //       style={{
-                          //         width: '200px',
-                          //         marginRight: '8px',
-                          //       }}
-                          //       value={v.representativeEntry}
-                          //     ></Input>
-                          //     <div className="entryList">
-                          //       <div className="entries">
-                          //         {v.synonym?.map((x, i) => {
-                          //           return (
-                          //             <div key={i}>
-                          //               <input defaultValue={x}></input>
-                          //             </div>
-                          //           );
-                          //         })}
-                          //         {entryTags.map((e, i) => (
-                          //           <div key={i}>
-                          //             <input
-                          //               defaultValue={e}
-                          //               style={{ width: 'fitContent' }}
-                          //             />
-                          //           </div>
-                          //         ))}
-                          //         <input onChange={(e) => addEntryTag(e)} value={entryTag} />
-                          //         <div className="addBtnWrapper">
-                          //           <button className="addBtn" onClick={handleClick}>
-                          //             <span>Add</span>
-                          //           </button>
-                          //         </div>
-                          //       </div>
-                          //     </div>
-                          //     <button className="icDelete" />
-                          //   </Col>
-                          // );
                         })}
                       </>
                     ) : (
