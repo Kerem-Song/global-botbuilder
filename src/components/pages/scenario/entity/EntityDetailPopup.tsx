@@ -23,6 +23,18 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   setEntryId,
   selectedOption,
 }) => {
+  const [entryTags, setEntryTags] = useState<string[]>([]);
+  const [entryTag, setEntryTag] = useState<string>('');
+
+  const addEntryTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEntryTag(e.target.value);
+  };
+
+  const handleClick = () => {
+    setEntryTags([...entryTags, entryTag]);
+    setEntryTag('');
+  };
+
   const { entryGroupMutate, entryGroupGetMutate, getEntryDetailQuery } =
     useEntityClient();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -97,6 +109,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       reset(resetValue);
     }
   }, [entryDetails?.data]);
+
+  console.log(fields);
 
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
@@ -195,13 +209,28 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                               width: '200px',
                               marginRight: '8px',
                             }}
-                            defaultValue={v.representativeEntry}
+                            value={v.representativeEntry}
                           ></Input>
                           <div className="entryList">
                             <div className="entries">
-                              <div>{v.synonym}</div>
+                              {v.synonym?.map((x, i) => {
+                                return (
+                                  <div key={i}>
+                                    <input defaultValue={x}></input>
+                                  </div>
+                                );
+                              })}
+                              {entryTags.map((e, i) => (
+                                <div key={i}>
+                                  <input
+                                    defaultValue={e}
+                                    style={{ width: 'fitContent' }}
+                                  />
+                                </div>
+                              ))}
+                              <input onChange={(e) => addEntryTag(e)} value={entryTag} />
                               <div className="addBtnWrapper">
-                                <button className="addBtn">
+                                <button className="addBtn" onClick={handleClick}>
                                   <span>Add</span>
                                 </button>
                               </div>
