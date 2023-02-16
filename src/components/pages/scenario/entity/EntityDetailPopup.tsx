@@ -206,7 +206,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         ref={entryGroupName}
                         onPressEnter={handleRegisterEntry}
                       ></Input>
-                      <Button style={{ marginLeft: '8px' }} type="primary">
+                      <Button
+                        style={{ marginLeft: '8px' }}
+                        type="primary"
+                        onClick={() => handleRegisterEntry(entryGroupName.current?.value)}
+                      >
                         Register
                       </Button>
                     </Col>
