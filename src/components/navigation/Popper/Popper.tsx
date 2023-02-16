@@ -143,7 +143,7 @@ export const Popper = <T extends object>({
         onMouseEnter={handleMouseOver}
         onContextMenu={(e) => {
           e.stopPropagation();
-          if (className === 'carouselPopup') {
+          if (className === 'onContextMenu') {
             handlePopper();
           }
         }}

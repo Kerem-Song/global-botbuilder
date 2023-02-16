@@ -118,7 +118,7 @@ export const SoratbleCarouselCtrlContainer = ({
           <SoratbleGrid columns={5}>
             {carouselNode?.map((item, i: number) => (
               <Popper
-                className="carouselPopup"
+                className="onContextMenu"
                 placement="right"
                 offset={[0, -100]}
                 popup
