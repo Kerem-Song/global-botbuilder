@@ -19,6 +19,7 @@ export interface ISaveEntryGroup {
   sessionToken?: string;
   name: string;
   isRegex: boolean;
+  entryGroupType?: number;
   entries: IEntriesModel[];
   entryGroupid?: string;
 }

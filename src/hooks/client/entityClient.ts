@@ -91,7 +91,7 @@ export const useEntityClient = () => {
 
   const getEntryDetailQuery = (entryId?: string) => {
     if (entryId) {
-      return useQuery<IHasResult<IResponseSaveEntryGroup>>(
+      return useQuery<IResponseSaveEntryGroup>(
         ['entry-detail', entryId],
         () =>
           http
@@ -103,7 +103,7 @@ export const useEntityClient = () => {
                 isSys: false,
               },
             )
-            .then((res) => res.data),
+            .then((res) => res.data.result),
         { refetchOnWindowFocus: false, refetchOnMount: true },
       );
     }
