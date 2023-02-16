@@ -25,8 +25,8 @@ export interface BotBuilderMaker {
   invalidateNodes: Record<string, boolean>;
   carouselIndex: Record<string, number>;
 
-  token?: string;
-  botInfo?: IBotModel;
+  // token?: string;
+  // botInfo?: IBotModel;
 }
 
 const initialState: BotBuilderMaker = {
@@ -58,17 +58,17 @@ export const botbuilderSlice = createSlice({
       state.invalidateNodes = {};
       state.carouselIndex = {};
     },
-    setSesstionToken: (state, action: PayloadAction<string | undefined>) => {
-      state.token = action.payload;
-      state.selectedScenario = undefined;
-      state.selected = undefined;
-      state.isEditDrawerOpen = false;
-      state.invalidateNodes = {};
-      state.carouselIndex = {};
-    },
-    setBotInfo: (state, action: PayloadAction<IBotModel | undefined>) => {
-      state.botInfo = action.payload;
-    },
+    // setSesstionToken: (state, action: PayloadAction<string | undefined>) => {
+    //   state.token = action.payload;
+    //   state.selectedScenario = undefined;
+    //   state.selected = undefined;
+    //   state.isEditDrawerOpen = false;
+    //   state.invalidateNodes = {};
+    //   state.carouselIndex = {};
+    // },
+    // setBotInfo: (state, action: PayloadAction<IBotModel | undefined>) => {
+    //   state.botInfo = action.payload;
+    // },
     zoomIn: (state) => {
       const scale = Math.min(state.scale + 0.25, transformOptions.maxScale);
       state.scale = scale;
@@ -126,8 +126,8 @@ export const {
   setSelected,
   setEditDrawerToggle,
   setGuideStartNode,
-  setSesstionToken,
-  setBotInfo,
+  //setSesstionToken,
+  //setBotInfo,
   setInvalidateNode,
   setCarouselIndex,
 } = botbuilderSlice.actions;

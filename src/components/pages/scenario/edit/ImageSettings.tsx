@@ -23,7 +23,7 @@ export const ImageSettings = ({
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   console.log('image ctrl', imageCtrl);
   const handleImageCtrlIdPath = () => {

@@ -12,7 +12,7 @@ export const VariablesManagement = () => {
   const { getVariableListQuery, variableDeleteMutate } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
   const { confirm } = useSystemModal();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const openDeleteVariableModal = async (parameterId: string) => {
     const result = await confirm({
@@ -29,7 +29,7 @@ export const VariablesManagement = () => {
 
     if (result) {
       const deleteVariable: IDeleteParameter = {
-        sessionToken: token,
+        sessionToken: token!,
         parameterId: parameterId,
       };
       variableDeleteMutate.mutate(deleteVariable, {

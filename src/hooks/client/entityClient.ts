@@ -1,5 +1,4 @@
 import { useHttp, useRootState } from '@hooks';
-import { HttpContext } from '@hooks/providers/HttpProvider';
 import {
   IDeleteEntryGroup,
   IGetEntryGroup,
@@ -21,7 +20,7 @@ import { AxiosResponse } from 'axios';
 export const useEntityClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const getEntityListQuery = (pageNo: number) => {
     return http
@@ -92,7 +91,7 @@ export const useEntityClient = () => {
 
   const getEntryDetailQuery = (entryId?: string) => {
     if (entryId) {
-      return useQuery<IHasResult<IResponseSaveEntryGroup>>(
+      return useQuery<IResponseSaveEntryGroup>(
         ['entry-detail', entryId],
         () =>
           http
@@ -104,7 +103,7 @@ export const useEntityClient = () => {
                 isSys: false,
               },
             )
-            .then((res) => res.data),
+            .then((res) => res.data.result),
         { refetchOnWindowFocus: false, refetchOnMount: true },
       );
     }

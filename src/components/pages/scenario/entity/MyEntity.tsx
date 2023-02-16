@@ -15,7 +15,7 @@ export const MyEntity = () => {
   const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
   const { data: initialData, fetchNextPage } = changePageNumberQuery;
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
 
@@ -46,8 +46,8 @@ export const MyEntity = () => {
   };
 
   const handleEntryDetail = (id: string) => {
-    handleIsOpen(true);
     setEntryId(id);
+    handleIsOpen(true);
   };
 
   useEffect(() => {
@@ -58,10 +58,6 @@ export const MyEntity = () => {
       fetchNextPage();
     }
   }, [inView]);
-
-  useEffect(() => {
-    setEntryId(entryId);
-  }, [entryId]);
 
   return (
     <>
@@ -107,12 +103,14 @@ export const MyEntity = () => {
             });
           })}
         </Row>
-        <EntityDetailPopup
-          isOpen={isOpen}
-          handleIsOpen={handleIsOpen}
-          entryId={entryId}
-          setEntryId={setEntryId}
-        />
+        {isOpen && (
+          <EntityDetailPopup
+            isOpen={isOpen}
+            handleIsOpen={handleIsOpen}
+            entryId={entryId}
+            setEntryId={setEntryId}
+          />
+        )}
       </div>
     </>
   );

@@ -21,7 +21,7 @@ export const useScenarioClient = () => {
   const http = useHttp();
   const { botId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -66,7 +66,7 @@ export const useScenarioClient = () => {
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
             return [...basicScenarios, ...restScenarios];
           }),
-      { refetchOnWindowFocus: false, refetchOnMount: true },
+      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
     );
   };
 
@@ -96,7 +96,7 @@ export const useScenarioClient = () => {
           return res.data.result;
         }
       },
-      { refetchOnWindowFocus: false, refetchOnMount: true },
+      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
     );
   };
 

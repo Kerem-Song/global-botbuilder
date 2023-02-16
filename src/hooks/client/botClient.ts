@@ -1,6 +1,8 @@
 import { IGetBotReq, IHasResult, IHasResults, ISearchBotReq } from '@models';
+import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
 import { IBotInput, IBotModel } from 'src/models/interfaces/IBotModel';
 
 import useHttp from '../useHttp';
@@ -8,6 +10,7 @@ import useHttp from '../useHttp';
 export const useBotClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
+  const dispatch = useDispatch();
 
   const getBotListQuery = () => {
     return useQuery<IBotModel[]>(
@@ -34,7 +37,10 @@ export const useBotClient = () => {
           .post<IGetBotReq, AxiosResponse<IHasResult<IBotModel>>>('/bot/getbotinfo', {
             botId,
           })
-          .then((res) => res.data.result),
+          .then((res) => {
+            dispatch(setBotInfo(res.data.result));
+            return res.data.result;
+          }),
       { refetchOnWindowFocus: false, refetchOnMount: false },
     );
   };

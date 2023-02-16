@@ -40,6 +40,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       case 'Enter':
         onPressEnter?.(value);
         onSearch?.(value);
+        if (onPressEnter || onSearch) {
+          e.preventDefault();
+        }
         break;
       case 'Escape':
         onPressEsc?.();

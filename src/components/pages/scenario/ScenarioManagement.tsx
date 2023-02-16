@@ -14,7 +14,7 @@ export const ScenarioManagement: FC<{
   const dispatch = useDispatch();
   const [isActivated, setIsActivated] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState<string>();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
 
   const basicScenarioList = useRootState(

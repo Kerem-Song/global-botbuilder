@@ -15,7 +15,7 @@ import {
 export const useVariableClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   const getVariableListQuery = () => {
     return useQuery<IHasResults<IVariableList>>(

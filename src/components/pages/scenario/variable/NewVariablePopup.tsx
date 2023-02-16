@@ -19,7 +19,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
   const { variableMutate } = useVariableClient();
   const { t, tc } = usePage();
 
-  const token = useRootState((state) => state.botBuilderReducer.token);
+  const token = useRootState((state) => state.botInfoReducer.token);
   const { reset, register, handleSubmit } = useForm<ISaveParameterData>({
     defaultValues: {},
   });
