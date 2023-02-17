@@ -663,7 +663,6 @@ export const nodeHelper = {
       startNode.nodeKind === NodeKind.InputNode
     ) {
       const count = nodeHelper.checkParent(2, startNode.id, nodes);
-      console.log(count);
       if (count > 3) {
         return '연속응답 노드는 3개까지만 가능합니다.';
       }
@@ -675,7 +674,6 @@ export const nodeHelper = {
     const parents = nodes.filter((x) => x.nextNodeId === nodeId);
     if (parents.length > 0) {
       const parentDepths = parents.map((p) => {
-        console.log('parent', p);
         if (p.nodeKind !== NodeKind.InputNode) {
           return depth;
         }
