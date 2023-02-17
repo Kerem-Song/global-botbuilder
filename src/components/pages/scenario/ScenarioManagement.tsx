@@ -28,9 +28,25 @@ export const ScenarioManagement: FC<{
 
   const handleNewScenario = async () => {
     if (token) {
+      const regex = new RegExp('^scenario');
+      const filtered = scenarios?.filter((x) => regex.test(x.alias.replace(/\s/g, '')));
+      let index = 1;
+      if (filtered) {
+        const regex = /[^0-9]/g;
+        const results = filtered.map((x) => Number(x.alias.replace(regex, '')));
+        const max = Math.max(...results);
+        for (let i = 1; i <= max + 1; i++) {
+          if (!results.includes(i)) {
+            index = i;
+            break;
+          }
+        }
+        console.log(index);
+      }
+
       await scenarioCreateAsync({
         token,
-        scenarioName: `scenario ${(scenarios?.length || 0) + 1}`,
+        scenarioName: `scenario ${index}`,
       });
     }
   };
