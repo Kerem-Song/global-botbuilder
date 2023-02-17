@@ -28,8 +28,8 @@ export const ScenarioManagement: FC<{
 
   const handleNewScenario = async () => {
     if (token) {
-      const regex = new RegExp('^scenario');
-      const filtered = scenarios?.filter((x) => regex.test(x.alias.replace(/\s/g, '')));
+      const regex = new RegExp('^scenario [0-9]*$');
+      const filtered = scenarios?.filter((x) => regex.test(x.alias));
       let index = 1;
       if (filtered) {
         const regex = /[^0-9]/g;
@@ -41,7 +41,6 @@ export const ScenarioManagement: FC<{
             break;
           }
         }
-        console.log(index);
       }
 
       await scenarioCreateAsync({
