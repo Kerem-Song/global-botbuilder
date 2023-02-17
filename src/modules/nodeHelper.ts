@@ -20,8 +20,10 @@ import {
   IBasicCardView,
   IConditionNode,
   IConditionView,
+  ICtrlBase,
   IHasButtonCarouselViewBase,
   IHasButtonViewBase,
+  IHasChildrenView,
   IListCardCarouselView,
   IListCardView,
   INodeBase,
@@ -33,6 +35,7 @@ import {
   IRetryConditionView,
   ITextView,
   ITrueFalseViewBase,
+  IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
@@ -683,5 +686,85 @@ export const nodeHelper = {
     }
 
     return depth;
+  },
+  cloneNode: (node: INode) => {
+    const { view, ...restProps } = node;
+    const clone: INode = {
+      ...restProps,
+      id: ID_GEN.generate(ID_TYPES.NODE),
+    };
+
+    if (view) {
+      if (Object.keys(view).includes('childrenViews')) {
+        clone.view = nodeHelper.cloneHasChildrenView(view as IHasChildrenView);
+      } else {
+        clone.view = nodeHelper.cloneView(view);
+      }
+    }
+
+    return clone;
+  },
+  cloneHasChildrenView: (view: IHasChildrenView) => {
+    const { childrenViews, ...restProps } = view;
+    const cloneChildrenViews = childrenViews.map((x) => x);
+
+    return {
+      ...JSON.parse(JSON.stringify(restProps)),
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      childrenViews: cloneChildrenViews,
+    };
+  },
+  cloneView: (view: IViewBase) => {
+    const ctrls = nodeHelper.filterCtrl(view);
+    const clone = {
+      ...JSON.parse(JSON.stringify(view)),
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+    };
+
+    ctrls.map(([key, value]) => {
+      clone[key] = nodeHelper.cloneCtrl(value);
+    });
+
+    return clone;
+  },
+  filterCtrl: (obj: object) => {
+    const ctrlTypeNames = Object.values(CTRL_TYPES);
+    const ctrls = Object.entries(obj).filter(([key, value]) => {
+      if (!value) {
+        return false;
+      }
+      if (typeof value === 'object') {
+        const controls = Object.entries(value).filter(([key, value]) => {
+          if (
+            key === 'typeName' &&
+            typeof value === 'string' &&
+            ctrlTypeNames.includes(value)
+          ) {
+            return true;
+          }
+          return false;
+        });
+
+        if (controls.length > 0) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+    return ctrls;
+  },
+  cloneCtrl: (ctrl: ICtrlBase) => {
+    const ctrls = nodeHelper.filterCtrl(ctrl);
+    const clone = {
+      ...JSON.parse(JSON.stringify(ctrl)),
+      id: ID_GEN.generate(ID_TYPES.CTRL),
+    };
+
+    ctrls.map(([key, value]) => {
+      clone[key] = nodeHelper.cloneCtrl(value);
+    });
+
+    return clone;
   },
 };

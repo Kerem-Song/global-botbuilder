@@ -1,10 +1,24 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { useRootState, useScenarioClient } from '@hooks';
-import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
+import {
+  basicCardNodeEditSchema,
+  conditionNodeEditSchema,
+  getNodeKind,
+  INode,
+  listCardNodeEditSchema,
+  NODE_TYPES,
+  parameterSetNodeEditSchema,
+  productCardNodeEditSchema,
+  textNodeEditSchema,
+  TNodeTypes,
+} from '@models';
+import { lunaToast } from '@modules/lunaToast';
+import { setInvalidateNode } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
 
 import { ID_GEN, ID_TYPES } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
@@ -54,19 +68,81 @@ const buttonNodes = [
   },
 ];
 
+const schema = yup
+  .object({
+    title: yup.string().required('말풍선 명은 필수입니다.'),
+    view: yup
+      .object()
+      .when('type', {
+        is: NODE_TYPES.TEXT_NODE,
+        then: textNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.BASIC_CARD_NODE,
+        then: basicCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.LIST_CARD_NODE,
+        then: listCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.PRODUCT_CARD_NODE,
+        then: productCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+        then: basicCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
+        then: listCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+        then: productCardNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.CONDITION_NODE,
+        then: conditionNodeEditSchema,
+      })
+      .when('type', {
+        is: NODE_TYPES.PARAMETER_SET_NODE,
+        then: parameterSetNodeEditSchema,
+      }),
+  })
+  .required();
+
 export const BotBuilderHeader = () => {
-  const cardNum = useRootState(
-    (state) => state.makingNodeSliceReducer.present.nodes,
-  ).length;
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
 
+  const cardNum = nodes.length;
+
   const dispatch = useDispatch();
   const { scenarioSaveAsync } = useScenarioClient();
 
-  const handleScenarioSave = () => {
+  const handleScenarioSave = async () => {
     if (selectedScenario) {
+      // const results = await Promise.all(
+      //   nodes.map(async (n) => {
+      //     try {
+      //       await schema.validate(n);
+      //       dispatch(setInvalidateNode({ id: n.id, isValid: true }));
+      //       return true;
+      //     } catch (e) {
+      //       dispatch(setInvalidateNode({ id: n.id, isValid: false }));
+      //       return false;
+      //     }
+      //   }),
+      // );
+
+      // if (results.includes(false)) {
+      //   lunaToast.error('저장에 실패하였습니다.');
+      //   return;
+      // }
+
       scenarioSaveAsync({ scenarioId: selectedScenario.id });
     }
   };

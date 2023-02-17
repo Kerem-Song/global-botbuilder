@@ -26,16 +26,16 @@ import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { setGuideStartNode } from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
+import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { IHasChildren } from 'src/models/interfaces/IHasChildren';
-import { IHasClassNameNStyle } from 'src/models/interfaces/IHasStyle';
 
 import { NODE_TYPES } from '../../../../models/interfaces/ICard';
+import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
+import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
-import { NODE_PREFIX } from '../../../../modules';
+import { NODE_PREFIX, nodeHelper } from '../../../../modules';
 import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
@@ -86,17 +86,18 @@ export const Node: FC<INodeProps> = ({
   const titleClass = classNames('luna-node-head');
   const bodyClass = classNames('luna-node-body');
 
-  const handleDuplicationCard = () => {
-    console.log('handle duplication');
+  const handleDuplicationCard = (node: INode) => {
+    const cloneNode = nodeHelper.cloneNode(node);
+    dispatch(appendNode(cloneNode));
   };
 
-  const handlePasteCard = () => {
+  const handlePasteCard = (node: INode) => {
     console.log('handle Paste');
   };
 
-  const handleDeleteCard = () => {
+  const handleDeleteCard = (node: INode) => {
     console.log('handle delete card');
-    dispatch(removeItem(id));
+    dispatch(removeItem(node.id));
   };
 
   const handleChangeCarouselOrder = () => {
@@ -121,7 +122,7 @@ export const Node: FC<INodeProps> = ({
     }
   };
 
-  const nodeMenu: IPopperItem<{ action: () => void }>[] = [
+  const nodeMenu: IPopperItem<{ action: (node: INode) => void }>[] = [
     {
       id: 'duplication',
       name: 'Duplication',
@@ -266,7 +267,7 @@ export const Node: FC<INodeProps> = ({
             popupList
             popperItems={popperMenu()}
             onChange={(m) => {
-              m.data?.action?.();
+              m.data?.action?.(node);
             }}
           >
             <Button shape="ghost" small>
