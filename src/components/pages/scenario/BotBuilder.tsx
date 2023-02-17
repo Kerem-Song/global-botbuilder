@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
-import { ID_GEN, NODE_PREFIX } from '../../../modules';
+import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
@@ -163,14 +163,21 @@ export const Botbuilder = () => {
     if (x === item.x && y === item.y) {
       return;
     }
-    const node = {
-      ...item,
-      x,
-      y,
-    };
-    dispatch(updateNode(node));
 
-    dirtySelect = node.id;
+    const distance = Math.sqrt(Math.pow(x - item.x, 2) + Math.pow(y - item.y, 2));
+
+    if (distance > NODE_DRAG_FACTOR) {
+      const node = {
+        ...item,
+        x,
+        y,
+      };
+      dispatch(updateNode(node));
+
+      dirtySelect = node.id;
+    } else {
+      dispatch(setSelected(item.id));
+    }
   };
 
   return (
