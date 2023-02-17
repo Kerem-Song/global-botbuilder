@@ -635,8 +635,9 @@ export const nodeHelper = {
     });
   },
   validateArrows: (startId: string, endId: string, nodes: INode[], isNext?: boolean) => {
+    // 자기 자신으로 연결한 경우
     if (startId === endId) {
-      return false;
+      return '자기 자신을 연결했음.';
     }
 
     const startNode = nodes.find((x) => x.id === startId.substring(5));
@@ -644,14 +645,19 @@ export const nodeHelper = {
 
     // 노드가 없는경우
     if (!startNode || !endNode) {
-      return false;
+      return '노드가 존재하지 않음.';
     }
 
     // Answer노드 앞에 응답이 없는경우
     if (isNext && endNode.type === NODE_TYPES.ANSWER_NODE) {
-      return false;
+      return 'Answer노드는 다음노드로 지정할 수 없음';
     }
 
-    return true;
+    // 연속 노드에 다른 시나리오로 연결 했을 경우
+    if (!isNext && endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
+      return '연속노드로 다른시나리오로 연결할 수 없음';
+    }
+
+    return undefined;
   },
 };

@@ -1,6 +1,7 @@
 import { IArrow, INode } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { INodeBase } from '@models/interfaces/res/IGetFlowRes';
+import { lunaToast } from '@modules/lunaToast';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { NODE_PREFIX } from '../modules';
@@ -70,17 +71,14 @@ export const makingNodeSlice = createSlice({
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
 
-      if (
-        !nodeHelper.validateArrows(
-          arrow.updateKey || arrow.start,
-          arrow.end,
-          state.nodes,
-          arrow.isNextNode,
-        )
-      ) {
-        return;
-      }
-      if (arrow.start === arrow.end) {
+      const errorMessage = nodeHelper.validateArrows(
+        arrow.updateKey || arrow.start,
+        arrow.end,
+        state.nodes,
+        arrow.isNextNode,
+      );
+      if (errorMessage) {
+        lunaToast.error(errorMessage);
         return;
       }
 
