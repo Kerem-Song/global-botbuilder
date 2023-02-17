@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { CarouselButtonsEdit } from './CarouselButtonsEdit';
 import { ImageSettings } from './ImageSettings';
 
 export const BasicCardCarousleNodeEdit = () => {
@@ -33,7 +34,8 @@ export const BasicCardCarousleNodeEdit = () => {
   useEffect(() => {
     console.log('basic card caro index', index);
   }, [index]);
-
+  // console.log('errors in basic caro edit@@', errors);
+  // console.log('values in basic caro edit@@', values);
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
@@ -85,7 +87,9 @@ export const BasicCardCarousleNodeEdit = () => {
           <Collapse label={'버튼'} useSwitch={false}>
             {values.view &&
               values.view.childrenViews &&
-              values.view.childrenViews[index]?.buttons && <ButtonsEdit />}
+              values.view.childrenViews[index]?.buttons && (
+                <CarouselButtonsEdit index={index} />
+              )}
           </Collapse>
         </>
       )}

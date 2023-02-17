@@ -146,3 +146,13 @@ export const parameterSetNodeEditSchema = yup.object().shape({
     }),
   ),
 });
+
+export const basicCardCarouselNodeEditSchema = yup.object().shape({
+  childrenViews: yup.array().of(basicCardNodeEditSchema),
+});
+export const listCardCarouselNodeEditSchema = yup.object().shape({
+  childrenViews: yup.array().of(listCardNodeEditSchema),
+});
+export const productCardCarouselNodeEditSchema = yup.object().shape({
+  childrenViews: yup.array().of(productCardNodeEditSchema),
+});

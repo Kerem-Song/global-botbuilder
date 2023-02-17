@@ -9,6 +9,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { CarouselButtonsEdit } from './CarouselButtonsEdit';
 import { ImageSettings } from './ImageSettings';
 
 const currencyOptions = [
@@ -222,7 +223,9 @@ export const ProductCardCarouselNodeEdit = () => {
             </div>
           </div>
           <Collapse label={'버튼'} useSwitch={false}>
-            {values.view && values.view.childrenViews[index].buttons && <ButtonsEdit />}
+            {values.view && values.view.childrenViews[index].buttons && (
+              <CarouselButtonsEdit index={index} />
+            )}
           </Collapse>
         </>
       )}

@@ -3,11 +3,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
 import { INode, NODE_TYPES } from '@models';
 import {
+  basicCardCarouselNodeEditSchema,
   basicCardNodeEditSchema,
   conditionNodeEditSchema,
   INodeEditModel,
+  listCardCarouselNodeEditSchema,
   listCardNodeEditSchema,
   parameterSetNodeEditSchema,
+  productCardCarouselNodeEditSchema,
   productCardNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
@@ -43,44 +46,45 @@ export const NodeEditDrawer = () => {
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = Object.values(carouselIndexObj)[0];
+
   const schema = yup
     .object({
       title: yup.string().required('말풍선 명은 필수입니다.'),
       view: yup
         .object()
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.TEXT_NODE,
           then: textNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.BASIC_CARD_NODE,
           then: basicCardNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.LIST_CARD_NODE,
           then: listCardNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.PRODUCT_CARD_NODE,
           then: productCardNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-          then: basicCardNodeEditSchema,
+          then: basicCardCarouselNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-          then: listCardNodeEditSchema,
+          then: listCardCarouselNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-          then: productCardNodeEditSchema,
+          then: productCardCarouselNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.CONDITION_NODE,
           then: conditionNodeEditSchema,
         })
-        .when('nodeType', {
+        .when('type', {
           is: NODE_TYPES.PARAMETER_SET_NODE,
           then: parameterSetNodeEditSchema,
         }),
@@ -196,6 +200,7 @@ export const NodeEditDrawer = () => {
   };
 
   console.log('errors in edit drawer', errors);
+  // console.log('get values', getValues());
   return (
     <Drawer
       className="botBuilderDrawer"

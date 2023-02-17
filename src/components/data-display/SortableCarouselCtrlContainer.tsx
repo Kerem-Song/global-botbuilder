@@ -22,7 +22,7 @@ import {
   IListCardView,
   IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { ID_GEN, ID_TYPES, nodeHelper } from '@modules';
 import { useEffect, useRef, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
@@ -68,7 +68,10 @@ export const SoratbleCarouselCtrlContainer = ({
     console.log('duplicate');
     const target = node.find((item) => item.id === id);
     console.log('target', target);
-    const duplication = { ...target, id: ID_GEN.generate(ID_TYPES.VIEW) };
+    if (target) {
+      const test = nodeHelper.cloneView(target);
+      console.log('test', test);
+    }
     // setCarouselNode([...carouselNode]);
   };
 

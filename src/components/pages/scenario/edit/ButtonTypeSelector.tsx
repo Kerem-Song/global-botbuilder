@@ -78,16 +78,22 @@ interface IButtonTypeSelector {
   index: number;
   options: IReactSelect[];
   setButtonType: Dispatch<SetStateAction<string | undefined>>;
+  isCarousel: boolean;
+  carouselIndex?: number;
 }
 
 export const ButtonTypeSelector = ({
   index,
   options,
   setButtonType,
+  isCarousel,
+  carouselIndex,
 }: IButtonTypeSelector) => {
   const { control } = useFormContext();
   const { field } = useController({
-    name: `view.buttons.${index}.actionType`,
+    name: isCarousel
+      ? `view.childrenViews.${carouselIndex}.buttons.${index}.actionType`
+      : `view.buttons.${index}.actionType`,
     control,
   });
 
