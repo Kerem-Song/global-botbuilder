@@ -117,7 +117,7 @@ export const ImageSettings = ({
             type="radio"
             value={ImageAspectRatio.Rectangle}
             checked={
-              Number(handleImageCtrlIdPath().imageCtrl.aspectRatio) ===
+              Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Rectangle
             }
             onClick={() => setImageRatio(ImageAspectRatio.Rectangle)}
@@ -133,7 +133,7 @@ export const ImageSettings = ({
             type="radio"
             value={ImageAspectRatio.Square}
             checked={
-              Number(handleImageCtrlIdPath().imageCtrl.aspectRatio) ===
+              Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Square
             }
             onClick={() => setImageRatio(ImageAspectRatio.Square)}
@@ -164,8 +164,11 @@ export const ImageSettings = ({
               transform: 'translate(50%, 50%)',
             }}
           >
-            {handleImageCtrlIdPath().imageCtrl.imageUrl ? (
-              <img src={handleImageCtrlIdPath().imageCtrl.imageUrl} alt="templateImage" />
+            {handleImageCtrlIdPath().imageCtrl?.imageUrl ? (
+              <img
+                src={handleImageCtrlIdPath().imageCtrl?.imageUrl}
+                alt="templateImage"
+              />
             ) : (
               <>
                 <img src={icImg} alt="icImg" />

@@ -23,7 +23,11 @@
     "ACTIVE_SCENARIOS_SWITCH": "Only active scenarios",
     "DEFAULT_SCENARIO": "Default scenarios",
     "ADD_A_NEW_SCENARIO_BTN": "New Scenario",
-    "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "Input Scenario Name"
+    "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "Input Scenario Name",
+    "ADD_A_NEW_BUTTON": "Add a Button",
+    "DELETE_BUTTON": "Delete Button",
+    "BUTTON_TYPE": "Button Type",
+    "BUTTON_NAME": "Button Name"
   },
   "test": {
     "TITLE": "test page"
