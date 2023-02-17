@@ -19,7 +19,11 @@
     "ADD_CAHTBUBBLE_BTN": "Chatbubble",
     "CONFIRM_CAROUSEL_POPUP": "Confirm",
     "CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_TITLE": "Saving",
-    "CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_DESCRIPTION": "not saved"
+    "CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_DESCRIPTION": "not saved",
+    "ACTIVE_SCENARIOS_SWITCH": "Only active scenarios",
+    "DEFAULT_SCENARIO": "Default scenarios",
+    "ADD_A_NEW_SCENARIO_BTN": "New Scenario",
+    "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "Input Scenario Name"
   },
   "test": {
     "TITLE": "test page"

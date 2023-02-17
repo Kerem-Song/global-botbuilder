@@ -83,18 +83,21 @@
       }
 
       .basicScenarioList {
-        margin: 0 rem(12);
-        margin-bottom: rem(18);
-        border: 1px solid $gray200;
-        border-radius: rem(8);
-        background-color: $grayWhite;
+        display: flex;
+        flex-direction: column;
+        gap: rem(4);
+
         .basicScenario {
+          margin: 0 rem(12);
           cursor: pointer;
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: rem(12);
           height: rem(40);
+          border: 1px solid $gray200;
+          border-radius: rem(8);
+          background-color: $grayWhite;
         }
       }
     }

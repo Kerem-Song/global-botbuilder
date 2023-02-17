@@ -1,6 +1,6 @@
-import { Button, Input, Space, Switch } from '@components';
+import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import { FC, useState } from 'react';
@@ -11,6 +11,7 @@ import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];
 }> = ({ scenarios }) => {
+  const { t } = usePage();
   const dispatch = useDispatch();
   const [isActivated, setIsActivated] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState<string>();
@@ -37,12 +38,12 @@ export const ScenarioManagement: FC<{
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">
-        <p>활성 시나리오만 보기</p>
+        <p>{t(`ACTIVE_SCENARIOS_SWITCH`)}</p>
         <Switch onChange={handleSwitch} />
       </div>
 
       <div className="basicScenarioWrapper">
-        <p>기본 제공 시나리오</p>
+        <p>{t(`DEFAULT_SCENARIO`)}</p>
         <div className="basicScenarioList">
           {basicScenarioList &&
             basicScenarioList.map((item, i) => {
@@ -60,11 +61,12 @@ export const ScenarioManagement: FC<{
               );
             })}
         </div>
+        <Divider style={{ margin: '16px 0' }} />
       </div>
 
       <div className="newScenarioBtn">
         <Button block type="primary" onClick={handleNewScenario}>
-          + 새 시나리오
+          + {t(`ADD_A_NEW_SCENARIO_BTN`)}
         </Button>
       </div>
 
@@ -86,7 +88,7 @@ export const ScenarioManagement: FC<{
       </div>
       <div className="search">
         <Input
-          placeholder="시나리오명을 입력해주세요. "
+          placeholder={t(`SEARCH_SCEANRIO_INPUT_PLACEHOLDER`)}
           search
           value={searchKeyword}
           onSearch={setSearchKeyword}
