@@ -706,20 +706,38 @@ export const nodeHelper = {
   },
   cloneHasChildrenView: (view: IHasChildrenView) => {
     const { childrenViews, ...restProps } = view;
-    const cloneChildrenViews = childrenViews.map((x) => x);
+    const cloneChildrenViews = childrenViews.map((x) => nodeHelper.cloneView(x));
 
     return {
-      ...JSON.parse(JSON.stringify(restProps)),
+      ...nodeHelper.cloneObject(restProps),
       id: ID_GEN.generate(ID_TYPES.VIEW),
       childrenViews: cloneChildrenViews,
     };
   },
   cloneView: (view: IViewBase) => {
-    const ctrls = nodeHelper.filterCtrl(view);
     const clone = {
-      ...JSON.parse(JSON.stringify(view)),
+      ...nodeHelper.cloneObject(view),
       id: ID_GEN.generate(ID_TYPES.VIEW),
     };
+
+    return clone;
+  },
+  cloneObject: (obj: object) => {
+    const arrays = nodeHelper.filterArray(obj);
+    const ctrls = nodeHelper.filterCtrl(obj);
+    const clone = {
+      ...JSON.parse(JSON.stringify(obj)),
+    };
+    arrays.map(([key, value]) => {
+      const cloneArray = value.map((v: object) => {
+        if (nodeHelper.isCtrlObject(v)) {
+          return nodeHelper.cloneCtrl(v as ICtrlBase);
+        }
+        return nodeHelper.cloneObject(v);
+      });
+
+      clone[key] = cloneArray;
+    });
 
     ctrls.map(([key, value]) => {
       clone[key] = nodeHelper.cloneCtrl(value);
@@ -727,27 +745,45 @@ export const nodeHelper = {
 
     return clone;
   },
-  filterCtrl: (obj: object) => {
+  filterArray: (obj: object) => {
+    const arrays = Object.entries(obj).filter(([key, value]) => {
+      if (!value) {
+        return false;
+      }
+
+      if (Array.isArray(value)) {
+        return true;
+      }
+      return false;
+    });
+    return arrays;
+  },
+  isCtrlObject: (obj: object) => {
     const ctrlTypeNames = Object.values(CTRL_TYPES);
+    const controls = Object.entries(obj).filter(([key, value]) => {
+      if (
+        key === 'typeName' &&
+        typeof value === 'string' &&
+        ctrlTypeNames.includes(value)
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    if (controls.length > 0) {
+      return true;
+    }
+
+    return false;
+  },
+  filterCtrl: (obj: object) => {
     const ctrls = Object.entries(obj).filter(([key, value]) => {
       if (!value) {
         return false;
       }
       if (typeof value === 'object') {
-        const controls = Object.entries(value).filter(([key, value]) => {
-          if (
-            key === 'typeName' &&
-            typeof value === 'string' &&
-            ctrlTypeNames.includes(value)
-          ) {
-            return true;
-          }
-          return false;
-        });
-
-        if (controls.length > 0) {
-          return true;
-        }
+        return nodeHelper.isCtrlObject(value);
       }
 
       return false;
@@ -757,7 +793,7 @@ export const nodeHelper = {
   cloneCtrl: (ctrl: ICtrlBase) => {
     const ctrls = nodeHelper.filterCtrl(ctrl);
     const clone = {
-      ...JSON.parse(JSON.stringify(ctrl)),
+      ...nodeHelper.cloneObject(ctrl),
       id: ID_GEN.generate(ID_TYPES.CTRL),
     };
 
