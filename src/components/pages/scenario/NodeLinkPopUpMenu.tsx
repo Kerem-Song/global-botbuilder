@@ -4,7 +4,14 @@ import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { getNodeKind, INode, NODE_TYPES, TCardsValues, TNodeTypes } from '@models';
+import {
+  getNodeKind,
+  INode,
+  NODE_TYPES,
+  NodeKind,
+  TCardsValues,
+  TNodeTypes,
+} from '@models';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { addArrow, appendNode } from '@store/makingNode';
 import classNames from 'classnames';
@@ -26,41 +33,77 @@ interface INodeLinkPopUpMenuProps {
 }
 
 const cardTypeValue = [
-  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
+  {
+    className: 'icText',
+    value: NODE_TYPES.TEXT_NODE,
+    nodeName: 'Text',
+    nodeKind: NodeKind.InputNode,
+  },
   {
     className: 'icBtnTemple',
     value: NODE_TYPES.BASIC_CARD_NODE,
     nodeName: 'Button Template',
+    nodeKind: NodeKind.InputNode,
   },
-  { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: 'List' },
-  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },
+  {
+    className: 'icList',
+    value: NODE_TYPES.LIST_CARD_NODE,
+    nodeName: 'List',
+    nodeKind: NodeKind.InputNode,
+  },
+  {
+    className: 'icCommerce',
+    value: NODE_TYPES.PRODUCT_CARD_NODE,
+    nodeName: 'Commerce',
+    nodeKind: NodeKind.InputNode,
+  },
   {
     className: 'icCaroImg',
     value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
     nodeName: 'Carousel',
+    nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroList',
     value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
     nodeName: 'List Carousel',
+    nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroCommerce',
     value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
     nodeName: 'Commerce Carousel',
+    nodeKind: NodeKind.InputNode,
   },
-  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
-  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
-  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: 'Count' },
+  {
+    className: 'icQuickBtn',
+    value: NODE_TYPES.ANSWER_NODE,
+    nodeName: 'Quick Button',
+    nodeKind: NodeKind.AnswerNode,
+  },
+  {
+    className: 'icCondition',
+    value: NODE_TYPES.CONDITION_NODE,
+    nodeName: 'Condition',
+    nodeKind: NodeKind.CommandNode,
+  },
+  {
+    className: 'icCount',
+    value: NODE_TYPES.RETRY_CONDITION_NODE,
+    nodeName: 'Count',
+    nodeKind: NodeKind.CommandNode,
+  },
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
     nodeName: 'Parameter Set',
+    nodeKind: NodeKind.CommandNode,
   },
   {
     className: 'icOtherFlowRedirect',
     value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
     nodeName: 'Other Flow Redirect',
+    nodeKind: NodeKind.CommandNode,
   },
 ];
 
@@ -69,9 +112,9 @@ export const NodeLinkPopUpMenu = ({
   handleIsOpen,
 }: INodeLinkPopUpMenuProps) => {
   const { botId } = useParams();
-  const [userInput, setUserInput] = useState<string | null>(null);
+  const [userInput, setUserInput] = useState<string>();
   const dispatch = useDispatch();
-  const [cardBtn, setCardBtn] = useState(cardTypeValue);
+  //const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const [scenarioList, setScenarioList] = useState<
     {
       id: string;
@@ -96,11 +139,11 @@ export const NodeLinkPopUpMenu = ({
     formState: { errors },
   } = useForm<INodeLinkPopUpFormValue>();
 
-  const onSubmit = () => {
-    if (!userInput) {
-      setCardBtn(cardTypeValue);
-    }
-  };
+  // const onSubmit = () => {
+  //   if (!userInput) {
+  //     setCardBtn(cardTypeValue);
+  //   }
+  // };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
@@ -136,21 +179,17 @@ export const NodeLinkPopUpMenu = ({
     handleIsOpen(false);
   };
 
-  const onSearch = (data: string) => {
-    const input = data.toLowerCase();
-
-    const filtered = cardTypeValue.filter((item) =>
-      item.value.toLowerCase().includes(input),
-    );
-    setCardBtn(filtered);
-    setUserInput(input);
-
-    if (!data) {
-      setCardBtn(cardTypeValue);
-    }
+  const onSearch = (data?: string) => {
+    setUserInput(data?.toLowerCase());
   };
 
-  const cardBtnResult = classNames('btnWrapper', { noResult: !cardBtn.length });
+  const filterdBtnList = cardTypeValue
+    .filter((b) => b.nodeKind !== NodeKind.CommandNode || guideStart?.isNext)
+    .filter((b) => (userInput ? b.nodeName.toLowerCase().includes(userInput) : true));
+
+  const cardBtnResult = classNames('btnWrapper', {
+    noResult: !filterdBtnList.length,
+  });
 
   useOutsideClick(nodeLinkPopUpMenuRef, () => {
     handleIsOpen(false);
@@ -229,19 +268,11 @@ export const NodeLinkPopUpMenu = ({
       role="presentation"
       onWheel={(e) => e.stopPropagation()}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="Input search text"
-          {...register('cardType')}
-          search
-          onSearch={(data) => onSearch(data as string)}
-          value={userInput || ''}
-        />
-      </form>
+      <Input placeholder="Input search text" search onSearch={(data) => onSearch(data)} />
 
       <div className={cardBtnResult}>
-        {cardBtn.length > 0 ? (
-          cardBtn.map((item, i) => (
+        {filterdBtnList.length > 0 ? (
+          filterdBtnList.map((item, i) => (
             <div key={i}>
               {item.value === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE && scenarioList ? (
                 <div>
