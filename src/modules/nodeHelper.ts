@@ -653,11 +653,37 @@ export const nodeHelper = {
       return 'Answer노드는 다음노드로 지정할 수 없음';
     }
 
-    // 연속 노드에 다른 시나리오로 연결 했을 경우
-    if (!isNext && endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
-      return '연속노드로 다른시나리오로 연결할 수 없음';
+    // 연속 노드에 응답이 아닌 노드 연결 할 경우
+    if (!isNext && endNode.nodeKind === NodeKind.CommandNode) {
+      return '연속노드로 응답노드만 연결 할 수 있습니다.';
+    }
+
+    if (
+      endNode.nodeKind === NodeKind.InputNode &&
+      startNode.nodeKind === NodeKind.InputNode
+    ) {
+      const count = nodeHelper.checkParent(2, startNode.id, nodes);
+      console.log(count);
+      if (count > 3) {
+        return '연속응답 노드는 3개까지만 가능합니다.';
+      }
     }
 
     return undefined;
+  },
+  checkParent: (depth: number, nodeId: string, nodes: INode[]): number => {
+    const parents = nodes.filter((x) => x.nextNodeId === nodeId);
+    if (parents.length > 0) {
+      const parentDepths = parents.map((p) => {
+        console.log('parent', p);
+        if (p.nodeKind !== NodeKind.InputNode) {
+          return depth;
+        }
+        return nodeHelper.checkParent(depth + 1, p.id, nodes);
+      });
+      return Math.max(...parentDepths);
+    }
+
+    return depth;
   },
 };
