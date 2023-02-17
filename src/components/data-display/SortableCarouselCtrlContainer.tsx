@@ -65,14 +65,12 @@ export const SoratbleCarouselCtrlContainer = ({
   };
 
   const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
-    console.log('duplicate');
     const target = node.find((item) => item.id === id);
-    console.log('target', target);
+
     if (target) {
-      const test = nodeHelper.cloneView(target);
-      console.log('test', test);
+      const duplicated = nodeHelper.cloneView(target);
+      setCarouselNode([...node, duplicated]);
     }
-    // setCarouselNode([...carouselNode]);
   };
 
   const handleDeleteCard = (id: string, node: IChildrenViewEnum) => {
