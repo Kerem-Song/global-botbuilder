@@ -1,7 +1,9 @@
 import { Col, Input } from '@components';
-import { IEntriesModel, ISaveEntryGroup } from '@models';
+import { IEntriesModel } from '@models';
 import { FC } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+
+import { AddEntryBtn } from './AddEntryBtn';
 
 export interface IEntityDetailItemProps {
   index: number;
@@ -29,22 +31,18 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({ index, entryGroup
           marginRight: '8px',
         }}
         {...field}
-      ></Input>
+      />
       <div className="entryList">
         <div className="entries">
-          {fields.map((entry, i) => (
-            <div key={i}>
+          {/* {fields.map((entry, i) => (
+            <div key={i} className="entry">
               <input
+                className="entryInput"
                 {...register(`entries.${index}.synonym.${i}`)}
-                style={{ width: 'fitContent' }}
               />
             </div>
-          ))}
-          <div className="addBtnWrapper">
-            <button type="button" className="addBtn" onClick={() => append('xxx')}>
-              <span>Add</span>
-            </button>
-          </div>
+          ))} */}
+          <AddEntryBtn entryGroup={entryGroup} />
         </div>
       </div>
       <button className="icDelete" />

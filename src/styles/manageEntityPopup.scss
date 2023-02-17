@@ -2,7 +2,7 @@
   width: rem(1080);
   height: rem(652);
   margin: auto;
-  margin-top: calc(100vh - rem(740));
+  margin-top: calc(100vh - rem(770));
   padding: 0;
   border-radius: rem(12);
   background-color: $grayWhite;
@@ -87,9 +87,34 @@
               align-items: center;
               .entries {
                 width: rem(744);
+                margin: rem(2) 0;
+                display: flex;
+                align-items: center;
                 flex-wrap: wrap;
+                .entry {
+                  margin: rem(3);
+                  padding: 4px 12px;
+                  width: fit-content;
+                  border: 1px solid #dcdcdc;
+                  height: rem(25);
+                  border-radius: rem(8);
+                  background-color: $primary150;
+                  white-space: nowrap;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  .entryDeleteBtn {
+                    margin-left: rem(7);
+                    width: rem(13);
+                    height: rem(13);
+                    border: none;
+                    background-color: transparent;
+                    img {
+                      width: 100%;
+                    }
+                  }
+                }
               }
-
               .addEntry {
                 margin-left: rem(4);
                 padding: 0 rem(4);
@@ -102,17 +127,29 @@
                 overflow: hidden;
                 white-space: nowrap;
               }
-              .addBtnWrapper {
-                position: relative;
-                margin-left: rem(8);
+              .visibleInput {
+                margin-left: rem(2);
                 display: flex;
                 justify-items: center;
                 align-items: center;
                 width: rem(63);
-                height: rem(24);
+                height: rem(25);
                 border: 1px solid $gray200;
                 border-radius: rem(99);
                 background-color: $grayWhite;
+              }
+              .addBtnWrapper {
+                position: relative;
+                margin-left: rem(2);
+                display: flex;
+                justify-items: center;
+                align-items: center;
+                width: rem(63);
+                height: rem(25);
+                border: 1px solid $gray200;
+                border-radius: rem(99);
+                background-color: $grayWhite;
+
                 .addBtn {
                   z-index: 100;
                   position: absolute;
