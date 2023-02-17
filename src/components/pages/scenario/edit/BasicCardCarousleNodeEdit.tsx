@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { CarouselButtonsEdit } from './CarouselButtonsEdit';
 import { ImageSettings } from './ImageSettings';
 
 export const BasicCardCarousleNodeEdit = () => {
@@ -87,9 +86,7 @@ export const BasicCardCarousleNodeEdit = () => {
           <Collapse label={'버튼'} useSwitch={false}>
             {values.view &&
               values.view.childrenViews &&
-              values.view.childrenViews[index]?.buttons && (
-                <CarouselButtonsEdit index={index} />
-              )}
+              values.view.childrenViews[index]?.buttons && <ButtonsEdit index={index} />}
           </Collapse>
         </>
       )}

@@ -45,7 +45,11 @@
     "ACTIVE_SCENARIOS_SWITCH": "활성 시나리오만 보기",
     "DEFAULT_SCENARIO": "기본 제공 시나리오",
     "ADD_A_NEW_SCENARIO_BTN": "새 시나리오",
-    "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "시나리오명을 입력해주세요."
+    "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "시나리오명을 입력해주세요.",
+    "ADD_A_NEW_BUTTON": "새 버튼",
+    "DELETE_BUTTON": "버튼 지우기",
+    "BUTTON_TYPE": "버튼타입",
+    "BUTTON_NAME": "버튼명"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",

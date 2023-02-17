@@ -303,7 +303,10 @@ export interface IProductCardCarouselView extends IHasButtonCarouselViewBase {
 export interface IHasButtonCarouselViewBase extends IViewBase {
   childrenViews: IHasButtonViewBase[];
 }
-
+export interface IButtonEditViewBase extends IViewBase {
+  childrenViews?: IHasButtonViewBase[];
+  buttons?: IButtonCtrl[];
+}
 export interface IProductCardCarouselNode extends INodeBase {
   view: IProductCardCarouselView;
 }
