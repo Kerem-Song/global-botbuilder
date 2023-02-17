@@ -17,10 +17,12 @@ import {
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import {
   IBasicCardView,
+  IChildrenViewEnum,
   IHasChildrenView,
   IListCardView,
   IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { ID_GEN, ID_TYPES } from '@modules';
 import { useEffect, useRef, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
@@ -29,8 +31,8 @@ import { SoratbleGrid } from './SortableGrid';
 interface ISortableContainer {
   nodeView: IHasChildrenView;
   nodeId: string;
-  carouselNode: (IBasicCardView | IListCardView | IProductCardView)[];
-  setCarouselNode: (node: (IBasicCardView | IListCardView | IProductCardView)[]) => void;
+  carouselNode: IChildrenViewEnum;
+  setCarouselNode: (node: IChildrenViewEnum) => void;
 }
 
 export const SoratbleCarouselCtrlContainer = ({
@@ -62,16 +64,15 @@ export const SoratbleCarouselCtrlContainer = ({
     }
   };
 
-  const handleDuplicationCard = (id: string) => {
+  const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
     console.log('duplicate');
-    // const copyRef = carouselNode.find((item) => item.id === rightClickViewId);
+    const target = node.find((item) => item.id === id);
+    console.log('target', target);
+    const duplication = { ...target, id: ID_GEN.generate(ID_TYPES.VIEW) };
     // setCarouselNode([...carouselNode]);
   };
 
-  const handleDeleteCard = (
-    id: string,
-    node: (IBasicCardView | IListCardView | IProductCardView)[],
-  ) => {
+  const handleDeleteCard = (id: string, node: IChildrenViewEnum) => {
     const target = node.findIndex((item) => item.id === id);
 
     if (target) {
@@ -80,10 +81,7 @@ export const SoratbleCarouselCtrlContainer = ({
   };
 
   const contextMenu: IPopperItem<{
-    action: (
-      id: string,
-      node: (IBasicCardView | IListCardView | IProductCardView)[],
-    ) => void;
+    action: (id: string, node: IChildrenViewEnum) => void;
   }>[] = [
     {
       id: 'duplicate-carousel',

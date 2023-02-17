@@ -5,13 +5,14 @@ import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> {
   id: string;
+  type: TNodeTypes;
   caption: string;
   title: string;
   view?: T;
 }
 export interface INodeEditModel {
   id: string;
-  nodeType: TNodeTypes;
+  type: TNodeTypes;
   caption: string;
   title: string;
   view?: IViewBase;

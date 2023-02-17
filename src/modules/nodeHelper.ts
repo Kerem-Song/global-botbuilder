@@ -405,7 +405,7 @@ export const nodeHelper = {
     return result;
   },
   editArrows: (node: INodeEditModel, arrows: IArrow[]): IArrow[] | undefined => {
-    if (!editableArrowNodeTypes.includes(node.nodeType)) {
+    if (!editableArrowNodeTypes.includes(node.type)) {
       return undefined;
     }
 
@@ -420,7 +420,7 @@ export const nodeHelper = {
       });
     }
 
-    switch (node.nodeType) {
+    switch (node.type) {
       case NODE_TYPES.ANSWER_NODE:
         arrows.push(
           ...nodeHelper.createAnswerNodeArrow(node.id, node.view as IAnswerView),

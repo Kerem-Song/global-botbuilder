@@ -125,7 +125,7 @@ export interface IHasUtteranceViewBase extends IViewBase {
 }
 
 export interface IHasChildrenView extends IViewBase {
-  childrenViews: (IBasicCardView | IListCardView | IProductCardView)[];
+  childrenViews: IChildrenViewEnum;
 }
 
 export interface IIntentNode extends INodeBase {
@@ -214,8 +214,9 @@ export interface IButtonCtrl extends ICtrlBase {
   seq: number;
 }
 
+export type IChildrenViewEnum = (IBasicCardView | IListCardView | IProductCardView)[];
 export interface ICarouselCtrl extends ICtrlBase {
-  childrenViews: (IBasicCardView | IListCardView | IProductCardView)[];
+  childrenViews: IChildrenViewEnum;
   typeName: TViewTypes;
 }
 

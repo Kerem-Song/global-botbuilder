@@ -28,6 +28,7 @@ export const CarouselOrderPopup: FC<{
   const { t } = usePage();
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
+
   useEffect(() => {
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
@@ -41,11 +42,12 @@ export const CarouselOrderPopup: FC<{
       if (checkSaving) {
         setCarouselNode(nodeView.childrenViews);
         handleIsOpen(false);
+      } else {
+        handleIsOpen(true);
       }
     } else {
       handleIsOpen(false);
     }
-    handleIsOpen(false);
   };
 
   const defaultView = (type: string) => {

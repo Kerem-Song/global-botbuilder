@@ -123,7 +123,7 @@ export const NodeEditDrawer = () => {
     if (selectedNode) {
       const model: INodeEditModel = {
         id: selectedNode.id,
-        nodeType: selectedNode.type,
+        type: selectedNode.type,
         caption: selectedNode.type,
         title: selectedNode.title || '',
         view: selectedNode.view,
