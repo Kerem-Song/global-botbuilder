@@ -18,7 +18,6 @@ export const LineContainer: FC = () => {
 
   useEffect(() => {
     updateLineAll();
-    console.log(lines);
   }, [lines]);
 
   const handleLineClick = useCallback((l: IArrow) => {

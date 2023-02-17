@@ -129,28 +129,18 @@ export const useElementHelper = (
 
     if (isNextNode) {
       if (startPoint.x + minLine > endPoint.x) {
-        const isDirectionUp = startPoint.y > endPoint.y;
-        let directionFactor = isDirectionUp ? -1 : 1;
+        const isDirectionUp = snr.top > er.bottom + minLine;
+        const directionFactor = isDirectionUp ? -1 : 1;
         const point1 = {
-          x: isDirectionUp
-            ? er.bottom + minLine > snr.top
-              ? svgRect.width - lineOffset
-              : Math.min(startPoint.x + minLine, svgRect.width - lineOffset)
-            : snr.bottom + minLine > er.top
-            ? svgRect.width - lineOffset
-            : Math.min(startPoint.x + minLine, svgRect.width - lineOffset),
+          x: svgRect.width - lineOffset,
           y: startPoint.y,
         };
 
         const point2 = {
           x: point1.x,
           y: isDirectionUp
-            ? er.bottom + minLine > snr.top
-              ? lineOffset
-              : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
-            : snr.bottom + minLine > er.top
-            ? svgRect.height - lineOffset
-            : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
+            ? er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
+            : svgRect.height - lineOffset,
         };
 
         const point3 = {
@@ -169,15 +159,12 @@ export const useElementHelper = (
         line2 = `L ${point2.x} ${point2.y - arcSize * directionFactor} Q ${point2.x},${
           point2.y
         } ${point2.x - arcSize},${point2.y}`;
-
-        directionFactor = point3.y > point4.y ? 1 : -1;
-
         line3 = `L ${point3.x + arcSize} ${point3.y} Q ${point3.x},${point3.y} ${
           point3.x
-        },${point3.y - arcSize * directionFactor}`;
-        line4 = `L ${point4.x} ${point4.y + arcSize * directionFactor} Q ${point4.x},${
-          point4.y
-        } ${point4.x + arcSize},${point4.y}`;
+        },${point3.y - arcSize}`;
+        line4 = `L ${point4.x} ${point4.y + arcSize} Q ${point4.x},${point4.y} ${
+          point4.x + arcSize
+        },${point4.y}`;
 
         deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
         deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
@@ -216,13 +203,7 @@ export const useElementHelper = (
         let directionFactor = isDirectionLeft ? -1 : 1;
         const point1 = {
           x: startPoint.x,
-          y: isDirectionLeft
-            ? er.right + minLine > sr.left
-              ? svgRect.height - lineOffset
-              : Math.min(startPoint.y + minLine, svgRect.height - lineOffset)
-            : sr.right + minLine > er.left
-            ? svgRect.height - lineOffset
-            : Math.min(startPoint.y + minLine, svgRect.height - lineOffset),
+          y: svgRect.height - lineOffset,
         };
 
         const point2 = {
