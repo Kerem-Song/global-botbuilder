@@ -14,4 +14,15 @@ export const lunaToast = {
       autoClose: 1000,
     });
   },
+  error: (message: string) => {
+    toast.error(message, {
+      position: 'bottom-center',
+      //icon: () => React.createElement('img', { src: icSuccess, alt: 'success' }),
+      theme: 'dark',
+      hideProgressBar: true,
+      className: 'luna-toast',
+      bodyClassName: 'luna-toast-body',
+      autoClose: 1000,
+    });
+  },
 };

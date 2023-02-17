@@ -635,8 +635,9 @@ export const nodeHelper = {
     });
   },
   validateArrows: (startId: string, endId: string, nodes: INode[], isNext?: boolean) => {
+    // 자기 자신으로 연결한 경우
     if (startId === endId) {
-      return false;
+      return '자기 자신을 연결했음.';
     }
 
     const startNode = nodes.find((x) => x.id === startId.substring(5));
@@ -644,14 +645,43 @@ export const nodeHelper = {
 
     // 노드가 없는경우
     if (!startNode || !endNode) {
-      return false;
+      return '노드가 존재하지 않음.';
     }
 
     // Answer노드 앞에 응답이 없는경우
     if (isNext && endNode.type === NODE_TYPES.ANSWER_NODE) {
-      return false;
+      return 'Answer노드는 다음노드로 지정할 수 없음';
     }
 
-    return true;
+    // 연속 노드에 응답이 아닌 노드 연결 할 경우
+    if (!isNext && endNode.nodeKind === NodeKind.CommandNode) {
+      return '연속노드로 응답노드만 연결 할 수 있습니다.';
+    }
+
+    if (
+      endNode.nodeKind === NodeKind.InputNode &&
+      startNode.nodeKind === NodeKind.InputNode
+    ) {
+      const count = nodeHelper.checkParent(2, startNode.id, nodes);
+      if (count > 3) {
+        return '연속응답 노드는 3개까지만 가능합니다.';
+      }
+    }
+
+    return undefined;
+  },
+  checkParent: (depth: number, nodeId: string, nodes: INode[]): number => {
+    const parents = nodes.filter((x) => x.nextNodeId === nodeId);
+    if (parents.length > 0) {
+      const parentDepths = parents.map((p) => {
+        if (p.nodeKind !== NodeKind.InputNode) {
+          return depth;
+        }
+        return nodeHelper.checkParent(depth + 1, p.id, nodes);
+      });
+      return Math.max(...parentDepths);
+    }
+
+    return depth;
   },
 };
