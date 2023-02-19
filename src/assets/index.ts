@@ -61,6 +61,7 @@ import icPenActive from '@assets/icons/ic_pen_active.svg';
 import icPlus from '@assets/icons/ic_plus.svg';
 import icPlusWhite from '@assets/icons/ic_plus_white.svg';
 import icPopupClose from '@assets/icons/ic_popup_close.svg';
+import icPrev from '@assets/icons/ic_prev.svg';
 import icPreview from '@assets/icons/ic_preview.svg';
 import icPreviewActive from '@assets/icons/ic_preview_active.svg';
 import icQuickBtn from '@assets/icons/ic_quick_btn.svg';
@@ -181,6 +182,7 @@ export {
   icPlus,
   icPlusWhite,
   icPopupClose,
+  icPrev,
   icPreview,
   icPreviewActive,
   icQuickBtn,

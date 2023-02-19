@@ -31,16 +31,16 @@ header {
       gap: rem(5);
 
       .testerBtn {
-        width: rem(100);
-        padding: rem(8) rem(5.5);
+        width: rem(50);
+        padding: rem(8.5) rem(5.5);
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $grayBlack;
+        background-color: $primary500;
         color: $grayWhite;
         font-size: rem(12);
         line-height: rem(14);
-        border: 1px solid $grayBlack;
+        border: none;
         border-radius: rem(6);
         cursor: pointer;
       }

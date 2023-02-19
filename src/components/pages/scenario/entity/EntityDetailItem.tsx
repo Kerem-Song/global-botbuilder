@@ -1,6 +1,7 @@
 import { Col, Input } from '@components';
+import { useSystemModal } from '@hooks';
 import { IEntriesModel } from '@models';
-import { FC } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { AddEntryBtn } from './AddEntryBtn';
@@ -11,13 +12,16 @@ export interface IEntityDetailItemProps {
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({ index, entryGroup }) => {
+  const entryGroupName = useRef<HTMLInputElement>(null);
+  const { confirm } = useSystemModal();
+
   const { control, register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
   });
 
-  const { field } = useController({
+  const { field, fieldState, formState } = useController({
     name: `entries.${index}.representativeEntry`,
     control,
   });
@@ -25,12 +29,13 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({ index, entryGroup
   return (
     <Col>
       <Input
+        {...field}
         size="normal"
         style={{
           width: '200px',
           marginRight: '8px',
         }}
-        {...field}
+        ref={entryGroupName}
       />
       <div className="entryList">
         <div className="entries">

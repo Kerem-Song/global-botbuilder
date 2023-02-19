@@ -8,7 +8,7 @@ export interface AddEntryBtnProps {
 }
 
 export const AddEntryBtn: FC<AddEntryBtnProps> = ({ entryGroup }) => {
-  const [tags, setTags] = useState<string[]>(entryGroup.synonym!);
+  const [tags, setTags] = useState<string[]>([]);
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
@@ -16,6 +16,12 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({ entryGroup }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (entryGroup.synonym) {
+      setTags(entryGroup.synonym);
+    }
+  }, []);
 
   useEffect(() => {
     if (inputVisible && inputRef.current) {
@@ -29,7 +35,6 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({ entryGroup }) => {
 
   const handleDelete = (removeTag: string) => {
     const newTags = tags.filter((tag) => tag !== removeTag);
-    console.log(newTags);
     setTags(newTags);
   };
 
@@ -66,14 +71,16 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({ entryGroup }) => {
       {tags.map((tag, i) => {
         if (editInputIndex === i) {
           return (
-            <Input
-              key={i}
-              ref={editInputRef}
-              value={editInputValue}
-              onChange={handleEditInputChange}
-              onBlur={handleEditInputConfirm}
-              onPressEnter={handleEditInputConfirm}
-            ></Input>
+            <div key={i} style={{ width: '100px', marginRight: '8px' }}>
+              <Input
+                className="entryInput"
+                ref={editInputRef}
+                value={editInputValue}
+                onChange={handleEditInputChange}
+                onBlur={handleEditInputConfirm}
+                onPressEnter={handleEditInputConfirm}
+              ></Input>
+            </div>
           );
         } else {
           return (

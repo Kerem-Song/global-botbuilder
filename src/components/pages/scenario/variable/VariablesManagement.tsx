@@ -69,7 +69,7 @@ export const VariablesManagement = () => {
               variableList?.result.map((item, i) => (
                 <div className="variableList" key={i}>
                   <span>{item.name}</span>
-                  <span>{item.defaultValue}</span>
+                  <span>{item.defaultValue === null ? '-' : item.defaultValue}</span>
                   <button
                     className="deleteBtn"
                     onClick={() => openDeleteVariableModal(item.id)}
