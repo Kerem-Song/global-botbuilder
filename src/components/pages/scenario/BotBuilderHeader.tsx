@@ -1,5 +1,6 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
+import { Tooltip } from '@components/navigation/Tooltip';
 import { useRootState, useScenarioClient } from '@hooks';
 import {
   basicCardNodeEditSchema,
@@ -197,17 +198,18 @@ export const BotBuilderHeader = () => {
           <span className="btnCategory">Single</span>
           <Col className="btnWrapper">
             {singleNodes.map((item, i) => (
-              <Button
-                key={i}
-                className={`${item.nodeName} icon ${item.className} `}
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => {
-                  handleMakingChatbubbleClick(e);
-                }}
-                draggable={true}
-                value={item.value}
-                data={item.nodeName}
-              />
+              <Tooltip tooltip={item.nodeName} key={i}>
+                <Button
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => {
+                    handleMakingChatbubbleClick(e);
+                  }}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              </Tooltip>
             ))}
           </Col>
         </div>
@@ -215,15 +217,17 @@ export const BotBuilderHeader = () => {
           <span className="btnCategory">Carousel</span>
           <Col className="btnWrapper">
             {carousleNodes.map((item, i) => (
-              <Button
-                key={i}
-                className={`${item.nodeName} icon ${item.className} `}
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={item.value}
-                data={item.nodeName}
-              />
+              <Tooltip tooltip={item.nodeName} key={i}>
+                <Button
+                  key={i}
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => handleMakingChatbubbleClick(e)}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              </Tooltip>
             ))}
           </Col>
         </div>
@@ -231,15 +235,16 @@ export const BotBuilderHeader = () => {
           <span className="btnCategory">Button</span>
           <Col className="btnWrapper">
             {buttonNodes.map((item, i) => (
-              <Button
-                key={i}
-                className={`${item.nodeName} icon ${item.className} `}
-                onDragStart={(e) => handleDragStart(e)}
-                onClick={(e) => handleMakingChatbubbleClick(e)}
-                draggable={true}
-                value={item.value}
-                data={item.nodeName}
-              />
+              <Tooltip tooltip={item.nodeName} key={i}>
+                <Button
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => handleMakingChatbubbleClick(e)}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              </Tooltip>
             ))}
           </Col>
         </div>

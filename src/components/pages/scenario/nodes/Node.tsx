@@ -168,6 +168,8 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         return nodeMenu;
+      case NODE_TYPES.INTENT_NODE:
+        return [nodeMenu[1]];
       default:
         return nodeMenu.slice(0, 3);
     }
