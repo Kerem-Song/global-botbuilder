@@ -71,7 +71,10 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
       <Divider />
       <form onSubmit={handleSubmit(handleSave)}>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
-          <Col span={6}>{t('VARIABLE_NAME')}</Col>
+          <Col span={6}>
+            {t('VARIABLE_NAME')}
+            <span style={{ color: 'red' }}>*</span>
+          </Col>
           <Col span={18}>
             <FormItem>
               <Input

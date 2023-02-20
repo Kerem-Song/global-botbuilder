@@ -1,7 +1,7 @@
 import { icPopupClose, icPrev, icUtteranceEmpty } from '@assets';
 import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
 import { useEntityClient, useRootState } from '@hooks';
-import { IEntryFormModel, ISaveEntryGroup } from '@models';
+import { IEntriesModel, IEntryFormModel, ISaveEntryGroup } from '@models';
 import { t } from 'i18next';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
@@ -150,6 +150,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
                     <Col style={{ width: '140px' }}>
                       <span>Entity Name</span>
+                      <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col flex="auto">
                       <Input
@@ -163,6 +164,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
                     <Col style={{ width: '140px' }}>
                       <span>Entry type</span>
+                      <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col style={{ display: 'flex' }}>
                       {watch('entryGroupid') ? (
@@ -195,6 +197,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         <Row align="center" gap={10}>
                           <Col style={{ width: '140px' }}>
                             <span>Regular expression</span>
+                            <span style={{ color: 'red' }}> *</span>
                           </Col>
                           <Col flex="auto">
                             <Input

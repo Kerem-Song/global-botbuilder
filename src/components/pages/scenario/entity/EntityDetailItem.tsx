@@ -1,4 +1,4 @@
-import { Col, Input } from '@components';
+import { Button, Col, Input } from '@components';
 import { useSystemModal } from '@hooks';
 import { IEntriesModel } from '@models';
 import React, { FC, useEffect, useRef, useState } from 'react';
@@ -13,6 +13,7 @@ export interface IEntityDetailItemProps {
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({ index, entryGroup }) => {
   const entryGroupName = useRef<HTMLInputElement>(null);
+
   const { confirm } = useSystemModal();
 
   const { control, register } = useFormContext();
@@ -39,18 +40,17 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({ index, entryGroup
       />
       <div className="entryList">
         <div className="entries">
-          {/* {fields.map((entry, i) => (
-            <div key={i} className="entry">
-              <input
-                className="entryInput"
-                {...register(`entries.${index}.synonym.${i}`)}
-              />
-            </div>
-          ))} */}
           <AddEntryBtn entryGroup={entryGroup} />
         </div>
       </div>
-      <button className="icDelete" />
+      <button
+        className="icDelete"
+        onClick={() => {
+          fields.map((entry, i) => {
+            remove(i);
+          });
+        }}
+      />
     </Col>
   );
 };

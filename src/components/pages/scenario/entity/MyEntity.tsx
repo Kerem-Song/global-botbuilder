@@ -102,7 +102,7 @@ export const MyEntity = () => {
                       ref={ref}
                     >
                       <div className="cardHeader">
-                        <span className="title">{x.name}</span>
+                        <span className="title">{x.usingName}</span>
                         <button
                           className="icDelete"
                           onClick={(e) => {
