@@ -14,7 +14,7 @@ export const ScenarioManagement: FC<{
   const { t } = usePage();
   const dispatch = useDispatch();
   const [isActivated, setIsActivated] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState<string>();
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
   const token = useRootState((state) => state.botInfoReducer.token);
   const { scenarioCreateAsync } = useScenarioClient();
 
@@ -93,7 +93,8 @@ export const ScenarioManagement: FC<{
               scenarioList={scenarios.filter(
                 (x) =>
                   (!isActivated || x.activated) &&
-                  (!searchKeyword || x.alias.includes(searchKeyword)),
+                  (!searchKeyword ||
+                    x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
               )}
             />
           ) : (
@@ -106,7 +107,10 @@ export const ScenarioManagement: FC<{
           placeholder={t(`SEARCH_SCEANRIO_INPUT_PLACEHOLDER`)}
           search
           value={searchKeyword}
-          onSearch={setSearchKeyword}
+          onChange={(e) => {
+            setSearchKeyword(e.target.value);
+          }}
+          onSearch={(v) => setSearchKeyword(v || '')}
         />
       </div>
     </div>

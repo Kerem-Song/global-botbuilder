@@ -65,7 +65,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     args.onChange?.(e);
-    onSearch?.(e.target.value);
+    //onSearch?.(e.target.value);
   };
 
   const input = (

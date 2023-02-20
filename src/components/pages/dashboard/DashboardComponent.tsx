@@ -40,6 +40,9 @@ export const DashboardComponent = () => {
         search
         placeholder={t('SEARCH_PLACEHOLDER')}
         value={searchKeyword}
+        onChange={(e) => {
+          setSearchKeyword(e.target.value);
+        }}
         onSearch={(v) => setSearchKeyword(v || '')}
       />
       <p className="chatbot-wrap">
@@ -72,7 +75,9 @@ export const DashboardComponent = () => {
               <NewBotCard onClick={() => handleIsOpen(true)} />
             </Col>
             {data
-              ?.filter((x) => x.botName?.includes(searchKeyword))
+              ?.filter((x) =>
+                x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()),
+              )
               .map((bot) => {
                 return (
                   <Col key={bot.id} span={8}>
