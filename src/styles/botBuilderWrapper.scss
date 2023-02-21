@@ -295,8 +295,20 @@
         }
       }
 
+      .itemProfileImg {
+        padding: 0 !important;
+      }
+
       .imgUploadLabel {
-        &:hover {
+        &.skeleton {
+          .imgUploadWrapper {
+            background: $grayWhite;
+            border: rem(1) dashed $gray200;
+            border-radius: rem(8);
+          }
+        }
+
+        &.skeleton:hover {
           box-sizing: border-box;
           -moz-box-sizing: border-box;
           -webkit-box-sizing: border-box;
@@ -316,12 +328,30 @@
         }
 
         .imgUploadWrapper {
-          background: $grayWhite;
+          position: relative;
+          height: rem(200);
 
           .imgUploadSkeleton {
+            position: absolute;
+            bottom: 50%;
+            right: 50%;
+            transform: translate((50%, 50%));
+            // width: rem(200);
+            text-align: center;
+            
             img {
               max-width: rem(200);
               max-height: rem(180);
+            }           
+          }
+
+          &.small {
+            width: rem(64);
+            height: rem(64);
+            
+            img {
+              max-width: rem(64);
+              max-height: rem(64);
             }
           }
         }

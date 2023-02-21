@@ -33,8 +33,7 @@ export const BasicCardCarousleNodeEdit = () => {
   useEffect(() => {
     console.log('basic card caro index', index);
   }, [index]);
-  // console.log('errors in basic caro edit@@', errors);
-  // console.log('values in basic caro edit@@', values);
+
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (

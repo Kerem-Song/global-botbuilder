@@ -8,7 +8,9 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
+import { SmallImageFileUploader } from './SmallImageFileUploader';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -119,13 +121,18 @@ export const ProductCardNodeEdit = () => {
           <div className="m-b-8">
             <Space direction="vertical">
               <Row align="center" gap={12} style={{ margin: 0 }}>
-                <Col span={8} className="img"></Col>
+                <Col span={8} className="itemProfileImg">
+                  <SmallImageFileUploader
+                    imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                  />
+                </Col>
                 <Col span={14}>
                   <p>Recommended size</p>
                   <p>640 x 640</p>
                 </Col>
               </Row>
             </Space>
+            <ImageFileUploader imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL} />
           </div>
           <div className="m-b-8">
             <Space direction="vertical">

@@ -3,10 +3,8 @@ import { Button, Card, Col, Input, Row, Title } from '@components';
 import { useModalOpen, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
-import { lunaToast } from '@modules/lunaToast';
 import { InfiniteData } from '@tanstack/react-query';
 import { t } from 'i18next';
-import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -84,7 +82,8 @@ export const MyEntity = () => {
           size="small"
           search
           value={searchKeyword}
-          onSearch={setSearchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onSearch={(v) => setSearchKeyword(v || '')}
         ></Input>
       </div>
       <div className="entityWrapper">
@@ -114,12 +113,7 @@ export const MyEntity = () => {
                       <div className="entries">
                         <>
                           <span className="entry">
-                            {_.first(x.entries)?.includes('#')
-                              ? _.first(x.entries)
-                                  ?.split('/t')
-                                  .filter((item) => item.includes('#'))
-                                  .map((item) => _.last(item.split('#'))?.concat(' '))
-                              : x.entries.map((item) => item.concat(' '))}
+                            {x.entries.map((item) => item.concat(' '))}
                           </span>
                         </>
                       </div>
@@ -130,7 +124,6 @@ export const MyEntity = () => {
             })
           ) : (
             <Card
-              className="test"
               radius="normal"
               bodyStyle={{ padding: '20px' }}
               style={{
