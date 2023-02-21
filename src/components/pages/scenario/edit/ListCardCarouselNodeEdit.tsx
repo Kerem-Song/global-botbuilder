@@ -10,6 +10,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { ItemProfileImageSetting } from './ItemProfileImageSetting';
 
 export const ListCardCarouselNodeEdit = () => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -92,7 +93,13 @@ export const ListCardCarouselNodeEdit = () => {
                 <div className="m-b-8">
                   <Space direction="vertical">
                     <Row align="center" gap={12} style={{ margin: 0 }}>
-                      <Col span={7} className="img"></Col>
+                      <Col span={7}>
+                        <ItemProfileImageSetting
+                          imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
+                          index={index}
+                          listItemIndex={i}
+                        />
+                      </Col>
                       <Col span={15}>
                         <p>Recommended</p>
                         <p>400 x 400 </p>

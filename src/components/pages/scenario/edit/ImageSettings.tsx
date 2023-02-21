@@ -11,6 +11,7 @@ interface IImageSetting {
   setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
   imageCtrl: TImageTypes;
   index?: number;
+  listItemIndex?: number;
 }
 
 export const ImageSettings = ({
@@ -18,6 +19,7 @@ export const ImageSettings = ({
   setImageRatio,
   imageCtrl,
   index,
+  listItemIndex,
 }: IImageSetting) => {
   const { register, getValues, setValue } = useFormContext();
   const values = getValues();
@@ -36,22 +38,33 @@ export const ImageSettings = ({
 
       case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.items[index!],
+          imageCtrl: values.view.items[index!].imageCtrl,
           imageFilePath: `view.items.${index}`,
         };
 
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.childrenViews[index!],
+          imageCtrl: values.view.childrenViews[index!].imageCtrl,
           imageFilePath: `view.childrenViews.${index}`,
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.childrenViews[index!]?.items[index!],
-          imageFilePath: `view.childrenViews.${index}.items.${index}`,
+          imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
+          imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
         };
 
+      case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
+        return {
+          imageCtrl: values.view.profileIconUrl,
+          imageFilePath: `view.profileIconUrl`,
+        };
+
+      case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
+        return {
+          imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
+          imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
+        };
       default:
         return { imageCtrlIdPath: '', imageFilePath: '' };
     }

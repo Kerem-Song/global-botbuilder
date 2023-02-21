@@ -78,8 +78,6 @@ export const listCardNodeEditSchema = yup.object().shape({
   imageCtrl: yup.object().shape({
     imageFile: imageFileEditSchema,
     imageUrl: yup.string().url(),
-    actionType: yup.string().required(),
-    actionValue: yup.string().required(),
   }),
 
   items: yup.array().of(
@@ -97,8 +95,6 @@ export const productCardNodeEditSchema = yup.object().shape({
   imageCtrl: yup.object().shape({
     imageFile: imageFileEditSchema,
     imageUrl: yup.string().url(),
-    actionType: yup.string().required(),
-    actionValue: yup.string().required(),
   }),
   profileIconUrl: yup.string().url(),
   profileName: yup
@@ -154,5 +150,6 @@ export const listCardCarouselNodeEditSchema = yup.object().shape({
   childrenViews: yup.array().of(listCardNodeEditSchema),
 });
 export const productCardCarouselNodeEditSchema = yup.object().shape({
+  header: yup.string().trim().max(15, '15자를 초과할 수 없습니다.'),
   childrenViews: yup.array().of(productCardNodeEditSchema),
 });

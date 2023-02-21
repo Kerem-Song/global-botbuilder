@@ -10,6 +10,7 @@ import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { ItemProfileImageSetting } from './ItemProfileImageSetting';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -130,7 +131,12 @@ export const ProductCardCarouselNodeEdit = () => {
               <div className="m-b-8">
                 <Space direction="vertical">
                   <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={8} className="img"></Col>
+                    <Col span={8}>
+                      <ItemProfileImageSetting
+                        imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL}
+                        index={index}
+                      />
+                    </Col>
                     <Col span={14}>
                       <p>Recommended size</p>
                       <p>640 x 640</p>

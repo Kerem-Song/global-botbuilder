@@ -2,6 +2,7 @@ export const ID_TYPES = {
   NODE: 'node',
   VIEW: 'view',
   CTRL: 'ctrl',
+  PROFILE: 'profile',
 } as const;
 
 export type IdType = typeof ID_TYPES[keyof typeof ID_TYPES];
