@@ -1,5 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
+import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
 import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
@@ -160,12 +161,26 @@ export const useScenarioClient = () => {
     },
   );
 
+  const scenarioCheckDeleteMutate = useMutation(
+    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+      const res = await http.post('builder/deletecheckflow', {
+        sessionToken: token,
+        flowId: scenarioId,
+        isForce: false,
+      });
+
+      if (res) {
+        return res.data.exception as FlowDeleteException;
+      }
+    },
+  );
+
   const scenarioDeleteMutate = useMutation(
     async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
       const res = await http.post('builder/deleteflow', {
         sessionToken: token,
         flowId: scenarioId,
-        isForce: false,
+        isForce: true,
       });
 
       if (res) {
@@ -221,6 +236,7 @@ export const useScenarioClient = () => {
     getCachedScenario,
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
+    scenarioCheckDeleteAsync: scenarioCheckDeleteMutate.mutateAsync,
     scenarioDeleteAsync: scenarioDeleteMutate.mutateAsync,
     scenarioActiveAsync: scenarioActivateMutate.mutateAsync,
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,

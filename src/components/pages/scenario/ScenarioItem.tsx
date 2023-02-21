@@ -1,5 +1,5 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
-import { useRootState, useScenarioClient, useSystemModal } from '@hooks';
+import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
@@ -13,12 +13,17 @@ export interface IScenarioItemProps {
 
 export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const dispatch = useDispatch();
+  const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { scenarioDeleteAsync, scenarioRenameAsync, scenarioActiveAsync } =
-    useScenarioClient();
+  const {
+    scenarioDeleteAsync,
+    scenarioRenameAsync,
+    scenarioActiveAsync,
+    scenarioCheckDeleteAsync,
+  } = useScenarioClient();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -38,27 +43,51 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   };
 
   const handleScenarioDelete = async () => {
-    const result = await confirm({
-      title: '삭제',
-      description: (
-        <>
-          <span>{`${item.alias}(와)과 연결된 시나리오가 있습니다.`}</span>
-          <br />
-          <span>: 시작, 시나리오01</span>
-          <br />
-          <span>정말 삭제하시겠습니까?</span>
-        </>
-      ),
+    const exception = await scenarioCheckDeleteAsync({
+      token: token!,
+      scenarioId: item.id,
     });
+    if (!exception) {
+      const result = await confirm({
+        title: t('SCENARIO_DELETE_TITLE'),
+        description: (
+          <>
+            <span>{tc('NO_RECOVERY_MESSAGE')}</span>
+            <br />
+            <span>{tc('DELETE_CONFIRM')}</span>
+          </>
+        ),
+      });
 
-    if (result) {
-      await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+      if (result) {
+        await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+      }
+    } else {
+      const result = await confirm({
+        title: t('SCENARIO_DELETE_TITLE'),
+        description: (
+          <>
+            <span>{t('SCENARIO_DELETE_LINK_MESSAGE', { scenario: item.alias })}</span>
+            <br />
+            <span style={{ color: '#ff4975', fontWeight: 500 }}>
+              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
+            </span>
+            <br />
+            <span>{tc('DELETE_CONFIRM')}</span>
+          </>
+        ),
+      });
+
+      if (result) {
+        await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+      }
     }
   };
 
   const handleScenarioRename = async (scenarioName?: string) => {
     if (!scenarioName) {
-      toast('시나리오 이름을 입력해 주세요.', {
+      const message = t('INPUT_SCENARIO_NAME');
+      toast(message, {
         position: 'bottom-center',
         theme: 'dark',
         hideProgressBar: true,

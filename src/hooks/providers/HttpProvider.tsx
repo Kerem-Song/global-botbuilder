@@ -4,6 +4,8 @@ import { createContext, FC } from 'react';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
+const manualExceptionCode = [7604];
+
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
@@ -31,8 +33,13 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   instance.interceptors.response.use(
     function (response) {
       if (!response.data.isSuccess) {
-        error({ title: 'error', description: response.data.exception.message });
-        return Promise.reject(new Error(response.data.exception.message));
+        if (
+          response.data.exception &&
+          !manualExceptionCode.includes(response.data.exception.errorCode)
+        ) {
+          error({ title: 'error', description: response.data.exception.message });
+          return Promise.reject(new Error(response.data.exception.message));
+        }
       }
       return response;
     },

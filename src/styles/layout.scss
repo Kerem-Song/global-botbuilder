@@ -7,8 +7,17 @@ body,
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+  font-family: 'Montserrat', 'Pretendard-Regular', 'AppleSDGothicNeo',
+    'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif' !important;
+}
+
 body {
   font-size: 14px;
+}
+
+button {
   font-family: 'Montserrat', 'Pretendard-Regular', 'AppleSDGothicNeo',
     'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif';
 }
