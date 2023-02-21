@@ -1,8 +1,8 @@
 import '@styles/header.scss';
 
 import { Popper } from '@components';
+import { UserInfoModal } from '@components/layout/UserInfoModal';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
-import { UserInfoModal } from '@components/pages/scenario/UserInfoModal';
 import { useModalOpen } from '@hooks';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
