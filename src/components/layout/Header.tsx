@@ -2,8 +2,9 @@ import '@styles/header.scss';
 
 import { Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
+import { UserInfoModal } from '@components/pages/scenario/UserInfoModal';
 import { useModalOpen } from '@hooks';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -14,6 +15,11 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const location = useLocation();
   const language = i18n.language;
   const { isOpen, handleIsOpen } = useModalOpen();
+  const [isOpenUserInfoModal, setIsOpenUserInfoModal] = useState<boolean>(false);
+
+  const handleOpenUserInfoModal = () => {
+    setIsOpenUserInfoModal(!isOpenUserInfoModal);
+  };
 
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: string) => {
@@ -83,8 +89,11 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           >
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
-          <span className="userName">{user}</span>
+          <div className="userName" role="presentation" onClick={handleOpenUserInfoModal}>
+            {user}
+          </div>
           <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
+          <UserInfoModal isOpen={isOpenUserInfoModal} />
         </div>
       </div>
     </header>

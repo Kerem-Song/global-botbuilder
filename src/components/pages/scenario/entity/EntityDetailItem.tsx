@@ -1,13 +1,18 @@
 import { Col, Input } from '@components';
 import { useSystemModal } from '@hooks';
-import { FC, useRef } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { FC } from 'react';
+import {
+  useController,
+  useFieldArray,
+  UseFieldArrayRemove,
+  useFormContext,
+} from 'react-hook-form';
 
 import { AddEntryBtn } from './AddEntryBtn';
 
 export interface IEntityDetailItemProps {
   index: number;
-  entriesRemove: () => void;
+  entriesRemove: UseFieldArrayRemove;
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
@@ -30,7 +35,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     });
 
     if (result) {
-      entriesRemove();
+      entriesRemove(index);
     }
   };
 

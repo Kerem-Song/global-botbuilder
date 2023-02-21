@@ -259,7 +259,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                 <EntityDetailItem
                                   key={i}
                                   index={i}
-                                  entriesRemove={() => remove(i)}
+                                  entriesRemove={remove}
                                 />
                               );
                             })}

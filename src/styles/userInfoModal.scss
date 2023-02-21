@@ -1,0 +1,45 @@
+.userInfoModal {
+  position: absolute;
+  width: rem(194);
+  background-color: $grayWhite;
+  top: rem(45);
+  right: rem(10);
+  height: rem(145);
+  z-index: 900;
+  border-radius: rem(12);
+  padding: rem(20) rem(16);
+  border: 1px solid $gray200;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+
+  .userInfoTitle {
+    margin-bottom: rem(8);
+    .user {
+      font-weight: 700;
+      font-size: rem(14);
+    }
+  }
+
+  .userBrandInfo {
+    margin-bottom: rem(8);
+
+    .userBrandName {
+      font-size: rem(13);
+      font-weight: 500;
+      line-height: rem(20);
+    }
+    .userAccount {
+      color: #626263;
+    }
+  }
+
+  .logoutBtn {
+    width: rem(162);
+    height: rem(38);
+    background-color: $gray150;
+    border: none;
+    color: #222222;
+    &:hover {
+      color: $gray300;
+    }
+  }
+}
