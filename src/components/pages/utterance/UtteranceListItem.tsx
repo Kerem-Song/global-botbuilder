@@ -1,8 +1,10 @@
 import { icUtteranceEmpty } from '@assets';
+import { Skeleton } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
-import { IDeleteIntent, ISearchData } from '@models';
+import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
+import { InfiniteData } from '@tanstack/react-query';
 import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
@@ -21,13 +23,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const { confirm } = useSystemModal();
   const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
 
-  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchData!);
+  const {
+    data: initialData,
+    fetchNextPage,
+    isFetching,
+  } = changePageNumberQuery(searchData!);
 
   useEffect(() => {
-    if (!initialData) {
-      return;
-    }
-
     if (inView) {
       fetchNextPage();
     }
@@ -63,53 +65,69 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
   };
 
-  if (initialData) {
-    return (
-      <>
-        {initialData?.pages.map((v) => {
-          const pages = v.items;
-          return pages.map((x, i) => {
-            return (
-              <tr
-                key={i}
-                className="list"
-                ref={ref}
-                onClick={() => handleGetIntent(x.intentId)}
-              >
-                <td role="presentation" className="utteranceList intent">
-                  {x.intentName}
-                </td>
-                <td role="presentation" className="utteranceList connectScenarios">
-                  {x.flowName}
-                </td>
-                <td role="presentation" className="utteranceList utterance">
-                  {x.utteranceSummary}
-                </td>
-                <td className="utteranceList icon">
-                  <button
-                    className="icDelete"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openModal(x.intentId);
-                    }}
-                  ></button>
-                </td>
-              </tr>
-            );
-          });
-        })}
-      </>
-    );
-  } else {
-    return (
-      <>
-        <tr className="emptyList">
-          <td className="empty">
-            <img src={icUtteranceEmpty} alt="empty" />
-            <span>No registered intents.</span>
-          </td>
-        </tr>
-      </>
-    );
-  }
+  const isExistInitialData = (
+    data: InfiniteData<IPagingItems<IIntentListItem>> | undefined,
+  ): boolean => {
+    if (data?.pages && data?.pages?.reduce((acc, cur) => acc + cur.totalPage, 0) > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  return (
+    <>
+      {
+        // 스켈레톤
+        // isFetching ? (
+        //   <tr>
+        //     <td>
+        //       <Skeleton />
+        //     </td>
+        //   </tr>
+        // ) :
+        isExistInitialData(initialData) ? (
+          initialData?.pages.map((v) => {
+            const pages = v.items;
+            return pages.map((x, i) => {
+              return (
+                <tr
+                  key={i}
+                  className="list"
+                  ref={ref}
+                  onClick={() => handleGetIntent(x.intentId)}
+                >
+                  <td role="presentation" className="utteranceList intent">
+                    {x.intentName}
+                  </td>
+                  <td role="presentation" className="utteranceList connectScenarios">
+                    {x.flowName}
+                  </td>
+                  <td role="presentation" className="utteranceList utterance">
+                    {x.utteranceSummary}
+                  </td>
+                  <td className="utteranceList icon">
+                    <button
+                      className="icDelete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(x.intentId);
+                      }}
+                    ></button>
+                  </td>
+                </tr>
+              );
+            });
+          })
+        ) : (
+          <tr className="emptyList">
+            <td className="empty">
+              <img src={icUtteranceEmpty} alt="empty" />
+              <span>No registered Utterance.</span>
+            </td>
+          </tr>
+        )
+      }
+    </>
+  );
 };

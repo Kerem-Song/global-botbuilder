@@ -25,7 +25,7 @@ export const UtteranceDetail = () => {
   const { navigate, t, tc } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
-  const [searchWord, setSearchWord] = useState<string | undefined>('');
+  const [searchWord, setSearchWord] = useState('');
   const { intentMutate, getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
@@ -265,7 +265,9 @@ export const UtteranceDetail = () => {
               size="small"
               search
               placeholder="Input search text"
-              value={fields.map((x) => x.text).find((x) => x === searchWord)}
+              value={searchWord}
+              onChange={(e) => setSearchWord(e.target.value)}
+              onSearch={(v) => setSearchWord(v || '')}
             />
           </FormItem>
           <button className="icDelete" onClick={openDeleteCheckboxModal} />
@@ -273,17 +275,21 @@ export const UtteranceDetail = () => {
         <Row style={{ marginTop: '12px' }}>
           <>
             {watch('items').length > 0 ? (
-              fields.map((v, i) => {
-                return (
-                  <div key={i} className="utteranceItem">
-                    <Checkbox
-                      {...register(`items.${i}.isChecked`)}
-                      style={{ marginLeft: '20px' }}
-                    />
-                    <p className="item">{v.text}</p>
-                  </div>
-                );
-              })
+              fields
+                .filter((x) => x.text?.toLowerCase().includes(searchWord.toLowerCase()))
+                .map((v, i) => {
+                  return (
+                    <>
+                      <div key={i} className="utteranceItem">
+                        <Checkbox
+                          {...register(`items.${i}.isChecked`)}
+                          style={{ marginLeft: '20px' }}
+                        />
+                        <p className="item">{v.text}</p>
+                      </div>
+                    </>
+                  );
+                })
             ) : (
               <Row style={{ width: '100%', marginTop: '12px' }}>
                 <div className="emptyList utteranceItem">
@@ -296,14 +302,6 @@ export const UtteranceDetail = () => {
             )}
           </>
         </Row>
-        {/* <Row style={{ width: '100%', marginTop: '12px' }}>
-            <div className="emptyList utteranceItem">
-              <div className="empty">
-                <img src={icUtteranceEmpty} alt="empty" />
-                <span>No search results found.</span>
-              </div>
-            </div>
-          </Row> */}
       </div>
     </div>
   );
