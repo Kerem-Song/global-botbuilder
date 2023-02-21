@@ -4,6 +4,7 @@ import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
 import { ID_GEN, ID_TYPES } from '@modules';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface IImageSetting {
@@ -13,12 +14,14 @@ interface IImageSetting {
   imageRatio?: ImageAspectRatio | undefined;
 }
 
-export const ImageFileUploader = ({
+export const SmallImageFileUploader = ({
   imageCtrl,
   index,
   listItemIndex,
   imageRatio,
 }: IImageSetting) => {
+  console.log('small imageCtrl', imageCtrl);
+
   const { register, getValues, setValue, watch } = useFormContext();
   const values = getValues();
 
@@ -123,7 +126,7 @@ export const ImageFileUploader = ({
   return (
     <>
       <label
-        htmlFor="imgUpload"
+        htmlFor="smallImgUpload"
         className={classnames('imgUploadLabel', {
           skeleton: !getValues(handleImageCtrlIdPath().imageUrl),
         })}
@@ -150,7 +153,7 @@ export const ImageFileUploader = ({
 
             <input
               type="file"
-              id="imgUpload"
+              id="smallImgUpload"
               accept="image/png, image/jpeg, image/jpg"
               className="file-name-input"
               onChange={handleChangeFile}

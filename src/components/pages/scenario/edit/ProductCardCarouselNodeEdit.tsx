@@ -9,8 +9,8 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
+import { SmallImageFileUploader } from './SmallImageFileUploader';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -132,7 +132,7 @@ export const ProductCardCarouselNodeEdit = () => {
                 <Space direction="vertical">
                   <Row align="center" gap={12} style={{ margin: 0 }}>
                     <Col span={7} className="itemProfileImg">
-                      <ImageFileUploader
+                      <SmallImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL}
                         index={index}
                       />

@@ -1,7 +1,4 @@
-import { icImg } from '@assets';
 import { Col, Row, Space } from '@components/layout';
-import { useRootState } from '@hooks';
-import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction } from 'react';
@@ -117,10 +114,6 @@ export const ImageSettings = ({
         index={index}
         listItemIndex={listItemIndex}
       />
-
-      {/* <button onClick={handleUploadImage} type="button">
-        test
-      </button> */}
     </Space>
   );
 };
