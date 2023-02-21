@@ -106,12 +106,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entries: entryDetails.data.entries,
       };
       reset(resetValue);
-
-      // append(
-      //   entryDetails.data.entries!.map<IEntriesModel>((x) => {
-      //     return { representativeEntry: x.representativeEntry, synonym: x.synonym } || [];
-      //   }),
-      // );
     }
   }, [entryDetails?.data]);
 
@@ -257,6 +251,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             return (
                               <EntityDetailItem
                                 entryGroup={entryGroup}
+                                entriesRemove={() => remove(i)}
                                 index={i}
                                 key={i}
                               />
