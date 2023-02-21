@@ -1,7 +1,7 @@
 import { icPopupClose, icPrev, icUtteranceEmpty } from '@assets';
 import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
 import { useEntityClient, useRootState } from '@hooks';
-import { IEntriesModel, IEntryFormModel, ISaveEntryGroup } from '@models';
+import { IEntryFormModel, ISaveEntryGroup } from '@models';
 import { t } from 'i18next';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
@@ -24,9 +24,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   handleIsOpen,
   entryId,
   setEntryId,
-  selectedOption,
 }) => {
-  const [searchKeyword, setSearchKeyword] = useState<string>();
+  const [searchKeyword, setSearchKeyword] = useState('');
   const entryGroupName = useRef<HTMLInputElement>(null);
   const { entryGroupMutate, entryGroupGetMutate, getEntryDetailQuery } =
     useEntityClient();
@@ -211,8 +210,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                 <Input
                   size="small"
                   search
+                  placeholder="Input search word"
                   value={searchKeyword}
-                  onSearch={setSearchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  onSearch={(v) => setSearchKeyword(v || '')}
                 ></Input>
               </div>
               <div className="registerEntry">
@@ -247,16 +248,21 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     <>
                       {watch('entries').length > 0 ? (
                         <>
-                          {fields.map((entryGroup, i) => {
-                            return (
-                              <EntityDetailItem
-                                entryGroup={entryGroup}
-                                entriesRemove={() => remove(i)}
-                                index={i}
-                                key={i}
-                              />
-                            );
-                          })}
+                          {fields
+                            .filter((x) =>
+                              x.representativeEntry
+                                .toLowerCase()
+                                .includes(searchKeyword.toLowerCase()),
+                            )
+                            .map((entryGroup, i) => {
+                              return (
+                                <EntityDetailItem
+                                  key={i}
+                                  index={i}
+                                  entriesRemove={() => remove(i)}
+                                />
+                              );
+                            })}
                         </>
                       ) : (
                         <Row
