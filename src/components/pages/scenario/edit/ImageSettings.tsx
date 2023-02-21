@@ -6,6 +6,8 @@ import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
+
+import { ImageFileUploader } from './ImageFileUploader';
 interface IImageSetting {
   imageRatio: ImageAspectRatio | undefined;
   setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
@@ -24,9 +26,6 @@ export const ImageSettings = ({
   const { register, getValues, setValue } = useFormContext();
   const values = getValues();
 
-  const { imageUploadAsync } = imageUploadClient();
-  const token = useRootState((state) => state.botInfoReducer.token);
-
   console.log('image ctrl', imageCtrl);
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
@@ -38,13 +37,13 @@ export const ImageSettings = ({
 
       case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.items[index!].imageCtrl,
-          imageFilePath: `view.items.${index}`,
+          imageCtrl: values.view.items[listItemIndex!].imageCtrl,
+          imageFilePath: `view.items.${listItemIndex}`,
         };
 
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.childrenViews[index!].imageCtrl,
+          imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
           imageFilePath: `view.childrenViews.${index}`,
         };
 
@@ -67,48 +66,6 @@ export const ImageSettings = ({
         };
       default:
         return { imageCtrlIdPath: '', imageFilePath: '' };
-    }
-  };
-
-  const handleUploadImage = async () => {
-    if (
-      token &&
-      getValues(handleImageCtrlIdPath().imageFilePath + `.imageFile`).length > 0
-    ) {
-      const formData = new FormData();
-      formData.append(
-        'File',
-        getValues(handleImageCtrlIdPath().imageFilePath + `.imageFile`)[0],
-      );
-      formData.append('SessionToken', token);
-      formData.append('CtrlId', handleImageCtrlIdPath().imageCtrl.id);
-
-      imageUploadAsync({ formData })
-        .then((res) => {
-          console.log('res.data image', res?.data);
-          setValue(handleImageCtrlIdPath().imageFilePath + `.imageUrl`, res?.data.result);
-          setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, null);
-        })
-        .catch((err) => {
-          setValue(handleImageCtrlIdPath().imageFilePath + `.imageUrl`, null);
-          setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, null);
-          //modal 띄우기?
-          console.log('upload 실패', err);
-        });
-    } else {
-      console.log('upload 파일이 없음');
-    }
-  };
-
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      console.log('file', e.target.files);
-      setValue(handleImageCtrlIdPath().imageFilePath + `.imageFile`, e.target.files);
-
-      console.log(
-        'handleImageCtrlIdPath',
-        handleImageCtrlIdPath().imageFilePath + `.imageFile`,
-      );
     }
   };
 
@@ -155,57 +112,15 @@ export const ImageSettings = ({
         </Col>
       </Row>
 
-      <label htmlFor="imgUpload" className="imgUploadLabel">
-        <div
-          className="imgUploadWrapper"
-          style={{
-            height: imageRatio === ImageAspectRatio.Rectangle ? `118px` : '200px',
-            border: '1px dashed #DCDCDC',
+      <ImageFileUploader
+        imageCtrl={imageCtrl}
+        index={index}
+        listItemIndex={listItemIndex}
+      />
 
-            borderRadius: '8px',
-            position: 'relative',
-          }}
-        >
-          <div
-            className="imgUploadSkeleton"
-            style={{
-              position: 'absolute',
-              textAlign: 'center',
-              width: '200px',
-              bottom: '50%',
-              right: '50%',
-              transform: 'translate(50%, 50%)',
-            }}
-          >
-            {handleImageCtrlIdPath().imageCtrl?.imageUrl ? (
-              <img
-                src={handleImageCtrlIdPath().imageCtrl?.imageUrl}
-                alt="templateImage"
-              />
-            ) : (
-              <>
-                <img src={icImg} alt="icImg" />
-                <br />
-                Recommended
-                <br />
-                Rectangular: 800 x 400
-              </>
-            )}
-
-            <input
-              type="file"
-              id="imgUpload"
-              accept="image/png, image/jpeg, image/jpg"
-              className="file-name-input"
-              onChange={handleChangeFile}
-              style={{ display: 'none' }}
-            />
-          </div>
-        </div>
-      </label>
-      <button onClick={handleUploadImage} type="button">
+      {/* <button onClick={handleUploadImage} type="button">
         test
-      </button>
+      </button> */}
     </Space>
   );
 };

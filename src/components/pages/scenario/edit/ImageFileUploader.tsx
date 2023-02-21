@@ -1,21 +1,23 @@
 import { icImg } from '@assets';
-import { Col, Row, Space } from '@components/layout';
 import { useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
-import { IMAGE_CTRL_TYPES, TImageTypes } from '@models';
+import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
 import { ID_GEN, ID_TYPES } from '@modules';
+import classnames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
 interface IImageSetting {
   imageCtrl: TImageTypes;
   index?: number;
   listItemIndex?: number;
+  imageRatio?: ImageAspectRatio | undefined;
 }
 
-export const ItemProfileImageSetting = ({
+export const ImageFileUploader = ({
   imageCtrl,
   index,
   listItemIndex,
+  imageRatio,
 }: IImageSetting) => {
   const { register, getValues, setValue, watch } = useFormContext();
   const values = getValues();
@@ -25,11 +27,25 @@ export const ItemProfileImageSetting = ({
 
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
+      case IMAGE_CTRL_TYPES.IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.imageCtrl,
+          imageFilePath: 'view.imageCtrl',
+          imageUrl: 'view.imageCtrl.imageUrl',
+        };
+
       case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
         return {
           imageCtrl: values.view.items?.[listItemIndex!]?.imageCtrl,
           imageFilePath: `view.items.${listItemIndex}.imageFile`,
           imageUrl: `view.items.${listItemIndex}.imageUrl`,
+        };
+
+      case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
+        return {
+          imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
+          imageFilePath: `view.childrenViews.${index}`,
+          imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
@@ -62,11 +78,9 @@ export const ItemProfileImageSetting = ({
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
       case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
         return ID_GEN.generate(ID_TYPES.PROFILE);
-      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
-      case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
-        return handleImageCtrlIdPath().imageCtrl?.id;
+
       default:
-        '';
+        return handleImageCtrlIdPath().imageCtrl?.id;
     }
   };
 
@@ -105,37 +119,35 @@ export const ItemProfileImageSetting = ({
 
   return (
     <>
-      <label htmlFor="itemProfileImgUpload" className="imgUploadLabel">
+      <label
+        htmlFor="imgUpload"
+        className={classnames('imgUploadLabel', {
+          skeleton: !getValues(handleImageCtrlIdPath().imageUrl),
+        })}
+      >
         <div
-          className="imgUploadWrapper"
-          style={{
-            height: '64px',
-            border: '1px dashed #DCDCDC',
-
-            borderRadius: '8px',
-            position: 'relative',
-          }}
+          className={classnames(`imgUploadWrapper`, {
+            small:
+              imageCtrl === IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL ||
+              imageCtrl === IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL ||
+              imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL ||
+              imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL,
+            regtangle: imageRatio === ImageAspectRatio.Rectangle,
+          })}
         >
-          <div
-            className="imgUploadSkeleton"
-            style={{
-              position: 'absolute',
-              textAlign: 'center',
-              width: '64px',
-              bottom: '50%',
-              right: '50%',
-              transform: 'translate(50%, 50%)',
-            }}
-          >
+          <div className={classnames('imgUploadSkeleton')}>
             {watch(handleImageCtrlIdPath().imageUrl) ? (
-              <img src={handleImageCtrlIdPath().imageUrl} alt="templateImage" />
+              <img
+                src={getValues(handleImageCtrlIdPath().imageUrl)}
+                alt="templateImage"
+              />
             ) : (
               <img src={icImg} alt="icImg" />
             )}
 
             <input
               type="file"
-              id="itemProfileImgUpload"
+              id="imgUpload"
               accept="image/png, image/jpeg, image/jpg"
               className="file-name-input"
               onChange={handleChangeFile}
@@ -144,10 +156,6 @@ export const ItemProfileImageSetting = ({
           </div>
         </div>
       </label>
-
-      <button onClick={handleUploadImage} type="button">
-        test
-      </button>
     </>
   );
 };
