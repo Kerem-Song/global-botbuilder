@@ -50,13 +50,14 @@ export const useScenarioClient = () => {
               basicScenarios.push(startScenario);
             }
 
+            // 기본 시나리오 세팅
             dispatch(setBasicScenarios(basicScenarios));
 
             if (
               !selectedScenario ||
               !scenarios.find((x) => x.id === selectedScenario.id)
             ) {
-              dispatch(setSelectedScenario(fallbackScenario));
+              dispatch(setSelectedScenario(startScenario));
             } else {
               queryClient.invalidateQueries(['scenario', selectedScenario.id]);
             }
@@ -190,6 +191,7 @@ export const useScenarioClient = () => {
       if (res) {
         lunaToast.success();
         queryClient.invalidateQueries(['scenario', scenarioId]);
+        queryClient.invalidateQueries(['variable-list']);
         return res;
       }
     },

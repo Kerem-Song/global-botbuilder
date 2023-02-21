@@ -17,7 +17,11 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
           <Col>
             <Space direction="vertical">
               <Row align="center">
-                <Col>{model.activated && <div className="active">Active</div>}</Col>
+                <Col>
+                  {model.activated && (
+                    <div className="active">{t('BOT_STATUS_ACTIVE')}</div>
+                  )}
+                </Col>
                 <Col>
                   <span className="created">{`${tc('intlDateTime', {
                     val: model.lastDeployUTC ? new Date(model.lastDeployUTC) : '',

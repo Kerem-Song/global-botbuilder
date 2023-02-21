@@ -19,7 +19,7 @@ export const AnswerNode: FC<AnswerNodeProps> = ({ nodeId, node }) => {
         {view.utteranceParam ? (
           <>
             <Button key={`${nodeId}-quickReply-answer`} className="btnQuickRelply">
-              {`{{${view.utteranceParam || ''}}}`}
+              {view.utteranceParam}
             </Button>
             <NextNodeButton
               ctrlId={`${nodeId}`}

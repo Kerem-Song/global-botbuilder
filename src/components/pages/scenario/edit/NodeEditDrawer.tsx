@@ -111,16 +111,13 @@ export const NodeEditDrawer = () => {
     handleSubmit,
     reset,
     getValues,
+    trigger,
     formState: { errors, isValid },
   } = formMethods;
 
   const onSubmit = (node: INodeEditModel) => {
     dispatch(editNode(node));
     //dispatch(setSelected());
-  };
-
-  const onFakeSubmit = (node: INodeEditModel) => {
-    console.log('onFake');
   };
 
   useEffect(() => {
@@ -134,16 +131,16 @@ export const NodeEditDrawer = () => {
       };
 
       if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
-        const view = model.view as IAnswerView;
-        model.view = {
-          ...view,
-          useUtteranceParam: view?.utteranceParam,
-        } as IAnswerView;
+        const view = { ...model.view } as IAnswerView;
+        if (view?.utteranceParam) {
+          view.useUtteranceParam = true;
+        }
+        model.view = view;
       }
 
       reset(model);
       if (invalidateNodes[selectedNode.id]) {
-        handleSubmit(onFakeSubmit)();
+        trigger();
       }
     } else {
       if (node) {

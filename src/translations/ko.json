@@ -11,7 +11,8 @@
     "PROD_CHANNEL": "운영채널",
     "TEST_CHANNEL": "테스트채널",
     "EMPTY_DESCRIPTION": "No search results found.",
-    "REQUIRE_BOT_NAME": "봇 이름은 필수입니다."
+    "REQUIRE_BOT_NAME": "봇 이름은 필수입니다.",
+    "BOT_STATUS_ACTIVE": "Active"
   },
   "common": {
     "intlDateTime": "{{val, datetime}}",
@@ -62,7 +63,8 @@
     "HISTORY": "히스토리",
     "STATISTICS": "통계",
     "HELP": "도움말",
-    "SETTING": "설정"
+    "SETTING": "설정",
+    "LIST_ALL": "전체 목록 보기"
   },
   "imgeditor": {
     "TITLE": "이미지 편집"
@@ -76,6 +78,10 @@
     "CHATBUBBLE_NAME": "Chatbubble name"
   },
   "utterance": {
+    "TITLE": "발화관리",
     "DELETE_HEADER": "인텐트 삭제"
+  },
+  "UtternaceDetailPage": {
+    "TITLE": "발화관리 상세"
   }
 }

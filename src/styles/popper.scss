@@ -46,7 +46,7 @@
 
   .list-view-btn {
     cursor: pointer;
-    width: rem(164);
+    width: 100%;
     height: rem(33);
     padding: rem(8) rem(10);
     border: none;
@@ -54,9 +54,9 @@
     gap: rem(4);
     font-size: rem(14);
     line-height: rem(17);
-    background-color: $gray100;
+    background-color: $gray150;
     color: $grayBlack;
-
+    font-weight: 500;
     &:hover {
       color: $gray300;
     }

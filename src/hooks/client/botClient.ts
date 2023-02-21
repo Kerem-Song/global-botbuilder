@@ -1,3 +1,4 @@
+import { useRootState } from '@hooks/useRootState';
 import { IGetBotReq, IHasResult, IHasResults, ISearchBotReq } from '@models';
 import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -12,13 +13,15 @@ export const useBotClient = () => {
   const http = useHttp();
   const dispatch = useDispatch();
 
+  const brandId = useRootState((state) => state.brandInfoReducer.brandId);
+
   const getBotListQuery = () => {
     return useQuery<IBotModel[]>(
       ['bot-list'],
       () =>
         http
           .post<ISearchBotReq, AxiosResponse<IHasResults<IBotModel>>>('/bot/searchbot', {
-            brandId: 'lunasoft',
+            brandId: brandId,
           })
           .then((res) => res.data.result),
       { refetchOnWindowFocus: false, refetchOnMount: true },

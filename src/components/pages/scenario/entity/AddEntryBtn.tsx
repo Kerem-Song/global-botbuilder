@@ -1,31 +1,22 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
-import { IEntriesModel } from '@models';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
   FieldValues,
   UseFieldArrayAppend,
   UseFieldArrayRemove,
   useFormContext,
-  UseFormGetValues,
 } from 'react-hook-form';
 
 export interface AddEntryBtnProps {
-  entryGroup: IEntriesModel;
   fields: Record<'id', string>[];
   append: UseFieldArrayAppend<FieldValues, `entries.${number}.synonym`>;
   remove: UseFieldArrayRemove;
   index: number;
 }
 
-export const AddEntryBtn: FC<AddEntryBtnProps> = ({
-  entryGroup,
-  fields,
-  append,
-  remove,
-  index,
-}) => {
-  const { control, register } = useFormContext();
+export const AddEntryBtn: FC<AddEntryBtnProps> = ({ fields, append, remove, index }) => {
+  const { register, getValues } = useFormContext();
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
@@ -63,8 +54,6 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
     setInputValue('');
   };
 
-  console.log(fields);
-
   return (
     <>
       {fields.map((tag, i) => {
@@ -86,7 +75,7 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
                   e.preventDefault();
                 }}
               >
-                {}
+                {getValues(`entries.${index}.synonym.${i}`)}
               </span>
               <button
                 type="button"

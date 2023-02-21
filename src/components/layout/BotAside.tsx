@@ -18,7 +18,7 @@ import {
   icUtterance,
   icUtteranceSelected,
 } from '@assets/index';
-import { Popper } from '@components/navigation';
+import { IPopperSelectItem, Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
@@ -92,24 +92,42 @@ export const BotAside = () => {
     getMenuItem(2, `${botId}/setting`, 'setting', icSetting, icSettingSelected),
   ];
 
-  const botList = data?.map((x) => {
-    return {
-      id: x.id,
-      name: x.botName,
-      select: x.botName,
-      icon: icLine,
+  const botList: IPopperSelectItem<{ action: (id: string) => void }>[] = [
+    ...(data
+      ? data.map((x) => {
+          return {
+            id: x.id,
+            name: x.botName,
+            select: x.botName,
+            icon: icLine,
+            data: {
+              action: (id: string) => {
+                if (botId === id) {
+                  return;
+                }
+                navigate(`/${i18n.language}/${id}/scenario`);
+                dispatch(setSesstionToken());
+                dispatch(initBotBuilder());
+              },
+            },
+          };
+        })
+      : []),
+    {
+      id: 'list',
+      name: ts('LIST_ALL'),
+      select: 'List',
+      type: 'button',
       data: {
         action: (id: string) => {
-          if (botId === id) {
-            return;
-          }
-          navigate(`/${i18n.language}/${id}/scenario`);
+          console.log(id);
+          navigate(`/${i18n.language}/dashboard`);
           dispatch(setSesstionToken());
           dispatch(initBotBuilder());
         },
       },
-    };
-  });
+    },
+  ];
 
   return (
     <aside className={css}>
