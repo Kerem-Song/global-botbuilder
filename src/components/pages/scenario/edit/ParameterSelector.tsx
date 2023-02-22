@@ -1,7 +1,7 @@
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
-import { FC } from 'react';
+import { getReactSelectStyle } from '@modules/getReactSelectStyle';
 import { Control, Path, useController } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
@@ -27,12 +27,11 @@ export const ParameterSelector = <T extends object>({
   return (
     <CreatableSelect
       placeholder={placeholder}
+      styles={getReactSelectStyle<IVariable>(true)}
       isDisabled={isDisabled}
       value={
         parameters.find((x) => x.usingName === field.value) || {
-          name: field.value
-            ? `${field.value}`.replace('{{', '').replace('}}', '')
-            : undefined,
+          name: field.value ? `${field.value}`.replace('{{', '').replace('}}', '') : '',
           usingName: field.value,
           kind: VariableKind.Parameter,
         }
@@ -50,7 +49,6 @@ export const ParameterSelector = <T extends object>({
       formatOptionLabel={(value) => value?.name}
       onBlur={() => field.onBlur()}
       onChange={(value) => {
-        console.log(value);
         field.onChange(value?.usingName);
       }}
       options={parameters}
