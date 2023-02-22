@@ -1,6 +1,7 @@
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
+import { getReactSelectStyle } from '@modules/getReactSelectStyle';
 import { Control, Path, useController } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
@@ -20,12 +21,13 @@ export const VariableSelector = <T extends object>({
   const {
     getVariableSelectListQuery: { data },
   } = useVariableSelectClient();
-
   const { field } = useController({ name: path, control });
   const variables = data || [];
+
   return (
     <CreatableSelect
       placeholder={placeholder}
+      styles={getReactSelectStyle<IVariable>()}
       isDisabled={isDisabled}
       value={
         variables.find((x) => x.usingName === field.value) || {
