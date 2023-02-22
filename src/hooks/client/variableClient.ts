@@ -10,7 +10,7 @@ import {
   ISaveParameter,
   ISaveParameterData,
   IVariableList,
-} from './../../models/interfaces/IVariable';
+} from '../../models/interfaces/IParameter';
 
 export const useVariableClient = () => {
   const queryClient = useQueryClient();
@@ -41,6 +41,7 @@ export const useVariableClient = () => {
 
     if (result) {
       queryClient.invalidateQueries(['variable-list']);
+      queryClient.invalidateQueries(['variable-select-list', token]);
       return result.data;
     }
   });
@@ -53,6 +54,7 @@ export const useVariableClient = () => {
 
     if (result) {
       queryClient.invalidateQueries(['variable-list']);
+      queryClient.invalidateQueries(['variable-select-list', token]);
       return result.data;
     }
   });
