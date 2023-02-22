@@ -123,11 +123,13 @@ export const ListCardCarouselNodeEdit = () => {
                     />
                   </Space>
                 </div>
-                <div className="deleteBtn">
-                  <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
-                    Delete Button
-                  </Button>
-                </div>
+                {i > 1 && (
+                  <div className="deleteBtn">
+                    <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
+                      Delete Button
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
             <div>

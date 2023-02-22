@@ -3,11 +3,7 @@ import * as yup from 'yup';
 import { TNodeTypes } from './ICard';
 import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
-export interface IGNodeEditModel<T extends IViewBase> {
-  id: string;
-  type: TNodeTypes;
-  caption: string;
-  title: string;
+export interface IGNodeEditModel<T extends IViewBase> extends INodeEditModel {
   view?: T;
 }
 export interface INodeEditModel {
@@ -15,6 +11,7 @@ export interface INodeEditModel {
   type: TNodeTypes;
   caption: string;
   title: string;
+  nextNodeId?: string;
   view?: IViewBase;
 }
 

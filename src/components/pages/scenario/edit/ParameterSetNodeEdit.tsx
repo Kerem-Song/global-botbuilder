@@ -1,17 +1,21 @@
-import { Divider } from '@components';
 import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules/nodeHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { SelectNode } from './SelectNode';
+
 export const ParameterSetNodeEdit = () => {
+  const { t } = usePage();
   const {
     register,
     getValues,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterSetView>>();
 
@@ -42,11 +46,11 @@ export const ParameterSetNodeEdit = () => {
 
   return (
     <>
-      <Collapse label={'파라미터 설정'} useSwitch={false}>
+      <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={i}>
             <div className="m-b-8">
-              <span className="subLabel">입력 받을 메시지 </span>
+              <span className="subLabel">{t(`PARAMETER_SET_VARIABLE`)} </span>
               <span className="required">*</span>
             </div>
             <FormItem
@@ -56,12 +60,12 @@ export const ParameterSetNodeEdit = () => {
             >
               <Input
                 {...register(`view.parameters.${i}.name`)}
-                placeholder="변수를 입력해주세요"
+                placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
               />
             </FormItem>
 
             <div className="m-b-8">
-              <span className="subLabel">저장할 값 </span>
+              <span className="subLabel">{t(`PARAMETER_SET_VALUE_TO_STORE`)} </span>
               <span className="required">*</span>
             </div>
             <FormItem
@@ -71,23 +75,27 @@ export const ParameterSetNodeEdit = () => {
             >
               <Input
                 {...register(`view.parameters.${i}.value`)}
-                placeholder="변수/엔티티/상수로 입력해주세요"
+                placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
               />
             </FormItem>
-            <div className="deleteBtn">
-              <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                Delete Condition
-              </Button>
-            </div>
+            {i > 0 && (
+              <div className="deleteBtn">
+                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
+                  {t(`PARAMETER_SET_DELETE_BUTTON`)}
+                </Button>
+              </div>
+            )}
           </div>
         ))}
 
         {fields.length < 10 && (
           <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
-            <span>+ Parameter Setting</span>
+            <span>+ {t(`PARAMETER_SET_ADD_BUTTON`)}</span>
           </Button>
         )}
       </Collapse>
+
+      <SelectNode fieldName={`selectNode.actionValue`} />
     </>
   );
 };
