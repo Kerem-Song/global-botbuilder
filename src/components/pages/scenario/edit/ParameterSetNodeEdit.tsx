@@ -1,35 +1,24 @@
 import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
-import { usePage, useRootState } from '@hooks';
-import { IGNodeEditModel, IReactSelect } from '@models';
+import { usePage } from '@hooks';
+import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules/nodeHelper';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
-import Select from 'react-select';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { reactSelectStyle } from './ButtonCtrlSelector';
 import { SelectNode } from './SelectNode';
 
 export const ParameterSetNodeEdit = () => {
   const { t } = usePage();
   const {
     register,
-    getValues,
     control,
-    watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterSetView>>();
 
-  const values = getValues();
-
   const { fields, append, remove } = useFieldArray({
     name: 'view.parameters',
-    control,
-  });
-
-  const { field: nextNodeId } = useController({
-    name: 'nextNodeId',
     control,
   });
 
@@ -47,16 +36,6 @@ export const ParameterSetNodeEdit = () => {
   const handleDeleteButton = (index: number) => {
     remove(index);
   };
-
-  console.log('value.view in ParameterSetNodeNodeEdit', values);
-  console.log('errors in Parameter set node edit:', errors);
-  console.log('next node id field', nextNodeId);
-  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-
-  const scenarios: IReactSelect[] = nodes.map((item) => ({
-    value: item.id,
-    label: item.title || '',
-  }));
 
   return (
     <>
@@ -114,14 +93,8 @@ export const ParameterSetNodeEdit = () => {
           <span className="subLabel">{t(`PARAMETER_SET_CONNECT_NEXT_NODE`)} </span>
           <span className="required">*</span>
         </div>
-        <Select
-          {...nextNodeId}
-          options={scenarios}
-          styles={reactSelectStyle}
-          value={scenarios.find((item) => item.value === nextNodeId.value)}
-          onChange={(options: any) => nextNodeId.onChange(options?.value)}
-        />
-        {/* <SelectNode fieldName={'nextNodeId'} /> */}
+
+        <SelectNode fieldName={'nextNodeId'} />
       </Collapse>
     </>
   );
