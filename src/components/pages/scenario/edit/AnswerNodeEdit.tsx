@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
+import { ParameterSelector } from './ParameterSelector';
 import { QuicksEdit } from './QuicksEdit';
 
 export interface IParameterSelect {
@@ -31,7 +32,7 @@ export const AnswerNodeEdit = () => {
         .map((v) => {
           return {
             label: v.name,
-            value: v.name,
+            value: v.usingName,
           };
         })
     : [];
@@ -54,6 +55,8 @@ export const AnswerNodeEdit = () => {
     control,
   });
 
+  console.log('field.value', field.value);
+
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
@@ -62,23 +65,11 @@ export const AnswerNodeEdit = () => {
           <span className="required">*</span>
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
-          <CreatableSelect
-            isClearable
+          <ParameterSelector
+            fieldValue={field.value}
+            onChange={field.onChange}
             placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
             isDisabled={!use}
-            value={
-              parameters.find((x) => x.value === field.value) || {
-                label: field.value,
-                value: field.value,
-              }
-            }
-            formatOptionLabel={(value) =>
-              value?.value?.replace('{{', '').replace('}}', '')
-            }
-            onChange={(value) => {
-              field.onChange(value?.value ? `{{${value?.value}}}` : undefined);
-            }}
-            options={parameters}
           />
         </div>
       </Collapse>
