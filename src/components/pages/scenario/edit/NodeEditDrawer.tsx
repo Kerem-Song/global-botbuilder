@@ -128,6 +128,7 @@ export const NodeEditDrawer = () => {
         caption: selectedNode.type,
         title: selectedNode.title || '',
         view: selectedNode.view,
+        nextNodeId: selectedNode.nextNodeId,
       };
 
       if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
