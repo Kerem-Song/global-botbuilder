@@ -2,41 +2,38 @@ import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
 import { FC } from 'react';
+import { Control, Path, useController } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
-export interface IParameterSelect {
-  readonly value?: string;
-  readonly label?: string;
-}
-
-export interface IParameterSelectorProps {
-  fieldValue?: string;
+export interface IParameterSelectorProps<T extends object> {
+  control: Control<T, any> | undefined;
+  path: Path<T>;
   isDisabled?: boolean;
   placeholder?: string;
-  onChange?: (value?: string) => void;
 }
 
-export const ParameterSelector: FC<IParameterSelectorProps> = ({
+export const ParameterSelector = <T extends object>({
   isDisabled,
   placeholder,
-  fieldValue,
-  onChange,
-}) => {
+  control,
+  path,
+}: IParameterSelectorProps<T>) => {
   const {
     getVariableSelectListQuery: { data },
   } = useVariableSelectClient();
-
+  const { field } = useController({ name: path, control });
   const parameters = data?.filter((v) => v.kind === VariableKind.Parameter) || [];
-  console.log('fieldValue', fieldValue);
+
   return (
     <CreatableSelect
-      isClearable
       placeholder={placeholder}
       isDisabled={isDisabled}
       value={
-        parameters.find((x) => x.usingName === fieldValue) || {
-          name: fieldValue?.replace('{{', '').replace('}}', ''),
-          usingName: fieldValue,
+        parameters.find((x) => x.usingName === field.value) || {
+          name: field.value
+            ? `${field.value}`.replace('{{', '').replace('}}', '')
+            : undefined,
+          usingName: field.value,
           kind: VariableKind.Parameter,
         }
       }
@@ -51,9 +48,10 @@ export const ParameterSelector: FC<IParameterSelectorProps> = ({
       }}
       getOptionValue={(v) => v.usingName || ''}
       formatOptionLabel={(value) => value?.name}
+      onBlur={() => field.onBlur()}
       onChange={(value) => {
         console.log(value);
-        onChange?.(value?.usingName);
+        field.onChange(value?.usingName);
       }}
       options={parameters}
     />

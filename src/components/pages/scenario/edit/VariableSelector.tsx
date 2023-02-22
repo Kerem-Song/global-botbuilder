@@ -4,11 +4,6 @@ import { IVariable } from '@models/interfaces/IVariable';
 import { Control, Path, useController } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
-export interface IVariableSelect {
-  readonly value?: string;
-  readonly label?: string;
-}
-
 export interface IVariableSelectorProps<T extends object> {
   control: Control<T, any> | undefined;
   path: Path<T>;
@@ -30,7 +25,6 @@ export const VariableSelector = <T extends object>({
   const variables = data || [];
   return (
     <CreatableSelect
-      isClearable
       placeholder={placeholder}
       isDisabled={isDisabled}
       value={
@@ -44,7 +38,7 @@ export const VariableSelector = <T extends object>({
         const newOption: IVariable = {
           name: v,
           usingName: v,
-          kind: VariableKind.Parameter,
+          kind: VariableKind.Unknown,
         };
         return newOption;
       }}

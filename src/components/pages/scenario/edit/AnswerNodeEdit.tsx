@@ -5,8 +5,7 @@ import { IGNodeEditModel, VariableKind } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
 import { useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
-import CreatableSelect from 'react-select/creatable';
+import { useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
 import { QuicksEdit } from './QuicksEdit';
@@ -50,13 +49,6 @@ export const AnswerNodeEdit = () => {
     };
   }, [watch]);
 
-  const { field } = useController({
-    name: 'view.utteranceParam',
-    control,
-  });
-
-  console.log('field.value', field.value);
-
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
@@ -66,8 +58,8 @@ export const AnswerNodeEdit = () => {
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
           <ParameterSelector
-            fieldValue={field.value}
-            onChange={field.onChange}
+            control={control}
+            path="view.utteranceParam"
             placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
             isDisabled={!use}
           />
