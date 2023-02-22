@@ -5,9 +5,9 @@ import { IGNodeEditModel, VariableKind } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
 import { useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
-import CreatableSelect from 'react-select/creatable';
+import { useFormContext } from 'react-hook-form';
 
+import { ParameterSelector } from './ParameterSelector';
 import { QuicksEdit } from './QuicksEdit';
 
 export interface IParameterSelect {
@@ -31,7 +31,7 @@ export const AnswerNodeEdit = () => {
         .map((v) => {
           return {
             label: v.name,
-            value: v.name,
+            value: v.usingName,
           };
         })
     : [];
@@ -49,11 +49,6 @@ export const AnswerNodeEdit = () => {
     };
   }, [watch]);
 
-  const { field } = useController({
-    name: 'view.utteranceParam',
-    control,
-  });
-
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
@@ -62,23 +57,11 @@ export const AnswerNodeEdit = () => {
           <span className="required">*</span>
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
-          <CreatableSelect
-            isClearable
+          <ParameterSelector
+            control={control}
+            path="view.utteranceParam"
             placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
             isDisabled={!use}
-            value={
-              parameters.find((x) => x.value === field.value) || {
-                label: field.value,
-                value: field.value,
-              }
-            }
-            formatOptionLabel={(value) =>
-              value?.value?.replace('{{', '').replace('}}', '')
-            }
-            onChange={(value) => {
-              field.onChange(value?.value ? `{{${value?.value}}}` : undefined);
-            }}
-            options={parameters}
           />
         </div>
       </Collapse>

@@ -10,6 +10,7 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { OperatorSelector } from './OperatorSelector';
 import { SelectNode } from './SelectNode';
+import { VariableSelector } from './VariableSelector';
 interface IReactSelect {
   value: string;
   label: string;
@@ -82,9 +83,10 @@ export const ConditionNodeEdit = () => {
             <FormItem
               error={errors.view && errors.view.items && errors.view?.items[0]?.op1}
             >
-              <Input
-                {...register(`view.items.${0}.op1`)}
+              <VariableSelector
                 placeholder="변수명을 입력해주세요"
+                control={control}
+                path="view.items.0.op1"
               />
             </FormItem>
 
@@ -96,9 +98,10 @@ export const ConditionNodeEdit = () => {
             <FormItem
               error={errors.view && errors.view.items && errors.view.items[0]?.op2}
             >
-              <Input
-                {...register(`view.items.${0}.op2`)}
+              <VariableSelector
                 placeholder="변수명을 입력해주세요"
+                control={control}
+                path="view.items.0.op2"
               />
             </FormItem>
 
@@ -135,9 +138,10 @@ export const ConditionNodeEdit = () => {
             <FormItem
               error={errors.view && errors.view.items && errors.view.items[i]?.op2}
             >
-              <Input
-                {...register(`view.items.${i}.op1`)}
+              <VariableSelector
                 placeholder="변수명을 입력해주세요"
+                control={control}
+                path={`view.items.${i}.op1`}
               />
             </FormItem>
 
@@ -151,9 +155,10 @@ export const ConditionNodeEdit = () => {
             <FormItem
               error={errors.view && errors.view.items && errors.view?.items[i]?.op2}
             >
-              <Input
-                {...register(`view.items.${i}.op2`)}
+              <VariableSelector
                 placeholder="변수명을 입력해주세요"
+                control={control}
+                path={`view.items.${i}.op2`}
               />
             </FormItem>
 
