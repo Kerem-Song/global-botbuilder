@@ -10,7 +10,6 @@ import Select, { StylesConfig } from 'react-select';
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
-import { SmallImageFileUploader } from './SmallImageFileUploader';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -122,7 +121,7 @@ export const ProductCardNodeEdit = () => {
             <Space direction="vertical">
               <Row align="center" gap={12} style={{ margin: 0 }}>
                 <Col span={8} className="itemProfileImg">
-                  <SmallImageFileUploader
+                  <ImageFileUploader
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                   />
                 </Col>
@@ -132,7 +131,6 @@ export const ProductCardNodeEdit = () => {
                 </Col>
               </Row>
             </Space>
-            <ImageFileUploader imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL} />
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
