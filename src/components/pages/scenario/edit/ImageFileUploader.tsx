@@ -2,7 +2,7 @@ import { icImg } from '@assets';
 import { useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -20,12 +20,12 @@ export const ImageFileUploader = ({
   listItemIndex,
   imageRatio,
 }: IImageSetting) => {
-  const { register, getValues, setValue, watch } = useFormContext();
+  const { getValues, setValue, watch } = useFormContext();
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();
   const token = useRootState((state) => state.botInfoReducer.token);
-  console.log('list item index', listItemIndex);
+
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.IMAGE_CTRL:
@@ -94,16 +94,11 @@ export const ImageFileUploader = ({
   };
 
   const handleUploadImage = async () => {
-    console.log('index', index);
-    console.log('get@', handleImageCtrlIdPath().imageFilePath);
-    console.log('getget!', getValues(handleImageCtrlIdPath().imageFilePath));
-    console.log('id@', handleImageCtrlIdPath().imageCtrl?.id);
     if (token && getValues(handleImageCtrlIdPath().imageFilePath).length > 0) {
       const formData = new FormData();
       formData.append('File', getValues(handleImageCtrlIdPath().imageFilePath)[0]);
       formData.append('SessionToken', token);
       formData.append('CtrlId', handleImageCtrlId());
-      console.log('handleImageCtrlId', handleImageCtrlId());
 
       imageUploadAsync({ formData })
         .then((res) => {
@@ -135,9 +130,6 @@ export const ImageFileUploader = ({
     }
   }, [watch(handleImageCtrlIdPath().imageFilePath)]);
 
-  useEffect(() => {
-    console.log('listitem index', listItemIndex);
-  }, [listItemIndex]);
   return (
     <>
       <label

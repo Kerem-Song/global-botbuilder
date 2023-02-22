@@ -20,10 +20,9 @@ export const ImageSettings = ({
   index,
   listItemIndex,
 }: IImageSetting) => {
-  const { register, getValues, setValue } = useFormContext();
+  const { register, getValues } = useFormContext();
   const values = getValues();
 
-  console.log('image ctrl', imageCtrl);
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.IMAGE_CTRL:
@@ -65,8 +64,6 @@ export const ImageSettings = ({
         return { imageCtrlIdPath: '', imageFilePath: '' };
     }
   };
-
-  console.log('index in imgsettings', index);
 
   return (
     <Space direction="vertical">

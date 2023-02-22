@@ -88,9 +88,9 @@ export const ParameterSetNodeEdit = () => {
         )}
       </Collapse>
 
-      <Collapse label={t(`PARAMETER_SET_NEXT_NODE_LABEL`)} useSwitch={false}>
+      <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
         <div className="m-b-8">
-          <span className="subLabel">{t(`PARAMETER_SET_CONNECT_NEXT_NODE`)} </span>
+          <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
           <span className="required">*</span>
         </div>
 

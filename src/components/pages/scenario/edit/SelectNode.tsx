@@ -23,7 +23,7 @@ export const SelectNode = ({
     name: `${fieldName}`,
     control,
   });
-  console.log('field', field);
+
   const scenarios: IReactSelect[] = nodes.map((item) => ({
     value: item.id,
     label: item.title || '',

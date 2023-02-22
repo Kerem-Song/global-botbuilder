@@ -27,6 +27,7 @@ import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
+import { IntentNodeEdit } from './IntentNodeEdit';
 import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
@@ -156,8 +157,6 @@ export const NodeEditDrawer = () => {
           } else {
             onSubmit(getValues());
           }
-
-          // onSubmit(getValues()); // carousel 생성문제
         }
         dispatch(setInvalidateNode({ id: node.id, isValid }));
         reset({ id: '', title: '' });
@@ -193,6 +192,8 @@ export const NodeEditDrawer = () => {
         return <ParameterSetNodeEdit />;
       case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
         return <OtherFlowRedirectNodeEdit />;
+      case NODE_TYPES.INTENT_NODE:
+        return <IntentNodeEdit />;
       default:
         <></>;
     }
@@ -215,17 +216,20 @@ export const NodeEditDrawer = () => {
             <div className="header">
               <span>{getValues().caption}</span>
             </div>
-            {selectedNode?.type !== NODE_TYPES.INTENT_NODE && (
-              <div className="node-item-wrap">
-                <p className="m-b-8">
-                  <span className="label">말풍선명</span>
-                  <span className="required">*</span>
-                </p>
-                <FormItem error={errors.title}>
-                  <Input placeholder="Input Chat Bubble name" {...register('title')} />
-                </FormItem>
-              </div>
-            )}
+
+            <div className="node-item-wrap">
+              <p className="m-b-8">
+                <span className="label">말풍선명</span>
+                <span className="required">*</span>
+              </p>
+              <FormItem error={errors.title}>
+                <Input
+                  placeholder="Input Chat Bubble name"
+                  {...register('title')}
+                  disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
+                />
+              </FormItem>
+            </div>
 
             {editItem()}
           </form>
