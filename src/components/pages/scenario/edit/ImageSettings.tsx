@@ -66,6 +66,8 @@ export const ImageSettings = ({
     }
   };
 
+  console.log('index in imgsettings', index);
+
   return (
     <Space direction="vertical">
       <div className="m-b-8">

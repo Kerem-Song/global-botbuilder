@@ -8,8 +8,8 @@ import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
-import { SmallImageFileUploader } from './SmallImageFileUploader';
 
 export const ListCardNodeEdit = () => {
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -80,7 +80,7 @@ export const ListCardNodeEdit = () => {
               <Space direction="vertical">
                 <Row align="center" gap={12} style={{ margin: 0 }}>
                   <Col span={7} className="itemProfileImg">
-                    <SmallImageFileUploader
+                    <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                       listItemIndex={i}
                     />

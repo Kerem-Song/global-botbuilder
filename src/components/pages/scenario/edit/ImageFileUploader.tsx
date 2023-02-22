@@ -4,6 +4,7 @@ import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
 import { ID_GEN, ID_TYPES } from '@modules';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface IImageSetting {
@@ -24,21 +25,23 @@ export const ImageFileUploader = ({
 
   const { imageUploadAsync } = imageUploadClient();
   const token = useRootState((state) => state.botInfoReducer.token);
-
+  console.log('list item index', listItemIndex);
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.IMAGE_CTRL:
         return {
           imageCtrl: values.view.imageCtrl,
-          imageFilePath: 'view.imageCtrl',
+          imageFilePath: 'view.imageCtrl.imageFile',
           imageUrl: 'view.imageCtrl.imageUrl',
+          htmlForId: 'imgUpload',
         };
 
       case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl: values.view.items?.[listItemIndex!]?.imageCtrl,
+          imageCtrl: values.view.items?.[listItemIndex!],
           imageFilePath: `view.items.${listItemIndex}.imageFile`,
           imageUrl: `view.items.${listItemIndex}.imageUrl`,
+          htmlForId: `smallImgUpload-${listItemIndex}`,
         };
 
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
@@ -46,14 +49,15 @@ export const ImageFileUploader = ({
           imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
           imageFilePath: `view.childrenViews.${index}.imageFile`,
           imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
+          htmlForId: 'imgUpload',
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl:
-            values.view.childrenViews[index!]?.items?.[listItemIndex!]?.imageCtrl,
+          imageCtrl: values.view.childrenViews[index!]?.items?.[listItemIndex!],
           imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}.imageFile`,
           imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
+          htmlForId: `smallImgUpload-${listItemIndex}`,
         };
 
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
@@ -61,6 +65,7 @@ export const ImageFileUploader = ({
           imageCtrl: values.view.profileIconUrl,
           imageFilePath: `view.profileIconUrlImageFile`,
           imageUrl: `view.profileIconUrl`,
+          htmlForId: 'smallImgUpload',
         };
 
       case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
@@ -68,9 +73,10 @@ export const ImageFileUploader = ({
           imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
           imageFilePath: `view.childrenViews.${index}.profileIconUrlImageFile`,
           imageUrl: `view.childrenViews.${index}.profileIconUrl`,
+          htmlForId: 'smallImgUpload',
         };
       default:
-        return { imageCtrl: '', imageFilePath: '', imageUrl: '' };
+        return { imageCtrl: '', imageFilePath: '', imageUrl: '', htmlForId: '' };
     }
   };
 
@@ -78,21 +84,26 @@ export const ImageFileUploader = ({
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
       case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
-        return ID_GEN.generate(ID_TYPES.PROFILE);
+        return ID_TYPES.PROFILE;
 
+      case IMAGE_CTRL_TYPES.IMAGE_CTRL:
+        return handleImageCtrlIdPath().imageCtrl?.id;
       default:
         return handleImageCtrlIdPath().imageCtrl?.id;
     }
   };
 
   const handleUploadImage = async () => {
+    console.log('index', index);
     console.log('get@', handleImageCtrlIdPath().imageFilePath);
     console.log('getget!', getValues(handleImageCtrlIdPath().imageFilePath));
+    console.log('id@', handleImageCtrlIdPath().imageCtrl?.id);
     if (token && getValues(handleImageCtrlIdPath().imageFilePath).length > 0) {
       const formData = new FormData();
       formData.append('File', getValues(handleImageCtrlIdPath().imageFilePath)[0]);
       formData.append('SessionToken', token);
       formData.append('CtrlId', handleImageCtrlId());
+      console.log('handleImageCtrlId', handleImageCtrlId());
 
       imageUploadAsync({ formData })
         .then((res) => {
@@ -115,15 +126,22 @@ export const ImageFileUploader = ({
     if (e.target.files) {
       console.log('file', e.target.files);
       setValue(handleImageCtrlIdPath().imageFilePath, e.target.files);
-
-      // handleUploadImage();
     }
   };
 
+  useEffect(() => {
+    if (token && !!getValues(handleImageCtrlIdPath().imageFilePath)) {
+      handleUploadImage();
+    }
+  }, [watch(handleImageCtrlIdPath().imageFilePath)]);
+
+  useEffect(() => {
+    console.log('listitem index', listItemIndex);
+  }, [listItemIndex]);
   return (
     <>
       <label
-        htmlFor="imgUpload"
+        htmlFor={handleImageCtrlIdPath().htmlForId}
         className={classnames('imgUploadLabel', {
           skeleton: !getValues(handleImageCtrlIdPath().imageUrl),
         })}
@@ -150,7 +168,7 @@ export const ImageFileUploader = ({
 
             <input
               type="file"
-              id="imgUpload"
+              id={handleImageCtrlIdPath().htmlForId}
               accept="image/png, image/jpeg, image/jpg"
               className="file-name-input"
               onChange={handleChangeFile}
@@ -159,9 +177,6 @@ export const ImageFileUploader = ({
           </div>
         </div>
       </label>
-      <button onClick={handleUploadImage} type="button">
-        test
-      </button>
     </>
   );
 };

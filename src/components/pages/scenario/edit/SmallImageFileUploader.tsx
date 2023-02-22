@@ -53,8 +53,7 @@ export const SmallImageFileUploader = ({
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
-          imageCtrl:
-            values.view.childrenViews[index!]?.items?.[listItemIndex!]?.imageCtrl,
+          imageCtrl: values.view.childrenViews[index!]?.items?.[listItemIndex!],
           imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}.imageFile`,
           imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
         };
@@ -91,6 +90,8 @@ export const SmallImageFileUploader = ({
   const handleUploadImage = async () => {
     console.log('get@', handleImageCtrlIdPath().imageFilePath);
     console.log('getget!', getValues(handleImageCtrlIdPath().imageFilePath));
+    console.log('handleImageCtrlId', handleImageCtrlId());
+    console.log('id@', handleImageCtrlIdPath().imageCtrl?.id);
     if (token && getValues(handleImageCtrlIdPath().imageFilePath).length > 0) {
       const formData = new FormData();
       formData.append('File', getValues(handleImageCtrlIdPath().imageFilePath)[0]);
