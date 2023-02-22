@@ -28,7 +28,9 @@ import {
   IListCardView,
   INodeBase,
   IOtherFlowRedirectView,
+  IParameterSetNode,
   IParameterSetParams,
+  IParameterSetView,
   IProductCardCarouselView,
   IProductCardView,
   IRetryConditionNode,
@@ -37,6 +39,7 @@ import {
   ITrueFalseViewBase,
   IViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
+import { arrow } from '@popperjs/core';
 
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
@@ -47,6 +50,7 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
   NODE_TYPES.CONDITION_NODE,
   NODE_TYPES.RETRY_CONDITION_NODE,
+  NODE_TYPES.PARAMETER_SET_NODE,
 ];
 
 export const nodeHelper = {
@@ -380,6 +384,23 @@ export const nodeHelper = {
 
     return result;
   },
+
+  createParameterSetNodeArrow: (
+    nodeId: string,
+    nextNodeId: INodeEditModel['nextNodeId'],
+  ): IArrow[] => {
+    const result: IArrow[] = [];
+    result.push({
+      start: `${NEXT_BUTTON_PREFIX}${nodeId}`,
+      updateKey: `${NODE_PREFIX}${nodeId}`,
+      end: `${NODE_PREFIX}${nextNodeId}`,
+      isNextNode: true,
+      type: 'blue',
+    });
+
+    return result;
+  },
+
   createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
     const result: IArrow[] = [];
     view.buttons?.forEach((b) => {
@@ -455,6 +476,13 @@ export const nodeHelper = {
           ),
         );
         break;
+      case NODE_TYPES.PARAMETER_SET_NODE:
+        arrows.push(
+          ...nodeHelper.createParameterSetNodeArrow(
+            node.id,
+            node.nextNodeId as INodeEditModel['nextNodeId'],
+          ),
+        );
     }
 
     return arrows;
@@ -488,6 +516,16 @@ export const nodeHelper = {
         ...nodeHelper.createRetryConditionNodeArrow(
           retryConditionNode.id,
           retryConditionNode.view,
+        ),
+      );
+    }
+
+    if (node.typeName === NODE_TYPES.PARAMETER_SET_NODE) {
+      const parameterSetNode: IParameterSetNode = node as IParameterSetNode;
+      arrows.push(
+        ...nodeHelper.createParameterSetNodeArrow(
+          parameterSetNode.id,
+          parameterSetNode.nextNodeId,
         ),
       );
     }

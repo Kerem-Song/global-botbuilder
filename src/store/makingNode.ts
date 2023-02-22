@@ -64,7 +64,12 @@ export const makingNodeSlice = createSlice({
           state.arrows = updateArrows;
         }
 
-        nodes.splice(index, 1, { ...old, title: node.title, view: node.view });
+        nodes.splice(index, 1, {
+          ...old,
+          title: node.title,
+          view: node.view,
+          nextNodeId: node.nextNodeId,
+        });
         state.nodes = nodes;
       }
     },

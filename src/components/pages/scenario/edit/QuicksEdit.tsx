@@ -54,7 +54,7 @@ export const QuicksEdit = () => {
             <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
               <SelectNode
-                fieldName={`quicks.${i}.actionValue`}
+                fieldName={`view.quicks.${i}.actionValue`}
                 defaultValue={values.view?.quicks?.[i].actionValue}
               />
             )}
