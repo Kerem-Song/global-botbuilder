@@ -1,12 +1,11 @@
-import { Input } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { usePage, useVariableClient } from '@hooks';
-import { IGNodeEditModel } from '@models';
+import { usePage } from '@hooks';
+import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
+import { IGNodeEditModel, VariableKind } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { SingleValue } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
 import { QuicksEdit } from './QuicksEdit';
@@ -19,27 +18,22 @@ export interface IParameterSelect {
 export const AnswerNodeEdit = () => {
   const { t } = usePage();
 
-  const {
-    trigger,
-    register,
-    getValues,
-    setValue,
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<IGNodeEditModel<IAnswerView>>();
+  const { setValue, control, watch } = useFormContext<IGNodeEditModel<IAnswerView>>();
   const use = watch('view.useUtteranceParam');
 
-  const { getVariableListQuery } = useVariableClient();
-  const { data } = getVariableListQuery();
+  const {
+    getVariableSelectListQuery: { data },
+  } = useVariableSelectClient();
 
   const parameters: IParameterSelect[] = data
-    ? data.result.map((v) => {
-        return {
-          label: v.name,
-          value: v.name,
-        };
-      })
+    ? data
+        .filter((x) => x.kind === VariableKind.Parameter)
+        .map((v) => {
+          return {
+            label: v.name,
+            value: v.name,
+          };
+        })
     : [];
 
   useEffect(() => {

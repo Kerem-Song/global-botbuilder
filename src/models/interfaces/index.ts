@@ -19,5 +19,5 @@ export * from './IScenarioModel';
 export * from './IScenarioVariable';
 export * from './ISidebarStatus';
 export * from './IUtterance';
-export * from './IVariable';
+export * from './IParameter';
 export * from './req';
