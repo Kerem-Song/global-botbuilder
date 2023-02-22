@@ -62,7 +62,9 @@
     "PARAMETER_SET_VALUE_TO_STORE": "저장할 값",
     "PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER": "변수/엔티티/상수로 입력해주세요",
     "PARAMETER_SET_DELETE_BUTTON": "파라미터 삭제",
-    "PARAMETER_SET_ADD_BUTTON": "파라미터 설정 추가"
+    "PARAMETER_SET_ADD_BUTTON": "파라미터 설정 추가",
+    "PARAMETER_SET_NEXT_NODE_LABEL": "메시지 연결 설정",
+    "PARAMETER_SET_CONNECT_NEXT_NODE": "메시지 연결"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",

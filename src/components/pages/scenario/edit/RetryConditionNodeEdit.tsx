@@ -56,7 +56,7 @@ export const RetryConditionNodeEdit = () => {
               <span className="label">재질문할 메시지 연결 </span>
               <span className="required">*</span>
             </div>
-            <SelectNode fieldName={'trueThenNextNodeId'} />
+            <SelectNode fieldName={'view.trueThenNextNodeId'} />
           </Space>
 
           <Divider />
@@ -67,7 +67,7 @@ export const RetryConditionNodeEdit = () => {
               <span>횟수 초과 메시지 연결 </span>
               <span className="required">*</span>
             </div>
-            <SelectNode fieldName={'falseThenNextNodeId'} />
+            <SelectNode fieldName={'view.falseThenNextNodeId'} />
           </Space>
         </div>
       </Collapse>

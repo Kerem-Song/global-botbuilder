@@ -90,7 +90,7 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
                 ? `view.buttons.${i}.actionType`
                 : `view.childrenViews.${index}.buttons.${i}.actionType`,
             ) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <SelectNode fieldName={`buttons.${i}.actionValue`} />
+              <SelectNode fieldName={`view.buttons.${i}.actionValue`} />
             )}
             {watch(
               index === undefined

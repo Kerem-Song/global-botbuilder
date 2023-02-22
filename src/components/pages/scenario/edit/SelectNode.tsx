@@ -20,10 +20,10 @@ export const SelectNode = ({
 
   const { control } = useFormContext();
   const { field } = useController({
-    name: `view.${fieldName}`,
+    name: `${fieldName}`,
     control,
   });
-
+  console.log('field', field);
   const scenarios: IReactSelect[] = nodes.map((item) => ({
     value: item.id,
     label: item.title || '',

@@ -1,12 +1,14 @@
 import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { IGNodeEditModel } from '@models';
+import { usePage, useRootState } from '@hooks';
+import { IGNodeEditModel, IReactSelect } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules/nodeHelper';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import Select from 'react-select';
 
+import { reactSelectStyle } from './ButtonCtrlSelector';
 import { SelectNode } from './SelectNode';
 
 export const ParameterSetNodeEdit = () => {
@@ -26,6 +28,11 @@ export const ParameterSetNodeEdit = () => {
     control,
   });
 
+  const { field: nextNodeId } = useController({
+    name: 'nextNodeId',
+    control,
+  });
+
   const handleAddButton = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
@@ -41,8 +48,15 @@ export const ParameterSetNodeEdit = () => {
     remove(index);
   };
 
-  console.log('value.view in ParameterSetNodeNodeEdit', values.view);
+  console.log('value.view in ParameterSetNodeNodeEdit', values);
   console.log('errors in Parameter set node edit:', errors);
+  console.log('next node id field', nextNodeId);
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+
+  const scenarios: IReactSelect[] = nodes.map((item) => ({
+    value: item.id,
+    label: item.title || '',
+  }));
 
   return (
     <>
@@ -95,7 +109,20 @@ export const ParameterSetNodeEdit = () => {
         )}
       </Collapse>
 
-      <SelectNode fieldName={`selectNode.actionValue`} />
+      <Collapse label={t(`PARAMETER_SET_NEXT_NODE_LABEL`)} useSwitch={false}>
+        <div className="m-b-8">
+          <span className="subLabel">{t(`PARAMETER_SET_CONNECT_NEXT_NODE`)} </span>
+          <span className="required">*</span>
+        </div>
+        <Select
+          {...nextNodeId}
+          options={scenarios}
+          styles={reactSelectStyle}
+          value={scenarios.find((item) => item.value === nextNodeId.value)}
+          onChange={(options: any) => nextNodeId.onChange(options?.value)}
+        />
+        {/* <SelectNode fieldName={'nextNodeId'} /> */}
+      </Collapse>
     </>
   );
 };

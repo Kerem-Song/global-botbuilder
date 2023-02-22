@@ -122,6 +122,7 @@ export const NodeEditDrawer = () => {
 
   useEffect(() => {
     if (selectedNode) {
+      console.log('selected node next node id', selectedNode.nextNodeId);
       const model: INodeEditModel = {
         id: selectedNode.id,
         type: selectedNode.type,
