@@ -12,6 +12,8 @@ import { PopperSelectItem } from './PopperSelectItem';
 export interface IPopperItem<T> {
   id: string;
   name: string;
+  brandname?: string;
+  account?: string;
   type?: ItemType;
   icon?: string;
   data?: T;
@@ -27,7 +29,7 @@ export interface IPopperSelectItem<T> {
   data?: T;
 }
 
-export type ItemType = 'button' | 'icon-front' | 'search';
+export type ItemType = 'button' | 'icon-front' | 'search' | 'info';
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
@@ -38,6 +40,8 @@ export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   selectedId?: string;
   popup?: boolean;
   popupList?: boolean;
+  userInfo?: boolean;
+  logoutBtn?: boolean;
   offset?: [number, number];
 }
 
@@ -47,6 +51,7 @@ export const Popper = <T extends object>({
   children,
   popup,
   popupList,
+  userInfo,
   showBullet,
   popperItems,
   popperSelect,
@@ -103,6 +108,7 @@ export const Popper = <T extends object>({
 
   const popperContainer = classNames(className, 'luna-chatbot-container', {
     'luna-popup-container': popup,
+    'luna-userInfo-container': userInfo,
   });
 
   const [items, setItems] = useState(popperItems);
@@ -173,7 +179,6 @@ export const Popper = <T extends object>({
             />
           </>
         ) : null}
-
         {items?.map((item: IPopperItem<T>) => (
           <PopperListItem
             key={item.id}

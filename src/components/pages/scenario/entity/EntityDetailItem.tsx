@@ -13,15 +13,16 @@ import { AddEntryBtn } from './AddEntryBtn';
 export interface IEntityDetailItemProps {
   index: number;
   entriesRemove: UseFieldArrayRemove;
+  searchKeyword: string;
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   index,
   entriesRemove,
+  searchKeyword,
 }) => {
   const { control } = useFormContext();
   const { confirm } = useSystemModal();
-
   const openDeleteEntryModal = async () => {
     const result = await confirm({
       title: '엔트리 그룹 삭제',
@@ -44,27 +45,39 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     name: `entries.${index}.synonym`,
   });
 
+  const { field: synonymField } = useController({
+    control,
+    name: `entries.${index}.synonym`,
+  });
+
   const { field } = useController({
     name: `entries.${index}.representativeEntry`,
     control,
   });
 
-  return (
-    <Col>
-      <Input
-        {...field}
-        size="normal"
-        style={{
-          width: '200px',
-          marginRight: '8px',
-        }}
-      />
-      <div className="entryList">
-        <div className="entries">
-          <AddEntryBtn fields={fields} append={append} remove={remove} index={index} />
+  if (
+    field.value.includes(searchKeyword) ||
+    synonymField.value.find((x: string) => x.includes(searchKeyword))
+  ) {
+    return (
+      <Col>
+        <Input
+          {...field}
+          size="normal"
+          style={{
+            width: '200px',
+            marginRight: '8px',
+          }}
+        />
+        <div className="entryList">
+          <div className="entries">
+            <AddEntryBtn fields={fields} append={append} remove={remove} index={index} />
+          </div>
         </div>
-      </div>
-      <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
-    </Col>
-  );
+        <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
+      </Col>
+    );
+  } else {
+    return <></>;
+  }
 };

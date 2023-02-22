@@ -1,7 +1,6 @@
 import '@styles/header.scss';
 
-import { Popper } from '@components';
-import { UserInfoModal } from '@components/layout/UserInfoModal';
+import { IPopperItem, Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
 import { FC, useEffect, useState } from 'react';
@@ -61,6 +60,21 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     },
   ];
 
+  const userInfoMenus: IPopperItem<object>[] = [
+    {
+      id: 'info',
+      name: 'cs_kimsuky',
+      brandname: 'Lunasoft',
+      account: 'lunacs@lunasoft.co.kr',
+      type: 'info',
+    },
+    {
+      id: 'logout',
+      name: '로그아웃',
+      type: 'button',
+    },
+  ];
+
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
 
   return (
@@ -89,11 +103,16 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           >
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
-          <div className="userName" role="presentation" onClick={handleOpenUserInfoModal}>
-            {user}
-          </div>
+          <Popper
+            placement="bottom-end"
+            offset={[0, 5]}
+            popup
+            userInfo
+            popperItems={userInfoMenus}
+          >
+            <button className="userName">{user}</button>
+          </Popper>
           <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
-          <UserInfoModal isOpen={isOpenUserInfoModal} />
         </div>
       </div>
     </header>

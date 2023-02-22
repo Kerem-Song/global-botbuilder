@@ -3,20 +3,22 @@ import { Button, Card, Col, Input, Row, Title } from '@components';
 import { useModalOpen, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
+import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import { t } from 'i18next';
+import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { EntityDetailPopup } from './EntityDetailPopup';
 
 export const MyEntity = () => {
-  const [entryId, setEntryId] = useState('');
+  const [entryId, setEntryId] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>();
   const { isOpen, handleIsOpen } = useModalOpen();
   const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
-  const { data: initialData, fetchNextPage } = changePageNumberQuery;
+  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchKeyword);
+
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
@@ -58,7 +60,6 @@ export const MyEntity = () => {
     if (data?.pages && data?.pages?.reduce((acc, cur) => acc + cur.totalPage, 0) > 0) {
       return true;
     }
-
     return false;
   };
 
@@ -81,9 +82,8 @@ export const MyEntity = () => {
         <Input
           size="small"
           search
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          onSearch={(v) => setSearchKeyword(v || '')}
+          onBlur={(e) => setSearchKeyword(e.target.value)}
+          onPressEnter={(value) => setSearchKeyword(value)}
         ></Input>
       </div>
       <div className="entityWrapper">
@@ -101,7 +101,9 @@ export const MyEntity = () => {
                       ref={ref}
                     >
                       <div className="cardHeader">
-                        <span className="title">{x.usingName}</span>
+                        <span className="title">
+                          {util.replaceKeywordMark(x.usingName, searchKeyword)}
+                        </span>
                         <button
                           className="icDelete"
                           onClick={(e) => {
@@ -111,11 +113,11 @@ export const MyEntity = () => {
                         />
                       </div>
                       <div className="entries">
-                        <>
+                        <div>
                           <span className="entry">
-                            {x.entries.map((item) => item.concat(' '))}
+                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
                           </span>
-                        </>
+                        </div>
                       </div>
                     </div>
                   </Col>

@@ -22,7 +22,7 @@ export const useEntityClient = () => {
   const http = useHttp();
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const getEntityListQuery = (pageNo: number) => {
+  const getEntityListQuery = (pageNo: number, keyword?: string) => {
     return http
       .post<
         ISearchEntryGroup,
@@ -31,31 +31,34 @@ export const useEntityClient = () => {
         sessionToken: token,
         countPerPage: 20,
         pageNo: pageNo,
+        keyword: keyword,
       })
       .then((res) => {
         return res.data.result;
       });
   };
 
-  const changePageNumberQuery = useInfiniteQuery(
-    ['change-pageNumber'],
-    async ({ pageParam = 1 }) => {
-      return await getEntityListQuery(pageParam);
-    },
-    {
-      getNextPageParam: (lastpage, pages) => {
-        if (lastpage.totalPage > 1) {
-          const max = Math.ceil(lastpage.total / 20);
-          const next = pages.length + 1;
-          return next <= max ? next : undefined;
-        }
+  const changePageNumberQuery = (keyword?: string) => {
+    return useInfiniteQuery(
+      ['change-pageNumber', keyword],
+      async ({ pageParam = 1 }) => {
+        return await getEntityListQuery(pageParam, keyword);
       },
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      retry: 1,
-    },
-  );
+      {
+        getNextPageParam: (lastpage, pages) => {
+          if (lastpage.totalPage > 1) {
+            const max = Math.ceil(lastpage.total / 20);
+            const next = pages.length + 1;
+            return next <= max ? next : undefined;
+          }
+        },
+        refetchOnMount: true,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
+        retry: 1,
+      },
+    );
+  };
 
   const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
     const result = await http.post<
@@ -79,14 +82,6 @@ export const useEntityClient = () => {
       queryClient.invalidateQueries(['change-pageNumber']);
       return result.data;
     }
-  });
-
-  const entryGroupGetMutate = useMutation(async (getEntry: IGetEntryGroup) => {
-    const result = await http.post<
-      IGetEntryGroup,
-      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
-    >('Builder/GetEntryGroup', getEntry);
-    return result.data;
   });
 
   const getEntryDetailQuery = (entryId?: string) => {
@@ -114,7 +109,6 @@ export const useEntityClient = () => {
     getEntityListQuery,
     changePageNumberQuery,
     entryGroupMutate,
-    entryGroupGetMutate,
     entryGroupDeleteMutate,
     getEntryDetailQuery,
   };

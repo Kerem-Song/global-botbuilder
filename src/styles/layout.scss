@@ -143,3 +143,9 @@ textarea {
 input {
   font-weight: 400;
 }
+
+mark {
+  font-weight: 500;
+  color: $primary700;
+  background-color: transparent;
+}

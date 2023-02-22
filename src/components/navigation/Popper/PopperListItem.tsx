@@ -47,17 +47,17 @@ export const PopperListItem = <T extends object>({
           </div>
         );
       }
-      case 'search': {
+      case 'info': {
         return (
-          <div
-            key={item.id}
-            role="presentation"
-            data-nodename={item.name}
-            className={popperList}
-            onClick={handleCheckChange}
-          >
-            <div className="items-name">{item.name}</div>
-          </div>
+          <>
+            <div className="userInfoTitle">
+              <p className="username">{item.name}</p>
+            </div>
+            <div className="userBrandInfo">
+              <p className="userBrandName">{item.brandname}</p>
+              <p className="userAccount">{item.account}</p>
+            </div>
+          </>
         );
       }
       default:

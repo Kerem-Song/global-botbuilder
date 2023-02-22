@@ -25,10 +25,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
   const entryGroupName = useRef<HTMLInputElement>(null);
-  const { entryGroupMutate, entryGroupGetMutate, getEntryDetailQuery } =
-    useEntityClient();
+  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
   const formMethods = useForm<ISaveEntryGroup>({
@@ -107,7 +106,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       reset(resetValue);
     }
   }, [entryDetails?.data]);
-
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
@@ -213,7 +211,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   placeholder="Input search word"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                  onSearch={(v) => setSearchKeyword(v || '')}
                 ></Input>
               </div>
               <div className="registerEntry">
@@ -248,21 +245,16 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     <>
                       {watch('entries').length > 0 ? (
                         <>
-                          {fields
-                            .filter((x) =>
-                              x.representativeEntry
-                                .toLowerCase()
-                                .includes(searchKeyword.toLowerCase()),
-                            )
-                            .map((entryGroup, i) => {
-                              return (
-                                <EntityDetailItem
-                                  key={i}
-                                  index={i}
-                                  entriesRemove={remove}
-                                />
-                              );
-                            })}
+                          {fields.map((entryGroup, i) => {
+                            return (
+                              <EntityDetailItem
+                                key={i}
+                                index={i}
+                                entriesRemove={remove}
+                                searchKeyword={searchKeyword}
+                              />
+                            );
+                          })}
                         </>
                       ) : (
                         <Row
