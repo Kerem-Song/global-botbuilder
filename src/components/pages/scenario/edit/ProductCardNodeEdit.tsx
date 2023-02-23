@@ -1,5 +1,6 @@
 import { Col, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -83,11 +84,13 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ProductCardNodeEdit = () => {
+  const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
     getValues,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
@@ -101,20 +104,18 @@ export const ProductCardNodeEdit = () => {
   return (
     <>
       <div className="node-item-wrap collapse">
-        <Collapse label={'이미지 설정'} useSwitch={false}>
-          {values.view?.imageCtrl && (
-            <ImageSettings
-              imageRatio={imageRatio}
-              setImageRatio={setImageRatio}
-              imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
-            />
-          )}
+        <Collapse label={t(`IMAGE_TYPE`)} useSwitch={false}>
+          <ImageSettings
+            imageRatio={imageRatio}
+            setImageRatio={setImageRatio}
+            imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+          />
         </Collapse>
       </div>
       <div className="node-item-wrap collapse">
         <Collapse label={'프로필'} useSwitch={false}>
           <div className="m-b-8">
-            <span className="subLabel">프로필 이미지 업로드 </span>
+            <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
             <span className="required">*</span>
           </div>
           <div className="m-b-8">
@@ -126,7 +127,7 @@ export const ProductCardNodeEdit = () => {
                   />
                 </Col>
                 <Col span={14}>
-                  <p>Recommended size</p>
+                  <p>{t(`RECOMMENDED_SIZE`)}</p>
                   <p>640 x 640</p>
                 </Col>
               </Row>
@@ -134,7 +135,7 @@ export const ProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <span className="label">브랜드 이름</span>
+              <span className="label">{t(`PRODUCT_NODE_BRAND_NAME`)}</span>
               <FormItem error={errors.view && errors.view.profileName}>
                 <Input {...register(`view.profileName`)} />
               </FormItem>
@@ -144,17 +145,17 @@ export const ProductCardNodeEdit = () => {
       </div>
       <div className="node-item-wrap collapse">
         <div className="m-b-8">
-          <Collapse label={'상품 정보 설정'} useSwitch={false}>
+          <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
               <p>
-                <span className="label">상품명 </span>
+                <span className="label">{t(`PRODUCT_NODE_PRODUCT_NAME`)} </span>
                 <span className="required">*</span>
               </p>
               <FormItem error={errors.view && errors.view.description}>
                 <Input {...register(`view.description`)} />
               </FormItem>
               <p>
-                <span className="label">가격 </span>
+                <span className="label">{t(`PRODUCT_NODE_PRICE`)} </span>
                 <span className="required">*</span>
               </p>
               <div className="m-b-8">
@@ -179,7 +180,7 @@ export const ProductCardNodeEdit = () => {
                 </Row>
               </div>
 
-              <span className="label">할인</span>
+              <span className="label">{t(`PRODUCT_NODE_DISCOUNT`)}</span>
               <FormItem error={errors.view && errors.view.salePrice}>
                 <Input {...register(`view.salePrice`)} />
               </FormItem>
@@ -187,7 +188,7 @@ export const ProductCardNodeEdit = () => {
           </Collapse>
         </div>
       </div>
-      <Collapse label={'버튼'} useSwitch={false}>
+      <Collapse label={t(`BUTTON`)} useSwitch={false}>
         {values.view && values.view.buttons && <ButtonsEdit />}
       </Collapse>
     </>

@@ -1,6 +1,6 @@
 import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
@@ -13,6 +13,7 @@ import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
 
 export const ListCardCarouselNodeEdit = () => {
+  const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -67,14 +68,18 @@ export const ListCardCarouselNodeEdit = () => {
         <>
           <div className="node-item-wrap">
             <div className="m-b-8">
-              <span className="label">Head Title </span>
+              <span className="label">{t(`LIST_NODE_HEAD_TITLE_SETTING`)} </span>
               <span className="required">*</span>
             </div>
             <Input {...register(`view.childrenViews.${index}.header`)} />
           </div>
 
-          <Collapse label={'Head 이미지 설정'} useSwitch={true} field={'imageCtrl'}>
-            {values.view?.childrenViews[index]?.imageCtrl && (
+          <Collapse
+            label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
+            useSwitch={true}
+            field={`childrenViews.${index}.imageCtrl`}
+          >
+            {watch(`view.childrenViews.${index}.imageCtrl`) && (
               <ImageSettings
                 imageRatio={imageRatio}
                 setImageRatio={setImageRatio}
@@ -83,11 +88,11 @@ export const ListCardCarouselNodeEdit = () => {
               />
             )}
           </Collapse>
-          <Collapse label={'List'} useSwitch={false}>
+          <Collapse label={t(`LIST`)} useSwitch={false}>
             {fields.map((item, i) => (
               <div key={item.id}>
                 <div className="m-b-8">
-                  <span className="subLabel">List 이미지 업로드 </span>
+                  <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
                   <span className="required">*</span>
                 </div>
                 <div className="m-b-8">
@@ -101,7 +106,7 @@ export const ListCardCarouselNodeEdit = () => {
                         />
                       </Col>
                       <Col span={15}>
-                        <p>Recommended</p>
+                        <p>{t(`RECOMMENDED_SIZE`)}</p>
                         <p>400 x 400 </p>
                       </Col>
                     </Row>
@@ -109,7 +114,7 @@ export const ListCardCarouselNodeEdit = () => {
                 </div>
                 <div className="m-b-8">
                   <Space direction="vertical">
-                    <span className="label">List Title</span>
+                    <span className="label">{t(`TITLE_INPUT`)}</span>
                     <Input
                       {...register(`view.childrenViews.${index}.items.${i}.title`)}
                     />
@@ -117,7 +122,7 @@ export const ListCardCarouselNodeEdit = () => {
                 </div>
                 <div className="m-b-8">
                   <Space direction="vertical">
-                    <span className="label">List Contents</span>
+                    <span className="label">{t(`CONTENT_INPUT`)}</span>
                     <Input
                       {...register(`view.childrenViews.${index}.items.${i}.description`)}
                     />
@@ -126,7 +131,7 @@ export const ListCardCarouselNodeEdit = () => {
                 {i > 1 && (
                   <div className="deleteBtn">
                     <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
-                      Delete Button
+                      {t(`DELETE_BUTTON`)}
                     </Button>
                   </div>
                 )}
@@ -135,13 +140,13 @@ export const ListCardCarouselNodeEdit = () => {
             <div>
               {fields.length < 5 ? (
                 <Button shape="ghost" className="addBtn" onClick={handleAddListButton}>
-                  <span>+ Add a List</span>
+                  <span>+ {t(`ADD_A_NEW_LIST`)}</span>
                 </Button>
               ) : null}
             </div>
           </Collapse>
           {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
-          <Collapse label={'버튼'} useSwitch={false}>
+          <Collapse label={t(`BUTTON`)} useSwitch={false}>
             {values.view && values.view?.childrenViews[index]?.buttons && (
               <ButtonsEdit index={index} />
             )}

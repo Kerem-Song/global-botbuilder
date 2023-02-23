@@ -1,5 +1,6 @@
 import { Button, Col, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -12,11 +13,13 @@ import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
 
 export const ListCardNodeEdit = () => {
+  const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
     getValues,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardView>>();
   const values = getValues();
@@ -60,8 +63,12 @@ export const ListCardNodeEdit = () => {
         </div>
         <Input {...register('view.header')} />
       </div>
-      <Collapse label={'Head 이미지 설정'} useSwitch={true} field={'imageCtrl'}>
-        {values.view?.imageCtrl && (
+      <Collapse
+        label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
+        useSwitch={true}
+        field={'imageCtrl'}
+      >
+        {watch(`view.imageCtrl`) && (
           <ImageSettings
             imageRatio={imageRatio}
             setImageRatio={setImageRatio}
@@ -69,11 +76,11 @@ export const ListCardNodeEdit = () => {
           />
         )}
       </Collapse>
-      <Collapse label={'List'} useSwitch={false}>
+      <Collapse label={t(`LIST`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
-              <span className="subLabel">List 이미지 업로드 </span>
+              <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
               <span className="required">*</span>
             </div>
             <div className="m-b-8">
@@ -86,7 +93,7 @@ export const ListCardNodeEdit = () => {
                     />
                   </Col>
                   <Col span={15}>
-                    <p>Recommended</p>
+                    <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>400 x 400 </p>
                   </Col>
                 </Row>
@@ -94,19 +101,19 @@ export const ListCardNodeEdit = () => {
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
-                <span className="label">List Title</span>
+                <span className="label">{t(`TITLE_INPUT`)}</span>
                 <Input {...register(`view.items.${i}.title`)} />
               </Space>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
-                <span className="label">List Contents</span>
+                <span className="label">{t(`CONTENT_INPUT`)}</span>
                 <Input {...register(`view.items.${i}.description`)} />
               </Space>
             </div>
             <div className="deleteBtn">
               <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
-                Delete Button
+                {t(`DELETE_BUTTON`)}
               </Button>
             </div>
           </div>
@@ -114,7 +121,7 @@ export const ListCardNodeEdit = () => {
         <div>
           {fields.length < 5 ? (
             <Button shape="ghost" className="addBtn" onClick={handleAddListButton}>
-              <span>+ Add a List</span>
+              <span>+ {t(`ADD_A_NEW_LIST`)}</span>
             </Button>
           ) : null}
         </div>
