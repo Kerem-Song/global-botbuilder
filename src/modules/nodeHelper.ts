@@ -505,16 +505,6 @@ export const nodeHelper = {
       );
     }
 
-    if (node.typeName === NODE_TYPES.PARAMETER_SET_NODE) {
-      const parameterSetNode: IParameterSetNode = node as IParameterSetNode;
-      arrows.push(
-        ...nodeHelper.createParameterSetNodeArrow(
-          parameterSetNode.id,
-          parameterSetNode.nextNodeId,
-        ),
-      );
-    }
-
     if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
       const cardCarouselNode: IBasicCardCarouselNode = node as IBasicCardCarouselNode;
       arrows.push(
