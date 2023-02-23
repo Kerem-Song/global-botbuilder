@@ -1,5 +1,5 @@
 import { icImg } from '@assets';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
 import { ID_TYPES } from '@modules';
@@ -20,6 +20,7 @@ export const ImageFileUploader = ({
   listItemIndex,
   imageRatio,
 }: IImageSetting) => {
+  const { t } = usePage();
   const { getValues, setValue, watch } = useFormContext();
   const values = getValues();
 
@@ -157,7 +158,12 @@ export const ImageFileUploader = ({
             ) : (
               <img src={icImg} alt="icImg" />
             )}
-
+            <p>{t(`RECOMMENDED_SIZE`)}</p>
+            <p>
+              {imageRatio === ImageAspectRatio.Rectangle
+                ? t(`IMAGE_TYPE_RECTANGLE`) + ' : 800 x 400'
+                : t(`IMAGE_TYPE_SQUARE`) + ' : 800 x 800'}
+            </p>
             <input
               type="file"
               id={handleImageCtrlIdPath().htmlForId}
