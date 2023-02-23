@@ -22,9 +22,13 @@ import { SortableScenarioListItem } from './SortableScenarioListItem';
 
 interface ISortableContainer {
   scenarioList?: IScenarioModel[];
+  disabled?: boolean;
 }
 
-export const SortableScenarioListContainer = ({ scenarioList }: ISortableContainer) => {
+export const SortableScenarioListContainer = ({
+  scenarioList,
+  disabled,
+}: ISortableContainer) => {
   const [list, setList] = useState<IScenarioModel[]>();
   const { scenarioSortAsync } = useScenarioClient();
   useEffect(() => {
@@ -64,7 +68,11 @@ export const SortableScenarioListContainer = ({ scenarioList }: ISortableContain
       modifiers={[restrictToParentElement]}
     >
       {list && (
-        <SortableContext items={list} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={list}
+          strategy={verticalListSortingStrategy}
+          disabled={disabled}
+        >
           {list.map((item) => (
             <SortableScenarioListItem key={item.id} item={item} />
           ))}
