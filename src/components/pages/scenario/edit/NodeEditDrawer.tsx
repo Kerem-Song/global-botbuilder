@@ -212,7 +212,7 @@ export const NodeEditDrawer = () => {
     >
       <div className="wrapper">
         <FormProvider {...formMethods}>
-          <form>
+          <form onSubmit={handleSubmit(onsubmit)}>
             <div className="header">
               <span>{getValues().caption}</span>
             </div>

@@ -12,7 +12,7 @@ export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
   return (
     <Card>
       <div className="countConditionWrapper">
-        {view.parameters.map((item) => (
+        {view.parameters?.map((item) => (
           <p key={item.name}>{`{{${item.name}}} = ${item.value}`}</p>
         ))}
       </div>
