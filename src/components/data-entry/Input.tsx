@@ -17,11 +17,11 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string | undefined>(args.value || args.defaultValue);
 
-  useEffect(() => {
-    setValue(args.value || args.defaultValue);
-  }, [args.value, args.defaultValue, args]);
+  // useEffect(() => {
+  //   setValue(args.value || args.defaultValue);
+  // }, [args.value, args.defaultValue, args]);
 
   const {
     showCount,
@@ -35,6 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     ...inputProps
   } = args;
 
+  console.log(value);
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case 'Enter':
