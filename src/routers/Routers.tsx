@@ -4,6 +4,7 @@ import { Layout } from '@components/layout/Layout';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';
+import { AuthPage } from '../pages/AuthPage';
 import DashboardPage from '../pages/DashboardPage';
 import DataApiPage from '../pages/DataApiPage';
 import DeploymentPage from '../pages/DeploymentPage';
@@ -79,6 +80,7 @@ const finalRoutes = [
       ],
     };
   }),
+  { path: 'auth', element: <AuthPage />, errorElement: <>404</> },
   {
     path: '*',
     element: <LocaleNavigate />,
