@@ -1,7 +1,7 @@
 import { FormItem, Input, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Space } from '@components/layout';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
 
 export const BasicCardCarousleNodeEdit = () => {
+  const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -38,22 +39,24 @@ export const BasicCardCarousleNodeEdit = () => {
     <>
       {watch(`view.childrenViews.${index}.id`) && (
         <>
-          <Collapse label={'이미지 설정'} useSwitch={true} field={'imageCtrl'}>
-            {values.view &&
-              values.view?.childrenViews &&
-              values.view?.childrenViews[index]?.imageCtrl && (
-                <ImageSettings
-                  imageRatio={imageRatio}
-                  setImageRatio={setImageRatio}
-                  index={index}
-                  imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
-                />
-              )}
+          <Collapse
+            label={t(`IMAGE_SETTING`)}
+            useSwitch={true}
+            field={`childrenViews.${index}.imageCtrl`}
+          >
+            {watch(`view.childrenViews.${index}.imageCtrl`) && (
+              <ImageSettings
+                imageRatio={imageRatio}
+                setImageRatio={setImageRatio}
+                index={index}
+                imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+              />
+            )}
           </Collapse>
 
-          <Collapse label={'텍스트 설정'} useSwitch={false}>
+          <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
-              <span className="subLabel">타이틀</span>
+              <span className="subLabel">{t(`TITLE_INPUT`)}</span>
               <FormItem
                 error={
                   errors.view &&
@@ -61,9 +64,12 @@ export const BasicCardCarousleNodeEdit = () => {
                   errors.view.childrenViews[index]?.title
                 }
               >
-                <Input {...register(`view.childrenViews.${index}.title`)} />
+                <Input
+                  {...register(`view.childrenViews.${index}.title`)}
+                  placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+                />
               </FormItem>
-              <span className="subLabel">내용</span>
+              <span className="subLabel">{t(`CONTENT_INPUT`)}</span>
               <FormItem
                 error={
                   errors.view &&
@@ -75,14 +81,14 @@ export const BasicCardCarousleNodeEdit = () => {
                   height={100}
                   showCount
                   maxLength={1000}
-                  placeholder="Input Text"
+                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
                   {...register(`view.childrenViews.${index}.description`)}
                 />
               </FormItem>
             </Space>
           </Collapse>
 
-          <Collapse label={'버튼'} useSwitch={false}>
+          <Collapse label={t(`BUTTON`)} useSwitch={false}>
             {values.view &&
               values.view.childrenViews &&
               values.view.childrenViews[index]?.buttons && <ButtonsEdit index={index} />}

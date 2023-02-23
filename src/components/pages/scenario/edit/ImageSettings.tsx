@@ -1,4 +1,5 @@
 import { Col, Row, Space } from '@components/layout';
+import { usePage } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction } from 'react';
@@ -20,6 +21,7 @@ export const ImageSettings = ({
   index,
   listItemIndex,
 }: IImageSetting) => {
+  const { t } = usePage();
   const { register, getValues } = useFormContext();
   const values = getValues();
 
@@ -40,7 +42,7 @@ export const ImageSettings = ({
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
           imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
-          imageFilePath: `view.childrenViews.${index}`,
+          imageFilePath: `view.childrenViews.${index}.imageCtrl`,
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
@@ -68,11 +70,11 @@ export const ImageSettings = ({
   return (
     <Space direction="vertical">
       <div className="m-b-8">
-        <span className="subLabel">이미지 업로드 </span>
+        <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
         <span className="required">*</span>
       </div>
 
-      <span className="subLabel">이미지 타입</span>
+      <span className="subLabel">{t(`IMAGE_TYPE`)}</span>
       <Row justify="space-between">
         <Col span={12} className="radioContainer">
           <input
@@ -86,9 +88,10 @@ export const ImageSettings = ({
               Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Rectangle
             }
+            defaultChecked={true}
             onClick={() => setImageRatio(ImageAspectRatio.Rectangle)}
           />
-          <span>직사각형</span>
+          <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
         </Col>
         <Col span={12} className="radioContainer">
           <input
@@ -104,7 +107,7 @@ export const ImageSettings = ({
             }
             onClick={() => setImageRatio(ImageAspectRatio.Square)}
           />
-          <span>정사각형</span>
+          <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
         </Col>
       </Row>
 

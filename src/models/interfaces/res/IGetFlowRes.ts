@@ -117,6 +117,7 @@ export interface IHasButtonViewBase extends IViewBase {
 
 export interface IHasImageCtrlViewBase extends IViewBase {
   imageCtrl?: IImageCtrl;
+  childrenViews?: IViewItem[];
 }
 
 export interface IHasUtteranceViewBase extends IViewBase {
