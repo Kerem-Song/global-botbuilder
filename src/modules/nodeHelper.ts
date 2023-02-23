@@ -114,18 +114,19 @@ export const nodeHelper = {
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
       },
-      buttons: [
-        {
-          id: ID_GEN.generate(ID_TYPES.CTRL),
-          label: '버튼 1',
-          seq: 0,
-          typeName: CTRL_TYPES.BUTTON_CTRL,
-          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
-        },
-      ],
+      buttons: [nodeHelper.createDefaultButtonCtrl()],
     };
 
     return result;
+  },
+  createDefaultButtonCtrl: (index = 0) => {
+    return {
+      id: ID_GEN.generate(ID_TYPES.CTRL),
+      label: `버튼 ${index + 1}`,
+      seq: index,
+      typeName: CTRL_TYPES.BUTTON_CTRL,
+      actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
+    };
   },
   createDefaultBasicCardCarouselView: () => {
     const result: IBasicCardCarouselView = {
@@ -204,15 +205,7 @@ export const nodeHelper = {
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
       },
-      buttons: [
-        {
-          id: ID_GEN.generate(ID_TYPES.CTRL),
-          label: '버튼 1',
-          seq: 0,
-          typeName: CTRL_TYPES.BUTTON_CTRL,
-          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
-        },
-      ],
+      buttons: [nodeHelper.createDefaultButtonCtrl()],
     };
 
     return result;
@@ -245,15 +238,7 @@ export const nodeHelper = {
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
       },
-      buttons: [
-        {
-          id: ID_GEN.generate(ID_TYPES.CTRL),
-          label: '버튼 1',
-          seq: 0,
-          typeName: CTRL_TYPES.BUTTON_CTRL,
-          actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
-        },
-      ],
+      buttons: [nodeHelper.createDefaultButtonCtrl()],
     };
 
     return result;

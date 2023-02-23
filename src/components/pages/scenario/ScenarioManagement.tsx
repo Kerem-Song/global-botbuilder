@@ -88,8 +88,8 @@ export const ScenarioManagement: FC<{
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
           {scenarios ? (
-            // scenarios?.map((item) => <ScenarioItem key={item.id} item={item} />)
             <SortableScenarioListContainer
+              disabled={isActivated || searchKeyword.trim().length > 0}
               scenarioList={scenarios.filter(
                 (x) =>
                   (!isActivated || x.activated) &&

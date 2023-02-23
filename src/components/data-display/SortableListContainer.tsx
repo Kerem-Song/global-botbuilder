@@ -14,6 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 
@@ -25,6 +26,9 @@ interface ISortableContainer {
 
 export const SortableListContainer = ({ listItems }: ISortableContainer) => {
   const [list, setList] = useState<IListCardItem[]>();
+  const isEditDrawerOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -67,7 +71,11 @@ export const SortableListContainer = ({ listItems }: ISortableContainer) => {
       modifiers={[restrictToParentElement]}
     >
       {list && (
-        <SortableContext items={list} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={list}
+          strategy={verticalListSortingStrategy}
+          disabled={isEditDrawerOpen}
+        >
           <div className="listItems">
             {list.map((item) => (
               <SortableListItem key={item.id} item={item} />

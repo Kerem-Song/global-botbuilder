@@ -15,6 +15,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
+import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { ACTION_TYPES, IButtonCtrl } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
@@ -34,6 +35,9 @@ export const SortableButtonCtrlContainer = ({
 }: ISortableButtonCtrlContainerProps) => {
   const { updateLine } = useUpdateLines();
   const [buttons, setButtons] = useState<IButtonCtrl[]>([]);
+  const isEditDrawerOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
+  );
 
   useEffect(() => {
     setButtons(buttonList || []);
@@ -76,7 +80,11 @@ export const SortableButtonCtrlContainer = ({
           collisionDetection={closestCenter}
           modifiers={[restrictToParentElement]}
         >
-          <SortableContext items={buttons} strategy={rectSortingStrategy}>
+          <SortableContext
+            items={buttons}
+            strategy={rectSortingStrategy}
+            disabled={isEditDrawerOpen}
+          >
             {buttons.map((item) => (
               <SortableButtonCtrlItem
                 key={item.id}
