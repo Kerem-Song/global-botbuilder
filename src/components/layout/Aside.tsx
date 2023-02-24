@@ -55,7 +55,7 @@ export const Aside = () => {
           </button>
         </div>
         <div className="partnerLnbHeader" data-sidebar={sidebarStatus}>
-          <Link to="">
+          <a href="https://partnerscenter.lunacode.dev">
             {sidebarStatus ? (
               <p className="headerName">{ts('PARTNERS_CENTER')}</p>
             ) : (
@@ -63,7 +63,7 @@ export const Aside = () => {
                 <img src={icChatbot} alt="icChatbot" />
               </div>
             )}
-          </Link>
+          </a>
         </div>
       </div>
 
