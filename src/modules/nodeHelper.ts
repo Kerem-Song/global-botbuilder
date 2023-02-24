@@ -675,6 +675,7 @@ export const nodeHelper = {
     }
 
     if (
+      !isNext &&
       endNode.nodeKind === NodeKind.InputNode &&
       startNode.nodeKind === NodeKind.InputNode
     ) {
@@ -705,6 +706,7 @@ export const nodeHelper = {
     const clone: INode = {
       ...restProps,
       id: ID_GEN.generate(ID_TYPES.NODE),
+      nextNodeId: undefined,
     };
 
     if (view) {
@@ -755,6 +757,14 @@ export const nodeHelper = {
     ctrls.map(([key, value]) => {
       clone[key] = nodeHelper.cloneCtrl(value);
     });
+
+    clone['nextNodeId'] = undefined;
+    clone['falseThenNextNodeId'] = undefined;
+    clone['trueThenNextNodeId'] = undefined;
+
+    if (clone['actionType'] === ACTION_TYPES.LUNA_NODE_REDIRECT) {
+      clone['actionValue'] = undefined;
+    }
 
     return clone;
   },
