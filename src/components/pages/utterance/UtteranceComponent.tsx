@@ -1,4 +1,3 @@
-import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { ISearchData } from '@models/interfaces/IUtterance';
 import { useState } from 'react';
 

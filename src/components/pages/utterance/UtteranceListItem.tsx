@@ -1,12 +1,14 @@
 import { icUtteranceEmpty } from '@assets';
-import { Skeleton } from '@components';
+import { Col, Row, Skeleton } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
 import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
+import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useParams } from 'react-router';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
@@ -68,6 +70,9 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const isExistInitialData = (
     data: InfiniteData<IPagingItems<IIntentListItem>> | undefined,
   ): boolean => {
+    if (!data) {
+      return true;
+    }
     if (data?.pages && data?.pages?.reduce((acc, cur) => acc + cur.totalPage, 0) > 0) {
       return true;
     }
@@ -77,6 +82,63 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
 
   return (
     <>
+      {!initialData || isFetching ? (
+        <>
+          {util.range(5).map((n) => (
+            <tr className="list" key={n}>
+              <td role="presentation" className="utteranceList intent">
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={16}
+                  width={`${util.random(100)}%`}
+                  baseColor="rgba(0,0,0,0.06)"
+                  style={{ lineHeight: 2 }}
+                />
+              </td>
+              <td role="presentation" className="utteranceList connectScenarios">
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={16}
+                  width={`50%`}
+                  baseColor="rgba(0,0,0,0.06)"
+                  style={{ lineHeight: 2 }}
+                />
+              </td>
+              <td role="presentation" className="utteranceList utterance">
+                <Row gap={10}>
+                  <Col span={util.random(8)}>
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={16}
+                      baseColor="rgba(0,0,0,0.06)"
+                      style={{ lineHeight: 2 }}
+                    />
+                  </Col>
+                  <Col span={util.random(8)}>
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={16}
+                      baseColor="rgba(0,0,0,0.06)"
+                      style={{ lineHeight: 2 }}
+                    />
+                  </Col>
+                  <Col span={util.random(8)}>
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={16}
+                      baseColor="rgba(0,0,0,0.06)"
+                      style={{ lineHeight: 2 }}
+                    />
+                  </Col>
+                </Row>
+              </td>
+              <td className="utteranceList icon"></td>
+            </tr>
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
       {
         // 스켈레톤
         // isFetching ? (

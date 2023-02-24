@@ -12,4 +12,10 @@ export const util = {
       }),
     );
   },
+  range: (length: number) => {
+    return Array.from({ length }, (_, index) => index + 1);
+  },
+  random: (max: number) => {
+    return Math.random() * max + 1;
+  },
 };
