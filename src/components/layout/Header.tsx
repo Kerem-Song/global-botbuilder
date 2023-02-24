@@ -15,6 +15,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const language = i18n.language;
   const { isOpen, handleIsOpen } = useModalOpen();
   const [isOpenUserInfoModal, setIsOpenUserInfoModal] = useState<boolean>(false);
+  const userInfo = useRootState((state) => state.userInfoReducer);
 
   const handleOpenUserInfoModal = () => {
     setIsOpenUserInfoModal(!isOpenUserInfoModal);
@@ -36,7 +37,6 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     handleIsOpen(false);
   }, [location]);
 
-  const user = 'UserName';
   const languageMenus = [
     {
       id: `ko`,
@@ -64,9 +64,18 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     {
       id: 'info',
       name: 'cs_kimsuky',
-      brandname: 'Lunasoft',
-      account: 'lunacs@lunasoft.co.kr',
-      type: 'info',
+      type: 'children',
+      children: (
+        <div className="luna-userInfo-container">
+          <div className="userInfoTitle">
+            <p className="username">{userInfo.loginUserName}</p>
+          </div>
+          <div className="userBrandInfo">
+            <p className="userBrandName">업체명이라고함</p>
+            <p className="userAccount">{userInfo.loginId}</p>
+          </div>
+        </div>
+      ),
     },
     {
       id: 'logout',
@@ -110,7 +119,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
             userInfo
             popperItems={userInfoMenus}
           >
-            <button className="userName">{user}</button>
+            <button className="userName">{userInfo.loginUserName}</button>
           </Popper>
           <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
         </div>

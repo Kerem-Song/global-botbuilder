@@ -2,7 +2,7 @@ import { Input } from '@components/data-entry';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
@@ -14,6 +14,7 @@ export interface IPopperItem<T> {
   name: string;
   brandname?: string;
   account?: string;
+  children?: ReactNode | React.ReactNode[];
   type?: ItemType;
   icon?: string;
   data?: T;
@@ -29,7 +30,7 @@ export interface IPopperSelectItem<T> {
   data?: T;
 }
 
-export type ItemType = 'button' | 'icon-front' | 'search' | 'info';
+export type ItemType = 'button' | 'icon-front' | 'search' | 'children';
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
@@ -108,7 +109,6 @@ export const Popper = <T extends object>({
 
   const popperContainer = classNames(className, 'luna-chatbot-container', {
     'luna-popup-container': popup,
-    'luna-userInfo-container': userInfo,
   });
 
   const [items, setItems] = useState(popperItems);

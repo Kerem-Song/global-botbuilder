@@ -47,18 +47,8 @@ export const PopperListItem = <T extends object>({
           </div>
         );
       }
-      case 'info': {
-        return (
-          <>
-            <div className="userInfoTitle">
-              <p className="username">{item.name}</p>
-            </div>
-            <div className="userBrandInfo">
-              <p className="userBrandName">{item.brandname}</p>
-              <p className="userAccount">{item.account}</p>
-            </div>
-          </>
-        );
+      case 'children': {
+        return <>{item.children}</>;
       }
       default:
         return (

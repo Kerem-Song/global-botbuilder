@@ -14,9 +14,11 @@ import intentReducer from './intentSlice';
 import makingNodeSliceReducer from './makingNode';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
+import userInfoReducer from './userInfSlice';
 
 const rootReducer = combineReducers({
   authReducer,
+  userInfoReducer,
   systemModalReducer,
   sideBarStatusReducer,
   brandInfoReducer,
@@ -34,7 +36,7 @@ type CombinedStateType = ReturnType<ReducerType>;
 const persistConfig: PersistConfig<CombinedStateType> = {
   key: 'root',
   storage,
-  whitelist: ['authReducer'],
+  whitelist: ['authReducer', 'brandInfoReducer', 'userInfoReducer'],
   transforms: [
     encryptTransform({
       secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
