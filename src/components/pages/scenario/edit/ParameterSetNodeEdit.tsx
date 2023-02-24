@@ -14,6 +14,7 @@ export const ParameterSetNodeEdit = () => {
   const {
     register,
     control,
+    getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterSetView>>();
 
@@ -21,6 +22,7 @@ export const ParameterSetNodeEdit = () => {
     name: 'view.parameters',
     control,
   });
+  console.log('get value param', getValues());
 
   const handleAddButton = () => {
     console.log('handle add condition btn');
@@ -93,8 +95,9 @@ export const ParameterSetNodeEdit = () => {
           <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
           <span className="required">*</span>
         </div>
-
-        <SelectNode fieldName={'nextNodeId'} />
+        <FormItem error={errors.nextNodeId}>
+          <SelectNode fieldName={'nextNodeId'} />
+        </FormItem>
       </Collapse>
     </>
   );

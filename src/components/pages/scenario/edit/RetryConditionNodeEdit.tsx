@@ -1,3 +1,4 @@
+import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Divider, Space } from '@components/layout';
 import { IGNodeEditModel } from '@models';
@@ -23,7 +24,11 @@ const countOptions: IReactSelect[] = [
 ];
 
 export const RetryConditionNodeEdit = () => {
-  const { getValues, control } = useFormContext<IGNodeEditModel<IRetryConditionView>>();
+  const {
+    getValues,
+    control,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IRetryConditionView>>();
 
   const { field } = useController({
     name: `view.count`,
@@ -56,7 +61,9 @@ export const RetryConditionNodeEdit = () => {
               <span className="label">재질문할 메시지 연결 </span>
               <span className="required">*</span>
             </div>
-            <SelectNode fieldName={'view.trueThenNextNodeId'} />
+            <FormItem error={errors.view?.trueThenNextNodeId}>
+              <SelectNode fieldName={'view.trueThenNextNodeId'} />
+            </FormItem>
           </Space>
 
           <Divider />
@@ -67,7 +74,9 @@ export const RetryConditionNodeEdit = () => {
               <span>횟수 초과 메시지 연결 </span>
               <span className="required">*</span>
             </div>
-            <SelectNode fieldName={'view.falseThenNextNodeId'} />
+            <FormItem error={errors.view?.falseThenNextNodeId}>
+              <SelectNode fieldName={'view.falseThenNextNodeId'} />
+            </FormItem>
           </Space>
         </div>
       </Collapse>

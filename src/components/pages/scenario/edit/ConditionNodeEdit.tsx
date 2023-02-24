@@ -224,7 +224,9 @@ export const ConditionNodeEdit = () => {
                 <span className="label">Message connection </span>
                 <span className="required">*</span>
               </div>
-              <SelectNode fieldName={'view.trueThenNextNodeId'} />
+              <FormItem error={errors.view?.trueThenNextNodeId}>
+                <SelectNode fieldName={'view.trueThenNextNodeId'} />
+              </FormItem>
             </Space>
 
             <Divider />
@@ -236,7 +238,9 @@ export const ConditionNodeEdit = () => {
                 <span>Next message </span>
                 <span className="required">*</span>
               </div>
-              <SelectNode fieldName={'view.falseThenNextNodeId'} />
+              <FormItem error={errors.view?.falseThenNextNodeId}>
+                <SelectNode fieldName={'view.falseThenNextNodeId'} />
+              </FormItem>
             </Space>
           </div>
         </div>

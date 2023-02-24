@@ -112,6 +112,7 @@
 
       .thumbnail {
         height: rem(96);
+        object-fit: contain;
         
         img {
           border-radius: rem(8) rem(8) 0 0;
