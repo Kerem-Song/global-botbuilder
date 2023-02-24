@@ -124,6 +124,7 @@ export const ImageFileUploader = ({
       setValue(handleImageCtrlIdPath().imageFilePath, e.target.files);
     }
   };
+  console.log('imageRatio', imageRatio);
 
   useEffect(() => {
     if (token && !!getValues(handleImageCtrlIdPath().imageFilePath)) {
@@ -158,12 +159,17 @@ export const ImageFileUploader = ({
             ) : (
               <img src={icImg} alt="icImg" />
             )}
-            <p>{t(`RECOMMENDED_SIZE`)}</p>
-            <p>
-              {imageRatio === ImageAspectRatio.Rectangle
-                ? t(`IMAGE_TYPE_RECTANGLE`) + ' : 800 x 400'
-                : t(`IMAGE_TYPE_SQUARE`) + ' : 800 x 800'}
-            </p>
+            {(imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL ||
+              imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) && (
+              <>
+                <p>{t(`RECOMMENDED_SIZE`)}</p>
+                <p>
+                  {imageRatio === ImageAspectRatio.Rectangle
+                    ? t(`IMAGE_TYPE_RECTANGLE`) + ' : 800 x 400'
+                    : t(`IMAGE_TYPE_SQUARE`) + ' : 800 x 800'}
+                </p>
+              </>
+            )}
             <input
               type="file"
               id={handleImageCtrlIdPath().htmlForId}

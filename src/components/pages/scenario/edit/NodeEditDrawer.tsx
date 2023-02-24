@@ -9,9 +9,12 @@ import {
   INodeEditModel,
   listCardCarouselNodeEditSchema,
   listCardNodeEditSchema,
+  otherFlowRedirectNodeEditSchema,
+  parameterSetNodeEditNextNodeIdSchema,
   parameterSetNodeEditSchema,
   productCardCarouselNodeEditSchema,
   productCardNodeEditSchema,
+  retryConditionNodeEditSchema,
   textNodeEditSchema,
 } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
@@ -86,9 +89,21 @@ export const NodeEditDrawer = () => {
           then: conditionNodeEditSchema,
         })
         .when('type', {
+          is: NODE_TYPES.RETRY_CONDITION_NODE,
+          then: retryConditionNodeEditSchema,
+        })
+        .when('type', {
           is: NODE_TYPES.PARAMETER_SET_NODE,
           then: parameterSetNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+          then: otherFlowRedirectNodeEditSchema,
         }),
+      nextNodeId: yup.string().when('type', {
+        is: NODE_TYPES.PARAMETER_SET_NODE,
+        then: parameterSetNodeEditNextNodeIdSchema,
+      }),
     })
     .required();
 
@@ -212,7 +227,7 @@ export const NodeEditDrawer = () => {
     >
       <div className="wrapper">
         <FormProvider {...formMethods}>
-          <form onSubmit={handleSubmit(onsubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="header">
               <span>{getValues().caption}</span>
             </div>

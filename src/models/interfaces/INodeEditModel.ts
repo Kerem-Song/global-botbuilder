@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 
+import { OtherFlowRedirectNode } from './../../components/pages/scenario/nodes/OtherFlowRedirectNode';
 import { TNodeTypes } from './ICard';
 import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 
@@ -33,13 +34,19 @@ export const buttonsEditSchema = yup
   .of(
     yup.object().shape({
       label: yup.string().trim().required('필수 입력 항목입니다.'),
-      actionValue: yup.string().when('actionType', {
-        is: ACTION_TYPES.URL,
-        then: yup
-          .string()
-          .url('http, https 형식으로 입력해 주세요')
-          .required('필수 입력 항목입니다.'),
-      }),
+      actionValue: yup
+        .string()
+        .when('actionType', {
+          is: ACTION_TYPES.URL,
+          then: yup
+            .string()
+            .url('http, https 형식으로 입력해 주세요')
+            .required('필수 입력 항목입니다.'),
+        })
+        .when('actionType', {
+          is: ACTION_TYPES.LUNA_NODE_REDIRECT,
+          then: yup.string().required('필수 입력 항목입니다.'),
+        }),
     }),
   );
 
@@ -125,6 +132,13 @@ export const conditionNodeEditSchema = yup.object().shape({
       op2: yup.string().trim().required(`필수 입력 항목입니다.`),
     }),
   ),
+  trueThenNextNodeId: yup.string().required('필수 입력 항목입니다.'),
+  falseThenNextNodeId: yup.string().required('필수 입력 항목입니다.'),
+});
+
+export const retryConditionNodeEditSchema = yup.object().shape({
+  trueThenNextNodeId: yup.string().required('필수 입력 항목입니다.'),
+  falseThenNextNodeId: yup.string().required('필수 입력 항목입니다.'),
 });
 
 export const parameterSetNodeEditSchema = yup.object().shape({
@@ -140,12 +154,22 @@ export const parameterSetNodeEditSchema = yup.object().shape({
   ),
 });
 
+export const parameterSetNodeEditNextNodeIdSchema = yup
+  .string()
+  .required('필수 입력 항목입니다.');
+
+export const otherFlowRedirectNodeEditSchema = yup.object().shape({
+  otherFlowId: yup.string().required('필수 입력 항목입니다.'),
+});
+
 export const basicCardCarouselNodeEditSchema = yup.object().shape({
   childrenViews: yup.array().of(basicCardNodeEditSchema),
 });
+
 export const listCardCarouselNodeEditSchema = yup.object().shape({
   childrenViews: yup.array().of(listCardNodeEditSchema),
 });
+
 export const productCardCarouselNodeEditSchema = yup.object().shape({
   header: yup.string().trim().max(15, '15자를 초과할 수 없습니다.'),
   childrenViews: yup.array().of(productCardNodeEditSchema),

@@ -1,6 +1,8 @@
+import { FormItem } from '@components/data-entry';
 import { Space } from '@components/layout';
 import { useScenarioClient } from '@hooks';
-import { IReactSelect } from '@models';
+import { IGNodeEditModel, IReactSelect } from '@models';
+import { IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -15,7 +17,11 @@ export const OtherFlowRedirectNodeEdit = () => {
   const { getCachedScenarioList } = useScenarioClient();
   const data = getCachedScenarioList(botId);
 
-  const { getValues, control } = useFormContext();
+  const {
+    getValues,
+    control,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IOtherFlowRedirectView>>();
   const { field } = useController({
     name: `view.otherFlowId`,
     control,
@@ -23,7 +29,7 @@ export const OtherFlowRedirectNodeEdit = () => {
 
   const values = getValues();
 
-  console.log('values in other flow redirect node edit:', values.view);
+  console.log('values in other flow redirect node edit:', values);
   console.log('data in ofr', data);
 
   useEffect(() => {
@@ -40,16 +46,18 @@ export const OtherFlowRedirectNodeEdit = () => {
             <span className="subLabel">Other Flow Redirect 설정 </span>
             <span className="required">*</span>
           </div>
-          <Select
-            {...field}
-            options={scenarioList}
-            styles={reactSelectStyle}
-            defaultValue={scenarioList.find(
-              (item) => item.value === values.view.otherNodeId,
-            )}
-            value={scenarioList.find((item) => item.value === field.value)}
-            onChange={(options: any) => field.onChange(options?.value)}
-          />
+          <FormItem error={errors.view?.otherFlowId}>
+            <Select
+              {...field}
+              options={scenarioList}
+              styles={reactSelectStyle}
+              defaultValue={scenarioList.find(
+                (item) => item.value === values.view?.otherNodeId,
+              )}
+              value={scenarioList.find((item) => item.value === field.value)}
+              onChange={(options: any) => field.onChange(options?.value)}
+            />
+          </FormItem>
         </Space>
       </div>
     </div>

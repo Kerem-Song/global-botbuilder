@@ -88,7 +88,6 @@ export const ImageSettings = ({
               Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Rectangle
             }
-            defaultChecked={true}
             onClick={() => setImageRatio(ImageAspectRatio.Rectangle)}
           />
           <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
@@ -115,6 +114,7 @@ export const ImageSettings = ({
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
+        imageRatio={imageRatio}
       />
     </Space>
   );
