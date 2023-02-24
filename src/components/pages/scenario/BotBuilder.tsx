@@ -1,4 +1,7 @@
+import { icCardPaste } from '@assets';
+import { IPopperItem } from '@components/navigation';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
+import { useContextMenu } from '@hooks/useContextMenu';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
@@ -8,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
-import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
+import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -180,6 +183,43 @@ export const Botbuilder = () => {
     }
   };
 
+  const [cutNode, setCutNode] = useState<INode>();
+
+  const handlePasteCard = () => {
+    console.log('------------');
+    // console.log('cutnode in paste', cutNode);
+    // if (cutNode) {
+    //   console.log('handlePasteCard cutNode: ', cutNode);
+    //   dispatch(appendNode(cutNode));
+    // }
+  };
+  const handleDeleteCard = (node: INode) => {
+    console.log('handle delete card');
+    dispatch(removeItem(node.id));
+  };
+
+  const canvasContextMenu: IPopperItem<{ action: () => void }> = {
+    id: 'paste',
+    name: 'to paste',
+    type: 'icon-front',
+    icon: icCardPaste,
+    data: {
+      action: handlePasteCard,
+    },
+  };
+  const { clicked, setClicked, points, setPoints } = useContextMenu();
+
+  const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    console.log('on context click');
+    setClicked(true);
+    const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
+    console.log('canvasrect', canvasRect);
+    console.log('client xy', e.clientX, e.clientY);
+    setPoints({
+      x: Math.round(e.clientX / scale) - canvasRect.left,
+      y: Math.round(e.clientY / scale) - canvasRect.top,
+    });
+  };
   return (
     <>
       <div
@@ -196,11 +236,16 @@ export const Botbuilder = () => {
         }}
       >
         <BotBuilderZoomBtn />
+
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
           ref={canvasRef}
           role="presentation"
+          onContextMenu={(e) => {
+            e.preventDefault();
+            handleContenxtMenu(e);
+          }}
         >
           {nodes.map((item, i) => (
             <Draggable
@@ -235,6 +280,7 @@ export const Botbuilder = () => {
                   zIndex: 1,
                 }}
                 ref={(el) => (nodeRef.current[i] = el)}
+                // onContextMenu={(e) => e.preventDefault()}
               >
                 <Node
                   typeName={item.type}
@@ -258,6 +304,26 @@ export const Botbuilder = () => {
               handleIsOpen={handleIsOpen}
               popUpPosition={popUpPosition}
             />
+          )}
+          {clicked && (
+            <div
+              className="luna-popup-container luna-chatbot-container"
+              style={{
+                top: points.x,
+                left: points.y,
+                position: 'absolute',
+                backgroundColor: '#ffffff',
+              }}
+            >
+              <div
+                className="luna-chatbot-list luna-popup-list"
+                role="presentation"
+                onClick={handlePasteCard}
+              >
+                <img src={canvasContextMenu.icon} alt="icon" />
+                <p className="items-name">{canvasContextMenu.name}</p>
+              </div>
+            </div>
           )}
         </div>
       </div>

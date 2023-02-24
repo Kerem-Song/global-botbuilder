@@ -1,6 +1,7 @@
 import icAdd from '@assets/icons/ic_add.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
 import icBtnTempleHover from '@assets/icons/ic_btn_temple_hover.svg';
+import icCardCut from '@assets/icons/ic_card_cut.svg';
 import icCardDelete from '@assets/icons/ic_card_delete.svg';
 import icCardDuplication from '@assets/icons/ic_card_duplication.svg';
 import icCardPaste from '@assets/icons/ic_card_paste.svg';
@@ -120,6 +121,7 @@ export {
   icAdd,
   icBtnTemple,
   icBtnTempleHover,
+  icCardCut,
   icCardDelete,
   icCardDuplication,
   icCardPaste,

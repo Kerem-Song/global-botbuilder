@@ -1,4 +1,5 @@
 import {
+  icCardCut,
   icCardDelete,
   icCardDuplication,
   icCardPaste,
@@ -91,6 +92,18 @@ export const Node: FC<INodeProps> = ({
     dispatch(appendNode(cloneNode));
   };
 
+  const handleCutCard = (node: INode) => {
+    console.log('카피할 노드:', node);
+    const cutNode = nodeHelper.cloneNode(node);
+    console.log('handle cut card:', cutNode);
+
+    if (cutNode) {
+      // setCutNode(cutNode);
+    }
+
+    // dispatch(removeItem(node.id));
+  };
+
   const handlePasteCard = (node: INode) => {
     console.log('handle Paste');
   };
@@ -133,6 +146,15 @@ export const Node: FC<INodeProps> = ({
       },
     },
     {
+      id: 'cut',
+      name: 'Cut',
+      type: 'icon-front',
+      icon: icCardCut,
+      data: {
+        action: handleCutCard,
+      },
+    },
+    {
       id: 'paste',
       name: 'To Paste',
       type: 'icon-front',
@@ -169,9 +191,9 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         return nodeMenu;
       case NODE_TYPES.INTENT_NODE:
-        return [nodeMenu[1]];
+        return [nodeMenu[2]];
       default:
-        return nodeMenu.slice(0, 3);
+        return nodeMenu.slice(0, 4);
     }
   };
 
