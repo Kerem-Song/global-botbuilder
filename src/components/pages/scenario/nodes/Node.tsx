@@ -26,7 +26,7 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
-import { setGuideStartNode } from '@store/botbuilderSlice';
+import { setClipBoard, setGuideStartNode } from '@store/botbuilderSlice';
 import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC, KeyboardEvent } from 'react';
@@ -88,20 +88,12 @@ export const Node: FC<INodeProps> = ({
   const bodyClass = classNames('luna-node-body');
 
   const handleDuplicationCard = (node: INode) => {
-    const cloneNode = nodeHelper.cloneNode(node);
-    dispatch(appendNode(cloneNode));
+    dispatch(setClipBoard(node));
   };
 
   const handleCutCard = (node: INode) => {
-    console.log('카피할 노드:', node);
-    const cutNode = nodeHelper.cloneNode(node);
-    console.log('handle cut card:', cutNode);
-
-    if (cutNode) {
-      // setCutNode(cutNode);
-    }
-
-    // dispatch(removeItem(node.id));
+    dispatch(setClipBoard(node));
+    dispatch(removeItem(node.id));
   };
 
   const handlePasteCard = (node: INode) => {

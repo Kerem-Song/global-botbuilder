@@ -45,6 +45,8 @@ export const Botbuilder = () => {
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
 
+  const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+
   const { getScenario } = useScenarioClient();
   getScenario(selectedScenario?.id);
 
@@ -186,6 +188,10 @@ export const Botbuilder = () => {
   const [cutNode, setCutNode] = useState<INode>();
 
   const handlePasteCard = () => {
+    if (clipBoard) {
+      const clone = nodeHelper.cloneNode(clipBoard);
+      dispatch(appendNode({ ...clone, x: points.x, y: points.y }));
+    }
     console.log('------------');
     // console.log('cutnode in paste', cutNode);
     // if (cutNode) {
@@ -213,8 +219,6 @@ export const Botbuilder = () => {
     console.log('on context click');
     setClicked(true);
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
-    console.log('canvasrect', canvasRect);
-    console.log('client xy', e.clientX, e.clientY);
     setPoints({
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
@@ -309,8 +313,8 @@ export const Botbuilder = () => {
             <div
               className="luna-popup-container luna-chatbot-container"
               style={{
-                top: points.x,
-                left: points.y,
+                top: points.y,
+                left: points.x,
                 position: 'absolute',
                 backgroundColor: '#ffffff',
               }}

@@ -24,7 +24,7 @@ export interface BotBuilderMaker {
   basicScenarios?: IScenarioModel[];
   invalidateNodes: Record<string, boolean>;
   carouselIndex: Record<string, number>;
-  clipBoard?: INode | IArrow;
+  clipBoard?: INode;
 
   // token?: string;
   // botInfo?: IBotModel;
@@ -104,6 +104,9 @@ export const botbuilderSlice = createSlice({
       result[id] = index;
       state.carouselIndex = result;
     },
+    setClipBoard: (state, action: PayloadAction<INode | undefined>) => {
+      state.clipBoard = action.payload;
+    },
   },
 });
 
@@ -120,5 +123,6 @@ export const {
   //setBotInfo,
   setInvalidateNode,
   setCarouselIndex,
+  setClipBoard,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
