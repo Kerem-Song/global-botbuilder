@@ -5,7 +5,6 @@ import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -82,6 +81,7 @@ export const MyEntity = () => {
         <Input
           size="small"
           search
+          placeholder="Input search word"
           onBlur={(e) => setSearchKeyword(e.target.value)}
           onPressEnter={(value) => setSearchKeyword(value)}
         ></Input>

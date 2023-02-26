@@ -41,7 +41,6 @@ export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   selectedId?: string;
   popup?: boolean;
   popupList?: boolean;
-  userInfo?: boolean;
   logoutBtn?: boolean;
   offset?: [number, number];
 }
@@ -52,7 +51,6 @@ export const Popper = <T extends object>({
   children,
   popup,
   popupList,
-  userInfo,
   showBullet,
   popperItems,
   popperSelect,
