@@ -98,6 +98,12 @@
           border: 1px solid $gray200;
           border-radius: rem(8);
           background-color: $grayWhite;
+
+          &.selected {
+            background-color: $primary100;
+            border: rem(1) solid $primary200;
+            border-radius: rem(8);
+          }
         }
       }
     }
