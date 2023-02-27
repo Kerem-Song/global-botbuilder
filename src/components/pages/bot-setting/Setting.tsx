@@ -1,7 +1,18 @@
 import { icCopy, icLine } from '@assets';
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
+import { usePage, useRootState } from '@hooks';
+import { lunaToast } from '@modules/lunaToast';
+import { util } from '@modules/util';
 
 export const Setting = () => {
+  const { t } = usePage();
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+
+  const handleCopyBotId = async () => {
+    await util.copyClipboard(botInfo?.id);
+    lunaToast.info(t('COPY_BOT_ID_MESSAGE'));
+  };
+
   return (
     <div className="settingWrap">
       <div className="title">Chatbot Setting</div>
@@ -12,7 +23,7 @@ export const Setting = () => {
       >
         <form>
           <Space direction="vertical">
-            <p style={{ fontSize: '16px', fontWeight: 500 }}>Default Setting</p>
+            <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('BASIC_SETTING')}</p>
             <Row align="center" gap={10}>
               <Col>
                 <span>Bot name</span>
@@ -20,9 +31,10 @@ export const Setting = () => {
               <Col flex="auto">
                 <FormItem>
                   <Input
+                    value={botInfo?.botName}
                     showCount
                     maxLength={20}
-                    placeholder="Please enter a search word"
+                    placeholder={t('BOT_NAME_PLACEHOLDER')}
                   />
                 </FormItem>
               </Col>
@@ -32,25 +44,11 @@ export const Setting = () => {
                 <span>Bot ID</span>
               </Col>
               <Col flex="auto">
-                <Input disabled />
+                <Input disabled value={botInfo?.id} />
               </Col>
               <Col>
-                <Button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: '34px',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <img src={icCopy} alt="copy"></img>
-                    <p>Copy</p>
-                  </div>
+                <Button onClick={handleCopyBotId} icon={icCopy}>
+                  Copy
                 </Button>
               </Col>
             </Row>

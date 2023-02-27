@@ -39,9 +39,13 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
     >
       <Space direction="vertical">
         <span className="channel-title">{t('PROD_CHANNEL')}</span>
-        <span className="channel-name">{model.prodChannel}</span>
+        <span className="channel-name">
+          {model.channelInfos?.find((x) => x.isLive)?.name}
+        </span>
         <span className="channel-title">{t('TEST_CHANNEL')}</span>
-        <span className="channel-name">{model.testChannel}</span>
+        <span className="channel-name">
+          {model.channelInfos?.find((x) => !x.isLive)?.name}
+        </span>
       </Space>
     </Card>
   );

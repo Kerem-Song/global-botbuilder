@@ -18,4 +18,7 @@ export const util = {
   random: (max: number) => {
     return Math.random() * max + 1;
   },
+  copyClipboard: async (text: string | undefined) => {
+    await navigator.clipboard.writeText(text || '');
+  },
 };

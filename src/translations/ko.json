@@ -119,5 +119,10 @@
   },
   "UtternaceDetailPage": {
     "TITLE": "발화관리 상세"
+  },
+  "setting": {
+    "BOT_NAME_PLACEHOLDER": "봇 이름을 입력해주세요.",
+    "COPY_BOT_ID_MESSAGE": "봇 ID가 복사되었습니다.",
+    "BASIC_SETTING": "기본 설정"
   }
 }

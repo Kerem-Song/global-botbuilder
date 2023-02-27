@@ -1,6 +1,9 @@
+import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
+import { setToken } from '@store/authSlice';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
@@ -10,9 +13,11 @@ export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
+  const dispatch = useDispatch();
+  const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    headers: {},
+    headers: { Authorization: token },
     //withCredentials: true,
   });
   console.log('import.meta. env', import.meta.env);
@@ -32,6 +37,9 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
 
   instance.interceptors.response.use(
     function (response) {
+      if (response.data.newToken) {
+        dispatch(setToken(response.data.newToken));
+      }
       if (!response.data.isSuccess) {
         if (
           response.data.exception &&
