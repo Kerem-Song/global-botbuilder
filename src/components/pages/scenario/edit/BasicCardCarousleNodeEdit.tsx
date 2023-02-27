@@ -69,7 +69,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                 />
               </FormItem>
-              <span className="subLabel">{t(`CONTENT_INPUT`)}</span>
+
               <FormItem
                 error={
                   errors.view &&
@@ -78,6 +78,8 @@ export const BasicCardCarousleNodeEdit = () => {
                 }
               >
                 <InputTextarea
+                  label={t(`CONTENT_INPUT`)}
+                  hasTitle={true}
                   height={100}
                   showCount
                   maxLength={1000}

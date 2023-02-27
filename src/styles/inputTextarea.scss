@@ -7,12 +7,36 @@
   border-radius: rem(8);
 }
 
-.textCounter {
-  position: absolute;
-  top: rem(14);
-  right: 0;
-  padding-right: rem(14);
-  color: $gray300;
-  font-size: rem(12);
-  line-height: rem(14);
+// .textCounter {
+//   position: absolute;
+//   top: rem(14);
+//   right: 0;
+//   padding-right: rem(14);
+//   color: $gray300;
+//   font-size: rem(12);
+//   line-height: rem(14);
+// }
+
+.textareaWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: rem(8);
+
+  .textareaLabel {
+    font-size: rem(15);
+    font-weight: 500;
+    color: #000000;
+    
+    &.hasTitle {
+      color: $gray500;
+      font-size: rem(13);
+    }
+  }
+
+  .textCounter {
+    color: $gray300;
+    font-size: rem(12);
+    line-height: rem(14);
+  }
 }

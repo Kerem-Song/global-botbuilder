@@ -89,6 +89,7 @@
     "CONTENT_INPUT": "내용",
     "TITLE_INPUT_PLACEHOLDER": "타이틀을 입력해 주세요",
     "CONTENT_INPUT_PLACEHOLDER": "내용을 입력해 주세요",
+    "TEXT": "텍스트",
     "BASIC_NODE_TEXT_SETTING": "텍스트 설정",
     "VALIDATION_REQUIRED": "필수 입력 항목 입니다",
     "VALIDATION_STRING_LIMIT_15": "15자 이상 입력하실 수 없습니다",

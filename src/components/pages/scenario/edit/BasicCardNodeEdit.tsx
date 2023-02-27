@@ -53,10 +53,13 @@ export const BasicCardNodeEdit = () => {
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
             />
           </FormItem>
-          <span className="subLabel">{t(`CONTENT_INPUT`)}</span>
+
           <FormItem error={errors.view && errors.view.description}>
             <InputTextarea
+              label={t(`CONTENT_INPUT`)}
               height={100}
+              hasTitle={true}
+              style={{ minHeight: '100px', maxHeight: '320px' }}
               showCount
               maxLength={1000}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
