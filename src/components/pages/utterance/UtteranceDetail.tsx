@@ -12,6 +12,7 @@ import {
   IUtteranceItem,
   IUtteranceModel,
 } from '@models';
+import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -50,6 +51,10 @@ export const UtteranceDetail = () => {
 
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
   const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+
+  const filterKeyword = fields.filter((x) =>
+    x.text?.toLowerCase().includes(searchWord.toLowerCase()),
+  );
 
   useEffect(() => {
     if (hasUtteranceId && hasUtteranceId.data) {
@@ -265,37 +270,47 @@ export const UtteranceDetail = () => {
               size="small"
               search
               placeholder="Input search text"
-              value={searchWord}
-              onChange={(e) => setSearchWord(e.target.value)}
-              onSearch={(v) => setSearchWord(v || '')}
+              onBlur={(e) => setSearchWord(e.target.value)}
+              onPressEnter={(value) => setSearchWord(value!)}
             />
           </FormItem>
           <button className="icDelete" onClick={openDeleteCheckboxModal} />
         </Space>
         <Row style={{ marginTop: '12px' }}>
           <>
-            {watch('items').length > 0 ? (
-              fields
-                .filter((x) => x.text?.toLowerCase().includes(searchWord.toLowerCase()))
-                .map((v, i) => {
-                  return (
-                    <>
-                      <div key={i} className="utteranceItem">
-                        <Checkbox
-                          {...register(`items.${i}.isChecked`)}
-                          style={{ marginLeft: '20px' }}
-                        />
-                        <p className="item">{v.text}</p>
-                      </div>
-                    </>
-                  );
-                })
-            ) : (
+            {watch('items').length === 0 ? (
               <Row style={{ width: '100%', marginTop: '12px' }}>
                 <div className="emptyList utteranceItem">
                   <div className="empty">
                     <img src={icUtteranceEmpty} alt="empty" />
                     <span>No registered Utterance.</span>
+                  </div>
+                </div>
+              </Row>
+            ) : fields.find((x) =>
+                x.text?.toLowerCase().includes(searchWord.toLowerCase()),
+              ) ? (
+              filterKeyword.map((v, i) => {
+                return (
+                  <>
+                    <div key={i} className="utteranceItem">
+                      <Checkbox
+                        {...register(`items.${i}.isChecked`)}
+                        style={{ marginLeft: '20px' }}
+                      />
+                      <p className="item">
+                        {util.replaceKeywordMark(v.text!, searchWord)}
+                      </p>
+                    </div>
+                  </>
+                );
+              })
+            ) : (
+              <Row style={{ width: '100%', marginTop: '12px' }}>
+                <div className="emptyList utteranceItem">
+                  <div className="empty">
+                    <img src={icUtteranceEmpty} alt="empty" />
+                    <span>No search results found.</span>
                   </div>
                 </div>
               </Row>

@@ -35,7 +35,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     ...inputProps
   } = args;
 
-  console.log(value);
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case 'Enter':

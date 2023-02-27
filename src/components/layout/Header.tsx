@@ -1,9 +1,7 @@
-import '@styles/header.scss';
-
 import { IPopperItem, Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -14,12 +12,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const location = useLocation();
   const language = i18n.language;
   const { isOpen, handleIsOpen } = useModalOpen();
-  const [isOpenUserInfoModal, setIsOpenUserInfoModal] = useState<boolean>(false);
   const userInfo = useRootState((state) => state.userInfoReducer);
-
-  const handleOpenUserInfoModal = () => {
-    setIsOpenUserInfoModal(!isOpenUserInfoModal);
-  };
 
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: string) => {
@@ -112,13 +105,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           >
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
-          <Popper
-            placement="bottom-end"
-            offset={[0, 5]}
-            popup
-            userInfo
-            popperItems={userInfoMenus}
-          >
+          <Popper placement="bottom-end" offset={[0, 5]} popperItems={userInfoMenus}>
             <button className="userName">{userInfo.loginUserName}</button>
           </Popper>
           <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />

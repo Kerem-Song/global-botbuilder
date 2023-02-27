@@ -2,9 +2,8 @@ import { icPopupClose, icPrev, icUtteranceEmpty } from '@assets';
 import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
 import { useEntityClient, useRootState } from '@hooks';
 import { IEntryFormModel, ISaveEntryGroup } from '@models';
-import { t } from 'i18next';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 
 import { EntityDetailItem } from './EntityDetailItem';
@@ -26,26 +25,37 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   setEntryId,
 }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const entryGroupName = useRef<HTMLInputElement>(null);
-  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const token = useRootState((state) => state.botInfoReducer.token);
-  const entryDetails = getEntryDetailQuery(entryId);
   const formMethods = useForm<ISaveEntryGroup>({
     defaultValues: {
       name: entryId,
       isRegex: false,
+      // entryGroupType: 0,
       entries: [],
     },
   });
-  const { reset, register, control, handleSubmit, watch } = formMethods;
+  const { reset, register, control, handleSubmit, watch, getValues } = formMethods;
+  console.log(watch('isRegex'));
+  console.log(watch('entryGroupType'));
+
   const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
+  console.log(fields);
+
+  const { field: isRegexField } = useController({ name: 'isRegex', control });
+
   const entryForm = useForm<IEntryFormModel>({ defaultValues: { entry: '' } });
+
+  // const regexForm = useForm<IEn
+
+  const entryGroupName = useRef<HTMLInputElement>(null);
+  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const entryDetails = getEntryDetailQuery(entryId);
+
   const handleSave = (entryData: ISaveEntryGroup): void => {
     const newEntry: ISaveEntryGroup = {
       sessionToken: token,
       name: entryData.name,
-      // isRegex: entryData.isRegex,
-      isRegex: false,
+      isRegex: entryData.isRegex,
       entries: entryData.entries,
     };
 
@@ -61,8 +71,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
         name: entryData.name,
-        // isRegex: entryData.isRegex,
-        isRegex: false,
+        isRegex: entryData.isRegex,
         entries: entryData.entries,
         entryGroupid: entryData.entryGroupid,
       };
@@ -99,13 +108,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       const resetValue = {
         entryGroupid: entryDetails.data.id,
         name: entryDetails.data.name,
-        isRegex: false,
         entryGroupType: entryDetails.data.entryGroupType,
         entries: entryDetails.data.entries,
       };
       reset(resetValue);
     }
   }, [entryDetails?.data]);
+
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
@@ -158,22 +167,24 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col style={{ display: 'flex' }}>
-                      {watch('entryGroupid') ? (
+                      {entryDetails?.data?.id ? (
                         <>
                           {entryDetails?.data?.entryGroupType === 0 ? 'String' : 'Regax'}
                         </>
                       ) : (
                         <>
                           <Radio
-                            value="0"
-                            checked
-                            {...register('entryGroupType', { valueAsNumber: true })}
+                            checked={isRegexField.value === false}
+                            onChange={() => isRegexField.onChange(false)}
+                            ref={isRegexField.ref}
                           >
                             String
                           </Radio>
                           <Radio
-                            value="2"
-                            {...register('entryGroupType', { valueAsNumber: true })}
+                            style={{ marginLeft: '40px' }}
+                            checked={isRegexField.value === true}
+                            onChange={() => isRegexField.onChange(true)}
+                            ref={isRegexField.ref}
                           >
                             Regex
                           </Radio>
@@ -181,101 +192,112 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       )}
                     </Col>
                   </Row>
-                  {/* <div>
-                  {watch('entryGroupid') === undefined ? (
-                    <>
-                      {entryDetails?.data?.entryGroupType === 0 ? (
-                        <Row align="center" gap={10}>
-                          <Col style={{ width: '140px' }}>
-                            <span>Regular expression</span>
-                            <span style={{ color: 'red' }}> *</span>
-                          </Col>
-                          <Col flex="auto">
-                            <Input
-                              placeholder="Input Intent Name"
-                              showCount
-                              maxLength={20}
-                            />
-                          </Col>
-                        </Row>
-                      ) : null}
-                    </>
-                  ) : null}
-                </div> */}
+                  <Row align="center" gap={10}>
+                    {watch('isRegex') === true ||
+                    entryDetails?.data?.entryGroupType === 2 ? (
+                      <>
+                        <Col style={{ width: '140px' }}>
+                          <span>Regular expression</span>
+                          <span style={{ color: 'red' }}> *</span>
+                        </Col>
+                        <Col flex="auto">
+                          <Input
+                            // {...register('entries')}
+                            placeholder="Input entity name"
+                          />
+                        </Col>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </Row>
                 </Space>
               </Card>
-              <div className="searchInput">
-                <Input
-                  size="small"
-                  search
-                  placeholder="Input search word"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                ></Input>
-              </div>
+              {watch('isRegex') === false || entryDetails?.data?.entryGroupType === 0 ? (
+                <div className="searchInput">
+                  <Input
+                    size="small"
+                    search
+                    placeholder="Input search word"
+                    onBlur={(e) => setSearchKeyword(e.target.value)}
+                    onPressEnter={(value) => setSearchKeyword(value!)}
+                  ></Input>
+                </div>
+              ) : null}
               <div className="registerEntry">
-                <Card
-                  radius="normal"
-                  bodyStyle={{ padding: '20px' }}
-                  style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
-                >
-                  <Space direction="vertical">
-                    <Row>
-                      <Col flex="auto" style={{ display: 'flex', marginBottom: '20px' }}>
-                        <Input
-                          {...entryForm.register('entry')}
-                          placeholder="Input Representative entry."
-                          size="normal"
-                          ref={entryGroupName}
-                          onPressEnter={handleRegisterEntry}
-                        ></Input>
-                        <Button
-                          style={{ marginLeft: '8px' }}
-                          type="primary"
-                          onClick={() =>
-                            handleRegisterEntry(entryGroupName.current?.value)
-                          }
+                {watch('isRegex') === false ||
+                entryDetails?.data?.entryGroupType === 0 ? (
+                  <Card
+                    radius="normal"
+                    bodyStyle={{ padding: '20px' }}
+                    style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
+                  >
+                    <Space direction="vertical">
+                      <Row>
+                        <Col
+                          flex="auto"
+                          style={{ display: 'flex', marginBottom: '20px' }}
                         >
-                          Register
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Space>
-                  <Row gap={8}>
-                    <>
-                      {watch('entries').length > 0 ? (
-                        <>
-                          {fields.map((entryGroup, i) => {
-                            return (
-                              <EntityDetailItem
-                                key={i}
-                                index={i}
-                                entriesRemove={remove}
-                                searchKeyword={searchKeyword}
-                              />
-                            );
-                          })}
-                        </>
-                      ) : (
-                        <Row
-                          style={{
-                            width: '100%',
-                            marginTop: '12px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <div className="emptyList">
-                            <div className="empty">
-                              <img src={icUtteranceEmpty} alt="empty" />
-                              <span>No entries registered</span>
+                          <Input
+                            {...entryForm.register('entry')}
+                            placeholder="Input Representative entry."
+                            size="normal"
+                            ref={entryGroupName}
+                            onPressEnter={handleRegisterEntry}
+                          ></Input>
+                          <Button
+                            style={{ marginLeft: '8px' }}
+                            type="primary"
+                            onClick={() =>
+                              handleRegisterEntry(entryGroupName.current?.value)
+                            }
+                          >
+                            Register
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Space>
+                    <Row gap={8}>
+                      <>
+                        {watch('entries').length === 0 ? (
+                          <Row
+                            style={{
+                              width: '100%',
+                              marginTop: '12px',
+                              display: 'flex',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <div className="emptyList">
+                              <div className="empty">
+                                <img src={icUtteranceEmpty} alt="empty" />
+                                <span>No entries registered</span>
+                              </div>
                             </div>
-                          </div>
-                        </Row>
-                      )}
-                    </>
-                  </Row>
-                </Card>
+                          </Row>
+                        ) : watch('entryGroupid') === undefined ||
+                          entryDetails?.data?.entryGroupType === 0 ? (
+                          <>
+                            {fields.map((entryGroup, i) => {
+                              return (
+                                <EntityDetailItem
+                                  key={i}
+                                  index={i}
+                                  entriesRemove={remove}
+                                  searchKeyword={searchKeyword}
+                                />
+                              );
+                            })}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    </Row>
+                  </Card>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

@@ -66,6 +66,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
           size="normal"
           style={{
             width: '200px',
+            height: 'auto',
             marginRight: '8px',
           }}
         />
