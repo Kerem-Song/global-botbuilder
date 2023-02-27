@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 
-import { OtherFlowRedirectNode } from './../../components/pages/scenario/nodes/OtherFlowRedirectNode';
 import { TNodeTypes } from './ICard';
 import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
 

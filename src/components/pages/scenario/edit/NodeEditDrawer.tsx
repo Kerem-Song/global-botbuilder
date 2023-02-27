@@ -1,22 +1,9 @@
 import { FormItem, Input } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRootState } from '@hooks';
+import { useYupValidation } from '@hooks/useYupValidation';
 import { INode, NODE_TYPES } from '@models';
-import {
-  basicCardCarouselNodeEditSchema,
-  basicCardNodeEditSchema,
-  conditionNodeEditSchema,
-  INodeEditModel,
-  listCardCarouselNodeEditSchema,
-  listCardNodeEditSchema,
-  otherFlowRedirectNodeEditSchema,
-  parameterSetNodeEditNextNodeIdSchema,
-  parameterSetNodeEditSchema,
-  productCardCarouselNodeEditSchema,
-  productCardNodeEditSchema,
-  retryConditionNodeEditSchema,
-  textNodeEditSchema,
-} from '@models/interfaces/INodeEditModel';
+import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
@@ -24,7 +11,6 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
@@ -50,62 +36,7 @@ export const NodeEditDrawer = () => {
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = Object.values(carouselIndexObj)[0];
-
-  const schema = yup
-    .object({
-      title: yup.string().required('말풍선 명은 필수입니다.'),
-      view: yup
-        .object()
-        .when('type', {
-          is: NODE_TYPES.TEXT_NODE,
-          then: textNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.BASIC_CARD_NODE,
-          then: basicCardNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.LIST_CARD_NODE,
-          then: listCardNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.PRODUCT_CARD_NODE,
-          then: productCardNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-          then: basicCardCarouselNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-          then: listCardCarouselNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-          then: productCardCarouselNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.CONDITION_NODE,
-          then: conditionNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.RETRY_CONDITION_NODE,
-          then: retryConditionNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.PARAMETER_SET_NODE,
-          then: parameterSetNodeEditSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
-          then: otherFlowRedirectNodeEditSchema,
-        }),
-      nextNodeId: yup.string().when('type', {
-        is: NODE_TYPES.PARAMETER_SET_NODE,
-        then: parameterSetNodeEditNextNodeIdSchema,
-      }),
-    })
-    .required();
+  const { schema } = useYupValidation();
 
   const selectedNode = nodes.find((x) => x.id === selected);
 
