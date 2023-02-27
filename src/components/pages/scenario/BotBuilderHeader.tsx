@@ -190,10 +190,10 @@ export const BotBuilderHeader = () => {
 
   return (
     <div className="botBuilderHeader">
-      <div className="botBuilderMakerWrapper">
-        <span className="cardNumWrapper">
-          chat bubble <span className="cardNum">{cardNum}</span>
-        </span>
+      <span className="cardNumWrapper">
+        chat bubble <span className="cardNum">{cardNum}</span>
+      </span>
+      <div className="makingBtnWrapper">
         <div className="makingBtn">
           <span className="btnCategory">Single</span>
           <Col className="btnWrapper">
