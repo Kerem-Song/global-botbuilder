@@ -4,12 +4,12 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { updateNode } from '@store/makingNode';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_PREFIX } from '../../../../modules';
-import { nodeHelper } from '../../../../modules/nodeHelper';
 import { BasicCardView } from '../views/BasicCardView';
 
 export interface IBasicCardCarouselNodeProps {
@@ -23,7 +23,7 @@ export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node })
   const HandleAddCarousel = () => {
     const childrenViews: IBasicCardView[] = [
       ...view.childrenViews,
-      nodeHelper.createDefaultBasicCardView(),
+      nodeDefaultHelper.createDefaultBasicCardView(),
     ];
     const upNode = {
       ...node,

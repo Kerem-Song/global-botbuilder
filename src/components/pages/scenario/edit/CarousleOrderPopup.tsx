@@ -10,7 +10,7 @@ import {
   IListCardCarouselView,
   IProductCardCarouselView,
 } from '@models/interfaces/res/IGetFlowRes';
-import { nodeHelper } from '@modules';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { updateNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
@@ -53,13 +53,13 @@ export const CarouselOrderPopup: FC<{
   const defaultView = (type: string) => {
     switch (type) {
       case 'BasicCardCarouselView':
-        return nodeHelper.createDefaultBasicCardView();
+        return nodeDefaultHelper.createDefaultBasicCardView();
       case 'ListCardCarouselView':
-        return nodeHelper.createDefaultListCardView();
+        return nodeDefaultHelper.createDefaultListCardView();
       case 'ProductCardCarouselView':
-        return nodeHelper.createCommerceView();
+        return nodeDefaultHelper.createCommerceView();
       default:
-        return nodeHelper.createDefaultBasicCardView();
+        return nodeDefaultHelper.createDefaultBasicCardView();
     }
   };
 

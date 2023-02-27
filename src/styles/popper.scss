@@ -90,7 +90,7 @@
   padding: rem(12) rem(8) rem(12) rem(8);
   .userInfoTitle {
     margin-bottom: rem(8);
-    .userName {
+    .username {
       font-weight: 700;
       font-size: rem(14);
     }
@@ -104,6 +104,8 @@
       line-height: rem(20);
     }
     .userAccount {
+      font-size: rem(12);
+      font-weight: 500;
       color: #626263;
     }
   }

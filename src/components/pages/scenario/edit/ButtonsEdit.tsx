@@ -7,7 +7,7 @@ import {
   ActionTypes,
   IButtonEditViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
-import { nodeHelper } from '@modules';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -40,7 +40,7 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 3) {
-      append(nodeHelper.createDefaultButtonCtrl(fields.length));
+      append(nodeDefaultHelper.createDefaultButtonCtrl(fields.length));
     } else {
       //modal alert
       console.log('3개까지 가능');

@@ -4,6 +4,7 @@ import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
@@ -143,7 +144,7 @@ export const Botbuilder = () => {
     }
     const nodeName = e.dataTransfer.getData('nodeName') as string;
 
-    const nodeView = nodeHelper.createDefaultView(cardType);
+    const nodeView = nodeDefaultHelper.createDefaultView(cardType);
 
     const addNode: INode = {
       id: ID_GEN.generate('node'),

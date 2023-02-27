@@ -1,6 +1,7 @@
 import { IArrow, INode } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { INodeBase } from '@models/interfaces/res/IGetFlowRes';
+import { arrowHelper } from '@modules/arrowHelper';
 import { lunaToast } from '@modules/lunaToast';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -19,7 +20,7 @@ const initialState: IBuilderInfo = {
 
 const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
   const result: INode = nodeHelper.convertToINode(node);
-  const arrows = nodeHelper.initArrows(node);
+  const arrows = arrowHelper.initArrows(node);
 
   return { node: result, arrows };
 };
@@ -58,7 +59,7 @@ export const makingNodeSlice = createSlice({
         const index = nodes.indexOf(matched);
         const old = nodes[index];
         const arrows = [...state.arrows];
-        const updateArrows = nodeHelper.editArrows(node, arrows);
+        const updateArrows = arrowHelper.editArrows(node, arrows);
 
         if (updateArrows) {
           state.arrows = updateArrows;
@@ -76,7 +77,7 @@ export const makingNodeSlice = createSlice({
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
 
-      const errorMessage = nodeHelper.validateArrows(
+      const errorMessage = arrowHelper.validateArrows(
         arrow.updateKey || arrow.start,
         arrow.end,
         state.nodes,
@@ -100,7 +101,7 @@ export const makingNodeSlice = createSlice({
       const node = state.nodes.find((x) => x.id === nodeId.substring(5));
 
       if (node) {
-        nodeHelper.syncArrow(arrow.start, arrow.end, node);
+        arrowHelper.syncArrow(arrow.start, arrow.end, node);
       }
 
       state.arrows = [...arrows, arrow];
@@ -155,7 +156,7 @@ export const makingNodeSlice = createSlice({
           const node = state.nodes.find((x) => x.id === nodeId.substring(5));
 
           if (node) {
-            nodeHelper.syncArrow(arrow.start, undefined, node);
+            arrowHelper.syncArrow(arrow.start, undefined, node);
           }
 
           state.arrows = arrows;

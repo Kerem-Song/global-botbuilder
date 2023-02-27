@@ -12,6 +12,7 @@ import {
   TCardsValues,
   TNodeTypes,
 } from '@models';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { addArrow, appendNode } from '@store/makingNode';
 import classNames from 'classnames';
@@ -21,7 +22,6 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '../../../modules';
-import { nodeHelper } from '../../../modules/nodeHelper';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -149,7 +149,7 @@ export const NodeLinkPopUpMenu = ({
     const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
     const nodeName = e.currentTarget.dataset.nodename;
 
-    const nodeView = nodeHelper.createDefaultView(nodeType);
+    const nodeView = nodeDefaultHelper.createDefaultView(nodeType);
     const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: nodeType,
@@ -230,7 +230,7 @@ export const NodeLinkPopUpMenu = ({
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = name;
 
-    const view = nodeHelper.createDefaultOtherFlowRedirectView();
+    const view = nodeDefaultHelper.createDefaultOtherFlowRedirectView();
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: nodeType,

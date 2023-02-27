@@ -1,7 +1,8 @@
 import { Carousel } from '@components/pages/scenario/Carousel';
 import { INode } from '@models';
 import { IListCardCarouselView, IListCardView } from '@models/interfaces/res/IGetFlowRes';
-import { NODE_PREFIX, nodeHelper } from '@modules';
+import { NODE_PREFIX } from '@modules';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { updateNode } from '@store/makingNode';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -19,7 +20,7 @@ export const ListCardCarouselNode: FC<IListCardCarouselNodeProps> = ({ node }) =
   const HandleAddCarousel = () => {
     const childrenViews: IListCardView[] = [
       ...view.childrenViews,
-      nodeHelper.createDefaultListCardView(),
+      nodeDefaultHelper.createDefaultListCardView(),
     ];
     const upNode = {
       ...node,

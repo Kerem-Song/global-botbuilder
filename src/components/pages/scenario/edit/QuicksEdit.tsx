@@ -1,11 +1,11 @@
-import { Button, Divider, Input, Space } from '@components';
+import { Button, Input, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { nodeHelper } from '../../../../modules/nodeHelper';
 import { ButtonCtrlSelector } from './ButtonCtrlSelector';
 import { SelectNode } from './SelectNode';
 
@@ -28,7 +28,7 @@ export const QuicksEdit = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 10) {
-      append(nodeHelper.createDefaultAnswerQickItem(fields.length));
+      append(nodeDefaultHelper.createDefaultAnswerQickItem(fields.length));
     } else {
       //modal alert
       console.log('10개까지 가능');

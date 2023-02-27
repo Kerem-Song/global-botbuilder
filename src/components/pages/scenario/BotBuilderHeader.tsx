@@ -15,6 +15,7 @@ import {
   TNodeTypes,
 } from '@models';
 import { lunaToast } from '@modules/lunaToast';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
@@ -22,7 +23,6 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 import { ID_GEN, ID_TYPES } from '../../../modules';
-import { nodeHelper } from '../../../modules/nodeHelper';
 
 const singleNodes = [
   { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
@@ -126,23 +126,23 @@ export const BotBuilderHeader = () => {
 
   const handleScenarioSave = async () => {
     if (selectedScenario) {
-      // const results = await Promise.all(
-      //   nodes.map(async (n) => {
-      //     try {
-      //       await schema.validate(n);
-      //       dispatch(setInvalidateNode({ id: n.id, isValid: true }));
-      //       return true;
-      //     } catch (e) {
-      //       dispatch(setInvalidateNode({ id: n.id, isValid: false }));
-      //       return false;
-      //     }
-      //   }),
-      // );
+      const results = await Promise.all(
+        nodes.map(async (n) => {
+          try {
+            await schema.validate(n);
+            dispatch(setInvalidateNode({ id: n.id, isValid: true }));
+            return true;
+          } catch (e) {
+            dispatch(setInvalidateNode({ id: n.id, isValid: false }));
+            return false;
+          }
+        }),
+      );
 
-      // if (results.includes(false)) {
-      //   lunaToast.error('저장에 실패하였습니다.');
-      //   return;
-      // }
+      if (results.includes(false)) {
+        lunaToast.error('저장에 실패하였습니다.');
+        return;
+      }
 
       scenarioSaveAsync({ scenarioId: selectedScenario.id });
     }
@@ -154,7 +154,7 @@ export const BotBuilderHeader = () => {
     const cardType = e.currentTarget.value as TNodeTypes;
     const nodeName = e.currentTarget.getAttribute('data') as string;
 
-    const nodeView = nodeHelper.createDefaultView(cardType);
+    const nodeView = nodeDefaultHelper.createDefaultView(cardType);
 
     const view = document.querySelector('.botBuilderMain');
     const canvas = document.querySelector('.canvasWrapper');

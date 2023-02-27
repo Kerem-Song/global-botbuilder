@@ -4,7 +4,7 @@ import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
-import { nodeHelper } from '@modules/nodeHelper';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { SelectNode } from './SelectNode';
@@ -28,7 +28,7 @@ export const ParameterSetNodeEdit = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 10) {
-      append(nodeHelper.createDefaultParameterSetParams());
+      append(nodeDefaultHelper.createDefaultParameterSetParams());
     } else {
       //modal alert
       console.log('10개까지 가능');
