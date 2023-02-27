@@ -18,6 +18,7 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
 
     dropdownIndicator: () => ({
       color: '#B5B4B4',
+      paddingRight: '10px',
       display: hideIndicator ? 'none' : 'block',
     }),
     indicatorsContainer: () => ({}),

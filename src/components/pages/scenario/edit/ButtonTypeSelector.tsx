@@ -20,6 +20,7 @@ export const reactSelectStyle: StylesConfig = {
 
   dropdownIndicator: () => ({
     color: '#B5B4B4',
+    paddingRight: '10px',
   }),
   indicatorsContainer: () => ({}),
   valueContainer: (provided) => ({
