@@ -53,7 +53,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     },
   ];
 
-  const userInfoMenus: IPopperItem<object>[] = [
+  const userInfoMenus: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'info',
       name: 'cs_kimsuky',
@@ -74,6 +74,13 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
       id: 'logout',
       name: '로그아웃',
       type: 'button',
+      data: {
+        action: () => {
+          console.log('logout');
+          window.location.href =
+            'https://auth.lunacode.dev/oauth/signin?clientPrev=null&clientType=1';
+        },
+      },
     },
   ];
 
@@ -105,7 +112,17 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           >
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
-          <Popper placement="bottom-end" offset={[0, 5]} popperItems={userInfoMenus}>
+          <Popper
+            placement="bottom-end"
+            offset={[0, 5]}
+            popperItems={userInfoMenus}
+            onChange={(e) => {
+              console.log(e);
+              if (e.data?.action) {
+                e.data.action();
+              }
+            }}
+          >
             <button className="userName">{userInfo.loginUserName}</button>
           </Popper>
           <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
