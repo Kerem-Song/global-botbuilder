@@ -76,7 +76,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     if (data?.pages && data?.pages?.reduce((acc, cur) => acc + cur.totalPage, 0) > 0) {
       return true;
     }
-
     return false;
   };
 

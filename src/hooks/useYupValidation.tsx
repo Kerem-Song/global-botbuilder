@@ -3,6 +3,11 @@ import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import * as yup from 'yup';
 
+const checkNextNodeIdTypes: string[] = [
+  NODE_TYPES.PARAMETER_SET_NODE,
+  NODE_TYPES.INTENT_NODE,
+];
+
 export const useYupValidation = () => {
   const { t } = usePage();
 
@@ -214,10 +219,15 @@ export const useYupValidation = () => {
           is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
           then: otherFlowRedirectNodeEditSchema,
         }),
-      nextNodeId: yup.string().nullable().when('type', {
-        is: NODE_TYPES.PARAMETER_SET_NODE,
-        then: parameterSetNodeEditNextNodeIdSchema,
-      }),
+      nextNodeId: yup
+        .string()
+        .nullable()
+        .when('type', {
+          is: (nodeType: string) => {
+            return checkNextNodeIdTypes.includes(nodeType);
+          },
+          then: parameterSetNodeEditNextNodeIdSchema,
+        }),
     })
     .required();
 

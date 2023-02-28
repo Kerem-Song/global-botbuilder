@@ -18,7 +18,7 @@ export interface IEntriesModel {
 export interface ISaveEntryGroup {
   sessionToken?: string;
   name: string;
-  isRegex: boolean;
+  isRegex?: boolean;
   entryGroupType?: number;
   entries: IEntriesModel[];
   entryGroupid?: string;
@@ -32,10 +32,6 @@ export interface IResponseSaveEntryGroup {
   usingName: string;
   entryStr: string;
   entries?: IEntriesModel[];
-}
-
-export interface IEntryFormModel {
-  entry: string;
 }
 
 export interface IGetEntryGroup {
