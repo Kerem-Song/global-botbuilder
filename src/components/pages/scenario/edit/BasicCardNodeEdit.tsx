@@ -53,6 +53,7 @@ export const BasicCardNodeEdit = () => {
               label={t(`TITLE_INPUT`)}
               showCount={true}
               maxLength={20}
+              isLight={true}
               {...register('view.title')}
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
             />
@@ -66,6 +67,7 @@ export const BasicCardNodeEdit = () => {
               style={{ minHeight: '100px', maxHeight: '320px' }}
               showCount
               maxLength={1000}
+              isLight={true}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
             />

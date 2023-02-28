@@ -69,6 +69,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   label={t(`TITLE_INPUT`)}
                   showCount={true}
                   maxLength={20}
+                  isLight={true}
                   {...register(`view.childrenViews.${index}.title`)}
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                 />
@@ -87,6 +88,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   height={100}
                   showCount
                   maxLength={1000}
+                  isLight={true}
                   placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
                   {...register(`view.childrenViews.${index}.description`)}
                 />

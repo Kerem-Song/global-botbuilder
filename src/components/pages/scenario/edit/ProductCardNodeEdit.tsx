@@ -135,9 +135,15 @@ export const ProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <span className="label">{t(`PRODUCT_NODE_BRAND_NAME`)}</span>
               <FormItem error={errors.view && errors.view.profileName}>
-                <Input {...register(`view.profileName`)} />
+                <Input
+                  hasTitle={true}
+                  label={t(`PRODUCT_NODE_BRAND_NAME`)}
+                  required={true}
+                  showCount={true}
+                  maxLength={15}
+                  {...register(`view.profileName`)}
+                />
               </FormItem>
             </Space>
           </div>
@@ -147,25 +153,30 @@ export const ProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
-              <p>
-                <span className="label">{t(`PRODUCT_NODE_PRODUCT_NAME`)} </span>
-                <span className="required">*</span>
-              </p>
               <FormItem error={errors.view && errors.view.description}>
-                <Input {...register(`view.description`)} />
+                <Input
+                  hasTitle={true}
+                  label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                  showCount={true}
+                  maxLength={15}
+                  required={true}
+                  {...register(`view.description`)}
+                />
               </FormItem>
-              <p>
-                <span className="label">{t(`PRODUCT_NODE_PRICE`)} </span>
-                <span className="required">*</span>
-              </p>
+
               <div className="m-b-8">
                 <Row justify="space-between">
                   <Col span={17}>
                     <FormItem error={errors.view && errors.view.retailPrice}>
-                      <Input {...register(`view.retailPrice`)} />
+                      <Input
+                        hasTitle={true}
+                        label={t(`PRODUCT_NODE_PRICE`)}
+                        required={true}
+                        {...register(`view.retailPrice`)}
+                      />
                     </FormItem>
                   </Col>
-                  <Col>
+                  <Col className="productSelectorWrapper">
                     <Select
                       {...currencyField}
                       options={currencyOptions}
@@ -180,9 +191,12 @@ export const ProductCardNodeEdit = () => {
                 </Row>
               </div>
 
-              <span className="label">{t(`PRODUCT_NODE_DISCOUNT`)}</span>
               <FormItem error={errors.view && errors.view.salePrice}>
-                <Input {...register(`view.salePrice`)} />
+                <Input
+                  hasTitle={true}
+                  label={t(`PRODUCT_NODE_DISCOUNT`)}
+                  {...register(`view.salePrice`)}
+                />
               </FormItem>
             </Space>
           </Collapse>

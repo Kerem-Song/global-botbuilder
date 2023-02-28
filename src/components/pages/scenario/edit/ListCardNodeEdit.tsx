@@ -57,11 +57,14 @@ export const ListCardNodeEdit = () => {
   return (
     <>
       <div className="node-item-wrap">
-        <div className="m-b-8">
-          <span className="label">Head Title </span>
-          <span className="required">*</span>
-        </div>
-        <Input {...register('view.header')} />
+        <Input
+          label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+          required={true}
+          hasTitle={true}
+          showCount={true}
+          maxLength={15}
+          {...register('view.header')}
+        />
       </div>
       <Collapse
         label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
@@ -101,14 +104,30 @@ export const ListCardNodeEdit = () => {
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
-                <span className="label">{t(`TITLE_INPUT`)}</span>
-                <Input {...register(`view.items.${i}.title`)} />
+                <span className="label">
+                  <Input
+                    hasTitle={true}
+                    label={t(`TITLE_INPUT`)}
+                    showCount={true}
+                    maxLength={36}
+                    isLight={true}
+                    {...register(`view.items.${i}.title`)}
+                  />
+                </span>
               </Space>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
-                <span className="label">{t(`CONTENT_INPUT`)}</span>
-                <Input {...register(`view.items.${i}.description`)} />
+                <span className="label">
+                  <Input
+                    label={t(`CONTENT_INPUT`)}
+                    hasTitle={true}
+                    showCount
+                    maxLength={16}
+                    isLight={true}
+                    {...register(`view.items.${i}.description`)}
+                  />
+                </span>
               </Space>
             </div>
             <div className="deleteBtn">
