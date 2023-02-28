@@ -56,7 +56,7 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
           <Space direction="vertical">
-            <span className="subLabel">{t(`BUTTON_NAME`)}</span>
+            {/* <span className="subLabel">{t(`BUTTON_NAME`)}</span> */}
             <FormItem
               error={
                 index === undefined
@@ -65,6 +65,10 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
               }
             >
               <Input
+                hasTitle={true}
+                label={t(`BUTTON_NAME`)}
+                showCount={true}
+                maxLength={14}
                 {...register(
                   index === undefined
                     ? `view.buttons.${i}.label`

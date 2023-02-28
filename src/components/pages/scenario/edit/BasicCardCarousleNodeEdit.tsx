@@ -56,7 +56,7 @@ export const BasicCardCarousleNodeEdit = () => {
 
           <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
-              <span className="subLabel">{t(`TITLE_INPUT`)}</span>
+              {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
               <FormItem
                 error={
                   errors.view &&
@@ -65,6 +65,10 @@ export const BasicCardCarousleNodeEdit = () => {
                 }
               >
                 <Input
+                  hasTitle={true}
+                  label={t(`TITLE_INPUT`)}
+                  showCount={true}
+                  maxLength={20}
                   {...register(`view.childrenViews.${index}.title`)}
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                 />
