@@ -21,6 +21,17 @@
     &[data-collapsed='false'] {
       display: none;
     }
+
+    .subLabel {
+      color: $gray500;
+      font-weight: 500;
+      font-size: rem(13);
+      line-height: rem(16);
+
+      &.bold {
+        color: $grayBlack;
+      }
+    }
   }
 }
 

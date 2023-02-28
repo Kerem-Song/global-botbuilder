@@ -3,6 +3,7 @@ import { SortableScenarioListContainer } from '@components/data-display/Sortable
 import { usePage, useRootState } from '@hooks';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
+import classNames from 'classnames';
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -49,6 +50,9 @@ export const ScenarioManagement: FC<{
       });
     }
   };
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
 
   return (
     <div className="scenarioTabWrapper">
@@ -66,7 +70,9 @@ export const ScenarioManagement: FC<{
                 <div
                   role="presentation"
                   key={i}
-                  className="basicScenario"
+                  className={classNames('basicScenario', {
+                    selected: selectedScenarios?.id === item.id,
+                  })}
                   onClick={() => {
                     dispatch(setSelectedScenario(item));
                   }}

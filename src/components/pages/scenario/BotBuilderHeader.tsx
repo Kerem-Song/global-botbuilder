@@ -1,26 +1,15 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
-import { useRootState, useScenarioClient } from '@hooks';
-import {
-  basicCardNodeEditSchema,
-  conditionNodeEditSchema,
-  getNodeKind,
-  INode,
-  listCardNodeEditSchema,
-  NODE_TYPES,
-  parameterSetNodeEditSchema,
-  productCardNodeEditSchema,
-  textNodeEditSchema,
-  TNodeTypes,
-} from '@models';
+import { usePage, useRootState, useScenarioClient } from '@hooks';
+import { useYupValidation } from '@hooks/useYupValidation';
+import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 
 import { ID_GEN, ID_TYPES } from '../../../modules';
 
@@ -69,51 +58,8 @@ const buttonNodes = [
   },
 ];
 
-const schema = yup
-  .object({
-    title: yup.string().required('말풍선 명은 필수입니다.'),
-    view: yup
-      .object()
-      .when('type', {
-        is: NODE_TYPES.TEXT_NODE,
-        then: textNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.BASIC_CARD_NODE,
-        then: basicCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.LIST_CARD_NODE,
-        then: listCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.PRODUCT_CARD_NODE,
-        then: productCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-        then: basicCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-        then: listCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-        then: productCardNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.CONDITION_NODE,
-        then: conditionNodeEditSchema,
-      })
-      .when('type', {
-        is: NODE_TYPES.PARAMETER_SET_NODE,
-        then: parameterSetNodeEditSchema,
-      }),
-  })
-  .required();
-
 export const BotBuilderHeader = () => {
+  const { t, tc } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
@@ -123,6 +69,8 @@ export const BotBuilderHeader = () => {
 
   const dispatch = useDispatch();
   const { scenarioSaveAsync } = useScenarioClient();
+
+  const { schema } = useYupValidation();
 
   const handleScenarioSave = async () => {
     if (selectedScenario) {
@@ -190,12 +138,12 @@ export const BotBuilderHeader = () => {
 
   return (
     <div className="botBuilderHeader">
-      <div className="botBuilderMakerWrapper">
-        <span className="cardNumWrapper">
-          chat bubble <span className="cardNum">{cardNum}</span>
-        </span>
+      <span className="cardNumWrapper">
+        {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
+      </span>
+      <div className="makingBtnWrapper">
         <div className="makingBtn">
-          <span className="btnCategory">Single</span>
+          <span className="btnCategory">{t(`SINGLE`)}</span>
           <Col className="btnWrapper">
             {singleNodes.map((item, i) => (
               <Tooltip tooltip={item.nodeName} key={i}>
@@ -214,7 +162,7 @@ export const BotBuilderHeader = () => {
           </Col>
         </div>
         <div className="makingBtn">
-          <span className="btnCategory">Carousel</span>
+          <span className="btnCategory">{t(`CAROUSEL`)}</span>
           <Col className="btnWrapper">
             {carousleNodes.map((item, i) => (
               <Tooltip tooltip={item.nodeName} key={i}>
@@ -232,7 +180,7 @@ export const BotBuilderHeader = () => {
           </Col>
         </div>
         <div className="makingBtn">
-          <span className="btnCategory">Button</span>
+          <span className="btnCategory">{t(`FUNCTION`)}</span>
           <Col className="btnWrapper">
             {buttonNodes.map((item, i) => (
               <Tooltip tooltip={item.nodeName} key={i}>
@@ -251,7 +199,7 @@ export const BotBuilderHeader = () => {
       </div>
       <div className="saveBtn">
         <Button small type="primary" onClick={handleScenarioSave}>
-          Save
+          {tc(`SAVE`)}
         </Button>
       </div>
     </div>

@@ -74,7 +74,7 @@ export const ImageSettings = ({
         <span className="required">*</span>
       </div>
 
-      <span className="subLabel">{t(`IMAGE_TYPE`)}</span>
+      <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
       <Row justify="space-between">
         <Col span={12} className="radioContainer">
           <input

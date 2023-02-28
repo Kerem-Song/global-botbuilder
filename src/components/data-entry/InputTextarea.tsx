@@ -22,6 +22,8 @@ export interface InputTextareaProps extends IHasClassNameNStyle {
   value?: string;
   isError?: boolean;
   required?: boolean;
+  label?: string;
+  hasTitle: boolean;
   onBlur?: (e: FocusEvent<HTMLTextAreaElement>) => void;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
@@ -67,23 +69,28 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
 
     return (
       <>
+        <div className="textareaWrapper">
+          <span className={classNames('textareaLabel', { hasTitle: args.hasTitle })}>
+            {args.label}
+            {args.required && <span className="required"> *</span>}
+          </span>
+          {args.showCount ? (
+            <span className="textCounter">
+              {text.length || 0}
+              {`/${args.maxLength}`}
+            </span>
+          ) : undefined}
+        </div>
         <textarea
           {...inputProps}
           className={resultClassName}
           style={resultStyle}
-          //value={text}
           onChange={handleTextArea}
           onInput={handleTextareaHeight}
           placeholder={args.placeholder}
           maxLength={1000}
           ref={ref}
         />
-        {args.showCount ? (
-          <span className="textCounter">
-            {text.length || 0}
-            {`/${args.maxLength}`}
-          </span>
-        ) : undefined}
       </>
     );
   },

@@ -24,7 +24,10 @@
   },
   "scenario": {
     "TITLE": "시나리오",
+    "SINGLE": "단일",
     "CAROUSEL": "캐로셀",
+    "FUNCTION": "기능",
+    "CHAT_BUBBLE": "말풍선",
     "CAROUSEL_WARNING_FIRST": "※ 본 팝업에서는 케로셀 순서만 변경 가능합니다.",
     "CAROUSEL_WARNING_SECOND": "상세 설정은 팝업을 닫고 말풍선을 클릭하여 편집해주세요.",
     "ADD_CAHTBUBBLE_BTN": "말풍선 추가",
@@ -86,6 +89,7 @@
     "CONTENT_INPUT": "내용",
     "TITLE_INPUT_PLACEHOLDER": "타이틀을 입력해 주세요",
     "CONTENT_INPUT_PLACEHOLDER": "내용을 입력해 주세요",
+    "TEXT": "텍스트",
     "BASIC_NODE_TEXT_SETTING": "텍스트 설정",
     "VALIDATION_REQUIRED": "필수 입력 항목 입니다",
     "VALIDATION_STRING_LIMIT_15": "15자 이상 입력하실 수 없습니다",
