@@ -1,21 +1,19 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
 import { FC, useEffect, useRef, useState } from 'react';
-import {
-  FieldValues,
-  UseFieldArrayAppend,
-  UseFieldArrayRemove,
-  useFormContext,
-} from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export interface AddEntryBtnProps {
-  fields: Record<'id', string>[];
-  append: UseFieldArrayAppend<FieldValues, `entries.${number}.synonym`>;
-  remove: UseFieldArrayRemove;
   index: number;
 }
 
-export const AddEntryBtn: FC<AddEntryBtnProps> = ({ fields, append, remove, index }) => {
+export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index }) => {
+  const { control } = useFormContext();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: `entries.${index}.synonym`,
+  });
+
   const { register, getValues } = useFormContext();
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');

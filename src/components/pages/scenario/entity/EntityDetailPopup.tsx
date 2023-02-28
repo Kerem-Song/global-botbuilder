@@ -1,10 +1,22 @@
 import { icPopupClose, icPrev, icUtteranceEmpty } from '@assets';
-import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
+import {
+  Button,
+  Card,
+  Col,
+  FormItem,
+  Input,
+  Radio,
+  Row,
+  Space,
+  Title,
+} from '@components';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, useRootState } from '@hooks';
-import { IEntryFormModel, ISaveEntryGroup } from '@models';
+import { ISaveEntryGroup } from '@models';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
+import * as yup from 'yup';
 
 import { EntityDetailItem } from './EntityDetailItem';
 
@@ -24,49 +36,100 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
+  const [entryInputError, setEntryInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const formMethods = useForm<ISaveEntryGroup>({
-    defaultValues: {
-      name: entryId,
-      isRegex: false,
-      // entryGroupType: 0,
-      entries: [],
-    },
-  });
-  const { reset, register, control, handleSubmit, watch, getValues } = formMethods;
-  console.log(watch('isRegex'));
-  console.log(watch('entryGroupType'));
-
-  const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
-  console.log(fields);
-
-  const { field: isRegexField } = useController({ name: 'isRegex', control });
-
-  const entryForm = useForm<IEntryFormModel>({ defaultValues: { entry: '' } });
-
-  // const regexForm = useForm<IEn
-
-  const entryGroupName = useRef<HTMLInputElement>(null);
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
 
-  const handleSave = (entryData: ISaveEntryGroup): void => {
-    const newEntry: ISaveEntryGroup = {
-      sessionToken: token,
-      name: entryData.name,
-      isRegex: entryData.isRegex,
-      entries: entryData.entries,
-    };
+  useEffect(() => {
+    if (entryDetails && entryDetails.data) {
+      const resetValue = {
+        entryGroupid: entryDetails.data.id,
+        name: entryDetails.data.name,
+        entryGroupType: entryDetails.data.entryGroupType,
+        isRegex: entryDetails.data.entryGroupType === 2,
+        usingName: entryDetails.data.usingName,
+        entryStr: entryDetails.data.entryStr,
+        entries: entryDetails.data.entries,
+      };
+      reset(resetValue);
+    }
+  }, [entryDetails?.data]);
 
-    entryGroupMutate.mutate(newEntry, {
-      onSuccess: (submitResult) => {
-        console.log('newEntry', submitResult);
-        handleIsOpen(false);
-        reset();
-      },
-    });
+  const defaultValues: ISaveEntryGroup = {
+    name: '',
+    isRegex: false,
+    entries: [],
+  };
 
+  const schema = yup.object({
+    representativeEntry: yup
+      .string()
+
+      .trim()
+
+      .when('isRegex', {
+        is: false,
+        then: yup
+          .string()
+          .trim()
+          .matches(
+            /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
+            `특수문자, 이모지는 입력할 수 없습니다.`,
+          )
+          .required(),
+      })
+      .required(),
+  });
+
+  const entityNameSchema = yup
+    .object({
+      name: yup
+        .string()
+        .required('엔티티 명은 필수입니다.')
+        .matches(
+          /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
+          `특수문자, 이모지는 입력할 수 없습니다.`,
+        )
+        .max(20, `20자를 초과할 수 없습니다.`),
+      entries: yup.array().of(schema),
+    })
+    .required();
+
+  const formMethods = useForm<ISaveEntryGroup>({
+    defaultValues,
+    resolver: yupResolver(entityNameSchema),
+  });
+
+  const {
+    reset,
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = formMethods;
+
+  const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
+
+  const { field: isRegexField } = useController({ name: 'isRegex', control });
+
+  const entryGroupName = useRef<HTMLInputElement>(null);
+
+  const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regExp1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[}]/g;
+    const regExp2 =
+      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
+
+    if (regExp1.test(e.target.value) || regExp2.test(e.target.value)) {
+      setEntryInputError('특수문자, 이모지는 입력할 수 없습니다.');
+    } else {
+      setEntryInputError('');
+    }
+  };
+
+  const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
     if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -76,13 +139,28 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entryGroupid: entryData.entryGroupid,
       };
 
-      entryGroupMutate.mutate(modifyEntry, {
-        onSuccess: (submitResult) => {
-          console.log('modifyEntry', submitResult);
-          handleIsOpen(false);
-          reset();
-        },
-      });
+      const res = await entryGroupMutate.mutateAsync(modifyEntry);
+
+      if (res) {
+        console.log('modifyEntry', res);
+        reset();
+        handleIsOpen(false);
+      }
+    } else {
+      const newEntry: ISaveEntryGroup = {
+        sessionToken: token,
+        name: entryData.name,
+        isRegex: entryData.isRegex,
+        entries: entryData.entries,
+      };
+
+      const res = await entryGroupMutate.mutateAsync(newEntry);
+
+      if (res) {
+        console.log('newEntry', res);
+        reset();
+        handleIsOpen(false);
+      }
     }
   };
 
@@ -90,30 +168,24 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     if (!name) {
       return;
     }
+
+    if (entryInputError) {
+      return;
+    }
+
     append({ representativeEntry: name });
+
     if (entryGroupName.current) {
       entryGroupName.current.value = '';
     }
   };
 
   const handleClose = () => {
-    handleIsOpen(false);
-    setEntryId('');
-    remove();
     reset();
+    remove();
+    setEntryId('');
+    handleIsOpen(false);
   };
-
-  useEffect(() => {
-    if (entryDetails && entryDetails.data) {
-      const resetValue = {
-        entryGroupid: entryDetails.data.id,
-        name: entryDetails.data.name,
-        entryGroupType: entryDetails.data.entryGroupType,
-        entries: entryDetails.data.entries,
-      };
-      reset(resetValue);
-    }
-  }, [entryDetails?.data]);
 
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
@@ -153,12 +225,14 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col flex="auto">
-                      <Input
-                        {...register('name')}
-                        placeholder="Input Intent Name"
-                        showCount
-                        maxLength={20}
-                      />
+                      <FormItem error={errors.name}>
+                        <Input
+                          {...register('name')}
+                          placeholder="Input Intent Name"
+                          showCount
+                          maxLength={20}
+                        />
+                      </FormItem>
                     </Col>
                   </Row>
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
@@ -201,10 +275,12 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <span style={{ color: 'red' }}> *</span>
                         </Col>
                         <Col flex="auto">
-                          <Input
-                            // {...register('entries')}
-                            placeholder="Input entity name"
-                          />
+                          <FormItem error={errors.entries?.[0]?.representativeEntry}>
+                            <Input
+                              {...register('entries.0.representativeEntry')}
+                              placeholder="Input entity name"
+                            />
+                          </FormItem>
                         </Col>
                       </>
                     ) : (
@@ -234,16 +310,15 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   >
                     <Space direction="vertical">
                       <Row>
-                        <Col
-                          flex="auto"
-                          style={{ display: 'flex', marginBottom: '20px' }}
-                        >
+                        <Col flex="auto" style={{ display: 'flex' }}>
                           <Input
-                            {...entryForm.register('entry')}
                             placeholder="Input Representative entry."
                             size="normal"
                             ref={entryGroupName}
                             onPressEnter={handleRegisterEntry}
+                            onChange={isEntryInputError}
+                            onBlur={isEntryInputError}
+                            isError={entryInputError ? true : false}
                           ></Input>
                           <Button
                             style={{ marginLeft: '8px' }}
@@ -255,6 +330,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             Register
                           </Button>
                         </Col>
+                      </Row>
+                      <Row
+                        style={{
+                          marginBottom: '10px',
+                        }}
+                      >
+                        <span className="error-message">{entryInputError}</span>
                       </Row>
                     </Space>
                     <Row gap={8}>
@@ -275,7 +357,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                               </div>
                             </div>
                           </Row>
-                        ) : watch('entryGroupid') === undefined ||
+                        ) : watch('isRegex') === false ||
                           entryDetails?.data?.entryGroupType === 0 ? (
                           <>
                             {fields.map((entryGroup, i) => {

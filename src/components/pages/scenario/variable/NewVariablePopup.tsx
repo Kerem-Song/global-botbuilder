@@ -7,6 +7,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
+import * as yup from 'yup';
 
 import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
 
@@ -20,7 +21,15 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
   const { t, tc } = usePage();
 
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { reset, register, handleSubmit } = useForm<ISaveParameterData>({
+
+  const variableNameSchema = yup.object({});
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISaveParameterData>({
     defaultValues: {},
   });
 
@@ -45,8 +54,8 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
         console.log('newVariable', submitResult);
         if (submitResult && submitResult.isSuccess) {
           lunaToast.success();
-          handleClose();
           reset();
+          handleClose();
         }
       },
     });

@@ -1,12 +1,9 @@
-import { Col, Input } from '@components';
+import { Col, FormItem, Input } from '@components';
 import { useSystemModal } from '@hooks';
+import { ISaveEntryGroup } from '@models';
+import { util } from '@modules/util';
 import { FC } from 'react';
-import {
-  useController,
-  useFieldArray,
-  UseFieldArrayRemove,
-  useFormContext,
-} from 'react-hook-form';
+import { useController, UseFieldArrayRemove, useFormContext } from 'react-hook-form';
 
 import { AddEntryBtn } from './AddEntryBtn';
 
@@ -21,7 +18,10 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   entriesRemove,
   searchKeyword,
 }) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
   const openDeleteEntryModal = async () => {
     const result = await confirm({
@@ -40,11 +40,6 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     }
   };
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: `entries.${index}.synonym`,
-  });
-
   const { field: synonymField } = useController({
     control,
     name: `entries.${index}.synonym`,
@@ -56,23 +51,29 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   });
 
   if (
-    field.value.includes(searchKeyword) ||
-    synonymField.value.find((x: string) => x.includes(searchKeyword))
+    searchKeyword === '' ||
+    (searchKeyword && field.value.includes(searchKeyword)) ||
+    (searchKeyword && synonymField.value?.find((x: string) => x.includes(searchKeyword)))
   ) {
     return (
       <Col>
-        <Input
-          {...field}
-          size="normal"
-          style={{
-            width: '200px',
-            height: 'auto',
-            marginRight: '8px',
-          }}
-        />
+        <div>
+          <FormItem error={errors.entries?.[index]?.representativeEntry}>
+            <>
+              <Input
+                {...field}
+                size="normal"
+                style={{
+                  width: '200px',
+                  marginRight: '8px',
+                }}
+              />
+            </>
+          </FormItem>
+        </div>
         <div className="entryList">
           <div className="entries">
-            <AddEntryBtn fields={fields} append={append} remove={remove} index={index} />
+            <AddEntryBtn index={index} />
           </div>
         </div>
         <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
