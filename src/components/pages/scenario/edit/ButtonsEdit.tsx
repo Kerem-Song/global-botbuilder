@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
 export const selectOptions = [
@@ -70,8 +71,7 @@ export const ButtonsEdit = ({
                   : errors.view?.childrenViews?.[index]?.buttons?.[i]?.label
               }
             >
-              <Input
-                hasTitle={true}
+              <InputWithTitleCounter
                 label={t(`BUTTON_NAME`)}
                 showCount={true}
                 maxLength={14}

@@ -16,6 +16,7 @@ import { AnswerNodeEdit } from './AnswerNodeEdit';
 import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { IntentNodeEdit } from './IntentNodeEdit';
 import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
@@ -183,8 +184,7 @@ export const NodeEditDrawer = () => {
 
             <div className="node-item-wrap">
               <FormItem error={errors.title}>
-                <Input
-                  hasTitle={true}
+                <InputWithTitleCounter
                   label={t(`CHAT_BUBBLE_NAME`)}
                   required={true}
                   showCount={true}

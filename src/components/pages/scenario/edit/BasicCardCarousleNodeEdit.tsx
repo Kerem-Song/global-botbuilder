@@ -1,4 +1,4 @@
-import { FormItem, Input, InputTextarea } from '@components/data-entry';
+import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Space } from '@components/layout';
 import { usePage, useRootState } from '@hooks';
@@ -9,6 +9,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardCarousleNodeEdit = () => {
   const { t } = usePage();
@@ -64,8 +65,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   errors.view.childrenViews[index]?.title
                 }
               >
-                <Input
-                  hasTitle={true}
+                <InputWithTitleCounter
                   label={t(`TITLE_INPUT`)}
                   showCount={true}
                   maxLength={20}
@@ -84,7 +84,6 @@ export const BasicCardCarousleNodeEdit = () => {
               >
                 <InputTextarea
                   label={t(`CONTENT_INPUT`)}
-                  hasTitle={true}
                   height={100}
                   showCount
                   maxLength={1000}

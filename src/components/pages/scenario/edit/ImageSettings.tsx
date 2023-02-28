@@ -1,5 +1,5 @@
 import { Col, Row, Space } from '@components/layout';
-import { usePage } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction } from 'react';
@@ -21,8 +21,9 @@ export const ImageSettings = ({
   index,
   listItemIndex,
 }: IImageSetting) => {
-  const { t } = usePage();
-  const { register, getValues } = useFormContext();
+  const { t, tc } = usePage();
+  const { confirm } = useSystemModal();
+  const { register, getValues, setValue } = useFormContext();
   const values = getValues();
 
   const handleImageCtrlIdPath = () => {
@@ -67,6 +68,39 @@ export const ImageSettings = ({
     }
   };
 
+  const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
+    const result = await confirm({
+      title: t(`IMAGE_TYPE_CHANGE`),
+      description: (
+        <>
+          <span>
+            {ratio === ImageAspectRatio.Rectangle
+              ? t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`)
+              : t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`)}
+          </span>
+        </>
+      ),
+    });
+
+    if (result) {
+      ratio === ImageAspectRatio.Rectangle && setImageRatio(ImageAspectRatio.Rectangle);
+      ratio === ImageAspectRatio.Square && setImageRatio(ImageAspectRatio.Square);
+    } else {
+      if (ratio === ImageAspectRatio.Rectangle) {
+        setValue(
+          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
+          ImageAspectRatio.Square,
+        );
+        setImageRatio(ImageAspectRatio.Rectangle);
+      } else {
+        setValue(
+          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
+          ImageAspectRatio.Rectangle,
+        );
+        setImageRatio(ImageAspectRatio.Square);
+      }
+    }
+  };
   return (
     <Space direction="vertical">
       <div className="m-b-8">
@@ -88,7 +122,7 @@ export const ImageSettings = ({
               Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Rectangle
             }
-            onClick={() => setImageRatio(ImageAspectRatio.Rectangle)}
+            onClick={() => setImageAspectRatioModal(ImageAspectRatio.Rectangle)}
           />
           <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
         </Col>
@@ -104,7 +138,7 @@ export const ImageSettings = ({
               Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
               ImageAspectRatio.Square
             }
-            onClick={() => setImageRatio(ImageAspectRatio.Square)}
+            onClick={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
           />
           <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
         </Col>

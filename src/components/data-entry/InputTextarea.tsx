@@ -23,7 +23,6 @@ export interface InputTextareaProps extends IHasClassNameNStyle {
   isError?: boolean;
   required?: boolean;
   label?: string;
-  hasTitle: boolean;
   isLight?: boolean;
   onBlur?: (e: FocusEvent<HTMLTextAreaElement>) => void;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -35,7 +34,8 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     //useImperativeHandle(ref, () => textareaRef.current!, [textareaRef.current]);
-    const { style, height, isError, showCount, autoHeight, ...inputProps } = args;
+    const { style, height, isError, showCount, autoHeight, isLight, ...inputProps } =
+      args;
     const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.target.value);
       args.onChange?.(e);
@@ -71,7 +71,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     return (
       <>
         <div className="textareaWrapper">
-          <span className={classNames('textareaLabel', { light: args.isLight })}>
+          <span className={classNames('textareaLabel', { light: isLight })}>
             {args.label}
             {args.required && <span className="required"> *</span>}
           </span>
