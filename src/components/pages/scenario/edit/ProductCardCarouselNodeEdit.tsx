@@ -123,7 +123,7 @@ export const ProductCardCarouselNodeEdit = () => {
             </Collapse>
           </div>
           <div className="node-item-wrap collapse">
-            <Collapse label={'프로필'} useSwitch={false}>
+            <Collapse label={t(`PROFILE`)} useSwitch={false}>
               <div className="m-b-8">
                 <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
                 <span className="required">*</span>
@@ -146,7 +146,6 @@ export const ProductCardCarouselNodeEdit = () => {
               </div>
               <div className="m-b-8">
                 <Space direction="vertical">
-                  <span className="label">{t(`PRODUCT_NODE_BRAND_NAME`)}</span>
                   <FormItem
                     error={
                       errors.view &&
@@ -154,7 +153,15 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.profileName
                     }
                   >
-                    <Input {...register(`view.childrenViews.${index}.profileName`)} />
+                    <Input
+                      hasTitle={true}
+                      label={t(`PRODUCT_NODE_BRAND_NAME`)}
+                      required={true}
+                      showCount={true}
+                      maxLength={15}
+                      isLight={true}
+                      {...register(`view.childrenViews.${index}.profileName`)}
+                    />
                   </FormItem>
                 </Space>
               </div>
@@ -164,10 +171,6 @@ export const ProductCardCarouselNodeEdit = () => {
             <div className="m-b-8">
               <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
                 <Space direction="vertical">
-                  <p>
-                    <span className="label">{t(`PRODUCT_NODE_PRODUCT_NAME`)} </span>
-                    <span className="required">*</span>
-                  </p>
                   <FormItem
                     error={
                       errors.view &&
@@ -175,12 +178,16 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.description
                     }
                   >
-                    <Input {...register(`view.childrenViews.${index}.description`)} />
+                    <Input
+                      hasTitle={true}
+                      label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                      showCount={true}
+                      maxLength={15}
+                      required={true}
+                      {...register(`view.childrenViews.${index}.description`)}
+                    />
                   </FormItem>
-                  <p>
-                    <span className="label">{t(`PRODUCT_NODE_PRICE`)} </span>
-                    <span className="required">*</span>
-                  </p>
+
                   <div className="m-b-8">
                     <Row justify="space-between">
                       <Col span={17}>
@@ -192,6 +199,9 @@ export const ProductCardCarouselNodeEdit = () => {
                           }
                         >
                           <Input
+                            hasTitle={true}
+                            label={t(`PRODUCT_NODE_PRICE`)}
+                            required={true}
                             {...register(`view.childrenViews.${index}.retailPrice`)}
                           />
                         </FormItem>
@@ -213,7 +223,6 @@ export const ProductCardCarouselNodeEdit = () => {
                     </Row>
                   </div>
 
-                  <span className="label">{t(`PRODUCT_NODE_DISCOUNT`)}</span>
                   <FormItem
                     error={
                       errors.view &&
@@ -221,7 +230,11 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.salePrice
                     }
                   >
-                    <Input {...register(`view.childrenViews.${index}.salePrice`)} />
+                    <Input
+                      hasTitle={true}
+                      label={t(`PRODUCT_NODE_DISCOUNT`)}
+                      {...register(`view.childrenViews.${index}.salePrice`)}
+                    />
                   </FormItem>
                 </Space>
               </Collapse>

@@ -13,6 +13,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   search?: boolean;
   hasTitle?: boolean;
   label?: string;
+  isLight?: boolean;
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
@@ -33,6 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     search,
     hasTitle,
     label,
+    isLight,
     onSearch,
     onPressEnter,
     onPressEsc,
@@ -89,10 +91,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       return (
         <>
           <div className="textareaWrapper">
-            <span className={classNames('textareaLabel', { hasTitle: args.hasTitle })}>
+            <p className={classNames('textareaLabel', { light: args.isLight })}>
               {args.label}
               {args.required && <span className="required"> *</span>}
-            </span>
+            </p>
             {args.showCount ? (
               <span className="textCounter">
                 {value?.length || 0}

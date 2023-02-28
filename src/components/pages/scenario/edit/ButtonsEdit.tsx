@@ -69,6 +69,7 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
                 label={t(`BUTTON_NAME`)}
                 showCount={true}
                 maxLength={14}
+                isLight={true}
                 {...register(
                   index === undefined
                     ? `view.buttons.${i}.label`

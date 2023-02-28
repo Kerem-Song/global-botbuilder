@@ -67,11 +67,14 @@ export const ListCardCarouselNodeEdit = () => {
       {watch(`view.childrenViews.${index}.id`) && (
         <>
           <div className="node-item-wrap">
-            <div className="m-b-8">
-              <span className="label">{t(`LIST_NODE_HEAD_TITLE_SETTING`)} </span>
-              <span className="required">*</span>
-            </div>
-            <Input {...register(`view.childrenViews.${index}.header`)} />
+            <Input
+              hasTitle={true}
+              label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+              required={true}
+              showCount={true}
+              maxLength={15}
+              {...register(`view.childrenViews.${index}.header`)}
+            />
           </div>
 
           <Collapse
@@ -114,18 +117,32 @@ export const ListCardCarouselNodeEdit = () => {
                 </div>
                 <div className="m-b-8">
                   <Space direction="vertical">
-                    <span className="label">{t(`TITLE_INPUT`)}</span>
-                    <Input
-                      {...register(`view.childrenViews.${index}.items.${i}.title`)}
-                    />
+                    <span className="label">
+                      <Input
+                        hasTitle={true}
+                        label={t(`TITLE_INPUT`)}
+                        showCount={true}
+                        maxLength={36}
+                        isLight={true}
+                        {...register(`view.childrenViews.${index}.items.${i}.title`)}
+                      />
+                    </span>
                   </Space>
                 </div>
                 <div className="m-b-8">
                   <Space direction="vertical">
-                    <span className="label">{t(`CONTENT_INPUT`)}</span>
-                    <Input
-                      {...register(`view.childrenViews.${index}.items.${i}.description`)}
-                    />
+                    <span className="label">
+                      <Input
+                        label={t(`CONTENT_INPUT`)}
+                        hasTitle={true}
+                        showCount
+                        maxLength={16}
+                        isLight={true}
+                        {...register(
+                          `view.childrenViews.${index}.items.${i}.description`,
+                        )}
+                      />
+                    </span>
                   </Space>
                 </div>
                 {i > 1 && (

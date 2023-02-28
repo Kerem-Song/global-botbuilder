@@ -1,6 +1,7 @@
 import { Button, Input, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -10,6 +11,7 @@ import { ButtonCtrlSelector } from './ButtonCtrlSelector';
 import { SelectNode } from './SelectNode';
 
 export const QuicksEdit = () => {
+  const { t } = usePage();
   const {
     register,
     getValues,
@@ -40,17 +42,24 @@ export const QuicksEdit = () => {
   };
 
   return (
-    <Collapse label="퀵 리플라이 버튼 설정" useSwitch={false}>
+    <Collapse label={t(`QUICK_REPLY_BUTTON_SETTING`)} useSwitch={false}>
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
           <Space direction="vertical">
-            <span className="subLabel">버튼명</span>
             <FormItem
               error={errors.view && errors.view.quicks && errors.view.quicks[i]?.label}
             >
-              <Input {...register(`view.quicks.${i}.label`)} />
+              <Input
+                hasTitle={true}
+                label={t(`BUTTON_NAME`)}
+                required={true}
+                showCount={true}
+                maxLength={14}
+                isLight={true}
+                {...register(`view.quicks.${i}.label`)}
+              />
             </FormItem>
-            <span className="subLabel">버튼타입</span>
+            <span className="subLabel">{t(`BUTTON_TYPE`)}</span>
             <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
               <SelectNode
@@ -69,7 +78,7 @@ export const QuicksEdit = () => {
             )}
             <div className="deleteBtn">
               <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                Delete Button
+                {t(`DELETE_BUTTON`)}
               </Button>
             </div>
           </Space>
@@ -77,7 +86,7 @@ export const QuicksEdit = () => {
       ))}
       {fields.length < 3 && (
         <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
-          <span>+ Add a Quick Reply</span>
+          <span>+ {t(`ADD_A_QUICK_REPLY`)}</span>
         </Button>
       )}
     </Collapse>

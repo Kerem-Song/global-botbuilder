@@ -1,6 +1,6 @@
 import { FormItem, Input } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
 import { INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
@@ -27,6 +27,7 @@ import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
+  const { t } = usePage();
   const dispatch = useDispatch();
   const [node, setNode] = useState<INode>();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
@@ -164,12 +165,13 @@ export const NodeEditDrawer = () => {
             </div>
 
             <div className="node-item-wrap">
-              <p className="m-b-8">
-                <span className="label">말풍선명</span>
-                <span className="required">*</span>
-              </p>
               <FormItem error={errors.title}>
                 <Input
+                  hasTitle={true}
+                  label={t(`CHAT_BUBBLE_NAME`)}
+                  required={true}
+                  showCount={true}
+                  maxLength={14}
                   placeholder="Input Chat Bubble name"
                   {...register('title')}
                   disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
