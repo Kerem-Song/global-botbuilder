@@ -21,7 +21,13 @@ export const selectOptions = [
   { value: ACTION_TYPES.URL, label: 'Url' },
 ];
 
-export const ButtonsEdit = ({ index }: { index?: number }) => {
+export const ButtonsEdit = ({
+  index,
+  isCarousel,
+}: {
+  index?: number;
+  isCarousel?: boolean;
+}) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
   const {
@@ -82,7 +88,8 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
               index={i}
               options={selectOptions}
               setButtonType={setButtonType}
-              isCarousel={false}
+              carouselIndex={index}
+              isCarousel={isCarousel}
             />
             {watch(
               index === undefined
@@ -96,7 +103,13 @@ export const ButtonsEdit = ({ index }: { index?: number }) => {
                     : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                 }
               >
-                <SelectNode fieldName={`view.buttons.${i}.actionValue`} />
+                <SelectNode
+                  fieldName={
+                    index === undefined
+                      ? `view.buttons.${i}.actionValue`
+                      : `view.childrenViews.${index}.buttons.${i}.actionValue`
+                  }
+                />
               </FormItem>
             )}
             {watch(

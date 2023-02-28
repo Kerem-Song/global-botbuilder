@@ -68,6 +68,23 @@ export const NodeEditDrawer = () => {
     //dispatch(setSelected());
   };
 
+  const validate = async () => {
+    if (node) {
+      const result = await schema.isValid(getValues());
+      if (!result) {
+        const view = node.view as IHasChildrenView;
+        console.log('view length', view.childrenViews?.length);
+        console.log('index', index);
+        if (view.childrenViews && view.childrenViews.length < index) {
+          return;
+        } else {
+          //onSubmit(getValues());
+        }
+      }
+      dispatch(setInvalidateNode({ id: node.id, isValid: result }));
+    }
+  };
+
   useEffect(() => {
     if (selectedNode) {
       console.log('selected node next node id', selectedNode.nextNodeId);
