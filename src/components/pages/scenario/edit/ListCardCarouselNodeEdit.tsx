@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row, Space } from '@components';
+import { Button, Col, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -11,6 +11,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ListCardCarouselNodeEdit = () => {
   const { t } = usePage();
@@ -67,8 +68,7 @@ export const ListCardCarouselNodeEdit = () => {
       {watch(`view.childrenViews.${index}.id`) && (
         <>
           <div className="node-item-wrap">
-            <Input
-              hasTitle={true}
+            <InputWithTitleCounter
               label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
               required={true}
               showCount={true}
@@ -118,8 +118,7 @@ export const ListCardCarouselNodeEdit = () => {
                 <div className="m-b-8">
                   <Space direction="vertical">
                     <span className="label">
-                      <Input
-                        hasTitle={true}
+                      <InputWithTitleCounter
                         label={t(`TITLE_INPUT`)}
                         showCount={true}
                         maxLength={36}
@@ -132,9 +131,8 @@ export const ListCardCarouselNodeEdit = () => {
                 <div className="m-b-8">
                   <Space direction="vertical">
                     <span className="label">
-                      <Input
+                      <InputWithTitleCounter
                         label={t(`CONTENT_INPUT`)}
-                        hasTitle={true}
                         showCount
                         maxLength={16}
                         isLight={true}

@@ -18,7 +18,6 @@ export const TextNodeEdit = () => {
         <FormItem error={errors.view && errors.view?.text}>
           <InputTextarea
             label={t(`TEXT`)}
-            hasTitle={false}
             required={true}
             style={{ minHeight: '100px', maxHeight: '320px' }}
             autoHeight

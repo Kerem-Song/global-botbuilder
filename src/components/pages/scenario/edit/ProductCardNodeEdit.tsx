@@ -1,4 +1,4 @@
-import { Col, FormItem, Input, Row, Space } from '@components';
+import { Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -11,6 +11,7 @@ import Select, { StylesConfig } from 'react-select';
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -136,8 +137,7 @@ export const ProductCardNodeEdit = () => {
           <div className="m-b-8">
             <Space direction="vertical">
               <FormItem error={errors.view && errors.view.profileName}>
-                <Input
-                  hasTitle={true}
+                <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
                   showCount={true}
@@ -154,8 +154,7 @@ export const ProductCardNodeEdit = () => {
           <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
               <FormItem error={errors.view && errors.view.description}>
-                <Input
-                  hasTitle={true}
+                <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
                   showCount={true}
                   maxLength={15}
@@ -168,8 +167,7 @@ export const ProductCardNodeEdit = () => {
                 <Row justify="space-between">
                   <Col span={17}>
                     <FormItem error={errors.view && errors.view.retailPrice}>
-                      <Input
-                        hasTitle={true}
+                      <InputWithTitleCounter
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
                         {...register(`view.retailPrice`)}
@@ -192,8 +190,7 @@ export const ProductCardNodeEdit = () => {
               </div>
 
               <FormItem error={errors.view && errors.view.salePrice}>
-                <Input
-                  hasTitle={true}
+                <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.salePrice`)}
                 />

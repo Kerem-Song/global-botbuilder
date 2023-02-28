@@ -11,6 +11,7 @@ import Select, { StylesConfig } from 'react-select';
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
@@ -153,8 +154,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.profileName
                     }
                   >
-                    <Input
-                      hasTitle={true}
+                    <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_BRAND_NAME`)}
                       required={true}
                       showCount={true}
@@ -178,8 +178,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.description
                     }
                   >
-                    <Input
-                      hasTitle={true}
+                    <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
                       showCount={true}
                       maxLength={15}
@@ -198,8 +197,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             errors.view.childrenViews[index]?.retailPrice
                           }
                         >
-                          <Input
-                            hasTitle={true}
+                          <InputWithTitleCounter
                             label={t(`PRODUCT_NODE_PRICE`)}
                             required={true}
                             {...register(`view.childrenViews.${index}.retailPrice`)}
@@ -230,8 +228,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       errors.view.childrenViews[index]?.salePrice
                     }
                   >
-                    <Input
-                      hasTitle={true}
+                    <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_DISCOUNT`)}
                       {...register(`view.childrenViews.${index}.salePrice`)}
                     />

@@ -1,4 +1,4 @@
-import { FormItem, Input, InputTextarea, Space } from '@components';
+import { FormItem, InputTextarea, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -9,6 +9,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardNodeEdit = () => {
   const { t } = usePage();
@@ -48,8 +49,7 @@ export const BasicCardNodeEdit = () => {
         <Space direction="vertical">
           {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
           <FormItem error={errors.view && errors.view.title}>
-            <Input
-              hasTitle={true}
+            <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
               showCount={true}
               maxLength={20}
@@ -63,7 +63,6 @@ export const BasicCardNodeEdit = () => {
             <InputTextarea
               label={t(`CONTENT_INPUT`)}
               height={100}
-              hasTitle={true}
               style={{ minHeight: '100px', maxHeight: '320px' }}
               showCount
               maxLength={1000}

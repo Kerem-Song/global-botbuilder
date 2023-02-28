@@ -32,9 +32,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     required,
     size,
     search,
-    hasTitle,
-    label,
-    isLight,
     onSearch,
     onPressEnter,
     onPressEsc,
@@ -55,7 +52,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         break;
     }
   };
-  const isWrapping = false || showCount || search || hasTitle;
+  const isWrapping = false || showCount || search;
 
   const inputClassName = classNames('luna-input', {
     'luna-input-error': isError,
@@ -87,26 +84,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   );
 
   if (isWrapping) {
-    if (hasTitle) {
-      return (
-        <>
-          <div className="textareaWrapper">
-            <p className={classNames('textareaLabel', { light: args.isLight })}>
-              {args.label}
-              {args.required && <span className="required"> *</span>}
-            </p>
-            {args.showCount ? (
-              <span className="textCounter">
-                {value?.length || 0}
-                {`/${args.maxLength}`}
-              </span>
-            ) : undefined}
-          </div>
-          {input}
-        </>
-      );
-    }
-
     return (
       <span className={inputWrapClassName}>
         {input}

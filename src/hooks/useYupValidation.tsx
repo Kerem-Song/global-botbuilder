@@ -214,7 +214,7 @@ export const useYupValidation = () => {
           is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
           then: otherFlowRedirectNodeEditSchema,
         }),
-      nextNodeId: yup.string().when('type', {
+      nextNodeId: yup.string().nullable().when('type', {
         is: NODE_TYPES.PARAMETER_SET_NODE,
         then: parameterSetNodeEditNextNodeIdSchema,
       }),
