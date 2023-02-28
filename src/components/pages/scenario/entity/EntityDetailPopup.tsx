@@ -108,6 +108,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = formMethods;
 
@@ -187,15 +188,22 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     handleIsOpen(false);
   };
 
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === 'isRegex' && type === 'change') {
+        setValue('entries', []);
+      }
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [watch]);
+
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
         <div className="listBtn">
-          <Button
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onClick={handleClose}
-          >
-            <img src={icPrev} alt="prev"></img>
+          <Button icon={icPrev} onClick={handleClose}>
             List
           </Button>
         </div>
