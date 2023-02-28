@@ -24,6 +24,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   };
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
   const pageName = location.pathname.split('/').slice(-1)[0];
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     <header>
       <div className="headerWapper">
         <div className="brandPage">
-          <span className="brandName">{brandName}</span>
+          <span className="brandName">{isBotPage ? botName : brandName}</span>
           <span className="pageName">{pageName}</span>
         </div>
         <div className="rightNav">
