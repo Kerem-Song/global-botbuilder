@@ -79,7 +79,7 @@ interface IButtonTypeSelector {
   index: number;
   options: IReactSelect[];
   setButtonType: Dispatch<SetStateAction<string | undefined>>;
-  isCarousel: boolean;
+  isCarousel?: boolean;
   carouselIndex?: number;
 }
 

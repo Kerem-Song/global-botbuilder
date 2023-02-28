@@ -97,7 +97,9 @@ export const BasicCardCarousleNodeEdit = () => {
           <Collapse label={t(`BUTTON`)} useSwitch={false}>
             {values.view &&
               values.view.childrenViews &&
-              values.view.childrenViews[index]?.buttons && <ButtonsEdit index={index} />}
+              values.view.childrenViews[index]?.buttons && (
+                <ButtonsEdit index={index} isCarousel={true} />
+              )}
           </Collapse>
         </>
       )}
