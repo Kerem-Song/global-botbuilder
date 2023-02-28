@@ -55,8 +55,6 @@ export const AnswerNodeEdit = () => {
     };
   }, [watch]);
 
-  console.log('values in other answer node edit:', getValues());
-
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
