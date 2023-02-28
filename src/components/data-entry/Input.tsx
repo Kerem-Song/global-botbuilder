@@ -11,9 +11,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   showCount?: boolean;
   size?: SizeType;
   search?: boolean;
-  hasTitle?: boolean;
-  label?: string;
-  isLight?: boolean;
+
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
@@ -39,6 +37,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   } = args;
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
     switch (e.key) {
       case 'Enter':
         onPressEnter?.(value);

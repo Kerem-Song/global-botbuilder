@@ -36,6 +36,9 @@ export const InputWithTitleCounter = forwardRef<
   });
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
     switch (e.key) {
       case 'Enter':
         onPressEnter?.(value);
