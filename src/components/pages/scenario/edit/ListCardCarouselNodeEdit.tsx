@@ -81,9 +81,9 @@ export const ListCardCarouselNodeEdit = () => {
           <Collapse
             label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
             useSwitch={true}
-            field={`childrenViews.${index}.imageCtrl`}
+            field={`useImageCtrl`}
           >
-            {watch(`view.childrenViews.${index}.imageCtrl`) && (
+            {watch(`view.useImageCtrl`) && (
               <ImageSettings
                 imageRatio={imageRatio}
                 setImageRatio={setImageRatio}
@@ -172,7 +172,7 @@ export const ListCardCarouselNodeEdit = () => {
           {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
           <Collapse label={t(`BUTTON`)} useSwitch={false}>
             {values.view && values.view?.childrenViews[index]?.buttons && (
-              <ButtonsEdit index={index} isCarousel={true} />
+              <ButtonsEdit index={index} isCarousel={true} imageRatio={imageRatio} />
             )}
           </Collapse>
         </>

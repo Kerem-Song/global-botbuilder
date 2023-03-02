@@ -1,6 +1,7 @@
 import {
   ConditionJoin,
   ConditionOperator,
+  ImageAspectRatio,
   NODE_TYPES,
   TNodeTypes,
   VIEW_TYPES,
@@ -79,11 +80,13 @@ export const nodeDefaultHelper = {
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
       title: '',
       description: '',
+      useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',
         altText: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
@@ -170,11 +173,13 @@ export const nodeDefaultHelper = {
       header: '',
       seq: 0,
       items: [],
+      useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',
         altText: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
@@ -203,11 +208,13 @@ export const nodeDefaultHelper = {
       description: '',
       seq: 0,
       currencyUnit: 'KRW',
+      useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',
         altText: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };

@@ -17,6 +17,7 @@ export const BasicCardNodeEdit = () => {
   const {
     register,
     getValues,
+
     control,
     watch,
     formState: { errors },
@@ -29,14 +30,14 @@ export const BasicCardNodeEdit = () => {
     control,
   });
 
-  useEffect(() => {
-    console.log('basic card node edit');
-  }, [fields]);
+  // useEffect(() => {
+  //   console.log('basic card node edit');
+  // }, [fields]);
 
   return (
     <>
-      <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'imageCtrl'}>
-        {watch(`view.imageCtrl`) && (
+      <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
+        {watch(`view.useImageCtrl`) && (
           <ImageSettings
             imageRatio={imageRatio}
             setImageRatio={setImageRatio}
@@ -77,7 +78,7 @@ export const BasicCardNodeEdit = () => {
       </Collapse>
 
       <Collapse label={t(`BUTTON`)} useSwitch={false}>
-        {values.view && values.view.buttons && <ButtonsEdit />}
+        {values.view && values.view.buttons && <ButtonsEdit imageRatio={imageRatio} />}
       </Collapse>
     </>
   );

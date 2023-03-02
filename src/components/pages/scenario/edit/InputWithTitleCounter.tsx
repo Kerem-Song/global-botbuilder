@@ -1,7 +1,7 @@
 import { InputProps } from '@components/data-entry';
 import classNames from 'classnames';
 import { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 interface InputWithTitleCounterProps extends InputProps {
   label?: string;
@@ -72,7 +72,7 @@ export const InputWithTitleCounter = forwardRef<
       aria-required={required}
     />
   );
-  console.log('watch', watch(`inputWithTitleCounter`));
+
   return (
     <>
       <div className="textareaWrapper">
