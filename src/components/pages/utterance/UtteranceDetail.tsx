@@ -25,11 +25,18 @@ export const UtteranceDetail = () => {
   const { utteranceId, botId } = useParams();
   const { navigate, t, tc } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { confirm } = useSystemModal();
+  const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
-  const { intentMutate, getIntentDetailQuery, intentDeleteMutate } = useUtteranceClient();
+  const {
+    intentMutate,
+    getIntentDetailQuery,
+    intentDeleteMutate,
+    checkIntentDuplicationMutate,
+    checkUtteranceDuplicationMutate,
+  } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
+
   const list = getScenarioList();
   const scenarioList =
     list.data &&
@@ -49,8 +56,8 @@ export const UtteranceDetail = () => {
     control,
   });
 
-  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
   const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
@@ -125,32 +132,43 @@ export const UtteranceDetail = () => {
     }
   };
 
-  const handleAddUtternace = (data: IInputFormModel): void => {
+  const handleAddUtternace = async (data: IInputFormModel): Promise<void> => {
     if (!data.utterance || !data.utterance.trim()) return;
-    append({ text: data.utterance });
-    inputForm.reset();
+
+    if (
+      getValues('items')
+        .map((x) => x.text)
+        ?.includes(data.utterance)
+    ) {
+      await error({
+        title: '중복 인텐트명',
+        description: <span>이미 있는 인텐트명입니다.</span>,
+      });
+      return;
+    }
+
+    checkUtteranceDuplicationMutate.mutate(
+      {
+        text: inputForm.getValues('utterance'),
+        // utteranceId:
+      },
+      {
+        onSuccess: async (result) => {
+          if (result.result === true) {
+            await error({
+              title: '중복 인텐트명',
+              description: <span>이미 있는 인텐트명입니다.</span>,
+            });
+          } else {
+            append({ text: data.utterance });
+            inputForm.reset();
+          }
+        },
+      },
+    );
   };
 
   const handleSave = (itemData: IUtteranceModel): void => {
-    const newIntent: ISaveIntent = {
-      sessionToken: token!,
-      intentName: itemData.name,
-      utterances: itemData.items.map((x) => {
-        return x.text;
-      }),
-      flowId: itemData.connectScenarioId,
-    };
-
-    intentMutate.mutate(newIntent, {
-      onSuccess: (submitResult) => {
-        console.log('newIntent', submitResult);
-        if (submitResult.isSuccess) {
-          lunaToast.success();
-          navigate(`/${botId}/utterance`);
-        }
-      },
-    });
-
     if (itemData.intentId) {
       const modifyIntent: ISaveIntent = {
         sessionToken: token!,
@@ -172,7 +190,45 @@ export const UtteranceDetail = () => {
           }
         },
       });
+    } else {
+      const newIntent: ISaveIntent = {
+        sessionToken: token!,
+        intentName: itemData.name,
+        utterances: itemData.items.map((x) => {
+          return x.text;
+        }),
+        flowId: itemData.connectScenarioId,
+      };
+
+      intentMutate.mutate(newIntent, {
+        onSuccess: (submitResult) => {
+          console.log('newIntent', submitResult);
+          if (submitResult.isSuccess) {
+            lunaToast.success();
+            navigate(`/${botId}/utterance`);
+          }
+        },
+      });
     }
+  };
+
+  const handleNameBlur = async () => {
+    checkIntentDuplicationMutate.mutate(
+      {
+        name: getValues('name'),
+        intentId: getValues('intentId'),
+      },
+      {
+        onSuccess: async (result) => {
+          if (result.result === true) {
+            await error({
+              title: '중복 인텐트명',
+              description: <span>이미 있는 인텐트명입니다.</span>,
+            });
+          }
+        },
+      },
+    );
   };
 
   return (
@@ -208,6 +264,7 @@ export const UtteranceDetail = () => {
                   placeholder="Input Intent Name"
                   showCount
                   maxLength={20}
+                  onBlur={handleNameBlur}
                 />
               </Col>
             </Row>
@@ -238,7 +295,10 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <Input
                   {...inputForm.register('utterance')}
+                  // ref={utteranceRef}
                   placeholder="Press Enter and enter the utterance keyword."
+                  // onPressEnter={handleUtteranceEnter}
+                  // onPressEnter={test}
                 />
               </Col>
               <Col style={{ marginLeft: '8px' }}>

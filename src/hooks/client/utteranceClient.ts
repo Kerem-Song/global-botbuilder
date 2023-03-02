@@ -10,9 +10,12 @@ import {
 import { AxiosResponse } from 'axios';
 
 import {
+  ICheckDuplicateIntent,
+  ICheckUtterance,
   IDeleteIntent,
   IGetIntent,
   IIntentListItem,
+  IResponseCheckDuplication,
   IResponseIntentData,
   ISaveIntent,
   ISearchData,
@@ -137,6 +140,34 @@ export const useUtteranceClient = () => {
     }
   });
 
+  const checkIntentDuplicationMutate = useMutation(
+    async (criteria: Pick<ICheckDuplicateIntent, 'intentId' | 'name'>) => {
+      const result = await http.post<
+        ICheckDuplicateIntent,
+        AxiosResponse<IResponseCheckDuplication>
+      >('Builder/CheckDuplicateIntent', {
+        sessionToken: token!,
+        ...criteria,
+      });
+
+      return result.data;
+    },
+  );
+
+  const checkUtteranceDuplicationMutate = useMutation(
+    async (criteria: Pick<ICheckUtterance, 'utteranceId' | 'text'>) => {
+      const result = await http.post<
+        ICheckUtterance,
+        AxiosResponse<IResponseCheckDuplication>
+      >('Builder/CheckUtterance', {
+        sessionToken: token!,
+        ...criteria,
+      });
+
+      return result.data;
+    },
+  );
+
   return {
     getIntentDetailQuery,
     getPageQuery,
@@ -145,5 +176,7 @@ export const useUtteranceClient = () => {
     intentGetMutate,
     changePageNumberQuery,
     invalidateIntentQuery,
+    checkIntentDuplicationMutate,
+    checkUtteranceDuplicationMutate,
   };
 };

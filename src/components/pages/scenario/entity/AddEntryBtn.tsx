@@ -1,13 +1,15 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
+import { util } from '@modules/util';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export interface AddEntryBtnProps {
   index: number;
+  searchKeyword: string;
 }
 
-export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index }) => {
+export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index, searchKeyword }) => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -73,7 +75,10 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index }) => {
                   e.preventDefault();
                 }}
               >
-                {getValues(`entries.${index}.synonym.${i}`)}
+                {util.replaceKeywordMark(
+                  getValues(`entries.${index}.synonym.${i}`),
+                  searchKeyword,
+                )}
               </span>
               <button
                 type="button"

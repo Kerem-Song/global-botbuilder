@@ -369,8 +369,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             {fields.map((entryGroup, i) => {
                               return (
                                 <EntityDetailItem
-                                  key={i}
+                                  key={entryGroup.id}
                                   index={i}
+                                  entryGroup={entryGroup}
                                   entriesRemove={remove}
                                   searchKeyword={searchKeyword}
                                 />
