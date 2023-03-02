@@ -86,6 +86,29 @@
                 }
               }
               display: flex;
+              .representativeEntry {
+                box-sizing: border-box;
+                margin: 0;
+                font-variant: tabular-nums;
+                list-style: none;
+                font-feature-settings: 'tnum';
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: rem(200);
+                height: auto;
+                min-width: 0;
+                padding: 4px 11px;
+                color: $grayBlack;
+                font-size: rem(13);
+                line-height: 1.5715;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid $gray200;
+                border-radius: rem(8);
+                transition: all 0.3s;
+                margin-right: rem(8);
+              }
               .entryList {
                 width: rem(744);
                 flex-wrap: wrap;
@@ -213,6 +236,7 @@
                   }
                 }
               }
+
               .icDelete {
                 width: rem(38);
                 height: rem(38);
@@ -237,6 +261,7 @@
                 }
               }
             }
+
             .emptyList {
               height: rem(207);
               display: flex;

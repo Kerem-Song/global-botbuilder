@@ -1,4 +1,5 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import { ISaveParameter, ISaveParameterData } from '@models';
@@ -22,7 +23,13 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const variableNameSchema = yup.object({});
+  const variableNameSchema = yup.object({
+    name: yup
+      .string()
+      .trim()
+      .matches(/^[a-z0-9_]*$/, `영어 소문자, 숫자, 특수문자 _ 만 입력 가능합니다.`)
+      .required(`필수 입력 항목입니다.`),
+  });
 
   const {
     reset,
@@ -31,6 +38,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
     formState: { errors },
   } = useForm<ISaveParameterData>({
     defaultValues: {},
+    resolver: yupResolver(variableNameSchema),
   });
 
   const handleClose = () => {
@@ -85,8 +93,9 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
             <span style={{ color: 'red' }}>*</span>
           </Col>
           <Col span={18}>
-            <FormItem>
+            <FormItem error={errors.name}>
               <Input
+                style={{ textTransform: 'lowercase' }}
                 {...register('name')}
                 placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
               />

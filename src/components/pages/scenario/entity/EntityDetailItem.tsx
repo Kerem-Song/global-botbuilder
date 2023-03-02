@@ -2,8 +2,13 @@ import { Col, FormItem, Input } from '@components';
 import { useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
-import { FC } from 'react';
-import { useController, UseFieldArrayRemove, useFormContext } from 'react-hook-form';
+import { FC, useEffect, useRef, useState } from 'react';
+import {
+  FieldArrayWithId,
+  useController,
+  UseFieldArrayRemove,
+  useFormContext,
+} from 'react-hook-form';
 
 import { AddEntryBtn } from './AddEntryBtn';
 
@@ -11,13 +16,22 @@ export interface IEntityDetailItemProps {
   index: number;
   entriesRemove: UseFieldArrayRemove;
   searchKeyword: string;
+  entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   index,
   entriesRemove,
   searchKeyword,
+  entryGroup,
 }) => {
+  const [editInputIndex, setEditInputIndex] = useState<number>(-1);
+  const editInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    editInputRef.current?.focus();
+  }, []);
+
   const {
     control,
     formState: { errors },
@@ -56,28 +70,64 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     (searchKeyword && synonymField.value?.find((x: string) => x.includes(searchKeyword)))
   ) {
     return (
-      <Col>
-        <div>
-          <FormItem error={errors.entries?.[index]?.representativeEntry}>
-            <>
-              <Input
-                {...field}
-                size="normal"
-                style={{
-                  width: '200px',
-                  marginRight: '8px',
-                }}
-              />
-            </>
-          </FormItem>
-        </div>
-        <div className="entryList">
-          <div className="entries">
-            <AddEntryBtn index={index} />
-          </div>
-        </div>
-        <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
-      </Col>
+      <>
+        {[entryGroup].map((item, i) => {
+          if (editInputIndex === i) {
+            return (
+              <Col key={i}>
+                <div>
+                  <FormItem error={errors.entries?.[index]?.representativeEntry}>
+                    <Input
+                      {...field}
+                      size="normal"
+                      style={{
+                        width: '200px',
+                        height: 'auto',
+                        marginRight: '8px',
+                      }}
+                    />
+                  </FormItem>
+                </div>
+                <div className="entryList">
+                  <div className="entries">
+                    <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="icDelete"
+                  onClick={openDeleteEntryModal}
+                />
+              </Col>
+            );
+          } else {
+            return (
+              <div key={i}>
+                <div className="representativeEntry">
+                  <span
+                    onDoubleClick={(e) => {
+                      setEditInputIndex(i);
+                      e.preventDefault();
+                    }}
+                  >
+                    {util.replaceKeywordMark(item.representativeEntry, searchKeyword)}
+                  </span>
+                </div>
+                <div className="entryList">
+                  <div className="entries">
+                    <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="icDelete"
+                  onClick={openDeleteEntryModal}
+                />
+              </div>
+            );
+          }
+        })}
+      </>
     );
   } else {
     return <></>;

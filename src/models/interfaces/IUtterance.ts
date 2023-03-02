@@ -76,11 +76,24 @@ export interface IScenarioData {
 
 export interface ICheckUtterance {
   sessionToken: string;
-  utteranceId: string;
+  utteranceId?: string;
   text: string;
 }
 
 export interface IReactSelect {
   value: string;
   label: string;
+}
+
+export interface ICheckDuplicateIntent {
+  sessionToken: string;
+  intentId?: string;
+  name: string;
+}
+
+export interface IResponseCheckDuplication {
+  result: boolean;
+  exception: null;
+  isSuccess: boolean;
+  newToken: null;
 }
