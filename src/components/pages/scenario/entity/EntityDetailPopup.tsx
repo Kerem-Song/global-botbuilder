@@ -63,24 +63,19 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     entries: [],
   };
 
-  const schema = yup.object({
+  const regexSchema = yup.object({
     representativeEntry: yup
       .string()
-
       .trim()
-
-      .when('isRegex', {
-        is: false,
-        then: yup
-          .string()
-          .trim()
-          .matches(
-            /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
-            `특수문자, 이모지는 입력할 수 없습니다.`,
-          )
-          .required(),
-      })
+      .matches(
+        /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
+        `특수문자, 이모지는 입력할 수 없습니다.`,
+      )
       .required(),
+  });
+
+  const schema = yup.object({
+    representativeEntry: yup.string().trim().required(),
   });
 
   const entityNameSchema = yup
@@ -93,7 +88,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
           `특수문자, 이모지는 입력할 수 없습니다.`,
         )
         .max(20, `20자를 초과할 수 없습니다.`),
-      entries: yup.array().of(schema),
+      entries: yup
+        .array()
+        .when('isRegex', { is: false, then: yup.array().of(regexSchema) })
+        .when('isRegex', { is: true, then: yup.array().of(schema) }),
     })
     .required();
 
