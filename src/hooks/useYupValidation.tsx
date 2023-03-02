@@ -58,10 +58,7 @@ export const useYupValidation = () => {
 
   const basicCardNodeEditSchema = yup.object().shape({
     title: yup.string().nullable().trim().max(20, t(`VALIDATION_STRING_LIMIT_20`)),
-    description: yup
-      .string()
-      .max(230, t(`VALIDATION_STRING_LIMIT_230`))
-      .required(t(`VALIDATION_REQUIRED`)),
+    description: yup.string().max(230, t(`VALIDATION_STRING_LIMIT_230`)),
     imageCtrl: yup.object().shape({
       imageFile: imageFileEditSchema,
       imageUrl: yup.string().url(t(`VALIDATION_URL`)),

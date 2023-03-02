@@ -113,11 +113,13 @@ export interface IViewBase {
 
 export interface IHasButtonViewBase extends IViewBase {
   buttons?: IButtonCtrl[];
+  useImageCtrl?: boolean;
 }
 
 export interface IHasImageCtrlViewBase extends IViewBase {
   imageCtrl?: IImageCtrl;
   childrenViews?: IViewItem[];
+  useImageCtrl?: boolean;
 }
 
 export interface IHasUtteranceViewBase extends IViewBase {
@@ -303,6 +305,7 @@ export interface IProductCardCarouselView extends IHasButtonCarouselViewBase {
 
 export interface IHasButtonCarouselViewBase extends IViewBase {
   childrenViews: IHasButtonViewBase[];
+  useImageCtrl?: boolean;
 }
 export interface IButtonEditViewBase extends IViewBase {
   childrenViews?: IHasButtonViewBase[];

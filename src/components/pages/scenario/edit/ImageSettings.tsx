@@ -23,7 +23,7 @@ export const ImageSettings = ({
 }: IImageSetting) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
-  const { register, getValues, setValue } = useFormContext();
+  const { register, getValues, setValue, watch } = useFormContext();
   const values = getValues();
 
   const handleImageCtrlIdPath = () => {
@@ -83,8 +83,22 @@ export const ImageSettings = ({
     });
 
     if (result) {
-      ratio === ImageAspectRatio.Rectangle && setImageRatio(ImageAspectRatio.Rectangle);
-      ratio === ImageAspectRatio.Square && setImageRatio(ImageAspectRatio.Square);
+      if (ratio === ImageAspectRatio.Rectangle) {
+        setImageRatio(ImageAspectRatio.Rectangle);
+
+        setValue(
+          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
+          ImageAspectRatio.Rectangle,
+        );
+      }
+      if (ratio === ImageAspectRatio.Square) {
+        setImageRatio(ImageAspectRatio.Square);
+
+        setValue(
+          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
+          ImageAspectRatio.Square,
+        );
+      }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
         setValue(
@@ -101,6 +115,8 @@ export const ImageSettings = ({
       }
     }
   };
+  console.log('imageRatio in img settings', imageRatio);
+
   return (
     <Space direction="vertical">
       <div className="m-b-8">

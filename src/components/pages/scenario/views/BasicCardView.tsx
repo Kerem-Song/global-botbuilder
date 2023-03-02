@@ -1,5 +1,6 @@
 import { Card } from '@components/data-display';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
+import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
@@ -10,8 +11,9 @@ export interface IBasicCardViewProps {
 }
 export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, view }) => {
   const [squareMode, setSquareMode] = useState<boolean>(false);
+
   const thumbnailClass = classNames('thumbnail', {
-    square: squareMode,
+    square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
     textCard: false,
   });
 

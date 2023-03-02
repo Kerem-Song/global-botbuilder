@@ -245,7 +245,7 @@ export const ProductCardCarouselNodeEdit = () => {
           </div>
           <Collapse label={t(`BUTTON`)} useSwitch={false}>
             {values.view && values.view.childrenViews[index].buttons && (
-              <ButtonsEdit index={index} isCarousel={true} />
+              <ButtonsEdit index={index} isCarousel={true} imageRatio={imageRatio} />
             )}
           </Collapse>
         </>

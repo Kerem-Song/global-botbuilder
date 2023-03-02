@@ -202,7 +202,7 @@ export const ProductCardNodeEdit = () => {
         </div>
       </div>
       <Collapse label={t(`BUTTON`)} useSwitch={false}>
-        {values.view && values.view.buttons && <ButtonsEdit />}
+        {values.view && values.view.buttons && <ButtonsEdit imageRatio={imageRatio} />}
       </Collapse>
     </>
   );

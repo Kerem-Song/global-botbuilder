@@ -1,26 +1,23 @@
 import { icCollapseClose, icCollapseOpen } from '@assets';
-import { Button, Col, Divider, Row, Space, Switch } from '@components';
+import { Button, Col, Divider, Row, Switch } from '@components';
 import { IGNodeEditModel, IHasChildren, IHasClassNameNStyle } from '@models';
 import {
   IHasImageCtrlViewBase,
   IHasUtteranceViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FC, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
   useSwitch: boolean;
-  field?: 'imageCtrl' | 'useUtteranceParam' | `childrenViews.${number}.imageCtrl`;
+  field?: 'useImageCtrl' | 'useUtteranceParam';
 }
 
 export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
-  const {
-    register,
-    getValues,
-    control,
-    formState: { errors },
-  } = useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
+  const { register } =
+    useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
+
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };

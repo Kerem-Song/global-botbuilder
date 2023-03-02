@@ -1,7 +1,7 @@
 import { Button, Input, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { usePage } from '@hooks';
-import { IGNodeEditModel } from '@models';
+import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
   ActionTypes,
@@ -25,9 +25,11 @@ export const selectOptions = [
 export const ButtonsEdit = ({
   index,
   isCarousel,
+  imageRatio,
 }: {
   index?: number;
   isCarousel?: boolean;
+  imageRatio?: ImageAspectRatio;
 }) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
@@ -148,7 +150,7 @@ export const ButtonsEdit = ({
           </Space>
         </Space>
       ))}
-      {fields.length < 3 && (
+      {fields.length < (imageRatio === ImageAspectRatio.Rectangle ? 3 : 2) && (
         <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
           <span>{t(`ADD_A_NEW_BUTTON`)}</span>
         </Button>
