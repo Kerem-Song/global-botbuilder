@@ -38,9 +38,10 @@ export const UtteranceDetail = () => {
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
 
   const list = getScenarioList();
-  const scenarioList =
-    list.data &&
-    list.data.map((x) => {
+
+  const scenarioList = list.data
+    ?.filter((item) => !item.isFallbackFlow)
+    .map((x) => {
       return { value: x.id, label: x.alias };
     });
 
@@ -295,10 +296,7 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <Input
                   {...inputForm.register('utterance')}
-                  // ref={utteranceRef}
                   placeholder="Press Enter and enter the utterance keyword."
-                  // onPressEnter={handleUtteranceEnter}
-                  // onPressEnter={test}
                 />
               </Col>
               <Col style={{ marginLeft: '8px' }}>
@@ -353,7 +351,7 @@ export const UtteranceDetail = () => {
               filterKeyword.map((v, i) => {
                 return (
                   <>
-                    <div key={i} className="utteranceItem">
+                    <div key={v.intentId} className="utteranceItem">
                       <Checkbox
                         {...register(`items.${i}.isChecked`)}
                         style={{ marginLeft: '20px' }}
