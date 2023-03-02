@@ -13,7 +13,7 @@ import {
   IUtteranceModel,
 } from '@models';
 import { util } from '@modules/util';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
@@ -25,7 +25,7 @@ export const UtteranceDetail = () => {
   const { utteranceId, botId } = useParams();
   const { navigate, t, tc } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { confirm } = useSystemModal();
+  const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
   const {
     intentMutate,
@@ -58,8 +58,6 @@ export const UtteranceDetail = () => {
 
   const { fields, append, remove } = useFieldArray({ control, name: 'items' });
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
-
-  console.log('items', getValues('items'));
 
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
@@ -134,12 +132,18 @@ export const UtteranceDetail = () => {
     }
   };
 
-  const handleAddUtternace = (data: IInputFormModel): void => {
+  const handleAddUtternace = async (data: IInputFormModel): Promise<void> => {
     if (!data.utterance || !data.utterance.trim()) return;
 
-    console.log(data.utterance);
-
-    if (getValues(`items.${0}.text`) === data.utterance) {
+    if (
+      getValues('items')
+        .map((x) => x.text)
+        ?.includes(data.utterance)
+    ) {
+      await error({
+        title: '중복 인텐트명',
+        description: <span>이미 있는 인텐트명입니다.</span>,
+      });
       return;
     }
 
@@ -151,7 +155,7 @@ export const UtteranceDetail = () => {
       {
         onSuccess: async (result) => {
           if (result.result === true) {
-            await confirm({
+            await error({
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
@@ -217,7 +221,7 @@ export const UtteranceDetail = () => {
       {
         onSuccess: async (result) => {
           if (result.result === true) {
-            await confirm({
+            await error({
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
