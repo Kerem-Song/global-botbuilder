@@ -64,6 +64,7 @@ export const ListCardNodeEdit = () => {
           showCount={true}
           maxLength={15}
           {...register('view.header')}
+          textLength={watch('view.header')?.length || 0}
         />
       </div>
       <Collapse
@@ -111,6 +112,7 @@ export const ListCardNodeEdit = () => {
                     maxLength={36}
                     isLight={true}
                     {...register(`view.items.${i}.title`)}
+                    textLength={watch(`view.items.${i}.title`)?.length || 0}
                   />
                 </span>
               </Space>
@@ -124,6 +126,7 @@ export const ListCardNodeEdit = () => {
                     maxLength={16}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
+                    textLength={watch(`view.items.${i}.description`)?.length || 0}
                   />
                 </span>
               </Space>

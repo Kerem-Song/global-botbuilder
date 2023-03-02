@@ -61,6 +61,7 @@ export const NodeEditDrawer = () => {
     reset,
     getValues,
     trigger,
+    watch,
     formState: { errors, isValid },
   } = formMethods;
 
@@ -192,6 +193,7 @@ export const NodeEditDrawer = () => {
                   placeholder="Input Chat Bubble name"
                   {...register('title')}
                   disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
+                  textLength={watch('title')?.length || 0}
                 />
               </FormItem>
             </div>

@@ -81,6 +81,13 @@ export const ButtonsEdit = ({
                     ? `view.buttons.${i}.label`
                     : `view.childrenViews.${index}.buttons.${i}.label`,
                 )}
+                textLength={
+                  watch(
+                    index === undefined
+                      ? `view.buttons.${i}.label`
+                      : `view.childrenViews.${index}.buttons.${i}.label`,
+                  )?.length || 0
+                }
               />
             </FormItem>
             <span className="subLabel">{t(`BUTTON_TYPE`)}</span>

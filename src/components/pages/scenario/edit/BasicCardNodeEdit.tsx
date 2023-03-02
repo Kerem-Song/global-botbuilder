@@ -56,6 +56,7 @@ export const BasicCardNodeEdit = () => {
               isLight={true}
               {...register('view.title')}
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+              textLength={watch('view.title')?.length || 0}
             />
           </FormItem>
 
@@ -69,6 +70,7 @@ export const BasicCardNodeEdit = () => {
               isLight={true}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
+              textLength={watch('view.description')?.length || 0}
             />
           </FormItem>
         </Space>

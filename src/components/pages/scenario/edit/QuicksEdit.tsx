@@ -57,6 +57,7 @@ export const QuicksEdit = () => {
                 maxLength={14}
                 isLight={true}
                 {...register(`view.quicks.${i}.label`)}
+                textLength={watch(`view.quicks.${i}.label`)?.length || 0}
               />
             </FormItem>
             <span className="subLabel">{t(`BUTTON_TYPE`)}</span>

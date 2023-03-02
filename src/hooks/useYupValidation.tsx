@@ -3,10 +3,7 @@ import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import * as yup from 'yup';
 
-const checkNextNodeIdTypes: string[] = [
-  NODE_TYPES.PARAMETER_SET_NODE,
-  NODE_TYPES.INTENT_NODE,
-];
+const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
 
 export const useYupValidation = () => {
   const { t } = usePage();
@@ -149,6 +146,25 @@ export const useYupValidation = () => {
     ),
   });
 
+  const answerNodeEditSchema = yup.object().shape({
+    utteranceParam: yup
+      .string()
+      .nullable()
+      .when('useUtteranceParam', {
+        is: true,
+        then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+      }),
+    quicks: buttonsEditSchema,
+  });
+
+  const answerNodeEditNextNodeIdSchema = yup
+    .string()
+    .nullable()
+    .when('view.useUtteranceParam', {
+      is: true,
+      then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    });
+
   const parameterSetNodeEditNextNodeIdSchema = yup
     .string()
     .required(t(`VALIDATION_REQUIRED`));
@@ -218,6 +234,10 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
           then: otherFlowRedirectNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.ANSWER_NODE,
+          then: answerNodeEditSchema,
         }),
       nextNodeId: yup
         .string()
@@ -227,6 +247,10 @@ export const useYupValidation = () => {
             return checkNextNodeIdTypes.includes(nodeType);
           },
           then: parameterSetNodeEditNextNodeIdSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.ANSWER_NODE,
+          then: answerNodeEditNextNodeIdSchema,
         }),
     })
     .required();

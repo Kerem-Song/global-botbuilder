@@ -1,3 +1,4 @@
+import { FormItem } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
@@ -9,7 +10,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
 import { QuicksEdit } from './QuicksEdit';
-
+import { SelectNode } from './SelectNode';
 export interface IParameterSelect {
   readonly value?: string;
   readonly label?: string;
@@ -18,7 +19,12 @@ export interface IParameterSelect {
 export const AnswerNodeEdit = () => {
   const { t } = usePage();
 
-  const { setValue, control, watch } = useFormContext<IGNodeEditModel<IAnswerView>>();
+  const {
+    setValue,
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IAnswerView>>();
   const use = watch('view.useUtteranceParam');
 
   const {
@@ -57,12 +63,27 @@ export const AnswerNodeEdit = () => {
           <span className="required">*</span>
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
-          <ParameterSelector
-            control={control}
-            path="view.utteranceParam"
-            placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
-            isDisabled={!use}
-          />
+          <div className="m-b-8">
+            <FormItem error={errors.view?.utteranceParam}>
+              <ParameterSelector
+                control={control}
+                path="view.utteranceParam"
+                placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
+                isDisabled={!use}
+              />
+            </FormItem>
+          </div>
+          {use && (
+            <>
+              <div className="m-b-8">
+                <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
+                <span className="required">*</span>
+              </div>
+              <FormItem error={errors.nextNodeId}>
+                <SelectNode fieldName={'nextNodeId'} />
+              </FormItem>
+            </>
+          )}
         </div>
       </Collapse>
       <QuicksEdit />
