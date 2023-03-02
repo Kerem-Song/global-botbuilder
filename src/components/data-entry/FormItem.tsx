@@ -4,12 +4,13 @@ import { FieldError } from 'react-hook-form';
 export interface IFormItemProps {
   error?: FieldError;
   children: ReactElement;
+  inline?: boolean;
 }
 
-export const FormItem: FC<IFormItemProps> = ({ children, error }) => {
+export const FormItem: FC<IFormItemProps> = ({ children, error, inline }) => {
   const clone = React.cloneElement(children, { isError: error !== undefined });
   return (
-    <div>
+    <div style={{ display: inline ? 'flex' : 'block', flex: 1, height: '100%' }}>
       {clone}
       <div className="error-message">{error?.message}</div>
     </div>

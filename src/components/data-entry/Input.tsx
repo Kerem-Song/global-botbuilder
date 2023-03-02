@@ -33,6 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     onSearch,
     onPressEnter,
     onPressEsc,
+    className,
     ...inputProps
   } = args;
 
@@ -55,7 +56,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   };
   const isWrapping = false || showCount || search;
 
-  const inputClassName = classNames('luna-input', {
+  const inputClassName = classNames(className, 'luna-input', {
     'luna-input-error': isError,
     'luna-input-large': size === 'large',
     'luna-input-normal': size === 'normal',
