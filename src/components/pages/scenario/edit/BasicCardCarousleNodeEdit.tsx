@@ -72,6 +72,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   isLight={true}
                   {...register(`view.childrenViews.${index}.title`)}
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+                  textLength={watch(`view.childrenViews.${index}.title`)?.length || 0}
                 />
               </FormItem>
 
@@ -90,6 +91,9 @@ export const BasicCardCarousleNodeEdit = () => {
                   isLight={true}
                   placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
                   {...register(`view.childrenViews.${index}.description`)}
+                  textLength={
+                    watch(`view.childrenViews.${index}.description`)?.length || 0
+                  }
                 />
               </FormItem>
             </Space>

@@ -9,6 +9,7 @@ export const TextNodeEdit = () => {
   const {
     register,
     getValues,
+    watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
   console.log(getValues());
@@ -25,6 +26,7 @@ export const TextNodeEdit = () => {
             maxLength={1000}
             placeholder="Input Text"
             {...register('view.text')}
+            textLength={watch(`view.text`)?.length || 0}
           />
         </FormItem>
       </div>

@@ -74,6 +74,7 @@ export const ListCardCarouselNodeEdit = () => {
               showCount={true}
               maxLength={15}
               {...register(`view.childrenViews.${index}.header`)}
+              textLength={watch(`view.childrenViews.${index}.header`)?.length || 0}
             />
           </div>
 
@@ -124,6 +125,10 @@ export const ListCardCarouselNodeEdit = () => {
                         maxLength={36}
                         isLight={true}
                         {...register(`view.childrenViews.${index}.items.${i}.title`)}
+                        textLength={
+                          watch(`view.childrenViews.${index}.items.${i}.title`)?.length ||
+                          0
+                        }
                       />
                     </span>
                   </Space>
@@ -139,6 +144,10 @@ export const ListCardCarouselNodeEdit = () => {
                         {...register(
                           `view.childrenViews.${index}.items.${i}.description`,
                         )}
+                        textLength={
+                          watch(`view.childrenViews.${index}.items.${i}.description`)
+                            ?.length || 0
+                        }
                       />
                     </span>
                   </Space>

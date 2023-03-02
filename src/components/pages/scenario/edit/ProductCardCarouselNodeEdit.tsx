@@ -161,6 +161,9 @@ export const ProductCardCarouselNodeEdit = () => {
                       maxLength={15}
                       isLight={true}
                       {...register(`view.childrenViews.${index}.profileName`)}
+                      textLength={
+                        watch(`view.childrenViews.${index}.profileName`)?.length || 0
+                      }
                     />
                   </FormItem>
                 </Space>
@@ -184,6 +187,9 @@ export const ProductCardCarouselNodeEdit = () => {
                       maxLength={15}
                       required={true}
                       {...register(`view.childrenViews.${index}.description`)}
+                      textLength={
+                        watch(`view.childrenViews.${index}.description`)?.length || 0
+                      }
                     />
                   </FormItem>
 

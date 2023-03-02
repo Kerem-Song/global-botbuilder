@@ -143,6 +143,7 @@ export const ProductCardNodeEdit = () => {
                   showCount={true}
                   maxLength={15}
                   {...register(`view.profileName`)}
+                  textLength={watch(`view.profileName`)?.length || 0}
                 />
               </FormItem>
             </Space>
@@ -160,6 +161,7 @@ export const ProductCardNodeEdit = () => {
                   maxLength={15}
                   required={true}
                   {...register(`view.description`)}
+                  textLength={watch(`view.description`)?.length || 0}
                 />
               </FormItem>
 

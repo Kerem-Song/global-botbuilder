@@ -6,6 +6,7 @@ import { useForm, useFormContext } from 'react-hook-form';
 interface InputWithTitleCounterProps extends InputProps {
   label?: string;
   isLight?: boolean;
+  textLength?: number;
 }
 export const InputWithTitleCounter = forwardRef<
   HTMLInputElement,
@@ -23,6 +24,7 @@ export const InputWithTitleCounter = forwardRef<
     label,
     isLight,
     maxLength,
+    textLength,
     onSearch,
     onPressEnter,
     onPressEsc,
@@ -80,8 +82,7 @@ export const InputWithTitleCounter = forwardRef<
         </p>
         {showCount ? (
           <span className="textCounter">
-            {value?.length || 0}
-            {/* {watch(`inputWithTitleCounter`)?.length || 0} */}
+            {textLength || 0}
             {`/${maxLength}`}
           </span>
         ) : undefined}
