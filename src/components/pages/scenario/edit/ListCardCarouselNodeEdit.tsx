@@ -4,7 +4,7 @@ import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -27,7 +27,7 @@ export const ListCardCarouselNodeEdit = () => {
   console.log('list card node edit value.view', values.view);
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
-  const index = Object.values(carouselIndexObj)[0];
+  const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
 
   const { fields, append, remove } = useFieldArray({
     name: `view.childrenViews.${index}.items`,

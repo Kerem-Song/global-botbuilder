@@ -4,6 +4,7 @@ import { Space } from '@components/layout';
 import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -25,7 +26,7 @@ export const BasicCardCarousleNodeEdit = () => {
   console.log('basic card carousel node edit values', values);
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
-  const index = Object.values(carouselIndexObj)[0];
+  const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
 
   const { fields } = useFieldArray({
     name: `view.childrenViews.${index}.buttons`,

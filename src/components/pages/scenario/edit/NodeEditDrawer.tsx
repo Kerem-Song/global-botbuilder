@@ -5,6 +5,7 @@ import { useYupValidation } from '@hooks/useYupValidation';
 import { INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
 import { useEffect, useState } from 'react';
@@ -31,16 +32,16 @@ export const NodeEditDrawer = () => {
   const { t } = usePage();
   const dispatch = useDispatch();
   const [node, setNode] = useState<INode>();
+  const { schema } = useYupValidation();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
-  const index = Object.values(carouselIndexObj)[0];
-  const { schema } = useYupValidation();
 
   const selectedNode = nodes.find((x) => x.id === selected);
+  const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
 
   const invalidateNodes = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes,
