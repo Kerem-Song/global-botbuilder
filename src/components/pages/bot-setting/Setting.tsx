@@ -97,16 +97,19 @@ export const Setting = () => {
                     <div className="channelInfo">
                       <p className="channelState">Operating channel</p>
                       <p className="channelName">
-                        {botInfo?.channelInfos?.find((x) => x.isLive)?.name ||
-                          '@lunasoft'}
+                        {botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -'}
                       </p>
                     </div>
                   </div>
-                  <Button type="lineBlue" disabled small>
-                    {botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked
-                      ? 'Disconnect'
-                      : 'Connect'}
-                  </Button>
+                  {botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked ? (
+                    <Button type="lineBlue" small>
+                      Disconnect
+                    </Button>
+                  ) : (
+                    <Button type="primary" small>
+                      Connect
+                    </Button>
+                  )}
                 </div>
               </div>
               <div className="botCardWrap">
@@ -122,16 +125,19 @@ export const Setting = () => {
                     <div className="channelInfo">
                       <p className="channelState">Test channel</p>
                       <p className="channelName">
-                        {botInfo?.channelInfos?.find((x) => !x.isLive)?.name ||
-                          '@lunasoft'}
+                        {botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -'}
                       </p>
                     </div>
                   </div>
-                  <Button type="lineBlue" disabled small>
-                    {botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked
-                      ? 'Disconnect'
-                      : 'Connect'}
-                  </Button>
+                  {botInfo?.channelInfos?.find((x) => !x.isLive)?.isLinked ? (
+                    <Button type="lineBlue" small>
+                      Disconnect
+                    </Button>
+                  ) : (
+                    <Button type="primary" small>
+                      Connect
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
