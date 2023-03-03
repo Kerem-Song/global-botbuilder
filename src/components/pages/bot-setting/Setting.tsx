@@ -21,8 +21,9 @@ export const Setting = () => {
         </Col>
         <Col>
           <Space gap={8}>
-            <Button type="lineBlue">Cancel Deletion</Button>
-            <Button type="primary">Save</Button>
+            <Button type="lineBlue">봇 삭제하기</Button>
+            <Button type="lineBlue">삭제 취소</Button>
+            <Button type="primary">저장하기</Button>
           </Space>
         </Col>
       </Row>
