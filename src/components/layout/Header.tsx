@@ -2,7 +2,7 @@ import { IPopperItem, Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
 import { FC, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -15,6 +15,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const userInfo = useRootState((state) => state.userInfoReducer);
 
   const navigate = useNavigate();
+  const matches = useMatches();
   const changeLanguageHandler = (lang: string) => {
     i18n.changeLanguage(lang, () => {
       const paths = location.pathname.split('/');
@@ -25,7 +26,8 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
-  const pageName = location.pathname.split('/').slice(-1)[0];
+  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as string;
+  const pageName = ts(handle) || location.pathname.split('/').slice(-1)[0];
 
   useEffect(() => {
     handleIsOpen(false);

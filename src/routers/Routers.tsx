@@ -28,11 +28,12 @@ const finalRoutes = [
             {
               path: 'dashboard',
               element: <DefaultLayout />,
-              handle: true,
+              handle: 'DASHBOARD',
               children: [
                 {
                   index: true,
                   element: <DashboardPage />,
+                  handle: 'DASHBOARD',
                   errorElement: <>404</>,
                 },
               ],
@@ -42,13 +43,15 @@ const finalRoutes = [
               element: <BotLayout />,
               errorElement: <>404</>,
               children: [
-                { path: 'scenario', element: <ScenarioPage /> },
+                { path: 'scenario', element: <ScenarioPage />, handle: 'SCENARIO' },
                 {
                   path: 'utterance',
+                  handle: 'UTTERANCE',
                   children: [
                     {
                       path: '',
                       element: <UtterancePage />,
+                      handle: 'UTTERANCE',
                     },
                     {
                       path: 'detail',
@@ -56,10 +59,12 @@ const finalRoutes = [
                         {
                           path: '',
                           element: <UtteranceDetailPage />,
+                          handle: 'UTTERANCE',
                         },
                         {
                           path: ':utteranceId',
                           element: <UtteranceDetailPage />,
+                          handle: 'UTTERANCE',
                         },
                       ],
                     },
