@@ -15,7 +15,18 @@ export const Setting = () => {
 
   return (
     <div className="settingWrap">
-      <div className="title">Chatbot Setting</div>
+      <Row justify="space-between" align="center" className="m-b-20">
+        <Col>
+          <div className="title">Chatbot Setting</div>
+        </Col>
+        <Col>
+          <Space gap={8}>
+            <Button type="lineBlue">Cancel Deletion</Button>
+            <Button type="primary">Save</Button>
+          </Space>
+        </Col>
+      </Row>
+
       <Card
         radius="normal"
         bodyStyle={{ padding: '20px' }}
@@ -62,17 +73,15 @@ export const Setting = () => {
       >
         <div className="activateWrap">
           <Space direction="vertical">
-            <div className="activateBotHeader">
-              <Row>
+            <Row justify="space-between" align="center">
+              <Col>
                 <p style={{ fontSize: '16px', fontWeight: 500 }}>Activate the bot</p>
-              </Row>
-              <div>
-                <Button type="secondary" style={{ marginRight: '8px', width: '100px' }}>
-                  Deactive
-                </Button>
+              </Col>
+              <Space gap={8}>
+                <Button type="lineBlue">Deactive</Button>
                 <Button>Bot list</Button>
-              </div>
-            </div>
+              </Space>
+            </Row>
             <div className="botCardContainer">
               <div className="botCardWrap">
                 <div className="botCard">
@@ -86,11 +95,16 @@ export const Setting = () => {
                     </div>
                     <div className="channelInfo">
                       <p className="channelState">Operating channel</p>
-                      <p className="channelName">@lunasoft</p>
+                      <p className="channelName">
+                        {botInfo?.channelInfos?.find((x) => x.isLive)?.name ||
+                          '@lunasoft'}
+                      </p>
                     </div>
                   </div>
-                  <Button type="primary" disabled>
-                    Connect
+                  <Button type="lineBlue" disabled small>
+                    {botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked
+                      ? 'Disconnect'
+                      : 'Connect'}
                   </Button>
                 </div>
               </div>
@@ -105,12 +119,17 @@ export const Setting = () => {
                       />
                     </div>
                     <div className="channelInfo">
-                      <p className="channelState">Operating channel</p>
-                      <p className="channelName">@lunasoft</p>
+                      <p className="channelState">Test channel</p>
+                      <p className="channelName">
+                        {botInfo?.channelInfos?.find((x) => !x.isLive)?.name ||
+                          '@lunasoft'}
+                      </p>
                     </div>
                   </div>
-                  <Button type="primary" disabled>
-                    Connect
+                  <Button type="lineBlue" disabled small>
+                    {botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked
+                      ? 'Disconnect'
+                      : 'Connect'}
                   </Button>
                 </div>
               </div>

@@ -108,6 +108,7 @@ a.luna-btn {
   &:disabled {
     background: $grayWhite;
     color: $primary200;
+    border: 1px solid $primary200;
   }
 }
 

@@ -21,6 +21,7 @@ export interface IChannelInfo {
   activated: boolean;
   name: string;
   isLive: boolean;
+  isLinked: boolean;
 }
 
 export interface IBotInput {
