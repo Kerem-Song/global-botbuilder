@@ -14,7 +14,7 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
       titleClassName="title"
       title={
         <Row align="center" justify="space-between">
-          <Col>
+          <Col span={20}>
             <Space direction="vertical">
               <Row align="center">
                 <Col>
@@ -28,10 +28,10 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
                   })}`}</span>
                 </Col>
               </Row>
-              <span className="bot-name">{model.botName}</span>
+              <div className="bot-name">{model.botName}</div>
             </Space>
           </Col>
-          <Col>
+          <Col span={4}>
             <img src={imgLinebot} width={48} height={48} alt="linebot" />
           </Col>
         </Row>
