@@ -65,7 +65,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
             <p className="username">{userInfo.loginUserName}</p>
           </div>
           <div className="userBrandInfo">
-            <p className="userBrandName">업체명이라고함</p>
+            <p className="userBrandName">{userInfo.companyName}</p>
             <p className="userAccount">{userInfo.loginId}</p>
           </div>
         </div>

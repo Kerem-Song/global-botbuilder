@@ -4,6 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface IUserInfo {
   loginUserName?: string;
   loginId?: string;
+  companyName?: string;
+  starffType?: number;
   role?: number;
 }
 
@@ -17,9 +19,11 @@ export const UserInfoSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action: PayloadAction<IUserInfo>) => {
-      const { loginUserName, loginId, role } = action.payload;
+      const { loginUserName, loginId, role, companyName, starffType } = action.payload;
       state.loginUserName = loginUserName;
       state.loginId = loginId;
+      state.companyName = companyName;
+      state.starffType = starffType;
       state.role = role;
     },
   },

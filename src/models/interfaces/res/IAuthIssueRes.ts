@@ -4,5 +4,7 @@ export interface IAuthIssueRes {
   loginId: string;
   brandName: string;
   brandId: string;
-  role: 0;
+  companyName: string;
+  staffType: number;
+  role: number;
 }

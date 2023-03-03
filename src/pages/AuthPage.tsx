@@ -26,7 +26,9 @@ export const AuthPage = () => {
       setUserInfo({
         loginId: res.loginId,
         loginUserName: res.loginUserName,
+        companyName: res.companyName,
         role: res.role,
+        starffType: res.staffType,
       }),
     );
     navigate('/');
