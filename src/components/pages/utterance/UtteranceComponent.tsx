@@ -8,7 +8,7 @@ import { UtteranceListItem } from './UtteranceListItem';
 export const UtteranceComponent = () => {
   const [searchData, setSearchData] = useState<ISearchData>({
     sort: 1,
-    scenarios: undefined,
+    scenarios: 'all',
     searchWord: undefined,
   });
 

@@ -155,7 +155,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                     : x.intentName}
                 </td>
                 <td role="presentation" className="utteranceList connectScenarios">
-                  {x.flowName}
+                  {x.flowName === null ? '-' : x.flowName}
                 </td>
                 <td role="presentation" className="utteranceList utterance">
                   {searchData?.searchWord

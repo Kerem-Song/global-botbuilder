@@ -19,7 +19,7 @@ const SORT = [
 
 export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
-  const [scenario, setScenario] = useState<string>();
+  const [scenario, setScenario] = useState<string>('all');
   const [searchWord, setSearchWord] = useState<string>('');
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
@@ -35,11 +35,11 @@ export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
   const handleReset = () => {
     setSearchData({
       sort: 1,
-      scenarios: undefined,
+      scenarios: 'all',
       searchWord: '',
     });
     setSort('1');
-    setScenario(undefined);
+    setScenario('all');
     setSearchWord('');
   };
 

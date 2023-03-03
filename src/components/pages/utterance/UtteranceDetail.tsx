@@ -3,6 +3,7 @@ import { Card } from '@components/data-display';
 import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
@@ -14,9 +15,10 @@ import {
 } from '@models';
 import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
-import { useController, useFieldArray, useForm } from 'react-hook-form';
+import { appendErrors, useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
+import * as yup from 'yup';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
 import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
@@ -45,12 +47,24 @@ export const UtteranceDetail = () => {
       return { value: x.id, label: x.alias };
     });
 
-  const { reset, register, handleSubmit, control, getValues, watch } =
-    useForm<IUtteranceModel>({
-      defaultValues: {
-        items: [],
-      },
-    });
+  const schema = yup.object({
+    name: yup.string().trim().required('필수 입력 항목입니다.'),
+  });
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm<IUtteranceModel>({
+    defaultValues: {
+      items: [],
+    },
+    resolver: yupResolver(schema),
+  });
 
   const { field: scenarioListField } = useController({
     name: `connectScenarioId`,
@@ -63,6 +77,27 @@ export const UtteranceDetail = () => {
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
   );
+
+  const preventGoBack = async () => {
+    history.pushState(null, '', location.href);
+    await confirm({
+      title: '저장하기',
+      description: (
+        <span>
+          변경사항이 저장되지 않았습니다.
+          <br />
+          정말 나가시겠습니까?
+        </span>
+      ),
+    });
+    return;
+  };
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = ''; // chrome에서는 설정이 필요해서 넣은 코드
+    alert('노노');
+  };
 
   useEffect(() => {
     if (hasUtteranceId && hasUtteranceId.data) {
@@ -82,17 +117,31 @@ export const UtteranceDetail = () => {
     }
   }, [hasUtteranceId?.data]);
 
+  useEffect(() => {
+    (() => {
+      history.pushState(null, '', location.href);
+      window.addEventListener('popstate', preventGoBack);
+    })();
+
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener('beforeunload', preventClose);
+    };
+  }, []);
+
   const openDeleteCheckboxModal = async () => {
     const result = await confirm({
-      title: 'Delete',
-      description: (
-        <span>
-          There is a scenario associated with scenario 02
-          <br />: Start, Scenario 01
-          <br />
-          Are you sure you want to delete it?
-        </span>
-      ),
+      title: '발화 삭제',
+      description: <span>총 1개의 발화를 삭제하시겠습니까?</span>,
     });
 
     if (result) {
@@ -106,13 +155,12 @@ export const UtteranceDetail = () => {
 
   const openDeleteIntentModal = async () => {
     const result = await confirm({
-      title: 'Delete',
+      title: '인텐트 삭제',
       description: (
         <span>
-          There is a scenario associated with scenario 02
-          <br />: Start, Scenario 01
+          인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.
           <br />
-          Are you sure you want to delete it?
+          삭제하시겠습니까?
         </span>
       ),
     });
@@ -157,8 +205,14 @@ export const UtteranceDetail = () => {
         onSuccess: async (result) => {
           if (result.result === true) {
             await error({
-              title: '중복 인텐트명',
-              description: <span>이미 있는 인텐트명입니다.</span>,
+              title: '중복 발화',
+              description: (
+                <span>
+                  이미 등록된 발화입니다.
+                  <br />
+                  등록위치: <span style={{ color: 'red' }}>인텐트명</span>
+                </span>
+              ),
             });
           } else {
             append({ text: data.utterance });
@@ -260,13 +314,15 @@ export const UtteranceDetail = () => {
                 <span>Intent Name</span>
               </Col>
               <Col flex="auto">
-                <Input
-                  {...register('name')}
-                  placeholder="Input Intent Name"
-                  showCount
-                  maxLength={20}
-                  onBlur={handleNameBlur}
-                />
+                <FormItem error={errors.name}>
+                  <Input
+                    {...register('name')}
+                    placeholder="Input Intent Name"
+                    showCount
+                    maxLength={20}
+                    onBlur={handleNameBlur}
+                  />
+                </FormItem>
               </Col>
             </Row>
             <Row align="center" gap={10}>
