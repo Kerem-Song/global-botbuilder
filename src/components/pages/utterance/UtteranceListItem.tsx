@@ -150,13 +150,17 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 onClick={() => handleGetIntent(x.intentId)}
               >
                 <td role="presentation" className="utteranceList intent">
-                  {x.intentName}
+                  {searchData?.searchWord
+                    ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
+                    : x.intentName}
                 </td>
                 <td role="presentation" className="utteranceList connectScenarios">
-                  {x.flowName}
+                  {x.flowName === null ? '-' : x.flowName}
                 </td>
                 <td role="presentation" className="utteranceList utterance">
-                  {x.utteranceSummary}
+                  {searchData?.searchWord
+                    ? util.replaceKeywordMark(x.utteranceSummary, searchData?.searchWord)
+                    : x.utteranceSummary}
                 </td>
                 <td className="utteranceList icon">
                   <button

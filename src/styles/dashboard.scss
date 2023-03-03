@@ -80,6 +80,9 @@
       .bot-name {
         font-size: rem(16);
         font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     .channel-title {

@@ -19,7 +19,7 @@ export const useVariableClient = () => {
 
   const getVariableListQuery = () => {
     return useQuery<IHasResults<IVariableList>>(
-      ['variable-list'],
+      ['variable-list', token],
       () =>
         http
           .post<ISearchParameter, AxiosResponse<IHasResults<IVariableList>>>(
@@ -29,7 +29,7 @@ export const useVariableClient = () => {
             },
           )
           .then((res) => res.data),
-      { refetchOnWindowFocus: false, refetchOnMount: true },
+      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
     );
   };
 
@@ -40,7 +40,7 @@ export const useVariableClient = () => {
     >('Builder/SaveParameter', variable);
 
     if (result) {
-      queryClient.invalidateQueries(['variable-list']);
+      queryClient.invalidateQueries(['variable-list', token]);
       queryClient.invalidateQueries(['variable-select-list', token]);
       return result.data;
     }
@@ -53,7 +53,7 @@ export const useVariableClient = () => {
     >('Builder/DeleteParameter', deleteVariable);
 
     if (result) {
-      queryClient.invalidateQueries(['variable-list']);
+      queryClient.invalidateQueries(['variable-list', token]);
       queryClient.invalidateQueries(['variable-select-list', token]);
       return result.data;
     }

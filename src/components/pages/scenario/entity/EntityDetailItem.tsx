@@ -1,7 +1,8 @@
-import { Col, FormItem, Input } from '@components';
+import { Col, FormItem, Input, Row } from '@components';
 import { useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
+import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
   FieldArrayWithId,
@@ -74,56 +75,65 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
         {[entryGroup].map((item, i) => {
           if (editInputIndex === i) {
             return (
-              <Col key={i}>
-                <div>
+              <Row key={i} gap={8}>
+                <Col span={5} className="representativeEntryInput">
                   <FormItem error={errors.entries?.[index]?.representativeEntry}>
                     <Input
                       {...field}
                       size="normal"
-                      style={{
-                        width: '200px',
-                        height: 'auto',
-                        marginRight: '8px',
-                      }}
+                      className={classNames({
+                        'input-normal': !errors.entries?.[index]?.representativeEntry,
+                        'input-error': errors.entries?.[index]?.representativeEntry,
+                      })}
                     />
                   </FormItem>
-                </div>
-                <div className="entryList">
-                  <div className="entries">
-                    <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                </Col>
+                <Col span={18}>
+                  <div className="entryList">
+                    <div className="entries">
+                      <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                    </div>
                   </div>
-                </div>
-                <button
-                  type="button"
-                  className="icDelete"
-                  onClick={openDeleteEntryModal}
-                />
-              </Col>
+                </Col>
+                <Col span={1}>
+                  <button
+                    type="button"
+                    className="icDelete"
+                    onClick={openDeleteEntryModal}
+                  />
+                </Col>
+              </Row>
             );
           } else {
             return (
-              <div key={i}>
-                <div className="representativeEntry">
-                  <span
-                    onDoubleClick={(e) => {
-                      setEditInputIndex(i);
-                      e.preventDefault();
-                    }}
-                  >
-                    {util.replaceKeywordMark(item.representativeEntry, searchKeyword)}
-                  </span>
-                </div>
-                <div className="entryList">
-                  <div className="entries">
-                    <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+              <Row key={i} gap={8}>
+                <Col span={5}>
+                  <div className="representativeEntry">
+                    <span
+                      onDoubleClick={(e) => {
+                        setEditInputIndex(i);
+                        e.preventDefault();
+                      }}
+                    >
+                      {util.replaceKeywordMark(item.representativeEntry, searchKeyword)}
+                    </span>
                   </div>
-                </div>
-                <button
-                  type="button"
-                  className="icDelete"
-                  onClick={openDeleteEntryModal}
-                />
-              </div>
+                </Col>
+                <Col span={18}>
+                  <div className="entryList">
+                    <div className="entries">
+                      <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                    </div>
+                  </div>
+                </Col>
+                <Col span={1}>
+                  <button
+                    type="button"
+                    className="icDelete"
+                    onClick={openDeleteEntryModal}
+                  />
+                </Col>
+              </Row>
             );
           }
         })}

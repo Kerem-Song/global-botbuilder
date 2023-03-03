@@ -345,44 +345,42 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         <span className="error-message">{entryInputError}</span>
                       </Row>
                     </Space>
-                    <Row gap={8}>
-                      <>
-                        {watch('entries').length === 0 ? (
-                          <Row
-                            style={{
-                              width: '100%',
-                              marginTop: '12px',
-                              display: 'flex',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <div className="emptyList">
-                              <div className="empty">
-                                <img src={icUtteranceEmpty} alt="empty" />
-                                <span>No entries registered</span>
-                              </div>
+                    <Space gap={8} direction="vertical">
+                      {watch('entries').length === 0 ? (
+                        <div
+                          style={{
+                            width: '100%',
+                            marginTop: '12px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <div className="emptyList">
+                            <div className="empty">
+                              <img src={icUtteranceEmpty} alt="empty" />
+                              <span>No entries registered</span>
                             </div>
-                          </Row>
-                        ) : watch('isRegex') === false ||
-                          entryDetails?.data?.entryGroupType === 0 ? (
-                          <>
-                            {fields.map((entryGroup, i) => {
-                              return (
-                                <EntityDetailItem
-                                  key={entryGroup.id}
-                                  index={i}
-                                  entryGroup={entryGroup}
-                                  entriesRemove={remove}
-                                  searchKeyword={searchKeyword}
-                                />
-                              );
-                            })}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    </Row>
+                          </div>
+                        </div>
+                      ) : watch('isRegex') === false ||
+                        entryDetails?.data?.entryGroupType === 0 ? (
+                        <>
+                          {fields.map((entryGroup, i) => {
+                            return (
+                              <EntityDetailItem
+                                key={entryGroup.id}
+                                index={i}
+                                entryGroup={entryGroup}
+                                entriesRemove={remove}
+                                searchKeyword={searchKeyword}
+                              />
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </Space>
                   </Card>
                 ) : (
                   <></>
