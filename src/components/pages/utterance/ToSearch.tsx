@@ -17,7 +17,7 @@ const SORT = [
   { value: '3', label: 'Scenario name' },
 ];
 
-export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
+export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string>('all');
   const [searchWord, setSearchWord] = useState<string>('');

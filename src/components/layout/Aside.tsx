@@ -1,8 +1,14 @@
-import { icChatbot, icHelp, icHelpSelected, icLnbHide, icLnbShow } from '@assets/index';
+import {
+  icBrandNameSelected,
+  icHelp,
+  icHelpSelected,
+  icLnbHide,
+  icLnbShow,
+} from '@assets/index';
 import classNames from 'classnames';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
@@ -14,7 +20,7 @@ export const Aside = () => {
 
   const { i18n, ts } = useI18n();
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
-
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
 
@@ -60,7 +66,7 @@ export const Aside = () => {
               <p className="headerName">{ts('PARTNERS_CENTER')}</p>
             ) : (
               <div>
-                <img src={icChatbot} alt="icChatbot" />
+                <img src={icBrandNameSelected} alt="icChatbot" />
               </div>
             )}
           </a>

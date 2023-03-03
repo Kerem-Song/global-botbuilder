@@ -1,4 +1,6 @@
 import icAdd from '@assets/icons/ic_add.svg';
+import icBrandName from '@assets/icons/ic_brand_name_default.svg';
+import icBrandNameSelected from '@assets/icons/ic_brand_name_selected.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
 import icBtnTempleHover from '@assets/icons/ic_btn_temple_hover.svg';
 import icCardCut from '@assets/icons/ic_card_cut.svg';
@@ -119,6 +121,8 @@ import imgLinebot from '@assets/images/img_linebot.svg';
 
 export {
   icAdd,
+  icBrandName,
+  icBrandNameSelected,
   icBtnTemple,
   icBtnTempleHover,
   icCardCut,

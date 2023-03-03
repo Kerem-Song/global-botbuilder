@@ -16,7 +16,10 @@ export const MyEntity = () => {
   const { isOpen, handleIsOpen } = useModalOpen();
   const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
-  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchKeyword);
+  const { data: initialData, fetchNextPage } = changePageNumberQuery(
+    searchKeyword,
+    false,
+  );
 
   const token = useRootState((state) => state.botInfoReducer.token);
 

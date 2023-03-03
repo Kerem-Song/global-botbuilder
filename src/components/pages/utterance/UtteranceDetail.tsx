@@ -15,7 +15,7 @@ import {
 } from '@models';
 import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
-import { appendErrors, useController, useFieldArray, useForm } from 'react-hook-form';
+import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
 import * as yup from 'yup';
@@ -79,8 +79,7 @@ export const UtteranceDetail = () => {
   );
 
   const preventGoBack = async () => {
-    history.pushState(null, '', location.href);
-    await confirm({
+    const result = await confirm({
       title: '저장하기',
       description: (
         <span>
@@ -90,13 +89,17 @@ export const UtteranceDetail = () => {
         </span>
       ),
     });
-    return;
+    console.log(result);
+    if (result) {
+      history.go(-1);
+    } else {
+      history.pushState(null, '', location.href);
+    }
   };
 
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = ''; // chrome에서는 설정이 필요해서 넣은 코드
-    alert('노노');
   };
 
   useEffect(() => {
@@ -394,12 +397,12 @@ export const UtteranceDetail = () => {
           <>
             {watch('items').length === 0 ? (
               <Row style={{ width: '100%', marginTop: '12px' }}>
-                <div className="emptyList utteranceItem">
+                <Col className="emptyList utteranceItem">
                   <div className="empty">
                     <img src={icUtteranceEmpty} alt="empty" />
                     <span>No registered Utterance.</span>
                   </div>
-                </div>
+                </Col>
               </Row>
             ) : fields.find((x) =>
                 x.text?.toLowerCase().includes(searchWord.toLowerCase()),
