@@ -15,8 +15,7 @@
   line-height: rem(16.8);
 
   &-active {
-    outline: rem(2) solid $primary200;
-    outline-offset: -1px;
+    border: rem(2) solid $primary200;
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
@@ -24,9 +23,8 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: rem(2) solid $red;
-    // box-shadow: inset 0 0 0 rem(2) $red;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);;
+    border: rem(2) solid rgba(255, 73, 117, 0.5);
+    box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
   .icNodeBottom {
@@ -471,4 +469,8 @@
       }
     }
   }
+}
+
+.luna-node-active.luna-node-invalidate {
+  border: rem(2) solid rgba(255, 73, 117);
 }

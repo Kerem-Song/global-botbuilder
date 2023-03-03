@@ -25,15 +25,6 @@ export const BasicCardNodeEdit = () => {
   const values = getValues();
   console.log('basic card node edit', values);
 
-  const { fields, append, remove } = useFieldArray({
-    name: `view.buttons`,
-    control,
-  });
-
-  // useEffect(() => {
-  //   console.log('basic card node edit');
-  // }, [fields]);
-
   return (
     <>
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>

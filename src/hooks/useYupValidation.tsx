@@ -16,7 +16,7 @@ export const useYupValidation = () => {
     text: yup
       .string()
       .trim()
-      .max(1000, t(`VALIDATION_STRING_LIMIT_1000`))
+      .max(1000, t(`VALIDATION_STRING_LIMIT`, { maxCount: 1000 }))
       .required(t(`VALIDATION_REQUIRED`)),
   });
 
@@ -38,6 +38,13 @@ export const useYupValidation = () => {
           .when('actionType', {
             is: ACTION_TYPES.LUNA_NODE_REDIRECT,
             then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+          })
+          .when('actionType', {
+            is: ACTION_TYPES.ACT_VALUE_IS_UTTR || ACTION_TYPES.LBL_IS_UTTR,
+            then: yup
+              .string()
+              .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
+              .required(t(`VALIDATION_REQUIRED`)),
           }),
       }),
     );
@@ -57,8 +64,21 @@ export const useYupValidation = () => {
     );
 
   const basicCardNodeEditSchema = yup.object().shape({
-    title: yup.string().nullable().trim().max(20, t(`VALIDATION_STRING_LIMIT_20`)),
-    description: yup.string().max(230, t(`VALIDATION_STRING_LIMIT_230`)),
+    title: yup
+      .string()
+      .nullable()
+      .trim()
+      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+    description: yup
+      .string()
+      .when('useImageCtrl', {
+        is: true,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
+      })
+      .when('useImageCtrl', {
+        is: false,
+        then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 400 })),
+      }),
     imageCtrl: yup.object().shape({
       imageFile: imageFileEditSchema,
       imageUrl: yup.string().url(t(`VALIDATION_URL`)),
@@ -67,7 +87,10 @@ export const useYupValidation = () => {
   });
 
   const listCardNodeEditSchema = yup.object().shape({
-    header: yup.string().trim().max(15, t(`VALIDATION_STRING_LIMIT_15`)),
+    header: yup
+      .string()
+      .trim()
+      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 })),
     imageCtrl: yup.object().shape({
       imageFile: imageFileEditSchema,
       imageUrl: yup.string().url(t(`VALIDATION_URL`)),
@@ -75,8 +98,12 @@ export const useYupValidation = () => {
 
     items: yup.array().of(
       yup.object().shape({
-        title: yup.string().trim().max(36, t(`VALIDATION_STRING_LIMIT_36`)).required(),
-        description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT_16`)),
+        title: yup
+          .string()
+          .trim()
+          .max(36, t(`VALIDATION_STRING_LIMIT`, { maxCount: 36 }))
+          .required(),
+        description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT`, { maxCount: 16 })),
         imageFile: imageFileEditSchema,
         imageUrl: yup.string().url(t(`VALIDATION_URL`)),
       }),
@@ -93,7 +120,7 @@ export const useYupValidation = () => {
     profileName: yup
       .string()
       .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT_15`))
+      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
       .required(t(`VALIDATION_REQUIRED`)),
     description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
@@ -179,7 +206,10 @@ export const useYupValidation = () => {
   });
 
   const productCardCarouselNodeEditSchema = yup.object().shape({
-    header: yup.string().trim().max(15, t(`VALIDATION_STRING_LIMIT_15`)),
+    header: yup
+      .string()
+      .trim()
+      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 })),
     childrenViews: yup.array().of(productCardNodeEditSchema),
   });
 
