@@ -1,8 +1,10 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { useScenarioClient, useUtteranceClient } from '@hooks';
 import { ISearchData } from '@models';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Select from 'react-select';
+
+import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export interface IToSearchProps {
   searchData: ISearchData;
@@ -17,22 +19,28 @@ const SORT = [
 
 export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
-  const [scenario, setScenario] = useState<string | undefined>(undefined);
-  const [searchWord, setSearchWord] = useState<string | undefined>(undefined);
+  const [scenario, setScenario] = useState<string>();
+  const [searchWord, setSearchWord] = useState<string>('');
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList();
 
-  const scenarioList = data?.map((x) => {
-    return { value: x.id, label: x.alias };
-  });
+  const scenarioList = data
+    ?.filter((item) => !item.isFallbackFlow)
+    .map((x) => {
+      return { value: x.id, label: x.alias };
+    })
+    .concat({ value: 'noflowid', label: '시나리오 미선택' });
 
   const handleReset = () => {
     setSearchData({
       sort: 1,
+      scenarios: undefined,
+      searchWord: '',
     });
+    setSort('1');
     setScenario(undefined);
-    setSearchWord(undefined);
+    setSearchWord('');
   };
 
   return (
@@ -49,26 +57,32 @@ export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
               <span>Sort</span>
             </Col>
             <Col>
-              <Select
-                options={SORT}
-                value={SORT.find((x) => x.value === sort)}
-                onChange={(e) => {
-                  setSort(e?.value);
-                }}
-              />
+              <div style={{ minWidth: '160px' }}>
+                <Select
+                  options={SORT}
+                  styles={reactSelectStyle}
+                  value={SORT.find((x) => x.value === sort)}
+                  onChange={(e: any) => {
+                    setSort(e?.value);
+                  }}
+                />
+              </div>
             </Col>
             <Col>
               <span>Scenarios</span>
             </Col>
             <Col>
-              <Select
-                options={scenarioList}
-                placeholder="시나리오 미선택"
-                value={scenarioList?.find((x) => x.value === scenario)}
-                onChange={(e) => {
-                  setScenario(e?.value);
-                }}
-              />
+              <div style={{ minWidth: '160px' }}>
+                <Select
+                  options={scenarioList}
+                  styles={reactSelectStyle}
+                  placeholder="전체"
+                  value={scenarioList?.find((x) => x.value === scenario) || null}
+                  onChange={(e: any) => {
+                    setScenario(e?.value);
+                  }}
+                />
+              </div>
             </Col>
             <Col>
               <span>Search word</span>
@@ -76,9 +90,10 @@ export const ToSearch: FC<IToSearchProps> = ({ searchData, setSearchData }) => {
             <Col flex="auto">
               <FormItem>
                 <Input
+                  value={searchWord}
+                  onChange={(e) => setSearchWord(e?.target.value)}
                   search
                   placeholder="Please enter a search word"
-                  onSearch={(e) => setSearchWord(e)}
                 />
               </FormItem>
             </Col>

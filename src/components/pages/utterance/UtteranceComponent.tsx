@@ -6,7 +6,6 @@ import { UtteranceListHeader } from './UtteranceListHeader';
 import { UtteranceListItem } from './UtteranceListItem';
 
 export const UtteranceComponent = () => {
-  console.log('UtteranceComponent');
   const [searchData, setSearchData] = useState<ISearchData>({
     sort: 1,
     scenarios: undefined,
