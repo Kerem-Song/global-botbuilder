@@ -25,6 +25,55 @@ aside {
     }
   }
 
+  .brandName {
+    text-align: center;
+
+    &[data-sidebar='false'] {
+      padding: rem(13) rem(15);
+      margin-bottom: rem(8);
+      
+      .brandNameImg {
+        &::after {
+          content: url('@assets/icons/ic_brand_name_default.svg');
+          width: rem(18);
+          height: rem(18);
+        }
+
+        &:hover {
+          &::after {
+            content: url('@assets/icons/ic_brand_name_hover.svg');
+            width: rem(18);
+            height: rem(18);
+          }
+        }
+      }
+    }
+
+    img {
+      height: rem(18);
+      width: rem(18);
+    }
+
+
+    &[data-sidebar='true'] {
+      padding: 0 rem(20);
+      margin-bottom: rem(8);
+      p {
+        padding: rem(16);
+        border: rem(1) solid $gray200;
+        border-radius: rem(4);
+      }
+      .chatbotList {
+        padding-left: rem(5);
+        color: $primary200;
+        font-size: rem(14);
+        font-weight: 700;
+        line-height: rem(17);
+        
+      }
+    }
+  }
+
   .lnbHeader {
     &[data-sidebar='true'] {
       height: rem(43);
@@ -216,5 +265,21 @@ nav {
 
   .chatbotName {
     transition: width 0.5s ease-in-out;
+  }
+
+  .brandName {
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity 0.3s linear;
+    color: $grayWhite;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    p {
+      opacity: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }

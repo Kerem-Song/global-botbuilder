@@ -41,7 +41,7 @@ export const NodeEditDrawer = () => {
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
 
   const selectedNode = nodes.find((x) => x.id === selected);
-  const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
+  const index = carouselIndexObj[`${NODE_PREFIX}${node?.id}`];
 
   const invalidateNodes = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes,

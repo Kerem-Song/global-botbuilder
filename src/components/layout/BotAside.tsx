@@ -1,4 +1,5 @@
 import {
+  icBrandName,
   icChatbot,
   icDeploy,
   icDeploySelected,
@@ -42,7 +43,7 @@ export const BotAside = () => {
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const { getBotListQuery } = useBotClient();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
@@ -146,6 +147,17 @@ export const BotAside = () => {
           </button>
         </div>
 
+        <NavLink to={`/${i18n.language}/dashboard`}>
+          <div className="brandName" data-sidebar={sidebarStatus}>
+            {sidebarStatus ? (
+              <p>
+                {brandName} <span className="chatbotList">{ts(`CHATBOT_LIST`)}</span>
+              </p>
+            ) : (
+              <div className="brandNameImg" />
+            )}
+          </div>
+        </NavLink>
         <Popper
           placement="right-start"
           offset={[10, -10]}
