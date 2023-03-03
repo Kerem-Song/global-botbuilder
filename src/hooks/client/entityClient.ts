@@ -22,7 +22,7 @@ export const useEntityClient = () => {
   const http = useHttp();
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const getEntityListQuery = (pageNo: number, keyword?: string) => {
+  const getEntityListQuery = (pageNo: number, keyword?: string, isSys?: boolean) => {
     return http
       .post<
         ISearchEntryGroup,
@@ -30,6 +30,7 @@ export const useEntityClient = () => {
       >('Builder/SearchEntryGroup', {
         sessionToken: token,
         countPerPage: 20,
+        isSys: isSys,
         pageNo: pageNo,
         keyword: keyword,
       })
@@ -38,11 +39,11 @@ export const useEntityClient = () => {
       });
   };
 
-  const changePageNumberQuery = (keyword?: string) => {
+  const changePageNumberQuery = (keyword?: string, isSys?: boolean) => {
     return useInfiniteQuery(
-      ['change-pageNumber', keyword],
+      ['change-pageNumber', keyword, isSys],
       async ({ pageParam = 1 }) => {
-        return await getEntityListQuery(pageParam, keyword);
+        return await getEntityListQuery(pageParam, keyword, isSys);
       },
       {
         getNextPageParam: (lastpage, pages) => {
