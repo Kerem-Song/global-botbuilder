@@ -154,7 +154,9 @@ export const BotAside = () => {
                 {brandName} <span className="chatbotList">{ts(`CHATBOT_LIST`)}</span>
               </p>
             ) : (
-              <div className="brandNameImg" />
+              <div className="brandNameWrapper">
+                <div className="brandNameImg" />
+              </div>
             )}
           </div>
         </NavLink>

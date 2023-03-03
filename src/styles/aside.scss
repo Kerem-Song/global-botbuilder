@@ -28,11 +28,21 @@ aside {
   .brandName {
     text-align: center;
 
+    &:hover {
+      background-color: $grayBlack;  
+    }
+
     &[data-sidebar='false'] {
-      padding: rem(13) rem(15);
       margin-bottom: rem(8);
+    
+      .brandNameWrapper {
+        padding: rem(6);
+      }
       
       .brandNameImg {
+        padding: rem(7);
+        border-radius: rem(4);
+        
         &::after {
           content: url('@assets/icons/ic_brand_name_default.svg');
           width: rem(18);
@@ -40,10 +50,15 @@ aside {
         }
 
         &:hover {
+          background-color: $grayBlack;
           &::after {
-            content: url('@assets/icons/ic_brand_name_hover.svg');
             width: rem(18);
             height: rem(18);
+          }
+        }
+        &.selected {
+          &::after {
+            content: url('@assets/icons/ic_brand_name_selected.svg')
           }
         }
       }
