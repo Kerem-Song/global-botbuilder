@@ -206,7 +206,7 @@ export const useScenarioClient = () => {
       if (res) {
         lunaToast.success();
         queryClient.invalidateQueries(['scenario', scenarioId]);
-        queryClient.invalidateQueries(['variable-list']);
+        queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);
         return res;
       }
