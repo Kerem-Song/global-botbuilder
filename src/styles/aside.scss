@@ -33,12 +33,10 @@ aside {
     }
 
     &[data-sidebar='false'] {
-      margin-bottom: rem(8);
-    
       .brandNameWrapper {
         padding: rem(6);
       }
-      
+
       .brandNameImg {
         padding: rem(7);
         border-radius: rem(4);

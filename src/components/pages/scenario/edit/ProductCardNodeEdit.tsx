@@ -4,7 +4,7 @@ import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
@@ -92,6 +92,7 @@ export const ProductCardNodeEdit = () => {
     getValues,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
@@ -101,6 +102,13 @@ export const ProductCardNodeEdit = () => {
     name: `view.currencyUnit`,
     control,
   });
+
+  const salePrice =
+    Number(watch(`view.retailPrice`)) - Number(watch(`view.discountPrice`));
+
+  useEffect(() => {
+    setValue(`view.salePrice`, salePrice);
+  }, [salePrice]);
 
   return (
     <>
@@ -172,7 +180,7 @@ export const ProductCardNodeEdit = () => {
                       <InputWithTitleCounter
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
-                        {...register(`view.retailPrice`)}
+                        {...register(`view.retailPrice`, { valueAsNumber: true })}
                       />
                     </FormItem>
                   </Col>
@@ -191,10 +199,10 @@ export const ProductCardNodeEdit = () => {
                 </Row>
               </div>
 
-              <FormItem error={errors.view && errors.view.salePrice}>
+              <FormItem error={errors.view && errors.view.discountPrice}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
-                  {...register(`view.salePrice`)}
+                  {...register(`view.discountPrice`, { valueAsNumber: true })}
                 />
               </FormItem>
             </Space>

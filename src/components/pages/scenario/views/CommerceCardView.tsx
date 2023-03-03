@@ -51,7 +51,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, view }) =
           <div>
             <span className="discounted">{view.retailPrice}</span>
             <span className="discount">
-              {view.retailPrice - view.salePrice}{' '}
+              {view.discountPrice}
               <span className="currency">{view.currencyUnit}</span> Discount
             </span>
           </div>
