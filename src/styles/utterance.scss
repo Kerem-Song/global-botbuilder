@@ -60,6 +60,9 @@
           }
           .utterance {
             width: rem(558);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .icon {
             display: flex;
