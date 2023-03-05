@@ -1,3 +1,4 @@
+import { Button, Input } from '@components';
 import { Col } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks';
@@ -75,6 +76,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
             type: TESTER_DATA_TYPES.quickReplies,
           };
           updateTesterData.push(quickpRepliesContent);
+          setText('');
         }
         dispatch(setTesterData(updateTesterData));
       },
@@ -138,16 +140,26 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               })}
             </div>
             <form className="botTesterInput" onSubmit={(e) => e.preventDefault()}>
-              <input
+              <Input
                 className="input"
                 value={text}
-                type="text"
                 onChange={handleText}
                 placeholder={t('ENTER_TEXT')}
+                onPressEnter={(value: any) => handleSend(value)}
               />
-              <button className="sendBtn" onClick={handleSend}>
+              <Button
+                style={{
+                  height: '33px',
+                  lineHeight: '1px',
+                  color: 'white',
+                  border: 'none',
+                  backgroundColor: text ? '#4478FF' : '#A1BBFF',
+                }}
+                onClick={handleSend}
+                disabled={text ? false : true}
+              >
                 {t('SEND')}
-              </button>
+              </Button>
             </form>
             {debugMeta && (
               <TestInfoModal

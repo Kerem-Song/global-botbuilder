@@ -24,18 +24,20 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
         <div className="productCardPrices">
           <div className="price">
             <p className="currentPrice">
-              {item.price?.salePrice
+              {item.price?.sale
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              {item.price?.symbol}
+              KRW
+              {/* {item.price?.symbol} */}
             </p>
             <p className="prevPrice">
-              {item.price?.retailPrice
+              {item.price?.retail
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              {item.price?.symbol}
+              KRW
+              {/* {item.price?.symbol} */}
             </p>
           </div>
           <div className="discount">
@@ -44,7 +46,8 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              {item.price?.symbol}↓
+              KRW↓
+              {/* {item.price?.symbol}↓ */}
             </p>
           </div>
         </div>

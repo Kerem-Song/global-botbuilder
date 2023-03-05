@@ -58,6 +58,9 @@
           -webkit-box-orient: vertical;
           .entry {
             color: $gray500;
+            overflow: hidden;
+            white-space: normal;
+            text-overflow: ellipsis;
           }
         }
         &:hover {

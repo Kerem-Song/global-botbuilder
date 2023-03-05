@@ -160,18 +160,16 @@
 
               .price {
                 display: flex;
-                align-items: center;
+                justify-content: space-between;
                 font-weight: 500;
                 margin-bottom: rem(8);
 
                 .currentPrice {
-                  width: rem(198);
                   height: rem(22);
                   font-size: rem(18);
                 }
 
                 .prevPrice {
-                  max-width: rem(114);
                   height: rem(19);
                   overflow: hidden;
                   text-overflow: ellipsis;

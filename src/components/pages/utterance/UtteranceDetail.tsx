@@ -14,6 +14,7 @@ import {
   IUtteranceModel,
 } from '@models';
 import { util } from '@modules/util';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -29,6 +30,8 @@ export const UtteranceDetail = () => {
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
+  const [isActive, setIsActive] = useState<boolean>(false);
+
   const {
     intentMutate,
     getIntentDetailQuery,
@@ -58,6 +61,7 @@ export const UtteranceDetail = () => {
     control,
     getValues,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<IUtteranceModel>({
     defaultValues: {
@@ -89,7 +93,6 @@ export const UtteranceDetail = () => {
         </span>
       ),
     });
-    console.log(result);
     if (result) {
       history.go(-1);
     } else {
@@ -100,6 +103,7 @@ export const UtteranceDetail = () => {
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = ''; // chrome에서는 설정이 필요해서 넣은 코드
+    return '';
   };
 
   useEffect(() => {
@@ -142,14 +146,18 @@ export const UtteranceDetail = () => {
   }, []);
 
   const openDeleteCheckboxModal = async () => {
+    const deleteItems = getValues().items.filter((x) => x.isChecked);
+    if (deleteItems.length === 0) {
+      return;
+    }
     const result = await confirm({
       title: '발화 삭제',
-      description: <span>총 1개의 발화를 삭제하시겠습니까?</span>,
+      description: <span>{t('DELETE_CONFIRM', { count: deleteItems.length })}</span>,
     });
 
     if (result) {
-      const deleteItems = getValues().items.filter((x) => x.isChecked);
       deleteItems.map((item) => {
+        setIsActive(true);
         const index = getValues().items.indexOf(item);
         remove(index);
       });
@@ -194,8 +202,14 @@ export const UtteranceDetail = () => {
     ) {
       await error({
         title: '중복 인텐트명',
-        description: <span>이미 있는 인텐트명입니다.</span>,
+        description: (
+          <span>
+            이미 있는 인텐트명입니다. <br />
+            등록위치: <span style={{ color: 'red' }}>{getValues('name')}</span>
+          </span>
+        ),
       });
+
       return;
     }
 
@@ -213,11 +227,12 @@ export const UtteranceDetail = () => {
                 <span>
                   이미 등록된 발화입니다.
                   <br />
-                  등록위치: <span style={{ color: 'red' }}>인텐트명</span>
+                  등록위치: <span style={{ color: 'red' }}>{getValues('name')}</span>
                 </span>
               ),
             });
           } else {
+            setIsActive(true);
             append({ text: data.utterance });
             inputForm.reset();
           }
@@ -243,7 +258,6 @@ export const UtteranceDetail = () => {
           console.log('modifyIntent', submitResult);
           if (submitResult.isSuccess) {
             lunaToast.success();
-
             navigate(`/${botId}/utterance`);
           }
         },
@@ -297,10 +311,19 @@ export const UtteranceDetail = () => {
             <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button>
           </div>
           <div>
-            <Button className="deleteBtn" onClick={openDeleteIntentModal}>
+            <Button
+              className="deleteBtn"
+              onClick={openDeleteIntentModal}
+              disabled={watch('name') ? false : true}
+            >
               Delete intent
             </Button>
-            <Button large type="primary" htmlType="submit">
+            <Button
+              large
+              type="primary"
+              htmlType="submit"
+              disabled={isActive ? false : true}
+            >
               Save
             </Button>
           </div>
@@ -320,6 +343,10 @@ export const UtteranceDetail = () => {
                 <FormItem error={errors.name}>
                   <Input
                     {...register('name')}
+                    onChange={(e) => {
+                      setValue('name', e.target.value);
+                      setIsActive(true);
+                    }}
                     placeholder="Input Intent Name"
                     showCount
                     maxLength={20}
@@ -340,7 +367,10 @@ export const UtteranceDetail = () => {
                   value={scenarioList?.find(
                     (item) => item.value === scenarioListField.value,
                   )}
-                  onChange={(options: any) => scenarioListField.onChange(options.value)}
+                  onChange={(options: any) => {
+                    scenarioListField.onChange(options.value);
+                    setIsActive(true);
+                  }}
                 />
               </Col>
             </Row>
@@ -369,6 +399,7 @@ export const UtteranceDetail = () => {
                     alignItems: 'center',
                   }}
                   htmlType="submit"
+                  disabled={inputForm.watch('utterance') ? false : true}
                 >
                   <img src={icEnter} alt="enter" />
                 </Button>

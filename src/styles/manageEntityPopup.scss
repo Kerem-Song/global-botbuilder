@@ -121,6 +121,10 @@
                 border-radius: rem(8);
                 transition: all 0.3s;
                 //margin-right: rem(8);
+                span {
+                  width: 100%;
+                  word-wrap: break-word;
+                }
               }
               .entryList {
                 width: 100%;
