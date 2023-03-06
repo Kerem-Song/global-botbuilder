@@ -27,13 +27,12 @@ export const MyEntity = () => {
 
   const openDeleteEntryModal = async (id: string) => {
     const result = await confirm({
-      title: 'Delete',
+      title: '엔티티 삭제',
       description: (
         <span>
-          There is a scenario associated with scenario 02
-          <br />: Start, Scenario 01
-          <br />
-          Are you sure you want to delete it?
+          엔티티를 삭제하면 해당 엔티티를 사용하는 시나리오가
+          <br /> 정상 작동 하지 않을 수 있습니다.
+          <br /> 정말 삭제하시겠습니까?
         </span>
       ),
     });

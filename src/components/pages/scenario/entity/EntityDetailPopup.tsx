@@ -42,28 +42,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
 
-  useEffect(() => {
-    if (entryDetails && entryDetails.data) {
-      const resetValue = {
-        entryGroupid: entryDetails.data.id,
-        name: entryDetails.data.name,
-        entryGroupType: entryDetails.data.entryGroupType,
-        isRegex: entryDetails.data.entryGroupType === 2,
-        usingName: entryDetails.data.usingName,
-        entryStr: entryDetails.data.entryStr,
-        entries: entryDetails.data.entries,
-      };
-      reset(resetValue);
-    }
-  }, [entryDetails?.data]);
-
   const defaultValues: ISaveEntryGroup = {
     name: '',
     isRegex: false,
     entries: [],
   };
 
-  const regexSchema = yup.object({
+  const schema = yup.object({
     representativeEntry: yup
       .string()
       .trim()
@@ -74,8 +59,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       .required(),
   });
 
-  const schema = yup.object({
-    representativeEntry: yup.string().trim().required(),
+  const regexSchema = yup.object({
+    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
   });
 
   const entityNameSchema = yup
@@ -90,8 +75,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .max(20, `20자를 초과할 수 없습니다.`),
       entries: yup
         .array()
-        .when('isRegex', { is: false, then: yup.array().of(regexSchema) })
-        .when('isRegex', { is: true, then: yup.array().of(schema) }),
+        .when('isRegex', { is: false, then: yup.array().of(schema) })
+        .when('isRegex', { is: true, then: yup.array().of(regexSchema) }),
     })
     .required();
 
@@ -115,6 +100,32 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const { field: isRegexField } = useController({ name: 'isRegex', control });
 
   const entryGroupName = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (entryDetails && entryDetails.data) {
+      const resetValue = {
+        entryGroupid: entryDetails.data.id,
+        name: entryDetails.data.name,
+        entryGroupType: entryDetails.data.entryGroupType,
+        isRegex: entryDetails.data.entryGroupType === 2,
+        usingName: entryDetails.data.usingName,
+        entryStr: entryDetails.data.entryStr,
+        entries: entryDetails.data.entries,
+      };
+      reset(resetValue);
+    }
+  }, [entryDetails?.data]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === 'isRegex' && type === 'change') {
+        setValue('entries', []);
+      }
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [watch]);
 
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regExp1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[}]/g;
@@ -185,17 +196,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     setEntryId('');
     handleIsOpen(false);
   };
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === 'isRegex' && type === 'change') {
-        setValue('entries', []);
-      }
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [watch]);
 
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>

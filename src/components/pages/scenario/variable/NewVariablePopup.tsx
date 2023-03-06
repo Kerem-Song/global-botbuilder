@@ -2,7 +2,7 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
-import { ISaveParameter, ISaveParameterData } from '@models';
+import { IHasResults, ISaveParameter, ISaveParameterData, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -19,6 +19,7 @@ export interface NewVariablePopupProps {
 
 export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOpen }) => {
   const { variableMutate } = useVariableClient();
+
   const { t, tc } = usePage();
 
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -47,26 +48,48 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
   };
 
   const handleSave = (variable: ISaveParameterData): void => {
-    const newVariable: ISaveParameter = {
-      sessionToken: token!,
-      data: {
-        name: variable.name,
-        defaultValue: variable.defaultValue,
-        // formatType: variable.formatType,
-        formatType: 2,
-      },
-    };
+    if (variable.id) {
+      const modifyParameter: ISaveParameter = {
+        sessionToken: token!,
+        data: {
+          name: variable.name,
+          defaultValue: variable.defaultValue,
+          formatType: 2,
+        },
+      };
 
-    variableMutate.mutate(newVariable, {
-      onSuccess: (submitResult) => {
-        console.log('newVariable', submitResult);
-        if (submitResult && submitResult.isSuccess) {
-          lunaToast.success();
-          reset();
-          handleClose();
-        }
-      },
-    });
+      variableMutate.mutate(modifyParameter, {
+        onSuccess: (submitResult) => {
+          console.log('modifyParameter', submitResult);
+          if (submitResult && submitResult.isSuccess) {
+            lunaToast.success();
+            reset();
+            handleClose();
+          }
+        },
+      });
+    } else {
+      const newVariable: ISaveParameter = {
+        sessionToken: token!,
+        data: {
+          name: variable.name,
+          defaultValue: variable.defaultValue,
+          // formatType: variable.formatType,
+          formatType: 2,
+        },
+      };
+
+      variableMutate.mutate(newVariable, {
+        onSuccess: (submitResult) => {
+          console.log('newVariable', submitResult);
+          if (submitResult && submitResult.isSuccess) {
+            lunaToast.success();
+            reset();
+            handleClose();
+          }
+        },
+      });
+    }
   };
 
   return (

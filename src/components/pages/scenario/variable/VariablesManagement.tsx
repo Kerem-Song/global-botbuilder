@@ -67,7 +67,12 @@ export const VariablesManagement = () => {
             </div>
             {variableList && variableList.result.length > 0 ? (
               variableList?.result.map((item, i) => (
-                <div className="variableList" key={i}>
+                <div
+                  role="presentation"
+                  className="variableList"
+                  key={i}
+                  onClick={() => handleIsOpen(true)}
+                >
                   <span>{item.name}</span>
                   <span>{item.defaultValue === null ? '-' : item.defaultValue}</span>
                   <button
@@ -85,8 +90,8 @@ export const VariablesManagement = () => {
             )}
           </div>
         </div>
+        <NewVariablePopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
       </div>
-      <NewVariablePopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
     </div>
   );
 };

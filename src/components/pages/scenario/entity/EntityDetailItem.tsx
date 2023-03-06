@@ -91,7 +91,11 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                 <Col span={18}>
                   <div className="entryList">
                     <div className="entries">
-                      <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                      <AddEntryBtn
+                        index={index}
+                        searchKeyword={searchKeyword}
+                        representativeEntry={item.representativeEntry}
+                      />
                     </div>
                   </div>
                 </Col>
@@ -122,7 +126,12 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                 <Col span={18}>
                   <div className="entryList">
                     <div className="entries">
-                      <AddEntryBtn index={index} searchKeyword={searchKeyword} />
+                      <AddEntryBtn
+                        index={index}
+                        searchKeyword={searchKeyword}
+                        synonym={synonymField.value}
+                        representativeEntry={item.representativeEntry}
+                      />
                     </div>
                   </div>
                 </Col>

@@ -1,5 +1,6 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
+import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -7,9 +8,16 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 export interface AddEntryBtnProps {
   index: number;
   searchKeyword: string;
+  representativeEntry?: string;
+  synonym?: string[];
 }
 
-export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index, searchKeyword }) => {
+export const AddEntryBtn: FC<AddEntryBtnProps> = ({
+  index,
+  searchKeyword,
+  synonym,
+  representativeEntry,
+}) => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -47,11 +55,18 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({ index, searchKeyword }) => {
   };
 
   const handleInputConfirm = () => {
-    if (inputValue) {
+    if (!inputValue.trim()) return;
+
+    if (
+      representativeEntry &&
+      synonym?.filter((x) => x).includes(representativeEntry!) === true
+    ) {
+      lunaToast.error('중복');
+    } else {
       append([inputValue]);
+      setInputVisible(false);
+      setInputValue('');
     }
-    setInputVisible(false);
-    setInputValue('');
   };
 
   return (
