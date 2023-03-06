@@ -97,3 +97,15 @@ export interface IResponseCheckDuplication {
   isSuccess: boolean;
   newToken: null;
 }
+
+export interface IResponseCheckUtteranceDuplication {
+  result: {
+    intentId: string;
+    intentName: string;
+    utterance: string;
+    utteranceId: string;
+  }[];
+  exception: null;
+  isSuccess: boolean;
+  newToken: null;
+}

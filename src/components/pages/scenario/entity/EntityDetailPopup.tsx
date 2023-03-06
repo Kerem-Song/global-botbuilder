@@ -11,7 +11,7 @@ import {
   Title,
 } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEntityClient, useRootState } from '@hooks';
+import { useEntityClient, useRootState, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
@@ -39,6 +39,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [entryInputError, setEntryInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
+  const { confirm, error } = useSystemModal();
+
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
 
@@ -101,6 +103,24 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const entryGroupName = useRef<HTMLInputElement>(null);
 
+  const preventGoBack = async () => {
+    const result = await confirm({
+      title: '저장하기',
+      description: (
+        <span>
+          변경사항이 저장되지 않았습니다.
+          <br />
+          정말 나가시겠습니까?
+        </span>
+      ),
+    });
+    if (result) {
+      history.go(-1);
+    } else {
+      history.pushState(null, '', location.href);
+    }
+  };
+
   useEffect(() => {
     if (entryDetails && entryDetails.data) {
       const resetValue = {
@@ -126,6 +146,17 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       subscription.unsubscribe();
     };
   }, [watch]);
+
+  useEffect(() => {
+    (() => {
+      history.pushState(null, '', location.href);
+      window.addEventListener('popstate', preventGoBack);
+    })();
+
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
 
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regExp1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[}]/g;

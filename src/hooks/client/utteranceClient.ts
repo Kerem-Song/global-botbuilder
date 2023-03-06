@@ -16,6 +16,7 @@ import {
   IGetIntent,
   IIntentListItem,
   IResponseCheckDuplication,
+  IResponseCheckUtteranceDuplication,
   IResponseIntentData,
   ISaveIntent,
   ISearchData,
@@ -158,13 +159,13 @@ export const useUtteranceClient = () => {
     async (criteria: Pick<ICheckUtterance, 'utteranceId' | 'text'>) => {
       const result = await http.post<
         ICheckUtterance,
-        AxiosResponse<IResponseCheckDuplication>
+        AxiosResponse<IResponseCheckUtteranceDuplication>
       >('Builder/CheckUtterance', {
         sessionToken: token!,
         ...criteria,
       });
 
-      return result.data;
+      return result.data.result;
     },
   );
 

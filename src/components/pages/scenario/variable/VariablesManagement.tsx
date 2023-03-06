@@ -2,8 +2,9 @@ import { icPlusWhite, icUtteranceDeleteDefault } from '@assets';
 import { Button } from '@components/general/Button';
 import { useModalOpen, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
-import { IDeleteParameter } from '@models';
+import { IDeleteParameter, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
+import { useState } from 'react';
 
 import { SettingEntity } from '../entity/SettingEntity';
 import { NewVariablePopup } from './NewVariablePopup';
@@ -11,18 +12,21 @@ import { NewVariablePopup } from './NewVariablePopup';
 export const VariablesManagement = () => {
   const { getVariableListQuery, variableDeleteMutate } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
+
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
+  const [isVariableList, setIsVariableList] = useState<IVariableList>();
 
   const openDeleteVariableModal = async (parameterId: string) => {
     const result = await confirm({
-      title: 'Delete',
+      title: '변수 삭제',
       description: (
         <span>
-          There is a scenario associated with scenario 02
-          <br />: Start, Scenario 01
+          현재 시나리오에서 사용하고 있는 변수의 경우,
           <br />
-          Are you sure you want to delete it?
+          변수 목록에서 완전히 삭제되지 않을 수 있습니다.
+          <br />
+          삭제하시겠습니까?
         </span>
       ),
     });
@@ -44,6 +48,14 @@ export const VariablesManagement = () => {
 
   const { isOpen, handleIsOpen } = useModalOpen();
 
+  const handleId = (item?: IVariableList) => {
+    if (item) {
+      setIsVariableList(item);
+    } else {
+      setIsVariableList(undefined);
+    }
+  };
+
   return (
     <div className="variableTabWrapper">
       <SettingEntity />
@@ -53,7 +65,10 @@ export const VariablesManagement = () => {
           <Button
             type="primary"
             style={{ width: '84px', display: 'flex', justifyContent: 'center' }}
-            onClick={() => handleIsOpen(true)}
+            onClick={() => {
+              handleId();
+              handleIsOpen(true);
+            }}
           >
             <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
             <span>variable</span>
@@ -71,13 +86,23 @@ export const VariablesManagement = () => {
                   role="presentation"
                   className="variableList"
                   key={i}
-                  onClick={() => handleIsOpen(true)}
+                  onClick={() => {
+                    handleId(item);
+                    handleIsOpen(true);
+                  }}
                 >
                   <span>{item.name}</span>
-                  <span>{item.defaultValue === null ? '-' : item.defaultValue}</span>
+                  <span>
+                    {item.defaultValue === null || item.defaultValue === ''
+                      ? '-'
+                      : item.defaultValue}
+                  </span>
                   <button
                     className="deleteBtn"
-                    onClick={() => openDeleteVariableModal(item.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openDeleteVariableModal(item.id);
+                    }}
                   >
                     <img src={icUtteranceDeleteDefault} alt="delete"></img>
                   </button>
@@ -90,7 +115,11 @@ export const VariablesManagement = () => {
             )}
           </div>
         </div>
-        <NewVariablePopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
+        <NewVariablePopup
+          isOpen={isOpen}
+          handleIsOpen={handleIsOpen}
+          variableList={isVariableList}
+        />
       </div>
     </div>
   );
