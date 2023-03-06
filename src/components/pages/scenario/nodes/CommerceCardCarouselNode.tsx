@@ -4,7 +4,8 @@ import {
   IProductCardCarouselView,
   IProductCardView,
 } from '@models/interfaces/res/IGetFlowRes';
-import { NODE_PREFIX, nodeHelper } from '@modules';
+import { NODE_PREFIX } from '@modules';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { updateNode } from '@store/makingNode';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -24,7 +25,7 @@ export const CommerceCardCarouselNode: FC<ICommerceCardCarouselNodeProps> = ({
   const HandleAddCarousel = () => {
     const childrenViews: IProductCardView[] = [
       ...view.childrenViews,
-      nodeHelper.createCommerceView(),
+      nodeDefaultHelper.createCommerceView(),
     ];
     const upNode = {
       ...node,

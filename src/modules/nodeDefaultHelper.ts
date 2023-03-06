@@ -203,6 +203,7 @@ export const nodeDefaultHelper = {
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
       retailPrice: 0,
       salePrice: 0,
+      discountPrice: 0,
       profileIconUrl: '',
       profileName: '',
       description: '',
