@@ -121,9 +121,15 @@ export const NodeLinkPopUpMenu = ({
       name: string;
       type: ItemType;
       data: {
-        action: (name: string, firstNodeId: string, start?: GuideInfo) => void;
+        action: (
+          name: string,
+          otherFlowId: string,
+          firstNodeId: string,
+          start?: GuideInfo,
+        ) => void;
         start?: GuideInfo;
         firstNodeId: string;
+        otherFlowId: string;
       };
     }[]
   >();
@@ -215,6 +221,7 @@ export const NodeLinkPopUpMenu = ({
             action: handleMakingOtherFlow,
             start: guideStart,
             firstNodeId: item.firstNodeId,
+            otherFlowId: item.id,
           },
         })),
       );
@@ -223,6 +230,7 @@ export const NodeLinkPopUpMenu = ({
 
   const handleMakingOtherFlow = (
     name: string,
+    otherFlowId: string,
     firstNodeId: string,
     guide?: GuideInfo,
   ) => {
@@ -231,6 +239,9 @@ export const NodeLinkPopUpMenu = ({
     const nodeName = name;
 
     const view = nodeDefaultHelper.createDefaultOtherFlowRedirectView();
+    view.otherFlowId = otherFlowId;
+    view.otherNodeId = firstNodeId;
+    console.log('nodelinkpopup', view);
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: nodeType,
@@ -281,7 +292,12 @@ export const NodeLinkPopUpMenu = ({
                     offset={[200, 20]}
                     popperItems={scenarioList}
                     onChange={(m) => {
-                      m.data?.action?.(m.name, m.data.firstNodeId, m.data.start);
+                      m.data?.action?.(
+                        m.name,
+                        m.data.otherFlowId,
+                        m.data.firstNodeId,
+                        m.data.start,
+                      );
                     }}
                     popup
                     popupList
