@@ -61,7 +61,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
-          lunaToast.success();
+          lunaToast.success('삭제되었습니다.');
         },
       });
     }
@@ -78,6 +78,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
     return false;
   };
+
+  console.log(searchData);
 
   return (
     <>
@@ -142,6 +144,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
+            console.log(x.utteranceSummary);
             return (
               <tr
                 key={i}
@@ -179,7 +182,11 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
-            <span>No registered Utterance.</span>
+            {searchData?.searchWord ? (
+              <span>No search results found.</span>
+            ) : (
+              <span>No registered Utterance.</span>
+            )}
           </td>
         </tr>
       )}

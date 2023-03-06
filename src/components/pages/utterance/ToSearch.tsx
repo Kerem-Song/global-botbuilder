@@ -32,6 +32,10 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     })
     .concat({ value: 'noflowid', label: '시나리오 미선택' });
 
+  const test = scenarioList?.splice(0, 0, { value: 'all', label: '전체' });
+
+  console.log(scenarioList);
+
   const handleReset = () => {
     setSearchData({
       sort: 1,
@@ -64,6 +68,13 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
                   value={SORT.find((x) => x.value === sort)}
                   onChange={(e: any) => {
                     setSort(e?.value);
+                  }}
+                  onBlur={() => {
+                    const searchData = {
+                      sort: Number(sort),
+                      scenarios: scenario,
+                    };
+                    setSearchData(searchData);
                   }}
                 />
               </div>

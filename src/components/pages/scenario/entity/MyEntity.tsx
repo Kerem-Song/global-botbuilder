@@ -140,30 +140,28 @@ export const MyEntity = () => {
                 alignItems: 'center',
               }}
             >
-              <Row
-                style={{
-                  width: '100%',
-                  marginTop: '12px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <div className="emptyList">
-                  <div
-                    className="empty"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <img src={icUtteranceEmpty} alt="empty" />
+              <div className="emptyList">
+                <div
+                  className="empty"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <img
+                    src={icUtteranceEmpty}
+                    alt="empty"
+                    style={{ marginBottom: '10px' }}
+                  />
+                  {searchKeyword ? (
+                    <span>No search results found.</span>
+                  ) : (
                     <span>No entries registered</span>
-                  </div>
+                  )}
                 </div>
-              </Row>
+              </div>
             </Card>
           )}
         </Row>

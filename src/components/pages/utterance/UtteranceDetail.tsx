@@ -83,20 +83,24 @@ export const UtteranceDetail = () => {
   );
 
   const preventGoBack = async () => {
-    const result = await confirm({
-      title: '저장하기',
-      description: (
-        <span>
-          변경사항이 저장되지 않았습니다.
-          <br />
-          정말 나가시겠습니까?
-        </span>
-      ),
-    });
-    if (result) {
-      history.go(-1);
+    if (isActive === true) {
+      const result = await confirm({
+        title: '저장하기',
+        description: (
+          <span>
+            변경사항이 저장되지 않았습니다.
+            <br />
+            정말 나가시겠습니까?
+          </span>
+        ),
+      });
+      if (result) {
+        history.go(-1);
+      } else {
+        history.pushState(null, '', location.href);
+      }
     } else {
-      history.pushState(null, '', location.href);
+      history.go(-1);
     }
   };
 
