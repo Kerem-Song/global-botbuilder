@@ -155,17 +155,20 @@
                     align-items: center;
                   }
                   .entry {
-                    margin: rem(3);
-                    padding: 4px 12px;
-                    width: fit-content;
-                    border: 1px solid #dcdcdc;
-                    height: rem(25);
-                    border-radius: rem(8);
-                    background-color: $primary150;
-                    white-space: nowrap;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    margin: rem(3);
+                    padding: 4px 12px;
+                    max-width: rem(720);
+                    overflow: hidden;
+                    word-break: break-all;
+                    border: 1px solid #dcdcdc;
+                    min-height: rem(25);
+                    border-radius: rem(8);
+                    background-color: $primary150;
+                    // white-space: nowrap;xxxw
+
                     .entryInput {
                       margin: rem(3);
                       padding: 4px 12px;

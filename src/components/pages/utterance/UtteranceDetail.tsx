@@ -219,15 +219,15 @@ export const UtteranceDetail = () => {
         // utteranceId:
       },
       {
-        onSuccess: async (result) => {
-          if (result.result === true) {
-            await error({
+        onSuccess: (result) => {
+          if (result.length > 0) {
+            error({
               title: '중복 발화',
               description: (
                 <span>
                   이미 등록된 발화입니다.
                   <br />
-                  등록위치: <span style={{ color: 'red' }}>{getValues('name')}</span>
+                  등록위치: <span style={{ color: 'red' }}>{result[0].intentName}</span>
                 </span>
               ),
             });
@@ -440,17 +440,13 @@ export const UtteranceDetail = () => {
               ) ? (
               filterKeyword.map((v, i) => {
                 return (
-                  <>
-                    <div key={v.intentId} className="utteranceItem">
-                      <Checkbox
-                        {...register(`items.${i}.isChecked`)}
-                        style={{ marginLeft: '20px' }}
-                      />
-                      <p className="item">
-                        {util.replaceKeywordMark(v.text!, searchWord)}
-                      </p>
-                    </div>
-                  </>
+                  <div key={v.id} className="utteranceItem">
+                    <Checkbox
+                      {...register(`items.${i}.isChecked`)}
+                      style={{ marginLeft: '20px' }}
+                    />
+                    <p className="item">{util.replaceKeywordMark(v.text!, searchWord)}</p>
+                  </div>
                 );
               })
             ) : (

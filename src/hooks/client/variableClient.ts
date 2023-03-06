@@ -11,6 +11,7 @@ import {
   ISaveParameterData,
   IVariableList,
 } from '../../models/interfaces/IParameter';
+import { IGetParameterFormats } from './../../models/interfaces/IParameter';
 
 export const useVariableClient = () => {
   const queryClient = useQueryClient();
@@ -59,9 +60,26 @@ export const useVariableClient = () => {
     }
   });
 
+  const getParameterFormatsQuery = () => {
+    return useQuery<IHasResults<IGetParameterFormats>>(
+      ['formats', token],
+      () =>
+        http
+          .post<ISearchParameter, AxiosResponse<IHasResults<IGetParameterFormats>>>(
+            'Builder/GetParameterFormats',
+            {
+              sessionToken: token,
+            },
+          )
+          .then((res) => res.data),
+      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
+    );
+  };
+
   return {
     getVariableListQuery,
     variableMutate,
     variableDeleteMutate,
+    getParameterFormatsQuery,
   };
 };

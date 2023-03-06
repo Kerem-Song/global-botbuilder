@@ -2,9 +2,9 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
-import { IHasResults, ISaveParameter, ISaveParameterData, IVariableList } from '@models';
+import { ISaveParameter, ISaveParameterData, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
@@ -15,10 +15,21 @@ import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
 export interface NewVariablePopupProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
+  variableList?: IVariableList | undefined;
 }
 
-export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOpen }) => {
-  const { variableMutate } = useVariableClient();
+export const NewVariablePopup: FC<NewVariablePopupProps> = ({
+  isOpen,
+  handleIsOpen,
+  variableList,
+}) => {
+  const [formats, setFormats] = useState<number>();
+  const { variableMutate, getParameterFormatsQuery } = useVariableClient();
+  const { data: parameterFormats } = getParameterFormatsQuery();
+
+  const formatsList = parameterFormats?.result.map((x) => {
+    return { value: x.formatType, label: x.example };
+  });
 
   const { t, tc } = usePage();
 
@@ -47,14 +58,31 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
     reset();
   };
 
+  useEffect(() => {
+    if (variableList?.id) {
+      const resetValue = {
+        id: variableList.id,
+        name: variableList.name,
+        defaultValue: variableList.defaultValue,
+        formatType: variableList.formatType!,
+      };
+      reset(resetValue);
+      setFormats(variableList.formatType!);
+    } else if (isOpen) {
+      reset({});
+      setFormats(undefined);
+    }
+  }, [variableList?.id, isOpen]);
+
   const handleSave = (variable: ISaveParameterData): void => {
-    if (variable.id) {
+    if (variableList?.id) {
       const modifyParameter: ISaveParameter = {
         sessionToken: token!,
         data: {
+          id: variableList.id,
           name: variable.name,
           defaultValue: variable.defaultValue,
-          formatType: 2,
+          formatType: formats!,
         },
       };
 
@@ -64,6 +92,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
           if (submitResult && submitResult.isSuccess) {
             lunaToast.success();
             reset();
+            // setFormats(undefined);
             handleClose();
           }
         },
@@ -74,8 +103,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
         data: {
           name: variable.name,
           defaultValue: variable.defaultValue,
-          // formatType: variable.formatType,
-          formatType: 2,
+          formatType: formats!,
         },
       };
 
@@ -106,7 +134,8 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
       isOpen={isOpen}
     >
       <div style={{ padding: '14px 20px 2px 20px' }}>
-        <Title level={4}>{t('ADD_VARIABLE')}</Title>
+        <Title level={4}>{variableList?.id ? '변수 수정' : '변수 추가'}</Title>
+        {/* <Title level={4}>{t('ADD_VARIABLE')}</Title> */}
       </div>
       <Divider />
       <form onSubmit={handleSubmit(handleSave)}>
@@ -130,8 +159,13 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({ isOpen, handleIsOp
           <Col span={18}>
             <FormItem>
               <Select
+                options={formatsList}
                 styles={reactSelectStyle}
                 placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
+                value={formatsList?.find((x) => x.value === formats) || null}
+                onChange={(e: any) => {
+                  setFormats(e.value);
+                }}
               ></Select>
             </FormItem>
           </Col>

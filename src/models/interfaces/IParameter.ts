@@ -30,3 +30,11 @@ export interface IResponseDeleteParameter {
   exception?: string | null;
   isSuccess?: boolean;
 }
+
+export interface IGetParameterFormats {
+  formatType: number;
+  cultureInfo: string;
+  example: string;
+  groupName: string;
+  formatStr: string;
+}
