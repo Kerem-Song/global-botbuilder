@@ -33,6 +33,24 @@ export const DashboardComponent = () => {
     }
   };
 
+  const isEmpty = () => {
+    if (!data) {
+      return true;
+    }
+    if (data.length === 0) {
+      return true;
+    }
+
+    if (
+      data.filter((x) => x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()))
+        .length === 0
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <div className="dashboard-wrap">
       <Input
@@ -57,7 +75,7 @@ export const DashboardComponent = () => {
               <Skeleton />
             </Card>
           </Col>
-        ) : data?.length === 0 ? (
+        ) : isEmpty() ? (
           <Col span={24}>
             <div className="empty-card">
               <div className="content">
