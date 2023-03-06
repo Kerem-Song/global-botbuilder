@@ -28,12 +28,12 @@ const finalRoutes = [
             {
               path: 'dashboard',
               element: <DefaultLayout />,
-              handle: 'DASHBOARD',
+              handle: { title: 'DASHBOARD', role: 0 },
               children: [
                 {
                   index: true,
                   element: <DashboardPage />,
-                  handle: 'DASHBOARD',
+                  handle: { title: 'DASHBOARD', role: 0 },
                   errorElement: <>404</>,
                 },
               ],
@@ -43,15 +43,19 @@ const finalRoutes = [
               element: <BotLayout />,
               errorElement: <>404</>,
               children: [
-                { path: 'scenario', element: <ScenarioPage />, handle: 'SCENARIO' },
+                {
+                  path: 'scenario',
+                  element: <ScenarioPage />,
+                  handle: { title: 'SCENARIO', role: 2 },
+                },
                 {
                   path: 'utterance',
-                  handle: 'UTTERANCE',
+                  handle: { title: 'UTTERANCE', role: 4 },
                   children: [
                     {
                       path: '',
                       element: <UtterancePage />,
-                      handle: 'UTTERANCE',
+                      handle: { title: 'UTTERANCE', role: 4 },
                     },
                     {
                       path: 'detail',
@@ -59,22 +63,47 @@ const finalRoutes = [
                         {
                           path: '',
                           element: <UtteranceDetailPage />,
-                          handle: 'UTTERANCE',
+                          handle: { title: 'UTTERANCE', role: 4 },
                         },
                         {
                           path: ':utteranceId',
                           element: <UtteranceDetailPage />,
-                          handle: 'UTTERANCE',
+                          handle: { title: 'UTTERANCE', role: 4 },
                         },
                       ],
                     },
                   ],
                 },
-                { path: 'data-api', element: <DataApiPage /> },
-                { path: 'deployment', element: <DeploymentPage /> },
-                { path: 'history', element: <HistoryPage /> },
-                { path: 'statistics', element: <StatisticsPage /> },
-                { path: 'setting', element: <SettingPage /> },
+                {
+                  path: 'data-api',
+                  element: <DataApiPage />,
+                  handle: { title: 'SKILL', role: 8 },
+                },
+                {
+                  path: 'deployment',
+                  element: <DeploymentPage />,
+                  handle: { title: 'DEPLOY', role: 16 },
+                },
+                {
+                  path: 'history',
+                  element: <HistoryPage />,
+                  handle: { title: 'HISTORY', role: 32 },
+                },
+                {
+                  path: 'statistics',
+                  element: <StatisticsPage />,
+                  handle: { title: 'STATISTICS', role: 64 },
+                },
+                {
+                  path: 'chatrecord',
+                  element: <StatisticsPage />,
+                  handle: { title: 'CHATRECORD', role: 128 },
+                },
+                {
+                  path: 'setting',
+                  element: <SettingPage />,
+                  handle: { title: 'SETTING', role: 256 },
+                },
               ],
             },
             { path: 'help', element: <HelpPage />, errorElement: <>404</> },

@@ -23,7 +23,6 @@ export const InputWithTitleCounter = forwardRef<
     size,
     label,
     isLight,
-    maxLength,
     textLength,
     onSearch,
     onPressEnter,
@@ -83,7 +82,7 @@ export const InputWithTitleCounter = forwardRef<
         {showCount ? (
           <span className="textCounter">
             {textLength || 0}
-            {`/${maxLength}`}
+            {`/${args.maxLength}`}
           </span>
         ) : undefined}
       </div>

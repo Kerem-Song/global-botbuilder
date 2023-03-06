@@ -1,7 +1,9 @@
+import { useRootState } from '@hooks/useRootState';
+import { IHandle } from '@models/interfaces/IHandle';
 import { i18n } from 'i18next';
 import { createContext, FC } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
-import { NavigateOptions, To, useNavigate } from 'react-router';
+import { Navigate, NavigateOptions, To, useMatches, useNavigate } from 'react-router';
 
 import { IPageProps } from '../../models/interfaces/IPageProps';
 
@@ -22,6 +24,9 @@ export const PageProvider: FC<IPageProps> = ({ pageName, children }) => {
   const { t: tc, i18n } = useTranslation('common');
   const { t: ts } = useTranslation('sidebar');
   const navigate = useNavigate();
+  const matches = useMatches();
+  const userInfo = useRootState((state) => state.userInfoReducer);
+  const role = userInfo.role || 0;
   const localeNavigate = (to: To, options?: NavigateOptions) => {
     if (typeof to === 'string') {
       navigate(`/${i18n.language}${to}`, options);
@@ -33,6 +38,13 @@ export const PageProvider: FC<IPageProps> = ({ pageName, children }) => {
       options,
     );
   };
+
+  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
+
+  console.log(userInfo.starffType, handle?.role, role);
+  if (userInfo.starffType !== 0 && handle?.role && (role & handle.role) === handle.role) {
+    <Navigate to={`/${i18n.language}/dashboard`} />;
+  }
   return (
     <PageContext.Provider value={{ t, tc, ts, i18n, pageName, navigate: localeNavigate }}>
       {children}

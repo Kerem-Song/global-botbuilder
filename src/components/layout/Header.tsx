@@ -1,6 +1,7 @@
 import { IPopperItem, Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
+import { IHandle } from '@models/interfaces/IHandle';
 import { FC, useEffect } from 'react';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
@@ -26,8 +27,8 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
 
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
-  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as string;
-  const pageName = ts(handle) || location.pathname.split('/').slice(-1)[0];
+  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
+  const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
 
   useEffect(() => {
     handleIsOpen(false);

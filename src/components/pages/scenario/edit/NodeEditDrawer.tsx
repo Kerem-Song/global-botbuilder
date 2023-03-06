@@ -190,7 +190,7 @@ export const NodeEditDrawer = () => {
                   label={t(`CHAT_BUBBLE_NAME`)}
                   required={true}
                   showCount={true}
-                  maxLength={14}
+                  maxLength={20}
                   placeholder="Input Chat Bubble name"
                   {...register('title')}
                   disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}

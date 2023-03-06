@@ -70,7 +70,10 @@ export const NewBotPopup: FC<{
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
-          <Col span={6}>{t('BOT_NAME_LABEL')}</Col>
+          <Col span={6}>
+            {t('BOT_NAME_LABEL')}
+            <span className="required">*</span>
+          </Col>
           <Col span={18}>
             <FormItem error={errors.botName}>
               <Input
