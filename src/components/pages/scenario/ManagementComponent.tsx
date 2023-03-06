@@ -11,8 +11,8 @@ export const ManagementComponent = () => {
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const { getScenarioList } = useScenarioClient();
   const { data } = getScenarioList();
-  const handleScenarioNameTags = () => {
-    setScenarioTab(!scenarioTab);
+  const handleScenarioNameTags = (value: boolean) => {
+    setScenarioTab(value);
   };
 
   return (
@@ -25,12 +25,12 @@ export const ManagementComponent = () => {
         <div className="scenarioNameTabs">
           <div
             className={classNames('tab scenario', { on: scenarioTab })}
-            onClick={handleScenarioNameTags}
+            onClick={() => handleScenarioNameTags(true)}
             role="presentation"
           ></div>
           <div
             className={classNames('tab variable', { on: !scenarioTab })}
-            onClick={handleScenarioNameTags}
+            onClick={() => handleScenarioNameTags(false)}
             role="presentation"
           ></div>
         </div>

@@ -29,20 +29,20 @@ aside {
     text-align: center;
 
     &:hover {
-      background-color: $grayBlack;  
+      background-color: $grayBlack;
     }
 
     &[data-sidebar='false'] {
       margin-bottom: rem(8);
-    
+
       .brandNameWrapper {
         padding: rem(6);
       }
-      
+
       .brandNameImg {
         padding: rem(7);
         border-radius: rem(4);
-        
+
         &::after {
           content: url('@assets/icons/ic_brand_name_default.svg');
           width: rem(18);
@@ -58,7 +58,7 @@ aside {
         }
         &.selected {
           &::after {
-            content: url('@assets/icons/ic_brand_name_selected.svg')
+            content: url('@assets/icons/ic_brand_name_selected.svg');
           }
         }
       }
@@ -68,7 +68,6 @@ aside {
       height: rem(18);
       width: rem(18);
     }
-
 
     &[data-sidebar='true'] {
       padding: 0 rem(20);
@@ -84,7 +83,6 @@ aside {
         font-size: rem(14);
         font-weight: 700;
         line-height: rem(17);
-        
       }
     }
   }
@@ -196,6 +194,7 @@ aside {
   }
 
   .lnbBtn {
+    cursor: pointer;
     width: rem(24);
     height: rem(24);
     margin-left: rem(6);

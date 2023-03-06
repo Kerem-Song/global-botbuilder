@@ -5,7 +5,7 @@ import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 
 export const Setting = () => {
-  const { t } = usePage();
+  const { t, navigate } = usePage();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
 
   const handleCopyBotId = async () => {
@@ -80,7 +80,7 @@ export const Setting = () => {
               </Col>
               <Space gap={8}>
                 <Button type="lineBlue">Deactive</Button>
-                <Button>Bot list</Button>
+                <Button onClick={() => navigate('/dashboard')}>Bot list</Button>
               </Space>
             </Row>
             <div className="botCardContainer">
