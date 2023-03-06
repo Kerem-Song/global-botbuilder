@@ -42,6 +42,8 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
     editInputRef.current?.focus();
   }, []);
 
+  // useEffect(() => {}, [synonym]);
+
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
   };
@@ -57,15 +59,18 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   const handleInputConfirm = () => {
     if (!inputValue.trim()) return;
 
-    if (
-      representativeEntry &&
-      synonym?.filter((x) => x).includes(representativeEntry!) === true
-    ) {
-      lunaToast.error('중복');
-    } else {
-      append([inputValue]);
-      setInputVisible(false);
-      setInputValue('');
+    if (representativeEntry) {
+      if (representativeEntry.toLowerCase() === inputValue.toLowerCase()) {
+        lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        return;
+      } else if (synonym?.find((x) => x.toLowerCase() === inputValue.toLowerCase())) {
+        lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        return;
+      } else {
+        append([inputValue]);
+        setInputVisible(false);
+        setInputValue('');
+      }
     }
   };
 
