@@ -100,7 +100,7 @@ export const UtteranceDetail = () => {
         history.pushState(null, '', location.href);
       }
     } else {
-      history.go(-1);
+      return navigate(`/${botId}/utterance`);
     }
   };
 

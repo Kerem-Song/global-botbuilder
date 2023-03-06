@@ -1,5 +1,5 @@
 import { icUtteranceEmpty } from '@assets';
-import { Col, Row, Skeleton } from '@components';
+import { Col, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -79,7 +79,15 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     return false;
   };
 
-  console.log(searchData);
+  function getUtteranceSummary(utteranceSummary: string) {
+    const arr = utteranceSummary.split(',');
+    const filterArr = arr.filter((item, index) => index < arr.length - 1);
+    const checkedStr =
+      filterArr?.length > 5
+        ? filterArr.splice(0, 5).toString().concat('...')
+        : filterArr.toString();
+    return checkedStr;
+  }
 
   return (
     <>
@@ -144,7 +152,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
-            console.log(x.utteranceSummary);
+            const checkedStr = getUtteranceSummary(x.utteranceSummary);
             return (
               <tr
                 key={i}
@@ -162,8 +170,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 </td>
                 <td role="presentation" className="utteranceList utterance">
                   {searchData?.searchWord
-                    ? util.replaceKeywordMark(x.utteranceSummary, searchData?.searchWord)
-                    : x.utteranceSummary}
+                    ? util.replaceKeywordMark(checkedStr, searchData?.searchWord)
+                    : checkedStr}
                 </td>
                 <td className="utteranceList icon">
                   <button
