@@ -7,7 +7,7 @@ import { lunaToast } from '@modules/lunaToast';
 import { useState } from 'react';
 
 import { SettingEntity } from '../entity/SettingEntity';
-import { NewVariablePopup } from './NewVariablePopup';
+import { NewVariablePopup } from './VariablePopup';
 
 export const VariablesManagement = () => {
   const { getVariableListQuery, variableDeleteMutate } = useVariableClient();

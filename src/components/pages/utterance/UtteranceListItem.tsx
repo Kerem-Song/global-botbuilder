@@ -1,5 +1,5 @@
 import { icUtteranceEmpty } from '@assets';
-import { Col, Row, Skeleton } from '@components';
+import { Col, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -61,7 +61,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
-          lunaToast.success();
+          lunaToast.success('삭제되었습니다.');
         },
       });
     }
@@ -78,6 +78,16 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
     return false;
   };
+
+  function getUtteranceSummary(utteranceSummary: string) {
+    const arr = utteranceSummary.split(',');
+    const filterArr = arr.filter((item, index) => index < arr.length - 1);
+    const checkedStr =
+      filterArr?.length > 5
+        ? filterArr.splice(0, 5).toString().concat('...')
+        : filterArr.toString();
+    return checkedStr;
+  }
 
   return (
     <>
@@ -142,6 +152,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
+            const checkedStr = getUtteranceSummary(x.utteranceSummary);
             return (
               <tr
                 key={i}
@@ -159,8 +170,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 </td>
                 <td role="presentation" className="utteranceList utterance">
                   {searchData?.searchWord
-                    ? util.replaceKeywordMark(x.utteranceSummary, searchData?.searchWord)
-                    : x.utteranceSummary}
+                    ? util.replaceKeywordMark(checkedStr, searchData?.searchWord)
+                    : checkedStr}
                 </td>
                 <td className="utteranceList icon">
                   <button
@@ -179,7 +190,11 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         <tr className="emptyList">
           <td className="empty">
             <img src={icUtteranceEmpty} alt="empty" />
-            <span>No registered Utterance.</span>
+            {searchData?.searchWord ? (
+              <span>No search results found.</span>
+            ) : (
+              <span>No registered Utterance.</span>
+            )}
           </td>
         </tr>
       )}

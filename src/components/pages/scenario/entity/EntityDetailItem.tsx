@@ -1,3 +1,4 @@
+import { icUtteranceEmpty } from '@assets';
 import { Col, FormItem, Input, Row } from '@components';
 import { useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
@@ -149,6 +150,22 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
       </>
     );
   } else {
-    return <></>;
+    return (
+      <div
+        style={{
+          width: '100%',
+          marginTop: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <div className="emptyList">
+          <div className="empty">
+            <img src={icUtteranceEmpty} alt="empty" />
+            <span>No search results found.</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 };

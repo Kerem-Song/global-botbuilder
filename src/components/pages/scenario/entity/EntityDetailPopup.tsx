@@ -40,6 +40,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm, error } = useSystemModal();
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
@@ -215,17 +216,37 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
 
     append({ representativeEntry: name });
+    setIsActive(true);
 
     if (entryGroupName.current) {
       entryGroupName.current.value = '';
     }
   };
 
-  const handleClose = () => {
-    reset();
-    remove();
-    setEntryId('');
-    handleIsOpen(false);
+  const handleClose = async () => {
+    if (isActive === false) {
+      reset();
+      remove();
+      setEntryId('');
+      handleIsOpen(false);
+    } else {
+      const result = await confirm({
+        title: '저장하기',
+        description: (
+          <span>
+            변경사항이 저장되지 않았습니다.
+            <br />
+            정말 나가시겠습니까?
+          </span>
+        ),
+      });
+      if (result) {
+        reset();
+        remove();
+        setEntryId('');
+        handleIsOpen(false);
+      }
+    }
   };
 
   return (
@@ -266,6 +287,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         <Input
                           {...register('name')}
                           placeholder="Input Intent Name"
+                          onChange={(e) => {
+                            setValue('name', e.target.value);
+                            setIsActive(true);
+                          }}
                           showCount
                           maxLength={20}
                         />
@@ -316,6 +341,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             <Input
                               {...register('entries.0.representativeEntry')}
                               placeholder="Input entity name"
+                              onChange={(e) => {
+                                setValue('entries.0.representativeEntry', e.target.value);
+                                setIsActive(true);
+                              }}
                             />
                           </FormItem>
                         </Col>
@@ -360,9 +389,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <Button
                             style={{ marginLeft: '8px' }}
                             type="primary"
-                            onClick={() =>
-                              handleRegisterEntry(entryGroupName.current?.value)
-                            }
+                            onClick={() => {
+                              handleRegisterEntry(entryGroupName.current?.value);
+                            }}
                           >
                             Register
                           </Button>
