@@ -79,15 +79,19 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     return false;
   };
 
-  function getUtteranceSummary(utteranceSummary: string) {
+  const getUtteranceSummary = (utteranceSummary: string) => {
     const arr = utteranceSummary.split(',');
     const filterArr = arr.filter((item, index) => index < arr.length - 1);
     const checkedStr =
       filterArr?.length > 5
-        ? filterArr.splice(0, 5).toString().concat('...')
-        : filterArr.toString();
+        ? filterArr
+            .splice(filterArr.length - 5, filterArr.length)
+            .reverse()
+            .toString()
+            .concat('...')
+        : filterArr.reverse().toString();
     return checkedStr;
-  }
+  };
 
   return (
     <>

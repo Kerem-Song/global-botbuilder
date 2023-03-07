@@ -82,6 +82,8 @@ export const UtteranceDetail = () => {
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
   );
 
+  const deleteItems = getValues().items.filter((x) => x.isChecked);
+
   const preventGoBack = async () => {
     if (isActive === true) {
       const result = await confirm({
@@ -120,7 +122,7 @@ export const UtteranceDetail = () => {
       };
       reset(resetValue);
 
-      append(
+      prepend(
         hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
           return { text: x.text, id: x.id };
         }) || [],
@@ -150,7 +152,6 @@ export const UtteranceDetail = () => {
   }, []);
 
   const openDeleteCheckboxModal = async () => {
-    const deleteItems = getValues().items.filter((x) => x.isChecked);
     if (deleteItems.length === 0) {
       return;
     }
@@ -307,9 +308,6 @@ export const UtteranceDetail = () => {
     );
   };
 
-  console.log('items', watch('items').length);
-  console.log('keyword', filterKeyword.length);
-
   return (
     <div className="utteranceDetailWrap">
       <form onSubmit={handleSubmit(handleSave)}>
@@ -435,7 +433,7 @@ export const UtteranceDetail = () => {
           <button
             className="icDelete"
             onClick={openDeleteCheckboxModal}
-            disabled={watch('items') ? false : true}
+            disabled={deleteItems.length === 0 ? true : false}
           />
         </Space>
         <Row style={{ marginTop: '12px' }}>
@@ -453,7 +451,6 @@ export const UtteranceDetail = () => {
                 x.text?.toLowerCase().includes(searchWord.toLowerCase()),
               ) ? (
               filterKeyword.map((v, i) => {
-                console.log(v);
                 return (
                   <div key={v.id} className="utteranceItem">
                     <Checkbox
