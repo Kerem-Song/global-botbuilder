@@ -18,21 +18,26 @@ import {
 import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { ACTION_TYPES, IButtonCtrl } from '@models/interfaces/res/IGetFlowRes';
+import { updateButtonOrder } from '@store/makingNode';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { NextNodeButton } from './NextNodeButton';
 import { SortableButtonCtrlItem } from './SortableButtonCtrlItem';
 
 interface ISortableButtonCtrlContainerProps {
   nodeId: string;
+  index?: number;
   nextNodeOffset?: number;
   buttonList?: IButtonCtrl[];
 }
 export const SortableButtonCtrlContainer = ({
   nodeId,
+  index,
   nextNodeOffset,
   buttonList,
 }: ISortableButtonCtrlContainerProps) => {
+  const dispath = useDispatch();
   const { updateLine } = useUpdateLines();
   const [buttons, setButtons] = useState<IButtonCtrl[]>([]);
   const isEditDrawerOpen = useRootState(
@@ -63,8 +68,15 @@ export const SortableButtonCtrlContainer = ({
       setButtons((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
+        const result = arrayMove(items, oldIndex, newIndex);
+        dispath(
+          updateButtonOrder({
+            nodeId: nodeId.substring(5),
+            buttons: result,
+            carouselIndex: index,
+          }),
+        );
+        return result;
       });
     }
 

@@ -36,9 +36,14 @@ export const CommerceCardCarouselNode: FC<ICommerceCardCarouselNodeProps> = ({
 
   return (
     <Carousel nodeId={`${NODE_PREFIX}${node.id}`} addCarousel={HandleAddCarousel}>
-      {view.childrenViews.map((v) => {
+      {view.childrenViews.map((v, index) => {
         return (
-          <CommerceCardView key={v.id} nodeId={`${NODE_PREFIX}${node.id}`} view={v} />
+          <CommerceCardView
+            key={v.id}
+            nodeId={`${NODE_PREFIX}${node.id}`}
+            view={v}
+            index={index}
+          />
         );
       })}
     </Carousel>

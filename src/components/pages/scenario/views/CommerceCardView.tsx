@@ -7,9 +7,10 @@ import { FC, useState } from 'react';
 
 export interface ICommerceCardViewProps {
   nodeId: string;
+  index?: number;
   view: IProductCardView;
 }
-export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, view }) => {
+export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, view }) => {
   const discountPriceCss = classNames('discountPrice', { discounted: true });
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
@@ -72,7 +73,11 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, view }) =
 
       <div className="buttonWrapper node-draggable-ignore">
         {view.buttons && (
-          <SortableButtonCtrlContainer buttonList={view.buttons} nodeId={nodeId} />
+          <SortableButtonCtrlContainer
+            buttonList={view.buttons}
+            nodeId={nodeId}
+            index={index}
+          />
         )}
       </div>
     </Card>

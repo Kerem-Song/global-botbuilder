@@ -34,8 +34,15 @@ export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node })
 
   return (
     <Carousel nodeId={`${NODE_PREFIX}${node.id}`} addCarousel={HandleAddCarousel}>
-      {view.childrenViews.map((v) => {
-        return <BasicCardView key={v.id} nodeId={`${NODE_PREFIX}${node.id}`} view={v} />;
+      {view.childrenViews.map((v, index) => {
+        return (
+          <BasicCardView
+            key={v.id}
+            nodeId={`${NODE_PREFIX}${node.id}`}
+            view={v}
+            index={index}
+          />
+        );
       })}
     </Carousel>
   );

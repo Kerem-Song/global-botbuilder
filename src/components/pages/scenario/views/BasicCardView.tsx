@@ -7,9 +7,10 @@ import { FC, useState } from 'react';
 
 export interface IBasicCardViewProps {
   nodeId: string;
+  index?: number;
   view: IBasicCardView;
 }
-export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, view }) => {
+export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) => {
   const [squareMode, setSquareMode] = useState<boolean>(false);
 
   const thumbnailClass = classNames('thumbnail', {
@@ -60,7 +61,11 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, view }) => {
 
       <div className="buttonWrapper node-draggable-ignore">
         {view.buttons && (
-          <SortableButtonCtrlContainer buttonList={view.buttons} nodeId={nodeId} />
+          <SortableButtonCtrlContainer
+            buttonList={view.buttons}
+            nodeId={nodeId}
+            index={index}
+          />
         )}
       </div>
     </Card>

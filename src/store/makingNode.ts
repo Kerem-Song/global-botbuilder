@@ -1,6 +1,12 @@
 import { IArrow, INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
-import { INodeBase, IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
+import {
+  IButtonCtrl,
+  IHasButtonViewBase,
+  IHasChildrenView,
+  INodeBase,
+  IOtherFlowRedirectView,
+} from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { lunaToast } from '@modules/lunaToast';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -76,6 +82,41 @@ export const makingNodeSlice = createSlice({
           nextNodeId: node.nextNodeId,
         });
         state.nodes = nodes;
+      }
+    },
+    updateButtonOrder: (
+      state,
+      action: PayloadAction<{
+        nodeId: string;
+        carouselIndex?: number;
+        buttons?: IButtonCtrl[];
+      }>,
+    ) => {
+      const { nodeId, carouselIndex, buttons } = action.payload;
+      const node = state.nodes.find((x) => x.id === nodeId);
+      if (node) {
+        if (carouselIndex !== undefined) {
+          const pView = node?.view as IHasChildrenView;
+          const childrenViews = [...pView.childrenViews];
+          const view = childrenViews[carouselIndex] as IHasButtonViewBase;
+          childrenViews.splice(carouselIndex, 1, { ...view, buttons });
+          const nodes = [...state.nodes];
+          const index = nodes.indexOf(node);
+          nodes.splice(index, 1, {
+            ...node,
+            view: { ...view, childrenViews } as IHasChildrenView,
+          });
+          state.nodes = nodes;
+        } else {
+          const view = node?.view as IHasButtonViewBase;
+          const nodes = [...state.nodes];
+          const index = nodes.indexOf(node);
+          nodes.splice(index, 1, {
+            ...node,
+            view: { ...view, buttons } as IHasButtonViewBase,
+          });
+          state.nodes = nodes;
+        }
       }
     },
     addArrow: (state, action: PayloadAction<IArrow>) => {
@@ -183,5 +224,6 @@ export const {
   removeItem,
   setTempCard,
   initNodes,
+  updateButtonOrder,
 } = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

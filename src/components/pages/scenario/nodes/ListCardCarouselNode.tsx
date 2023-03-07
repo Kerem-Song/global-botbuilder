@@ -31,8 +31,15 @@ export const ListCardCarouselNode: FC<IListCardCarouselNodeProps> = ({ node }) =
 
   return (
     <Carousel nodeId={`${NODE_PREFIX}${node.id}`} addCarousel={HandleAddCarousel}>
-      {view.childrenViews.map((v) => {
-        return <ListCardView key={v.id} nodeId={`${NODE_PREFIX}${node.id}`} view={v} />;
+      {view.childrenViews.map((v, index) => {
+        return (
+          <ListCardView
+            key={v.id}
+            nodeId={`${NODE_PREFIX}${node.id}`}
+            view={v}
+            index={index}
+          />
+        );
       })}
     </Carousel>
   );
