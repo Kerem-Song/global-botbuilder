@@ -9,11 +9,18 @@ import { FC, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
+  index?: number;
   useSwitch: boolean;
   field?: 'useImageCtrl' | 'useUtteranceParam';
 }
 
-export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children }) => {
+export const Collapse: FC<CollapseProps> = ({
+  label,
+  index,
+  useSwitch,
+  field,
+  children,
+}) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const { register } =
     useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
@@ -21,7 +28,14 @@ export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children 
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-
+  console.log(index);
+  console.log(
+    field === 'useUtteranceParam'
+      ? `view.useUtteranceParam`
+      : index !== undefined
+      ? `view.childrenViews.${index}.useImageCtrl`
+      : `view.useImageCtrl`,
+  );
   return (
     <div className="node-item-wrap collapse">
       <div className="collapseHeader">
@@ -32,7 +46,17 @@ export const Collapse: FC<CollapseProps> = ({ label, useSwitch, field, children 
             <span className="label" style={{ paddingRight: '10px' }}>
               {label}
             </span>
-            {useSwitch && field && <Switch {...register(`view.${field}`)} />}
+            {useSwitch && field && (
+              <Switch
+                {...register(
+                  field === 'useUtteranceParam'
+                    ? `view.useUtteranceParam`
+                    : index !== undefined
+                    ? `view.childrenViews.${index}.useImageCtrl`
+                    : `view.useImageCtrl`,
+                )}
+              />
+            )}
           </Col>
           <Col span={4}>
             <Button shape="ghost" onClick={handleCollapse}>

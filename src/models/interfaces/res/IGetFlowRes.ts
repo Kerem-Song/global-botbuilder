@@ -29,6 +29,7 @@ export type CtrlTypes = ValueOf<typeof CTRL_TYPES>;
 export interface IViewItem {
   id: string;
   title: string;
+  useImageCtrl: boolean;
   imageCtrl: {
     imageUrl: string;
   };

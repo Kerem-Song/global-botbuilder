@@ -41,8 +41,13 @@ export const BasicCardCarousleNodeEdit = () => {
     <>
       {watch(`view.childrenViews.${index}.id`) && (
         <>
-          <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={`useImageCtrl`}>
-            {watch(`view.useImageCtrl`) && (
+          <Collapse
+            label={t(`IMAGE_SETTING`)}
+            index={index}
+            useSwitch={true}
+            field={`useImageCtrl`}
+          >
+            {watch(`view.childrenViews.${index}.useImageCtrl`) && (
               <ImageSettings
                 imageRatio={imageRatio}
                 setImageRatio={setImageRatio}
