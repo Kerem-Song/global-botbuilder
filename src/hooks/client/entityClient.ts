@@ -41,7 +41,7 @@ export const useEntityClient = () => {
 
   const changePageNumberQuery = (keyword?: string, isSys?: boolean) => {
     return useInfiniteQuery(
-      ['change-pageNumber', keyword, isSys],
+      ['change-pageNumber', token, keyword, isSys],
       async ({ pageParam = 1 }) => {
         return await getEntityListQuery(pageParam, keyword, isSys);
       },
@@ -88,7 +88,7 @@ export const useEntityClient = () => {
   const getEntryDetailQuery = (entryId?: string) => {
     if (entryId) {
       return useQuery<IResponseSaveEntryGroup>(
-        ['entry-detail', entryId],
+        ['entry-detail', token, entryId],
         () =>
           http
             .post<IGetEntryGroup, AxiosResponse<IHasResult<IResponseSaveEntryGroup>>>(

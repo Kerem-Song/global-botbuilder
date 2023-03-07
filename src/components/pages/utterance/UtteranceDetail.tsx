@@ -75,14 +75,50 @@ export const UtteranceDetail = () => {
     control,
   });
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+  const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
   );
 
+  useEffect(() => {
+    if (hasUtteranceId && hasUtteranceId.data) {
+      const resetValue = {
+        name: hasUtteranceId.data.result.intentName,
+        intentId: hasUtteranceId.data.result.intentId,
+        connectScenarioId: hasUtteranceId.data.result.flowId,
+        connectScenarioName: hasUtteranceId.data.result.flowName,
+      };
+      reset(resetValue);
+
+      prepend(
+        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { text: x.text, id: x.id };
+        }) || [],
+      );
+    }
+  }, [hasUtteranceId?.data]);
+
   const preventGoBack = async () => {
+    const result = await confirm({
+      title: '저장하기',
+      description: (
+        <span>
+          변경사항이 저장되지 않았습니다.
+          <br />
+          정말 나가시겠습니까?
+        </span>
+      ),
+    });
+    if (result) {
+      history.go(-1);
+    } else {
+      history.pushState(null, '', location.href);
+    }
+  };
+
+  const handleListBtn = async () => {
     if (isActive === true) {
       const result = await confirm({
         title: '저장하기',
@@ -95,62 +131,46 @@ export const UtteranceDetail = () => {
         ),
       });
       if (result) {
-        history.go(-1);
-      } else {
-        history.pushState(null, '', location.href);
+        navigate(`/${botId}/utterance`);
       }
     } else {
-      return navigate(`/${botId}/utterance`);
+      navigate(`/${botId}/utterance`);
     }
   };
+
+  useEffect(() => {
+    if (isActive === true) {
+      (() => {
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+      })();
+
+      return () => {
+        window.removeEventListener('popstate', preventGoBack);
+      };
+    }
+  }, [isActive]);
 
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
-    e.returnValue = ''; // chrome에서는 설정이 필요해서 넣은 코드
-    return '';
+    e.returnValue = '';
   };
 
   useEffect(() => {
-    if (hasUtteranceId && hasUtteranceId.data) {
-      const resetValue = {
-        name: hasUtteranceId.data.result.intentName,
-        intentId: hasUtteranceId.data.result.intentId,
-        connectScenarioId: hasUtteranceId.data.result.flowId,
-        connectScenarioName: hasUtteranceId.data.result.flowName,
+    if (isActive === true) {
+      (() => {
+        window.addEventListener('beforeunload', preventClose);
+      })();
+
+      return () => {
+        window.removeEventListener('beforeunload', preventClose);
       };
-      reset(resetValue);
-
-      append(
-        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
-          return { text: x.text, id: x.id };
-        }) || [],
-      );
     }
-  }, [hasUtteranceId?.data]);
-
-  useEffect(() => {
-    (() => {
-      history.pushState(null, '', location.href);
-      window.addEventListener('popstate', preventGoBack);
-    })();
-
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
-
-  useEffect(() => {
-    (() => {
-      window.addEventListener('beforeunload', preventClose);
-    })();
-
-    return () => {
-      window.removeEventListener('beforeunload', preventClose);
-    };
-  }, []);
+  }, [isActive]);
 
   const openDeleteCheckboxModal = async () => {
     const deleteItems = getValues().items.filter((x) => x.isChecked);
+
     if (deleteItems.length === 0) {
       return;
     }
@@ -181,18 +201,22 @@ export const UtteranceDetail = () => {
     });
 
     if (result) {
-      const deleteIntent: IDeleteIntent = {
-        sessionToken: token!,
-        intentId: hasUtteranceId!.data?.result.intentId,
-      };
-      intentDeleteMutate.mutate(deleteIntent, {
-        onSuccess: (submitResult) => {
-          if (submitResult && submitResult.isSuccess) {
-            lunaToast.success();
-            navigate(`/${botId}/utterance`);
-          }
-        },
-      });
+      if (!hasUtteranceId?.data?.result.intentId) {
+        return navigate(`/${botId}/utterance`);
+      } else {
+        const deleteIntent: IDeleteIntent = {
+          sessionToken: token!,
+          intentId: hasUtteranceId!.data?.result.intentId,
+        };
+        intentDeleteMutate.mutate(deleteIntent, {
+          onSuccess: (submitResult) => {
+            if (submitResult && submitResult.isSuccess) {
+              lunaToast.success();
+              navigate(`/${botId}/utterance`);
+            }
+          },
+        });
+      }
     }
   };
 
@@ -237,7 +261,7 @@ export const UtteranceDetail = () => {
             });
           } else {
             setIsActive(true);
-            append({ text: data.utterance });
+            prepend({ text: data.utterance });
             inputForm.reset();
           }
         },
@@ -289,6 +313,8 @@ export const UtteranceDetail = () => {
   };
 
   const handleNameBlur = async () => {
+    if (!getValues('name')) return;
+
     checkIntentDuplicationMutate.mutate(
       {
         name: getValues('name'),
@@ -301,6 +327,7 @@ export const UtteranceDetail = () => {
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
+            setValue('name', '');
           }
         },
       },
@@ -312,7 +339,8 @@ export const UtteranceDetail = () => {
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="detailButtons">
           <div>
-            <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button>
+            <Button onClick={handleListBtn}>List</Button>
+            {/* <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button> */}
           </div>
           <div>
             <Button
@@ -368,6 +396,7 @@ export const UtteranceDetail = () => {
                   {...scenarioListField}
                   styles={reactSelectStyle}
                   options={scenarioList}
+                  placeholder="시나리오를 선택해주세요."
                   value={scenarioList?.find(
                     (item) => item.value === scenarioListField.value,
                   )}
@@ -415,7 +444,10 @@ export const UtteranceDetail = () => {
       <div className="utterance list">
         <Space direction="horizontal">
           <span className="title">
-            Utterance <span className="utteranceLength">{watch('items').length}</span>
+            Utterance{' '}
+            <span className="utteranceLength">
+              {filterKeyword ? filterKeyword.length : watch('items').length}
+            </span>
           </span>
           <FormItem>
             <Input
@@ -426,7 +458,16 @@ export const UtteranceDetail = () => {
               onPressEnter={(value) => setSearchWord(value!)}
             />
           </FormItem>
-          <button className="icDelete" onClick={openDeleteCheckboxModal} />
+          <button
+            className="icDelete"
+            onClick={openDeleteCheckboxModal}
+            disabled={
+              getValues('items') &&
+              getValues().items.filter((x) => x.isChecked).length === 0
+                ? true
+                : false
+            }
+          />
         </Space>
         <Row style={{ marginTop: '12px' }}>
           <>

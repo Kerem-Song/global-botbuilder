@@ -98,7 +98,7 @@ export const useUtteranceClient = () => {
   const getIntentDetailQuery = (intentId?: string) => {
     if (intentId) {
       return useQuery<IHasResult<IIntentListItem>>(
-        ['intent-detail', intentId],
+        ['intent-detail', token, intentId],
         () =>
           http
             .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
