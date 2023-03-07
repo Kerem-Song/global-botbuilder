@@ -75,7 +75,7 @@ export const UtteranceDetail = () => {
     control,
   });
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+  const { fields, append, remove, prepend } = useFieldArray({ control, name: 'items' });
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
   const filterKeyword = fields.filter((x) =>
@@ -237,7 +237,7 @@ export const UtteranceDetail = () => {
             });
           } else {
             setIsActive(true);
-            append({ text: data.utterance });
+            prepend({ text: data.utterance });
             inputForm.reset();
           }
         },
@@ -306,6 +306,9 @@ export const UtteranceDetail = () => {
       },
     );
   };
+
+  console.log('items', watch('items').length);
+  console.log('keyword', filterKeyword.length);
 
   return (
     <div className="utteranceDetailWrap">
@@ -415,7 +418,10 @@ export const UtteranceDetail = () => {
       <div className="utterance list">
         <Space direction="horizontal">
           <span className="title">
-            Utterance <span className="utteranceLength">{watch('items').length}</span>
+            Utterance{' '}
+            <span className="utteranceLength">
+              {filterKeyword ? filterKeyword.length : watch('items').length}
+            </span>
           </span>
           <FormItem>
             <Input
@@ -426,7 +432,11 @@ export const UtteranceDetail = () => {
               onPressEnter={(value) => setSearchWord(value!)}
             />
           </FormItem>
-          <button className="icDelete" onClick={openDeleteCheckboxModal} />
+          <button
+            className="icDelete"
+            onClick={openDeleteCheckboxModal}
+            disabled={watch('items') ? false : true}
+          />
         </Space>
         <Row style={{ marginTop: '12px' }}>
           <>
@@ -443,6 +453,7 @@ export const UtteranceDetail = () => {
                 x.text?.toLowerCase().includes(searchWord.toLowerCase()),
               ) ? (
               filterKeyword.map((v, i) => {
+                console.log(v);
                 return (
                   <div key={v.id} className="utteranceItem">
                     <Checkbox
