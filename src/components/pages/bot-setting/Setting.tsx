@@ -84,7 +84,7 @@ export const Setting = () => {
     if (!botInfo) {
       return;
     }
-    await botUpdateAsync({
+    const res = await botUpdateAsync({
       botId: botInfo.id,
       botName: botName !== botInfo.botName ? botName : undefined,
       botActivate: activate !== botInfo.activated ? activate : undefined,
@@ -97,6 +97,10 @@ export const Setting = () => {
           ? testLinked
           : undefined,
     });
+
+    if (res) {
+      lunaToast.success('저장되었습니다.');
+    }
   };
 
   const checkChange = () => {
@@ -127,7 +131,7 @@ export const Setting = () => {
     <div className="settingWrap">
       <Row justify="space-between" align="center" className="m-b-20">
         <Col>
-          <div className="title">Chatbot Setting</div>
+          <div className="title">챗봇 설정</div>
         </Col>
         <Col>
           <Space gap={8}>
@@ -171,7 +175,7 @@ export const Setting = () => {
             <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('BASIC_SETTING')}</p>
             <Row align="center" gap={10}>
               <Col>
-                <span>Bot name</span>
+                <span>봇 이름</span>
               </Col>
               <Col flex="auto">
                 <FormItem>
@@ -187,7 +191,7 @@ export const Setting = () => {
             </Row>
             <Row align="center" gap={10}>
               <Col style={{ width: '69px' }}>
-                <span>Bot ID</span>
+                <span>봇 ID</span>
               </Col>
               <Col flex="auto">
                 <Input disabled value={botInfo?.id} />
@@ -210,20 +214,20 @@ export const Setting = () => {
           <Space direction="vertical">
             <Row justify="space-between" align="center">
               <Col>
-                <p style={{ fontSize: '16px', fontWeight: 500 }}>Activate the bot</p>
+                <p style={{ fontSize: '16px', fontWeight: 500 }}>봇 활성화</p>
               </Col>
               <Space gap={8}>
                 {activate ? (
                   <Button type="lineBlue" onClick={() => handleDisableBot()}>
-                    Deactive
+                    비활성화
                   </Button>
                 ) : (
                   <Button type="primary" onClick={() => setActivate(true)}>
-                    Activate
+                    활성화
                   </Button>
                 )}
 
-                <Button onClick={() => navigate('/dashboard')}>Bot list</Button>
+                <Button onClick={() => navigate('/dashboard')}>봇 목록 가기</Button>
               </Space>
             </Row>
             <div className="botCardContainer">
@@ -246,11 +250,11 @@ export const Setting = () => {
                   </div>
                   {opLinked ? (
                     <Button type="lineBlue" small onClick={() => setOpLinked(false)}>
-                      Disconnect
+                      연결 해제
                     </Button>
                   ) : (
                     <Button type="primary" small onClick={() => setOpLinked(true)}>
-                      Connect
+                      연결
                     </Button>
                   )}
                 </div>
@@ -274,11 +278,11 @@ export const Setting = () => {
                   </div>
                   {testLinked ? (
                     <Button type="lineBlue" small onClick={() => setTestLinked(false)}>
-                      Disconnect
+                      연결 해제
                     </Button>
                   ) : (
                     <Button type="primary" small onClick={() => setTestLinked(true)}>
-                      Connect
+                      연결
                     </Button>
                   )}
                 </div>
@@ -294,17 +298,19 @@ export const Setting = () => {
       >
         <div className="handleScenariosWrap">
           <Space direction="vertical">
-            <p style={{ fontSize: '16px', fontWeight: 500 }}>Export/Import Scenarios</p>
+            <p style={{ fontSize: '16px', fontWeight: 500 }}>
+              시나리오 내보내기/가져오기
+            </p>
             <div className="handleScenarioInfo">
               <p className="infoText">
-                If you import another bot, existing set scenarios, utterances, variables,
-                entities, etc. will be overwritten. Statistics and history are not
-                overwritten.
+                시나리오를 ‘가져오기’ 할 경우, 기존에 세팅된 시나리오, 발화, 변수, 엔티티
+                등은 덮어씌워집니다. <br />
+                통계 및 히스토리는 덮어씌워지지 않습니다.
               </p>
             </div>
             <div className="duplicateScenarios">
               <div className="text">
-                <p>Duplicate Scenarios</p>
+                <p>시나리오 복사</p>
               </div>
               <Button
                 type="primary"
