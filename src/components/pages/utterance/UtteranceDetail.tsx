@@ -339,7 +339,6 @@ export const UtteranceDetail = () => {
         <div className="detailButtons">
           <div>
             <Button onClick={handleListBtn}>List</Button>
-            {/* <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button> */}
           </div>
           <div>
             <Button

@@ -38,6 +38,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const variableNameSchema = yup.object({
     name: yup
       .string()
+      .lowercase()
       .trim()
       .matches(/^[a-z0-9_]*$/, `영어 소문자, 숫자, 특수문자 _ 만 입력 가능합니다.`)
       .required(`필수 입력 항목입니다.`),
