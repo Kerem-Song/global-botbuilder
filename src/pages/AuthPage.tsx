@@ -13,7 +13,7 @@ export const AuthPage = () => {
   const { IssueTokenAsync } = useAuthClient();
   const queryParams = useQueryParams();
   const code = queryParams.get('code');
-  const brandId = queryParams.get('brandId');
+  const brandId = queryParams.get('state');
 
   const handleAuth = async () => {
     if (!brandId || !code) {
