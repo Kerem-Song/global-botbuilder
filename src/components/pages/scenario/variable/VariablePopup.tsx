@@ -1,6 +1,6 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import { ISaveParameter, ISaveParameterData, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
@@ -32,6 +32,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   });
 
   const { t, tc } = usePage();
+  const { confirm, error: modalError } = useSystemModal();
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
@@ -97,6 +98,15 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             handleClose();
           }
         },
+        onError: (error) => {
+          console.log('modifyError', error);
+          if (error) {
+            modalError({
+              title: '중복 변수명',
+              description: <span>중복된 변수명입니다.</span>,
+            });
+          }
+        },
       });
     } else {
       const newVariable: ISaveParameter = {
@@ -115,6 +125,15 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             lunaToast.success();
             reset();
             handleClose();
+          }
+        },
+        onError: (error) => {
+          console.log('newError', error);
+          if (error) {
+            modalError({
+              title: '중복 변수명',
+              description: <span>중복된 변수명입니다</span>,
+            });
           }
         },
       });
