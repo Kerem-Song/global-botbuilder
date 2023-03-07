@@ -118,6 +118,26 @@ export const UtteranceDetail = () => {
     }
   };
 
+  const handleListBtn = async () => {
+    if (isActive === true) {
+      const result = await confirm({
+        title: '저장하기',
+        description: (
+          <span>
+            변경사항이 저장되지 않았습니다.
+            <br />
+            정말 나가시겠습니까?
+          </span>
+        ),
+      });
+      if (result) {
+        navigate(`/${botId}/utterance`);
+      }
+    } else {
+      navigate(`/${botId}/utterance`);
+    }
+  };
+
   useEffect(() => {
     if (isActive === true) {
       (() => {
@@ -319,7 +339,8 @@ export const UtteranceDetail = () => {
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="detailButtons">
           <div>
-            <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button>
+            <Button onClick={handleListBtn}>List</Button>
+            {/* <Button onClick={() => navigate(`/${botId}/utterance`)}>List</Button> */}
           </div>
           <div>
             <Button
