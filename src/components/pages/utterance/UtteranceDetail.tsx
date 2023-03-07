@@ -244,7 +244,6 @@ export const UtteranceDetail = () => {
     checkUtteranceDuplicationMutate.mutate(
       {
         text: inputForm.getValues('utterance'),
-        // utteranceId:
       },
       {
         onSuccess: (result) => {

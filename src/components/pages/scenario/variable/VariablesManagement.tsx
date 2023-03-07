@@ -86,7 +86,7 @@ export const VariablesManagement = () => {
                   role="presentation"
                   className="variableList"
                   key={i}
-                  onClick={() => {
+                  onDoubleClick={() => {
                     handleId(item);
                     handleIsOpen(true);
                   }}
