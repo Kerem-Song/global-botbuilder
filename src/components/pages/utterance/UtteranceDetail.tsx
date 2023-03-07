@@ -44,8 +44,6 @@ export const UtteranceDetail = () => {
 
   const list = getScenarioList();
 
-  // useEffect(() => {}, []);
-
   const scenarioList = list.data
     ?.filter((item) => !item.isFallbackFlow)
     .map((x) => {
@@ -84,34 +82,6 @@ export const UtteranceDetail = () => {
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
   );
 
-  const preventGoBack = async () => {
-    if (isActive === true) {
-      const result = await confirm({
-        title: '저장하기',
-        description: (
-          <span>
-            변경사항이 저장되지 않았습니다.
-            <br />
-            정말 나가시겠습니까?
-          </span>
-        ),
-      });
-      if (result) {
-        history.go(-1);
-      } else {
-        history.pushState(null, '', location.href);
-      }
-    } else {
-      return navigate(`/${botId}/utterance`);
-    }
-  };
-
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = ''; // chrome에서는 설정이 필요해서 넣은 코드
-    return '';
-  };
-
   useEffect(() => {
     if (hasUtteranceId && hasUtteranceId.data) {
       const resetValue = {
@@ -130,26 +100,53 @@ export const UtteranceDetail = () => {
     }
   }, [hasUtteranceId?.data]);
 
-  useEffect(() => {
-    (() => {
+  const preventGoBack = async () => {
+    const result = await confirm({
+      title: '저장하기',
+      description: (
+        <span>
+          변경사항이 저장되지 않았습니다.
+          <br />
+          정말 나가시겠습니까?
+        </span>
+      ),
+    });
+    if (result) {
+      history.go(-1);
+    } else {
       history.pushState(null, '', location.href);
-      window.addEventListener('popstate', preventGoBack);
-    })();
-
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
+    }
+  };
 
   useEffect(() => {
-    (() => {
-      window.addEventListener('beforeunload', preventClose);
-    })();
+    if (isActive === true) {
+      (() => {
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+      })();
 
-    return () => {
-      window.removeEventListener('beforeunload', preventClose);
-    };
-  }, []);
+      return () => {
+        window.removeEventListener('popstate', preventGoBack);
+      };
+    }
+  }, [isActive]);
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
+  useEffect(() => {
+    if (isActive === true) {
+      (() => {
+        window.addEventListener('beforeunload', preventClose);
+      })();
+
+      return () => {
+        window.removeEventListener('beforeunload', preventClose);
+      };
+    }
+  }, [isActive]);
 
   const openDeleteCheckboxModal = async () => {
     const deleteItems = getValues().items.filter((x) => x.isChecked);
@@ -378,6 +375,7 @@ export const UtteranceDetail = () => {
                   {...scenarioListField}
                   styles={reactSelectStyle}
                   options={scenarioList}
+                  placeholder="시나리오를 선택해주세요."
                   value={scenarioList?.find(
                     (item) => item.value === scenarioListField.value,
                   )}
