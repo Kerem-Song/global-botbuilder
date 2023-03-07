@@ -44,6 +44,8 @@ export const UtteranceDetail = () => {
 
   const list = getScenarioList();
 
+  // useEffect(() => {}, []);
+
   const scenarioList = list.data
     ?.filter((item) => !item.isFallbackFlow)
     .map((x) => {
@@ -75,14 +77,12 @@ export const UtteranceDetail = () => {
     control,
   });
 
-  const { fields, append, remove, prepend } = useFieldArray({ control, name: 'items' });
+  const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
   const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
   );
-
-  const deleteItems = getValues().items.filter((x) => x.isChecked);
 
   const preventGoBack = async () => {
     if (isActive === true) {
@@ -152,6 +152,8 @@ export const UtteranceDetail = () => {
   }, []);
 
   const openDeleteCheckboxModal = async () => {
+    const deleteItems = getValues().items.filter((x) => x.isChecked);
+
     if (deleteItems.length === 0) {
       return;
     }
@@ -182,18 +184,22 @@ export const UtteranceDetail = () => {
     });
 
     if (result) {
-      const deleteIntent: IDeleteIntent = {
-        sessionToken: token!,
-        intentId: hasUtteranceId!.data?.result.intentId,
-      };
-      intentDeleteMutate.mutate(deleteIntent, {
-        onSuccess: (submitResult) => {
-          if (submitResult && submitResult.isSuccess) {
-            lunaToast.success();
-            navigate(`/${botId}/utterance`);
-          }
-        },
-      });
+      if (!hasUtteranceId?.data?.result.intentId) {
+        return navigate(`/${botId}/utterance`);
+      } else {
+        const deleteIntent: IDeleteIntent = {
+          sessionToken: token!,
+          intentId: hasUtteranceId!.data?.result.intentId,
+        };
+        intentDeleteMutate.mutate(deleteIntent, {
+          onSuccess: (submitResult) => {
+            if (submitResult && submitResult.isSuccess) {
+              lunaToast.success();
+              navigate(`/${botId}/utterance`);
+            }
+          },
+        });
+      }
     }
   };
 
@@ -290,6 +296,8 @@ export const UtteranceDetail = () => {
   };
 
   const handleNameBlur = async () => {
+    if (!getValues('name')) return;
+
     checkIntentDuplicationMutate.mutate(
       {
         name: getValues('name'),
@@ -302,6 +310,7 @@ export const UtteranceDetail = () => {
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
+            setValue('name', '');
           }
         },
       },
@@ -433,7 +442,12 @@ export const UtteranceDetail = () => {
           <button
             className="icDelete"
             onClick={openDeleteCheckboxModal}
-            disabled={deleteItems.length === 0 ? true : false}
+            disabled={
+              getValues('items') &&
+              getValues().items.filter((x) => x.isChecked).length === 0
+                ? true
+                : false
+            }
           />
         </Space>
         <Row style={{ marginTop: '12px' }}>
