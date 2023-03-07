@@ -1,11 +1,12 @@
 import { useRootState } from '@hooks/useRootState';
-import { IGetBotReq, IHasResult, IHasResults, ISearchBotReq } from '@models';
+import { IGetBotReq, IHasResult, IHasResults, ISaveBotReq, ISearchBotReq } from '@models';
 import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
-import { IBotInput, IBotModel } from 'src/models/interfaces/IBotModel';
 
+import { IBotInput, IBotModel } from '../../models/interfaces/IBotModel';
 import useHttp from '../useHttp';
 
 export const useBotClient = () => {
@@ -61,11 +62,55 @@ export const useBotClient = () => {
     }
   });
 
+  const botExportMutate = useMutation(
+    async (args: { botId: string; botName: string }) => {
+      const res = await http.post('/bot/exportflowgroupcurrent', args, {
+        responseType: 'blob',
+      });
+
+      if (res) {
+        const blob = new Blob([res.data]);
+        saveAs(blob, `Lunatalk_${args.botName}_${args.botId}.json`);
+        return true;
+      }
+    },
+  );
+
+  const botDeleteMutate = useMutation(async (args: { botId: string }) => {
+    const res = await http.post('/bot/deletebot', args);
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
+  const botRecoverMutate = useMutation(async (args: { botId: string }) => {
+    const res = await http.post('/bot/recoverbot', args);
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
+  const botUpdateMutate = useMutation(async (args: ISaveBotReq) => {
+    const res = await http.post('/bot/updatebot', args);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
   return {
     getBotListQuery,
     getCachedBotList,
     getBotInfoQuery,
     refetchBotInfo,
+    botExportAsync: botExportMutate.mutateAsync,
     botSaveAsync: botSaveMutate.mutateAsync,
+    botDeleteAsync: botDeleteMutate.mutateAsync,
+    botRecoverAsync: botRecoverMutate.mutateAsync,
+    botUpdateAsync: botUpdateMutate.mutateAsync,
   };
 };

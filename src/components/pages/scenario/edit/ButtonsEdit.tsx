@@ -16,10 +16,10 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
 export const selectOptions = [
-  { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: 'Node Redirect' },
-  { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: 'Action is Utterance' },
-  { value: ACTION_TYPES.LBL_IS_UTTR, label: 'Label is Utterance' },
-  { value: ACTION_TYPES.URL, label: 'Url' },
+  { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: '메시지 연결' },
+  { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: '메시지 입력' },
+  //{ value: ACTION_TYPES.LBL_IS_UTTR, label: 'Label is Utterance' },
+  { value: ACTION_TYPES.URL, label: 'URL 연결' },
 ];
 
 export const ButtonsEdit = ({
