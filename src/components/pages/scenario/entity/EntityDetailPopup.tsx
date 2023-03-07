@@ -98,7 +98,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     formState: { errors },
   } = formMethods;
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'entries' });
+  const { fields, append, prepend, remove } = useFieldArray({ control, name: 'entries' });
 
   const { field: isRegexField } = useController({ name: 'isRegex', control });
 
@@ -149,15 +149,17 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   }, [watch]);
 
   useEffect(() => {
-    (() => {
-      history.pushState(null, '', location.href);
-      window.addEventListener('popstate', preventGoBack);
-    })();
+    if (isActive === true) {
+      (() => {
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+      })();
 
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
+      return () => {
+        window.removeEventListener('popstate', preventGoBack);
+      };
+    }
+  }, [isActive]);
 
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regExp1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[}]/g;
@@ -215,7 +217,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       return;
     }
 
-    append({ representativeEntry: name });
+    prepend({ representativeEntry: name });
     setIsActive(true);
 
     if (entryGroupName.current) {

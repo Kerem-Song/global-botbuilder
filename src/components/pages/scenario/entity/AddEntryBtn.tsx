@@ -18,13 +18,12 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   synonym,
   representativeEntry,
 }) => {
-  const { control } = useFormContext();
-  const { fields, append, remove } = useFieldArray({
+  const { control, register, getValues } = useFormContext();
+  const { fields, prepend, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
   });
 
-  const { register, getValues } = useFormContext();
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
@@ -41,8 +40,6 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   useEffect(() => {
     editInputRef.current?.focus();
   }, []);
-
-  // useEffect(() => {}, [synonym]);
 
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
@@ -67,7 +64,7 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
         lunaToast.error('중복되었습니다. 다시 입력해주세요.');
         return;
       } else {
-        append([inputValue]);
+        prepend([inputValue]);
         setInputVisible(false);
         setInputValue('');
       }
