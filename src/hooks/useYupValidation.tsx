@@ -194,7 +194,7 @@ export const useYupValidation = () => {
     .required(t(`VALIDATION_REQUIRED`));
 
   const otherFlowRedirectNodeEditSchema = yup.object().shape({
-    otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    //otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
   const basicCardCarouselNodeEditSchema = yup.object().shape({

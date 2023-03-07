@@ -14,6 +14,7 @@ export interface IBotModel {
   channelInfos?: IChannelInfo[];
   prodChannel?: string;
   testChannel?: string;
+  removeCancelExpireUtc?: string;
 }
 
 export interface IChannelInfo {

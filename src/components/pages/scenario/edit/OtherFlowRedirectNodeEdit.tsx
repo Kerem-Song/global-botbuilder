@@ -23,7 +23,7 @@ export const OtherFlowRedirectNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IOtherFlowRedirectView>>();
   const { field } = useController({
-    name: `view.otherFlowId`,
+    name: `nextNodeId`,
     control,
   });
 
@@ -34,7 +34,12 @@ export const OtherFlowRedirectNodeEdit = () => {
 
   useEffect(() => {
     if (data) {
-      setScenarioList(data?.map((item) => ({ value: item.id, label: item.alias })));
+      setScenarioList(
+        data?.map((item) => ({
+          label: item.alias,
+          value: item.firstNodeId,
+        })),
+      );
     }
   }, [data]);
 
@@ -46,14 +51,12 @@ export const OtherFlowRedirectNodeEdit = () => {
             <span className="subLabel">Other Flow Redirect 설정 </span>
             <span className="required">*</span>
           </div>
-          <FormItem error={errors.view?.otherFlowId}>
+          <FormItem error={errors.nextNodeId}>
             <Select
               {...field}
               options={scenarioList}
               styles={reactSelectStyle}
-              defaultValue={scenarioList.find(
-                (item) => item.value === values.view?.otherNodeId,
-              )}
+              defaultValue={scenarioList.find((item) => item.value === values.nextNodeId)}
               value={scenarioList.find((item) => item.value === field.value)}
               onChange={(options: any) => field.onChange(options?.value)}
             />

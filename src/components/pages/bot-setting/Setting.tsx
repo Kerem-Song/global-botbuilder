@@ -1,12 +1,24 @@
 import { icCopy, icLine } from '@assets';
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
-import { usePage, useRootState } from '@hooks';
+import { useBotClient, usePage, useRootState } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
+import { useEffect, useState } from 'react';
 
 export const Setting = () => {
   const { t, navigate } = usePage();
+
+  const { refetchBotInfo } = useBotClient();
+
+  const [activate, setActivate] = useState<boolean>();
+
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  useEffect(() => {
+    if (botInfo) {
+      refetchBotInfo(botInfo.id);
+      setActivate(botInfo.activated);
+    }
+  }, [botInfo?.id]);
 
   const handleCopyBotId = async () => {
     await util.copyClipboard(botInfo?.id);
@@ -21,8 +33,11 @@ export const Setting = () => {
         </Col>
         <Col>
           <Space gap={8}>
-            <Button type="lineBlue">봇 삭제하기</Button>
-            <Button type="lineBlue">삭제 취소</Button>
+            {botInfo?.removeCancelExpireUtc ? (
+              <Button type="lineBlue">삭제 취소</Button>
+            ) : (
+              <Button type="lineBlue">봇 삭제하기</Button>
+            )}
             <Button type="primary">저장하기</Button>
           </Space>
         </Col>
@@ -79,7 +94,16 @@ export const Setting = () => {
                 <p style={{ fontSize: '16px', fontWeight: 500 }}>Activate the bot</p>
               </Col>
               <Space gap={8}>
-                <Button type="lineBlue">Deactive</Button>
+                {activate ? (
+                  <Button type="lineBlue" onClick={() => setActivate(false)}>
+                    Deactive
+                  </Button>
+                ) : (
+                  <Button type="primary" onClick={() => setActivate(true)}>
+                    Activate
+                  </Button>
+                )}
+
                 <Button onClick={() => navigate('/dashboard')}>Bot list</Button>
               </Space>
             </Row>

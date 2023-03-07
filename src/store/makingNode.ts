@@ -1,6 +1,6 @@
-import { IArrow, INode } from '@models';
+import { IArrow, INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
-import { INodeBase } from '@models/interfaces/res/IGetFlowRes';
+import { INodeBase, IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { lunaToast } from '@modules/lunaToast';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -56,6 +56,10 @@ export const makingNodeSlice = createSlice({
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];
+        // if (node.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
+        //   const view = node.view as IOtherFlowRedirectView;
+        //   node.nextNodeId = view.otherNodeId;
+        // }
         const index = nodes.indexOf(matched);
         const old = nodes[index];
         const arrows = [...state.arrows];

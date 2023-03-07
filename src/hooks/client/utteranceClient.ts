@@ -68,7 +68,13 @@ export const useUtteranceClient = () => {
 
   const changePageNumberQuery = (searchData: ISearchData) => {
     return useInfiniteQuery(
-      ['change-pageNumber', searchData.sort, searchData.scenarios, searchData.searchWord],
+      [
+        'change-pageNumber',
+        token,
+        searchData.sort,
+        searchData.scenarios,
+        searchData.searchWord,
+      ],
       async ({ pageParam = 1 }) => {
         return await getPageQuery({ pageNo: pageParam, ...searchData });
       },

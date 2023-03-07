@@ -48,6 +48,10 @@ export const useBotClient = () => {
     );
   };
 
+  const refetchBotInfo = (botId: string) => {
+    queryClient.invalidateQueries(['bot-info', botId]);
+  };
+
   const botSaveMutate = useMutation(async (botInput: IBotInput) => {
     const res = await http.post('/bot/createbot', botInput);
 
@@ -61,6 +65,7 @@ export const useBotClient = () => {
     getBotListQuery,
     getCachedBotList,
     getBotInfoQuery,
+    refetchBotInfo,
     botSaveAsync: botSaveMutate.mutateAsync,
   };
 };
