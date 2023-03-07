@@ -12,13 +12,13 @@ import * as yup from 'yup';
 
 import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
 
-export interface NewVariablePopupProps {
+export interface VariablePopupProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
   variableList?: IVariableList | undefined;
 }
 
-export const NewVariablePopup: FC<NewVariablePopupProps> = ({
+export const VariablePopup: FC<VariablePopupProps> = ({
   isOpen,
   handleIsOpen,
   variableList,
@@ -125,10 +125,11 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({
       style={{
         content: {
           width: '600px',
-          height: 'fit-content',
+          height: '317px',
           margin: 'auto',
           marginTop: '200px',
           padding: 0,
+          overflowY: 'hidden',
         },
       }}
       isOpen={isOpen}
@@ -161,6 +162,7 @@ export const NewVariablePopup: FC<NewVariablePopupProps> = ({
               <Select
                 options={formatsList}
                 styles={reactSelectStyle}
+                menuPortalTarget={document.body}
                 placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
                 value={formatsList?.find((x) => x.value === formats) || null}
                 onChange={(e: any) => {

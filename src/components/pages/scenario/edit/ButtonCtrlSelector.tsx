@@ -66,6 +66,10 @@ export const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderRadius: '8px',
   }),
+  menuPortal: (provided) => ({
+    ...provided,
+    zIndex: 9999,
+  }),
 };
 
 interface IButtonCtrlSelectorProp {

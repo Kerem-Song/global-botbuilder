@@ -7,7 +7,7 @@ import { lunaToast } from '@modules/lunaToast';
 import { useState } from 'react';
 
 import { SettingEntity } from '../entity/SettingEntity';
-import { NewVariablePopup } from './VariablePopup';
+import { VariablePopup } from './VariablePopup';
 
 export const VariablesManagement = () => {
   const { getVariableListQuery, variableDeleteMutate } = useVariableClient();
@@ -86,7 +86,7 @@ export const VariablesManagement = () => {
                   role="presentation"
                   className="variableList"
                   key={i}
-                  onClick={() => {
+                  onDoubleClick={() => {
                     handleId(item);
                     handleIsOpen(true);
                   }}
@@ -115,7 +115,7 @@ export const VariablesManagement = () => {
             )}
           </div>
         </div>
-        <NewVariablePopup
+        <VariablePopup
           isOpen={isOpen}
           handleIsOpen={handleIsOpen}
           variableList={isVariableList}
