@@ -1,6 +1,7 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { IScenarioModel } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
@@ -60,7 +61,10 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
 
       if (result) {
-        await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        if (res) {
+          lunaToast.success('삭제되었습니다.');
+        }
       }
     } else {
       const result = await confirm({
@@ -79,7 +83,10 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
 
       if (result) {
-        await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        if (res) {
+          lunaToast.success('삭제되었습니다.');
+        }
       }
     }
   };
