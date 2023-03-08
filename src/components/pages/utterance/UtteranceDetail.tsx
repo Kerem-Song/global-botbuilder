@@ -6,16 +6,10 @@ import { Col, Row, Space } from '@components/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
-import {
-  IDeleteIntent,
-  IInputFormModel,
-  ISaveIntent,
-  IUtteranceItem,
-  IUtteranceModel,
-} from '@models';
+import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
 import { util } from '@modules/util';
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
@@ -31,6 +25,10 @@ export const UtteranceDetail = () => {
   const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [utteranceWord, setUtteranceWord] = useState<string>('');
+  const utteranceRef = useRef<HTMLInputElement>(null);
+  const intentNameRef = useRef<HTMLInputElement | null>(null);
 
   const {
     intentMutate,
@@ -70,13 +68,14 @@ export const UtteranceDetail = () => {
     resolver: yupResolver(schema),
   });
 
+  const { ref, ...rest } = register('name');
+
   const { field: scenarioListField } = useController({
     name: `connectScenarioId`,
     control,
   });
 
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
-  const inputForm = useForm<IInputFormModel>({ defaultValues: { utterance: '' } });
 
   const filterKeyword = fields.filter((x) =>
     x.text?.toLowerCase().includes(searchWord.toLowerCase()),
@@ -168,6 +167,12 @@ export const UtteranceDetail = () => {
     }
   }, [isActive]);
 
+  useEffect(() => {
+    if (isEditing && utteranceRef.current) {
+      utteranceRef.current.select();
+    }
+  }, [isEditing]);
+
   const openDeleteCheckboxModal = async () => {
     const deleteItems = getValues().items.filter((x) => x.isChecked);
 
@@ -220,15 +225,15 @@ export const UtteranceDetail = () => {
     }
   };
 
-  const handleAddUtternace = async (data: IInputFormModel): Promise<void> => {
-    if (!data.utterance || !data.utterance.trim()) return;
+  const handleAddUtternace = (utterance?: string) => {
+    if (!utterance || !utterance.trim()) return;
 
     if (
       getValues('items')
         .map((x) => x.text)
-        ?.includes(data.utterance)
+        ?.includes(utterance)
     ) {
-      await error({
+      error({
         title: '중복 인텐트명',
         description: (
           <span>
@@ -237,13 +242,15 @@ export const UtteranceDetail = () => {
           </span>
         ),
       });
-
+      if (utteranceRef.current) {
+        utteranceRef.current.select();
+      }
       return;
     }
 
     checkUtteranceDuplicationMutate.mutate(
       {
-        text: inputForm.getValues('utterance'),
+        text: utterance,
       },
       {
         onSuccess: (result) => {
@@ -258,10 +265,15 @@ export const UtteranceDetail = () => {
                 </span>
               ),
             });
+            if (utteranceRef.current) {
+              utteranceRef.current.select();
+            }
           } else {
+            prepend({ text: utterance });
             setIsActive(true);
-            prepend({ text: data.utterance });
-            inputForm.reset();
+            if (utteranceRef.current) {
+              utteranceRef.current.value = '';
+            }
           }
         },
       },
@@ -322,11 +334,15 @@ export const UtteranceDetail = () => {
       {
         onSuccess: async (result) => {
           if (result.result === true) {
+            // if (isActive === true) return;
             await error({
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
-            setValue('name', '');
+            if (intentNameRef.current) {
+              intentNameRef.current.select();
+            }
+            return;
           }
         },
       },
@@ -372,10 +388,17 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <FormItem error={errors.name}>
                   <Input
-                    {...register('name')}
+                    {...rest}
+                    ref={(e) => {
+                      ref(e);
+                      intentNameRef.current = e;
+                    }}
                     onChange={(e) => {
                       setValue('name', e.target.value);
                       setIsActive(true);
+                    }}
+                    onPressEnter={() => {
+                      return;
                     }}
                     placeholder="Input Intent Name"
                     showCount
@@ -411,32 +434,39 @@ export const UtteranceDetail = () => {
       <div className="utterance add">
         <Space direction="vertical">
           <p style={{ fontSize: '16px', fontWeight: 500 }}>Add Utterance</p>
-          <form onSubmit={inputForm.handleSubmit(handleAddUtternace)}>
-            <Row>
-              <Col flex="auto">
-                <Input
-                  {...inputForm.register('utterance')}
-                  placeholder="Press Enter and enter the utterance keyword."
-                />
-              </Col>
-              <Col style={{ marginLeft: '8px' }}>
-                <Button
-                  type="primary"
-                  style={{
-                    width: '64px',
-                    height: '33px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  htmlType="submit"
-                  disabled={inputForm.watch('utterance') ? false : true}
-                >
-                  <img src={icEnter} alt="enter" />
-                </Button>
-              </Col>
-            </Row>
-          </form>
+          <Row>
+            <Col flex="auto">
+              <Input
+                ref={utteranceRef}
+                onChange={(e) => {
+                  setUtteranceWord(e.target.value);
+                  setIsEditing(true);
+                }}
+                onPressEnter={(value) => {
+                  handleAddUtternace(value);
+                }}
+                placeholder="Press Enter and enter the utterance keyword."
+              />
+            </Col>
+            <Col style={{ marginLeft: '8px' }}>
+              <Button
+                type="primary"
+                style={{
+                  width: '64px',
+                  height: '33px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onClick={() => {
+                  handleAddUtternace(utteranceRef.current!.value);
+                }}
+                disabled={utteranceWord && isEditing ? false : true}
+              >
+                <img src={icEnter} alt="enter" />
+              </Button>
+            </Col>
+          </Row>
         </Space>
       </div>
       <div className="utterance list">

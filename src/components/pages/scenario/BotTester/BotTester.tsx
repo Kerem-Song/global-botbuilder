@@ -4,6 +4,7 @@ import { useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks';
 import {
   IQuickRepliesContent,
+  IRefreshBotTester,
   ISendMessage,
   ITesterDataType,
   ITesterDebugMeta,
@@ -25,7 +26,7 @@ export interface IBotTesterProps {
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { t } = useTranslation('botTest');
-  const { botTesterMutate } = useBotTesterClient();
+  const { botTesterMutate, reFreshbotTester } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
@@ -35,9 +36,17 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
 
   const dispatch = useDispatch();
 
-  const handleRefresh = () => {
-    dispatch(initMessages());
-    setDebugMeta(undefined);
+  const handleRefresh = async () => {
+    const sendToken = {
+      sessionToken: token!,
+    };
+
+    const res = await reFreshbotTester.mutateAsync(sendToken);
+
+    if (res) {
+      dispatch(initMessages());
+      setDebugMeta(undefined);
+    }
   };
 
   const handleClose = () => {
