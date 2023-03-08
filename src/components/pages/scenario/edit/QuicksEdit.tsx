@@ -4,6 +4,7 @@ import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
+import { QUICK_MAX_COUNT } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -30,7 +31,7 @@ export const QuicksEdit = () => {
   const handleAddButton = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
-    if (fields.length < 10) {
+    if (fields.length < QUICK_MAX_COUNT) {
       append(nodeDefaultHelper.createDefaultAnswerQickItem(fields.length));
     } else {
       //modal alert
@@ -85,7 +86,7 @@ export const QuicksEdit = () => {
           </Space>
         </Space>
       ))}
-      {fields.length < 3 && (
+      {fields.length < QUICK_MAX_COUNT && (
         <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
           <span>+ {t(`ADD_A_QUICK_REPLY`)}</span>
         </Button>
