@@ -1,6 +1,7 @@
 import { IArrow, INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
+  IAnswerView,
   IButtonCtrl,
   IHasButtonViewBase,
   IHasChildrenView,
@@ -96,9 +97,10 @@ export const makingNodeSlice = createSlice({
         nodeId: string;
         carouselIndex?: number;
         buttons?: IButtonCtrl[];
+        isQuicks?: boolean;
       }>,
     ) => {
-      const { nodeId, carouselIndex, buttons } = action.payload;
+      const { nodeId, carouselIndex, buttons, isQuicks } = action.payload;
       const node = state.nodes.find((x) => x.id === nodeId);
       if (node) {
         if (carouselIndex !== undefined) {
@@ -114,14 +116,25 @@ export const makingNodeSlice = createSlice({
           });
           state.nodes = nodes;
         } else {
-          const view = node?.view as IHasButtonViewBase;
-          const nodes = [...state.nodes];
-          const index = nodes.indexOf(node);
-          nodes.splice(index, 1, {
-            ...node,
-            view: { ...view, buttons } as IHasButtonViewBase,
-          });
-          state.nodes = nodes;
+          if (isQuicks) {
+            const view = node?.view as IAnswerView;
+            const nodes = [...state.nodes];
+            const index = nodes.indexOf(node);
+            nodes.splice(index, 1, {
+              ...node,
+              view: { ...view, quicks: buttons } as IAnswerView,
+            });
+            state.nodes = nodes;
+          } else {
+            const view = node?.view as IHasButtonViewBase;
+            const nodes = [...state.nodes];
+            const index = nodes.indexOf(node);
+            nodes.splice(index, 1, {
+              ...node,
+              view: { ...view, buttons } as IHasButtonViewBase,
+            });
+            state.nodes = nodes;
+          }
         }
       }
       state.changed = true;

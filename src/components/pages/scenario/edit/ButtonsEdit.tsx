@@ -74,6 +74,7 @@ export const ButtonsEdit = ({
               }
             >
               <InputWithTitleCounter
+                required
                 label={t(`BUTTON_NAME`)}
                 showCount={true}
                 maxLength={14}
@@ -92,7 +93,10 @@ export const ButtonsEdit = ({
                 }
               />
             </FormItem>
-            <span className="subLabel">{t(`BUTTON_TYPE`)}</span>
+            <span className="subLabel">
+              {t(`BUTTON_TYPE`)}
+              <span className="required"> *</span>
+            </span>
             <ButtonTypeSelector
               index={i}
               options={selectOptions}
@@ -126,21 +130,26 @@ export const ButtonsEdit = ({
                 ? `view.buttons.${i}.actionType`
                 : `view.childrenViews.${index}.buttons.${i}.actionType`,
             ) === ACTION_TYPES.URL && (
-              <FormItem
-                error={
-                  index === undefined
-                    ? errors.view?.buttons?.[i]?.actionValue
-                    : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
-                }
-              >
-                <Input
-                  {...register(
+              <>
+                <span className="subLabel">
+                  URL 입력<span className="required"> *</span>
+                </span>
+                <FormItem
+                  error={
                     index === undefined
-                      ? `view.buttons.${i}.actionValue`
-                      : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                  )}
-                />
-              </FormItem>
+                      ? errors.view?.buttons?.[i]?.actionValue
+                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
+                  }
+                >
+                  <Input
+                    {...register(
+                      index === undefined
+                        ? `view.buttons.${i}.actionValue`
+                        : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                    )}
+                  />
+                </FormItem>
+              </>
             )}
             <div className="deleteBtn">
               <Button shape="ghost" onClick={() => handleDeleteButton(i)}>

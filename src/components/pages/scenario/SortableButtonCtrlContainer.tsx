@@ -30,12 +30,14 @@ interface ISortableButtonCtrlContainerProps {
   index?: number;
   nextNodeOffset?: number;
   buttonList?: IButtonCtrl[];
+  isQuicks?: boolean;
 }
 export const SortableButtonCtrlContainer = ({
   nodeId,
   index,
   nextNodeOffset,
   buttonList,
+  isQuicks,
 }: ISortableButtonCtrlContainerProps) => {
   const dispath = useDispatch();
   const { updateLine } = useUpdateLines();
@@ -74,6 +76,7 @@ export const SortableButtonCtrlContainer = ({
             nodeId: nodeId.substring(5),
             buttons: result,
             carouselIndex: index,
+            isQuicks,
           }),
         );
         return result;

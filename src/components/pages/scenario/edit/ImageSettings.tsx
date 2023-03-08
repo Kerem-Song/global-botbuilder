@@ -73,7 +73,7 @@ export const ImageSettings = ({
       title: t(`IMAGE_TYPE_CHANGE`),
       description: (
         <>
-          <span>
+          <span style={{ whiteSpace: 'pre-line' }}>
             {ratio === ImageAspectRatio.Rectangle
               ? t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`)
               : t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`)}
