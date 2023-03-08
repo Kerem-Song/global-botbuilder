@@ -19,7 +19,7 @@ export interface IUtteranceListItemProps {
 
 export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) => {
   const { botId } = useParams();
-  const { navigate, t } = usePage();
+  const { navigate, t, tc } = usePage();
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
@@ -61,7 +61,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       intentDeleteMutate.mutate(deleteIntent, {
         onSuccess: (submitResult) => {
           console.log(submitResult);
-          lunaToast.success('삭제되었습니다.');
+          lunaToast.success(tc('DELETE_MESSAGE'));
         },
       });
     }

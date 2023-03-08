@@ -63,7 +63,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       if (result) {
         const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
         if (res) {
-          lunaToast.success('삭제되었습니다.');
+          lunaToast.success(tc('DELETE_MESSAGE'));
         }
       }
     } else {
