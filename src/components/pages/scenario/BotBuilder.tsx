@@ -201,10 +201,6 @@ export const Botbuilder = () => {
     //   dispatch(appendNode(cutNode));
     // }
   };
-  const handleDeleteCard = (node: INode) => {
-    console.log('handle delete card');
-    dispatch(removeItem(node.id));
-  };
 
   const canvasContextMenu: IPopperItem<{ action: () => void }> = {
     id: 'paste',

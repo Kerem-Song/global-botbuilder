@@ -154,7 +154,7 @@ export const makingNodeSlice = createSlice({
     removeItem: (state, action: PayloadAction<IArrow | string | undefined>) => {
       if (typeof action.payload === 'string') {
         const nodeId = action.payload as string;
-        console.log(nodeId);
+
         if (nodeId) {
           const found = state.nodes.find((x) => x.id === nodeId);
 

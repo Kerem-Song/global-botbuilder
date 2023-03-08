@@ -21,11 +21,12 @@ import { OtherFlowRedirectNode } from '@components/pages/scenario/nodes/OtherFlo
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
-import { useModalOpen, useRootState } from '@hooks';
+import { useModalOpen, usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
+import { lunaToast } from '@modules/lunaToast';
 import { setClipBoard, setGuideStartNode } from '@store/botbuilderSlice';
 import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
@@ -69,6 +70,7 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
+  const { tc } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
   const dispatch = useDispatch();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -101,8 +103,12 @@ export const Node: FC<INodeProps> = ({
   };
 
   const handleDeleteCard = (node: INode) => {
-    console.log('handle delete card');
-    dispatch(removeItem(node.id));
+    deleteCard(node.id);
+  };
+
+  const deleteCard = (nodeId: string) => {
+    dispatch(removeItem(nodeId));
+    lunaToast.success(tc('DELETE_MESSAGE'));
   };
 
   const handleChangeCarouselOrder = () => {
@@ -233,7 +239,7 @@ export const Node: FC<INodeProps> = ({
 
   const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Delete') {
-      dispatch(removeItem(node.id));
+      deleteCard(node.id);
     } else if (e.key === 'c' && e.ctrlKey) {
       console.log(e);
     }
