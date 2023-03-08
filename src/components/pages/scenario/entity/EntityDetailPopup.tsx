@@ -98,7 +98,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     formState: { errors },
   } = formMethods;
 
-  const { fields, append, prepend, remove } = useFieldArray({ control, name: 'entries' });
+  const { fields, prepend, remove } = useFieldArray({ control, name: 'entries' });
 
   const { field: isRegexField } = useController({ name: 'isRegex', control });
 
@@ -217,7 +217,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       return;
     }
 
-    prepend({ representativeEntry: name });
+    prepend({ representativeEntry: name, synonym: [] });
     setIsActive(true);
 
     if (entryGroupName.current) {
