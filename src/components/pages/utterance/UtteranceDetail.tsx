@@ -486,7 +486,7 @@ export const UtteranceDetail = () => {
               onPressEnter={(value) => setSearchWord(value!)}
             />
           </FormItem>
-          <button
+          <Button
             className="icDelete"
             onClick={openDeleteCheckboxModal}
             disabled={
