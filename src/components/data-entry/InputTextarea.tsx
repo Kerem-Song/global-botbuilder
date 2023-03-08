@@ -76,7 +76,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
       minHeight: height,
     };
     const resultClassName = classNames('textInput', args.className);
-
+    console.log(args.maxLength);
     return (
       <>
         <div className="textareaWrapper">
@@ -99,7 +99,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
           onChange={handleTextArea}
           onInput={handleTextareaHeight}
           placeholder={args.placeholder}
-          maxLength={1000}
+          maxLength={args.maxLength}
           ref={ref}
         />
       </>

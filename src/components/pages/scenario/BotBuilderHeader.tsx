@@ -14,53 +14,54 @@ import { useDispatch } from 'react-redux';
 import { ID_GEN, ID_TYPES } from '../../../modules';
 
 const singleNodes = [
-  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: 'Text' },
+  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: '텍스트' },
   {
     className: 'icBtnTemple',
     value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: '기본카드',
+    nodeName: '기본 카드',
   },
-  { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: 'List' },
-  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },
+  { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: '리스트' },
+  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: '커머스' },
 ];
 
 const carousleNodes = [
   {
     className: 'icCaroImg',
     value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-    nodeName: 'Carousel',
+    nodeName: '기본 카드 케로셀',
   },
   {
     className: 'icCaroList',
     value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-    nodeName: 'List Carousel',
+    nodeName: '리스트 케로셀',
   },
   {
     className: 'icCaroCommerce',
     value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-    nodeName: 'Commerce Carousel',
+    nodeName: '커머스 케로셀',
   },
 ];
 
 const buttonNodes = [
-  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Quick Button' },
-  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: 'Condition' },
-  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: 'Count' },
+  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: '퀵리플라이' },
+  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: '컨디션' },
+  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: '카운트' },
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
-    nodeName: 'Parameter Set',
+    nodeName: '파라미터 설정',
   },
   {
     className: 'icOtherFlowRedirect',
     value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
-    nodeName: 'Other Flow Redirect',
+    nodeName: '시나리오',
   },
 ];
 
 export const BotBuilderHeader = () => {
   const { t, tc } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -198,7 +199,7 @@ export const BotBuilderHeader = () => {
         </div>
       </div>
       <div className="saveBtn">
-        <Button small type="primary" onClick={handleScenarioSave}>
+        <Button small type="primary" onClick={handleScenarioSave} disabled={!changed}>
           {tc(`SAVE`)}
         </Button>
       </div>

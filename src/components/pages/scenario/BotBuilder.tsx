@@ -103,7 +103,7 @@ export const Botbuilder = () => {
 
   const handleCanvasClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
+    //e.preventDefault();
 
     dispatch(setSelected());
     if (e.buttons === 1) {

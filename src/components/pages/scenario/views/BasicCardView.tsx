@@ -48,7 +48,11 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
           empty: view.title === '',
         })}
       >
-        {view.title ? <p>{view.title}</p> : <p>Enter Title</p>}
+        {view.title ? (
+          <MultiClamp clamp={2}>{view.title}</MultiClamp>
+        ) : (
+          <p>Enter Title</p>
+        )}
       </div>
 
       <div

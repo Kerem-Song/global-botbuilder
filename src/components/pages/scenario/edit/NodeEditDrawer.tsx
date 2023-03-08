@@ -94,7 +94,7 @@ export const NodeEditDrawer = () => {
       const model: INodeEditModel = {
         id: selectedNode.id,
         type: selectedNode.type,
-        caption: selectedNode.type,
+        caption: t(`CAPTION_${selectedNode.type.toUpperCase()}`),
         title: selectedNode.title || '',
         view: selectedNode.view,
         nextNodeId: selectedNode.nextNodeId,

@@ -24,10 +24,12 @@ export const SelectNode = ({
     control,
   });
 
-  const scenarios: IReactSelect[] = nodes.map((item) => ({
-    value: item.id,
-    label: item.title || '',
-  }));
+  const scenarios: IReactSelect[] = [...nodes]
+    .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
+    .map((item) => ({
+      value: item.id,
+      label: item.title || '',
+    }));
 
   return (
     <Select

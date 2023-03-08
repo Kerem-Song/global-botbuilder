@@ -36,73 +36,73 @@ const cardTypeValue = [
   {
     className: 'icText',
     value: NODE_TYPES.TEXT_NODE,
-    nodeName: 'Text',
+    nodeName: '텍스트',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icBtnTemple',
     value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: '기본카드',
+    nodeName: '기본 카드',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icList',
     value: NODE_TYPES.LIST_CARD_NODE,
-    nodeName: 'List',
+    nodeName: '리스트',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCommerce',
     value: NODE_TYPES.PRODUCT_CARD_NODE,
-    nodeName: 'Commerce',
+    nodeName: '커머스',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroImg',
     value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-    nodeName: 'Carousel',
+    nodeName: '기본 카드 케로셀',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroList',
     value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-    nodeName: 'List Carousel',
+    nodeName: '리스트 케로셀',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroCommerce',
     value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-    nodeName: 'Commerce Carousel',
+    nodeName: '커머스 케로셀',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icQuickBtn',
     value: NODE_TYPES.ANSWER_NODE,
-    nodeName: 'Quick Button',
+    nodeName: '퀵리플라이',
     nodeKind: NodeKind.AnswerNode,
   },
   {
     className: 'icCondition',
     value: NODE_TYPES.CONDITION_NODE,
-    nodeName: 'Condition',
+    nodeName: '컨디션',
     nodeKind: NodeKind.CommandNode,
   },
   {
     className: 'icCount',
     value: NODE_TYPES.RETRY_CONDITION_NODE,
-    nodeName: 'Count',
+    nodeName: '카운트',
     nodeKind: NodeKind.CommandNode,
   },
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
-    nodeName: 'Parameter Set',
+    nodeName: '파라미터 설정',
     nodeKind: NodeKind.CommandNode,
   },
   {
     className: 'icOtherFlowRedirect',
     value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
-    nodeName: 'Other Flow Redirect',
+    nodeName: '시나리오',
     nodeKind: NodeKind.CommandNode,
   },
 ];
@@ -268,7 +268,13 @@ export const NodeLinkPopUpMenu = ({
       role="presentation"
       onWheel={(e) => e.stopPropagation()}
     >
-      <Input placeholder="Input search text" search onSearch={(data) => onSearch(data)} />
+      <Input
+        placeholder="Input search text"
+        search
+        value={userInput}
+        onSearch={(v) => onSearch(v)}
+        onChange={(e) => onSearch(e.target.value)}
+      />
 
       <div className={cardBtnResult}>
         {filterdBtnList.length > 0 ? (
