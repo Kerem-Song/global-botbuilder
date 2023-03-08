@@ -18,7 +18,7 @@ const singleNodes = [
   {
     className: 'icBtnTemple',
     value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: 'Button Template',
+    nodeName: '기본카드',
   },
   { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: 'List' },
   { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: 'Commerce' },

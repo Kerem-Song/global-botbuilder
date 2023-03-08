@@ -18,10 +18,12 @@ export interface IBuilderInfo {
   nodes: INode[];
   arrows: IArrow[];
   selected?: INode | IArrow;
+  changed: boolean;
 }
 const initialState: IBuilderInfo = {
   nodes: [],
   arrows: [],
+  changed: false,
 };
 
 const convert = (node: INodeBase): { node: INode; arrows: IArrow[] } => {
@@ -40,12 +42,14 @@ export const makingNodeSlice = createSlice({
       const converted = nodes.map((x) => convert(x));
       state.nodes = converted.map((x) => x.node);
       state.arrows = [];
+      state.changed = false;
       converted.map((x) => (state.arrows = [...state.arrows, ...x.arrows]));
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
       console.log(node);
       state.nodes = [...state.nodes, node];
+      state.changed = true;
     },
     updateNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
@@ -55,6 +59,7 @@ export const makingNodeSlice = createSlice({
         const index = nodes.indexOf(matched);
         nodes.splice(index, 1, node);
         state.nodes = nodes;
+        state.changed = true;
       }
     },
     editNode: (state, action: PayloadAction<INodeEditModel>) => {
@@ -83,6 +88,7 @@ export const makingNodeSlice = createSlice({
         });
         state.nodes = nodes;
       }
+      state.changed = true;
     },
     updateButtonOrder: (
       state,
@@ -118,6 +124,7 @@ export const makingNodeSlice = createSlice({
           state.nodes = nodes;
         }
       }
+      state.changed = true;
     },
     addArrow: (state, action: PayloadAction<IArrow>) => {
       const arrow = action.payload;
@@ -150,6 +157,7 @@ export const makingNodeSlice = createSlice({
       }
 
       state.arrows = [...arrows, arrow];
+      state.changed = true;
     },
     removeItem: (state, action: PayloadAction<IArrow | string | undefined>) => {
       if (typeof action.payload === 'string') {
@@ -207,6 +215,7 @@ export const makingNodeSlice = createSlice({
           state.arrows = arrows;
         }
       }
+      state.changed = true;
     },
     setTempCard: (state, action: PayloadAction<IBuilderInfo>) => {
       const { nodes } = action.payload;

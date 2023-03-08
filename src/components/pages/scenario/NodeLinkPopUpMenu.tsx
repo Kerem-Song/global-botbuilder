@@ -42,7 +42,7 @@ const cardTypeValue = [
   {
     className: 'icBtnTemple',
     value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: 'Button Template',
+    nodeName: '기본카드',
     nodeKind: NodeKind.InputNode,
   },
   {
