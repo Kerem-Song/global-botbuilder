@@ -40,6 +40,7 @@
     "react-loading-skeleton": "^3.1.0",
     "react-modal": "^3.16.1",
     "react-modern-drawer": "^1.1.2",
+    "react-multi-clamp": "^2.0.6",
     "react-popper": "^2.3.0",
     "react-redux": "^8.0.2",
     "react-router": "^6.4.1",

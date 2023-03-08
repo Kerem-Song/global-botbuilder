@@ -4,6 +4,7 @@ import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
+import MultiClamp from 'react-multi-clamp';
 
 export interface IBasicCardViewProps {
   nodeId: string;
@@ -56,7 +57,11 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
           empty: view.description === '',
         })}
       >
-        {view.description ? <p>{view.description}</p> : <p>Enter Content</p>}
+        {view.description ? (
+          <MultiClamp clamp={2}>{view.description}</MultiClamp>
+        ) : (
+          <p>Enter Content</p>
+        )}
       </div>
 
       <div className="buttonWrapper node-draggable-ignore">

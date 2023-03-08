@@ -8227,6 +8227,11 @@ ms@2.1.3, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
+multi-clamp@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/multi-clamp/-/multi-clamp-2.0.2.tgz#fa77efb0100aa387855f90dd245ec26316fdede8"
+  integrity sha512-zhI0kP3VqZ2rACPWGxWV/G5s6z7qYWyh7Ow6QdPVzZ8N3fuNT4HZ25e9KIqUCROB++ppcn3/EUy7IYQ9UC1N+w==
+
 nan@^2.12.1:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
@@ -9454,6 +9459,14 @@ react-modern-drawer@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-modern-drawer/-/react-modern-drawer-1.1.2.tgz#33a8a167a86e899c5c5258cb4b2fa091d3851445"
   integrity sha512-v7I6gGHZnJo7mVLFV74NyazEgl7IXJSmnmFE98olhH7sP9O0ul/1l/d7YQOARWyyLPd96P0odriX+nRusDJr6g==
+
+react-multi-clamp@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-multi-clamp/-/react-multi-clamp-2.0.6.tgz#8cd378ec12c42b5712b03143d4a7960819cdd44b"
+  integrity sha512-sCPGBq5zUJCgwWV/3pJBGs/Y8UMtNb6fpyw56YEfwwJIOhJbv+rHam+JeMDzyBghWbbKZ8n1B5MPKb7tsy8vPA==
+  dependencies:
+    multi-clamp "^2.0.2"
+    prop-types "^15.7.2"
 
 react-popper@^2.3.0:
   version "2.3.0"

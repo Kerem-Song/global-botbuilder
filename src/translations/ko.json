@@ -11,7 +11,6 @@
     "PROD_CHANNEL": "운영채널",
     "TEST_CHANNEL": "테스트채널",
     "EMPTY_DESCRIPTION": "No search results found.",
-    "REQUIRE_BOT_NAME": "봇 이름은 필수입니다.",
     "BOT_STATUS_ACTIVE": "Active"
   },
   "common": {
@@ -20,7 +19,8 @@
     "OK": "확인",
     "CANCEL": "취소",
     "DELETE_CONFIRM": "정말 삭제하시겠습니까?",
-    "NO_RECOVERY_MESSAGE": "삭제한 데이터는 다시 복구할 수 없습니다."
+    "NO_RECOVERY_MESSAGE": "삭제한 데이터는 다시 복구할 수 없습니다.",
+    "REQUIRE_MESSAGE": "필수 입력 항목입니다."
   },
   "scenario": {
     "TITLE": "시나리오",

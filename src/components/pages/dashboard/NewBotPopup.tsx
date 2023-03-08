@@ -23,7 +23,7 @@ export const NewBotPopup: FC<{
 
   const schema = yup
     .object({
-      botName: yup.string().required(t('REQUIRE_BOT_NAME')),
+      botName: yup.string().required(tc('REQUIRE_MESSAGE')),
     })
     .required();
 

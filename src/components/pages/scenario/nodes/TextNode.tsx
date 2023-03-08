@@ -3,6 +3,7 @@ import { INode } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC } from 'react';
+import MultiClamp from 'react-multi-clamp';
 
 export interface ITextNodeProps {
   node: INode;
@@ -18,7 +19,11 @@ export const TextNode: FC<ITextNodeProps> = ({ node }) => {
           empty: view.text === '',
         })}
       >
-        {view.text ? <p>{view.text}</p> : <p>Enter Content</p>}
+        {view.text ? (
+          <MultiClamp clamp={2}>{view.text}</MultiClamp>
+        ) : (
+          <p>Enter Content</p>
+        )}
       </div>
     </Card>
   );

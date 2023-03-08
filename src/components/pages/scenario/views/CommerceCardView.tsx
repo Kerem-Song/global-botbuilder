@@ -4,6 +4,7 @@ import { SortableButtonCtrlContainer } from '@components/pages/scenario/Sortable
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
+import MultiClamp from 'react-multi-clamp';
 
 export interface ICommerceCardViewProps {
   nodeId: string;
@@ -67,7 +68,11 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
 
       {view.description !== undefined ? (
         <div className={classNames('productName', { empty: view.description })}>
-          {view.description ? <p>{view.description}</p> : <p>Enter Product Name</p>}
+          {view.description ? (
+            <MultiClamp clamp={2}>{view.description}</MultiClamp>
+          ) : (
+            <p>Enter Product Name</p>
+          )}
         </div>
       ) : null}
 
