@@ -133,7 +133,7 @@ export const ListCardNodeEdit = () => {
             </div>
             <div className="deleteBtn">
               <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
-                {t(`DELETE_BUTTON`)}
+                {t(`DELETE_A_LIST`)}
               </Button>
             </div>
           </div>
