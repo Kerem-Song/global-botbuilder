@@ -1,11 +1,12 @@
 import { icUtteranceEmpty } from '@assets';
 import { Col, Row } from '@components';
-import { usePage, useSystemModal } from '@hooks';
+import { usePage, useScenarioClient, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
 import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
+import classNames from 'classnames';
 import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
@@ -24,6 +25,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
   const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
+  const { getScenarioList } = useScenarioClient();
+  const { data } = getScenarioList();
 
   const {
     data: initialData,
@@ -156,7 +159,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
+            // if (x.intentName == '폴') {
+            //   console.log('rendering 폴');
+            // }
             const checkedStr = getUtteranceSummary(x.utteranceSummary);
+            console.log(data);
+            const foundFlow = data?.find((item) => item.id === x.flowId);
+            console.log(foundFlow?.activated);
             return (
               <tr
                 key={i}
@@ -169,7 +178,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                     ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
                     : x.intentName}
                 </td>
-                <td role="presentation" className="utteranceList connectScenarios">
+                <td
+                  role="presentation"
+                  className={classNames('utteranceList connectScenarios', {
+                    'connectScenarios-notActivated':
+                      foundFlow && foundFlow.activated === false,
+                  })}
+                >
                   {x.flowName === null ? '-' : x.flowName}
                 </td>
                 <td role="presentation" className="utteranceList utterance">
