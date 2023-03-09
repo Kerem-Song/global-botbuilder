@@ -4,9 +4,13 @@ import icBrandNameSelected from '@assets/icons/ic_brand_name_selected.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
 import icBtnTempleHover from '@assets/icons/ic_btn_temple_hover.svg';
 import icCardCut from '@assets/icons/ic_card_cut.svg';
+import icCardCutDisabled from '@assets/icons/ic_card_cut_disabled.svg';
 import icCardDelete from '@assets/icons/ic_card_delete.svg';
+import icCardDeleteDisabled from '@assets/icons/ic_card_delete_disabled.svg';
 import icCardDuplication from '@assets/icons/ic_card_duplication.svg';
+import icCardDuplicationDisabled from '@assets/icons/ic_card_duplication_disabled.svg';
 import icCardPaste from '@assets/icons/ic_card_paste.svg';
+import icCardPasteDisabled from '@assets/icons/ic_card_paste_disabled.svg';
 import icCaroCommerce from '@assets/icons/ic_caro_commerce.svg';
 import icCaroCommerceHover from '@assets/icons/ic_caro_commerce_hover.svg';
 import icCaroImg from '@assets/icons/ic_caro_img.svg';
@@ -126,9 +130,13 @@ export {
   icBtnTemple,
   icBtnTempleHover,
   icCardCut,
+  icCardCutDisabled,
   icCardDelete,
+  icCardDeleteDisabled,
   icCardDuplication,
+  icCardDuplicationDisabled,
   icCardPaste,
+  icCardPasteDisabled,
   icCaroCommerce,
   icCaroCommerceHover,
   icCaroImg,

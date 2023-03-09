@@ -1,4 +1,9 @@
-import { icCardPaste } from '@assets';
+import {
+  icCardCutDisabled,
+  icCardDeleteDisabled,
+  icCardDuplicationDisabled,
+  icCardPaste,
+} from '@assets';
 import { IPopperItem } from '@components/navigation';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useContextMenu } from '@hooks/useContextMenu';
@@ -12,7 +17,7 @@ import { useDispatch } from 'react-redux';
 
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
-import { addArrow, appendNode, removeItem, updateNode } from '../../../store/makingNode';
+import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -202,15 +207,44 @@ export const Botbuilder = () => {
     // }
   };
 
-  const canvasContextMenu: IPopperItem<{ action: () => void }> = {
-    id: 'paste',
-    name: 'to paste',
-    type: 'icon-front',
-    icon: icCardPaste,
-    data: {
-      action: handlePasteCard,
+  const canvasContextMenu: IPopperItem<{ action: () => void }>[] = [
+    {
+      id: 'duplication',
+      name: 'Duplication',
+      type: 'icon-front',
+      icon: icCardDuplicationDisabled,
+      data: {
+        action: () => null,
+      },
     },
-  };
+    {
+      id: 'cut',
+      name: 'Cut',
+      type: 'icon-front',
+      icon: icCardCutDisabled,
+      data: {
+        action: () => null,
+      },
+    },
+    {
+      id: 'paste',
+      name: 'To Paste',
+      type: 'icon-front',
+      icon: icCardPaste,
+      data: {
+        action: handlePasteCard,
+      },
+    },
+    {
+      id: 'delete',
+      name: 'Delete',
+      type: 'icon-front',
+      icon: icCardDeleteDisabled,
+      data: {
+        action: () => null,
+      },
+    },
+  ];
   const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -317,14 +351,17 @@ export const Botbuilder = () => {
                 backgroundColor: '#ffffff',
               }}
             >
-              <div
-                className="luna-chatbot-list luna-popup-list"
-                role="presentation"
-                onClick={handlePasteCard}
-              >
-                <img src={canvasContextMenu.icon} alt="icon" />
-                <p className="items-name">{canvasContextMenu.name}</p>
-              </div>
+              {canvasContextMenu.map((item, i) => (
+                <div
+                  key={i}
+                  className="luna-chatbot-list luna-popup-list"
+                  role="presentation"
+                  onClick={item.data?.action}
+                >
+                  <img src={item.icon} alt="icon" />
+                  <p className="items-name">{item.name}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
