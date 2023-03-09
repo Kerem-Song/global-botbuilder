@@ -159,13 +159,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
-            // if (x.intentName == '폴') {
-            //   console.log('rendering 폴');
-            // }
             const checkedStr = getUtteranceSummary(x.utteranceSummary);
-            console.log(data);
             const foundFlow = data?.find((item) => item.id === x.flowId);
-            console.log(foundFlow?.activated);
             return (
               <tr
                 key={i}
