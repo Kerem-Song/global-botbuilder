@@ -94,6 +94,9 @@ export const Node: FC<INodeProps> = ({
   };
 
   const handleCutCard = (node: INode) => {
+    if (node.type === NODE_TYPES.INTENT_NODE) {
+      return;
+    }
     dispatch(setClipBoard(node));
     dispatch(removeItem(node.id));
   };
@@ -107,6 +110,9 @@ export const Node: FC<INodeProps> = ({
   };
 
   const deleteCard = (nodeId: string) => {
+    if (node.type === NODE_TYPES.INTENT_NODE) {
+      return;
+    }
     dispatch(removeItem(nodeId));
     lunaToast.success(tc('DELETE_MESSAGE'));
   };

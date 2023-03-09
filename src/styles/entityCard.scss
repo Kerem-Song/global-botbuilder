@@ -49,18 +49,11 @@
           }
         }
         .entries {
-          height: rem(68);
-          overflow: hidden;
-          white-space: normal;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
+          width: rem(211);
+          max-height: rem(65);
+          line-height: rem(18);
           .entry {
             color: $gray500;
-            overflow: hidden;
-            white-space: normal;
-            text-overflow: ellipsis;
           }
         }
         &:hover {

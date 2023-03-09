@@ -39,7 +39,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [entryInputError, setEntryInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const { confirm, error } = useSystemModal();
+  const { confirm, error: modalError } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -78,6 +78,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .max(20, `20자를 초과할 수 없습니다.`),
       entries: yup
         .array()
+        .min(1, '대표 엔트리는 최소 한 개 이상 등록되어야 합니다.')
         .when('isRegex', { is: false, then: yup.array().of(schema) })
         .when('isRegex', { is: true, then: yup.array().of(regexSchema) }),
     })
@@ -183,13 +184,20 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entryGroupid: entryData.entryGroupid,
       };
 
-      const res = await entryGroupMutate.mutateAsync(modifyEntry);
-
-      if (res) {
-        console.log('modifyEntry', res);
-        reset();
-        handleIsOpen(false);
-      }
+      entryGroupMutate.mutate(modifyEntry, {
+        onSuccess: (res) => {
+          console.log(res);
+          if (res && res.isSuccess) {
+            reset();
+            handleIsOpen(false);
+          } else {
+            modalError({
+              title: '중복 엔티티명',
+              description: <span>중복된 엔티티명입니다.</span>,
+            });
+          }
+        },
+      });
     } else {
       const newEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -198,13 +206,20 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entries: entryData.entries,
       };
 
-      const res = await entryGroupMutate.mutateAsync(newEntry);
-
-      if (res) {
-        console.log('newEntry', res);
-        reset();
-        handleIsOpen(false);
-      }
+      entryGroupMutate.mutate(newEntry, {
+        onSuccess: (res) => {
+          console.log(res);
+          if (res && res.isSuccess) {
+            reset();
+            handleIsOpen(false);
+          } else {
+            modalError({
+              title: '중복 엔티티명',
+              description: <span>중복된 엔티티명입니다.</span>,
+            });
+          }
+        },
+      });
     }
   };
 
@@ -250,7 +265,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       }
     }
   };
-
+  console.log(errors);
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
@@ -292,6 +307,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           onChange={(e) => {
                             setValue('name', e.target.value);
                             setIsActive(true);
+                          }}
+                          onPressEnter={() => {
+                            return;
                           }}
                           showCount
                           maxLength={20}
@@ -342,7 +360,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <FormItem error={errors.entries?.[0]?.representativeEntry}>
                             <Input
                               {...register('entries.0.representativeEntry')}
-                              placeholder="Input entity name"
+                              placeholder="Input Regular expression"
                               onChange={(e) => {
                                 setValue('entries.0.representativeEntry', e.target.value);
                                 setIsActive(true);
@@ -376,20 +394,29 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     bodyStyle={{ padding: '20px' }}
                     style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
                   >
-                    <Space direction="vertical">
-                      <Row>
-                        <Col flex="auto" style={{ display: 'flex' }}>
-                          <Input
-                            placeholder="Input Representative entry."
-                            size="normal"
-                            ref={entryGroupName}
-                            onPressEnter={handleRegisterEntry}
-                            onChange={isEntryInputError}
-                            onBlur={isEntryInputError}
-                            isError={entryInputError ? true : false}
-                          ></Input>
+                    <Space direction="vertical" gap={10}>
+                      <Row gap={8}>
+                        <Col flex="auto">
+                          <>
+                            <Input
+                              placeholder="Input Representative entry."
+                              size="normal"
+                              ref={entryGroupName}
+                              onPressEnter={handleRegisterEntry}
+                              onChange={isEntryInputError}
+                              onBlur={isEntryInputError}
+                              isError={
+                                entryInputError || errors.entries?.message ? true : false
+                              }
+                            ></Input>
+                            <span className="error-message">{entryInputError}</span>
+                            <span className="error-message">
+                              {errors.entries?.message}
+                            </span>
+                          </>
+                        </Col>
+                        <Col>
                           <Button
-                            style={{ marginLeft: '8px' }}
                             type="primary"
                             onClick={() => {
                               handleRegisterEntry(entryGroupName.current?.value);
@@ -399,49 +426,42 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           </Button>
                         </Col>
                       </Row>
-                      <Row
-                        style={{
-                          marginBottom: '10px',
-                        }}
-                      >
-                        <span className="error-message">{entryInputError}</span>
-                      </Row>
-                    </Space>
-                    <Space gap={8} direction="vertical">
-                      {watch('entries').length === 0 ? (
-                        <div
-                          style={{
-                            width: '100%',
-                            marginTop: '12px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <div className="emptyList">
-                            <div className="empty">
-                              <img src={icUtteranceEmpty} alt="empty" />
-                              <span>No entries registered</span>
+                      <Space gap={8} direction="vertical">
+                        {watch('entries').length === 0 ? (
+                          <div
+                            style={{
+                              width: '100%',
+                              marginTop: '12px',
+                              display: 'flex',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <div className="emptyList">
+                              <div className="empty">
+                                <img src={icUtteranceEmpty} alt="empty" />
+                                <span>No entries registered</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ) : watch('isRegex') === false ||
-                        entryDetails?.data?.entryGroupType === 0 ? (
-                        <>
-                          {fields.map((entryGroup, i) => {
-                            return (
-                              <EntityDetailItem
-                                key={entryGroup.id}
-                                index={i}
-                                entryGroup={entryGroup}
-                                entriesRemove={remove}
-                                searchKeyword={searchKeyword}
-                              />
-                            );
-                          })}
-                        </>
-                      ) : (
-                        <></>
-                      )}
+                        ) : watch('isRegex') === false ||
+                          entryDetails?.data?.entryGroupType === 0 ? (
+                          <>
+                            {fields.map((entryGroup, i) => {
+                              return (
+                                <EntityDetailItem
+                                  key={entryGroup.id}
+                                  index={i}
+                                  entryGroup={entryGroup}
+                                  entriesRemove={remove}
+                                  searchKeyword={searchKeyword}
+                                />
+                              );
+                            })}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </Space>
                     </Space>
                   </Card>
                 ) : (

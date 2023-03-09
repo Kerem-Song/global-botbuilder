@@ -20,7 +20,8 @@ const SORT = [
 export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string>('all');
-  const [searchWord, setSearchWord] = useState<string>('');
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioClient();
@@ -50,7 +51,23 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     });
     setSort('1');
     setScenario('all');
-    setSearchWord('');
+    setSearchKeyword('');
+  };
+
+  const handleSearchBtn = (keyword?: string) => {
+    const searchData = {
+      sort: Number(sort),
+      scenarios: scenario,
+      searchWord: keyword,
+    };
+    setSearchData(searchData);
+    invalidateIntentQuery(searchData);
+  };
+
+  const handleSearch = (keyword?: string) => {
+    setSearchKeyword(keyword!);
+    setSearchKeywordParameter(keyword);
+    handleSearchBtn(keyword);
   };
 
   return (
@@ -107,9 +124,10 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
             <Col flex="auto">
               <FormItem>
                 <Input
-                  value={searchWord}
-                  onChange={(e) => setSearchWord(e?.target.value)}
                   search
+                  value={searchKeyword}
+                  onSearch={(value) => handleSearch(value!)}
+                  onChange={(e) => setSearchKeyword(e?.target.value)}
                   placeholder="Please enter a search word"
                 />
               </FormItem>
@@ -119,18 +137,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
             <Col>
               <Space>
                 <Button onClick={handleReset}>Reset</Button>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    const searchData = {
-                      sort: Number(sort),
-                      scenarios: scenario,
-                      searchWord: searchWord,
-                    };
-                    setSearchData(searchData);
-                    invalidateIntentQuery(searchData);
-                  }}
-                >
+                <Button type="primary" onClick={() => handleSearchBtn(searchKeyword)}>
                   Search
                 </Button>
               </Space>

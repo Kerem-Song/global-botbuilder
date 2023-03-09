@@ -1,8 +1,8 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
+import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { lunaToast } from '@modules/lunaToast';
-import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -25,6 +25,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     scenarioActiveAsync,
     scenarioCheckDeleteAsync,
   } = useScenarioClient();
+
+  const { handleChangeSelectedScenario } = useSelectedScenarioChange();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -143,7 +145,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       radius="small"
       bodyStyle={{ padding: '8px 12px', cursor: 'pointer' }}
       onClick={() => {
-        dispatch(setSelectedScenario(item));
+        handleChangeSelectedScenario(item);
       }}
       className={selectedScenario}
     >

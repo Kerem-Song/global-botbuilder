@@ -183,6 +183,10 @@ export const makingNodeSlice = createSlice({
             return;
           }
 
+          if (found.type === NODE_TYPES.INTENT_NODE) {
+            return;
+          }
+
           const index = state.nodes.indexOf(found);
           const nodes = [...state.nodes];
           nodes.splice(index, 1);

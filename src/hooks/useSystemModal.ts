@@ -11,23 +11,33 @@ export interface IInfoModal {
 export const useSystemModal = () => {
   const dispatch = useDispatch();
   const info = (args: IInfoModal) => {
-    dispatch(
-      systemModalOpen({
-        message: args.title,
-        description: args.description,
-        confirmButton: 'OK',
-      }),
-    );
+    return new Promise((resolve) => {
+      dispatch(
+        systemModalOpen({
+          message: args.title,
+          description: args.description,
+          confirmButton: 'OK',
+          callbackFunc: () => {
+            resolve(true);
+          },
+        }),
+      );
+    });
   };
 
   const error = (args: IInfoModal) => {
-    dispatch(
-      systemModalOpen({
-        message: args.title,
-        description: args.description,
-        confirmButton: 'OK',
-      }),
-    );
+    return new Promise((resolve) => {
+      dispatch(
+        systemModalOpen({
+          message: args.title,
+          description: args.description,
+          confirmButton: 'OK',
+          callbackFunc: () => {
+            resolve(true);
+          },
+        }),
+      );
+    });
   };
 
   const confirm = (args: IInfoModal): Promise<boolean | undefined> => {
