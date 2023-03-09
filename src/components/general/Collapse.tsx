@@ -1,5 +1,6 @@
 import { icCollapseClose, icCollapseOpen } from '@assets';
 import { Button, Col, Divider, Row, Switch } from '@components';
+import { usePage, useSystemModal } from '@hooks';
 import { IGNodeEditModel, IHasChildren, IHasClassNameNStyle } from '@models';
 import {
   IHasImageCtrlViewBase,
@@ -21,14 +22,15 @@ export const Collapse: FC<CollapseProps> = ({
   field,
   children,
 }) => {
+  const { t } = usePage();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
-  const { register } =
+  const { register, setValue } =
     useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
-
+  const { confirm } = useSystemModal();
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-  console.log(index);
+
   console.log(
     field === 'useUtteranceParam'
       ? `view.useUtteranceParam`
@@ -36,6 +38,27 @@ export const Collapse: FC<CollapseProps> = ({
       ? `view.childrenViews.${index}.useImageCtrl`
       : `view.useImageCtrl`,
   );
+
+  const isCollapsedModal = async () => {
+    if (field === 'useImageCtrl' && index !== undefined) {
+      const result = await confirm({
+        title: t(`IMAGE_SETTING_OFF`),
+        description: (
+          <>
+            <span style={{ whiteSpace: 'pre-line' }}>
+              {t(`IMAGE_SETTING_OFF_WARNING`)}
+            </span>
+          </>
+        ),
+      });
+
+      if (result) {
+        setIsCollapsed(false);
+        setValue(`view.useImageCtrl`, false);
+      }
+    }
+  };
+
   return (
     <div className="node-item-wrap collapse">
       <div className="collapseHeader">
@@ -51,8 +74,6 @@ export const Collapse: FC<CollapseProps> = ({
                 {...register(
                   field === 'useUtteranceParam'
                     ? `view.useUtteranceParam`
-                    : index !== undefined
-                    ? `view.childrenViews.${index}.useImageCtrl`
                     : `view.useImageCtrl`,
                 )}
               />

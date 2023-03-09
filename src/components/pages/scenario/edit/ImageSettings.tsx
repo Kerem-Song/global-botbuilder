@@ -1,9 +1,10 @@
+import { Radio } from '@components';
 import { Col, Row, Space } from '@components/layout';
 import { usePage, useSystemModal } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
-import { Dispatch, SetStateAction } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 
 import { ImageFileUploader } from './ImageFileUploader';
 interface IImageSetting {
@@ -23,7 +24,7 @@ export const ImageSettings = ({
 }: IImageSetting) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
-  const { register, getValues, setValue, watch } = useFormContext();
+  const { getValues, setValue, watch, control } = useFormContext();
   const values = getValues();
 
   const handleImageCtrlIdPath = () => {
@@ -64,19 +65,42 @@ export const ImageSettings = ({
           imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
         };
       default:
-        return { imageCtrlIdPath: '', imageFilePath: '' };
+        return { imageCtrl: '', imageFilePath: '' };
     }
   };
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
+    const handleDesc = () => {
+      let desc;
+      if (
+        imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL &&
+        ratio === ImageAspectRatio.Rectangle
+      ) {
+        desc = t(`IMAGE_SETTING_TYPE_CAROUSEL_RECTANGLE_WARNING`);
+      } else if (
+        imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL &&
+        ratio === ImageAspectRatio.Square
+      ) {
+        desc = t(`IMAGE_SETTING_TYPE_CAROUSEL_SQUARE_WARNING`);
+      } else if (
+        imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL &&
+        ratio === ImageAspectRatio.Rectangle
+      ) {
+        desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
+      } else {
+        desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
+      }
+      return desc;
+    };
     const result = await confirm({
       title: t(`IMAGE_TYPE_CHANGE`),
       description: (
         <>
           <span style={{ whiteSpace: 'pre-line' }}>
-            {ratio === ImageAspectRatio.Rectangle
+            {/* {ratio === ImageAspectRatio.Rectangle
               ? t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`)
-              : t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`)}
+              : t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`)} */}
+            {handleDesc()}
           </span>
         </>
       ),
@@ -115,8 +139,12 @@ export const ImageSettings = ({
       }
     }
   };
-  console.log('imageRatio in img settings', imageRatio);
 
+  const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
+
+  useEffect(() => {
+    console.log('image settings');
+  }, [aspectRatio]);
   return (
     <Space direction="vertical">
       <div className="m-b-8">
@@ -127,36 +155,28 @@ export const ImageSettings = ({
       <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
       <Row justify="space-between">
         <Col span={12} className="radioContainer">
-          <input
-            className="radio"
-            {...register(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`, {
-              valueAsNumber: true,
-            })}
-            type="radio"
-            value={ImageAspectRatio.Rectangle}
+          <Radio
             checked={
-              Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
+              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
               ImageAspectRatio.Rectangle
             }
-            onClick={() => setImageAspectRatioModal(ImageAspectRatio.Rectangle)}
-          />
-          <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
+            onChange={() => setImageAspectRatioModal(ImageAspectRatio.Rectangle)}
+            ref={aspectRatio.ref}
+          >
+            <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
+          </Radio>
         </Col>
         <Col span={12} className="radioContainer">
-          <input
-            className="radio"
-            {...register(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`, {
-              valueAsNumber: true,
-            })}
-            type="radio"
-            value={ImageAspectRatio.Square}
+          <Radio
             checked={
-              Number(handleImageCtrlIdPath().imageCtrl?.aspectRatio) ===
+              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
               ImageAspectRatio.Square
             }
-            onClick={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
-          />
-          <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
+            onChange={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
+            ref={aspectRatio.ref}
+          >
+            <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
+          </Radio>
         </Col>
       </Row>
 
@@ -164,7 +184,7 @@ export const ImageSettings = ({
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
-        imageRatio={imageRatio}
+        imageRatio={watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`)}
       />
     </Space>
   );

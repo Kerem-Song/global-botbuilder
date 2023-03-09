@@ -107,6 +107,7 @@ export const nodeDefaultHelper = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
       childrenViews: [nodeDefaultHelper.createDefaultBasicCardView()],
+      useImageCtrl: true,
       isSuffle: false,
       count: 10,
     };
@@ -191,6 +192,7 @@ export const nodeDefaultHelper = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
       childrenViews: [nodeDefaultHelper.createDefaultListCardView()],
+      useImageCtrl: true,
       isSuffle: false,
       count: 10,
     };

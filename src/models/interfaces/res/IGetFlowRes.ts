@@ -59,6 +59,7 @@ export interface INodeView {
   typeName: string;
   title?: string;
   description?: string;
+  useImageCtrl: boolean;
   imageCtrl: {
     imageUrl: string;
   };

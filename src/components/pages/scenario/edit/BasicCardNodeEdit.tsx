@@ -17,7 +17,6 @@ export const BasicCardNodeEdit = () => {
   const {
     register,
     getValues,
-
     control,
     watch,
     formState: { errors },
@@ -30,7 +29,7 @@ export const BasicCardNodeEdit = () => {
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
         {watch(`view.useImageCtrl`) && (
           <ImageSettings
-            imageRatio={imageRatio}
+            imageRatio={Number(watch(`view.imageCtrl.aspectRatio`))}
             setImageRatio={setImageRatio}
             imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
           />
@@ -69,7 +68,9 @@ export const BasicCardNodeEdit = () => {
       </Collapse>
 
       <Collapse label={t(`BUTTON`)} useSwitch={false}>
-        {values.view && values.view.buttons && <ButtonsEdit imageRatio={imageRatio} />}
+        {values.view && values.view.buttons && (
+          <ButtonsEdit imageRatio={watch(`view.imageCtrl.aspectRatio`)} />
+        )}
       </Collapse>
     </>
   );

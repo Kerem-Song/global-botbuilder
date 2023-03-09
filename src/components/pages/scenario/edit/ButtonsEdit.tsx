@@ -8,7 +8,7 @@ import {
   IButtonEditViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
@@ -57,8 +57,15 @@ export const ButtonsEdit = ({
   };
 
   const handleDeleteButton = (index: number) => {
+    console.log('@@delete index', index);
     remove(index);
   };
+
+  useEffect(() => {
+    if (imageRatio === ImageAspectRatio.Square && fields.length === 3) {
+      handleDeleteButton(fields.length - 1);
+    }
+  }, [imageRatio]);
 
   return (
     <>
@@ -159,7 +166,7 @@ export const ButtonsEdit = ({
           </Space>
         </Space>
       ))}
-      {fields.length < (imageRatio === ImageAspectRatio.Rectangle ? 3 : 2) && (
+      {fields.length < (imageRatio === ImageAspectRatio.Square ? 2 : 3) && (
         <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
           <span>{t(`ADD_A_NEW_BUTTON`)}</span>
         </Button>

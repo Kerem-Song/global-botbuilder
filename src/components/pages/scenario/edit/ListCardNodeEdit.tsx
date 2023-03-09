@@ -74,7 +74,7 @@ export const ListCardNodeEdit = () => {
       >
         {watch(`view.useImageCtrl`) && (
           <ImageSettings
-            imageRatio={imageRatio}
+            imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             setImageRatio={setImageRatio}
             imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
           />
@@ -148,7 +148,9 @@ export const ListCardNodeEdit = () => {
       </Collapse>
       {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
       <Collapse label={'버튼'} useSwitch={false}>
-        {values.view && values.view.buttons && <ButtonsEdit imageRatio={imageRatio} />}
+        {values.view && values.view.buttons && (
+          <ButtonsEdit imageRatio={watch(`view.imageCtrl.aspectRatio`)} />
+        )}
       </Collapse>
     </>
   );

@@ -113,16 +113,16 @@ export const ProductCardNodeEdit = () => {
   return (
     <>
       <div className="node-item-wrap collapse">
-        <Collapse label={t(`IMAGE_TYPE`)} useSwitch={false}>
+        <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
           <ImageSettings
-            imageRatio={imageRatio}
+            imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             setImageRatio={setImageRatio}
             imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
           />
         </Collapse>
       </div>
       <div className="node-item-wrap collapse">
-        <Collapse label={'프로필'} useSwitch={false}>
+        <Collapse label={t(`PROFILE`)} useSwitch={false}>
           <div className="m-b-8">
             <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
             <span className="required">*</span>
@@ -210,7 +210,9 @@ export const ProductCardNodeEdit = () => {
         </div>
       </div>
       <Collapse label={t(`BUTTON`)} useSwitch={false}>
-        {values.view && values.view.buttons && <ButtonsEdit imageRatio={imageRatio} />}
+        {values.view && values.view.buttons && (
+          <ButtonsEdit imageRatio={watch(`view.imageCtrl.aspectRatio`)} />
+        )}
       </Collapse>
     </>
   );

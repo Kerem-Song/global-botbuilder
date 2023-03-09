@@ -47,9 +47,11 @@ export const BasicCardCarousleNodeEdit = () => {
             useSwitch={true}
             field={`useImageCtrl`}
           >
-            {watch(`view.childrenViews.${index}.useImageCtrl`) && (
+            {watch(`view.useImageCtrl`) && (
               <ImageSettings
-                imageRatio={imageRatio}
+                imageRatio={Number(
+                  watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`),
+                )}
                 setImageRatio={setImageRatio}
                 index={index}
                 imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
@@ -110,7 +112,11 @@ export const BasicCardCarousleNodeEdit = () => {
             {values.view &&
               values.view.childrenViews &&
               values.view.childrenViews[index]?.buttons && (
-                <ButtonsEdit index={index} isCarousel={true} imageRatio={imageRatio} />
+                <ButtonsEdit
+                  index={index}
+                  isCarousel={true}
+                  imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
+                />
               )}
           </Collapse>
         </>
