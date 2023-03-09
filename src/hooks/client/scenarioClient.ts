@@ -61,11 +61,6 @@ export const useScenarioClient = () => {
 
             // 기본 시나리오 세팅
             dispatch(setBasicScenarios(basicScenarios));
-            console.log(
-              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
-              selectedScenario,
-            );
-
             dispatch(initSelectedScenario(scenarios));
 
             const restScenarios = scenarios
@@ -248,5 +243,6 @@ export const useScenarioClient = () => {
     scenarioActiveAsync: scenarioActivateMutate.mutateAsync,
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioSortAsync: scenarioSortMutate.mutateAsync,
+    scenarioSaving: scenarioSaveMutate.isLoading,
   };
 };

@@ -69,7 +69,7 @@ export const BotBuilderHeader = () => {
   const cardNum = nodes.length;
 
   const dispatch = useDispatch();
-  const { scenarioSaveAsync } = useScenarioClient();
+  const { scenarioSaveAsync, scenarioSaving } = useScenarioClient();
 
   const { schema } = useYupValidation();
   console.log(selectedScenario);
@@ -200,7 +200,12 @@ export const BotBuilderHeader = () => {
         </div>
       </div>
       <div className="saveBtn">
-        <Button small type="primary" onClick={handleScenarioSave} disabled={!changed}>
+        <Button
+          small
+          type="primary"
+          onClick={handleScenarioSave}
+          disabled={!changed || scenarioSaving}
+        >
           {tc(`SAVE`)}
         </Button>
       </div>
