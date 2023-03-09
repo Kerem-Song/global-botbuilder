@@ -127,16 +127,11 @@ export const MyEntity = () => {
                         />
                       </div>
                       <div className="entries">
-                        <div>
-                          <span className="entry">
-                            <MultiClamp clamp={4}>
-                              {util.replaceKeywordMark(
-                                x.entries.join(' '),
-                                searchKeyword,
-                              )}
-                            </MultiClamp>
-                          </span>
-                        </div>
+                        <span className="entry">
+                          <MultiClamp clamp={4}>
+                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
+                          </MultiClamp>
+                        </span>
                       </div>
                     </div>
                   </Col>
@@ -172,7 +167,7 @@ export const MyEntity = () => {
                     alt="empty"
                     style={{ marginBottom: '10px' }}
                   />
-                  {searchKeyword ? (
+                  {searchKeywordParameter ? (
                     <span>No search results found.</span>
                   ) : (
                     <span>No entries registered</span>
