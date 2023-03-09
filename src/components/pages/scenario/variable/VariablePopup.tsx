@@ -125,11 +125,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             lunaToast.success();
             reset();
             handleClose();
-          }
-        },
-        onError: (error) => {
-          console.log('newError', error);
-          if (error) {
+          } else {
             modalError({
               title: '중복 변수명',
               description: <span>중복된 변수명입니다</span>,

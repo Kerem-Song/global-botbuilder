@@ -11,7 +11,7 @@ export const useSelectedScenarioChange = () => {
   const { confirm } = useSystemModal();
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
 
-  const handleChangeSelectedScenario = async (item: IScenarioModel) => {
+  const handleChangeSelectedScenario = async (item?: IScenarioModel) => {
     if (changed) {
       const message = createElement(
         'span',
@@ -24,10 +24,11 @@ export const useSelectedScenarioChange = () => {
       });
 
       if (!result) {
-        return;
+        return false;
       }
     }
     dispatch(setSelectedScenario(item));
+    return true;
   };
 
   return { handleChangeSelectedScenario };
