@@ -58,7 +58,7 @@ export const BasicCardNodeEdit = () => {
               height={100}
               style={{ minHeight: '100px', maxHeight: '320px' }}
               showCount
-              maxLength={watch('view.useImageCtrl') || watch('view.title') ? 60 : 120}
+              maxLength={watch(`view.useImageCtrl`) || watch(`view.title`) ? 230 : 400}
               isLight={true}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}

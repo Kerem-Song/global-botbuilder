@@ -63,6 +63,37 @@ export const useYupValidation = () => {
       (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type)),
     );
 
+  const basicCardCarouselNodeEditSchemaForScript = yup.object().shape({
+    title: yup
+      .string()
+      .nullable()
+      .trim()
+      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+    description: yup
+      .string()
+      .when('useImageCtrl', {
+        is: true,
+        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+      })
+      .when('useImageCtrl', {
+        is: false,
+        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
+      })
+      .when('title', {
+        is: (title: string) => title.length > 0,
+        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+      })
+      .when('title', {
+        is: (title: string) => !title,
+        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
+      }),
+    imageCtrl: yup.object().shape({
+      imageFile: imageFileEditSchema,
+      imageUrl: yup.string().url(t(`VALIDATION_URL`)),
+    }),
+    buttons: buttonsEditSchema,
+  });
+
   const basicCardNodeEditSchema = yup.object().shape({
     title: yup
       .string()
@@ -78,6 +109,14 @@ export const useYupValidation = () => {
       .when('useImageCtrl', {
         is: false,
         then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 400 })),
+      })
+      .when('title', {
+        is: (title: string) => title.length > 0,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
+      })
+      .when('title', {
+        is: (title: string) => !title,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       }),
     imageCtrl: yup.object().shape({
       imageFile: imageFileEditSchema,
@@ -198,7 +237,7 @@ export const useYupValidation = () => {
   });
 
   const basicCardCarouselNodeEditSchema = yup.object().shape({
-    childrenViews: yup.array().of(basicCardNodeEditSchema),
+    childrenViews: yup.array().of(basicCardCarouselNodeEditSchemaForScript),
   });
 
   const listCardCarouselNodeEditSchema = yup.object().shape({
