@@ -81,17 +81,6 @@ export interface ITesterCard {
   };
 }
 
-// export interface ITesterQuickReply {
-//   actionType?: string;
-//   label: string;
-//   postback?: {
-//     command?: string;
-//     displayText?: string;
-//     text?: string;
-//     lunaNodeLink?: string;
-//   };
-// }
-
 export interface ITesterDebugMeta {
   nodeId?: string;
   nodeAlias?: string;
@@ -212,4 +201,15 @@ export interface IImageCard extends IHasDebugMeta {
 export interface IQuickRepliesContent {
   quickReplies: ITesterQuickReply[];
   type: typeof TESTER_DATA_TYPES.quickReplies;
+}
+
+export interface IRefreshBotTester {
+  sessionToken: string;
+}
+
+export interface IResponseRefreshBotTester {
+  result: boolean;
+  exception: null;
+  isSuccess: boolean;
+  newToken: null;
 }

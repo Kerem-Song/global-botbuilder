@@ -57,7 +57,12 @@
           }
           .connectScenarios {
             width: rem(285);
+
+            &.connectScenarios-notActivated {
+              color: $gray250;
+            }
           }
+
           .utterance {
             width: rem(558);
           }
