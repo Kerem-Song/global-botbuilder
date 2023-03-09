@@ -42,6 +42,7 @@ export const botbuilderSlice = createSlice({
   initialState,
   reducers: {
     initBotBuilder: (state) => {
+      console.log('initBotBuilder');
       state.scale = 1.0;
       state.selectedScenario = undefined;
       state.selected = undefined;
@@ -52,7 +53,22 @@ export const botbuilderSlice = createSlice({
     setBasicScenarios: (state, action: PayloadAction<IScenarioModel[]>) => {
       state.basicScenarios = action.payload;
     },
+    initSelectedScenario: (state, action: PayloadAction<IScenarioModel[]>) => {
+      console.log('initSelectedScenario');
+      if (state.selectedScenario) {
+        if (action.payload.find((x) => x.id === state.selectedScenario?.id)) {
+          return;
+        }
+      }
+
+      state.selectedScenario = state.basicScenarios?.find((x) => x.isStartFlow);
+      state.selected = undefined;
+      state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
+    },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
+      console.log('setSelectedScenario', action.payload);
       state.selectedScenario = action.payload;
       state.selected = undefined;
       state.isEditDrawerOpen = false;
@@ -119,6 +135,7 @@ export const {
   setSelected,
   setEditDrawerToggle,
   setGuideStartNode,
+  initSelectedScenario,
   //setSesstionToken,
   //setBotInfo,
   setInvalidateNode,

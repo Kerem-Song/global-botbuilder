@@ -1,8 +1,8 @@
 import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
 import { usePage, useRootState } from '@hooks';
+import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
-import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -14,6 +14,7 @@ export const ScenarioManagement: FC<{
 }> = ({ scenarios }) => {
   const { t } = usePage();
   const dispatch = useDispatch();
+  const { handleChangeSelectedScenario } = useSelectedScenarioChange();
   const [isActivated, setIsActivated] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -74,7 +75,7 @@ export const ScenarioManagement: FC<{
                     selected: selectedScenarios?.id === item.id,
                   })}
                   onClick={() => {
-                    dispatch(setSelectedScenario(item));
+                    handleChangeSelectedScenario(item);
                   }}
                 >
                   <span>{item.alias}</span>

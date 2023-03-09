@@ -78,7 +78,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       {...inputProps}
       //value={value}
       onChange={onChangeHandler}
-      onKeyDown={args.onPressEnter ? handleKeyDown : undefined}
+      onKeyDown={args.onPressEnter || args.onSearch ? handleKeyDown : undefined}
       ref={ref}
       aria-invalid={isError}
       aria-required={required}

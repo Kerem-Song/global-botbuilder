@@ -2,7 +2,11 @@ import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { setBasicScenarios, setSelectedScenario } from '@store/botbuilderSlice';
+import {
+  initSelectedScenario,
+  setBasicScenarios,
+  setSelectedScenario,
+} from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -26,6 +30,10 @@ export const useScenarioClient = () => {
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
+
+  const invalidateScenario = (scenarioId: string) => {
+    queryClient.invalidateQueries(['scenario', scenarioId]);
+  };
 
   const getScenarioList = () => {
     return useQuery<IScenarioModel[]>(
@@ -53,15 +61,12 @@ export const useScenarioClient = () => {
 
             // 기본 시나리오 세팅
             dispatch(setBasicScenarios(basicScenarios));
+            console.log(
+              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+              selectedScenario,
+            );
 
-            if (
-              !selectedScenario ||
-              !scenarios.find((x) => x.id === selectedScenario.id)
-            ) {
-              dispatch(setSelectedScenario(startScenario));
-            } else {
-              queryClient.invalidateQueries(['scenario', selectedScenario.id]);
-            }
+            dispatch(initSelectedScenario(scenarios));
 
             const restScenarios = scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
@@ -235,6 +240,7 @@ export const useScenarioClient = () => {
     getCachedScenarioList,
     getScenario,
     getCachedScenario,
+    invalidateScenario,
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
     scenarioCheckDeleteAsync: scenarioCheckDeleteMutate.mutateAsync,

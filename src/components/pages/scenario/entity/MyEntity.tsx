@@ -7,20 +7,26 @@ import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import MultiClamp from 'react-multi-clamp';
 
 import { EntityDetailPopup } from './EntityDetailPopup';
 
 export const MyEntity = () => {
   const [entryId, setEntryId] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>();
+  const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
   const { isOpen, handleIsOpen } = useModalOpen();
   const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
   const { data: initialData, fetchNextPage } = changePageNumberQuery(
-    searchKeyword,
+    searchKeywordParameter,
     false,
   );
 
+  const handleSearch = (keyword?: string) => {
+    setSearchKeyword(keyword);
+    setSearchKeywordParameter(keyword);
+  };
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
@@ -83,9 +89,15 @@ export const MyEntity = () => {
         <Input
           size="small"
           search
+          value={searchKeyword}
           placeholder="Input search word"
-          onBlur={(e) => setSearchKeyword(e.target.value)}
-          onPressEnter={(value) => setSearchKeyword(value)}
+          onBlur={(e) => {
+            handleSearch(e.target.value);
+          }}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onSearch={(value) => {
+            handleSearch(value);
+          }}
         ></Input>
       </div>
       <div className="entityWrapper">
@@ -117,7 +129,12 @@ export const MyEntity = () => {
                       <div className="entries">
                         <div>
                           <span className="entry">
-                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
+                            <MultiClamp clamp={4}>
+                              {util.replaceKeywordMark(
+                                x.entries.join(' '),
+                                searchKeyword,
+                              )}
+                            </MultiClamp>
                           </span>
                         </div>
                       </div>

@@ -1,3 +1,4 @@
+import { useCallbackPrompt } from '@hooks/useCallbackPrompt';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';
 
@@ -7,7 +8,7 @@ import { ManagementComponent } from './ManagementComponent';
 
 export const ScenarioComponent = () => {
   const dispatch = useDispatch();
-
+  const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(false);
   dispatch(initBotBuilder());
 
   return (
