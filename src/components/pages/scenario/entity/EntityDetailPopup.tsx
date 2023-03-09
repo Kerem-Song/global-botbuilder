@@ -342,7 +342,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <FormItem error={errors.entries?.[0]?.representativeEntry}>
                             <Input
                               {...register('entries.0.representativeEntry')}
-                              placeholder="Input entity name"
+                              placeholder="Input Regular expression"
                               onChange={(e) => {
                                 setValue('entries.0.representativeEntry', e.target.value);
                                 setIsActive(true);
