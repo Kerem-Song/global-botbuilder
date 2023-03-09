@@ -72,8 +72,9 @@ export const BotBuilderHeader = () => {
   const { scenarioSaveAsync } = useScenarioClient();
 
   const { schema } = useYupValidation();
-
+  console.log(selectedScenario);
   const handleScenarioSave = async () => {
+    console.log(selectedScenario);
     if (selectedScenario) {
       const results = await Promise.all(
         nodes.map(async (n) => {

@@ -1,6 +1,6 @@
 import { usePrompt } from '@hooks/usePrompt';
 import { initBotBuilder } from '@store/botbuilderSlice';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useBeforeUnload } from 'react-router-dom';
 
@@ -10,7 +10,10 @@ import { ManagementComponent } from './ManagementComponent';
 
 export const ScenarioComponent = () => {
   const dispatch = useDispatch();
-  dispatch(initBotBuilder());
+  useEffect(() => {
+    dispatch(initBotBuilder());
+  }, []);
+
   usePrompt();
   return (
     <div className="scenarioWrapper">
