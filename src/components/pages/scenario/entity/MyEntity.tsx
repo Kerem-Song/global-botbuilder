@@ -115,11 +115,9 @@ export const MyEntity = () => {
                         />
                       </div>
                       <div className="entries">
-                        <div>
-                          <span className="entry">
-                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
-                          </span>
-                        </div>
+                        <span className="entry">
+                          {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
+                        </span>
                       </div>
                     </div>
                   </Col>
