@@ -482,8 +482,9 @@ export const UtteranceDetail = () => {
               size="small"
               search
               placeholder="Input search text"
-              onBlur={(e) => setSearchWord(e.target.value)}
-              onPressEnter={(value) => setSearchWord(value!)}
+              value={searchWord}
+              onSearch={(value) => setSearchWord(value!)}
+              onChange={(e) => setSearchWord(e.target.value)}
             />
           </FormItem>
           <Button

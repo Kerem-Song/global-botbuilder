@@ -39,7 +39,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [entryInputError, setEntryInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const { confirm, error } = useSystemModal();
+  const { confirm, error: modalError } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -184,13 +184,22 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entryGroupid: entryData.entryGroupid,
       };
 
-      const res = await entryGroupMutate.mutateAsync(modifyEntry);
-
-      if (res) {
-        console.log('modifyEntry', res);
-        reset();
-        handleIsOpen(false);
-      }
+      entryGroupMutate.mutate(modifyEntry, {
+        onSuccess: (res) => {
+          console.log(res);
+          reset();
+          handleIsOpen(false);
+        },
+        onError: (error) => {
+          console.log('modifyError', error);
+          if (error) {
+            modalError({
+              title: '중복 엔티티명',
+              description: <span>중복된 엔티티명입니다.</span>,
+            });
+          }
+        },
+      });
     } else {
       const newEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -199,13 +208,22 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entries: entryData.entries,
       };
 
-      const res = await entryGroupMutate.mutateAsync(newEntry);
-
-      if (res) {
-        console.log('newEntry', res);
-        reset();
-        handleIsOpen(false);
-      }
+      entryGroupMutate.mutate(newEntry, {
+        onSuccess: (res) => {
+          console.log(res);
+          reset();
+          handleIsOpen(false);
+        },
+        onError: (error) => {
+          console.log('newError', error);
+          if (error) {
+            modalError({
+              title: '중복 엔티티명',
+              description: <span>중복된 엔티티명입니다.</span>,
+            });
+          }
+        },
+      });
     }
   };
 
@@ -294,6 +312,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             setValue('name', e.target.value);
                             setIsActive(true);
                           }}
+                          onPressEnter={() => {
+                            return;
+                          }}
                           showCount
                           maxLength={20}
                         />
@@ -343,7 +364,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <FormItem error={errors.entries?.[0]?.representativeEntry}>
                             <Input
                               {...register('entries.0.representativeEntry')}
-                              placeholder="Input entity name"
+                              placeholder="Input Regular expression"
                               onChange={(e) => {
                                 setValue('entries.0.representativeEntry', e.target.value);
                                 setIsActive(true);
