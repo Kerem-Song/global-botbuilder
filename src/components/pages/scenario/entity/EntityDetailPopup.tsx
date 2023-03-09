@@ -187,12 +187,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       entryGroupMutate.mutate(modifyEntry, {
         onSuccess: (res) => {
           console.log(res);
-          reset();
-          handleIsOpen(false);
-        },
-        onError: (error) => {
-          console.log('modifyError', error);
-          if (error) {
+          if (res && res.isSuccess) {
+            reset();
+            handleIsOpen(false);
+          } else {
             modalError({
               title: '중복 엔티티명',
               description: <span>중복된 엔티티명입니다.</span>,
@@ -211,12 +209,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       entryGroupMutate.mutate(newEntry, {
         onSuccess: (res) => {
           console.log(res);
-          reset();
-          handleIsOpen(false);
-        },
-        onError: (error) => {
-          console.log('newError', error);
-          if (error) {
+          if (res && res.isSuccess) {
+            reset();
+            handleIsOpen(false);
+          } else {
             modalError({
               title: '중복 엔티티명',
               description: <span>중복된 엔티티명입니다.</span>,
