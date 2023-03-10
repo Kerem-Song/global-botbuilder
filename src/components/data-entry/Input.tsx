@@ -37,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     ...inputProps
   } = args;
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
       return;
     }
@@ -47,10 +47,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         onSearch?.(value);
         if (onPressEnter || onSearch) {
           e.preventDefault();
+          e.stopPropagation();
         }
         break;
       case 'Escape':
         onPressEsc?.();
+        if (onPressEsc) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         break;
     }
   };
@@ -78,7 +83,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       {...inputProps}
       //value={value}
       onChange={onChangeHandler}
-      onKeyDown={args.onPressEnter || args.onSearch ? handleKeyDown : undefined}
+      onKeyUp={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
       ref={ref}
       aria-invalid={isError}
       aria-required={required}

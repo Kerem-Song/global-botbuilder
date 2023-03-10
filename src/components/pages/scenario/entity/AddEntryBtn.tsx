@@ -119,10 +119,10 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
           onChange={handleInputChange}
           onBlur={handleInputConfirm}
           onPressEnter={handleInputConfirm}
-          // onPressEsc={() => {
-          //   setInputVisible(false);
-          //   setInputValue('');
-          // }}
+          onPressEsc={() => {
+            setInputVisible(false);
+            setInputValue('');
+          }}
         />
       ) : (
         <div className="addBtnWrapper">
