@@ -103,6 +103,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const { fields, prepend, remove } = useFieldArray({ control, name: 'entries' });
 
   const { field: isRegexField } = useController({ name: 'isRegex', control });
+  const { field: nameField } = useController({ name: 'name', control });
 
   const entryGroupName = useRef<HTMLInputElement>(null);
 
@@ -300,22 +301,27 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     </Col>
                     <Col flex="auto">
                       <FormItem error={errors.name}>
-                        <Input
-                          {...register('name')}
-                          placeholder="Input Intent Name"
-                          onChange={(e) => {
-                            if (e.target.value.indexOf(' ') > -1) {
-                              lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
-                              setValue('name', e.target.value.replaceAll(' ', ''));
-                            }
-                            setIsActive(true);
-                          }}
-                          onPressEnter={() => {
-                            return;
-                          }}
-                          showCount
-                          maxLength={20}
-                        />
+                        <>
+                          <Input
+                            placeholder="Input Intent Name"
+                            showCount
+                            maxLength={20}
+                            value={nameField.value}
+                            onChange={(e) => {
+                              if (e.target.value.indexOf(' ') > -1) {
+                                lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
+                              }
+                              e.target.value = e.target.value.replaceAll(' ', '');
+                              nameField.onChange(e);
+                              setIsActive(true);
+                            }}
+                            onPressEnter={() => {
+                              return;
+                            }}
+                            ref={nameField.ref}
+                            onBlur={nameField.onBlur}
+                          />
+                        </>
                       </FormItem>
                     </Col>
                   </Row>
