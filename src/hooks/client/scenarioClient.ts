@@ -17,6 +17,7 @@ import { ActionCreators } from 'redux-undo';
 import { lunaToast } from '../../modules/lunaToast';
 import { nodeHelper } from '../../modules/nodeHelper';
 import { useHttp } from '../useHttp';
+import { SCENARIO_LIST_SELECT_QUERY_KEY } from './scenarioSelectClient';
 
 const SCENARIO_LIST = 'scenario-list';
 
@@ -76,7 +77,7 @@ export const useScenarioClient = () => {
     if (!botId) {
       return undefined;
     }
-    return queryClient.getQueryData<IScenarioModel[]>(['scenario-list', botId]);
+    return queryClient.getQueryData<IScenarioModel[]>([SCENARIO_LIST, botId]);
   };
 
   const getScenario = (scenarioId?: string) => {
@@ -117,7 +118,8 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
-        queryClient.invalidateQueries(['scenario-list', botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
     },
@@ -132,6 +134,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
+        queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
         queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
@@ -155,6 +158,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
+        queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
         queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
@@ -184,6 +188,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
+        queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
         queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
       }
@@ -225,6 +230,7 @@ export const useScenarioClient = () => {
     });
 
     if (res) {
+      queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
       queryClient.invalidateQueries([SCENARIO_LIST, botId]);
       return res;
     }
@@ -244,5 +250,6 @@ export const useScenarioClient = () => {
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioSortAsync: scenarioSortMutate.mutateAsync,
     scenarioSaving: scenarioSaveMutate.isLoading,
+    scenarioCreating: scenarioCreateMutate.isLoading,
   };
 };

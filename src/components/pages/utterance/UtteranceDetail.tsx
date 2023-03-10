@@ -5,6 +5,7 @@ import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
 import { util } from '@modules/util';
@@ -37,7 +38,7 @@ export const UtteranceDetail = () => {
     checkIntentDuplicationMutate,
     checkUtteranceDuplicationMutate,
   } = useUtteranceClient();
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList } = useScenarioSelectClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
 
   const list = getScenarioList();

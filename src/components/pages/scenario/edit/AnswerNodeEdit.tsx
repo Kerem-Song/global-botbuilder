@@ -4,6 +4,7 @@ import { usePage } from '@hooks';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { IGNodeEditModel, VariableKind } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import classnames from 'classnames';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -47,6 +48,9 @@ export const AnswerNodeEdit = () => {
       if (name === 'view.useUtteranceParam' && type === 'change') {
         if (!value.view?.useUtteranceParam) {
           setValue('view.utteranceParam', undefined);
+          if (value.view?.quicks?.length === 0) {
+            setValue('view.quicks', [nodeDefaultHelper.createDefaultAnswerQickItem(0)]);
+          }
         }
       }
     });

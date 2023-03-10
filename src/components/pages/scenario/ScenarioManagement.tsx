@@ -4,8 +4,7 @@ import { usePage, useRootState } from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC, useEffect, useState } from 'react';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 
@@ -13,12 +12,12 @@ export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];
 }> = ({ scenarios }) => {
   const { t } = usePage();
-  const dispatch = useDispatch();
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
   const [isActivated, setIsActivated] = useState(false);
+  const [tempScenarioNames, setTempScenarioNames] = useState<number[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { scenarioCreateAsync } = useScenarioClient();
+  const { scenarioCreateAsync, scenarioCreating } = useScenarioClient();
 
   const basicScenarioList = useRootState(
     (state) => state.botBuilderReducer.basicScenarios,
@@ -28,15 +27,19 @@ export const ScenarioManagement: FC<{
     setIsActivated(e.target.checked);
   };
 
+  useEffect(() => {
+    setTempScenarioNames([]);
+  }, [scenarios]);
+
   const handleNewScenario = async () => {
     if (token) {
       const regex = new RegExp('^scenario [0-9]*$');
       const filtered = scenarios?.filter((x) => regex.test(x.alias));
       let index = 1;
-      if (filtered) {
+      if (filtered || tempScenarioNames) {
         const regex = /[^0-9]/g;
-        const results = filtered.map((x) => Number(x.alias.replace(regex, '')));
-        const max = Math.max(...results);
+        const results = filtered?.map((x) => Number(x.alias.replace(regex, ''))) || [];
+        const max = Math.max(...results, ...tempScenarioNames);
         for (let i = 1; i <= max + 1; i++) {
           if (!results.includes(i)) {
             index = i;
@@ -44,7 +47,7 @@ export const ScenarioManagement: FC<{
           }
         }
       }
-
+      setTempScenarioNames([...tempScenarioNames, index]);
       await scenarioCreateAsync({
         token,
         scenarioName: `scenario ${index}`,
@@ -87,7 +90,17 @@ export const ScenarioManagement: FC<{
       </div>
 
       <div className="newScenarioBtn">
-        <Button block type="primary" onClick={handleNewScenario}>
+        <Button
+          block
+          type="primary"
+          onClick={(e) => {
+            if (tempScenarioNames.length > 0) {
+              return;
+            }
+            handleNewScenario();
+          }}
+          disabled={scenarioCreating || tempScenarioNames.length > 0}
+        >
           + {t(`ADD_A_NEW_SCENARIO_BTN`)}
         </Button>
       </div>

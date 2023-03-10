@@ -1,5 +1,6 @@
 import { Input } from '@components/data-entry';
 import { useScenarioClient } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IScenarioModel } from '@models';
 import classNames from 'classnames';
 import { useRef, useState } from 'react';
@@ -12,7 +13,7 @@ interface IScenarioSelectorFormValue {
 export const ScenarioSelector = ({ children }: any) => {
   const [userInput, setUserInput] = useState<string | null>(null);
   const scenarioSelectorRef = useRef<HTMLDivElement | null>(null);
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const [scenarioList, setScenarioList] = useState<IScenarioModel[] | undefined>(data);
 

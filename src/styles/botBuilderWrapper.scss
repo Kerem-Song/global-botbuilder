@@ -121,7 +121,6 @@
   background: $gray150 !important;
   border-left: 1px solid $gray200;
 
-  
   .wrapper::-webkit-scrollbar {
     display: none;
   }
@@ -338,17 +337,17 @@
             transform: translate((50%, 50%));
             width: 100%;
             text-align: center;
-            
+
             img {
               max-width: rem(200);
               max-height: rem(180);
-            }           
+            }
           }
 
           &.small {
             width: rem(64);
             height: rem(64);
-            
+
             img {
               max-width: rem(64);
               max-height: rem(64);

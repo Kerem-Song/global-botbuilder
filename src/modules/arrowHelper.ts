@@ -26,6 +26,8 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.ANSWER_NODE,
   NODE_TYPES.BASIC_CARD_NODE,
   NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+  NODE_TYPES.PRODUCT_CARD_NODE,
+  NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
   NODE_TYPES.CONDITION_NODE,
   NODE_TYPES.RETRY_CONDITION_NODE,
   NODE_TYPES.PARAMETER_SET_NODE,
@@ -116,8 +118,7 @@ export const arrowHelper = {
 
     return result;
   },
-
-  createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
+  createHasButtonsArrow: (nodeId: string, view: IHasButtonViewBase): IArrow[] => {
     const result: IArrow[] = [];
     view.buttons?.forEach((b) => {
       if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
@@ -132,18 +133,45 @@ export const arrowHelper = {
     });
     return result;
   },
-  createBasicCardCarouselArrow: (
+  createHasButtonsCarouselArrow: (
     nodeId: string,
-    view: IBasicCardCarouselView,
+    view: IHasButtonCarouselViewBase,
   ): IArrow[] => {
     const result: IArrow[] = [];
     result.push(
       ...view.childrenViews
-        .map((view) => arrowHelper.createBasicCardArrow(nodeId, view))
+        .map((view) => arrowHelper.createHasButtonsArrow(nodeId, view))
         .flat(1),
     );
     return result;
   },
+  // createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
+  //   const result: IArrow[] = [];
+  //   view.buttons?.forEach((b) => {
+  //     if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
+  //       result.push({
+  //         start: `${NEXT_BUTTON_PREFIX}${b.id}`,
+  //         updateKey: `${NODE_PREFIX}${nodeId}`,
+  //         end: `${NODE_PREFIX}${b.actionValue}`,
+  //         isNextNode: true,
+  //         type: 'blue',
+  //       });
+  //     }
+  //   });
+  //   return result;
+  // },
+  // createBasicCardCarouselArrow: (
+  //   nodeId: string,
+  //   view: IBasicCardCarouselView,
+  // ): IArrow[] => {
+  //   const result: IArrow[] = [];
+  //   result.push(
+  //     ...view.childrenViews
+  //       .map((view) => arrowHelper.createHasButtonsArrow(nodeId, view))
+  //       .flat(1),
+  //   );
+  //   return result;
+  // },
   editArrows: (node: INodeEditModel, arrows: IArrow[]): IArrow[] | undefined => {
     if (!editableArrowNodeTypes.includes(node.type)) {
       return undefined;
@@ -173,15 +201,19 @@ export const arrowHelper = {
         );
         break;
       case NODE_TYPES.BASIC_CARD_NODE:
+      case NODE_TYPES.LIST_CARD_NODE:
+      case NODE_TYPES.PRODUCT_CARD_NODE:
         arrows.push(
-          ...arrowHelper.createBasicCardArrow(node.id, node.view as IBasicCardView),
+          ...arrowHelper.createHasButtonsArrow(node.id, node.view as IHasButtonViewBase),
         );
         break;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         arrows.push(
-          ...arrowHelper.createBasicCardCarouselArrow(
+          ...arrowHelper.createHasButtonsCarouselArrow(
             node.id,
-            node.view as IBasicCardCarouselView,
+            node.view as IHasButtonCarouselViewBase,
           ),
         );
         break;
@@ -213,41 +245,43 @@ export const arrowHelper = {
       }
     }
 
-    if (node.typeName === NODE_TYPES.ANSWER_NODE) {
-      const answerNode: IAnswerNode = node as IAnswerNode;
-      arrows.push(...arrowHelper.createAnswerNodeArrow(answerNode.id, answerNode.view));
-    }
+    switch (node.typeName) {
+      case NODE_TYPES.ANSWER_NODE:
+        arrows.push(
+          ...arrowHelper.createAnswerNodeArrow(node.id, node.view as IAnswerView),
+        );
+        break;
+      case NODE_TYPES.CONDITION_NODE:
+        arrows.push(
+          ...arrowHelper.createConditionNodeArrow(node.id, node.view as IConditionView),
+        );
+        break;
 
-    if (node.typeName === NODE_TYPES.CONDITION_NODE) {
-      const conditionNode: IConditionNode = node as IConditionNode;
-      arrows.push(
-        ...arrowHelper.createConditionNodeArrow(conditionNode.id, conditionNode.view),
-      );
-    }
-
-    if (node.typeName === NODE_TYPES.RETRY_CONDITION_NODE) {
-      const retryConditionNode: IRetryConditionNode = node as IRetryConditionNode;
-      arrows.push(
-        ...arrowHelper.createRetryConditionNodeArrow(
-          retryConditionNode.id,
-          retryConditionNode.view,
-        ),
-      );
-    }
-
-    if (node.typeName === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE) {
-      const cardCarouselNode: IBasicCardCarouselNode = node as IBasicCardCarouselNode;
-      arrows.push(
-        ...arrowHelper.createBasicCardCarouselArrow(
-          cardCarouselNode.id,
-          cardCarouselNode.view,
-        ),
-      );
-    }
-
-    if (node.typeName === NODE_TYPES.BASIC_CARD_NODE) {
-      const cardNode: IBasicCardNode = node as IBasicCardNode;
-      arrows.push(...arrowHelper.createBasicCardArrow(cardNode.id, cardNode.view));
+      case NODE_TYPES.RETRY_CONDITION_NODE:
+        arrows.push(
+          ...arrowHelper.createRetryConditionNodeArrow(
+            node.id,
+            node.view as IRetryConditionView,
+          ),
+        );
+        break;
+      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
+      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
+        arrows.push(
+          ...arrowHelper.createHasButtonsCarouselArrow(
+            node.id,
+            node.view as IHasButtonCarouselViewBase,
+          ),
+        );
+        break;
+      case NODE_TYPES.BASIC_CARD_NODE:
+      case NODE_TYPES.LIST_CARD_NODE:
+      case NODE_TYPES.PRODUCT_CARD_NODE:
+        arrows.push(
+          ...arrowHelper.createHasButtonsArrow(node.id, node.view as IHasButtonViewBase),
+        );
+        break;
     }
 
     return arrows;
