@@ -20,9 +20,9 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   const [value, setValue] = useState<string | undefined>(args.value || args.defaultValue);
 
-  // useEffect(() => {
-  //   setValue(args.value || args.defaultValue);
-  // }, [args.value, args.defaultValue, args]);
+  useEffect(() => {
+    setValue(args.value || args.defaultValue);
+  }, [args.value, args.defaultValue, args]);
 
   const {
     showCount,
@@ -84,7 +84,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       aria-required={required}
     />
   );
-
   if (isWrapping) {
     return (
       <span className={inputWrapClassName}>
