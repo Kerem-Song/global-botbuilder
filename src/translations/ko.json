@@ -101,6 +101,8 @@
     "PRODUCT_NODE_PRODUCT_NAME": "상품명",
     "PRODUCT_NODE_PRICE": "가격",
     "PRODUCT_NODE_DISCOUNT": "할인",
+    "PRODUCT_NODE_SET_PRODUCT_NAME": "상품명 입력",
+    "PRODUCT_NODE_SET_BRAND_NAME": "업체명 입력",
     "LIST": "리스트",
     "LIST_NODE_HEAD_TITLE_SETTING": "머릿글 설정",
     "LIST_NODE_HEAD_IMAGE_SETTING": "헤드 이미지 설정",

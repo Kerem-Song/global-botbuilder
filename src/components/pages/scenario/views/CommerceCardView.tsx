@@ -1,6 +1,7 @@
 import { Card } from '@components/data-display';
 import { Divider } from '@components/layout';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
+import { usePage } from '@hooks';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
@@ -13,6 +14,7 @@ export interface ICommerceCardViewProps {
 }
 export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, view }) => {
   const discountPriceCss = classNames('discountPrice', { discounted: true });
+  const { t } = usePage();
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
     square: squareMode,
@@ -41,7 +43,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             {view.profileName ? (
               <span>{view.profileName}</span>
             ) : (
-              <span className="empty">Enter Brand Name</span>
+              <span className="empty">{t(`PRODUCT_NODE_SET_BRAND_NAME`)}</span>
             )}
           </div>
           <Divider className="commerceDivider" />
@@ -51,16 +53,17 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       <div className="priceWrapper">
         {view.retailPrice !== view.salePrice && (
           <div>
-            <span className="discounted">{view.retailPrice}</span>
+            <span className="discounted">{view.retailPrice.toLocaleString()}</span>
             <span className="discount">
-              {view.discountPrice}
-              <span className="currency">{view.currencyUnit}</span> Discount
+              {view.discountPrice.toLocaleString()}
+              <span className="currency">{view.currencyUnit}</span>{' '}
+              {t(`PRODUCT_NODE_DISCOUNT`)}
             </span>
           </div>
         )}
         <div className="prices">
           <p>
-            {view.salePrice}
+            {view.salePrice.toLocaleString()}
             <span className="currency">{view.currencyUnit}</span>
           </p>
         </div>
@@ -71,7 +74,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           {view.description ? (
             <MultiClamp clamp={2}>{view.description}</MultiClamp>
           ) : (
-            <p>Enter Product Name</p>
+            <p>{t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}</p>
           )}
         </div>
       ) : null}

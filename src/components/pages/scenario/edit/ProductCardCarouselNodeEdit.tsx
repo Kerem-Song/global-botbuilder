@@ -91,6 +91,7 @@ export const ProductCardCarouselNodeEdit = () => {
   const {
     register,
     getValues,
+    setValue,
     watch,
     control,
     formState: { errors },
@@ -110,6 +111,13 @@ export const ProductCardCarouselNodeEdit = () => {
     console.log('product card caro index', index);
   }, [index]);
 
+  const salePrice =
+    Number(watch(`view.childrenViews.${index}.retailPrice`)) -
+    Number(watch(`view.childrenViews.${index}.discountPrice`));
+
+  useEffect(() => {
+    setValue(`view.childrenViews.${index}.salePrice`, salePrice);
+  });
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
@@ -198,20 +206,18 @@ export const ProductCardCarouselNodeEdit = () => {
                     <Row justify="space-between">
                       <Col span={17}>
                         <FormItem
-                          error={
-                            errors.view &&
-                            errors.view.childrenViews &&
-                            errors.view.childrenViews[index]?.retailPrice
-                          }
+                          error={errors.view?.childrenViews?.[index]?.retailPrice}
                         >
                           <InputWithTitleCounter
                             label={t(`PRODUCT_NODE_PRICE`)}
                             required={true}
-                            {...register(`view.childrenViews.${index}.retailPrice`)}
+                            {...register(`view.childrenViews.${index}.retailPrice`, {
+                              valueAsNumber: true,
+                            })}
                           />
                         </FormItem>
                       </Col>
-                      <Col>
+                      <Col className="productSelectorWrapper">
                         <Select
                           {...currencyField}
                           options={currencyOptions}
@@ -228,16 +234,12 @@ export const ProductCardCarouselNodeEdit = () => {
                     </Row>
                   </div>
 
-                  <FormItem
-                    error={
-                      errors.view &&
-                      errors.view.childrenViews &&
-                      errors.view.childrenViews[index]?.salePrice
-                    }
-                  >
+                  <FormItem error={errors.view?.childrenViews?.[index]?.discountPrice}>
                     <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_DISCOUNT`)}
-                      {...register(`view.childrenViews.${index}.salePrice`)}
+                      {...register(`view.childrenViews.${index}.discountPrice`, {
+                        valueAsNumber: true,
+                      })}
                     />
                   </FormItem>
                 </Space>
