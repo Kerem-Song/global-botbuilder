@@ -18,7 +18,7 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   synonym,
   representativeEntry,
 }) => {
-  const { control, register, getValues } = useFormContext();
+  const { control, register, getValues, reset } = useFormContext();
   const { fields, prepend, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
@@ -54,7 +54,10 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   };
 
   const handleInputConfirm = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue || !inputValue.trim()) {
+      setInputVisible(false);
+      return;
+    }
 
     if (representativeEntry) {
       if (representativeEntry.toLowerCase() === inputValue.toLowerCase()) {
@@ -116,6 +119,10 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
           onChange={handleInputChange}
           onBlur={handleInputConfirm}
           onPressEnter={handleInputConfirm}
+          // onPressEsc={() => {
+          //   setInputVisible(false);
+          //   setInputValue('');
+          // }}
         />
       ) : (
         <div className="addBtnWrapper">
