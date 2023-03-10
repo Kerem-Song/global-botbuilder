@@ -388,7 +388,7 @@ export const arrowHelper = {
   validateArrows: (startId: string, endId: string, nodes: INode[], isNext?: boolean) => {
     // 자기 자신으로 연결한 경우
     if (startId === endId) {
-      return '자기 자신을 연결했음.';
+      return '잘못된 연결입니다.';
     }
 
     const startNode = nodes.find((x) => x.id === startId.substring(5));
