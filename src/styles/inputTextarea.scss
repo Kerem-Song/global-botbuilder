@@ -40,3 +40,13 @@
     line-height: rem(14);
   }
 }
+
+.actValueIsUttrInput {
+  max-height: rem(34);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.actValueIsUttrInput::-webkit-scrollbar {
+  display: none;
+}

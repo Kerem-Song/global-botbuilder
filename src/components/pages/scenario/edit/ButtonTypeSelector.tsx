@@ -90,7 +90,7 @@ export const ButtonTypeSelector = ({
   isCarousel,
   carouselIndex,
 }: IButtonTypeSelector) => {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
   const { field } = useController({
     name: isCarousel
       ? `view.childrenViews.${carouselIndex}.buttons.${index}.actionType`
@@ -107,6 +107,12 @@ export const ButtonTypeSelector = ({
       onChange={(options: any) => {
         field.onChange(options?.value);
         setButtonType(options.value);
+        setValue(
+          isCarousel
+            ? `view.childrenViews.${carouselIndex}.buttons.${index}.actionValue`
+            : `view.buttons.${index}.actionValue`,
+          '',
+        );
       }}
       minMenuHeight={500}
     />

@@ -80,7 +80,7 @@ export const useYupValidation = () => {
         then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
       })
       .when('title', {
-        is: (title: string) => title.length > 0,
+        is: (title: string) => title?.length > 0,
         then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       })
       .when('title', {

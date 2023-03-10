@@ -149,7 +149,10 @@ export const ListCardNodeEdit = () => {
       {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
       <Collapse label={'버튼'} useSwitch={false}>
         {values.view && values.view.buttons && (
-          <ButtonsEdit imageRatio={watch(`view.imageCtrl.aspectRatio`)} />
+          <ButtonsEdit
+            imageRatio={watch(`view.imageCtrl.aspectRatio`)}
+            nodeId={values.id}
+          />
         )}
       </Collapse>
     </>

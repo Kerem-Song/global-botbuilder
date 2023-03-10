@@ -116,6 +116,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   index={index}
                   isCarousel={true}
                   imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
+                  nodeId={values.id}
                 />
               )}
           </Collapse>

@@ -1,5 +1,5 @@
 import { Button, Input, Space } from '@components';
-import { FormItem } from '@components/data-entry';
+import { FormItem, InputTextarea } from '@components/data-entry';
 import { usePage } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
@@ -26,10 +26,12 @@ export const ButtonsEdit = ({
   index,
   isCarousel,
   imageRatio,
+  nodeId,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
+  nodeId?: string;
 }) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
@@ -116,21 +118,28 @@ export const ButtonsEdit = ({
                 ? `view.buttons.${i}.actionType`
                 : `view.childrenViews.${index}.buttons.${i}.actionType`,
             ) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <FormItem
-                error={
-                  index === undefined
-                    ? errors.view?.buttons?.[i]?.actionValue
-                    : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
-                }
-              >
-                <SelectNode
-                  fieldName={
+              <>
+                <span className="subLabel">
+                  {t(`SELECT_NODE`)}
+                  <span className="required"> *</span>
+                </span>
+                <FormItem
+                  error={
                     index === undefined
-                      ? `view.buttons.${i}.actionValue`
-                      : `view.childrenViews.${index}.buttons.${i}.actionValue`
+                      ? errors.view?.buttons?.[i]?.actionValue
+                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                   }
-                />
-              </FormItem>
+                >
+                  <SelectNode
+                    fieldName={
+                      index === undefined
+                        ? `view.buttons.${i}.actionValue`
+                        : `view.childrenViews.${index}.buttons.${i}.actionValue`
+                    }
+                    nodeId={nodeId}
+                  />
+                </FormItem>
+              </>
             )}
             {watch(
               index === undefined
@@ -139,7 +148,8 @@ export const ButtonsEdit = ({
             ) === ACTION_TYPES.URL && (
               <>
                 <span className="subLabel">
-                  URL 입력<span className="required"> *</span>
+                  {t(`SET_URL`)}
+                  <span className="required"> *</span>
                 </span>
                 <FormItem
                   error={
@@ -154,6 +164,43 @@ export const ButtonsEdit = ({
                         ? `view.buttons.${i}.actionValue`
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
+                  />
+                </FormItem>
+              </>
+            )}
+            {watch(
+              index === undefined
+                ? `view.buttons.${i}.actionType`
+                : `view.childrenViews.${index}.buttons.${i}.actionType`,
+            ) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (
+              <>
+                <FormItem
+                  error={
+                    index === undefined
+                      ? errors.view?.buttons?.[i]?.actionValue
+                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
+                  }
+                >
+                  <InputTextarea
+                    className="actValueIsUttrInput"
+                    label={t(`SET_MESSAGE`)}
+                    showCount
+                    maxLength={14}
+                    isLight={true}
+                    required={true}
+                    placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
+                    {...register(
+                      index === undefined
+                        ? `view.buttons.${i}.actionValue`
+                        : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                    )}
+                    textLength={
+                      watch(
+                        index === undefined
+                          ? `view.buttons.${i}.actionValue`
+                          : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                      )?.length || 0
+                    }
                   />
                 </FormItem>
               </>

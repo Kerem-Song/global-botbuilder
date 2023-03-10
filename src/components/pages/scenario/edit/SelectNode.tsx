@@ -12,9 +12,11 @@ interface IReactSelect {
 export const SelectNode = ({
   fieldName,
   defaultValue,
+  nodeId,
 }: {
   fieldName: string;
   defaultValue?: string;
+  nodeId?: string;
 }) => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
@@ -25,6 +27,7 @@ export const SelectNode = ({
   });
 
   const scenarios: IReactSelect[] = [...nodes]
+    .filter((item) => item.id !== nodeId)
     .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
     .map((item) => ({
       value: item.id,
