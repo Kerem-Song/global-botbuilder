@@ -13,6 +13,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, useRootState, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -54,12 +55,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const schema = yup.object({
     representativeEntry: yup
       .string()
-      .trim()
+      .required('필수 입력 항목입니다.')
       .matches(
-        /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
+        /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
         `특수문자, 이모지는 입력할 수 없습니다.`,
-      )
-      .required(),
+      ),
   });
 
   const regexSchema = yup.object({
@@ -70,6 +70,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     .object({
       name: yup
         .string()
+        .trim()
         .required('엔티티 명은 필수입니다.')
         .matches(
           /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
@@ -95,6 +96,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     control,
     handleSubmit,
     watch,
+    getValues,
     setValue,
     formState: { errors },
   } = formMethods;
@@ -265,7 +267,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       }
     }
   };
-  console.log(errors);
   return (
     <ReactModal className="entityModal detail" isOpen={isOpen}>
       <div className="detail header">
@@ -305,7 +306,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           {...register('name')}
                           placeholder="Input Intent Name"
                           onChange={(e) => {
-                            setValue('name', e.target.value);
+                            setValue('name', e.target.value.replaceAll(' ', ''));
                             setIsActive(true);
                           }}
                           onPressEnter={() => {
@@ -313,6 +314,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           }}
                           showCount
                           maxLength={20}
+                          onBlur={isEntryInputError}
                         />
                       </FormItem>
                     </Col>
@@ -397,23 +399,19 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     <Space direction="vertical" gap={10}>
                       <Row gap={8}>
                         <Col flex="auto">
-                          <>
-                            <Input
-                              placeholder="Input Representative entry."
-                              size="normal"
-                              ref={entryGroupName}
-                              onPressEnter={handleRegisterEntry}
-                              onChange={isEntryInputError}
-                              onBlur={isEntryInputError}
-                              isError={
-                                entryInputError || errors.entries?.message ? true : false
-                              }
-                            ></Input>
-                            <span className="error-message">{entryInputError}</span>
-                            <span className="error-message">
-                              {errors.entries?.message}
-                            </span>
-                          </>
+                          <Input
+                            placeholder="Input Representative entry."
+                            size="normal"
+                            ref={entryGroupName}
+                            onPressEnter={handleRegisterEntry}
+                            onChange={isEntryInputError}
+                            onBlur={isEntryInputError}
+                            isError={
+                              entryInputError || errors.entries?.message ? true : false
+                            }
+                          ></Input>
+                          <span className="error-message">{entryInputError}</span>
+                          <span className="error-message">{errors.entries?.message}</span>
                         </Col>
                         <Col>
                           <Button
