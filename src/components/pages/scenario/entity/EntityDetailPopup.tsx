@@ -402,6 +402,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <Input
                             placeholder="Input Representative entry."
                             size="normal"
+                            maxLength={125}
+                            showCount
                             ref={entryGroupName}
                             onPressEnter={handleRegisterEntry}
                             onChange={isEntryInputError}

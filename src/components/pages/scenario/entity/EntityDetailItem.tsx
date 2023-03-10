@@ -82,6 +82,8 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                     <Input
                       {...field}
                       size="normal"
+                      maxLength={125}
+                      showCount
                       className={classNames({
                         'input-normal': !errors.entries?.[index]?.representativeEntry,
                         'input-error': errors.entries?.[index]?.representativeEntry,
