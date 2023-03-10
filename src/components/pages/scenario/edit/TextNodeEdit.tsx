@@ -12,15 +12,16 @@ export const TextNodeEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
+
   console.log(getValues());
   return (
     <>
       <div className="node-item-wrap">
         <FormItem error={errors.view && errors.view?.text}>
           <InputTextarea
+            className="textNodeTextArea"
             label={t(`TEXT`)}
             required={true}
-            style={{ minHeight: '100px', maxHeight: '320px' }}
             autoHeight
             showCount
             maxLength={1000}
