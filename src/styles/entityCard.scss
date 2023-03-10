@@ -54,6 +54,7 @@
           line-height: rem(18);
           .entry {
             color: $gray500;
+            word-break: break-word;
           }
         }
         &:hover {

@@ -129,7 +129,7 @@ export const MyEntity = () => {
                       <div className="entries">
                         <span className="entry">
                           <MultiClamp clamp={4}>
-                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
+                            {util.replaceKeywordMark(x.entries.join(', '), searchKeyword)}
                           </MultiClamp>
                         </span>
                       </div>

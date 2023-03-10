@@ -46,11 +46,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     if (res) {
       dispatch(initMessages());
       setDebugMeta(undefined);
+      setText('');
     }
   };
 
   const handleClose = () => {
     handleIsOpen(false);
+    setText('');
   };
 
   const handleText = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -154,7 +156,9 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 value={text}
                 onChange={handleText}
                 placeholder={t('ENTER_TEXT')}
-                onPressEnter={(value: any) => handleSend(value)}
+                onPressEnter={(value: any) => {
+                  handleSend(value);
+                }}
               />
               <Button
                 style={{
