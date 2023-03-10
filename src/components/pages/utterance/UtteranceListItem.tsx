@@ -82,19 +82,19 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     return false;
   };
 
-  const getUtteranceSummary = (utteranceSummary: string) => {
-    const arr = utteranceSummary.split(',');
-    const filterArr = arr.filter((item, index) => index < arr.length - 1);
-    const checkedStr =
-      filterArr?.length > 5
-        ? filterArr
-            .splice(filterArr.length - 5, filterArr.length)
-            .reverse()
-            .toString()
-            .concat('...')
-        : filterArr.reverse().toString();
-    return checkedStr;
-  };
+  // const getUtteranceSummary = (utteranceSummary: string) => {
+  //   const arr = utteranceSummary.split(',');
+  //   const filterArr = arr.filter((item, index) => index < arr.length - 1);
+  //   const checkedStr =
+  //     filterArr?.length > 5
+  //       ? filterArr
+  //           .splice(filterArr.length - 5, filterArr.length)
+  //           .reverse()
+  //           .toString()
+  //           .concat('...')
+  //       : filterArr.reverse().toString();
+  //   return checkedStr;
+  // };
 
   return (
     <>
@@ -159,7 +159,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         initialData?.pages.map((v) => {
           const pages = v.items;
           return pages.map((x, i) => {
-            const checkedStr = getUtteranceSummary(x.utteranceSummary);
             const foundFlow = data?.find((item) => item.id === x.flowId);
             return (
               <tr
@@ -184,8 +183,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 </td>
                 <td role="presentation" className="utteranceList utterance">
                   {searchData?.searchWord
-                    ? util.replaceKeywordMark(checkedStr, searchData?.searchWord)
-                    : checkedStr}
+                    ? util.replaceKeywordMark(x.utteranceSummary, searchData?.searchWord)
+                    : x.utteranceSummary}
                 </td>
                 <td className="utteranceList icon">
                   <button
