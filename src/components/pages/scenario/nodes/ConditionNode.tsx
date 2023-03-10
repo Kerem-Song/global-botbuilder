@@ -17,7 +17,7 @@ export const ConditionNode: FC<IConditionNodeProps> = ({ node }) => {
           return (
             <p key={i}>
               {i === 0 || view.join === undefined ? ' ' : ConditionJoin[view.join]} if{' '}
-              {item.op1} {ConditionOperator[item.operator]} {item.op2}
+              {item.op1} {ConditionOperator[item.operator]} {item.op2 || '{{ }}'}
             </p>
           );
         })}
