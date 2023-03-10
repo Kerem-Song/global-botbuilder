@@ -52,7 +52,7 @@ export const QuicksEdit = () => {
               error={errors.view && errors.view.quicks && errors.view.quicks[i]?.label}
             >
               <InputWithTitleCounter
-                label={t(`BUTTON_NAME`)}
+                label={t(`QUICK_REPLY_BUTTON_NAME`)}
                 required={true}
                 showCount={true}
                 maxLength={14}
@@ -62,7 +62,7 @@ export const QuicksEdit = () => {
               />
             </FormItem>
             <div>
-              <span className="subLabel">{t(`BUTTON_TYPE`)}</span>
+              <span className="subLabel">{t(`QUICK_REPLY_BUTTON_TYPE`)}</span>
               <span className="required"> *</span>
             </div>
             <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
