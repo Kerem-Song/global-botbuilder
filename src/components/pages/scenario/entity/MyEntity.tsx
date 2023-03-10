@@ -116,7 +116,7 @@ export const MyEntity = () => {
                     >
                       <div className="cardHeader">
                         <span className="title">
-                          {util.replaceKeywordMark(x.usingName, searchKeyword)}
+                          {util.replaceKeywordMark(x.usingName, searchKeywordParameter)}
                         </span>
                         <button
                           className="icDelete"
@@ -129,7 +129,10 @@ export const MyEntity = () => {
                       <div className="entries">
                         <span className="entry">
                           <MultiClamp clamp={4}>
-                            {util.replaceKeywordMark(x.entries.join(', '), searchKeyword)}
+                            {util.replaceKeywordMark(
+                              x.entries.join(', '),
+                              searchKeywordParameter,
+                            )}
                           </MultiClamp>
                         </span>
                       </div>

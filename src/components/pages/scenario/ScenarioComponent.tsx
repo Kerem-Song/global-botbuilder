@@ -1,8 +1,8 @@
+import { useRootState } from '@hooks';
 import { usePrompt } from '@hooks/usePrompt';
 import { initBotBuilder } from '@store/botbuilderSlice';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useBeforeUnload } from 'react-router-dom';
 
 import { Botbuilder } from './BotBuilder';
 import { BotBuilderHeader } from './BotBuilderHeader';
@@ -10,11 +10,12 @@ import { ManagementComponent } from './ManagementComponent';
 
 export const ScenarioComponent = () => {
   const dispatch = useDispatch();
+  const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
   useEffect(() => {
     dispatch(initBotBuilder());
   }, []);
 
-  usePrompt();
+  usePrompt(changed);
   return (
     <div className="scenarioWrapper">
       <ManagementComponent />

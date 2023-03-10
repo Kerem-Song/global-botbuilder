@@ -5,6 +5,7 @@ import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -35,16 +36,7 @@ export const ListCardNodeEdit = () => {
     console.log('handle add list btn');
     // e.preventDefault();
     if (fields.length < 5) {
-      append({
-        id: ID_GEN.generate(ID_TYPES.CTRL),
-        typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
-        description: '',
-        imageUrl: '',
-        title: '',
-        seq: 0,
-        actionType: '',
-        actionValue: '',
-      });
+      append(nodeDefaultHelper.createDefaultListCardItem(fields.length));
     } else {
       //modal alert
       console.log('5개까지 가능');

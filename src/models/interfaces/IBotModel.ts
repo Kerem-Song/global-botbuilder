@@ -5,15 +5,10 @@ export interface IBotModel {
   botName: string;
   snsKind: SnsKind;
   activated: boolean;
-  lastDeployUTC?: string;
   lastDeployUTCTime?: string;
-  createUTC?: string;
-  createUTCTime?: string;
   updateUTC?: string;
-  updateUTCTime?: string;
+  lastUpdateUTC?: string;
   channelInfos?: IChannelInfo[];
-  prodChannel?: string;
-  testChannel?: string;
   removeCancelExpireUtc?: string;
 }
 

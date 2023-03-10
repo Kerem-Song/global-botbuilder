@@ -1,6 +1,7 @@
 import { icUtteranceEmpty } from '@assets';
 import { Col, Row } from '@components';
 import { usePage, useScenarioClient, useSystemModal } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
 import { IDeleteIntent, IIntentListItem, IPagingItems, ISearchData } from '@models';
@@ -25,7 +26,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
   const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
   const {

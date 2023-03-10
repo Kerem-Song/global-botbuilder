@@ -34,7 +34,7 @@ export function usePrompt(when = true) {
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
   useEffect(() => {
     if (when) {
-      window.onbeforeunload = function () {
+      window.onbeforeunload = async function (e) {
         return 'message';
       };
     }

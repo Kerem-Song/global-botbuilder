@@ -6,7 +6,7 @@ import { useYupValidation } from '@hooks/useYupValidation';
 import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { setInvalidateNode } from '@store/botbuilderSlice';
+import { setEditDrawerToggle, setInvalidateNode } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -65,6 +65,9 @@ export const BotBuilderHeader = () => {
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
+  const isEditDrawOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
+  );
 
   const cardNum = nodes.length;
 
@@ -74,7 +77,10 @@ export const BotBuilderHeader = () => {
   const { schema } = useYupValidation();
   console.log(selectedScenario);
   const handleScenarioSave = async () => {
-    console.log(selectedScenario);
+    if (isEditDrawOpen) {
+      return;
+    }
+
     if (selectedScenario) {
       const results = await Promise.all(
         nodes.map(async (n) => {
@@ -204,7 +210,7 @@ export const BotBuilderHeader = () => {
           small
           type="primary"
           onClick={handleScenarioSave}
-          disabled={!changed || scenarioSaving}
+          disabled={!changed || scenarioSaving || isEditDrawOpen}
         >
           {tc(`SAVE`)}
         </Button>

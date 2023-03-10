@@ -23,9 +23,12 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
                   )}
                 </Col>
                 <Col>
-                  <span className="created">{`${tc('intlDateTime', {
-                    val: model.lastDeployUTC ? new Date(model.lastDeployUTC) : '',
-                  })}`}</span>
+                  <span className="created">
+                    {model.lastUpdateUTC
+                      ? new Date(model.lastUpdateUTC).toLocaleDateString()
+                      : ''}
+                    ,
+                  </span>
                 </Col>
               </Row>
               <div className="bot-name">{model.botName}</div>

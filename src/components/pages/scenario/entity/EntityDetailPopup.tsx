@@ -96,7 +96,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     control,
     handleSubmit,
     watch,
-    getValues,
     setValue,
     formState: { errors },
   } = formMethods;
@@ -177,6 +176,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
+    console.log(entryData);
     if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -188,7 +188,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
       entryGroupMutate.mutate(modifyEntry, {
         onSuccess: (res) => {
-          console.log(res);
           if (res && res.isSuccess) {
             reset();
             handleIsOpen(false);
@@ -210,7 +209,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
       entryGroupMutate.mutate(newEntry, {
         onSuccess: (res) => {
-          console.log(res);
           if (res && res.isSuccess) {
             reset();
             handleIsOpen(false);
@@ -306,7 +304,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           {...register('name')}
                           placeholder="Input Intent Name"
                           onChange={(e) => {
-                            setValue('name', e.target.value.replaceAll(' ', ''));
+                            if (e.target.value.indexOf(' ') > -1) {
+                              lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
+                              setValue('name', e.target.value.replaceAll(' ', ''));
+                            }
                             setIsActive(true);
                           }}
                           onPressEnter={() => {
@@ -314,7 +315,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           }}
                           showCount
                           maxLength={20}
-                          onBlur={isEntryInputError}
                         />
                       </FormItem>
                     </Col>
@@ -402,6 +402,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <Input
                             placeholder="Input Representative entry."
                             size="normal"
+                            maxLength={125}
+                            showCount
                             ref={entryGroupName}
                             onPressEnter={handleRegisterEntry}
                             onChange={isEntryInputError}

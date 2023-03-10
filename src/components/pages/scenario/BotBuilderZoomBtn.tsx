@@ -10,6 +10,9 @@ export const BotBuilderZoomBtn = () => {
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const past = useRootState((state) => state.makingNodeSliceReducer.past).length !== 0;
+  const future =
+    useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
 
   const handleZoomOut = () => {
     dispatch(zoomOut());
@@ -18,6 +21,9 @@ export const BotBuilderZoomBtn = () => {
   const handleZoomIn = () => {
     dispatch(zoomIn());
   };
+
+  console.log('past', past);
+  console.log('future', future);
 
   return (
     <Row className="botBuilderCanvasBtn">
@@ -30,6 +36,7 @@ export const BotBuilderZoomBtn = () => {
         <Button
           small
           className="undo"
+          disabled={!past}
           onClick={() => {
             updateLineAll();
             dispatch(ActionCreators.undo());
@@ -38,6 +45,7 @@ export const BotBuilderZoomBtn = () => {
         <Button
           small
           className="redo"
+          disabled={!future}
           onClick={() => {
             updateLineAll();
             dispatch(ActionCreators.redo());

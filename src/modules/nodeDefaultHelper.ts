@@ -14,6 +14,7 @@ import {
   IBasicCardView,
   IConditionView,
   IListCardCarouselView,
+  IListCardItem,
   IListCardView,
   IOtherFlowRedirectView,
   IParameterSetParams,
@@ -167,13 +168,27 @@ export const nodeDefaultHelper = {
     };
     return result;
   },
+  createDefaultListCardItem: (seq?: number) => {
+    const result: IListCardItem = {
+      id: ID_GEN.generate(ID_TYPES.CTRL),
+      typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
+      description: '',
+      imageUrl: '',
+      title: '',
+      seq: seq || 0,
+      actionType: '',
+      actionValue: '',
+    };
+
+    return result;
+  },
   createDefaultListCardView: () => {
     const result: IListCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_VIEW,
       header: '',
       seq: 0,
-      items: [],
+      items: [nodeDefaultHelper.createDefaultListCardItem()],
       useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',

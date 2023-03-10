@@ -1,5 +1,6 @@
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { useScenarioClient, useUtteranceClient } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, ISearchData } from '@models';
 import { FC, useEffect, useState } from 'react';
 import Select from 'react-select';
@@ -24,7 +25,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const { invalidateIntentQuery } = useUtteranceClient();
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
   useEffect(() => {

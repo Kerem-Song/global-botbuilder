@@ -1,11 +1,10 @@
 import { FormItem } from '@components/data-entry';
 import { Space } from '@components/layout';
-import { useScenarioClient } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router';
 import Select from 'react-select';
 
 import { reactSelectStyle } from './ButtonTypeSelector';
@@ -13,10 +12,8 @@ import { reactSelectStyle } from './ButtonTypeSelector';
 export const OtherFlowRedirectNodeEdit = () => {
   const [scenarioList, setScenarioList] = useState<IReactSelect[]>([]);
 
-  const { botId } = useParams();
-  const { getCachedScenarioList } = useScenarioClient();
-  const data = getCachedScenarioList(botId);
-
+  const { getScenarioList } = useScenarioSelectClient();
+  const { data } = getScenarioList();
   const {
     getValues,
     control,
@@ -33,6 +30,7 @@ export const OtherFlowRedirectNodeEdit = () => {
   console.log('data in ofr', data);
 
   useEffect(() => {
+    console.log('###########################', data);
     if (data) {
       setScenarioList(
         data?.map((item) => ({

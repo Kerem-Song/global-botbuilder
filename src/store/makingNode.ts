@@ -203,6 +203,13 @@ export const makingNodeSlice = createSlice({
             removeArrows.forEach((arrow) => {
               const index = arrows.indexOf(arrow);
               arrows.splice(index, 1);
+
+              const nodeId = arrow.updateKey || arrow.start;
+              const node = state.nodes.find((x) => x.id === nodeId.substring(5));
+
+              if (node) {
+                arrowHelper.syncArrow(arrow.start, undefined, node);
+              }
             });
             state.arrows = arrows;
           }
