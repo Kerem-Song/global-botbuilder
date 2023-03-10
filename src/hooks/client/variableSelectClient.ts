@@ -19,7 +19,7 @@ export const useVariableSelectClient = () => {
           },
         )
         .then((res) => res.data.result),
-    { refetchOnWindowFocus: false, refetchOnMount: false },
+    { refetchOnWindowFocus: false, refetchOnMount: true },
   );
 
   return {

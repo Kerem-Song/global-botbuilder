@@ -27,7 +27,7 @@ import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { lunaToast } from '@modules/lunaToast';
-import { setClipBoard, setGuideStartNode } from '@store/botbuilderSlice';
+import { setClipBoard, setGuideStartNode, setSelected } from '@store/botbuilderSlice';
 import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC, KeyboardEvent } from 'react';
@@ -114,6 +114,7 @@ export const Node: FC<INodeProps> = ({
       return;
     }
     dispatch(removeItem(nodeId));
+    dispatch(setSelected());
     lunaToast.success(tc('DELETE_MESSAGE'));
   };
 

@@ -3,6 +3,7 @@ import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
 import { useRootState, useScenarioClient } from '@hooks';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import {
   getNodeKind,
@@ -130,8 +131,8 @@ export const NodeLinkPopUpMenu = ({
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
   const guideStart = useRootState((state) => state.botBuilderReducer.savedGuideInfo);
 
-  const { getCachedScenarioList } = useScenarioClient();
-  const data = getCachedScenarioList(botId);
+  const { getScenarioList } = useScenarioSelectClient();
+  const { data } = getScenarioList();
 
   const {
     register,

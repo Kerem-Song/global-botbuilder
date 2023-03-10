@@ -27,13 +27,12 @@ export const useScenarioSelectClient = () => {
           )
           .then((res) => {
             const scenarios = res.data.result;
-            const fallbackScenario = scenarios.find((x) => x.isFallbackFlow);
             const startScenario = scenarios.find((x) => x.isStartFlow);
             const restScenarios = scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
               .filter((x) => x.activated)
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
-            return [fallbackScenario!, startScenario!, ...restScenarios];
+            return [startScenario!, ...restScenarios];
           }),
       {
         refetchOnWindowFocus: false,
