@@ -50,3 +50,13 @@
 .actValueIsUttrInput::-webkit-scrollbar {
   display: none;
 }
+
+.textNodeTextArea {
+  max-height: rem(320);
+  overflow-y: auto;
+  resize: none;
+}
+
+.textNodeTextArea::-webkit-scrollbar {
+  display: none;
+}

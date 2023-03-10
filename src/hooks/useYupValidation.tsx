@@ -8,7 +8,7 @@ const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
 export const useYupValidation = () => {
   const { t } = usePage();
 
-  const FILE_SIZE = 2 * 1024 * 1024; //2mb제한
+  const FILE_SIZE = 3.2 * 1024 * 1024; //2mb제한
 
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능(Line 기준)
 

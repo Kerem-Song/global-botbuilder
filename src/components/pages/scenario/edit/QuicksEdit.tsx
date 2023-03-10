@@ -1,5 +1,5 @@
 import { Button, Input, Space } from '@components';
-import { FormItem } from '@components/data-entry';
+import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
@@ -52,7 +52,7 @@ export const QuicksEdit = () => {
               error={errors.view && errors.view.quicks && errors.view.quicks[i]?.label}
             >
               <InputWithTitleCounter
-                label={t(`BUTTON_NAME`)}
+                label={t(`QUICK_REPLY_BUTTON_NAME`)}
                 required={true}
                 showCount={true}
                 maxLength={14}
@@ -62,7 +62,7 @@ export const QuicksEdit = () => {
               />
             </FormItem>
             <div>
-              <span className="subLabel">{t(`BUTTON_TYPE`)}</span>
+              <span className="subLabel">{t(`QUICK_REPLY_BUTTON_TYPE`)}</span>
               <span className="required"> *</span>
             </div>
             <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
@@ -79,6 +79,25 @@ export const QuicksEdit = () => {
                 }
               >
                 <Input {...register(`view.quicks.${i}.actionValue`)} />
+              </FormItem>
+            )}
+            {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (
+              <FormItem
+                error={
+                  errors.view && errors.view.quicks && errors.view.quicks[i]?.actionValue
+                }
+              >
+                <InputTextarea
+                  className="actValueIsUttrInput"
+                  label={t(`SET_MESSAGE`)}
+                  showCount
+                  maxLength={14}
+                  isLight={true}
+                  required={true}
+                  placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
+                  {...register(`view.quicks.${i}.actionValue`)}
+                  textLength={watch(`view.quicks.${i}.actionValue`)?.length || 0}
+                />
               </FormItem>
             )}
             <div className="deleteBtn">

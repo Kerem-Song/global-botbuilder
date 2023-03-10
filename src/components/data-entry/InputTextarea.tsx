@@ -100,7 +100,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
           onInput={handleTextareaHeight}
           placeholder={args.placeholder}
           maxLength={args.maxLength}
-          ref={ref}
+          ref={textareaRef}
         />
       </>
     );
