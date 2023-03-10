@@ -76,6 +76,7 @@ export const Collapse: FC<CollapseProps> = ({
                     ? `view.useUtteranceParam`
                     : `view.useImageCtrl`,
                 )}
+                onChange={() => field === 'useImageCtrl' && index && isCollapsedModal}
               />
             )}
           </Col>
