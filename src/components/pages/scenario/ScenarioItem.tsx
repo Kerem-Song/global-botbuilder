@@ -1,4 +1,5 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
+import { Tooltip } from '@components/navigation/Tooltip';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
@@ -166,30 +167,32 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           }}
         />
       ) : (
-        <Row align="center" style={{ flexWrap: 'nowrap' }}>
-          <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
-            {item.alias}
-          </Col>
-          <Col className="scenarioListSwitch">
-            <Switch onChange={handleSwitch} checked={item.activated} />
-          </Col>
-          <Col>
-            <Popper
-              placement="right-start"
-              offset={[5, 10]}
-              popperItems={scenarioMenus}
-              onChange={(m) => {
-                m.data?.action?.();
-              }}
-              popup
-              popupList
-            >
-              <Button small shape="ghost">
-                <i className="fa-solid fa-ellipsis-vertical" />
-              </Button>
-            </Popper>
-          </Col>
-        </Row>
+        <Tooltip tooltip={item.alias} placement="right">
+          <Row align="center" style={{ flexWrap: 'nowrap' }}>
+            <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
+              {item.alias}
+            </Col>
+            <Col className="scenarioListSwitch">
+              <Switch onChange={handleSwitch} checked={item.activated} />
+            </Col>
+            <Col>
+              <Popper
+                placement="right-start"
+                offset={[5, 10]}
+                popperItems={scenarioMenus}
+                onChange={(m) => {
+                  m.data?.action?.();
+                }}
+                popup
+                popupList
+              >
+                <Button small shape="ghost">
+                  <i className="fa-solid fa-ellipsis-vertical" />
+                </Button>
+              </Popper>
+            </Col>
+          </Row>
+        </Tooltip>
       )}
     </Card>
   );
