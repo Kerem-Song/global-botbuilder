@@ -1,5 +1,5 @@
 import { icImg } from '@assets';
-import { usePage, useRootState } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { imageUploadClient } from '@hooks/client/uploadImageClient';
 import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
 import { ID_TYPES } from '@modules';
@@ -21,10 +21,17 @@ export const ImageFileUploader = ({
   imageRatio,
 }: IImageSetting) => {
   const { t } = usePage();
-  const { getValues, setValue, watch } = useFormContext();
+  const {
+    getValues,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();
+  const { error, info } = useSystemModal();
+
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const handleImageCtrlIdPath = () => {
@@ -118,9 +125,24 @@ export const ImageFileUploader = ({
     }
   };
 
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
+    const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
     if (e.target.files) {
       console.log('file', e.target.files);
+      if (e.target.files[0].size > FILE_SIZE) {
+        await error({
+          title: t(`VALIDATION_FILE_SIZE_TITLE`),
+          description: t(`VALIDATION_FILE_SIZE`),
+        });
+
+        return;
+      } else if (!SUPPORTED_FORMATS.includes(e.target.files[0]?.type)) {
+        await error({
+          title: t(`VALIDATION_FILE_TYPE_TITLE`),
+          description: t(`VALIDATION_FILE_TYPE`),
+        });
+      }
       setValue(handleImageCtrlIdPath().imageFilePath, e.target.files);
     }
   };
@@ -132,6 +154,7 @@ export const ImageFileUploader = ({
     }
   }, [watch(handleImageCtrlIdPath().imageFilePath)]);
 
+  console.log('errors in image:', errors);
   return (
     <>
       <label

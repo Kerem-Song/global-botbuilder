@@ -113,7 +113,9 @@ export const ProductCardCarouselNodeEdit = () => {
 
   const salePrice =
     Number(watch(`view.childrenViews.${index}.retailPrice`)) -
-    Number(watch(`view.childrenViews.${index}.discountPrice`));
+    (watch(`view.childrenViews.${index}.discountPrice`)
+      ? Number(watch(`view.childrenViews.${index}.discountPrice`))
+      : 0);
 
   useEffect(() => {
     setValue(`view.childrenViews.${index}.salePrice`, salePrice);

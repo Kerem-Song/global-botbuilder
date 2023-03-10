@@ -104,7 +104,8 @@ export const ProductCardNodeEdit = () => {
   });
 
   const salePrice =
-    Number(watch(`view.retailPrice`)) - Number(watch(`view.discountPrice`));
+    Number(watch(`view.retailPrice`)) -
+    (watch(`view.discountPrice`) ? Number(watch(`view.discountPrice`)) : 0);
 
   useEffect(() => {
     setValue(`view.salePrice`, salePrice);
@@ -202,7 +203,9 @@ export const ProductCardNodeEdit = () => {
               <FormItem error={errors.view && errors.view.discountPrice}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
-                  {...register(`view.discountPrice`, { valueAsNumber: true })}
+                  {...register(`view.discountPrice`, {
+                    valueAsNumber: true,
+                  })}
                 />
               </FormItem>
             </Space>

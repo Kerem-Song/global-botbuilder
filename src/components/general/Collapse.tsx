@@ -55,6 +55,12 @@ export const Collapse: FC<CollapseProps> = ({
       if (result) {
         setIsCollapsed(false);
         setValue(`view.useImageCtrl`, false);
+        setValue(
+          index !== undefined
+            ? `view.childrenViews.${index}.imageCtrl`
+            : `view.imageCtrl`,
+          { imageUrl: '' },
+        );
       }
     }
   };

@@ -8,7 +8,7 @@ const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
 export const useYupValidation = () => {
   const { t } = usePage();
 
-  const FILE_SIZE = 3.2 * 1024 * 1024; //2mb제한
+  const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
 
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능(Line 기준)
 
@@ -55,12 +55,12 @@ export const useYupValidation = () => {
     .test(
       'fileSize',
       t(`VALIDATION_FILE_SIZE`),
-      (value) => !value || (value && value[0].size <= FILE_SIZE),
+      (value) => !value || (value && value[0]?.size <= FILE_SIZE),
     )
     .test(
       'filetype',
       t(`VALIDATION_FILE_TYPE`),
-      (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type)),
+      (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
     );
 
   const basicCardCarouselNodeEditSchemaForScript = yup.object().shape({
@@ -165,17 +165,19 @@ export const useYupValidation = () => {
     retailPrice: yup
       .number()
       .transform((value, originalValue) => {
-        return originalValue === '' ? undefined : value;
+        return originalValue === '' ? undefined : Number(value);
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .required(t(`VALIDATION_REQUIRED`)),
-    salePrice: yup
+    discountPrice: yup
       .number()
+      .nullable()
       .transform((value, originalValue) => {
-        return originalValue === '' ? undefined : value;
+        console.log('value@@,:', value, originalValue);
+        return originalValue === '' ? undefined : Number(value);
       })
-      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
-      .required(t(`VALIDATION_REQUIRED`)),
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),
+
     currencyUnit: yup.mixed().oneOf(['USD', 'KRW', 'JPY']),
     buttons: buttonsEditSchema,
   });
