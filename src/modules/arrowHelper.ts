@@ -1,20 +1,11 @@
 import { IArrow, INode, INodeEditModel, NODE_TYPES, NodeKind } from '@models';
 import {
   ACTION_TYPES,
-  IAnswerNode,
   IAnswerView,
-  IBasicCardCarouselNode,
-  IBasicCardCarouselView,
-  IBasicCardNode,
-  IBasicCardView,
-  IConditionNode,
   IConditionView,
   IHasButtonCarouselViewBase,
   IHasButtonViewBase,
-  IListCardCarouselView,
-  IListCardView,
   INodeBase,
-  IRetryConditionNode,
   IRetryConditionView,
   ITrueFalseViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
@@ -28,6 +19,8 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
   NODE_TYPES.PRODUCT_CARD_NODE,
   NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+  NODE_TYPES.LIST_CARD_NODE,
+  NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
   NODE_TYPES.CONDITION_NODE,
   NODE_TYPES.RETRY_CONDITION_NODE,
   NODE_TYPES.PARAMETER_SET_NODE,
@@ -131,6 +124,7 @@ export const arrowHelper = {
         });
       }
     });
+    console.log('createbuttonsArrow', result);
     return result;
   },
   createHasButtonsCarouselArrow: (
@@ -194,6 +188,7 @@ export const arrowHelper = {
       }
     }
 
+    console.log('node.type', node.type);
     switch (node.type) {
       case NODE_TYPES.ANSWER_NODE:
         arrows.push(
