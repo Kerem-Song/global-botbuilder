@@ -399,8 +399,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                 entryDetails?.data?.entryGroupType === 0 ? (
                   <Card
                     radius="normal"
-                    bodyStyle={{ padding: '20px' }}
-                    style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
+                    bodyStyle={{ padding: '20px', height: '269px', overflowY: 'scroll' }}
+                    style={{ border: '1px solid #DCDCDC' }}
                   >
                     <Space direction="vertical" gap={10}>
                       <Row gap={8}>
@@ -411,7 +411,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             maxLength={125}
                             showCount
                             ref={entryGroupName}
-                            onPressEnter={handleRegisterEntry}
+                            onPressEnter={() =>
+                              handleRegisterEntry(entryGroupName.current?.value)
+                            }
                             onChange={isEntryInputError}
                             onBlur={isEntryInputError}
                             isError={
