@@ -165,7 +165,11 @@ export const useYupValidation = () => {
       .trim()
       .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
       .required(t(`VALIDATION_REQUIRED`)),
-    description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    description: yup
+      .string()
+      .trim()
+      .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
+      .required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
       .number()
       .transform((value, originalValue) => {
