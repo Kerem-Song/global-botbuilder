@@ -167,7 +167,7 @@ export const ProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
                   showCount={true}
-                  maxLength={15}
+                  maxLength={30}
                   required={true}
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}

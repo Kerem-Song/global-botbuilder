@@ -195,7 +195,7 @@ export const ProductCardCarouselNodeEdit = () => {
                     <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
                       showCount={true}
-                      maxLength={15}
+                      maxLength={30}
                       required={true}
                       {...register(`view.childrenViews.${index}.description`)}
                       textLength={
