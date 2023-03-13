@@ -4,8 +4,8 @@ import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
-import { useEffect, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
@@ -22,7 +22,6 @@ export const BasicCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
-  console.log('basic card node edit', values);
 
   return (
     <>

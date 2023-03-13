@@ -52,6 +52,10 @@ export const useYupValidation = () => {
   const imageFileEditSchema = yup
     .mixed()
     .nullable()
+    .when('useImageCtrl', {
+      is: true,
+      then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    })
     .test(
       'fileSize',
       t(`VALIDATION_FILE_SIZE`),
