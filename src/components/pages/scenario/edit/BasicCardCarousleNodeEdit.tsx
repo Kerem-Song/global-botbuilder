@@ -36,11 +36,7 @@ export const BasicCardCarousleNodeEdit = () => {
   useEffect(() => {
     console.log('basic card caro index', index);
   }, [index]);
-  console.log(
-    'watch@@',
-    watch(`view.childrenViews.${index}.title`),
-    watch(`view.childrenViews.${index}.useImageCtrl`),
-  );
+
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (

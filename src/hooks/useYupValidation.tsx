@@ -72,7 +72,7 @@ export const useYupValidation = () => {
       .string()
       .nullable()
       .trim()
-      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+      .max(40, t(`VALIDATION_STRING_LIMIT`, { maxCount: 40 })),
     description: yup
       .string()
       .when('useImageCtrl', {
