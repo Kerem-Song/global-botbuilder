@@ -88,7 +88,7 @@ export const SortableButtonCtrlContainer = ({
 
   return (
     <Row justify="flex-start" align="flex-start">
-      <Col span={22}>
+      <Col span={22} className="sortableBtn">
         <DndContext
           onDragEnd={handleDragEnd}
           sensors={sensors}

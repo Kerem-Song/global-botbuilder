@@ -132,9 +132,11 @@
 
       .buttonWrapper {
         display: block;
-        & :first-child {
-          display: block !important;
+
+        .sortableBtn {
+          min-width: 100% !important;
         }
+
         div:has(.nextNodeWrapper) {
           display: none;
         }
