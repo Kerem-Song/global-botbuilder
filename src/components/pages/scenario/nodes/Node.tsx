@@ -160,15 +160,6 @@ export const Node: FC<INodeProps> = ({
       },
     },
     {
-      id: 'paste',
-      name: 'To Paste',
-      type: 'icon-front',
-      icon: icCardPaste,
-      data: {
-        action: handlePasteCard,
-      },
-    },
-    {
       id: 'delete',
       name: 'Delete',
       type: 'icon-front',
@@ -196,9 +187,9 @@ export const Node: FC<INodeProps> = ({
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
         return nodeMenu;
       case NODE_TYPES.INTENT_NODE:
-        return [nodeMenu[2]];
+        return [];
       default:
-        return nodeMenu.slice(0, 4);
+        return nodeMenu.slice(0, 3);
     }
   };
 
