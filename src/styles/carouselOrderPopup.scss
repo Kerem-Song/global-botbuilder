@@ -135,6 +135,9 @@
         & :first-child {
           display: block !important;
         }
+        div:has(.nextNodeWrapper) {
+          display: none;
+        }
       }
 
       .title {
