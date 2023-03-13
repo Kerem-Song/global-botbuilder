@@ -125,6 +125,7 @@ export const CarouselOrderPopup: FC<{
                 shape="ghost"
                 className="carouselBtn confirm"
                 onClick={handleConfirm}
+                disabled={nodeView.childrenViews === carouselNode}
               >
                 {t('CONFIRM_CAROUSEL_POPUP')}
               </Button>

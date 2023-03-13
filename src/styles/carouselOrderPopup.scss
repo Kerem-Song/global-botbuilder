@@ -71,10 +71,12 @@
 
           &:hover {
             background-color: $primary700;
+            border: rem(1) solid $primary700;
           }
 
           &:disabled {
             background-color: $primary200;
+            border: rem(1) solid $primary200;
           }
         }
         
