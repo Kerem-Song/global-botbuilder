@@ -180,5 +180,22 @@
     "BOT_NAME_PLACEHOLDER": "봇 이름을 입력해주세요.",
     "COPY_BOT_ID_MESSAGE": "봇 ID가 복사되었습니다.",
     "BASIC_SETTING": "기본 설정"
+  },
+  "deployment": {
+    "TITLE": "배포",
+    "REFERENCE_TIME": "기준 시간",
+    "DEPLOY_TEST_CHANNEL": "테스트 채널 배포하기",
+    "DEPLOY_OPERATIONAL_CHANNEL": "운영 채널 배포하기",
+    "DEPLOY_NUMBER": "배포 번호",
+    "CHANNEL_TYPE": "채널 타입",
+    "CHANNEL_NAME": "채널명",
+    "DEPLOYMENT_DATE_AND_TIME": "배포 일시",
+    "OPERATOR": "작업자",
+    "OPERATOR_ACCOUNT": "작업자(계정)",
+    "DEPLOYMENT_STATUS": "배포 상태",
+    "MEMO": "메모",
+    "DEPLOY_NOTES": "메모가 없습니다.",
+    "DEPLOYING_MESSAGE": "배포 중에는 취소가 불가합니다.\n잠시만 기다려주세요.",
+    "SUCCESS": "성공"
   }
 }

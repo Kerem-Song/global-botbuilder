@@ -267,7 +267,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   };
   return (
-    <ReactModal className="entityModal detail" isOpen={isOpen}>
+    <ReactModal
+      style={{ overlay: { display: 'flex' } }}
+      className="entityModal detail"
+      isOpen={isOpen}
+    >
       <div className="detail header">
         <div className="listBtn">
           <Button icon={icPrev} onClick={handleClose}>

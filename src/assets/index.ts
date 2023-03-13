@@ -1,4 +1,6 @@
 import icAdd from '@assets/icons/ic_add.svg';
+import icBackActive from '@assets/icons/ic_back_active.svg';
+import icBackInactive from '@assets/icons/ic_back_inactive.svg';
 import icBrandName from '@assets/icons/ic_brand_name_default.svg';
 import icBrandNameSelected from '@assets/icons/ic_brand_name_selected.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
@@ -58,6 +60,8 @@ import icListMenuHover from '@assets/icons/ic_list_menu_hover.svg';
 import icLnbHide from '@assets/icons/ic_lnb_hide.svg';
 import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icMinus from '@assets/icons/ic_minus.svg';
+import icNextActive from '@assets/icons/ic_next_active.svg';
+import icNextInactive from '@assets/icons/ic_next_inactive.svg';
 import icNode from '@assets/icons/ic_node.svg';
 import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
 import icOtherFlowRedirect from '@assets/icons/ic_other_flow_redirect.svg';
@@ -125,6 +129,8 @@ import imgLinebot from '@assets/images/img_linebot.svg';
 
 export {
   icAdd,
+  icBackActive,
+  icBackInactive,
   icBrandName,
   icBrandNameSelected,
   icBtnTemple,
@@ -186,6 +192,8 @@ export {
   icLnbHide,
   icLnbShow,
   icMinus,
+  icNextActive,
+  icNextInactive,
   icNode,
   icNodeBottom,
   icOtherFlowRedirect,

@@ -1,0 +1,272 @@
+.deployContainer {
+  position: relative;
+  padding: rem(20);
+  padding-top: rem(40);
+  max-width: rem(1140);
+  margin-left: auto;
+  margin-right: auto;
+  .title {
+    width: 100%;
+    font-size: rem(16);
+    font-weight: 700;
+    color: $grayBlack;
+    margin-bottom: rem(29.5);
+  }
+  .deployInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .referenceTime {
+      width: fit-content;
+      line-height: rem(19);
+      font-size: rem(16);
+      font-weight: 500;
+      color: $grayBlack;
+      margin-bottom: rem(20);
+    }
+  }
+  .deployHistoryListWrap {
+    margin-top: rem(20);
+    max-width: rem(1140);
+    border: 1px solid $gray200;
+    border-radius: rem(8);
+    .deployHistoryListTable {
+      width: 100%;
+      border-radius: rem(8);
+      overflow: hidden;
+      border-collapse: collapse;
+      thead,
+      tbody {
+        tr {
+          text-align: left;
+          height: rem(40);
+          background-color: $gray150;
+          display: flex;
+          align-items: center;
+          color: #636364;
+          font-weight: 700;
+          font-size: rem(13);
+          line-height: rem(16);
+          .deployHistoryList {
+            padding-left: rem(20);
+          }
+          .deployNumber {
+            width: rem(94);
+          }
+          .channelType {
+            width: rem(85);
+          }
+          .channelName {
+            width: rem(180);
+          }
+          .deployDateTime {
+            width: rem(185);
+          }
+          .account {
+            width: rem(187);
+            white-space: pre-wrap;
+          }
+          .status {
+            width: rem(141);
+            display: flex;
+            justify-content: center;
+            .success {
+              width: fit-content;
+              padding: rem(2) rem(6);
+              background: rgba(3, 191, 78, 0.15);
+              color: #03bf4e;
+              border-radius: rem(4);
+              &.failed {
+                background-color: #ffe4e9;
+                color: #d80034;
+              }
+            }
+          }
+          .memo {
+            width: rem(187);
+          }
+          .text {
+            width: rem(187);
+            height: rem(32);
+          }
+        }
+        .list {
+          background-color: $grayWhite;
+          height: rem(54);
+          border-bottom: 1px solid $gray150;
+          cursor: pointer;
+          &:last-child {
+            border-bottom: none;
+          }
+          &:hover {
+            background-color: $primary100;
+          }
+        }
+      }
+    }
+  }
+  .pageBtns {
+    margin-top: rem(40);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .prevBtn {
+      margin-right: rem(8);
+      border: 1px solid $gray200;
+      width: rem(26);
+      height: rem(26);
+      padding: 0;
+      background-color: $grayWhite;
+      border-radius: rem(4);
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .pageNumBtns {
+      .pageNumBtn {
+        margin-right: rem(3);
+        width: rem(26);
+        height: rem(26);
+        padding: 0;
+        border-radius: rem(4);
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .nextBtn {
+      margin-left: rem(8);
+      border: 1px solid $gray200;
+      width: rem(26);
+      height: rem(26);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background-color: $grayWhite;
+      border-radius: rem(4);
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.deployingModal {
+  width: rem(330);
+  height: rem(240);
+  margin: auto;
+  border-radius: rem(12);
+  border: rem(1) solid $gray200;
+  background-color: $grayWhite;
+
+  .contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: rem(40) rem(10);
+
+    .loading {
+      width: rem(50);
+      height: rem(50);
+    }
+
+    .title {
+      margin-top: rem(20);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .text {
+      margin-top: rem(8);
+      text-align: center;
+      font-weight: 400;
+      font-size: 14px;
+      color: $gray700;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+.deployDetailModal {
+  width: rem(520);
+  height: rem(430);
+  margin: auto;
+  border-radius: rem(12);
+  border: rem(1) solid $gray200;
+  background-color: $grayWhite;
+  .title {
+    padding: rem(14) rem(20) rem(3) rem(20);
+  }
+  .contents {
+    padding: 0 rem(20);
+    .deployNumber {
+      margin: rem(18) rem(0);
+    }
+    .deployInfo {
+      .info {
+        width: 100%;
+        height: rem(17);
+        margin-bottom: rem(13);
+        display: flex;
+        .infoTitle {
+          width: rem(116);
+          margin-right: rem(16);
+          color: $gray500;
+        }
+        .infoContent {
+          .success {
+            width: fit-content;
+            padding: rem(2) rem(6);
+            background: rgba(3, 191, 78, 0.15);
+            color: #03bf4e;
+            border-radius: rem(4);
+            &.failed {
+              background-color: #ffe4e9;
+              color: #d80034;
+            }
+          }
+        }
+      }
+    }
+    .deployNotes {
+      margin-top: rem(10);
+      width: 100%;
+      height: rem(120);
+      overflow: hidden;
+      overflow-y: scroll;
+      border: 1px solid $gray200;
+      border-radius: rem(8);
+      resize: none;
+      padding: rem(15) rem(10);
+      font-family: 'Pretendard';
+    }
+    .deployNotes::-webkit-scrollbar {
+      width: rem(8);
+      height: rem(0);
+      background-color: rgba(208, 221, 255, 0);
+    }
+
+    .deployNotes::-webkit-scrollbar-thumb {
+      height: 30%;
+      background-color: rgba(208, 221, 255, 0);
+      border-radius: rem(18);
+      transition: background-color 3s ease-out;
+
+      &:hover {
+        background-color: rgba(208, 221, 255, 0.8);
+      }
+    }
+    .modalBtns {
+      margin-top: rem(10);
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
