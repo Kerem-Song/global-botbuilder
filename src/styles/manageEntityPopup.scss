@@ -52,7 +52,7 @@
   }
   .entitiesContainer {
     height: rem(580);
-    overflow-y: scroll;
+    overflow: hidden;
 
     .entitiesWrapper {
       padding: rem(20);
@@ -85,7 +85,6 @@
                   display: flex;
                 }
               }
-              //display: flex;
               .representativeEntryInput {
                 div {
                   height: 100%;

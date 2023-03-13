@@ -81,6 +81,13 @@ export const Popper = <T extends object>({
   };
 
   const handlePopper = () => {
+    if (
+      (!popperItems || popperItems.length === 0) &&
+      (!items || items.length === 0) &&
+      (!popperSelect || popperSelect.length === 0)
+    ) {
+      return;
+    }
     update?.();
     setShowPopper(!showPopper);
   };
