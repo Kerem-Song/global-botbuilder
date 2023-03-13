@@ -397,11 +397,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
               <div className="registerEntry">
                 {watch('isRegex') === false ||
                 entryDetails?.data?.entryGroupType === 0 ? (
-                  <Card
-                    radius="normal"
-                    bodyStyle={{ padding: '20px', height: '269px', overflowY: 'scroll' }}
-                    style={{ border: '1px solid #DCDCDC' }}
-                  >
+                  <Card className="entityDetail" radius="normal">
                     <Space direction="vertical" gap={10}>
                       <Row gap={8}>
                         <Col flex="auto">
