@@ -14,20 +14,14 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
-import { useOutsideClick } from '@hooks/useOutsideClick';
-import {
-  IBasicCardView,
-  IChildrenViewEnum,
-  IHasChildrenView,
-  IListCardView,
-  IProductCardView,
-} from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES, nodeHelper } from '@modules';
-import { useEffect, useRef, useState } from 'react';
+import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
+import { nodeHelper } from '@modules';
+import { setSelected } from '@store/botbuilderSlice';
+import { removeItem } from '@store/makingNode';
+import { useDispatch } from 'react-redux';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';
-
 interface ISortableContainer {
   nodeView: IHasChildrenView;
   nodeId: string;
@@ -40,6 +34,8 @@ export const SoratbleCarouselCtrlContainer = ({
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
+  const dispatch = useDispatch();
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -76,7 +72,7 @@ export const SoratbleCarouselCtrlContainer = ({
   const handleDeleteCard = (id: string, node: IChildrenViewEnum) => {
     const target = node.findIndex((item) => item.id === id);
 
-    if (target) {
+    if (target >= 0) {
       setCarouselNode(node.filter((item) => item.id !== id));
     }
   };

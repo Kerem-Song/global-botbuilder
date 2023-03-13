@@ -5,19 +5,20 @@ import {
   IBasicCardView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { setSelected } from '@store/botbuilderSlice';
 import { updateNode } from '@store/makingNode';
-import { FC } from 'react';
+import { removeItem } from '@store/makingNode';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_PREFIX } from '../../../../modules';
 import { BasicCardView } from '../views/BasicCardView';
-
 export interface IBasicCardCarouselNodeProps {
   node: INode;
 }
 
 export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node }) => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const view = node.view as IBasicCardCarouselView;
 
   const HandleAddCarousel = () => {
@@ -29,8 +30,19 @@ export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node })
       ...node,
       view: { ...view, childrenViews } as IBasicCardCarouselView,
     };
-    dispath(updateNode(upNode));
+    dispatch(updateNode(upNode));
   };
+
+  const deleteNode = (nodeId: string) => {
+    dispatch(removeItem(nodeId));
+    dispatch(setSelected());
+  };
+
+  useEffect(() => {
+    if (!view.childrenViews?.length) {
+      deleteNode(node.id);
+    }
+  }, [view.childrenViews]);
 
   return (
     <Carousel nodeId={`${NODE_PREFIX}${node.id}`} addCarousel={HandleAddCarousel}>
