@@ -295,6 +295,7 @@ export const arrowHelper = {
 
     switch (node.type) {
       case NODE_TYPES.ANSWER_NODE:
+        node.nextNodeId = endId;
         arrowHelper.syncAnswerNodeArrow(startId, endId, node.view as IAnswerView);
         break;
       case NODE_TYPES.CONDITION_NODE:

@@ -59,7 +59,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     setText(e.target.value);
   };
 
-  const handleSend = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleSend = (): void => {
     const newMessage: ITesterDataType = {
       value: text,
       isMe: true,
@@ -92,7 +92,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
         dispatch(setTesterData(updateTesterData));
       },
     });
-    e.preventDefault();
     setText('');
   };
 
@@ -156,9 +155,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 value={text}
                 onChange={handleText}
                 placeholder={t('ENTER_TEXT')}
-                onPressEnter={(value: any) => {
-                  handleSend(value);
-                }}
+                onPressEnter={handleSend}
               />
               <Button
                 style={{
@@ -168,7 +165,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                   border: 'none',
                   backgroundColor: text ? '#4478FF' : '#A1BBFF',
                 }}
-                onClick={handleSend}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSend();
+                }}
                 disabled={text ? false : true}
               >
                 {t('SEND')}
