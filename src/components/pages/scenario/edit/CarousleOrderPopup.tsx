@@ -10,6 +10,7 @@ import {
   IListCardCarouselView,
   IProductCardCarouselView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { updateNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
@@ -25,7 +26,7 @@ export const CarouselOrderPopup: FC<{
   node: INode;
 }> = ({ isOpen, handleIsOpen, handleSave, nodeId, nodeView, node }) => {
   const [carouselNode, setCarouselNode] = useState<IHasChildrenView['childrenViews']>([]);
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
 
@@ -82,6 +83,8 @@ export const CarouselOrderPopup: FC<{
 
     dispatch(updateNode(upNode));
     handleIsOpen(false);
+
+    lunaToast.success(tc(`ACCEPTED`));
   };
 
   return (
