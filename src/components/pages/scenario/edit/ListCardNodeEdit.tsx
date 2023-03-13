@@ -1,4 +1,4 @@
-import { Button, Col, Row, Space } from '@components';
+import { Button, Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -50,14 +50,16 @@ export const ListCardNodeEdit = () => {
   return (
     <>
       <div className="node-item-wrap">
-        <InputWithTitleCounter
-          label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
-          required={true}
-          showCount={true}
-          maxLength={15}
-          {...register('view.header')}
-          textLength={watch('view.header')?.length || 0}
-        />
+        <FormItem error={errors.view?.header}>
+          <InputWithTitleCounter
+            label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+            required={true}
+            showCount={true}
+            maxLength={15}
+            {...register('view.header')}
+            textLength={watch('view.header')?.length || 0}
+          />
+        </FormItem>
       </div>
       <Collapse
         label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
@@ -65,11 +67,13 @@ export const ListCardNodeEdit = () => {
         field={'useImageCtrl'}
       >
         {watch(`view.useImageCtrl`) && (
-          <ImageSettings
-            imageRatio={watch(`view.imageCtrl.aspectRatio`)}
-            setImageRatio={setImageRatio}
-            imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
-          />
+          <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+            <ImageSettings
+              imageRatio={watch(`view.imageCtrl.aspectRatio`)}
+              setImageRatio={setImageRatio}
+              imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+            />
+          </FormItem>
         )}
       </Collapse>
       <Collapse label={t(`LIST`)} useSwitch={false}>
@@ -81,31 +85,36 @@ export const ListCardNodeEdit = () => {
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
-                <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={7} className="itemProfileImg">
-                    <ImageFileUploader
-                      imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
-                      listItemIndex={i}
-                    />
-                  </Col>
-                  <Col span={15}>
-                    <p>{t(`RECOMMENDED_SIZE`)}</p>
-                    <p>400 x 400 </p>
-                  </Col>
-                </Row>
+                <FormItem error={errors.view?.items?.[i]?.imageUrl}>
+                  <Row align="center" gap={12} style={{ margin: 0 }}>
+                    <Col span={7} className="itemProfileImg">
+                      <ImageFileUploader
+                        imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
+                        listItemIndex={i}
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <p>{t(`RECOMMENDED_SIZE`)}</p>
+                      <p>400 x 400 </p>
+                    </Col>
+                  </Row>
+                </FormItem>
               </Space>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">
-                  <InputWithTitleCounter
-                    label={t(`TITLE_INPUT`)}
-                    showCount={true}
-                    maxLength={36}
-                    isLight={true}
-                    {...register(`view.items.${i}.title`)}
-                    textLength={watch(`view.items.${i}.title`)?.length || 0}
-                  />
+                  <FormItem error={errors.view?.items?.[i]?.title}>
+                    <InputWithTitleCounter
+                      label={t(`TITLE_INPUT`)}
+                      showCount={true}
+                      maxLength={36}
+                      required={true}
+                      isLight={true}
+                      {...register(`view.items.${i}.title`)}
+                      textLength={watch(`view.items.${i}.title`)?.length || 0}
+                    />
+                  </FormItem>
                 </span>
               </Space>
             </div>

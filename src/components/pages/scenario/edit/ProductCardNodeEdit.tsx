@@ -115,11 +115,13 @@ export const ProductCardNodeEdit = () => {
     <>
       <div className="node-item-wrap collapse">
         <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
-          <ImageSettings
-            imageRatio={watch(`view.imageCtrl.aspectRatio`)}
-            setImageRatio={setImageRatio}
-            imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
-          />
+          <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+            <ImageSettings
+              imageRatio={watch(`view.imageCtrl.aspectRatio`)}
+              setImageRatio={setImageRatio}
+              imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+            />
+          </FormItem>
         </Collapse>
       </div>
       <div className="node-item-wrap collapse">
