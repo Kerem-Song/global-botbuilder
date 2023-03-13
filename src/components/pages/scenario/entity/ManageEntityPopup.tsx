@@ -57,7 +57,7 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
           <img src={icPopupClose} alt="delete"></img>
         </button>
       </div>
-      <div className="entitiesContainer">
+      <div className="myEntitiesContainer">
         <div className="entitiesWrapper">{tabArr[activeIndex].tabCont}</div>
       </div>
     </ReactModal>

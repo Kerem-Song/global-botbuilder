@@ -152,7 +152,11 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             role="presentation"
             onClick={() => onClick(item.debugMeta)}
           >
-            <img className="imageCardImg contain" src={item.imageUrl} alt="fullSizeImg" />
+            <img
+              className="imageCardImg contain"
+              src={item?.imageUrl}
+              alt="fullSizeImg"
+            />
           </div>
         );
       case TESTER_DATA_TYPES.quickReplies:
