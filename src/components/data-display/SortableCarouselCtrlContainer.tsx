@@ -1,4 +1,4 @@
-import { icCardDelete, icCardDuplication } from '@assets';
+import { icCardDelete, icCardDuplication, icCardDuplicationDisabled } from '@assets';
 import { IPopperItem, Popper } from '@components/navigation';
 import {
   closestCenter,
@@ -82,15 +82,15 @@ export const SoratbleCarouselCtrlContainer = ({
   };
 
   const contextMenu: IPopperItem<{
-    action: (id: string, node: IChildrenViewEnum) => void;
+    action: ((id: string, node: IChildrenViewEnum) => void) | null;
   }>[] = [
     {
       id: 'duplicate-carousel',
       name: 'Duplication',
       type: 'icon-front',
-      icon: icCardDuplication,
+      icon: carouselNode?.length < 10 ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: handleDuplicationCard,
+        action: carouselNode?.length < 10 ? handleDuplicationCard : null,
       },
     },
     {
