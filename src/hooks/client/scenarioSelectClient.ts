@@ -37,6 +37,7 @@ export const useScenarioSelectClient = () => {
       {
         refetchOnWindowFocus: false,
         refetchOnMount: true,
+        enabled: token !== undefined,
       },
     );
   };
