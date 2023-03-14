@@ -3,7 +3,10 @@ import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import * as yup from 'yup';
 
-const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
+const checkNextNodeIdTypes: string[] = [
+  NODE_TYPES.PARAMETER_SET_NODE,
+  NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+];
 
 export const useYupValidation = () => {
   const { t } = usePage();
@@ -365,6 +368,7 @@ export const useYupValidation = () => {
         .nullable()
         .when('type', {
           is: (nodeType: string) => {
+            console.log(nodeType);
             return checkNextNodeIdTypes.includes(nodeType);
           },
           then: parameterSetNodeEditNextNodeIdSchema,
