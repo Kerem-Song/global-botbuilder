@@ -180,14 +180,12 @@ export const MyEntity = () => {
             </Card>
           )}
         </Row>
-        {isOpen && (
-          <EntityDetailPopup
-            isOpen={isOpen}
-            handleIsOpen={handleIsOpen}
-            entryId={entryId}
-            setEntryId={setEntryId}
-          />
-        )}
+        <EntityDetailPopup
+          isOpen={isOpen}
+          handleIsOpen={handleIsOpen}
+          entryId={entryId}
+          setEntryId={setEntryId}
+        />
       </div>
     </>
   );

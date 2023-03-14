@@ -268,7 +268,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
+      style={{ overlay: { display: 'flex', background: 'transparent' } }}
       className="entityModal detail"
       isOpen={isOpen}
     >
