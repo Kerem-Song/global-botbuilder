@@ -64,12 +64,16 @@ export const UtteranceDetail = () => {
     formState: { errors },
   } = useForm<IUtteranceModel>({
     defaultValues: {
+      name: '',
       items: [],
     },
     resolver: yupResolver(schema),
   });
 
-  const { ref, ...rest } = register('name');
+  const { field: nameField } = useController({
+    name: `name`,
+    control,
+  });
 
   const { field: scenarioListField } = useController({
     name: `connectScenarioId`,
@@ -227,6 +231,7 @@ export const UtteranceDetail = () => {
   };
 
   const handleAddUtternace = (utterance?: string) => {
+    console.log('utterance', utterance);
     if (!utterance || !utterance.trim()) return;
 
     if (
@@ -364,13 +369,13 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <FormItem error={errors.name}>
                   <Input
-                    {...rest}
                     ref={(e) => {
-                      ref(e);
+                      nameField.ref(e);
                       intentNameRef.current = e;
                     }}
+                    value={nameField.value}
                     onChange={(e) => {
-                      setValue('name', e.target.value);
+                      nameField.onChange(e);
                       setIsActive(true);
                     }}
                     onPressEnter={() => {
@@ -379,7 +384,10 @@ export const UtteranceDetail = () => {
                     placeholder="Input Intent Name"
                     showCount
                     maxLength={20}
-                    onBlur={handleNameBlur}
+                    onBlur={() => {
+                      nameField.onBlur();
+                      handleNameBlur();
+                    }}
                   />
                 </FormItem>
               </Col>
@@ -414,6 +422,7 @@ export const UtteranceDetail = () => {
             <Col flex="auto">
               <Input
                 ref={utteranceRef}
+                value={utteranceWord}
                 onChange={(e) => {
                   setUtteranceWord(e.target.value);
                   setIsEditing(true);
