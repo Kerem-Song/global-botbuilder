@@ -49,7 +49,7 @@ const buttonNodes = [
   {
     className: 'icSetParameter',
     value: NODE_TYPES.PARAMETER_SET_NODE,
-    nodeName: '파라미터 설정',
+    nodeName: '파라미터',
   },
   {
     className: 'icOtherFlowRedirect',

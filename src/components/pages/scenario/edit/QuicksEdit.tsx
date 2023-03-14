@@ -70,6 +70,7 @@ export const QuicksEdit = () => {
               <SelectNode
                 fieldName={`view.quicks.${i}.actionValue`}
                 defaultValue={values.view?.quicks?.[i].actionValue}
+                nodeId={getValues().id}
               />
             )}
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.URL && (

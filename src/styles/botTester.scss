@@ -94,12 +94,13 @@
         flex-direction: column;
 
         .replyMessage {
-          max-width: rem(244);
+          width: rem(244);
           height: -webkit-fit-content;
           padding: rem(8) rem(14);
           background-color: $grayWhite;
           border: 1px solid $grayWhite;
           border-radius: rem(10);
+          word-wrap: break-word;
           white-space: pre-wrap;
           &:hover {
             border: 1px solid $primary500;
@@ -118,7 +119,12 @@
           background-color: $grayWhite;
           border-radius: rem(16);
 
-          .productCardImg {
+          .productCardImg_rectangle {
+            width: rem(264);
+            height: rem(132);
+            border-radius: rem(16) rem(16) 0 0;
+          }
+          .productCardImg_square {
             width: rem(264);
             height: rem(264);
             border-radius: rem(16) rem(16) 0 0;
@@ -220,6 +226,7 @@
                   align-items: center;
                   width: rem(117);
                   height: rem(37);
+                  margin-right: rem(3);
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
@@ -258,23 +265,46 @@
 
         .cardCarousel {
           width: rem(264);
-          height: rem(191);
+          height: fit-content;
           background-color: $grayWhite;
           margin: 0 rem(8) 0 0;
-          border-radius: rem(10);
+          border-radius: rem(16);
           display: flex;
           flex-direction: column;
           align-items: center;
+          padding-bottom: rem(10);
 
-          .cardCarouselImg {
+          .cardCarouselImg_rectangle {
+            width: rem(264);
             height: rem(132);
-            border-radius: rem(10) rem(10) 0 0;
+            margin-bottom: rem(4);
+            border-radius: rem(16) rem(16) 0 0;
+          }
+          .cardCarouselImg_square {
+            width: rem(264);
+            height: rem(264);
+            border-radius: rem(16) rem(16) 0 0;
+          }
+          .cardCarouselContents {
+            width: rem(264);
+            height: fit-content;
+            padding: rem(16) rem(12);
+            .cardCarouselTitle {
+              font-weight: 700;
+              font-size: rem(14);
+              line-height: rem(17);
+            }
+            .cardCarouselDesc {
+              font-weight: 400;
+              font-size: rem(14);
+              line-height: rem(17);
+            }
           }
 
           .luna-testerItem-cardCarouselBtn {
             width: rem(240);
             height: rem(35);
-            margin-top: rem(12);
+            margin-top: rem(4);
             border: none;
             border-radius: rem(8);
             cursor: pointer;
@@ -290,14 +320,20 @@
         background-color: $grayWhite;
         border-radius: rem(16);
 
-        .cardImg {
+        .cardImg_rectangle {
           width: rem(264);
           height: rem(132);
-          border-radius: rem(200);
+          border-radius: rem(16) rem(16) 0 0;
+        }
+        .cardImg_square {
+          width: rem(264);
+          height: rem(264);
+          border-radius: rem(16) rem(16) 0 0;
         }
 
         .cardText {
-          max-height: rem(70);
+          word-break: break-all;
+          min-height: rem(70);
           display: flex;
           flex-direction: column;
           padding: rem(16) rem(12);
@@ -334,18 +370,114 @@
 
       .imageCardContainer {
         width: rem(264);
-        height: rem(132);
+        min-height: rem(132);
         border-radius: rem(16);
         background-color: $grayWhite;
 
-        .imageCardImg {
+        .imageCardImg_rectangle {
           width: 100%;
-          height: 100%;
+          height: rem(132);
+          border-radius: rem(16);
+        }
+
+        .imageCardImg_square {
+          width: 100%;
+          height: rem(264);
           border-radius: rem(16);
         }
 
         .contain {
           object-fit: contain;
+        }
+      }
+
+      .listCard {
+        width: rem(264);
+        height: fit-content;
+        background-color: $grayWhite;
+        border-radius: rem(16);
+        .header {
+          width: 100%;
+          height: rem(46);
+          border-radius: rem(16) rem(16) 0 0;
+          padding: rem(12);
+          font-size: rem(18);
+          font-weight: 500;
+          line-height: rem(22);
+        }
+        .listCardImg_rectangle {
+          width: rem(264);
+          height: rem(132);
+          margin-bottom: rem(8);
+        }
+        .listCardImg_square {
+          width: rem(264);
+          height: rem(264);
+          margin-bottom: rem(8);
+        }
+
+        .cardList {
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          justify-content: space-between;
+          padding: rem(0) rem(12);
+
+          .listInfo {
+            max-width: rem(180);
+
+            .infoTitle {
+              word-break: break-all;
+              font-weight: 500;
+              font-size: rem(16);
+              line-height: rem(19);
+              color: $grayBlack;
+              margin-bottom: rem(4);
+            }
+            .infoDesc {
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 16px;
+              color: $gray500;
+            }
+          }
+          .listImg {
+            width: rem(52);
+            height: rem(52);
+            border: rem(1) solid $gray200;
+            border-radius: rem(4);
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: rem(3);
+            }
+          }
+        }
+
+        .listCardBtns {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: rem(12) 0;
+          gap: rem(4);
+
+          .luna-testerItem-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: rem(240);
+            height: rem(37);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: rem(14);
+            border: none;
+            background-color: #dbdee5;
+            border-radius: rem(8);
+            &:hover {
+              background-color: #75767a;
+            }
+          }
         }
       }
 

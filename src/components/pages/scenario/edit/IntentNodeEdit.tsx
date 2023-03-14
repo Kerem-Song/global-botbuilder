@@ -1,11 +1,14 @@
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
+import { IGNodeEditModel } from '@models';
+import { IIntentView } from '@models/interfaces/res/IGetFlowRes';
+import { useFormContext } from 'react-hook-form';
 
 import { SelectNode } from './SelectNode';
 
 export const IntentNodeEdit = () => {
   const { t } = usePage();
-
+  const { getValues } = useFormContext<IGNodeEditModel<IIntentView>>();
   return (
     <>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
@@ -14,7 +17,7 @@ export const IntentNodeEdit = () => {
           <span className="required">*</span>
         </div>
 
-        <SelectNode fieldName={'nextNodeId'} />
+        <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
       </Collapse>
     </>
   );

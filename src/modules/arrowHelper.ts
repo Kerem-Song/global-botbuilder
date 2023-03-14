@@ -382,6 +382,7 @@ export const arrowHelper = {
   },
 
   validateArrows: (startId: string, endId: string, nodes: INode[], isNext?: boolean) => {
+    console.log(startId, endId);
     // 자기 자신으로 연결한 경우
     if (startId === endId) {
       return '잘못된 연결입니다.';
@@ -393,6 +394,15 @@ export const arrowHelper = {
     // 노드가 없는경우
     if (!startNode || !endNode) {
       return '노드가 존재하지 않음.';
+    }
+
+    // 시작노드에 다른시나리오 연결한 경우
+    if (
+      isNext &&
+      startNode.type === NODE_TYPES.INTENT_NODE &&
+      endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
+    ) {
+      return '시작노드에서 다른시나리오로 연결 할 수 없습니다.';
     }
 
     // Answer노드 앞에 응답이 없는경우

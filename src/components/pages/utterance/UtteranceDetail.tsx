@@ -26,7 +26,7 @@ export const UtteranceDetail = () => {
   const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const utteranceRef = useRef<HTMLInputElement>(null);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
@@ -178,6 +178,12 @@ export const UtteranceDetail = () => {
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    if (!utteranceWord && utteranceRef.current) {
+      utteranceRef.current.focus();
+    }
+  }, [utteranceWord]);
+
   const openDeleteCheckboxModal = async () => {
     const deleteItems = getValues().items.filter((x) => x.isChecked);
 
@@ -230,14 +236,13 @@ export const UtteranceDetail = () => {
     }
   };
 
-  const handleAddUtternace = (utterance?: string) => {
-    console.log('utterance', utterance);
-    if (!utterance || !utterance.trim()) return;
+  const handleAddUtternace = () => {
+    if (!utteranceWord || !utteranceWord.trim()) return;
 
     if (
       getValues('items')
         .map((x) => x.text)
-        ?.includes(utterance)
+        ?.includes(utteranceWord)
     ) {
       error({
         title: '중복 인텐트명',
@@ -256,7 +261,7 @@ export const UtteranceDetail = () => {
 
     checkUtteranceDuplicationMutate.mutate(
       {
-        text: utterance,
+        text: utteranceWord,
       },
       {
         onSuccess: (result) => {
@@ -275,10 +280,11 @@ export const UtteranceDetail = () => {
               utteranceRef.current.select();
             }
           } else {
-            prepend({ text: utterance });
+            prepend({ text: utteranceWord });
             setIsActive(true);
+            setUtteranceWord('');
             if (utteranceRef.current) {
-              utteranceRef.current.value = '';
+              utteranceRef.current.focus();
             }
           }
         },
@@ -427,9 +433,7 @@ export const UtteranceDetail = () => {
                   setUtteranceWord(e.target.value);
                   setIsEditing(true);
                 }}
-                onPressEnter={(value) => {
-                  handleAddUtternace(value);
-                }}
+                onPressEnter={handleAddUtternace}
                 placeholder="Press Enter and enter the utterance keyword."
               />
             </Col>
@@ -444,7 +448,7 @@ export const UtteranceDetail = () => {
                   alignItems: 'center',
                 }}
                 onClick={() => {
-                  handleAddUtternace(utteranceRef.current!.value);
+                  handleAddUtternace();
                 }}
                 disabled={utteranceWord && isEditing ? false : true}
               >

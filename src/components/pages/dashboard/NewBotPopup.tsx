@@ -2,6 +2,7 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { IBotInput, SnsKind } from '@models';
+import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -23,7 +24,24 @@ export const NewBotPopup: FC<{
 
   const schema = yup
     .object({
-      botName: yup.string().required(tc('REQUIRE_MESSAGE')),
+      botName: yup
+        .string()
+        .required(tc('REQUIRE_MESSAGE'))
+        .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
+          if (!value) {
+            return false;
+          }
+
+          if (EMOJI_REGEX.test(value)) {
+            return false;
+          }
+
+          if (SPECIAL_CHARACTOR_REGEX.test(value)) {
+            return false;
+          }
+
+          return true;
+        }),
     })
     .required();
 

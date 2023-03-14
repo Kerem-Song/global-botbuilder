@@ -4,7 +4,10 @@ import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import { is } from 'immer/dist/internal';
 import * as yup from 'yup';
 
-const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
+const checkNextNodeIdTypes: string[] = [
+  NODE_TYPES.PARAMETER_SET_NODE,
+  NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+];
 
 export const useYupValidation = () => {
   const { t } = usePage();
@@ -22,6 +25,35 @@ export const useYupValidation = () => {
       .max(1000, t(`VALIDATION_STRING_LIMIT`, { maxCount: 1000 }))
       .required(t(`VALIDATION_REQUIRED`)),
   });
+
+  const quicksEditSchema = yup
+    .array()
+    .max(10, t(`VALIDATION_BUTTON_MAX`))
+    .of(
+      yup.object().shape({
+        label: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        actionValue: yup
+          .string()
+          .when('actionType', {
+            is: ACTION_TYPES.URL,
+            then: yup
+              .string()
+              .url(t(`VALIDATION_URL`))
+              .required(t(`VALIDATION_REQUIRED`)),
+          })
+          .when('actionType', {
+            is: ACTION_TYPES.LUNA_NODE_REDIRECT,
+            then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+          })
+          .when('actionType', {
+            is: ACTION_TYPES.ACT_VALUE_IS_UTTR || ACTION_TYPES.LBL_IS_UTTR,
+            then: yup
+              .string()
+              .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
+              .required(t(`VALIDATION_REQUIRED`)),
+          }),
+      }),
+    );
 
   const buttonsEditSchema = yup
     .array()
@@ -262,7 +294,7 @@ export const useYupValidation = () => {
           .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
-    quicks: buttonsEditSchema,
+    quicks: quicksEditSchema,
   });
 
   const answerNodeEditNextNodeIdSchema = yup
@@ -355,6 +387,7 @@ export const useYupValidation = () => {
         .nullable()
         .when('type', {
           is: (nodeType: string) => {
+            console.log(nodeType);
             return checkNextNodeIdTypes.includes(nodeType);
           },
           then: parameterSetNodeEditNextNodeIdSchema,

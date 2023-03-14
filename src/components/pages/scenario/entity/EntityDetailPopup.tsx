@@ -268,7 +268,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
+      style={{ overlay: { display: 'flex', background: 'transparent' } }}
       className="entityModal detail"
       isOpen={isOpen}
     >
@@ -414,7 +414,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             onPressEnter={() =>
                               handleRegisterEntry(entryGroupName.current?.value)
                             }
-                            onChange={isEntryInputError}
+                            onChange={() => {
+                              isEntryInputError;
+                              setIsActive(true);
+                            }}
                             onBlur={isEntryInputError}
                             isError={
                               entryInputError || errors.entries?.message ? true : false

@@ -10,7 +10,11 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
   return (
     <div className="productCard">
       <img
-        className="productCardImg"
+        className={
+          item.image?.imageAspectRatio === 0
+            ? 'productCardImg_rectangle'
+            : 'productCardImg_square'
+        }
         src={item.image?.imageUrl}
         alt="productCardCarouselImg"
       />
@@ -28,16 +32,14 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              KRW
-              {/* {item.price?.symbol} */}
+              {item.price?.symbol}
             </p>
             <p className="prevPrice">
               {item.price?.retail
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              KRW
-              {/* {item.price?.symbol} */}
+              {item.price?.symbol}
             </p>
           </div>
           <div className="discount">
@@ -46,8 +48,7 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
                 ?.toFixed(0)
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              KRW↓
-              {/* {item.price?.symbol}↓ */}
+              {item.price?.symbol}↓
             </p>
           </div>
         </div>
