@@ -2,7 +2,7 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { IBotInput, SnsKind } from '@models';
-import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGX } from '@modules';
+import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -36,7 +36,7 @@ export const NewBotPopup: FC<{
             return false;
           }
 
-          if (SPECIAL_CHARACTOR_REGX.test(value)) {
+          if (SPECIAL_CHARACTOR_REGEX.test(value)) {
             return false;
           }
 
