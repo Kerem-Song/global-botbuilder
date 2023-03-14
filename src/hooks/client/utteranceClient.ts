@@ -24,6 +24,8 @@ import {
 } from './../../models/interfaces/IUtterance';
 import { useHttp } from './../useHttp';
 
+const UTTERNACE_LIST_KEY = 'utterance-list';
+
 export const useUtteranceClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
@@ -59,7 +61,7 @@ export const useUtteranceClient = () => {
 
   const invalidateIntentQuery = (searchData: ISearchData) => {
     queryClient.invalidateQueries([
-      'change-pageNumber',
+      UTTERNACE_LIST_KEY,
       searchData.sort,
       searchData.scenarios,
       searchData.searchWord,
@@ -69,7 +71,7 @@ export const useUtteranceClient = () => {
   const changePageNumberQuery = (searchData: ISearchData) => {
     return useInfiniteQuery(
       [
-        'change-pageNumber',
+        UTTERNACE_LIST_KEY,
         token,
         searchData.sort,
         searchData.scenarios,
@@ -124,7 +126,11 @@ export const useUtteranceClient = () => {
       'Builder/SaveIntent',
       intent,
     );
-    return result.data;
+
+    if (result) {
+      queryClient.invalidateQueries([UTTERNACE_LIST_KEY]);
+      return result.data;
+    }
   });
 
   const intentGetMutate = useMutation(async (intent: IGetIntent) => {
@@ -142,7 +148,7 @@ export const useUtteranceClient = () => {
     );
 
     if (result) {
-      queryClient.invalidateQueries(['change-pageNumber']);
+      queryClient.invalidateQueries([UTTERNACE_LIST_KEY]);
       return result.data;
     }
   });

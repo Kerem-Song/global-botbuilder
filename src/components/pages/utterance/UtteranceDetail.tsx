@@ -281,46 +281,21 @@ export const UtteranceDetail = () => {
     );
   };
 
-  const handleSave = (itemData: IUtteranceModel): void => {
-    if (itemData.intentId) {
-      const modifyIntent: ISaveIntent = {
-        sessionToken: token!,
-        intentId: itemData.intentId,
-        intentName: itemData.name,
-        utterances: itemData.items.map((x) => {
-          return x.text;
-        }),
-        flowId: itemData.connectScenarioId,
-      };
+  const handleSave = async (itemData: IUtteranceModel): Promise<void> => {
+    const modifyIntent: ISaveIntent = {
+      sessionToken: token!,
+      intentId: itemData.intentId,
+      intentName: itemData.name,
+      utterances: itemData.items.map((x) => {
+        return x.text;
+      }),
+      flowId: itemData.connectScenarioId,
+    };
 
-      intentMutate.mutate(modifyIntent, {
-        onSuccess: (submitResult) => {
-          console.log('modifyIntent', submitResult);
-          if (submitResult.isSuccess) {
-            lunaToast.success();
-            navigate(`/${botId}/utterance`);
-          }
-        },
-      });
-    } else {
-      const newIntent: ISaveIntent = {
-        sessionToken: token!,
-        intentName: itemData.name,
-        utterances: itemData.items.map((x) => {
-          return x.text;
-        }),
-        flowId: itemData.connectScenarioId,
-      };
-
-      intentMutate.mutate(newIntent, {
-        onSuccess: (submitResult) => {
-          console.log('newIntent', submitResult);
-          if (submitResult.isSuccess) {
-            lunaToast.success();
-            navigate(`/${botId}/utterance`);
-          }
-        },
-      });
+    const res = await intentMutate.mutateAsync(modifyIntent);
+    if (res) {
+      lunaToast.success();
+      navigate(`/${botId}/utterance`);
     }
   };
 
