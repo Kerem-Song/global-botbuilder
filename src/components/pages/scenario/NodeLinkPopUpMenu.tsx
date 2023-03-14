@@ -115,6 +115,7 @@ export const NodeLinkPopUpMenu = ({
   const { botId } = useParams();
   const [userInput, setUserInput] = useState<string>();
   const dispatch = useDispatch();
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   //const [cardBtn, setCardBtn] = useState(cardTypeValue);
   const [scenarioList, setScenarioList] = useState<
     {
@@ -184,8 +185,16 @@ export const NodeLinkPopUpMenu = ({
     setUserInput(data?.toLowerCase());
   };
 
+  const startNode = nodes.find((x) => x.id === guideStart?.nodeId?.substring(5));
+  console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
+  console.log('startNode Type', startNode?.type);
   const filterdBtnList = cardTypeValue
     .filter((b) => b.nodeKind !== NodeKind.CommandNode || guideStart?.isNext)
+    .filter(
+      (b) =>
+        startNode?.type !== NODE_TYPES.INTENT_NODE ||
+        b.value !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+    )
     .filter((b) => (userInput ? b.nodeName.toLowerCase().includes(userInput) : true));
 
   const cardBtnResult = classNames('btnWrapper', {

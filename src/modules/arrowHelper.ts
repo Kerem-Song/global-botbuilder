@@ -396,6 +396,15 @@ export const arrowHelper = {
       return '노드가 존재하지 않음.';
     }
 
+    // 시작노드에 다른시나리오 연결한 경우
+    if (
+      isNext &&
+      startNode.type === NODE_TYPES.INTENT_NODE &&
+      endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
+    ) {
+      return '시작노드에서 다른시나리오로 연결 할 수 없습니다.';
+    }
+
     // Answer노드 앞에 응답이 없는경우
     if (isNext && endNode.type === NODE_TYPES.ANSWER_NODE) {
       return 'Answer노드는 다음노드로 지정할 수 없음';
