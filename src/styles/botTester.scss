@@ -391,91 +391,95 @@
         }
       }
 
-      .listCard {
-        width: rem(264);
-        height: fit-content;
-        background-color: $grayWhite;
-        border-radius: rem(16);
-        .header {
-          width: 100%;
-          height: rem(46);
-          border-radius: rem(16) rem(16) 0 0;
-          padding: rem(12);
-          font-size: rem(18);
-          font-weight: 500;
-          line-height: rem(22);
-        }
-        .listCardImg_rectangle {
+      .listCardContainer {
+        position: relative;
+        .listCard {
           width: rem(264);
-          height: rem(132);
-          margin-bottom: rem(8);
-        }
-        .listCardImg_square {
-          width: rem(264);
-          height: rem(264);
-          margin-bottom: rem(8);
-        }
-
-        .cardList {
-          width: 100%;
+          margin-right: rem(10);
           height: fit-content;
-          display: flex;
-          justify-content: space-between;
-          padding: rem(0) rem(12);
-
-          .listInfo {
-            max-width: rem(180);
-
-            .infoTitle {
-              word-break: break-all;
-              font-weight: 500;
-              font-size: rem(16);
-              line-height: rem(19);
-              color: $grayBlack;
-              margin-bottom: rem(4);
-            }
-            .infoDesc {
-              font-weight: 400;
-              font-size: 14px;
-              line-height: 16px;
-              color: $gray500;
-            }
+          background-color: $grayWhite;
+          border-radius: rem(16);
+          .header {
+            width: 100%;
+            height: rem(46);
+            border-radius: rem(16) rem(16) 0 0;
+            padding: rem(12);
+            font-size: rem(18);
+            font-weight: 500;
+            line-height: rem(22);
           }
-          .listImg {
-            width: rem(52);
-            height: rem(52);
-            border: rem(1) solid $gray200;
-            border-radius: rem(4);
-            img {
-              width: 100%;
-              height: 100%;
-              border-radius: rem(3);
-            }
+          .listCardImg_rectangle {
+            width: rem(264);
+            height: rem(132);
+            margin-bottom: rem(8);
           }
-        }
+          .listCardImg_square {
+            width: rem(264);
+            height: rem(264);
+            margin-bottom: rem(8);
+          }
 
-        .listCardBtns {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: rem(12) 0;
-          gap: rem(4);
-
-          .luna-testerItem-btn {
+          .cardList {
+            width: 100%;
+            height: fit-content;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            padding: rem(0) rem(12);
+
+            .listInfo {
+              max-width: rem(180);
+
+              .infoTitle {
+                word-break: break-all;
+                font-weight: 500;
+                font-size: rem(16);
+                line-height: rem(19);
+                color: $grayBlack;
+                margin-bottom: rem(4);
+              }
+              .infoDesc {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 16px;
+                color: $gray500;
+              }
+            }
+            .listImg {
+              width: rem(52);
+              height: rem(52);
+              border: rem(1) solid $gray200;
+              border-radius: rem(4);
+              img {
+                width: 100%;
+                height: 100%;
+                border-radius: rem(3);
+              }
+            }
+          }
+
+          .listCardBtns {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            width: rem(240);
-            height: rem(37);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: rem(14);
-            border: none;
-            background-color: #dbdee5;
-            border-radius: rem(8);
-            &:hover {
-              background-color: #75767a;
+            padding: rem(12) 0;
+            gap: rem(4);
+
+            .luna-testerItem-btn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: rem(240);
+              height: rem(37);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: rem(14);
+              border: none;
+              background-color: #dbdee5;
+              border-radius: rem(8);
+              &:hover {
+                background-color: #75767a;
+              }
             }
           }
         }

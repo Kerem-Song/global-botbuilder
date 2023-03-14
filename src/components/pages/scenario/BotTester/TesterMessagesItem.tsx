@@ -2,6 +2,7 @@ import { Divider, Space } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 
 import { CardCarouselType } from './CardCarouselType';
+import { ListCardCarouselType } from './ListCardCarouselType';
 import { ProductCardCarouselType } from './ProductCardCarouselType';
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 import { TesterSlide } from './TesterSlide';
@@ -179,40 +180,62 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
         );
       case TESTER_DATA_TYPES.listCard:
         return (
-          <div className="listCard">
-            {item.header && <div className="header">{item.header}</div>}
-            {item.image?.imageUrl && (
-              <img
-                className={
-                  item.image.imageAspectRatio === 0
-                    ? 'listCardImg_rectangle'
-                    : 'listCardImg_square'
-                }
-                src={item.image?.imageUrl}
-                alt="img"
-              ></img>
-            )}
-            {item.items.map((x, i) => {
-              return (
-                <div key={i}>
-                  <div className="cardList">
-                    <div className="listInfo">
-                      <div className="infoTitle">{x.title}</div>
-                      <div className="infoDesc">{x.description}</div>
+          <div
+            className="listCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
+            <div className="listCard">
+              {item.header && <div className="header">{item.header}</div>}
+              {item.image?.imageUrl && (
+                <img
+                  className={
+                    item.image.imageAspectRatio === 0
+                      ? 'listCardImg_rectangle'
+                      : 'listCardImg_square'
+                  }
+                  src={item.image?.imageUrl}
+                  alt="img"
+                ></img>
+              )}
+              {item.items.map((x, i) => {
+                return (
+                  <div key={i}>
+                    <div className="cardList">
+                      <div className="listInfo">
+                        <div className="infoTitle">{x.title}</div>
+                        <div className="infoDesc">{x.description}</div>
+                      </div>
+                      <div className="listImg">
+                        <img src={x.image?.imageUrl} alt="img"></img>
+                      </div>
                     </div>
-                    <div className="listImg">
-                      <img src={x.image?.imageUrl} alt="img"></img>
-                    </div>
+                    {item.items.length - 1 === i ? <></> : <Divider />}
                   </div>
-                  {item.items.length - 1 === i ? <></> : <Divider />}
-                </div>
-              );
-            })}
-            <div className="listCardBtns">
-              {item.buttons?.map((v, i) => {
-                return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+                );
               })}
+              <div className="listCardBtns">
+                {item.buttons?.map((v, i) => {
+                  return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+                })}
+              </div>
             </div>
+          </div>
+        );
+      case TESTER_DATA_TYPES.listCardCarousel:
+        return (
+          <div
+            className="listCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
+            {item.contents.length === 0 ? null : (
+              <TesterSlide gapSize={10} offset={55}>
+                {item.contents.map((c, i) => {
+                  return <ListCardCarouselType key={i} item={c} />;
+                })}
+              </TesterSlide>
+            )}
           </div>
         );
       case TESTER_DATA_TYPES.quickReplies:
