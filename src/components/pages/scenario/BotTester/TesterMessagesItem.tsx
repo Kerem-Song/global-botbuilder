@@ -1,3 +1,4 @@
+import { Divider, Space } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 
 import { CardCarouselType } from './CardCarouselType';
@@ -11,6 +12,7 @@ export interface TesterProps {
 }
 
 export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
+  console.log(item.type);
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:
@@ -70,6 +72,17 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             role="presentation"
             onClick={() => onClick(item.debugMeta)}
           >
+            {item.image && (
+              <img
+                className={
+                  item.image.imageAspectRatio === 0
+                    ? 'cardImg_rectangle'
+                    : 'cardImg_square'
+                }
+                src={item.image.imageUrl}
+                alt="cardImg"
+              />
+            )}
             <div className="cardText">
               {item.title ? <div className="cardTitle">{item.title}</div> : null}
               <div className="cardContentText">{item.contentText}</div>
@@ -90,7 +103,11 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
           >
             <div className="productCard">
               <img
-                className="productCardImg"
+                className={
+                  item.image?.imageAspectRatio === 0
+                    ? 'productCardImg_rectangle'
+                    : 'productCardImg_square'
+                }
                 src={item.image?.imageUrl}
                 alt="productCardCarouselImg"
               />
@@ -108,16 +125,14 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                         ?.toFixed(0)
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                      KRW
-                      {/* {item.price?.symbol} */}
+                      {item.price?.symbol}
                     </p>
                     <p className="prevPrice">
                       {item.price?.retail
                         ?.toFixed(0)
                         ?.toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                      KRW
-                      {/* {item.price?.symbol} */}
+                      {item.price?.symbol}
                     </p>
                   </div>
                   <div className="discount">
@@ -126,8 +141,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                         ?.toFixed(0)
                         ?.toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                      KRW↓
-                      {/* {item.price?.symbol}↓ */}
+                      {item.price?.symbol}↓
                     </p>
                   </div>
                 </div>
@@ -153,10 +167,52 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             onClick={() => onClick(item.debugMeta)}
           >
             <img
-              className="imageCardImg contain"
+              className={
+                item.imageAspectRatio === 0
+                  ? 'imageCardImg_rectangle contain'
+                  : 'imageCardImg_square'
+              }
               src={item?.imageUrl}
               alt="fullSizeImg"
             />
+          </div>
+        );
+      case TESTER_DATA_TYPES.listCard:
+        return (
+          <div className="listCard">
+            {item.header && <div className="header">{item.header}</div>}
+            {item.image?.imageUrl && (
+              <img
+                className={
+                  item.image.imageAspectRatio === 0
+                    ? 'listCardImg_rectangle'
+                    : 'listCardImg_square'
+                }
+                src={item.image?.imageUrl}
+                alt="img"
+              ></img>
+            )}
+            {item.items.map((x, i) => {
+              return (
+                <div key={i}>
+                  <div className="cardList">
+                    <div className="listInfo">
+                      <div className="infoTitle">{x.title}</div>
+                      <div className="infoDesc">{x.description}</div>
+                    </div>
+                    <div className="listImg">
+                      <img src={x.image?.imageUrl} alt="img"></img>
+                    </div>
+                  </div>
+                  {item.items.length - 1 === i ? <></> : <Divider />}
+                </div>
+              );
+            })}
+            <div className="listCardBtns">
+              {item.buttons?.map((v, i) => {
+                return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+              })}
+            </div>
           </div>
         );
       case TESTER_DATA_TYPES.quickReplies:

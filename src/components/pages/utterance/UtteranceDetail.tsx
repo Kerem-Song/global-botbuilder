@@ -26,7 +26,7 @@ export const UtteranceDetail = () => {
   const { confirm, error } = useSystemModal();
   const [searchWord, setSearchWord] = useState('');
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const utteranceRef = useRef<HTMLInputElement>(null);
   const intentNameRef = useRef<HTMLInputElement | null>(null);

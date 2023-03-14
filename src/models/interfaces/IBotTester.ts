@@ -11,17 +11,19 @@ export interface IBotTester {
       userKey?: string;
     };
     meta?: {
+      isDebug?: boolean;
       replyToken?: string;
       callbackUrl?: string;
       replyUserId?: string;
-      snsRequestTimeUtc: string;
-      queueInTimeUtc: string;
+      snsRequestTimeUtc?: string;
+      queueInTimeUtc?: string;
     };
     messages?: ITesterDataType[];
     quickReplies?: ITesterQuickReply[];
   };
   exception?: string;
   isSuccess?: boolean;
+  newToken?: string;
 }
 
 // mutation
@@ -63,6 +65,7 @@ export interface ITesterCard {
     url: string;
   };
   title: string;
+  contentText?: string;
   description: string;
   price?: {
     retail?: number;
@@ -101,6 +104,7 @@ export const TESTER_DATA_TYPES = {
   productCard: 'productCard',
   image: 'image',
   quickReplies: 'quickReplies',
+  listCard: 'listCard',
 } as const;
 
 export type ITesterDataType =
@@ -110,6 +114,7 @@ export type ITesterDataType =
   | IContentTextCard
   | IProductCard
   | IImageCard
+  | IListCard
   | IQuickRepliesContent;
 
 export interface ITextCard extends IHasDebugMeta {
@@ -196,6 +201,35 @@ export interface IImageCard extends IHasDebugMeta {
       webLinkUrl: string;
     };
   };
+}
+
+export interface IListCard extends IHasDebugMeta {
+  header?: string;
+  items: [
+    {
+      title: string;
+      description: string;
+      image?: {
+        imageUrl?: string;
+        imageAspectRatio?: number;
+        imageSize?: number;
+        background?: string;
+        previewUrl?: string;
+        type?: string;
+      };
+      postbackAction?: string;
+    },
+  ];
+  buttons: ITesterQuickReply[];
+  image?: {
+    imageUrl?: string;
+    imageAspectRatio?: number;
+    imageSize?: number;
+    background?: string;
+    previewUrl?: string;
+    type?: string;
+  };
+  type: typeof TESTER_DATA_TYPES.listCard;
 }
 
 export interface IQuickRepliesContent {

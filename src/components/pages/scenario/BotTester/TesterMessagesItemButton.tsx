@@ -74,17 +74,15 @@ export const TesterMessagesItemButton = ({
   });
   return (
     <>
-      <div>
-        {actionType === 'linkWebUrl' ? (
-          <button className={itemButton} onClick={() => window.open(webLinkUrl)}>
-            {item.label}
-          </button>
-        ) : (
-          <button className={itemButton} onClick={() => handleNodeUrl()}>
-            {item.label}
-          </button>
-        )}
-      </div>
+      {actionType === 'linkWebUrl' ? (
+        <button className={itemButton} onClick={() => window.open(webLinkUrl)}>
+          {item.label}
+        </button>
+      ) : (
+        <button className={itemButton} onClick={() => handleNodeUrl()}>
+          {item.label}
+        </button>
+      )}
     </>
   );
 };
