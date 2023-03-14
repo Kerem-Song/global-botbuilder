@@ -21,7 +21,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
 
   return (
     <Card>
-      {view.imageCtrl ? (
+      {view.useImageCtrl && view.imageCtrl ? (
         <div
           className={classNames(
             'thumbnail',
