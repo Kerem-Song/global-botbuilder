@@ -37,7 +37,11 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
   ];
 
   return (
-    <ReactModal className="entityModal" isOpen={isOpen}>
+    <ReactModal
+      style={{ overlay: { display: 'flex' } }}
+      className="entityModal"
+      isOpen={isOpen}
+    >
       <div className="header">
         <ul className="title">
           {tabArr.map((x, i) => {

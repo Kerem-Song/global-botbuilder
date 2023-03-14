@@ -10,7 +10,7 @@ export const useYupValidation = () => {
 
   const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
 
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능(Line 기준)
+  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; //jpeg, png가능(Line 기준)
 
   const textNodeEditSchema = yup.object().shape({
     text: yup
@@ -67,12 +67,20 @@ export const useYupValidation = () => {
       (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
     );
 
+  const imageCtrlEditSchema = yup.object().when('useImageCtrl', {
+    is: true,
+    then: yup.object().shape({
+      imageFile: imageFileEditSchema,
+      imageUrl: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
+    }),
+  });
+
   const basicCardCarouselNodeEditSchemaForScript = yup.object().shape({
     title: yup
       .string()
       .nullable()
       .trim()
-      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+      .max(40, t(`VALIDATION_STRING_LIMIT`, { maxCount: 40 })),
     description: yup
       .string()
       .when('useImageCtrl', {
@@ -90,11 +98,9 @@ export const useYupValidation = () => {
       .when('title', {
         is: (title: string) => !title,
         then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
-      }),
-    imageCtrl: yup.object().shape({
-      imageFile: imageFileEditSchema,
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)),
-    }),
+      })
+      .required(t(`VALIDATION_REQUIRED`)),
+    imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
 
@@ -121,11 +127,10 @@ export const useYupValidation = () => {
       .when('title', {
         is: (title: string) => !title,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
-      }),
-    imageCtrl: yup.object().shape({
-      imageFile: imageFileEditSchema,
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)),
-    }),
+      })
+      .required(t(`VALIDATION_REQUIRED`)),
+
+    imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
 
@@ -133,22 +138,22 @@ export const useYupValidation = () => {
     header: yup
       .string()
       .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 })),
-    imageCtrl: yup.object().shape({
-      imageFile: imageFileEditSchema,
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)),
-    }),
-
+      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
+      .required(t(`VALIDATION_REQUIRED`)),
+    imageCtrl: imageCtrlEditSchema,
     items: yup.array().of(
       yup.object().shape({
         title: yup
           .string()
           .trim()
           .max(36, t(`VALIDATION_STRING_LIMIT`, { maxCount: 36 }))
-          .required(),
+          .required(t(`VALIDATION_REQUIRED`)),
         description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT`, { maxCount: 16 })),
         imageFile: imageFileEditSchema,
-        imageUrl: yup.string().url(t(`VALIDATION_URL`)),
+        imageUrl: yup
+          .string()
+          .url(t(`VALIDATION_URL`))
+          .required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
     buttons: buttonsEditSchema,
@@ -159,7 +164,10 @@ export const useYupValidation = () => {
       imageFile: imageFileEditSchema,
       imageUrl: yup.string().url(t(`VALIDATION_URL`)),
     }),
-    profileIconUrl: yup.string().url(t(`VALIDATION_URL`)),
+    profileIconUrl: yup
+      .string()
+      .url(t(`VALIDATION_URL`))
+      .required(t(`VALIDATION_REQUIRED`)),
     profileName: yup
       .string()
       .trim()
@@ -225,7 +233,11 @@ export const useYupValidation = () => {
       .nullable()
       .when('useUtteranceParam', {
         is: true,
-        then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+        then: yup
+          .string()
+          .trim()
+          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .required(t(`VALIDATION_REQUIRED`)),
       }),
     quicks: buttonsEditSchema,
   });

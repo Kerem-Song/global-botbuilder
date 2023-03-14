@@ -126,12 +126,14 @@ export const ProductCardCarouselNodeEdit = () => {
         <>
           <div className="node-item-wrap collapse">
             <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
-              <ImageSettings
-                imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
-                setImageRatio={setImageRatio}
-                imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
-                index={index}
-              />
+              <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
+                <ImageSettings
+                  imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
+                  setImageRatio={setImageRatio}
+                  imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                  index={index}
+                />
+              </FormItem>
             </Collapse>
           </div>
           <div className="node-item-wrap collapse">

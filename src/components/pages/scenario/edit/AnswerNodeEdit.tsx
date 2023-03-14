@@ -24,6 +24,7 @@ export const AnswerNodeEdit = () => {
     setValue,
     control,
     watch,
+    getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IAnswerView>>();
   const use = watch('view.useUtteranceParam');
@@ -58,7 +59,7 @@ export const AnswerNodeEdit = () => {
       subscription.unsubscribe();
     };
   }, [watch]);
-
+  console.log('answer node edit view', getValues().view);
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>

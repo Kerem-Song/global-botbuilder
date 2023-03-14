@@ -1,4 +1,4 @@
-import { Button, Col, Row, Space } from '@components';
+import { Button, Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -68,14 +68,16 @@ export const ListCardCarouselNodeEdit = () => {
       {watch(`view.childrenViews.${index}.id`) && (
         <>
           <div className="node-item-wrap">
-            <InputWithTitleCounter
-              label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
-              required={true}
-              showCount={true}
-              maxLength={15}
-              {...register(`view.childrenViews.${index}.header`)}
-              textLength={watch(`view.childrenViews.${index}.header`)?.length || 0}
-            />
+            <FormItem error={errors.view?.childrenViews?.[index]?.header}>
+              <InputWithTitleCounter
+                label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+                required={true}
+                showCount={true}
+                maxLength={15}
+                {...register(`view.childrenViews.${index}.header`)}
+                textLength={watch(`view.childrenViews.${index}.header`)?.length || 0}
+              />
+            </FormItem>
           </div>
 
           <Collapse
@@ -84,14 +86,16 @@ export const ListCardCarouselNodeEdit = () => {
             field={`useImageCtrl`}
           >
             {watch(`view.useImageCtrl`) && (
-              <ImageSettings
-                imageRatio={Number(
-                  watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`),
-                )}
-                setImageRatio={setImageRatio}
-                index={index}
-                imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
-              />
+              <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
+                <ImageSettings
+                  imageRatio={Number(
+                    watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`),
+                  )}
+                  setImageRatio={setImageRatio}
+                  index={index}
+                  imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                />
+              </FormItem>
             )}
           </Collapse>
           <Collapse label={t(`LIST`)} useSwitch={false}>
@@ -121,17 +125,21 @@ export const ListCardCarouselNodeEdit = () => {
                 <div className="m-b-8">
                   <Space direction="vertical">
                     <span className="label">
-                      <InputWithTitleCounter
-                        label={t(`TITLE_INPUT`)}
-                        showCount={true}
-                        maxLength={36}
-                        isLight={true}
-                        {...register(`view.childrenViews.${index}.items.${i}.title`)}
-                        textLength={
-                          watch(`view.childrenViews.${index}.items.${i}.title`)?.length ||
-                          0
-                        }
-                      />
+                      <FormItem
+                        error={errors.view?.childrenViews?.[index]?.items?.[i]?.title}
+                      >
+                        <InputWithTitleCounter
+                          label={t(`TITLE_INPUT`)}
+                          showCount={true}
+                          maxLength={36}
+                          isLight={true}
+                          {...register(`view.childrenViews.${index}.items.${i}.title`)}
+                          textLength={
+                            watch(`view.childrenViews.${index}.items.${i}.title`)
+                              ?.length || 0
+                          }
+                        />
+                      </FormItem>
                     </span>
                   </Space>
                 </div>

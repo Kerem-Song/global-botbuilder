@@ -22,16 +22,18 @@ export const BasicCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
-
+  console.log('values in basiccard node edit', values.view);
   return (
     <>
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
         {watch(`view.useImageCtrl`) && (
-          <ImageSettings
-            imageRatio={Number(watch(`view.imageCtrl.aspectRatio`))}
-            setImageRatio={setImageRatio}
-            imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
-          />
+          <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+            <ImageSettings
+              imageRatio={Number(watch(`view.imageCtrl.aspectRatio`))}
+              setImageRatio={setImageRatio}
+              imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+            />
+          </FormItem>
         )}
       </Collapse>
 

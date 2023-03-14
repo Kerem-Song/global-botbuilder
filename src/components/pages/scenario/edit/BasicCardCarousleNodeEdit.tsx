@@ -36,11 +36,7 @@ export const BasicCardCarousleNodeEdit = () => {
   useEffect(() => {
     console.log('basic card caro index', index);
   }, [index]);
-  console.log(
-    'watch@@',
-    watch(`view.childrenViews.${index}.title`),
-    watch(`view.childrenViews.${index}.useImageCtrl`),
-  );
+
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
@@ -52,14 +48,16 @@ export const BasicCardCarousleNodeEdit = () => {
             field={`useImageCtrl`}
           >
             {watch(`view.useImageCtrl`) && (
-              <ImageSettings
-                imageRatio={Number(
-                  watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`),
-                )}
-                setImageRatio={setImageRatio}
-                index={index}
-                imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
-              />
+              <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
+                <ImageSettings
+                  imageRatio={Number(
+                    watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`),
+                  )}
+                  setImageRatio={setImageRatio}
+                  index={index}
+                  imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                />
+              </FormItem>
             )}
           </Collapse>
 
