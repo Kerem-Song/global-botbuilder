@@ -268,7 +268,10 @@ export const ConditionNodeEdit = () => {
                 <span className="required">*</span>
               </div>
               <FormItem error={errors.view?.trueThenNextNodeId}>
-                <SelectNode fieldName={'view.trueThenNextNodeId'} />
+                <SelectNode
+                  fieldName={'view.trueThenNextNodeId'}
+                  nodeId={getValues().id}
+                />
               </FormItem>
             </Space>
 
@@ -282,7 +285,10 @@ export const ConditionNodeEdit = () => {
                 <span className="required">*</span>
               </div>
               <FormItem error={errors.view?.falseThenNextNodeId}>
-                <SelectNode fieldName={'view.falseThenNextNodeId'} />
+                <SelectNode
+                  fieldName={'view.falseThenNextNodeId'}
+                  nodeId={getValues().id}
+                />
               </FormItem>
             </Space>
           </div>
