@@ -6,8 +6,8 @@ import {
   IHasImageCtrlViewBase,
   IHasUtteranceViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
-import { FC, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FC, useEffect, useState } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 interface CollapseProps extends IHasChildren, IHasClassNameNStyle {
   label: string;
   index?: number;
@@ -24,7 +24,7 @@ export const Collapse: FC<CollapseProps> = ({
 }) => {
   const { t } = usePage();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
-  const { register, setValue } =
+  const { register, setValue, watch, control } =
     useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
   const { confirm } = useSystemModal();
   const handleCollapse = () => {
@@ -32,6 +32,7 @@ export const Collapse: FC<CollapseProps> = ({
   };
 
   console.log(
+    'field in collapse',
     field === 'useUtteranceParam'
       ? `view.useUtteranceParam`
       : index !== undefined
@@ -39,7 +40,7 @@ export const Collapse: FC<CollapseProps> = ({
       : `view.useImageCtrl`,
   );
 
-  const isCollapsedModal = async () => {
+  const isCollapsedModalForImage = async () => {
     if (field === 'useImageCtrl' && index !== undefined) {
       const result = await confirm({
         title: t(`IMAGE_SETTING_OFF`),
@@ -65,6 +66,19 @@ export const Collapse: FC<CollapseProps> = ({
     }
   };
 
+  useEffect(() => {
+    const childrenViewArr = watch(`view.childrenViews`);
+    if (watch(`view.useImageCtrl`) === false && childrenViewArr) {
+      for (const i in childrenViewArr) {
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false);
+      }
+    } else {
+      for (const i in childrenViewArr) {
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, true);
+      }
+    }
+  }, [watch(`view.useImageCtrl`)]);
+
   return (
     <div className="node-item-wrap collapse">
       <div className="collapseHeader">
@@ -82,7 +96,6 @@ export const Collapse: FC<CollapseProps> = ({
                     ? `view.useUtteranceParam`
                     : `view.useImageCtrl`,
                 )}
-                //onChange={() => field === 'useImageCtrl' && index && isCollapsedModal}
               />
             )}
           </Col>

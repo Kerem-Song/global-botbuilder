@@ -1,6 +1,7 @@
 import { usePage } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
+import { is } from 'immer/dist/internal';
 import * as yup from 'yup';
 
 const checkNextNodeIdTypes: string[] = [NODE_TYPES.PARAMETER_SET_NODE];
@@ -11,6 +12,8 @@ export const useYupValidation = () => {
   const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
 
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; //jpeg, png가능(Line 기준)
+
+  const patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
   const textNodeEditSchema = yup.object().shape({
     text: yup
@@ -180,6 +183,14 @@ export const useYupValidation = () => {
       .required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
       .number()
+      .positive()
+      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
+        if (val != undefined) {
+          return patternTwoDigisAfterComma.test(val);
+        }
+        return true;
+      })
+      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .transform((value, originalValue) => {
         return originalValue === '' ? undefined : Number(value);
       })
@@ -187,6 +198,14 @@ export const useYupValidation = () => {
       .required(t(`VALIDATION_REQUIRED`)),
     discountPrice: yup
       .number()
+      .positive()
+      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
+        if (val != undefined) {
+          return patternTwoDigisAfterComma.test(val);
+        }
+        return true;
+      })
+      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .nullable()
       .transform((value, originalValue) => {
         console.log('value@@,:', value, originalValue);

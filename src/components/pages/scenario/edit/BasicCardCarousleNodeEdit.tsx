@@ -43,9 +43,9 @@ export const BasicCardCarousleNodeEdit = () => {
         <>
           <Collapse
             label={t(`IMAGE_SETTING`)}
-            index={index}
             useSwitch={true}
             field={`useImageCtrl`}
+            index={index}
           >
             {watch(`view.useImageCtrl`) && (
               <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>

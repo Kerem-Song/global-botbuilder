@@ -84,6 +84,7 @@ export const ListCardCarouselNodeEdit = () => {
             label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
             useSwitch={true}
             field={`useImageCtrl`}
+            index={index}
           >
             {watch(`view.useImageCtrl`) && (
               <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>

@@ -1,6 +1,7 @@
 import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
+import { Divider } from '@components/layout';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
@@ -80,6 +81,7 @@ export const ParameterSetNodeEdit = () => {
                 </Button>
               </div>
             )}
+            <Divider style={{ margin: '32px 0' }} />
           </div>
         ))}
 

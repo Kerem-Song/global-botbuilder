@@ -19,9 +19,12 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
     textCard: false,
   });
 
+  console.log('@@view', view);
+  console.log('@view.useimagectrl', view.useImageCtrl);
+
   return (
     <Card>
-      {view.useImageCtrl && view.imageCtrl ? (
+      {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div
           className={classNames(
             'thumbnail',
@@ -30,9 +33,10 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
               view.description === undefined
               ? 'round'
               : '',
+            thumbnailClass,
           )}
         >
-          {view.imageCtrl.imageUrl ? (
+          {view.imageCtrl?.imageUrl ? (
             <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
           ) : (
             <div className="skeleton"></div>

@@ -15,8 +15,8 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
-  { value: 'KRW', label: 'KRW' },
   { value: 'JPY', label: 'JPY' },
+  { value: 'KRW', label: 'KRW' },
 ];
 
 const reactSelectStyle: StylesConfig = {
@@ -177,29 +177,35 @@ export const ProductCardNodeEdit = () => {
               </FormItem>
 
               <div className="m-b-8">
-                <Row justify="space-between">
-                  <Col span={17}>
-                    <FormItem error={errors.view && errors.view.retailPrice}>
+                <FormItem error={errors.view && errors.view.retailPrice}>
+                  <Row justify="space-between">
+                    <Col span={17}>
                       <InputWithTitleCounter
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
-                        {...register(`view.retailPrice`, { valueAsNumber: true })}
+                        {...register(`view.retailPrice`, {
+                          valueAsNumber: true,
+                        })}
                       />
-                    </FormItem>
-                  </Col>
-                  <Col className="productSelectorWrapper">
-                    <Select
-                      {...currencyField}
-                      options={currencyOptions}
-                      styles={reactSelectStyle}
-                      defaultValue={currencyOptions[0]}
-                      value={currencyOptions.find(
-                        (item) => item.value === currencyField.value,
-                      )}
-                      onChange={(options: any) => currencyField.onChange(options?.value)}
-                    />
-                  </Col>
-                </Row>
+                    </Col>
+                    <Col className="productSelectorWrapper">
+                      <Select
+                        {...currencyField}
+                        options={currencyOptions.sort((a, b) =>
+                          b.value > a.value ? 1 : -1,
+                        )}
+                        styles={reactSelectStyle}
+                        defaultValue={currencyOptions[0]}
+                        value={currencyOptions.find(
+                          (item) => item.value === currencyField.value,
+                        )}
+                        onChange={(options: any) =>
+                          currencyField.onChange(options?.value)
+                        }
+                      />
+                    </Col>
+                  </Row>
+                </FormItem>
               </div>
 
               <FormItem error={errors.view && errors.view.discountPrice}>

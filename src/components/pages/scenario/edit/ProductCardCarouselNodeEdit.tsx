@@ -16,8 +16,8 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 const currencyOptions = [
   { value: 'USD', label: 'USD' },
-  { value: 'KRW', label: 'KRW' },
   { value: 'JPY', label: 'JPY' },
+  { value: 'KRW', label: 'KRW' },
 ];
 
 const reactSelectStyle: StylesConfig = {
@@ -125,7 +125,7 @@ export const ProductCardCarouselNodeEdit = () => {
       {watch(`view.childrenViews.${index}.id`) && (
         <>
           <div className="node-item-wrap collapse">
-            <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
+            <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false} index={index}>
               <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
                 <ImageSettings
                   imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
@@ -207,11 +207,9 @@ export const ProductCardCarouselNodeEdit = () => {
                   </FormItem>
 
                   <div className="m-b-8">
-                    <Row justify="space-between">
-                      <Col span={17}>
-                        <FormItem
-                          error={errors.view?.childrenViews?.[index]?.retailPrice}
-                        >
+                    <FormItem error={errors.view?.childrenViews?.[index]?.retailPrice}>
+                      <Row justify="space-between">
+                        <Col span={17}>
                           <InputWithTitleCounter
                             label={t(`PRODUCT_NODE_PRICE`)}
                             required={true}
@@ -219,23 +217,23 @@ export const ProductCardCarouselNodeEdit = () => {
                               valueAsNumber: true,
                             })}
                           />
-                        </FormItem>
-                      </Col>
-                      <Col className="productSelectorWrapper">
-                        <Select
-                          {...currencyField}
-                          options={currencyOptions}
-                          styles={reactSelectStyle}
-                          defaultValue={currencyOptions[0]}
-                          value={currencyOptions.find(
-                            (item) => item.value === currencyField.value,
-                          )}
-                          onChange={(options: any) =>
-                            currencyField.onChange(options?.value)
-                          }
-                        />
-                      </Col>
-                    </Row>
+                        </Col>
+                        <Col className="productSelectorWrapper">
+                          <Select
+                            {...currencyField}
+                            options={currencyOptions}
+                            styles={reactSelectStyle}
+                            defaultValue={currencyOptions[0]}
+                            value={currencyOptions.find(
+                              (item) => item.value === currencyField.value,
+                            )}
+                            onChange={(options: any) =>
+                              currencyField.onChange(options?.value)
+                            }
+                          />
+                        </Col>
+                      </Row>
+                    </FormItem>
                   </div>
 
                   <FormItem error={errors.view?.childrenViews?.[index]?.discountPrice}>

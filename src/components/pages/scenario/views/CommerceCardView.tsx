@@ -2,6 +2,7 @@ import { Card } from '@components/data-display';
 import { Divider } from '@components/layout';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
 import { usePage } from '@hooks';
+import { ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
@@ -15,14 +16,15 @@ export interface ICommerceCardViewProps {
 export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, view }) => {
   const discountPriceCss = classNames('discountPrice', { discounted: true });
   const { t } = usePage();
-  const [squareMode, setSquareMode] = useState<boolean>(false);
+
   const thumbnailClass = classNames('thumbnail', {
-    square: squareMode,
+    square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
+    textCard: false,
   });
 
   return (
     <Card onClick={() => console.log('card click')}>
-      {view.imageCtrl ? (
+      {view.useImageCtrl && view.imageCtrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl.imageUrl ? (
             <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />

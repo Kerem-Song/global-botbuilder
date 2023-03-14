@@ -28,7 +28,7 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
           {view.header ? <p>{view.header}</p> : <p>Enter Head Title</p>}
         </div>
       ) : null}
-      {view.imageCtrl ? (
+      {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl.imageUrl ? (
             <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
