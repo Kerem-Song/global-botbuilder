@@ -115,20 +115,26 @@ export const SortableButtonCtrlContainer = ({
         </DndContext>
       </Col>
       <Col span={2}>
-        {buttons.map(
-          (item, i) =>
-            item.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <div className="nextNodeWrapper" key={i}>
-                <NextNodeButton
-                  ctrlId={`${item.id}`}
-                  nodeId={nodeId}
-                  type="blue"
-                  key={`card-${nodeId}-button-${item.id}-nodeButton-${item.id}`}
-                  offset={nextNodeOffset ? i * 40 + nextNodeOffset : undefined}
-                />
-              </div>
-            ),
-        )}
+        {buttons.map((item, i) => (
+          <div
+            className="nextNodeWrapper"
+            key={i}
+            style={{
+              visibility:
+                item.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT
+                  ? 'visible'
+                  : 'hidden',
+            }}
+          >
+            <NextNodeButton
+              ctrlId={`${item.id}`}
+              nodeId={nodeId}
+              type="blue"
+              key={`card-${nodeId}-button-${item.id}-nodeButton-${item.id}`}
+              offset={nextNodeOffset ? i * 40 + nextNodeOffset : undefined}
+            />
+          </div>
+        ))}
       </Col>
     </Row>
   );
