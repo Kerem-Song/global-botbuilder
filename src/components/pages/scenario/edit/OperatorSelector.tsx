@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 const operatorOptions = [
+  { value: 0, label: '조건을 선택해주세요.' },
   { value: ConditionOperator.Is, label: 'is/are equal to' },
   { value: ConditionOperator.IsNot, label: 'is/are not equal to' },
   { value: ConditionOperator.Contain, label: 'contain(s)' },

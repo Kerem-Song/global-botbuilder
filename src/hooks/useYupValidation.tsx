@@ -202,6 +202,10 @@ export const useYupValidation = () => {
     items: yup.array().of(
       yup.object().shape({
         op1: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        operator: yup
+          .number()
+          .not([0], t(`VALIDATION_REQUIRED`))
+          .required(t(`VALIDATION_REQUIRED`)),
         op2: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
