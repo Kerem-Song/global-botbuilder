@@ -104,8 +104,8 @@ export const TESTER_DATA_TYPES = {
   productCard: 'productCard',
   image: 'image',
   quickReplies: 'quickReplies',
-  listCard: 'listTypeCard',
-  listCardCarousel: 'listTypeCardCarousel',
+  listCard: 'listCard',
+  listCardCarousel: 'listCardCarousel',
 } as const;
 
 export type ITesterDataType =
