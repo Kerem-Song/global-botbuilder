@@ -414,8 +414,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             onPressEnter={() =>
                               handleRegisterEntry(entryGroupName.current?.value)
                             }
-                            onChange={() => {
-                              isEntryInputError;
+                            onChange={(e) => {
+                              isEntryInputError(e);
                               setIsActive(true);
                             }}
                             onBlur={isEntryInputError}
