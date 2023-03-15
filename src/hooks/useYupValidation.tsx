@@ -387,7 +387,7 @@ export const useYupValidation = () => {
         .nullable()
         .when('type', {
           is: (nodeType: string) => {
-            console.log(nodeType);
+            // console.log(nodeType);
             return checkNextNodeIdTypes.includes(nodeType);
           },
           then: parameterSetNodeEditNextNodeIdSchema,

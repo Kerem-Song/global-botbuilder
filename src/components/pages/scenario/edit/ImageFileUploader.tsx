@@ -131,6 +131,8 @@ export const ImageFileUploader = ({
     if (e.target.files) {
       console.log('file', e.target.files);
       if (e.target.files[0].size > FILE_SIZE) {
+        e.target.files = null;
+        e.target.value = '';
         await error({
           title: t(`VALIDATION_FILE_SIZE_TITLE`),
           description: t(`VALIDATION_FILE_SIZE`),
