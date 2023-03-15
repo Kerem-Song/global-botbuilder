@@ -67,22 +67,63 @@ export const TesterMessagesItemButton = ({
     });
   };
 
+  const handleActValueIsUttr = () => {
+    const actValueIsUttr: ITesterDataType = {
+      value: item.label,
+      isMe: true,
+      type: 'text',
+    };
+    dispatch(setTesterData([actValueIsUttr]));
+
+    const sendActValueIsUttr: ISendMessage = {
+      sessionToken: token!,
+      lunaMessage: {
+        id: 'actValueIsUttr',
+        utterance: {
+          value: item.postback.actValueIsUttr!,
+        },
+      },
+    };
+
+    botTesterMutate.mutate(sendActValueIsUttr, {
+      onSuccess: (submitResult) => {
+        console.log('결과', submitResult);
+        const updateTesterData = submitResult.result?.messages || [];
+        if (submitResult.result?.quickReplies) {
+          const quickpRepliesContent: IQuickRepliesContent = {
+            quickReplies: submitResult.result.quickReplies,
+            type: TESTER_DATA_TYPES.quickReplies,
+          };
+          updateTesterData.push(quickpRepliesContent);
+        }
+        dispatch(setTesterData(updateTesterData));
+      },
+    });
+  };
+
   const itemButton = classNames(className, 'luna-testerItem-btn', {
     'luna-testerItem-cardBtn': card,
     'luna-testerItem-cardCarouselBtn': cardCarousel,
     'luna-testerItem-quickReplyBtn': quickReply,
   });
-  return (
-    <>
-      {actionType === 'linkWebUrl' ? (
-        <button className={itemButton} onClick={() => window.open(webLinkUrl)}>
-          {item.label}
-        </button>
-      ) : (
-        <button className={itemButton} onClick={() => handleNodeUrl()}>
-          {item.label}
-        </button>
-      )}
-    </>
-  );
+
+  if (actionType === 'linkWebUrl') {
+    return (
+      <button className={itemButton} onClick={() => window.open(webLinkUrl)}>
+        {item.label}
+      </button>
+    );
+  } else if (actionType === 'actValueIsUttr') {
+    return (
+      <button className={itemButton} onClick={() => handleActValueIsUttr()}>
+        {item.label}
+      </button>
+    );
+  } else {
+    return (
+      <button className={itemButton} onClick={() => handleNodeUrl()}>
+        {item.label}
+      </button>
+    );
+  }
 };

@@ -1,6 +1,6 @@
 import { icUtteranceEmpty } from '@assets';
 import { Col, Row } from '@components';
-import { usePage, useScenarioClient, useSystemModal } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -82,20 +82,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
     return false;
   };
-
-  // const getUtteranceSummary = (utteranceSummary: string) => {
-  //   const arr = utteranceSummary.split(',');
-  //   const filterArr = arr.filter((item, index) => index < arr.length - 1);
-  //   const checkedStr =
-  //     filterArr?.length > 5
-  //       ? filterArr
-  //           .splice(filterArr.length - 5, filterArr.length)
-  //           .reverse()
-  //           .toString()
-  //           .concat('...')
-  //       : filterArr.reverse().toString();
-  //   return checkedStr;
-  // };
 
   return (
     <>

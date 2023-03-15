@@ -49,6 +49,7 @@ export interface ITesterQuickReply {
     displayText?: string;
     text?: string;
     lunaNodeLink?: string;
+    actValueIsUttr?: string;
   };
 }
 
@@ -80,6 +81,7 @@ export interface ITesterCard {
     label?: string;
     postback?: {
       webLinkUrl?: string;
+      actValueIsUttr?: string;
     };
   };
 }

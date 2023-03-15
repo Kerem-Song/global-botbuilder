@@ -1,4 +1,4 @@
-import { Divider, Space } from '@components/layout';
+import { Divider } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 
 import { CardCarouselType } from './CardCarouselType';
