@@ -104,8 +104,8 @@ export const TESTER_DATA_TYPES = {
   productCard: 'productCard',
   image: 'image',
   quickReplies: 'quickReplies',
-  listCard: 'listCard',
-  listCardCarousel: 'listCardCarousel',
+  listCard: 'listTypeCard',
+  listCardCarousel: 'listTypeCardCarousel',
 } as const;
 
 export type ITesterDataType =
@@ -115,8 +115,8 @@ export type ITesterDataType =
   | IContentTextCard
   | IProductCard
   | IImageCard
-  | IListCard
-  | IListCardCarousel
+  | IListTypeCard
+  | IListTypeCardCarousel
   | IQuickRepliesContent;
 
 export interface ITextCard extends IHasDebugMeta {
@@ -205,7 +205,7 @@ export interface IImageCard extends IHasDebugMeta {
   };
 }
 
-export interface IListCard extends IHasDebugMeta {
+export interface IListTypeCard extends IHasDebugMeta {
   header?: string;
   items: [
     {
@@ -233,9 +233,9 @@ export interface IListCard extends IHasDebugMeta {
   };
   type: typeof TESTER_DATA_TYPES.listCard;
 }
-export interface IListCardCarousel extends IHasDebugMeta {
+export interface IListTypeCardCarousel extends IHasDebugMeta {
   header?: string;
-  contents: IListCard[];
+  contents: IListTypeCard[];
   type: typeof TESTER_DATA_TYPES.listCardCarousel;
 }
 

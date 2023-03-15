@@ -1,11 +1,11 @@
 import { Divider } from '@components';
-import { IListCard } from '@models';
+import { IListTypeCard } from '@models';
 import { FC } from 'react';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
 export interface IListCardCarouselTypeProps {
-  item: IListCard;
+  item: IListTypeCard;
 }
 
 export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) => {
