@@ -177,8 +177,6 @@
 
                 .prevPrice {
                   height: rem(19);
-                  overflow: hidden;
-                  text-overflow: ellipsis;
                   padding-left: rem(20);
                   font-size: rem(16);
                   color: $gray300;
@@ -214,21 +212,34 @@
                   color: #636364;
                 }
               }
-              .productBtn {
+              .rectangleImageBtn {
+                margin-bottom: rem(10);
+
+                button {
+                  width: rem(240);
+                  height: rem(35);
+                  margin-top: rem(4);
+                  border: none;
+                  border-radius: rem(8);
+                  cursor: pointer;
+                  &:hover {
+                    background-color: #75767a;
+                  }
+                }
+              }
+              .squareImageBtn {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: rem(10);
 
-                .luna-testerItem-btn {
+                button {
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   width: rem(117);
                   height: rem(37);
                   margin-right: rem(3);
-                  overflow: hidden;
-                  text-overflow: ellipsis;
                   white-space: nowrap;
                   font-size: rem(14);
                   border: none;
@@ -251,6 +262,7 @@
             width: rem(30);
             height: rem(30);
             background-color: $grayWhite;
+            background-color: yellow;
             opacity: 0.3;
             border: rem(1) solid $gray200;
             box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);

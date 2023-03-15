@@ -16,6 +16,7 @@ export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
   item: ITesterQuickReply;
   card?: boolean;
   cardCarousel?: boolean;
+  productCardCarousel?: boolean;
   quickReply?: boolean;
 }
 
@@ -23,6 +24,7 @@ export const TesterMessagesItemButton = ({
   item,
   card,
   cardCarousel,
+  productCardCarousel,
   quickReply,
   className,
 }: TesterMessagesItemButtonProps) => {
@@ -104,6 +106,7 @@ export const TesterMessagesItemButton = ({
   const itemButton = classNames(className, 'luna-testerItem-btn', {
     'luna-testerItem-cardBtn': card,
     'luna-testerItem-cardCarouselBtn': cardCarousel,
+    'luna-testerItem-productCardCarouselBtn': productCardCarousel,
     'luna-testerItem-quickReplyBtn': quickReply,
   });
 

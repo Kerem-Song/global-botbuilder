@@ -1,5 +1,6 @@
 import { usePage } from '@hooks';
 import { FC } from 'react';
+import ReactLoading from 'react-loading';
 import ReactModal from 'react-modal';
 
 export interface IDeployingModalProps {
@@ -16,7 +17,7 @@ export const DeployingModal: FC<IDeployingModalProps> = ({ isOpenDeployingModal 
       isOpen={isOpenDeployingModal}
     >
       <div className="contents">
-        <div className="loading"></div>
+        <ReactLoading type="spin" color="#4478FF" height={50} width={50} />
         <div className="title">
           <span>{t('DEPLOY_TEST_CHANNEL')}</span>
         </div>
