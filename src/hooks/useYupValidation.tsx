@@ -230,7 +230,6 @@ export const useYupValidation = () => {
       .required(t(`VALIDATION_REQUIRED`)),
     discountPrice: yup
       .number()
-      .positive()
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
           return patternTwoDigisAfterComma.test(val);
