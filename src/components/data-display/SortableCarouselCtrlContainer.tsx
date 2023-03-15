@@ -48,14 +48,14 @@ export const SoratbleCarouselCtrlContainer = ({
     }),
   );
 
-  useEffect(() => {
-    console.log('carouselnode lenght', carouselNode.length);
-    if (carouselNode.length === 10) {
-      setIsDisable(true);
-    }
-  }, [carouselNode.length, setIsDisable]);
-  console.log('isDisable', isDisable);
-  console.log('caro num', carouselNode.length);
+  // useEffect(() => {
+  //   console.log('carouselnode lenght', carouselNode.length);
+  //   if (carouselNode.length === 10) {
+  //     setIsDisable(true);
+  //   }
+  // }, [carouselNode.length, setIsDisable]);
+  // console.log('isDisable', isDisable);
+  // console.log('caro num', carouselNode.length);
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;

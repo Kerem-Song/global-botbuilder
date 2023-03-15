@@ -74,7 +74,7 @@ export const BasicCardCarousleNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`TITLE_INPUT`)}
                   showCount={true}
-                  maxLength={40}
+                  maxLength={20}
                   isLight={true}
                   {...register(`view.childrenViews.${index}.title`)}
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}

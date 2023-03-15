@@ -65,12 +65,17 @@ export const Collapse: FC<CollapseProps> = ({
       }
     }
   };
+  // if (watch(`view.childrenViews.${Number(index)}.imageCtrl.imageUrl`)) {
+  //   setValue(`view.useImageCtrl`, true);
+  // }
 
   useEffect(() => {
     const childrenViewArr = watch(`view.childrenViews`);
+
     if (watch(`view.useImageCtrl`) === false && childrenViewArr) {
       for (const i in childrenViewArr) {
         setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false);
+        // setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
       }
     } else {
       for (const i in childrenViewArr) {
