@@ -19,9 +19,6 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
     textCard: false,
   });
 
-  console.log('@@view', view);
-  console.log('@view.useimagectrl', view.useImageCtrl);
-
   return (
     <Card>
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (

@@ -18,6 +18,7 @@ import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGet
 import { nodeHelper } from '@modules';
 import { setSelected } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
@@ -35,7 +36,7 @@ export const SoratbleCarouselCtrlContainer = ({
   setCarouselNode,
 }: ISortableContainer) => {
   const dispatch = useDispatch();
-
+  const [isDisable, setIsDisable] = useState<boolean>(false);
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -46,6 +47,15 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  useEffect(() => {
+    console.log('carouselnode lenght', carouselNode.length);
+    if (carouselNode.length === 10) {
+      setIsDisable(true);
+    }
+  }, [carouselNode.length, setIsDisable]);
+  console.log('isDisable', isDisable);
+  console.log('caro num', carouselNode.length);
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -63,7 +73,7 @@ export const SoratbleCarouselCtrlContainer = ({
   const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
     const target = node.find((item) => item.id === id);
 
-    if (target) {
+    if (target && carouselNode.length < 10) {
       const duplicated = nodeHelper.cloneView(target);
       setCarouselNode([...node, duplicated]);
     }
@@ -84,9 +94,9 @@ export const SoratbleCarouselCtrlContainer = ({
       id: 'duplicate-carousel',
       name: 'Duplication',
       type: 'icon-front',
-      icon: carouselNode?.length < 10 ? icCardDuplication : icCardDuplicationDisabled,
+      icon: carouselNode.length < 10 ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: carouselNode?.length < 10 ? handleDuplicationCard : null,
+        action: handleDuplicationCard,
       },
     },
     {

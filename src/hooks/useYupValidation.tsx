@@ -239,7 +239,7 @@ export const useYupValidation = () => {
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .nullable()
       .transform((value, originalValue) => {
-        console.log('value@@,:', value, originalValue);
+        // console.log('value@@,:', value, originalValue);
         return originalValue === '' ? undefined : Number(value);
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),

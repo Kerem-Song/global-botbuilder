@@ -347,6 +347,10 @@
               max-height: rem(64);
             }
           }
+
+          &.invalid {
+            border: rem(1) solid $red;
+          }
         }
       }
     }

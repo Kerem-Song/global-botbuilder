@@ -95,6 +95,21 @@ export const Collapse: FC<CollapseProps> = ({
                   field === 'useUtteranceParam'
                     ? `view.useUtteranceParam`
                     : `view.useImageCtrl`,
+                  {
+                    onChange: (e) => {
+                      if (!e.target.checked) {
+                        setValue(
+                          index !== undefined
+                            ? `view.childrenViews.${index}.imageCtrl.imageUrl`
+                            : `view.imageCtrl.imageUrl`,
+                          '',
+                        );
+                        e.target.files = null;
+                        e.target.value = '';
+                        isCollapsedModalForImage();
+                      }
+                    },
+                  },
                 )}
               />
             )}

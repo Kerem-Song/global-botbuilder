@@ -25,7 +25,7 @@ export const ImageFileUploader = ({
     getValues,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useFormContext();
   const values = getValues();
 
@@ -157,6 +157,7 @@ export const ImageFileUploader = ({
   }, [watch(handleImageCtrlIdPath().imageFilePath)]);
 
   console.log('errors in image:', errors);
+  console.log('isvalid in image', isValid);
   return (
     <>
       <label
@@ -173,6 +174,7 @@ export const ImageFileUploader = ({
               imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL ||
               imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL,
             regtangle: imageRatio === ImageAspectRatio.Rectangle,
+            invalid: !isValid,
           })}
         >
           <div className={classnames('imgUploadSkeleton')}>

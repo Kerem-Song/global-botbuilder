@@ -108,19 +108,23 @@ export const ListCardCarouselNodeEdit = () => {
                 </div>
                 <div className="m-b-8">
                   <Space direction="vertical">
-                    <Row align="center" gap={12} style={{ margin: 0 }}>
-                      <Col span={7} className="itemProfileImg">
-                        <ImageFileUploader
-                          imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
-                          index={index}
-                          listItemIndex={i}
-                        />
-                      </Col>
-                      <Col span={15}>
-                        <p>{t(`RECOMMENDED_SIZE`)}</p>
-                        <p>400 x 400 </p>
-                      </Col>
-                    </Row>
+                    <FormItem
+                      error={errors.view?.childrenViews?.[index]?.items?.[i]?.imageUrl}
+                    >
+                      <Row align="center" gap={12} style={{ margin: 0 }}>
+                        <Col span={7} className="itemProfileImg">
+                          <ImageFileUploader
+                            imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
+                            index={index}
+                            listItemIndex={i}
+                          />
+                        </Col>
+                        <Col span={15}>
+                          <p>{t(`RECOMMENDED_SIZE`)}</p>
+                          <p>400 x 400 </p>
+                        </Col>
+                      </Row>
+                    </FormItem>
                   </Space>
                 </div>
                 <div className="m-b-8">

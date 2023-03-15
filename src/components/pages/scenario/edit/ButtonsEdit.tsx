@@ -59,7 +59,6 @@ export const ButtonsEdit = ({
   };
 
   const handleDeleteButton = (index: number) => {
-    console.log('@@delete index', index);
     remove(index);
   };
 
