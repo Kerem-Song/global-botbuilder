@@ -133,18 +133,20 @@ export const ProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <Row align="center" gap={12} style={{ margin: 0 }}>
-                <Col span={8} className="itemProfileImg">
-                  <ImageFileUploader
-                    imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
-                    isValid={errors.view?.profileIconUrl ? false : true}
-                  />
-                </Col>
-                <Col span={14}>
-                  <p>{t(`RECOMMENDED_SIZE`)}</p>
-                  <p>640 x 640</p>
-                </Col>
-              </Row>
+              <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+                <Row align="center" gap={12} style={{ margin: 0 }}>
+                  <Col span={8} className="itemProfileImg">
+                    <ImageFileUploader
+                      imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                      isValid={errors.view?.profileIconUrl ? false : true}
+                    />
+                  </Col>
+                  <Col span={14}>
+                    <p>{t(`RECOMMENDED_SIZE`)}</p>
+                    <p>640 x 640</p>
+                  </Col>
+                </Row>
+              </FormItem>
             </Space>
           </div>
           <div className="m-b-8">
