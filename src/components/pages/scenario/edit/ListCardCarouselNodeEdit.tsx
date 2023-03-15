@@ -95,6 +95,11 @@ export const ListCardCarouselNodeEdit = () => {
                   setImageRatio={setImageRatio}
                   index={index}
                   imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                  isValid={
+                    errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl
+                      ? false
+                      : true
+                  }
                 />
               </FormItem>
             )}
@@ -117,6 +122,11 @@ export const ListCardCarouselNodeEdit = () => {
                             imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
                             index={index}
                             listItemIndex={i}
+                            isValid={
+                              errors.view?.childrenViews?.[index]?.items?.[i]?.imageUrl
+                                ? false
+                                : true
+                            }
                           />
                         </Col>
                         <Col span={15}>

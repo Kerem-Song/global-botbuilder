@@ -197,7 +197,7 @@ export const useYupValidation = () => {
   const productCardNodeEditSchema = yup.object().shape({
     imageCtrl: yup.object().shape({
       imageFile: imageFileEditSchema,
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)),
+      imageUrl: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
     }),
     profileIconUrl: yup
       .string()

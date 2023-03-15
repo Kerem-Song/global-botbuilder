@@ -72,6 +72,7 @@ export const ListCardNodeEdit = () => {
               imageRatio={watch(`view.imageCtrl.aspectRatio`)}
               setImageRatio={setImageRatio}
               imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+              isValid={errors.view?.imageCtrl?.imageUrl ? false : true}
             />
           </FormItem>
         )}
@@ -91,6 +92,7 @@ export const ListCardNodeEdit = () => {
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                         listItemIndex={i}
+                        isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                       />
                     </Col>
                     <Col span={15}>

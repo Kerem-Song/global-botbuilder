@@ -13,6 +13,7 @@ interface IImageSetting {
   imageCtrl: TImageTypes;
   index?: number;
   listItemIndex?: number;
+  isValid?: boolean;
 }
 
 export const ImageSettings = ({
@@ -21,6 +22,7 @@ export const ImageSettings = ({
   imageCtrl,
   index,
   listItemIndex,
+  isValid,
 }: IImageSetting) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
@@ -145,6 +147,7 @@ export const ImageSettings = ({
   useEffect(() => {
     console.log('image settings');
   }, [aspectRatio]);
+
   return (
     <Space direction="vertical">
       <div className="m-b-8">
@@ -185,6 +188,7 @@ export const ImageSettings = ({
         index={index}
         listItemIndex={listItemIndex}
         imageRatio={watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`)}
+        isValid={isValid}
       />
     </Space>
   );

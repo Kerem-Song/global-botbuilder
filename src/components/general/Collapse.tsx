@@ -65,9 +65,6 @@ export const Collapse: FC<CollapseProps> = ({
       }
     }
   };
-  // if (watch(`view.childrenViews.${Number(index)}.imageCtrl.imageUrl`)) {
-  //   setValue(`view.useImageCtrl`, true);
-  // }
 
   useEffect(() => {
     const childrenViewArr = watch(`view.childrenViews`);

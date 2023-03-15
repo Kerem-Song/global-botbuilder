@@ -132,6 +132,11 @@ export const ProductCardCarouselNodeEdit = () => {
                   setImageRatio={setImageRatio}
                   imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
                   index={index}
+                  isValid={
+                    errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl
+                      ? false
+                      : true
+                  }
                 />
               </FormItem>
             </Collapse>
@@ -149,6 +154,11 @@ export const ProductCardCarouselNodeEdit = () => {
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL}
                         index={index}
+                        isValid={
+                          errors.view?.childrenViews?.[index]?.profileIconUrl
+                            ? false
+                            : true
+                        }
                       />
                     </Col>
                     <Col span={15}>

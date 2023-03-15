@@ -12,6 +12,7 @@ interface IImageSetting {
   index?: number;
   listItemIndex?: number;
   imageRatio?: ImageAspectRatio | undefined;
+  isValid?: boolean;
 }
 
 export const ImageFileUploader = ({
@@ -19,13 +20,14 @@ export const ImageFileUploader = ({
   index,
   listItemIndex,
   imageRatio,
+  isValid,
 }: IImageSetting) => {
   const { t } = usePage();
   const {
     getValues,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useFormContext();
   const values = getValues();
 
@@ -156,8 +158,6 @@ export const ImageFileUploader = ({
     }
   }, [watch(handleImageCtrlIdPath().imageFilePath)]);
 
-  console.log('errors in image:', errors);
-  console.log('isvalid in image', isValid);
   return (
     <>
       <label

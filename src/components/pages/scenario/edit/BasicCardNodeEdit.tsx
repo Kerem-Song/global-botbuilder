@@ -32,6 +32,7 @@ export const BasicCardNodeEdit = () => {
               imageRatio={Number(watch(`view.imageCtrl.aspectRatio`))}
               setImageRatio={setImageRatio}
               imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
+              isValid={errors.view?.imageCtrl?.imageUrl ? false : true}
             />
           </FormItem>
         )}

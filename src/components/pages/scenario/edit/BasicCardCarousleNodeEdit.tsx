@@ -56,6 +56,11 @@ export const BasicCardCarousleNodeEdit = () => {
                   setImageRatio={setImageRatio}
                   index={index}
                   imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                  isValid={
+                    errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl
+                      ? false
+                      : true
+                  }
                 />
               </FormItem>
             )}
