@@ -411,7 +411,12 @@ export const arrowHelper = {
     }
 
     // 연속 노드에 응답이 아닌 노드 연결 할 경우
-    if (!isNext && endNode.nodeKind === NodeKind.CommandNode) {
+    // 연속 노드에 다른시나리오나 시작노드 연결 할 경우
+    if (
+      !isNext &&
+      (endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE ||
+        endNode.type === NODE_TYPES.INTENT_NODE)
+    ) {
       return '연속노드로 응답노드만 연결 할 수 있습니다.';
     }
 
