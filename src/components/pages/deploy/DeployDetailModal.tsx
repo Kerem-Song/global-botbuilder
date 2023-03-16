@@ -29,7 +29,9 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       <Divider />
       <div className="contents">
         <div className="deployNumber">
-          <Title level={2}>{t('DEPLOY_NUMBER')} : 00037-L (operating channel)</Title>
+          <Title level={2}>
+            {t('DEPLOY_NUMBER')} : 00037-L ({t('OPERATIONAL')})
+          </Title>
         </div>
         <div className="deployInfo">
           <div className="info">
@@ -47,7 +49,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_STATUS')}</span>
             <span className="infoContent">
-              <span className="success">Success</span>
+              <span className="success">{t('SUCCESS')}</span>
             </span>
           </div>
         </div>

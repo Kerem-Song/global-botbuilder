@@ -207,7 +207,15 @@
     "DEPLOYMENT_STATUS": "배포 상태",
     "MEMO": "메모",
     "DEPLOY_NOTES": "메모가 없습니다.",
+    "NOTES_SAVED": "메모가 저장되었습니다.",
     "DEPLOYING_MESSAGE": "배포 중에는 취소가 불가합니다.\n잠시만 기다려주세요.",
-    "SUCCESS": "성공"
+    "DEPLOYING_SUCCESS": "배포가 완료되었습니다.",
+    "DEPLOYING_FAILED": "배포 실패",
+    "DEPLOYING_FAILED_MESSAGE": "배포에 실패했습니다. 다시 시도해주세요.\n계속해서 오류가 발생하는 경우 관리자에게 문의해주세요.",
+    "DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE": "배포에 실패했습니다.\n파트너스 센터에서 채널 연결을 확인해주세요.",
+    "SUCCESS": "성공",
+    "FAILED": "실패",
+    "OPERATIONAL": "운영 채널",
+    "TEST": "테스트 채널"
   }
 }

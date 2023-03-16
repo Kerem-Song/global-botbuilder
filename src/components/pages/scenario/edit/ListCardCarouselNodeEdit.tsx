@@ -19,6 +19,7 @@ export const ListCardCarouselNodeEdit = () => {
   const {
     register,
     getValues,
+    setValue,
     watch,
     control,
     formState: { errors },
@@ -60,7 +61,9 @@ export const ListCardCarouselNodeEdit = () => {
   };
 
   useEffect(() => {
-    console.log('list card index', index);
+    if (watch(`view.childrenViews.${index}.imageCtrl.imageUrl`) !== '') {
+      setValue(`view.useImageCtrl`, true);
+    }
   }, [index]);
 
   return (
@@ -86,7 +89,8 @@ export const ListCardCarouselNodeEdit = () => {
             field={`useImageCtrl`}
             index={index}
           >
-            {watch(`view.useImageCtrl`) && (
+            {(watch(`view.useImageCtrl`) ||
+              watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)) && (
               <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
                 <ImageSettings
                   imageRatio={Number(
@@ -147,6 +151,7 @@ export const ListCardCarouselNodeEdit = () => {
                           label={t(`TITLE_INPUT`)}
                           showCount={true}
                           maxLength={36}
+                          required={true}
                           isLight={true}
                           {...register(`view.childrenViews.${index}.items.${i}.title`)}
                           textLength={

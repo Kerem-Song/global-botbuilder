@@ -4,7 +4,7 @@ import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -17,16 +17,24 @@ export const BasicCardNodeEdit = () => {
   const {
     register,
     getValues,
+    setValue,
     control,
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
+
+  useEffect(() => {
+    if (watch(`view.imageCtrl.imageUrl`) !== '') {
+      setValue(`view.useImageCtrl`, true);
+    }
+  }, [watch(`view.imageCtrl.imageUrl`)]);
+
   console.log('values in basiccard node edit', values.view);
   return (
     <>
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
-        {watch(`view.useImageCtrl`) && (
+        {(watch(`view.useImageCtrl`) || watch(`view.imageCtrl.imageUrl`)) && (
           <FormItem error={errors.view?.imageCtrl?.imageUrl}>
             <ImageSettings
               imageRatio={Number(watch(`view.imageCtrl.aspectRatio`))}

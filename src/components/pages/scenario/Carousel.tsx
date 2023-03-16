@@ -91,17 +91,29 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
           </Col>
         </Row>
       )}
-      <div role="presentation" style={{ width: '190px', overflowX: 'hidden' }}>
+      <div
+        role="presentation"
+        style={{
+          width: '190px',
+          overflowX: 'hidden',
+          border: '1px solid #DCDCDC',
+          borderRadius: '12px',
+        }}
+        className="carouselComponent"
+      >
         <div style={{ display: 'flex', ...style }}>
           {children.map((c, i) => {
             return (
-              <div style={{ width: '190px', flex: 'none' }} key={`card-wrap-${i}`}>
+              <div
+                style={{ width: '190px', flex: 'none', padding: '12px' }}
+                key={`card-wrap-${i}`}
+              >
                 {i === current ? c : <div style={{ width: '190px' }}></div>}
               </div>
             );
           })}
-          <div style={{ width: '190px', flex: 'none' }}>
-            <div style={{ width: '190px' }}>
+          <div style={{ width: '166px', flex: 'none' }}>
+            <div style={{ width: '166px' }}>
               <Button block onClick={addCarousel}>
                 말풍선 추가
               </Button>

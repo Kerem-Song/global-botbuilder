@@ -34,6 +34,10 @@ export const CarouselOrderPopup: FC<{
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
 
+  useEffect(() => {
+    console.log('caropopup', nodeView.childrenViews === carouselNode);
+  }, [carouselNode]);
+
   const handleClose = async () => {
     if (nodeView.childrenViews !== carouselNode) {
       const checkSaving = await confirm({
