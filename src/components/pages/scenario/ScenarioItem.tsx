@@ -157,12 +157,14 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           maxLength={20}
           ref={inputRef}
           onBlur={(e) => {
+            console.log('scenario item lost focus');
             handleScenarioRename(e.target.value);
           }}
           onPressEsc={() => {
             setIsEditing(false);
           }}
           onPressEnter={(value) => {
+            console.log('scenario item enter');
             handleScenarioRename(value);
           }}
         />
