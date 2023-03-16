@@ -5,8 +5,8 @@
   border: 1px solid $grayWhite;
   border-radius: rem(12);
   background-color: $grayWhite;
-  max-width: rem(220);
-  min-width: rem(220);
+  max-width: rem(218);
+  min-width: rem(218);
   padding: rem(13.5) rem(12) rem(24) rem(12);
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   cursor: pointer;
@@ -144,10 +144,12 @@
 
         p {
           white-space: normal;
-          word-break: break-all;
+          // word-break: break-all;
           -webkit-user-select: none; /* Safari */
           -ms-user-select: none; /* IE 10 and IE 11 */
           user-select: none; /* Standard syntax */
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         & div {
@@ -260,7 +262,7 @@
           }
 
           .listItemsContent {
-            padding-left: rem(8) !important;
+
             line-height: rem(15.6);
 
             p {
@@ -492,6 +494,11 @@
     .luna-btn {
       width: rem(166) !important;
     }
+  }
 
+  .listItemsContent {
+    flex: 0 0 70% !important;
+    min-width: 70% !important;
+    line-height: rem(15.6);
   }
 }
