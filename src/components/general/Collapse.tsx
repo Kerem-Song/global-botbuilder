@@ -58,9 +58,9 @@ export const Collapse: FC<CollapseProps> = ({
         setValue(`view.useImageCtrl`, false);
         setValue(
           index !== undefined
-            ? `view.childrenViews.${index}.imageCtrl`
-            : `view.imageCtrl`,
-          { imageUrl: '' },
+            ? `view.childrenViews.${index}.imageCtrl.imageUrl`
+            : `view.imageCtrl.imageUrl`,
+          '',
         );
       }
     }
@@ -72,7 +72,7 @@ export const Collapse: FC<CollapseProps> = ({
     if (watch(`view.useImageCtrl`) === false && childrenViewArr) {
       for (const i in childrenViewArr) {
         setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false);
-        // setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
+        setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
       }
     } else {
       for (const i in childrenViewArr) {
