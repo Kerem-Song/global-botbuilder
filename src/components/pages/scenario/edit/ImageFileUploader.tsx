@@ -154,6 +154,7 @@ export const ImageFileUploader = ({
           title: t(`VALIDATION_FILE_TYPE_TITLE`),
           description: t(`VALIDATION_FILE_TYPE`),
         });
+        return;
       }
       setValue(handleImageCtrlIdPath().imageFilePath, e.target.files);
     }
