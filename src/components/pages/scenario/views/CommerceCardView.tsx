@@ -24,7 +24,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
 
   return (
     <Card onClick={() => console.log('card click')}>
-      {view.useImageCtrl || view.imageCtrl.imageUrl ? (
+      {view.useImageCtrl || view.imageCtrl?.imageUrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl.imageUrl ? (
             <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />

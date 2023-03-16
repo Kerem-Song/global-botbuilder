@@ -36,7 +36,7 @@
   "scenario": {
     "TITLE": "시나리오",
     "SINGLE": "단일",
-    "CAROUSEL": "캐로셀",
+    "CAROUSEL": "케로셀",
     "FUNCTION": "기능",
     "CHAT_BUBBLE": "말풍선",
     "CHAT_BUBBLE_NAME": "말풍선명",
@@ -67,7 +67,7 @@
     "ADD_A_NEW_BUTTON": "버튼 추가",
     "ADD_A_NEW_LIST": "리스트 추가",
     "DELETE_A_LIST": "리스트 삭제",
-    "ADD_A_QUICK_REPLY": "새 퀵버튼",
+    "ADD_A_QUICK_REPLY": "퀵 리플라이 추가",
     "DELETE_BUTTON": "버튼 삭제",
     "BUTTON_TYPE": "버튼타입",
     "BUTTON_NAME": "버튼명",

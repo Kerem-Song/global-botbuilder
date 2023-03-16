@@ -95,6 +95,7 @@ export const CarouselOrderPopup: FC<{
     <ReactModal
       isOpen={isOpen}
       className="carouselOrderPopupWrapper node-draggable-ignore"
+      overlayClassName="luna-system-modal-overlay"
     >
       <div onWheel={(e) => e.stopPropagation()}>
         <Row justify="space-between" align="center" className="titleWrapper">

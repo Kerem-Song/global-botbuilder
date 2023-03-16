@@ -23,6 +23,7 @@ import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 import { Node } from './nodes';
+import { OtherFlowScenariosPopup } from './nodes/OtherFlowScenariosPopup';
 
 let dirtySelect: string | undefined;
 
@@ -39,6 +40,7 @@ export const Botbuilder = () => {
     x: 0,
     y: 0,
   });
+  const [otherFlowPopup, setOtherFlowPopup] = useState<boolean>(false);
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
@@ -140,6 +142,7 @@ export const Botbuilder = () => {
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
+    console.log('cardtype', cardType);
     if (!cardType) {
       handleIsOpen(true);
       setPopUpPosition({
@@ -148,6 +151,18 @@ export const Botbuilder = () => {
       });
       return;
     }
+
+    // if (cardType === 'OtherFlowRedirectNode') {
+    //   console.log('akak');
+    //   setPopUpPosition({
+    //     x: Math.round(e.clientX / scale) - canvasRect.left,
+    //     y: Math.round(e.clientY / scale) - canvasRect.top,
+    //   });
+
+    //   setOtherFlowPopup(true);
+
+    //   return;
+    // }
     const nodeName = e.dataTransfer.getData('nodeName') as string;
 
     const nodeView = nodeDefaultHelper.createDefaultView(cardType);
@@ -256,6 +271,8 @@ export const Botbuilder = () => {
       y: Math.round(e.clientY / scale) - canvasRect.top,
     });
   };
+
+  console.log('other flow popup', otherFlowPopup);
   return (
     <>
       <div
@@ -341,6 +358,7 @@ export const Botbuilder = () => {
               popUpPosition={popUpPosition}
             />
           )}
+          {otherFlowPopup && <OtherFlowScenariosPopup popUpPosition={popUpPosition} />}
           {clicked && (
             <div
               className="luna-popup-container luna-chatbot-container"

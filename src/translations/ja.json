@@ -38,7 +38,7 @@
     "DEFAULT_SCENARIO": "기본 제공 시나리오",
     "ADD_A_NEW_SCENARIO_BTN": "새 시나리오",
     "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "시나리오명을 입력해주세요.",
-    "ADD_A_NEW_BUTTON": "새 버튼",
+    "ADD_A_NEW_BUTTON": "버튼 추가",
     "DELETE_BUTTON": "지우기 버튼",
     "BUTTON_TYPE": "BUTTON_TYPE",
     "BUTTON_NAME": "BUTTON_NAME"
