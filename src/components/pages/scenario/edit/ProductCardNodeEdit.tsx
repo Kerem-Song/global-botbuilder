@@ -111,6 +111,10 @@ export const ProductCardNodeEdit = () => {
     setValue(`view.salePrice`, salePrice);
   }, [salePrice]);
 
+  useEffect(() => {
+    setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
+  }, [watch(`view.salePrice`)]);
+
   return (
     <>
       <div className="node-item-wrap collapse">

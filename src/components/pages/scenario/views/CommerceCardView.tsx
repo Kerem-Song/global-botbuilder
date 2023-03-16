@@ -24,7 +24,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
 
   return (
     <Card onClick={() => console.log('card click')}>
-      {view.useImageCtrl && view.imageCtrl ? (
+      {view.useImageCtrl || view.imageCtrl.imageUrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl.imageUrl ? (
             <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
@@ -55,9 +55,13 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       <div className="priceWrapper">
         {view.retailPrice !== view.salePrice && (
           <div>
-            <span className="discounted">{view.retailPrice}</span>
+            <span className="discounted">
+              {view.retailPrice && view.retailPrice.toLocaleString()}
+            </span>
             <span className="discount">
-              {view.discountPrice}
+              {view.discountPrice
+                ? view.discountPrice.toLocaleString()
+                : (view.retailPrice - view.salePrice).toLocaleString()}
               <span className="currency">{view.currencyUnit}</span>
               {t(`PRODUCT_NODE_DISCOUNT`)}
             </span>
@@ -65,7 +69,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
         )}
         <div className="prices">
           <p>
-            {view.salePrice}
+            {view.salePrice && view.salePrice.toLocaleString()}
             <span className="currency">{view.currencyUnit}</span>
           </p>
         </div>
