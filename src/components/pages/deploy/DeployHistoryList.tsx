@@ -20,9 +20,7 @@ export const DeployHistoryList = () => {
           <th className="deployHistoryList memo">{t('MEMO')}</th>
         </tr>
       </thead>
-      <tbody>
-        <DeployHistoryListItem />
-      </tbody>
+      <DeployHistoryListItem />
     </table>
   );
 };

@@ -119,7 +119,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable onDrag={undefined}>
+        <Draggable onDrag={undefined} bounds="#layout">
           <div className="botTester">
             <Col className="botTesterHeader">
               <Col className="text">{t('HEADER')}</Col>
