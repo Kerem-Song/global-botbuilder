@@ -26,6 +26,7 @@ export const NewBotPopup: FC<{
     .object({
       botName: yup
         .string()
+        .trim()
         .required(tc('REQUIRE_MESSAGE'))
         .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
           if (!value) {
