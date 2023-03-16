@@ -1,19 +1,7 @@
-import { ConditionOperator } from '@models';
+import { useI18n } from '@hooks';
+import { ConditionOperator, ConditionOperatorKeys } from '@models';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
-
-const operatorOptions = [
-  { value: 0, label: '조건을 선택해주세요.' },
-  { value: ConditionOperator.Is, label: 'is/are equal to' },
-  { value: ConditionOperator.IsNot, label: 'is/are not equal to' },
-  { value: ConditionOperator.Contain, label: 'contain(s)' },
-  { value: ConditionOperator.NotContain, label: 'not contain' },
-  { value: ConditionOperator.GreaterThan, label: 'is/are greater than' },
-  { value: ConditionOperator.LessThan, label: 'is/are lesser than' },
-  { value: ConditionOperator.StartWith, label: 'start with' },
-  { value: ConditionOperator.EndWith, label: 'end with' },
-  { value: ConditionOperator.Regex, label: 'regex' },
-];
 
 const reactSelectStyle: StylesConfig = {
   control: (provided, state) => ({
@@ -82,6 +70,19 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const OperatorSelector = ({ index }: { index: number }) => {
+  const { getConditionOperatorLabel } = useI18n();
+  const operatorOptions = [
+    { value: 0, label: '조건을 선택해주세요.' },
+    ...Object.keys(ConditionOperator)
+      .filter((o) => isNaN(Number(o)))
+      .map((o) => {
+        return {
+          value: ConditionOperator[o as ConditionOperatorKeys],
+          label: getConditionOperatorLabel(ConditionOperator[o as ConditionOperatorKeys]),
+        };
+      }),
+  ];
+
   const { control } = useFormContext();
   const { field: operatorField } = useController({
     name: `view.items.${index}.operator`,

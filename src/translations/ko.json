@@ -22,7 +22,16 @@
     "NO_RECOVERY_MESSAGE": "삭제한 데이터는 다시 복구할 수 없습니다.",
     "REQUIRE_MESSAGE": "필수 입력 항목입니다.",
     "DELETE_MESSAGE": "삭제되었습니다",
-    "ACCEPTED": "반영 완료 되었습니다."
+    "ACCEPTED": "반영 완료 되었습니다.",
+    "CONDITION_OPERATOR_IS": "is/are equal to",
+    "CONDITION_OPERATOR_ISNOT": "is/are not equal to",
+    "CONDITION_OPERATOR_CONTAIN": "contain(s)",
+    "CONDITION_OPERATOR_NOTCONTAIN": "not contain",
+    "CONDITION_OPERATOR_GREATERTHAN": "is/are greater than",
+    "CONDITION_OPERATOR_LESSTHAN": "is/are lesser than",
+    "CONDITION_OPERATOR_STARTWITH": "start with",
+    "CONDITION_OPERATOR_ENDWITH": "end with",
+    "CONDITION_OPERATOR_REGEX": "regex"
   },
   "scenario": {
     "TITLE": "시나리오",

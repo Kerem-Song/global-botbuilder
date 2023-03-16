@@ -1,6 +1,7 @@
 import { Card } from '@components';
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
-import { ConditionJoin, ConditionOperator, INode } from '@models';
+import { useI18n } from '@hooks';
+import { ConditionJoin, INode } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FALSE_SUFFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';
 import { FC } from 'react';
@@ -9,6 +10,7 @@ interface IConditionNodeProps {
   node: INode;
 }
 export const ConditionNode: FC<IConditionNodeProps> = ({ node }) => {
+  const { getConditionOperatorLabel } = useI18n();
   const view: IConditionView = node.view as IConditionView;
   return (
     <Card>
@@ -17,7 +19,8 @@ export const ConditionNode: FC<IConditionNodeProps> = ({ node }) => {
           return (
             <p key={i}>
               {i === 0 || view.join === undefined ? ' ' : ConditionJoin[view.join]} if{' '}
-              {item.op1} {ConditionOperator[item.operator]} {item.op2 || '{{ }}'}
+              {item.op1} {item.operator ? getConditionOperatorLabel(item.operator) : ''}{' '}
+              {item.op2 || '{{ }}'}
             </p>
           );
         })}
