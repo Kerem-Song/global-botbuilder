@@ -270,7 +270,7 @@ export const NodeLinkPopUpMenu = ({
 
     handleIsOpen(false);
   };
-
+  console.log('filter btn list', filterdBtnList);
   return (
     <div
       className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"

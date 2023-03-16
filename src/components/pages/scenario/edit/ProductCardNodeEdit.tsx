@@ -160,6 +160,7 @@ export const ProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
                   showCount={true}
+                  isLight={true}
                   maxLength={15}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
