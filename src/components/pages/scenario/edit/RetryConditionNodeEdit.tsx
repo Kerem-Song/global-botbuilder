@@ -53,6 +53,7 @@ export const RetryConditionNodeEdit = () => {
             defaultValue={countOptions[0]}
             value={countOptions.find((item) => item.value === field.value)}
             onChange={(options: any) => field.onChange(options?.value)}
+            isSearchable={false}
           />
         </div>
         <div className="m-b-8">

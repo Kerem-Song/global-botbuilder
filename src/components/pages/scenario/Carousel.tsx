@@ -113,8 +113,8 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
             );
           })}
           <div style={{ width: '166px', flex: 'none' }}>
-            <div style={{ width: '166px' }}>
-              <Button block onClick={addCarousel}>
+            <div style={{ width: '190px' }}>
+              <Button block onClick={addCarousel} style={{ border: 'none' }}>
                 말풍선 추가
               </Button>
             </div>
