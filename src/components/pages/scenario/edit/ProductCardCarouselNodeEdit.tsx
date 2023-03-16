@@ -119,7 +119,16 @@ export const ProductCardCarouselNodeEdit = () => {
 
   useEffect(() => {
     setValue(`view.childrenViews.${index}.salePrice`, salePrice);
-  });
+  }, [salePrice]);
+
+  useEffect(() => {
+    setValue(
+      `view.childrenViews.${index}.discountPrice`,
+      watch(`view.childrenViews.${index}.retailPrice`) -
+        watch(`view.childrenViews.${index}.salePrice`),
+    );
+  }, [watch(`view.childrenViews.${index}.discountPrice`)]);
+
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
