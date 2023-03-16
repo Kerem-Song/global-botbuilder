@@ -1,11 +1,11 @@
-import { icBackInactive, icNextActive, icNextInactive, icPrev } from '@assets';
-import { Button } from '@components/general';
+import { Button } from '@components';
 import { useModalOpen, usePage, useSystemModal } from '@hooks';
 import { useState } from 'react';
 
 import { DeployDetailModal } from './DeployDetailModal';
 import { DeployHistoryList } from './DeployHistoryList';
 import { DeployingModal } from './DeployingModal';
+import { DeployPagination } from './DeployPagination';
 
 export const Deploy = () => {
   const { t } = usePage();
@@ -76,25 +76,11 @@ export const Deploy = () => {
       >
         <DeployHistoryList />
       </div>
+      <DeployPagination />
       {isOpen && <DeployDetailModal isOpen={isOpen} handleIsOpen={handleIsOpen} />}
-      <div className="pageBtns">
-        <Button disabled shape="ghost" className="prevBtn">
-          <img src={icBackInactive} alt="prev" />
-        </Button>
-        <div className="pageNumBtns">
-          <Button className="pageNumBtn" type="primary">
-            1
-          </Button>
-          <Button className="pageNumBtn">2</Button>
-          <Button className="pageNumBtn">3</Button>
-        </div>
-        <Button shape="ghost" className="nextBtn">
-          <img src={icNextActive} alt="next"></img>
-        </Button>
-        {isOpenDeployingModal && (
-          <DeployingModal isOpenDeployingModal={isOpenDeployingModal} />
-        )}
-      </div>
+      {isOpenDeployingModal && (
+        <DeployingModal isOpenDeployingModal={isOpenDeployingModal} />
+      )}
     </div>
   );
 };
