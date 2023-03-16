@@ -1,6 +1,7 @@
 import { Card } from '@components/data-display';
 import { SortableListContainer } from '@components/data-display/SortableListContainer';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
+import { ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
@@ -13,7 +14,7 @@ export interface IListCardViewProps {
 export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) => {
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
-    square: squareMode,
+    square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
     textCard: false,
   });
 
