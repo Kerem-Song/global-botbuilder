@@ -9,3 +9,5 @@ export enum ConditionOperator {
   LessThan = 1 << 7,
   Regex = 1 << 8,
 }
+
+export type ConditionOperatorKeys = keyof typeof ConditionOperator;
