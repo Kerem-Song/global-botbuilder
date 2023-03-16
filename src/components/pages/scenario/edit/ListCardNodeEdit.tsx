@@ -6,7 +6,7 @@ import { ImageAspectRatio } from '@models/enum';
 import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -20,6 +20,7 @@ export const ListCardNodeEdit = () => {
   const {
     register,
     getValues,
+    setValue,
     control,
     watch,
     formState: { errors },
@@ -47,6 +48,12 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
+  useEffect(() => {
+    if (watch(`view.imageCtrl.imageUrl`) !== '') {
+      setValue(`view.useImageCtrl`, true);
+    }
+  }, [watch(`view.imageCtrl.imageUrl`)]);
+
   return (
     <>
       <div className="node-item-wrap">
@@ -66,7 +73,7 @@ export const ListCardNodeEdit = () => {
         useSwitch={true}
         field={'useImageCtrl'}
       >
-        {watch(`view.useImageCtrl`) && (
+        {(watch(`view.useImageCtrl`) || watch(`view.imageCtrl.imageUrl`)) && (
           <FormItem error={errors.view?.imageCtrl?.imageUrl}>
             <ImageSettings
               imageRatio={watch(`view.imageCtrl.aspectRatio`)}
