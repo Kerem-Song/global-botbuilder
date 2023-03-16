@@ -22,6 +22,7 @@ export const ListCardCarouselNodeEdit = () => {
     setValue,
     watch,
     control,
+    trigger,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardCarouselView>>();
   const values = getValues();
@@ -64,6 +65,7 @@ export const ListCardCarouselNodeEdit = () => {
     if (watch(`view.childrenViews.${index}.imageCtrl.imageUrl`) !== '') {
       setValue(`view.useImageCtrl`, true);
     }
+    trigger();
   }, [index]);
 
   return (

@@ -94,6 +94,7 @@ export const ProductCardCarouselNodeEdit = () => {
     setValue,
     watch,
     control,
+    trigger,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardCarouselView>>();
   const values = getValues();
@@ -108,7 +109,7 @@ export const ProductCardCarouselNodeEdit = () => {
   });
 
   useEffect(() => {
-    console.log('product card caro index', index);
+    trigger();
   }, [index]);
 
   const salePrice =
