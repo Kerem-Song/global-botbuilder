@@ -128,10 +128,18 @@ export const ImageFileUploader = ({
   };
 
   const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
+    const FILE_SIZE = 3.2 * 1000 * 1000; //3mb제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
     if (e.target.files) {
-      console.log('file', e.target.files);
+      // console.log('file', e.target.files);
+      // console.log(
+      //   'file size:',
+      //   e.target.files[0].size,
+      //   'limit size:',
+      //   FILE_SIZE,
+      //   '업로드파일 리미트와 비교',
+      //   e.target.files[0].size > FILE_SIZE,
+      // );
       if (e.target.files[0].size > FILE_SIZE) {
         e.target.files = null;
         e.target.value = '';
