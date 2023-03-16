@@ -126,6 +126,7 @@
           color: $gray500;
           font-size: rem(12);
           font-weight: 500;
+          word-break: break-all;
 
           &.empty {
             color: $gray300;
