@@ -95,7 +95,7 @@ export const BotAside = () => {
 
   const botList: IPopperSelectItem<{ action: (id: string) => void }>[] = [
     ...(data
-      ? data.map((x) => {
+      ? data.slice(0, 3).map((x) => {
           return {
             id: x.id,
             name: x.botName,

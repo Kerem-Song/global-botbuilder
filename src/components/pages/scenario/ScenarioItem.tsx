@@ -146,6 +146,9 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       radius="small"
       bodyStyle={{ padding: '8px 12px', cursor: 'pointer' }}
       onClick={() => {
+        if (item.id === selectedScenarios?.id) {
+          return;
+        }
         handleChangeSelectedScenario(item);
       }}
       className={selectedScenario}
@@ -157,12 +160,14 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           maxLength={20}
           ref={inputRef}
           onBlur={(e) => {
+            console.log('scenario item lost focus');
             handleScenarioRename(e.target.value);
           }}
           onPressEsc={() => {
             setIsEditing(false);
           }}
           onPressEnter={(value) => {
+            console.log('scenario item enter');
             handleScenarioRename(value);
           }}
         />

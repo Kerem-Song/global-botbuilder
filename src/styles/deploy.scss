@@ -61,10 +61,17 @@
           }
           .deployDateTime {
             width: rem(185);
+            text-align: center;
           }
           .account {
             width: rem(187);
-            white-space: pre-wrap;
+            height: rem(32);
+            padding-top: rem(8);
+          }
+          .accountInfo {
+            width: rem(187);
+            height: rem(32);
+            word-wrap: break-word;
           }
           .status {
             width: rem(141);
@@ -88,11 +95,16 @@
           .text {
             width: rem(187);
             height: rem(32);
+            word-wrap: break-word;
+            &.empty {
+              height: fit-content;
+            }
           }
         }
         .list {
           background-color: $grayWhite;
-          height: rem(54);
+          min-height: rem(54);
+          height: fit-content;
           border-bottom: 1px solid $gray150;
           cursor: pointer;
           &:last-child {
@@ -133,6 +145,10 @@
         border-radius: rem(4);
         &:last-child {
           margin-right: 0;
+        }
+        &.active {
+          background-color: $primary500;
+          color: $grayWhite;
         }
       }
     }
@@ -197,31 +213,35 @@
 
 .deployDetailModal {
   width: rem(520);
-  height: rem(430);
+  min-height: rem(430);
   margin: auto;
   border-radius: rem(12);
   border: rem(1) solid $gray200;
   background-color: $grayWhite;
+
   .title {
     padding: rem(14) rem(20) rem(3) rem(20);
   }
   .contents {
-    padding: 0 rem(20);
+    padding: 0 rem(20) rem(15) rem(20);
     .deployNumber {
       margin: rem(18) rem(0);
     }
     .deployInfo {
       .info {
         width: 100%;
-        height: rem(17);
+        min-height: rem(17);
         margin-bottom: rem(13);
         display: flex;
+        align-items: center;
         .infoTitle {
           width: rem(116);
-          margin-right: rem(16);
           color: $gray500;
         }
         .infoContent {
+          width: calc(100% - rem(126));
+          margin-left: rem(10);
+          // word-wrap: break-word;
           .success {
             width: fit-content;
             padding: rem(2) rem(6);
