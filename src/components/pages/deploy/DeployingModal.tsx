@@ -5,9 +5,14 @@ import ReactModal from 'react-modal';
 
 export interface IDeployingModalProps {
   isOpenDeployingModal: boolean;
+  opLinked?: boolean;
+  testLinked?: boolean;
 }
 
-export const DeployingModal: FC<IDeployingModalProps> = ({ isOpenDeployingModal }) => {
+export const DeployingModal: FC<IDeployingModalProps> = ({
+  isOpenDeployingModal,
+  testLinked,
+}) => {
   const { t } = usePage();
 
   return (
@@ -19,7 +24,9 @@ export const DeployingModal: FC<IDeployingModalProps> = ({ isOpenDeployingModal 
       <div className="contents">
         <ReactLoading type="spin" color="#4478FF" height={50} width={50} />
         <div className="title">
-          <span>{t('DEPLOY_TEST_CHANNEL')}</span>
+          <span>
+            {testLinked ? t('DEPLOY_TEST_CHANNEL') : t('DEPLOY_OPERATIONAL_CHANNEL')}
+          </span>
         </div>
         <div className="text">
           <p>{t('DEPLOYING_MESSAGE')}</p>

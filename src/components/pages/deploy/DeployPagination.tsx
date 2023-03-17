@@ -1,4 +1,4 @@
-import { icBackInactive, icNextActive } from '@assets';
+import { icBackActive, icBackInactive, icNextActive, icNextInactive } from '@assets';
 import { Button } from '@components';
 import { IHasResult, IPagingItems } from '@models';
 import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
@@ -26,6 +26,7 @@ export const DeployPagination: FC<IDeployPagination> = ({
     const totalPageArray = Array(totalPages)
       .fill(0)
       .map((_, i) => i + 1);
+
     return Array(Math.ceil(totalPages / limit))
       .fill(0)
       .map((_, i) => totalPageArray.slice(i * limit, i * limit + limit));
@@ -57,7 +58,7 @@ export const DeployPagination: FC<IDeployPagination> = ({
           setCurrentPage(currentPage - 10);
         }}
       >
-        <img src={icBackInactive} alt="prev" />
+        <img src={currentPage >= 10 ? icBackActive : icBackInactive} alt="prev" />
       </Button>
       <div className="pageNumBtns">
         {data &&
@@ -77,10 +78,13 @@ export const DeployPagination: FC<IDeployPagination> = ({
       <Button
         shape="ghost"
         className="nextBtn"
-        disabled={currentPage >= totalPages}
+        disabled={currentPage + 10 >= totalPages}
         onClick={() => setCurrentPage(currentPage + 10)}
       >
-        <img src={icNextActive} alt="next"></img>
+        <img
+          src={currentPage + 10 >= totalPages ? icNextInactive : icNextActive}
+          alt="next"
+        ></img>
       </Button>
     </div>
   );

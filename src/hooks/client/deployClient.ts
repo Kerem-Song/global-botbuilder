@@ -62,7 +62,7 @@ export const useDeployClient = () => {
     },
   );
 
-  const deploy = useMutation(async (data: IDeploy) => {
+  const deployingBot = useMutation(async (data: IDeploy) => {
     const result = await http.post<IDeploy, AxiosResponse<IResponse>>('Bot/Deploy', data);
     if (result) {
       queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY, token]);
@@ -73,6 +73,6 @@ export const useDeployClient = () => {
   return {
     getDeployHistoryListQuery,
     updateDeployHistoryComment,
-    deploy,
+    deployingBot,
   };
 };
