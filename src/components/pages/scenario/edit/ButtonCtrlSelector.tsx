@@ -74,6 +74,7 @@ export const reactSelectStyle: StylesConfig = {
 
 interface IButtonCtrlSelectorProp {
   name: string;
+  value: string;
 }
 
 export const selectOptions = [
@@ -83,8 +84,8 @@ export const selectOptions = [
   { value: ACTION_TYPES.URL, label: 'URL 연결' },
 ];
 
-export const ButtonCtrlSelector = ({ name }: IButtonCtrlSelectorProp) => {
-  const { control } = useFormContext();
+export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => {
+  const { setValue, control } = useFormContext();
   const { field } = useController({
     name,
     control,
@@ -98,6 +99,7 @@ export const ButtonCtrlSelector = ({ name }: IButtonCtrlSelectorProp) => {
       value={selectOptions.find((item) => item.value === field.value)}
       onChange={(options: any) => {
         field.onChange(options?.value);
+        setValue(value, '');
       }}
     />
   );
