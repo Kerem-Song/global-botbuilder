@@ -17,6 +17,11 @@ export interface IResponseSearchDeployHistory {
   comment?: string;
 }
 
+export interface IDeploy {
+  botId: string;
+  isLive: boolean;
+}
+
 export interface IUpdateDeployHistoryComment {
   comment?: string;
   deployHistoryId: string;

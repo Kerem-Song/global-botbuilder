@@ -1,14 +1,21 @@
-import { useHttp } from '@hooks';
+import { useHttp, useRootState } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import {
+  IDeploy,
   IResponseSearchDeployHistory,
   ISearchDeployHistory,
+  IUpdateDeployHistoryComment,
 } from '@models/interfaces/IDeploy';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+
+import { IResponse } from './../../models/interfaces/IResponse';
 
 export const useDeployClient = () => {
   const http = useHttp();
+  const queryClient = useQueryClient();
+  const token = useRootState((state) => state.botInfoReducer.token);
+
   const DEPLOY_HISTORY_LIST_KEY = 'deploy-history-list';
 
   const getDeployHistoryListQuery = ({
@@ -42,7 +49,30 @@ export const useDeployClient = () => {
     );
   };
 
+  const updateDeployHistoryComment = useMutation(
+    async (data: IUpdateDeployHistoryComment) => {
+      const result = await http.post<
+        IUpdateDeployHistoryComment,
+        AxiosResponse<IResponse>
+      >('Bot/UpdateDeployHistoryComment', data);
+      if (result) {
+        queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY, token]);
+        return result.data;
+      }
+    },
+  );
+
+  const deploy = useMutation(async (data: IDeploy) => {
+    const result = await http.post<IDeploy, AxiosResponse<IResponse>>('Bot/Deploy', data);
+    if (result) {
+      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY, token]);
+      return result.data;
+    }
+  });
+
   return {
     getDeployHistoryListQuery,
+    updateDeployHistoryComment,
+    deploy,
   };
 };
