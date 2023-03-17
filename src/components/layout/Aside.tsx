@@ -20,7 +20,7 @@ export const Aside = () => {
 
   const { i18n, ts } = useI18n();
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
-  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const brandId = useRootState((state) => state.brandInfoReducer.brandId);
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
 
@@ -61,7 +61,7 @@ export const Aside = () => {
           </button>
         </div>
         <div className="partnerLnbHeader" data-sidebar={sidebarStatus}>
-          <a href="https://partnerscenter.lunacode.dev">
+          <a href={`https://partnerscenter.lunacode.dev/${brandId}/dashboard`}>
             {sidebarStatus ? (
               <p className="headerName">{ts('PARTNERS_CENTER')}</p>
             ) : (

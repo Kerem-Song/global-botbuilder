@@ -146,6 +146,9 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       radius="small"
       bodyStyle={{ padding: '8px 12px', cursor: 'pointer' }}
       onClick={() => {
+        if (item.id === selectedScenarios?.id) {
+          return;
+        }
         handleChangeSelectedScenario(item);
       }}
       className={selectedScenario}
