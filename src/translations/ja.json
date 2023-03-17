@@ -14,7 +14,7 @@
   "scenario": {
     "TITLE": "시나리오",
     "CAROUSEL": "캐로셀",
-    "CAROUSEL_WARNING_FIRST": "※ 본 팝업에서는 케로셀 순서만 변경 가능합니다.",
+    "CAROUSEL_WARNING_FIRST": "※ 본 팝업에서는 캐로셀 순서만 변경 가능합니다.",
     "CAROUSEL_WARNING_SECOND": "상세 설정은 팝업을 닫고 말풍선을 클릭하여 편집해주세요.",
     "ADD_CAHTBUBBLE_BTN": "말풍선 추가",
     "CONFIRM_CAROUSEL_POPUP": "반영하기",
