@@ -117,9 +117,9 @@ export const NodeEditDrawer = () => {
         handleSubmit(onSubmit)();
         if (!isValid) {
           const view = node.view as IHasChildrenView;
-          console.log('view length', view.childrenViews?.length);
+
           console.log('index', index);
-          if (view.childrenViews && view.childrenViews.length < index) {
+          if (view.childrenViews && view.childrenViews.length === index) {
             return;
           } else {
             onSubmit(getValues());

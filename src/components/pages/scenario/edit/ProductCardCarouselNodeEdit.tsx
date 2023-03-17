@@ -28,7 +28,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '60px',
+    width: '76px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -103,10 +103,10 @@ export const ProductCardCarouselNodeEdit = () => {
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
 
-  // const { field: currencyField } = useController({
-  //   name: `view.childrenViews.${index}.currencyUnit`,
-  //   control,
-  // });
+  const { field: currencyField } = useController({
+    name: `view.childrenViews.${index}.currencyUnit`,
+    control,
+  });
 
   useEffect(() => {
     trigger();
@@ -123,6 +123,9 @@ export const ProductCardCarouselNodeEdit = () => {
   }, [salePrice]);
 
   useEffect(() => {
+    if (watch(`view.childrenViews`)?.length === index) {
+      return;
+    }
     setValue(
       `view.childrenViews.${index}.discountPrice`,
       watch(`view.childrenViews.${index}.retailPrice`) -
@@ -244,7 +247,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           />
                         </Col>
                         <Col className="productSelectorWrapper" span={8}>
-                          {/* <Select
+                          <Select
                             {...currencyField}
                             options={currencyOptions}
                             styles={reactSelectStyle}
@@ -255,8 +258,8 @@ export const ProductCardCarouselNodeEdit = () => {
                             onChange={(options: any) =>
                               currencyField.onChange(options?.value)
                             }
-                          /> */}
-                          <select
+                          />
+                          {/* <select
                             onPointerLeave={() => {
                               console.log('setout');
                               setIsOut(true);
@@ -270,7 +273,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 {item.label}
                               </option>
                             ))}
-                          </select>
+                          </select> */}
                         </Col>
                       </Row>
                     </FormItem>

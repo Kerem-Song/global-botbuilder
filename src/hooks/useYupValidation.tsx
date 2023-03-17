@@ -245,7 +245,6 @@ export const useYupValidation = () => {
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),
 
-    currencyUnit: yup.mixed().oneOf(['USD', 'KRW', 'JPY']),
     buttons: buttonsEditSchema,
   });
 
