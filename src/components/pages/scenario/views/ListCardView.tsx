@@ -31,8 +31,8 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
       ) : null}
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div className={thumbnailClass}>
-          {view.imageCtrl.imageUrl ? (
-            <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
+          {view.imageCtrl?.imageUrl ? (
+            <img src={view.imageCtrl?.imageUrl} alt="thumbnailImage" />
           ) : (
             <div className="skeleton"></div>
           )}
@@ -41,7 +41,9 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
 
       {view.items && view.items.length < 6 ? (
         <div className={'node-draggable-ignore'}>
-          {view.items && <SortableListContainer listItems={view.items} />}
+          {view.items && (
+            <SortableListContainer listItems={view.items} nodeId={nodeId} index={index} />
+          )}
         </div>
       ) : null}
       <div className="buttonWrapper list node-draggable-ignore">

@@ -27,7 +27,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '60px',
+    width: '76px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -160,7 +160,6 @@ export const ProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
                   showCount={true}
-                  isLight={true}
                   maxLength={15}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
@@ -188,7 +187,7 @@ export const ProductCardNodeEdit = () => {
               <div className="m-b-8">
                 <FormItem error={errors.view && errors.view.retailPrice}>
                   <Row justify="space-between">
-                    <Col span={17}>
+                    <Col span={16} className="retailPrice">
                       <InputWithTitleCounter
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
@@ -197,7 +196,7 @@ export const ProductCardNodeEdit = () => {
                         })}
                       />
                     </Col>
-                    <Col className="productSelectorWrapper">
+                    <Col className="productSelectorWrapper" span={8}>
                       <Select
                         {...currencyField}
                         options={currencyOptions.sort((a, b) =>

@@ -103,10 +103,10 @@ export const ProductCardCarouselNodeEdit = () => {
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
 
-  const { field: currencyField } = useController({
-    name: `view.childrenViews.${index}.currencyUnit`,
-    control,
-  });
+  // const { field: currencyField } = useController({
+  //   name: `view.childrenViews.${index}.currencyUnit`,
+  //   control,
+  // });
 
   useEffect(() => {
     trigger();
@@ -130,6 +130,7 @@ export const ProductCardCarouselNodeEdit = () => {
     );
   }, [watch(`view.childrenViews.${index}.discountPrice`)]);
 
+  const [isOut, setIsOut] = useState<boolean>();
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
@@ -233,7 +234,7 @@ export const ProductCardCarouselNodeEdit = () => {
                   <div className="m-b-8">
                     <FormItem error={errors.view?.childrenViews?.[index]?.retailPrice}>
                       <Row justify="space-between">
-                        <Col span={17}>
+                        <Col span={16} className="retailPrice">
                           <InputWithTitleCounter
                             label={t(`PRODUCT_NODE_PRICE`)}
                             required={true}
@@ -242,8 +243,8 @@ export const ProductCardCarouselNodeEdit = () => {
                             })}
                           />
                         </Col>
-                        <Col className="productSelectorWrapper">
-                          <Select
+                        <Col className="productSelectorWrapper" span={8}>
+                          {/* <Select
                             {...currencyField}
                             options={currencyOptions}
                             styles={reactSelectStyle}
@@ -254,7 +255,22 @@ export const ProductCardCarouselNodeEdit = () => {
                             onChange={(options: any) =>
                               currencyField.onChange(options?.value)
                             }
-                          />
+                          /> */}
+                          <select
+                            onPointerLeave={() => {
+                              console.log('setout');
+                              setIsOut(true);
+                            }}
+                            {...register(`view.childrenViews.${index}.currencyUnit`)}
+                            className="currencySelector"
+                            data-arrow={isOut}
+                          >
+                            {currencyOptions.map((item, i) => (
+                              <option key={i} value={item.value}>
+                                {item.label}
+                              </option>
+                            ))}
+                          </select>
                         </Col>
                       </Row>
                     </FormItem>
@@ -263,9 +279,13 @@ export const ProductCardCarouselNodeEdit = () => {
                   <FormItem error={errors.view?.childrenViews?.[index]?.discountPrice}>
                     <InputWithTitleCounter
                       label={t(`PRODUCT_NODE_DISCOUNT`)}
-                      {...register(`view.childrenViews.${index}.discountPrice`, {
-                        valueAsNumber: true,
-                      })}
+                      {...register(
+                        `view.childrenViews.${index}.discountPrice`,
+
+                        {
+                          valueAsNumber: true,
+                        },
+                      )}
                     />
                   </FormItem>
                 </Space>

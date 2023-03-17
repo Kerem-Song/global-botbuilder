@@ -16,16 +16,24 @@ import {
 } from '@dnd-kit/sortable';
 import { useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
+import { updateListItemOrder, updateNode } from '@store/makingNode';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { SortableListItem } from './SortableListItem';
-
 interface ISortableContainer {
   listItems: IListCardItem[];
+  nodeId: string;
+  index?: number;
 }
 
-export const SortableListContainer = ({ listItems }: ISortableContainer) => {
+export const SortableListContainer = ({
+  listItems,
+  nodeId,
+  index,
+}: ISortableContainer) => {
   const [list, setList] = useState<IListCardItem[]>();
+  const dispath = useDispatch();
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
@@ -51,7 +59,16 @@ export const SortableListContainer = ({ listItems }: ISortableContainer) => {
         if (items) {
           const oldIndex = items.findIndex((item) => item.id === active.id);
           const newIndex = items.findIndex((item) => item.id === over.id);
-          return arrayMove(items, oldIndex, newIndex);
+          const result = arrayMove(items, oldIndex, newIndex);
+
+          dispath(
+            updateListItemOrder({
+              nodeId: nodeId.substring(5),
+              carouselIndex: index,
+              items: result,
+            }),
+          );
+          return result;
         }
       });
     }
