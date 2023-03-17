@@ -82,6 +82,13 @@ export const Botbuilder = () => {
     dispatch(zoomIn());
   }, []);
 
+  useEffect(() => {
+    if (canvasRef.current) {
+      canvasRef.current.style.left = '0px';
+      canvasRef.current.style.top = '0px';
+    }
+  }, [selectedScenario]);
+
   const panning = (x: number, y: number) => {
     if (!canvasRef.current) {
       return;
