@@ -4,11 +4,12 @@ import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 export const Setting = () => {
   const { t, tc, navigate } = usePage();
   const { confirm } = useSystemModal();
-
+  const { botId } = useParams();
   const {
     refetchBotInfo,
     botExportAsync,
@@ -24,14 +25,19 @@ export const Setting = () => {
 
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   useEffect(() => {
+    if (botId) {
+      refetchBotInfo(botId);
+    }
+  }, [botId]);
+
+  useEffect(() => {
     if (botInfo) {
-      refetchBotInfo(botInfo.id);
       setActivate(botInfo.activated);
       setBotName(botInfo.botName);
-      setOpLinked(botInfo?.channelInfos?.find((x) => x.isLive)?.isLinked);
-      setTestLinked(botInfo?.channelInfos?.find((x) => !x.isLive)?.isLinked);
+      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
+      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
     }
-  }, [botInfo?.id]);
+  }, [botInfo]);
 
   const handleCopyBotId = async () => {
     await util.copyClipboard(botInfo?.id);

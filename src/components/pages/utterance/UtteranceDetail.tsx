@@ -161,7 +161,7 @@ export const UtteranceDetail = () => {
   };
 
   useEffect(() => {
-    if (isActive === true) {
+    if (isActive) {
       (() => {
         window.addEventListener('beforeunload', preventClose);
       })();

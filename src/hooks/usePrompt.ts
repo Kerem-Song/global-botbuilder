@@ -32,15 +32,18 @@ function useConfirmExit(confirmExit: () => Promise<boolean>, when = true) {
 
 export function usePrompt(when = true) {
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
   useEffect(() => {
     if (when) {
-      window.onbeforeunload = async function (e) {
-        return 'message';
-      };
+      window.addEventListener('beforeunload', preventClose);
     }
 
     return () => {
-      window.onbeforeunload = null;
+      window.removeEventListener('beforeunload', preventClose);
     };
   }, [when]);
 
