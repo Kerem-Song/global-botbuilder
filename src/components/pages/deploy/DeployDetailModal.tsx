@@ -1,12 +1,15 @@
-import { Button, Divider, Input, InputTextarea, Row, Space } from '@components';
+import { Button, Divider, Space } from '@components';
 import { Title } from '@components/general';
 import { usePage } from '@hooks';
+import { IHasResult, IPagingItems } from '@models';
+import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
 import { FC } from 'react';
 import ReactModal from 'react-modal';
 
 export interface IDeployDetailModalProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
+  data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
 }
 
 export const DeployDetailModal: FC<IDeployDetailModalProps> = ({

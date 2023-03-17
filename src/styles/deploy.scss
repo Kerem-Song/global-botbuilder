@@ -61,10 +61,17 @@
           }
           .deployDateTime {
             width: rem(185);
+            text-align: center;
           }
           .account {
             width: rem(187);
-            white-space: pre-wrap;
+            height: rem(32);
+            padding-top: rem(8);
+          }
+          .accountInfo {
+            width: rem(187);
+            height: rem(32);
+            word-wrap: break-word;
           }
           .status {
             width: rem(141);
@@ -88,11 +95,16 @@
           .text {
             width: rem(187);
             height: rem(32);
+            word-wrap: break-word;
+            &.empty {
+              height: fit-content;
+            }
           }
         }
         .list {
           background-color: $grayWhite;
-          height: rem(54);
+          min-height: rem(54);
+          height: fit-content;
           border-bottom: 1px solid $gray150;
           cursor: pointer;
           &:last-child {
@@ -133,6 +145,10 @@
         border-radius: rem(4);
         &:last-child {
           margin-right: 0;
+        }
+        &.active {
+          background-color: $primary500;
+          color: $grayWhite;
         }
       }
     }

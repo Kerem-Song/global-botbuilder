@@ -1,8 +1,15 @@
 import { usePage } from '@hooks';
+import { IHasResult, IPagingItems } from '@models';
+import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
+import { FC } from 'react';
 
 import { DeployHistoryListItem } from './DeployHistoryListItem';
 
-export const DeployHistoryList = () => {
+export interface IDeployHistoryList {
+  data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
+}
+
+export const DeployHistoryList: FC<IDeployHistoryList> = ({ data }) => {
   const { t } = usePage();
 
   return (
@@ -20,7 +27,7 @@ export const DeployHistoryList = () => {
           <th className="deployHistoryList memo">{t('MEMO')}</th>
         </tr>
       </thead>
-      <DeployHistoryListItem />
+      <DeployHistoryListItem data={data} />
     </table>
   );
 };
