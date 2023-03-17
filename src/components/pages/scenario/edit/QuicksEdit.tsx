@@ -65,7 +65,10 @@ export const QuicksEdit = () => {
               <span className="subLabel">{t(`QUICK_REPLY_BUTTON_TYPE`)}</span>
               <span className="required"> *</span>
             </div>
-            <ButtonCtrlSelector name={`view.quicks.${i}.actionType`} />
+            <ButtonCtrlSelector
+              name={`view.quicks.${i}.actionType`}
+              value={`view.quicks.${i}.actionValue`}
+            />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
               <SelectNode
                 fieldName={`view.quicks.${i}.actionValue`}

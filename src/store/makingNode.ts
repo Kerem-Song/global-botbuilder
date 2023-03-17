@@ -5,6 +5,7 @@ import {
   IButtonCtrl,
   IHasButtonViewBase,
   IHasChildrenView,
+  IListCardItem,
   INodeBase,
   IOtherFlowRedirectView,
 } from '@models/interfaces/res/IGetFlowRes';
@@ -102,6 +103,7 @@ export const makingNodeSlice = createSlice({
     ) => {
       const { nodeId, carouselIndex, buttons, isQuicks } = action.payload;
       const node = state.nodes.find((x) => x.id === nodeId);
+
       if (node) {
         if (carouselIndex !== undefined) {
           const pView = node?.view as IHasChildrenView;
@@ -241,6 +243,43 @@ export const makingNodeSlice = createSlice({
       }
       state.changed = true;
     },
+    updateListItemOrder: (
+      state,
+      action: PayloadAction<{
+        nodeId: string;
+        carouselIndex?: number;
+        items?: IListCardItem[];
+      }>,
+    ) => {
+      const { nodeId, carouselIndex, items } = action.payload;
+      const node = state.nodes.find((x) => x.id === nodeId);
+
+      if (node) {
+        if (carouselIndex !== undefined) {
+          const pView = node?.view as IHasChildrenView;
+          const childrenViews = [...pView.childrenViews];
+          const view = childrenViews[carouselIndex] as IHasButtonViewBase;
+          childrenViews.splice(carouselIndex, 1, { ...view, items });
+          const nodes = [...state.nodes];
+          const index = nodes.indexOf(node);
+          nodes.splice(index, 1, {
+            ...node,
+            view: { ...view, childrenViews } as IHasChildrenView,
+          });
+          state.nodes = nodes;
+        } else {
+          const view = node?.view as IHasButtonViewBase;
+          const nodes = [...state.nodes];
+          const index = nodes.indexOf(node);
+          nodes.splice(index, 1, {
+            ...node,
+            view: { ...view, items } as IHasButtonViewBase,
+          });
+          state.nodes = nodes;
+        }
+      }
+      state.changed = true;
+    },
     setTempCard: (state, action: PayloadAction<IBuilderInfo>) => {
       const { nodes } = action.payload;
       state.nodes = state.nodes.concat(nodes);
@@ -258,5 +297,6 @@ export const {
   setTempCard,
   initNodes,
   updateButtonOrder,
+  updateListItemOrder,
 } = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

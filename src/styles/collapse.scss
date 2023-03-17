@@ -33,9 +33,47 @@
       }
     }
 
+    
+    .retailPrice {
+      input {
+        width: rem(152);
+      }
+    }
+
     .productSelectorWrapper {
       display: flex;
       align-items: end;
+
+      .currencySelector {
+        -webkit-appearance: none;  /* 네이티브 외형 감추기 */
+        -moz-appearance: none;
+        appearance: none;
+        padding-left: rem(10) ;
+        background-image: url('@assets/icons/ic_select_arrow_down.svg');  /* 화살표 모양의 이미지 */ 
+        background-repeat: no-repeat;
+        background-position: 90% 50%;
+        width: 100%;
+        height: rem(34);
+        border: rem(1) solid $gray200;
+        border-radius: rem(8);
+        font-size: rem(13);
+
+
+        option {
+          background-color: $grayWhite;
+        }
+
+        &:focus {
+          background-image: url('@assets/icons/ic_select_arrow_up.svg');
+        }
+        &[data-arrow='true'] {
+          background-image: url('@assets/icons/ic_select_arrow_down.svg');
+        } 
+      }
+
+      select::-ms-expand { 
+        display: none;
+      }
     }
   }
 }

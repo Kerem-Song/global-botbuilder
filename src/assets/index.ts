@@ -101,6 +101,8 @@ import icSearch from '@assets/icons/ic_search.svg';
 import icSearchActive from '@assets/icons/ic_search_active.svg';
 import icSearchDelete from '@assets/icons/ic_search_delete.svg';
 import icSearchDeleteActive from '@assets/icons/ic_search_delete_active.svg';
+import icSelectArrowDown from '@assets/icons/ic_select_arrow_down.svg';
+import icSelectArrowUp from '@assets/icons/ic_select_arrow_up.svg';
 import icSetParameter from '@assets/icons/ic_set_parameter.svg';
 import icSetParameterHover from '@assets/icons/ic_set_parameter_hover.svg';
 import icSetting from '@assets/icons/ic_setting_default.svg';
@@ -233,6 +235,8 @@ export {
   icSearchActive,
   icSearchDelete,
   icSearchDeleteActive,
+  icSelectArrowDown,
+  icSelectArrowUp,
   icSetParameter,
   icSetParameterHover,
   icSetting,

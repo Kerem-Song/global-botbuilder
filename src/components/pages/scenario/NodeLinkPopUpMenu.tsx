@@ -61,19 +61,19 @@ const cardTypeValue = [
   {
     className: 'icCaroImg',
     value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-    nodeName: '기본 카드 케로셀',
+    nodeName: '기본 카드 캐로셀',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroList',
     value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-    nodeName: '리스트 케로셀',
+    nodeName: '리스트 캐로셀',
     nodeKind: NodeKind.InputNode,
   },
   {
     className: 'icCaroCommerce',
     value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-    nodeName: '커머스 케로셀',
+    nodeName: '커머스 캐로셀',
     nodeKind: NodeKind.InputNode,
   },
   {

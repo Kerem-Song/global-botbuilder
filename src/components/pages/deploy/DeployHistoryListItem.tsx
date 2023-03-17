@@ -2,7 +2,7 @@ import { useModalOpen, usePage } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { DeployDetailModal } from './DeployDetailModal';
@@ -12,14 +12,24 @@ export interface IDeployHistoryListItem {
 }
 
 export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
+  const [detailInfo, setDetailInfo] = useState({});
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
+
   return (
     <>
-      <tbody role="presentation" onClick={() => handleIsOpen(true)}>
+      <tbody>
         {data?.result.items.map((x, i) => {
           return (
-            <tr className="list" key={i}>
+            <tr
+              className="list"
+              key={i}
+              role="presentation"
+              onClick={() => {
+                setDetailInfo(x);
+                handleIsOpen(true);
+              }}
+            >
               <td className="deployHistoryList deployNumber">{x.no}</td>
               <td className="deployHistoryList channelType">
                 {x.isLive === true ? t('OPERATIONAL') : t('TEST')}
@@ -49,7 +59,12 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
         })}
       </tbody>
       {isOpen && (
-        <DeployDetailModal isOpen={isOpen} handleIsOpen={handleIsOpen} data={data} />
+        <DeployDetailModal
+          isOpen={isOpen}
+          handleIsOpen={handleIsOpen}
+          detailInfo={detailInfo}
+          data={data}
+        />
       )}
     </>
   );

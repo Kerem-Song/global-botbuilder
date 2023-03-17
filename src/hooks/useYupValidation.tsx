@@ -231,6 +231,7 @@ export const useYupValidation = () => {
       .required(t(`VALIDATION_REQUIRED`)),
     discountPrice: yup
       .number()
+      .nullable()
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
           return patternTwoDigisAfterComma.test(val);
@@ -238,7 +239,6 @@ export const useYupValidation = () => {
         return true;
       })
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
-      .nullable()
       .transform((value, originalValue) => {
         // console.log('value@@,:', value, originalValue);
         return originalValue === '' ? undefined : Number(value);

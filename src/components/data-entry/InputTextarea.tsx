@@ -76,7 +76,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
       minHeight: height,
     };
     const resultClassName = classNames('textInput', args.className);
-    console.log(args.maxLength);
+    // console.log(args.maxLength);
     return (
       <>
         <div className="textareaWrapper">
