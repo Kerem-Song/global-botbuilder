@@ -10,7 +10,7 @@ import { DeployingModal } from './DeployingModal';
 
 export const DeployButton = () => {
   const { t } = usePage();
-  const { deployingBot } = useDeployClient();
+  const { deployingBot, isDeployingBotIsLoading } = useDeployClient();
   const { confirm, error } = useSystemModal();
   const { refetchBotInfo } = useBotClient();
   const { botId } = useParams();
@@ -35,9 +35,7 @@ export const DeployButton = () => {
     }
   }, [botInfo]);
 
-  const [isOpenDeployingModal, setIsOpenDeployingModal] = useState(false);
-
-  const handleDeployTestChannel = async () => {
+  const handleDeployChannel = async () => {
     const result = await confirm({
       title: testLinked ? t('DEPLOY_TEST_CHANNEL') : t('DEPLOY_OPERATIONAL_CHANNEL'),
       description: (
@@ -49,15 +47,11 @@ export const DeployButton = () => {
       ),
     });
     if (result) {
-      console.log('배포하기');
-      const deployTestChannel: IDeploy = {
+      const deployChannel: IDeploy = {
         botId: botId!,
         isLive: testLinked ? false : true,
       };
-
-      deployingBot.isLoading && setIsOpenDeployingModal(true);
-      const res = await deployingBot.mutateAsync(deployTestChannel);
-
+      const res = await deployingBot.mutateAsync(deployChannel);
       if (res && res.isSuccess) {
         lunaToast.success('배포가 완료되었습니다.');
       } else {
@@ -81,24 +75,21 @@ export const DeployButton = () => {
         style={{ marginRight: '8px' }}
         type="lineBlue"
         disabled={activate && testLinked ? false : true}
-        onClick={handleDeployTestChannel}
+        onClick={handleDeployChannel}
       >
         {t('DEPLOY_TEST_CHANNEL')}
       </Button>
       <Button
         type="primary"
         disabled={activate && opLinked ? false : true}
-        onClick={handleDeployTestChannel}
+        onClick={handleDeployChannel}
       >
         {t('DEPLOY_OPERATIONAL_CHANNEL')}
       </Button>
-      {isOpenDeployingModal && (
-        <DeployingModal
-          isOpenDeployingModal={isOpenDeployingModal}
-          opLinked={opLinked}
-          testLinked={testLinked}
-        />
-      )}
+      <DeployingModal
+        isOpenDeployingModal={isDeployingBotIsLoading}
+        testLinked={testLinked}
+      />
     </div>
   );
 };

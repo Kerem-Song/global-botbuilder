@@ -28,7 +28,7 @@ export const useDeployClient = () => {
     botId: string;
   }) => {
     return useQuery<IHasResult<IPagingItems<IResponseSearchDeployHistory>>>(
-      [DEPLOY_HISTORY_LIST_KEY, pageNo, countPerPage, botId],
+      [DEPLOY_HISTORY_LIST_KEY, pageNo, countPerPage, botId, token],
       () =>
         http
           .post<
@@ -45,6 +45,9 @@ export const useDeployClient = () => {
         // keepPreviousData: true,
         refetchOnWindowFocus: false,
         refetchOnMount: true,
+        refetchOnReconnect: true,
+        retry: 1,
+        enabled: token !== undefined,
       },
     );
   };
@@ -56,7 +59,7 @@ export const useDeployClient = () => {
         AxiosResponse<IResponse>
       >('Bot/UpdateDeployHistoryComment', data);
       if (result) {
-        queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY, token]);
+        queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
         return result.data;
       }
     },
@@ -65,7 +68,7 @@ export const useDeployClient = () => {
   const deployingBot = useMutation(async (data: IDeploy) => {
     const result = await http.post<IDeploy, AxiosResponse<IResponse>>('Bot/Deploy', data);
     if (result) {
-      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY, token]);
+      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
       return result.data;
     }
   });
@@ -74,5 +77,6 @@ export const useDeployClient = () => {
     getDeployHistoryListQuery,
     updateDeployHistoryComment,
     deployingBot,
+    isDeployingBotIsLoading: deployingBot.isLoading,
   };
 };

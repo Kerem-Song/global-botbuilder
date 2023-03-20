@@ -51,9 +51,10 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       deployHistoryId: detailInfo.id,
     };
     const res = await updateDeployHistoryComment.mutateAsync(updateComment);
-    if (res) {
-      console.log(res.isSuccess);
-      lunaToast.success('메모가 저장되었습니다.');
+    if (res && res.isSuccess) {
+      lunaToast.success();
+      reset();
+      handleClose();
     }
   };
 

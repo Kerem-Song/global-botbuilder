@@ -94,7 +94,6 @@
           }
           .text {
             width: rem(187);
-            height: rem(32);
             word-wrap: break-word;
             &.empty {
               height: fit-content;
@@ -143,6 +142,8 @@
         height: rem(26);
         padding: 0;
         border-radius: rem(4);
+        background-color: $gray150;
+        border: 1px solid $gray200;
         &:last-child {
           margin-right: 0;
         }

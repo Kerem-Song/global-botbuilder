@@ -5,7 +5,6 @@ import ReactModal from 'react-modal';
 
 export interface IDeployingModalProps {
   isOpenDeployingModal: boolean;
-  opLinked?: boolean;
   testLinked?: boolean;
 }
 
