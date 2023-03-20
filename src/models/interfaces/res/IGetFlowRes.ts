@@ -50,9 +50,9 @@ export interface IQuickReplyRes {
 }
 
 export interface IConditionItem {
-  op1: string;
-  op2: string;
-  operator: ConditionOperator;
+  op1: string | null;
+  op2: string | null;
+  operator?: ConditionOperator;
 }
 
 export interface INodeView {

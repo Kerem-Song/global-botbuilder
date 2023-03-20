@@ -251,12 +251,12 @@ export const useYupValidation = () => {
   const conditionNodeEditSchema = yup.object().shape({
     items: yup.array().of(
       yup.object().shape({
-        op1: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        op1: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
         operator: yup
           .number()
           .not([0], t(`VALIDATION_REQUIRED`))
           .required(t(`VALIDATION_REQUIRED`)),
-        op2: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        op2: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
     trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),

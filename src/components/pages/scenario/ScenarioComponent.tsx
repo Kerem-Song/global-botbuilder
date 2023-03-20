@@ -1,8 +1,10 @@
 import { useRootState } from '@hooks';
 import { usePrompt } from '@hooks/usePrompt';
 import { initBotBuilder } from '@store/botbuilderSlice';
+import { initNodes } from '@store/makingNode';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { ActionCreators } from 'redux-undo';
 
 import { Botbuilder } from './BotBuilder';
 import { BotBuilderHeader } from './BotBuilderHeader';
@@ -13,6 +15,11 @@ export const ScenarioComponent = () => {
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
   useEffect(() => {
     dispatch(initBotBuilder());
+    return () => {
+      dispatch(initBotBuilder());
+      dispatch(initNodes([]));
+      dispatch(ActionCreators.clearHistory());
+    };
   }, []);
 
   usePrompt(changed);

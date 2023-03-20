@@ -15,7 +15,9 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
       },
       minHeight: '34px',
     }),
-
+    clearIndicator: () => ({
+      display: 'none',
+    }),
     dropdownIndicator: () => ({
       color: '#B5B4B4',
       paddingRight: '10px',

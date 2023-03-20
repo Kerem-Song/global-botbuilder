@@ -52,7 +52,7 @@ export const ScenarioManagement: FC<{
       setTempScenarioNames([...tempScenarioNames, index]);
       await scenarioCreateAsync({
         token,
-        scenarioName: `scenario ${index}`,
+        scenarioName: `scenario ${`${index}`.padStart(2, '0')}`,
       });
     }
   };

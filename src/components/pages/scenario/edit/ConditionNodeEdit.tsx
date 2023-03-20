@@ -159,7 +159,7 @@ export const ConditionNodeEdit = () => {
         {fields.map((item, i) => (
           <Space direction="vertical" key={i}>
             <FormItem
-              error={errors.view && errors.view.items && errors.view.items[i]?.op2}
+              error={errors.view && errors.view.items && errors.view.items[i]?.op1}
             >
               <VariableSelector
                 placeholder="변수명을 입력해주세요"
