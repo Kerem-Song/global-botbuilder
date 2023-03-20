@@ -2,12 +2,18 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
-import { ISaveParameter, ISaveParameterData, IVariableList } from '@models';
+import {
+  IPararmeterList,
+  ISaveParameter,
+  ISaveParameterData,
+  IVariableList,
+} from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
+import { format } from 'url';
 import * as yup from 'yup';
 
 import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
@@ -26,10 +32,11 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const [formats, setFormats] = useState<number>();
   const { variableMutate, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
+  const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
-  const formatsList = parameterFormats?.result.map((x) => {
-    return { value: x.formatType, label: x.example };
-  });
+  // const formatsList = parameterFormats?.result.map((x) => {
+  //   return { value: x.formatType, label: x.example };
+  // });
 
   const { t, tc } = usePage();
   const { confirm, error: modalError } = useSystemModal();
@@ -75,6 +82,17 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       setFormats(undefined);
     }
   }, [variableList?.id, isOpen]);
+
+  useEffect(() => {
+    const formatList = parameterFormats?.result.map((x) => {
+      return { value: x.formatType, label: x.example };
+    });
+    const totalFormatList = [
+      { value: 0, label: '변수 포맷을 선택해주세요.' },
+      ...(formatList ? formatList : []),
+    ];
+    setTotalScenarioList(totalFormatList);
+  }, [parameterFormats]);
 
   const handleSave = (variable: ISaveParameterData): void => {
     if (variableList?.id) {
@@ -128,7 +146,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
           } else {
             modalError({
               title: '중복 변수명',
-              description: <span>중복된 변수명입니다</span>,
+              description: <span>중복된 변수명입니다.</span>,
             });
           }
         },
@@ -176,11 +194,11 @@ export const VariablePopup: FC<VariablePopupProps> = ({
           <Col span={18}>
             <FormItem>
               <Select
-                options={formatsList}
+                options={totalFormatList}
                 styles={reactSelectStyle}
                 menuPortalTarget={document.body}
                 placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
-                value={formatsList?.find((x) => x.value === formats) || null}
+                value={totalFormatList?.find((x) => x.value === formats) || null}
                 onChange={(e: any) => {
                   setFormats(e.value);
                 }}

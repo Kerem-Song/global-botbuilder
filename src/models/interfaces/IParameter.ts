@@ -38,3 +38,8 @@ export interface IGetParameterFormats {
   groupName: string;
   formatStr: string;
 }
+
+export interface IPararmeterList {
+  value: number;
+  label: string;
+}
