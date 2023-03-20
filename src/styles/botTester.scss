@@ -120,8 +120,10 @@
           border-radius: rem(16);
 
           .productCardImg_rectangle {
-            width: rem(264);
+            width: 100%;
             height: rem(132);
+            object-fit: contain;
+            background-color: $grayWhite;
             border-radius: rem(16) rem(16) 0 0;
           }
           .productCardImg_square {
@@ -237,7 +239,7 @@
                   display: flex;
                   justify-content: center;
                   align-items: center;
-                  width: rem(117);
+                  width: rem(240);
                   height: rem(37);
                   margin-right: rem(3);
                   white-space: nowrap;
@@ -289,6 +291,8 @@
           .cardCarouselImg_rectangle {
             width: rem(264);
             height: rem(132);
+            object-fit: contain;
+            background-color: $grayWhite;
             margin-bottom: rem(4);
             border-radius: rem(16) rem(16) 0 0;
           }
@@ -335,6 +339,8 @@
         .cardImg_rectangle {
           width: rem(264);
           height: rem(132);
+          object-fit: contain;
+          background-color: $grayWhite;
           border-radius: rem(16) rem(16) 0 0;
         }
         .cardImg_square {
@@ -389,6 +395,8 @@
         .imageCardImg_rectangle {
           width: 100%;
           height: rem(132);
+          object-fit: contain;
+          background-color: $grayWhite;
           border-radius: rem(16);
         }
 
@@ -421,8 +429,10 @@
             line-height: rem(22);
           }
           .listCardImg_rectangle {
-            width: rem(264);
+            width: 100%;
             height: rem(132);
+            object-fit: contain;
+            background-color: $grayWhite;
             margin-bottom: rem(8);
           }
           .listCardImg_square {

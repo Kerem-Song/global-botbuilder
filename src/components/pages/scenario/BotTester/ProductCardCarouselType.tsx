@@ -56,7 +56,11 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
           <div className="productDesc">
             <p className="desc">{item.description}</p>
           </div>
-          <div className="productBtn">
+          <div
+            className={
+              item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
+            }
+          >
             {item.buttons?.map((v, i) => {
               return <TesterMessagesItemButton key={i} item={v} />;
             })}
