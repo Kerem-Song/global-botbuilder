@@ -10,12 +10,14 @@ import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 
 export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];
-}> = ({ scenarios }) => {
+  searchKeyword: string;
+  isActivated: boolean;
+  setSearchKeyword: (value: string) => void;
+  setIsActivated: (value: boolean) => void;
+}> = ({ scenarios, searchKeyword, isActivated, setSearchKeyword, setIsActivated }) => {
   const { t } = usePage();
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
-  const [isActivated, setIsActivated] = useState(false);
   const [tempScenarioNames, setTempScenarioNames] = useState<number[]>([]);
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
   const token = useRootState((state) => state.botInfoReducer.token);
   const { scenarioCreateAsync, scenarioCreating } = useScenarioClient();
 
