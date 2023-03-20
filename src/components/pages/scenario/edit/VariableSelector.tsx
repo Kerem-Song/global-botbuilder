@@ -44,7 +44,7 @@ export const VariableSelector = <T extends object>({
   return (
     <CreatableSelect
       placeholder={placeholder}
-      styles={getReactSelectStyle<IVariable>()}
+      styles={getReactSelectStyle<IVariable>(true)}
       isDisabled={isDisabled}
       isClearable
       value={getValue()}

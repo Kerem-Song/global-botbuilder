@@ -16,12 +16,12 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
       minHeight: '34px',
     }),
     clearIndicator: () => ({
-      display: 'none',
+      display: hideIndicator ? 'none' : 'block',
     }),
     dropdownIndicator: () => ({
       color: '#B5B4B4',
       paddingRight: '10px',
-      display: hideIndicator ? 'none' : 'block',
+      //display: hideIndicator ? 'none' : 'block',
     }),
     indicatorsContainer: () => ({}),
     valueContainer: (provided) => ({
