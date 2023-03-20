@@ -18,7 +18,7 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   synonym,
   representativeEntry,
 }) => {
-  const { control, register, getValues, reset } = useFormContext();
+  const { control, register, getValues } = useFormContext();
   const { fields, prepend, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
