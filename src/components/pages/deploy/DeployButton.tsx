@@ -18,6 +18,7 @@ export const DeployButton = () => {
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();
+  const [channelInfos, setChannelInfos] = useState<string | undefined>('');
 
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
 
@@ -32,6 +33,7 @@ export const DeployButton = () => {
       setActivate(botInfo.activated);
       setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
       setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
+      setChannelInfos(botInfo.channelInfos?.find((x) => x.isLive)?.name);
     }
   }, [botInfo]);
 
@@ -40,7 +42,7 @@ export const DeployButton = () => {
       title: testLinked ? t('DEPLOY_TEST_CHANNEL') : t('DEPLOY_OPERATIONAL_CHANNEL'),
       description: (
         <span>
-          <span style={{ color: 'blue' }}>@루나소프트_라인테스트</span> 채널에
+          <span style={{ color: 'blue' }}>{channelInfos}</span> 채널에
           <br />
           모든 변경사항을 배포하시겠습니까?
         </span>

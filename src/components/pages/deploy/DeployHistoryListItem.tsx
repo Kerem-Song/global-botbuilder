@@ -11,6 +11,26 @@ export interface IDeployHistoryListItem {
   data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
 }
 
+function pad(n: number): string {
+  return n < 10 ? `0${n.toString()}` : n.toString();
+}
+
+function timestamp(d: Date) {
+  return (
+    d.getFullYear() +
+    '-' +
+    pad(d.getMonth() + 1) +
+    '-' +
+    pad(d.getDate()) +
+    ' ' +
+    pad(d.getHours()) +
+    ':' +
+    pad(d.getMinutes()) +
+    ':' +
+    pad(d.getSeconds())
+  );
+}
+
 export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
   const [detailInfo, setDetailInfo] = useState({});
   const { isOpen, handleIsOpen } = useModalOpen();
@@ -35,7 +55,9 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
                 {x.isLive === true ? t('OPERATIONAL') : t('TEST')}
               </td>
               <td className="deployHistoryList channelName">{x.snsChannel}</td>
-              <td className="deployHistoryList deployDateTime">{x.deployedTime}</td>
+              <td className="deployHistoryList deployDateTime">
+                {timestamp(new Date(x.deployedTime))}
+              </td>
               <td className="deployHistoryList accountInfo">
                 <MultiClamp clamp={1}>{x.actorName}</MultiClamp>
                 <MultiClamp clamp={1}>{x.actorEmail}</MultiClamp>
@@ -63,7 +85,6 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
           isOpen={isOpen}
           handleIsOpen={handleIsOpen}
           detailInfo={detailInfo}
-          data={data}
         />
       )}
     </>

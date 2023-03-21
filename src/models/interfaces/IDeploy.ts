@@ -26,3 +26,8 @@ export interface IUpdateDeployHistoryComment {
   comment?: string;
   deployHistoryId: string;
 }
+
+export interface IDeployResult {
+  value: number;
+  message: string;
+}

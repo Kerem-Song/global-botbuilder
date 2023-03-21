@@ -2,23 +2,37 @@ import { Button, Divider, InputTextarea, Space } from '@components';
 import { Title } from '@components/general';
 import { usePage } from '@hooks';
 import { useDeployClient } from '@hooks/client/deployClient';
-import { IHasResult, IPagingItems } from '@models';
-import {
-  IResponseSearchDeployHistory,
-  IUpdateDeployHistoryComment,
-} from '@models/interfaces/IDeploy';
+import { IDeployResult, IUpdateDeployHistoryComment } from '@models/interfaces/IDeploy';
 import { lunaToast } from '@modules/lunaToast';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FC, useEffect, useState } from 'react';
+import { useController, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
-import MultiClamp from 'react-multi-clamp';
 
 export interface IDeployDetailModalProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
   detailInfo: Record<string, never>;
-  data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
+}
+
+function pad(n: number): string {
+  return n < 10 ? `0${n.toString()}` : n.toString();
+}
+
+function timestamp(d: Date) {
+  return (
+    d.getFullYear() +
+    '-' +
+    pad(d.getMonth() + 1) +
+    '-' +
+    pad(d.getDate()) +
+    ' ' +
+    pad(d.getHours()) +
+    ':' +
+    pad(d.getMinutes()) +
+    ':' +
+    pad(d.getSeconds())
+  );
 }
 
 export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
@@ -26,9 +40,20 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
   handleIsOpen,
   detailInfo,
 }) => {
+  const [deployResult, setDeployResult] = useState<IDeployResult[]>([
+    { value: 0, message: '알수 없는 오류' },
+    { value: 1, message: '성공' },
+    { value: 2, message: '이미 다른 곳에서 사용중인 채널' },
+    { value: 3, message: 'S3에 연결 실패' },
+    { value: 6, message: '채널이 활성화 되어 있지 않음' },
+    { value: 8, message: '정상적이지 않은 FlowGroup' },
+    { value: 9, message: '채널을 찾지 못함' },
+  ]);
+  const [isActive, setIsActive] = useState<boolean>(false);
   const { updateDeployHistoryComment } = useDeployClient();
-  const { register, handleSubmit, reset, getValues } =
+  const { handleSubmit, reset, getValues, control } =
     useForm<IUpdateDeployHistoryComment>();
+  const { field } = useController({ name: 'comment', control: control });
   const { t, tc } = usePage();
 
   useEffect(() => {
@@ -41,7 +66,16 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     }
   }, [detailInfo]);
 
-  const handleClose = () => {
+  useEffect(() => {
+    if (detailInfo.deployResult) {
+      const currentDeployResult = deployResult.filter(
+        (x) => x.value === detailInfo.deployResult,
+      );
+      setDeployResult(currentDeployResult);
+    }
+  }, [detailInfo.deployResult]);
+
+  const handleCancel = () => {
     handleIsOpen(false);
   };
 
@@ -54,7 +88,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     if (res && res.isSuccess) {
       lunaToast.success();
       reset();
-      handleClose();
+      handleCancel();
     }
   };
 
@@ -71,7 +105,8 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       <div className="contents">
         <div className="deployNumber">
           <Title level={2}>
-            {t('DEPLOY_NUMBER')} {detailInfo.no} ({t('OPERATIONAL')})
+            {t('DEPLOY_NUMBER')} {detailInfo.no} (
+            {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
           </Title>
         </div>
         <div className="deployInfo">
@@ -81,7 +116,9 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           </div>
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>
-            <span className="infoContent">{detailInfo.deployedTime}</span>
+            <span className="infoContent">
+              {timestamp(new Date(detailInfo.deployedTime))}
+            </span>
           </div>
           <div className="info">
             <span className="infoTitle">{t('OPERATOR')}</span>
@@ -99,22 +136,41 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
               >
                 {detailInfo.isSuccess === true ? t('SUCCESS') : t('FAILED')}
               </span>
+              {deployResult
+                .filter((x) => x.value !== 1)
+                .map((x, i) => (
+                  <span className="deployResult" key={i}>
+                    ({x.value} : {x.message})
+                  </span>
+                ))}
             </span>
           </div>
         </div>
         <form onSubmit={handleSubmit(handleSave)}>
           <InputTextarea
             className="deployNotes"
-            placeholder={t('MEMO')}
-            {...register('comment')}
+            placeholder={t('DEPLOY_NOTES')}
+            ref={(e) => {
+              field.ref(e);
+            }}
+            value={field.value}
+            onChange={(e) => {
+              field.onChange(e);
+              setIsActive(true);
+            }}
           />
         </form>
         <div className="modalBtns">
           <Space>
-            <Button className="min-w-100" onClick={handleClose}>
+            <Button className="min-w-100" onClick={handleCancel}>
               {tc('CANCEL')}
             </Button>
-            <Button className="min-w-100" type="primary" onClick={handleSave}>
+            <Button
+              className="min-w-100"
+              type="primary"
+              disabled={isActive ? false : true}
+              onClick={handleSave}
+            >
               {tc('SAVE')}
             </Button>
           </Space>

@@ -26,14 +26,24 @@ export const DeployPagination: FC<IDeployPagination> = ({
     const totalPageArray = Array(totalPages)
       .fill(0)
       .map((_, i) => i + 1);
-
     return Array(Math.ceil(totalPages / limit))
       .fill(0)
       .map((_, i) => totalPageArray.slice(i * limit, i * limit + limit));
   };
 
+  const handleNextBtn = () => {
+    const lastPageArray = totalPagesArray[totalPagesArray.length - 1];
+    const nextPage = currentPage + limit;
+
+    if (nextPage >= totalPages) {
+      setCurrentPage(lastPageArray[lastPageArray.length - 1]);
+    } else {
+      setCurrentPage(nextPage);
+    }
+  };
+
   useEffect(() => {
-    if (currentPage % limit === 1) {
+    if (currentPage % limit !== 0) {
       setCurrentPageArray(totalPagesArray[Math.floor(currentPage / limit)]);
     } else if (currentPage % limit === 0) {
       setCurrentPageArray(totalPagesArray[Math.floor(currentPage / limit) - 1]);
@@ -47,18 +57,17 @@ export const DeployPagination: FC<IDeployPagination> = ({
       setCurrentPageArray(slicedPageArray[0]);
     }
   }, [totalPages]);
-
   return (
     <div className="pageBtns">
       <Button
         shape="ghost"
         className="prevBtn"
-        disabled={currentPage <= 10}
+        disabled={currentPage <= limit}
         onClick={() => {
-          setCurrentPage(currentPage - 10);
+          setCurrentPage(currentPage - limit);
         }}
       >
-        <img src={currentPage >= 10 ? icBackActive : icBackInactive} alt="prev" />
+        <img src={currentPage > limit ? icBackActive : icBackInactive} alt="prev" />
       </Button>
       <div className="pageNumBtns">
         {data &&
@@ -78,13 +87,23 @@ export const DeployPagination: FC<IDeployPagination> = ({
       <Button
         shape="ghost"
         className="nextBtn"
-        disabled={currentPage + 10 >= totalPages}
-        onClick={() => setCurrentPage(currentPage + 10)}
+        disabled={
+          currentPagesArray === totalPagesArray[totalPagesArray.length - 1] ||
+          currentPage > totalPages
+            ? true
+            : false
+        }
+        onClick={handleNextBtn}
       >
         <img
-          src={currentPage + 10 >= totalPages ? icNextInactive : icNextActive}
+          src={
+            currentPagesArray === totalPagesArray[totalPagesArray.length - 1] ||
+            currentPage > totalPages
+              ? icNextInactive
+              : icNextActive
+          }
           alt="next"
-        ></img>
+        />
       </Button>
     </div>
   );

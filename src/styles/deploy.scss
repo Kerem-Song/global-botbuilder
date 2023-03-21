@@ -250,9 +250,13 @@
             color: #03bf4e;
             border-radius: rem(4);
             &.failed {
+              margin-right: rem(3);
               background-color: #ffe4e9;
               color: #d80034;
             }
+          }
+          .deployResult {
+            color: $grayBlack;
           }
         }
       }

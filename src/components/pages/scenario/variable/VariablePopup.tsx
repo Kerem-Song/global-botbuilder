@@ -13,7 +13,6 @@ import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
-import { format } from 'url';
 import * as yup from 'yup';
 
 import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
@@ -33,10 +32,6 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const { variableMutate, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
-
-  // const formatsList = parameterFormats?.result.map((x) => {
-  //   return { value: x.formatType, label: x.example };
-  // });
 
   const { t, tc } = usePage();
   const { confirm, error: modalError } = useSystemModal();
