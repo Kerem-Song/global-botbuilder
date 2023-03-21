@@ -11,7 +11,6 @@ export interface IDeployHistoryList {
 
 export const DeployHistoryList: FC<IDeployHistoryList> = ({ data }) => {
   const { t } = usePage();
-
   return (
     <table className="deployHistoryListTable">
       <thead>
