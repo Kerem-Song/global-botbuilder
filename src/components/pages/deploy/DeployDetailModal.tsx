@@ -4,6 +4,7 @@ import { usePage } from '@hooks';
 import { useDeployClient } from '@hooks/client/deployClient';
 import { IDeployResult, IUpdateDeployHistoryComment } from '@models/interfaces/IDeploy';
 import { lunaToast } from '@modules/lunaToast';
+import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
@@ -13,26 +14,6 @@ export interface IDeployDetailModalProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
   detailInfo: Record<string, never>;
-}
-
-function pad(n: number): string {
-  return n < 10 ? `0${n.toString()}` : n.toString();
-}
-
-function timestamp(d: Date) {
-  return (
-    d.getFullYear() +
-    '-' +
-    pad(d.getMonth() + 1) +
-    '-' +
-    pad(d.getDate()) +
-    ' ' +
-    pad(d.getHours()) +
-    ':' +
-    pad(d.getMinutes()) +
-    ':' +
-    pad(d.getSeconds())
-  );
 }
 
 export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
@@ -117,7 +98,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>
             <span className="infoContent">
-              {timestamp(new Date(detailInfo.deployedTime))}
+              {util.formatDateTime(new Date(detailInfo.deployedTime))}
             </span>
           </div>
           <div className="info">

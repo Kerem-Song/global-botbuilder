@@ -21,4 +21,22 @@ export const util = {
   copyClipboard: async (text: string | undefined) => {
     await navigator.clipboard.writeText(text || '');
   },
+  pad: (n: number) => {
+    return n < 10 ? `0${n.toString()}` : n.toString();
+  },
+  formatDateTime: (d: Date) => {
+    return (
+      d.getFullYear() +
+      '-' +
+      util.pad(d.getMonth() + 1) +
+      '-' +
+      util.pad(d.getDate()) +
+      ' ' +
+      util.pad(d.getHours()) +
+      ':' +
+      util.pad(d.getMinutes()) +
+      ':' +
+      util.pad(d.getSeconds())
+    );
+  },
 };

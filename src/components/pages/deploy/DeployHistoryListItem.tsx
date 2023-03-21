@@ -1,6 +1,7 @@
 import { useModalOpen, usePage } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
+import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 import MultiClamp from 'react-multi-clamp';
@@ -11,31 +12,10 @@ export interface IDeployHistoryListItem {
   data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
 }
 
-function pad(n: number): string {
-  return n < 10 ? `0${n.toString()}` : n.toString();
-}
-
-function timestamp(d: Date) {
-  return (
-    d.getFullYear() +
-    '-' +
-    pad(d.getMonth() + 1) +
-    '-' +
-    pad(d.getDate()) +
-    ' ' +
-    pad(d.getHours()) +
-    ':' +
-    pad(d.getMinutes()) +
-    ':' +
-    pad(d.getSeconds())
-  );
-}
-
 export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
   const [detailInfo, setDetailInfo] = useState({});
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
-
   return (
     <>
       <tbody>
@@ -56,7 +36,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
               </td>
               <td className="deployHistoryList channelName">{x.snsChannel}</td>
               <td className="deployHistoryList deployDateTime">
-                {timestamp(new Date(x.deployedTime))}
+                {util.formatDateTime(new Date(x.deployedTime))}
               </td>
               <td className="deployHistoryList accountInfo">
                 <MultiClamp clamp={1}>{x.actorName}</MultiClamp>
