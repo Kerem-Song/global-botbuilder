@@ -152,22 +152,6 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
       </>
     );
   } else {
-    return (
-      <div
-        style={{
-          width: '100%',
-          marginTop: '12px',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <div className="emptyList">
-          <div className="empty">
-            <img src={icUtteranceEmpty} alt="empty" />
-            <span>No search results found.</span>
-          </div>
-        </div>
-      </div>
-    );
+    return <></>;
   }
 };

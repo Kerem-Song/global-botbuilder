@@ -104,6 +104,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const { field: isRegexField } = useController({ name: 'isRegex', control });
   const { field: nameField } = useController({ name: 'name', control });
+  const { field: regexField } = useController({
+    name: 'entries.0.representativeEntry',
+    control,
+  });
 
   const entryGroupName = useRef<HTMLInputElement>(null);
 
@@ -309,27 +313,25 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     </Col>
                     <Col flex="auto">
                       <FormItem error={errors.name}>
-                        <>
-                          <Input
-                            placeholder="Input Intent Name"
-                            showCount
-                            maxLength={20}
-                            value={nameField.value}
-                            onChange={(e) => {
-                              if (e.target.value.indexOf(' ') > -1) {
-                                lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
-                              }
-                              e.target.value = e.target.value.replaceAll(' ', '');
-                              nameField.onChange(e);
-                              setIsActive(true);
-                            }}
-                            onPressEnter={() => {
-                              return;
-                            }}
-                            ref={nameField.ref}
-                            onBlur={nameField.onBlur}
-                          />
-                        </>
+                        <Input
+                          placeholder="Input Intent Name"
+                          showCount
+                          maxLength={20}
+                          value={nameField.value}
+                          onChange={(e) => {
+                            if (e.target.value.indexOf(' ') > -1) {
+                              lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
+                            }
+                            e.target.value = e.target.value.replaceAll(' ', '');
+                            nameField.onChange(e);
+                            setIsActive(true);
+                          }}
+                          onPressEnter={() => {
+                            return;
+                          }}
+                          ref={nameField.ref}
+                          onBlur={nameField.onBlur}
+                        />
                       </FormItem>
                     </Col>
                   </Row>
@@ -375,8 +377,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         <Col flex="auto">
                           <FormItem error={errors.entries?.[0]?.representativeEntry}>
                             <Input
-                              {...register('entries.0.representativeEntry')}
+                              // {...register('entries.0.representativeEntry')}
                               placeholder="Input Regular expression"
+                              value={regexField.value}
+                              maxLength={125}
+                              showCount
                               onChange={(e) => {
                                 setValue('entries.0.representativeEntry', e.target.value);
                                 setIsActive(true);
