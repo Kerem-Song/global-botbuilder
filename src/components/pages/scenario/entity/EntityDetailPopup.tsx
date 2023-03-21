@@ -241,6 +241,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   };
 
+  const handleSearch = (keyword?: string) => {
+    setSearchKeyword(keyword!);
+  };
+
   const handleClose = async () => {
     if (isActive === false) {
       reset();
@@ -392,9 +396,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   <Input
                     size="small"
                     search
+                    value={searchKeyword}
+                    onSearch={(value) => handleSearch(value!)}
+                    onChange={(e) => setSearchKeyword(e?.target.value)}
                     placeholder="Input search word"
-                    onBlur={(e) => setSearchKeyword(e.target.value)}
-                    onPressEnter={(value) => setSearchKeyword(value!)}
                   ></Input>
                 </div>
               ) : null}
