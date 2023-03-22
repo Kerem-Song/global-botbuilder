@@ -2,6 +2,7 @@ import { useHttp, useRootState } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import {
   IDeploy,
+  IResponseDeploy,
   IResponseSearchDeployHistory,
   ISearchDeployHistory,
   IUpdateDeployHistoryComment,
@@ -66,7 +67,10 @@ export const useDeployClient = () => {
   );
 
   const deployingBot = useMutation(async (data: IDeploy) => {
-    const result = await http.post<IDeploy, AxiosResponse<IResponse>>('Bot/Deploy', data);
+    const result = await http.post<IDeploy, AxiosResponse<IResponseDeploy>>(
+      'Bot/Deploy',
+      data,
+    );
     if (result) {
       queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
       return result.data;

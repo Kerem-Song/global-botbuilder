@@ -13,7 +13,6 @@ export const DeployingModal: FC<IDeployingModalProps> = ({
   testLinked,
 }) => {
   const { t } = usePage();
-
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}

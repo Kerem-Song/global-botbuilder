@@ -31,3 +31,16 @@ export interface IDeployResult {
   value: number;
   message: string;
 }
+
+export interface IResponseDeploy {
+  exception: IException | null;
+  isSuccess: boolean;
+  newToken?: string | null;
+}
+
+export interface IException {
+  errorCode: number;
+  exceptionType: string;
+  message: string;
+  subErrorCode: number;
+}

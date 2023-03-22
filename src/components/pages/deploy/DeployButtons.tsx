@@ -8,19 +8,17 @@ import { useParams } from 'react-router';
 
 import { DeployingModal } from './DeployingModal';
 
-export const DeployButton = () => {
+export const DeployButtons = () => {
+  const [activate, setActivate] = useState<boolean>();
+  const [opLinked, setOpLinked] = useState<boolean>();
+  const [testLinked, setTestLinked] = useState<boolean>();
+  const [channelInfos, setChannelInfos] = useState<string | undefined>('');
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const { t } = usePage();
   const { deployingBot, isDeployingBotIsLoading } = useDeployClient();
   const { confirm, error } = useSystemModal();
   const { refetchBotInfo } = useBotClient();
   const { botId } = useParams();
-
-  const [activate, setActivate] = useState<boolean>();
-  const [opLinked, setOpLinked] = useState<boolean>();
-  const [testLinked, setTestLinked] = useState<boolean>();
-  const [channelInfos, setChannelInfos] = useState<string | undefined>('');
-
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
 
   useEffect(() => {
     if (botId) {
@@ -59,11 +57,13 @@ export const DeployButton = () => {
       } else {
         error({
           title: t('DEPLOYING_FAILED'),
-          description:
-            // res && res.exception!.errorCode == 7633
-            //   ? t('DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE')
-            //   : t('DEPLOYING_FAILED_MESSAGE'),
-            t('DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE'),
+          description: (
+            <p style={{ whiteSpace: 'break-spaces' }}>
+              {res && res.exception!.errorCode === 7633
+                ? t('DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE')
+                : t('DEPLOYING_FAILED_MESSAGE')}
+            </p>
+          ),
         });
       }
     } else {
