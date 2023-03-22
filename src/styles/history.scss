@@ -1,0 +1,122 @@
+.historyMain {
+  margin-top: rem(30);
+  margin: rem(30) rem(297);
+
+  .historyMainTitle {
+    font-weight: 700;
+    font-size: rem(24);
+    line-height: rem(29);
+    color: $grayBlack;
+  }
+
+  .inquiryYear {
+    align-items: center;
+    padding-top: rem(18);
+    gap: rem(12);
+    font-weight: 500;
+    font-size: rem(16);
+    line-height: rem(19);
+    color: $grayBlack;
+  }
+
+  .quickFilterWrapper {
+    display: flex;
+    align-items: center;
+    padding-top: rem(12);
+    font-weight: 500;
+    font-size: rem(16);
+    line-height: rem(19);
+    color: $grayBlack;
+
+
+    .filterTitle {
+      padding-right: rem(12);
+    }
+
+    .filterBtnWrapper {
+      display: flex;
+      gap: rem(10);
+      
+      .filterBtn {
+        padding: rem(8) rem(12) !important;
+        font-weight: 400;
+        font-size: rem(14);
+        // line-height: rem(17);
+        background-color: $grayWhite;
+        height: rem(33);
+        border: rem(1) solid $gray200;
+        border-radius: rem(99);
+  
+        &.selected {
+          background-color: $primary100;
+        }
+
+        &:focus {
+          border: rem(1) solid $primary500;
+          background-color: $primary100;
+        }
+        
+      }
+    }
+  }
+
+  .historyListWarpper {
+    margin-top: rem(19);
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+    width: rem(1120);
+
+    .historyList {
+      height: rem(149);
+      background-color: $grayWhite;
+      border: rem(1) solid $gray200;
+      border-radius: rem(8);
+
+      .historyListCatetory {
+        img {
+          width: rem(21.6);
+          height: rem(21.6);
+        }
+
+        font-weight: 500;
+        font-size: rem(16);
+        line-height: rem(19);
+        color: $gray700;
+      }
+
+      .historyListTitle {
+        font-weight: 500;
+        font-size: rem(18);
+        line-height: rem(22);
+        color: $primary500;
+
+        .viewerBtn {
+          padding: rem(5) rem(10);
+          width: rem(47);
+          height: rem(24);
+          background: $primary500;
+          border-radius: rem(4);
+          color: $grayWhite;
+        }
+      }
+
+      .historyListDesc {
+        font-weight: 400;
+        font-size: rem(16);
+        line-height: rem(19);
+        color: $grayBlack;
+      }
+    }
+
+    .historyDateActorWrapper {
+      font-weight: 400;
+      font-size: rem(14);
+      line-height: rem(17);
+      color: $gray500;
+
+
+  
+    }
+  }
+}

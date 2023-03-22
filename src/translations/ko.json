@@ -217,5 +217,16 @@
     "FAILED": "실패",
     "OPERATIONAL": "운영 채널",
     "TEST": "테스트 채널"
+  },
+  "history": {
+    "HISTORY": "히스토리",
+    "INQUIRY_YEAR": "조회 연도",
+    "QUICK_FILTER": "빠른 필터",
+    "VIEWER_BTN": "뷰어로 보기",
+    "HISTORY_SCENARIO": "시나리오",
+    "HISTORY_UTTERANCE": "발화",
+    "HISTORY_DEPLOYMENT": "배포",
+    "HISTORY_SETTING": "설정",
+    "HISTORY_MY_HISTORY": "나의 히스토리"
   }
 }

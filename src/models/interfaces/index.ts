@@ -10,6 +10,7 @@ export * from './IHasChildren';
 export * from './IHasResult';
 export * from './IHasResults';
 export * from './IHasStyle';
+export * from './IHistory';
 export * from './INode';
 export * from './INodeEditModel';
 export * from './IPageProps';
