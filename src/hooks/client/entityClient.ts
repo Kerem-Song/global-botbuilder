@@ -57,6 +57,7 @@ export const useEntityClient = () => {
         refetchOnWindowFocus: false,
         refetchOnReconnect: true,
         retry: 1,
+        enabled: token !== undefined,
       },
     );
   };
@@ -68,7 +69,7 @@ export const useEntityClient = () => {
     >('Builder/SaveEntryGroup', entry);
 
     if (result) {
-      queryClient.invalidateQueries(['change-pageNumber']);
+      queryClient.removeQueries(['change-pageNumber']);
       return result.data;
     }
   });

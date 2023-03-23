@@ -13,6 +13,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, useRootState, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
+import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import React, { Dispatch, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
@@ -56,10 +57,19 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     representativeEntry: yup
       .string()
       .required('필수 입력 항목입니다.')
-      .matches(
-        /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-        `특수문자, 이모지는 입력할 수 없습니다.`,
-      ),
+      .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
+        if (!value) {
+          return false;
+        }
+        if (EMOJI_REGEX.test(value)) {
+          return false;
+        }
+        if (SPECIAL_CHARACTOR_REGEX.test(value)) {
+          return false;
+        }
+        return true;
+      })
+      .max(125, `125자를 초과할 수 없습니다.`),
   });
 
   const regexSchema = yup.object({
@@ -72,10 +82,20 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .string()
         .trim()
         .required('엔티티 명은 필수입니다.')
-        .matches(
-          /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\s]*$/,
-          `특수문자, 이모지는 입력할 수 없습니다.`,
-        )
+        .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
+          if (!value) {
+            return false;
+          }
+
+          if (EMOJI_REGEX.test(value)) {
+            return false;
+          }
+
+          if (SPECIAL_CHARACTOR_REGEX.test(value)) {
+            return false;
+          }
+          return true;
+        })
         .max(20, `20자를 초과할 수 없습니다.`),
       entries: yup
         .array()
@@ -165,20 +185,17 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   }, [isActive]);
 
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const regExp1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[}]/g;
-    const regExp2 =
-      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
+    const regExp1 = /[\n]/g;
 
-    if (regExp1.test(e.target.value) || regExp2.test(e.target.value)) {
-      setEntryInputError('특수문자, 이모지는 입력할 수 없습니다.');
+    if (regExp1.test(e.target.value)) {
+      setEntryInputError('컨트롤 문자는 입력할 수 없습니다.');
     } else {
       setEntryInputError('');
     }
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
-    console.log(entryData);
-    if (entryData.entryGroupid) {
+    if (entryData.entryGroupid!) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
         name: entryData.name,
@@ -191,13 +208,16 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         onSuccess: (res) => {
           if (res && res.isSuccess) {
             reset();
+            lunaToast.success('수정되었습니다.');
             handleIsOpen(false);
-          } else {
-            modalError({
-              title: '중복 엔티티명',
-              description: <span>중복된 엔티티명입니다.</span>,
-            });
           }
+        },
+        onError: (res) => {
+          console.log(res);
+          modalError({
+            title: '중복 엔티티명',
+            description: <span>중복된 엔티티명입니다.</span>,
+          });
         },
       });
     } else {
@@ -212,6 +232,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         onSuccess: (res) => {
           if (res && res.isSuccess) {
             reset();
+            lunaToast.success('저장되었습니다.');
             handleIsOpen(false);
           } else {
             modalError({
@@ -225,6 +246,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleRegisterEntry = (name?: string): void => {
+    console.log(name);
     if (!name) {
       return;
     }
@@ -239,10 +261,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     if (entryGroupName.current) {
       entryGroupName.current.value = '';
     }
-  };
-
-  const handleSearch = (keyword?: string) => {
-    setSearchKeyword(keyword!);
   };
 
   const handleClose = async () => {
@@ -270,6 +288,22 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       }
     }
   };
+
+  const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.indexOf(' ') > -1) {
+      lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
+      e.target.value = e.target.value.replaceAll(' ', '');
+    } else if (e.target.value.match(SPECIAL_CHARACTOR_REGEX)) {
+      lunaToast.error('특수문자 및 이모지는 입력할 수 없습니다.');
+      e.target.value = e.target.value.replaceAll(SPECIAL_CHARACTOR_REGEX, '');
+    } else if (e.target.value.match(EMOJI_REGEX)) {
+      lunaToast.error('특수문자 및 이모지는 입력할 수 없습니다.');
+      e.target.value = e.target.value.replaceAll(EMOJI_REGEX, '');
+    }
+    nameField.onChange(e);
+    setIsActive(true);
+  };
+
   return (
     <ReactModal
       style={{ overlay: { display: 'flex', background: 'transparent' } }}
@@ -309,27 +343,18 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     </Col>
                     <Col flex="auto">
                       <FormItem error={errors.name}>
-                        <>
-                          <Input
-                            placeholder="Input Intent Name"
-                            showCount
-                            maxLength={20}
-                            value={nameField.value}
-                            onChange={(e) => {
-                              if (e.target.value.indexOf(' ') > -1) {
-                                lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
-                              }
-                              e.target.value = e.target.value.replaceAll(' ', '');
-                              nameField.onChange(e);
-                              setIsActive(true);
-                            }}
-                            onPressEnter={() => {
-                              return;
-                            }}
-                            ref={nameField.ref}
-                            onBlur={nameField.onBlur}
-                          />
-                        </>
+                        <Input
+                          placeholder="Input Intent Name"
+                          showCount
+                          maxLength={20}
+                          value={nameField.value}
+                          onChange={handleEntityName}
+                          onPressEnter={() => {
+                            return;
+                          }}
+                          ref={nameField.ref}
+                          onBlur={nameField.onBlur}
+                        />
                       </FormItem>
                     </Col>
                   </Row>
@@ -341,7 +366,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     <Col style={{ display: 'flex' }}>
                       {entryDetails?.data?.id ? (
                         <>
-                          {entryDetails?.data?.entryGroupType === 0 ? 'String' : 'Regax'}
+                          {entryDetails?.data?.entryGroupType === 0 ? 'String' : 'Regex'}
                         </>
                       ) : (
                         <>
@@ -396,10 +421,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   <Input
                     size="small"
                     search
-                    value={searchKeyword}
-                    onSearch={(value) => handleSearch(value!)}
-                    onChange={(e) => setSearchKeyword(e?.target.value)}
                     placeholder="Input search word"
+                    onBlur={(e) => setSearchKeyword(e.target.value)}
+                    onPressEnter={(value) => setSearchKeyword(value!)}
                   ></Input>
                 </div>
               ) : null}
@@ -470,6 +494,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                   entryGroup={entryGroup}
                                   entriesRemove={remove}
                                   searchKeyword={searchKeyword}
+                                  setIsActive={setIsActive}
                                 />
                               );
                             })}

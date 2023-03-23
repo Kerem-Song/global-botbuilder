@@ -7,7 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
-import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
+import {
+  IDeleteIntent,
+  IReactSelect,
+  ISaveIntent,
+  IUtteranceItem,
+  IUtteranceModel,
+} from '@models';
 import { util } from '@modules/util';
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
@@ -24,12 +30,15 @@ export const UtteranceDetail = () => {
   const { navigate, t, tc } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm, error } = useSystemModal();
+  const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const [searchWord, setSearchWord] = useState('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const utteranceRef = useRef<HTMLInputElement>(null);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
+  const { getScenarioList } = useScenarioSelectClient();
+  const { data } = getScenarioList();
 
   const {
     intentMutate,
@@ -38,16 +47,7 @@ export const UtteranceDetail = () => {
     checkIntentDuplicationMutate,
     checkUtteranceDuplicationMutate,
   } = useUtteranceClient();
-  const { getScenarioList } = useScenarioSelectClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
-
-  const list = getScenarioList();
-
-  const scenarioList = list.data
-    ?.filter((item) => !item.isFallbackFlow)
-    .map((x) => {
-      return { value: x.id, label: x.alias };
-    });
 
   const schema = yup.object({
     name: yup.string().trim().required('필수 입력 항목입니다.'),
@@ -103,6 +103,21 @@ export const UtteranceDetail = () => {
       );
     }
   }, [hasUtteranceId?.data]);
+
+  useEffect(() => {
+    const scenarioList = data
+      ?.filter((item) => !item.isFallbackFlow)
+      .map((x) => {
+        return { value: x.id, label: x.alias };
+      });
+
+    const total = [
+      { value: '', label: '시나리오를 선택해주세요' },
+      ...(scenarioList ? scenarioList : []),
+    ];
+
+    setTotalScenarioList(total);
+  }, [data]);
 
   const preventGoBack = async () => {
     const result = await confirm({
@@ -406,9 +421,9 @@ export const UtteranceDetail = () => {
                 <Select
                   {...scenarioListField}
                   styles={reactSelectStyle}
-                  options={scenarioList}
+                  options={totalScenarioList}
                   placeholder="시나리오를 선택해주세요."
-                  value={scenarioList?.find(
+                  value={totalScenarioList?.find(
                     (item) => item.value === scenarioListField.value,
                   )}
                   onChange={(options: any) => {

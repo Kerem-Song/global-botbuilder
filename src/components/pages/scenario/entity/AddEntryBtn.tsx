@@ -10,6 +10,7 @@ export interface AddEntryBtnProps {
   searchKeyword: string;
   representativeEntry?: string;
   synonym?: string[];
+  setIsActive: (value: boolean) => void;
 }
 
 export const AddEntryBtn: FC<AddEntryBtnProps> = ({
@@ -17,8 +18,9 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   searchKeyword,
   synonym,
   representativeEntry,
+  setIsActive,
 }) => {
-  const { control, register, getValues } = useFormContext();
+  const { control, register, getValues, reset } = useFormContext();
   const { fields, prepend, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
@@ -51,23 +53,24 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    setIsActive(true);
   };
 
-  const handleInputConfirm = () => {
-    if (!inputValue || !inputValue.trim()) {
+  const handleInputConfirm = (value: string) => {
+    if (!value || !value.trim()) {
       setInputVisible(false);
       return;
     }
 
     if (representativeEntry) {
-      if (representativeEntry.toLowerCase() === inputValue.toLowerCase()) {
+      if (representativeEntry.toLowerCase() === value.toLowerCase()) {
         lunaToast.error('중복되었습니다. 다시 입력해주세요.');
         return;
-      } else if (synonym?.find((x) => x.toLowerCase() === inputValue.toLowerCase())) {
+      } else if (synonym?.find((x) => x.toLowerCase() === value.toLowerCase())) {
         lunaToast.error('중복되었습니다. 다시 입력해주세요.');
         return;
       } else {
-        prepend([inputValue]);
+        prepend([value]);
         setInputVisible(false);
         setInputValue('');
       }
@@ -82,19 +85,28 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
             <div key={i} style={{ width: '100px', marginRight: '8px' }}>
               <Input
                 className="entryInput"
-                {...register(`entries.${index}.synonym.${i}`)}
+                ref={editInputRef}
+                // {...register(`entries.${index}.synonym.${i}`)}
+                onBlur={() => {
+                  setEditInputIndex(-1);
+                }}
+                onPressEnter={() => {
+                  setEditInputIndex(-1);
+                }}
               ></Input>
             </div>
           );
         } else {
           return (
-            <div key={i} className="entry">
-              <span
-                onDoubleClick={(e) => {
-                  setEditInputIndex(i);
-                  e.preventDefault();
-                }}
-              >
+            <div
+              key={i}
+              className="entry"
+              onDoubleClick={(e) => {
+                setEditInputIndex(i);
+                e.preventDefault();
+              }}
+            >
+              <span>
                 {util.replaceKeywordMark(
                   getValues(`entries.${index}.synonym.${i}`),
                   searchKeyword,
@@ -117,8 +129,8 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
-          onBlur={handleInputConfirm}
-          onPressEnter={handleInputConfirm}
+          onBlur={() => handleInputConfirm(inputValue)}
+          onPressEnter={() => handleInputConfirm(inputValue)}
           onPressEsc={() => {
             setInputVisible(false);
             setInputValue('');
