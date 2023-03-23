@@ -1,9 +1,7 @@
-import { icUtteranceEmpty } from '@assets';
-import { Col, FormItem, Input, Row } from '@components';
+import { Col, Row } from '@components';
 import { useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
-import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
   FieldArrayWithId,
@@ -19,25 +17,22 @@ export interface IEntityDetailItemProps {
   entriesRemove: UseFieldArrayRemove;
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
+  setIsActive: (value: boolean) => void;
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   index,
   entriesRemove,
   searchKeyword,
-  entryGroup,
+  setIsActive,
 }) => {
-  const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     editInputRef.current?.focus();
   }, []);
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<ISaveEntryGroup>();
+  const { control } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
   const openDeleteEntryModal = async () => {
     const result = await confirm({
@@ -72,84 +67,29 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     (searchKeyword && synonymField.value?.find((x: string) => x.includes(searchKeyword)))
   ) {
     return (
-      <>
-        {[entryGroup].map((item, i) => {
-          if (editInputIndex === i) {
-            return (
-              <Row key={i} gap={8}>
-                <Col span={5} className="representativeEntryInput">
-                  <FormItem error={errors.entries?.[index]?.representativeEntry}>
-                    <Input
-                      {...field}
-                      size="normal"
-                      maxLength={125}
-                      showCount
-                      className={classNames({
-                        'input-normal': !errors.entries?.[index]?.representativeEntry,
-                        'input-error': errors.entries?.[index]?.representativeEntry,
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col span={18}>
-                  <div className="entryList">
-                    <div className="entries">
-                      <AddEntryBtn
-                        index={index}
-                        searchKeyword={searchKeyword}
-                        representativeEntry={item.representativeEntry}
-                      />
-                    </div>
-                  </div>
-                </Col>
-                <Col span={1}>
-                  <button
-                    type="button"
-                    className="icDelete"
-                    onClick={openDeleteEntryModal}
-                  />
-                </Col>
-              </Row>
-            );
-          } else {
-            return (
-              <Row key={i} gap={8}>
-                <Col span={5}>
-                  <div className="representativeEntry">
-                    <span
-                      onDoubleClick={(e) => {
-                        setEditInputIndex(i);
-                        e.preventDefault();
-                      }}
-                    >
-                      {util.replaceKeywordMark(item.representativeEntry, searchKeyword)}
-                    </span>
-                  </div>
-                </Col>
-                <Col span={18}>
-                  <div className="entryList">
-                    <div className="entries">
-                      <AddEntryBtn
-                        index={index}
-                        searchKeyword={searchKeyword}
-                        synonym={synonymField.value}
-                        representativeEntry={item.representativeEntry}
-                      />
-                    </div>
-                  </div>
-                </Col>
-                <Col span={1}>
-                  <button
-                    type="button"
-                    className="icDelete"
-                    onClick={openDeleteEntryModal}
-                  />
-                </Col>
-              </Row>
-            );
-          }
-        })}
-      </>
+      <Row gap={8}>
+        <Col span={5}>
+          <div className="representativeEntry">
+            <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>
+          </div>
+        </Col>
+        <Col span={18}>
+          <div className="entryList">
+            <div className="entries">
+              <AddEntryBtn
+                index={index}
+                searchKeyword={searchKeyword}
+                synonym={synonymField.value}
+                representativeEntry={field.value}
+                setIsActive={setIsActive}
+              />
+            </div>
+          </div>
+        </Col>
+        <Col span={1}>
+          <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
+        </Col>
+      </Row>
     );
   } else {
     return <></>;

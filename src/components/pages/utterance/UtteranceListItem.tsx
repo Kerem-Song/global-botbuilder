@@ -34,6 +34,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     fetchNextPage,
     isFetching,
   } = changePageNumberQuery(searchData!);
+
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -143,9 +144,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       )}
       {isExistInitialData(initialData) ? (
         initialData?.pages.map((v) => {
+          console.log(v);
           const pages = v.items;
           return pages.map((x, i) => {
             const foundFlow = data?.find((item) => item.id === x.flowId);
+            const connectedFlow = x.flowName !== null;
+            const notFoundFlow = foundFlow === undefined;
+            const hasInactiveFlow = connectedFlow && notFoundFlow;
             return (
               <tr
                 key={i}
@@ -161,8 +166,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 <td
                   role="presentation"
                   className={classNames('utteranceList connectScenarios', {
-                    'connectScenarios-notActivated':
-                      foundFlow && foundFlow.activated === false,
+                    'connectScenarios-notActivated': hasInactiveFlow,
                   })}
                 >
                   {x.flowName === null ? '-' : x.flowName}
