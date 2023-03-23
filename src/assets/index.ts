@@ -41,6 +41,7 @@ import icDataApiSelcted from '@assets/icons/ic_data_api_selected.svg';
 import icDelete from '@assets/icons/ic_delete.svg';
 import icDeploy from '@assets/icons/ic_deploy_default.svg';
 import icDeploySelected from '@assets/icons/ic_deploy_select.svg';
+import icDeploySelectHistory from '@assets/icons/ic_deploy_select_history.svg';
 import icDuplication from '@assets/icons/ic_duplication.svg';
 import icEditCarousel from '@assets/icons/ic_edit_carousel.svg';
 import icEmptyBot from '@assets/icons/ic_empty_bot.svg';
@@ -86,6 +87,7 @@ import icScenarioRedo from '@assets/icons/ic_scenario_redo_default.svg';
 import icScenarioRedoDisable from '@assets/icons/ic_scenario_redo_disable.svg';
 import icScenarioRedoHover from '@assets/icons/ic_scenario_redo_hover.svg';
 import icScenarioSelected from '@assets/icons/ic_scenario_select.svg';
+import icScenarioSelectHistory from '@assets/icons/ic_scenario_select_history.svg';
 import icScenarioUndo from '@assets/icons/ic_scenario_undo_default.svg';
 import icScenarioUndoDisable from '@assets/icons/ic_scenario_undo_disable.svg';
 import icScenarioUndoHover from '@assets/icons/ic_scenario_undo_hover.svg';
@@ -107,6 +109,7 @@ import icSetParameter from '@assets/icons/ic_set_parameter.svg';
 import icSetParameterHover from '@assets/icons/ic_set_parameter_hover.svg';
 import icSetting from '@assets/icons/ic_setting_default.svg';
 import icSettingSelected from '@assets/icons/ic_setting_select.svg';
+import icSettingSelectHistory from '@assets/icons/ic_setting_select_history.svg';
 import icShow from '@assets/icons/ic_show.svg';
 import icStatistics from '@assets/icons/ic_statistics_default.svg';
 import icStatisticsSelected from '@assets/icons/ic_statistics_select.svg';
@@ -124,11 +127,11 @@ import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.
 import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
 import icUtteranceEmpty from '@assets/icons/ic_utterance_empty.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
+import icUtteranceSelectHistory from '@assets/icons/ic_utterance_select_history.svg';
 import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
-
 export {
   icAdd,
   icBackActive,
@@ -173,6 +176,7 @@ export {
   icDelete,
   icDeploy,
   icDeploySelected,
+  icDeploySelectHistory,
   icDuplication,
   icEditCarousel,
   icEmptyBot,
@@ -220,6 +224,7 @@ export {
   icScenarioRedoDisable,
   icScenarioRedoHover,
   icScenarioSelected,
+  icScenarioSelectHistory,
   icScenarioTabScenarioOff,
   icScenarioTabScenarioOn,
   icScenarioTabVariableOff,
@@ -241,6 +246,7 @@ export {
   icSetParameterHover,
   icSetting,
   icSettingSelected,
+  icSettingSelectHistory,
   icShow,
   icStatistics,
   icStatisticsSelected,
@@ -258,6 +264,7 @@ export {
   icUtteranceDeleteDisable,
   icUtteranceEmpty,
   icUtteranceSelected,
+  icUtteranceSelectHistory,
   imgInstabot,
   imgLinebot,
 };

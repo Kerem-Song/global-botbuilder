@@ -1,6 +1,12 @@
 import { useRootState } from '@hooks/useRootState';
-import { IHasResult, IPagingItems, ISearchHistoryData } from '@models';
-import { IGetHistoryList, IResponseHistoryItems } from '@models';
+import {
+  IHasResult,
+  IHistoryListRes,
+  IPagingItems,
+  ISearchHistoryData,
+  THistoryCategoryValues,
+} from '@models';
+import { IGetHistoryList, IResponseHistoryItem } from '@models';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -14,26 +20,29 @@ export const useHistoryClient = () => {
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const getHistoryListQuery = ({
-    pageNo,
     botId,
+    pageNo,
+    countPerPage,
     year,
     category,
   }: {
-    pageNo: number;
     botId: string;
-    year: string;
-    category: string;
+    pageNo: number;
+    countPerPage?: number;
+    year?: string;
+    category?: THistoryCategoryValues;
   }) => {
     return http
-      .post<
-        IGetHistoryList,
-        AxiosResponse<IHasResult<IPagingItems<IResponseHistoryItems>>>
-      >('bot/searchhistory', {
-        pageNo: pageNo,
-        botId: botId,
-        category: category,
-        year: year,
-      })
+      .post<IGetHistoryList, AxiosResponse<IHasResult<IPagingItems<IHistoryListRes>>>>(
+        'bot/searchhistory',
+        {
+          botId: botId,
+          pageNo: pageNo,
+          countPerPage: 100,
+          category: category,
+          year: year,
+        },
+      )
       .then((res) => {
         return res.data.result;
       });
@@ -52,7 +61,11 @@ export const useHistoryClient = () => {
     return useInfiniteQuery(
       [HISTORY_LIST_KEY, token, searchData.botId, searchData.category, searchData.year],
       async ({ pageParam = 1 }) => {
-        return await getHistoryListQuery({ pageNo: pageParam, ...searchData });
+        return await getHistoryListQuery({
+          pageNo: pageParam,
+          countPerPage: 100,
+          ...searchData,
+        });
       },
       {
         getNextPageParam: (lastPage, pages) => {

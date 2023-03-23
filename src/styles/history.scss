@@ -23,6 +23,7 @@
     display: flex;
     align-items: center;
     padding-top: rem(12);
+    padding-bottom: rem(19);
     font-weight: 500;
     font-size: rem(16);
     line-height: rem(19);
@@ -60,63 +61,90 @@
     }
   }
 
-  .historyListWarpper {
-    margin-top: rem(19);
+  .historyListContainter {
     display: flex;
     flex-direction: column;
-    gap: rem(12);
-    width: rem(1120);
-
-    .historyList {
+    gap: rem(16);
+  
+    .historyListWarpper {
+      gap: rem(12);
+      padding: rem(32);
+      width: rem(1120);      
       height: rem(149);
       background-color: $grayWhite;
       border: rem(1) solid $gray200;
       border-radius: rem(8);
+      position: relative;
 
-      .historyListCatetory {
-        img {
-          width: rem(21.6);
-          height: rem(21.6);
-        }
-
-        font-weight: 500;
-        font-size: rem(16);
-        line-height: rem(19);
-        color: $gray700;
+      &::after {
+        display: inline-block;
+        position: absolute;
+        top: rem(-17);
+        right: 20;
+        content: '';
+        width: rem(2);
+        height: rem(16);
+        background-color: $primary500;
       }
 
-      .historyListTitle {
-        font-weight: 500;
-        font-size: rem(18);
-        line-height: rem(22);
-        color: $primary500;
+      &:first-child::after {
+        display: none;
+      }
 
-        .viewerBtn {
-          padding: rem(5) rem(10);
-          width: rem(47);
-          height: rem(24);
-          background: $primary500;
-          border-radius: rem(4);
-          color: $grayWhite;
+      .historyList {
+        .historyListCatetory {
+          display: flex;
+          align-items: center;
+          padding-bottom: rem(6);
+          font-weight: 500;
+          font-size: rem(19);
+          line-height: rem(19);
+          color: $gray700;
+          img {
+            width: rem(21.6);
+            height: rem(21.6);
+          }
+
+          span {
+            padding-left: rem(8);
+          }
+
+        }
+
+        .historyListTitle {
+          font-weight: 500;
+          font-size: rem(18);
+          line-height: rem(22);
+          color: $primary500;
+
+          .viewerBtn {
+            padding: rem(5) rem(10);
+            width: rem(47);
+            height: rem(24);
+            background: $primary500;
+            border-radius: rem(4);
+            color: $grayWhite;
+          }
+        }
+
+        .historyListDesc {
+          font-weight: 400;
+          font-size: rem(16);
+          line-height: rem(19);
+          color: $grayBlack;
         }
       }
 
-      .historyListDesc {
+      .historyDateActorWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: rem(8);
         font-weight: 400;
-        font-size: rem(16);
-        line-height: rem(19);
-        color: $grayBlack;
+        font-size: rem(14);
+        line-height: rem(17);
+        color: $gray500;
+        text-align: end;     
       }
-    }
-
-    .historyDateActorWrapper {
-      font-weight: 400;
-      font-size: rem(14);
-      line-height: rem(17);
-      color: $gray500;
-
-
-  
     }
   }
 }
