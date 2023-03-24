@@ -1,4 +1,5 @@
 import { Button, Checkbox, Checkboxes } from '@components';
+import { CheckboxButton } from '@components/data-entry/CheckboxButton';
 import { usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import {
@@ -11,9 +12,6 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router';
 
 export const HistoryCategoryFilter = () => {
-  const [category, setCategory] = useState<THistoryCategoryValues[]>([]);
-  const filteredCategory = category.reduce((a, b) => a + b, 0);
-
   const { t } = usePage();
 
   const filterBtnArr = [
@@ -24,50 +22,20 @@ export const HistoryCategoryFilter = () => {
     { value: HISTORY_CATEGORY_TYPES.ETC, label: t(`HISTORY_MY_HISTORY`) },
   ];
 
-  const {
-    register,
-    setValue,
-    getValues,
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<IHistoryCondition>();
+  const { register } = useFormContext<IHistoryCondition>();
 
-  const { field: categoryField } = useController({
-    name: `category`,
-    control,
-  });
-
-  const { botId } = useParams();
-  const {
-    getHistoryListQuery,
-    changeHistoryPageNumberQuery,
-    invalidateGetHistoryListQuery,
-  } = useHistoryClient();
-
-  const handleSetCategory = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setCategory([...category, Number(e.currentTarget.value)]);
-
-    setValue('category', filteredCategory);
-  };
-  console.log('filteredCategory', filteredCategory);
-  console.log('@category', watch(`category`));
   return (
     <div className="quickFilterWrapper">
       <span className="filterTitle">{t(`QUICK_FILTER`)}</span>
       <div className="filterBtnWrapper">
         {filterBtnArr.map((item, i) => (
-          <div key={i}>
-            {/* <Checkbox {...register('category')} /> */}
-            <Button
-              className="filterBtn"
-              key={i}
-              value={item.value.toString()}
-              onClick={(e) => handleSetCategory(e)}
-            >
-              {item.label}
-            </Button>
-          </div>
+          <CheckboxButton
+            {...register(`filteredCategory.${i}`, { valueAsNumber: true })}
+            value={item.value.toString()}
+            key={i}
+          >
+            <span>{item.label}</span>
+          </CheckboxButton>
         ))}
       </div>
     </div>

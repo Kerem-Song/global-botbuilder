@@ -19,7 +19,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const { changeHistoryPageNumberQuery } = useHistoryClient();
   const { data, fetchNextPage, hasNextPage, isFetching } = changeHistoryPageNumberQuery({
     botId: botId!,
-    category: category,
+    category: category ? category : null,
     year: year,
   });
 

@@ -26,7 +26,11 @@ export const HistoryMain = () => {
   } = formMethods;
   const values = getValues();
 
-  console.log('@year value', getValues().year, 'category value', getValues().category);
+  const filteredCategory = watch(`filteredCategory`)
+    ?.map(Number)
+    ?.reduce((a, b) => a + b, 0);
+
+  console.log('@year value', getValues().year, 'category value', filteredCategory);
   return (
     <>
       <div className="historyMain">
@@ -39,7 +43,7 @@ export const HistoryMain = () => {
             </Col>
           </Row>
           <HistoryCategoryFilter />
-          <HistoryListItem category={watch(`category`)} year={watch(`year`)} />
+          <HistoryListItem category={filteredCategory} year={watch(`year`)} />
         </FormProvider>
       </div>
     </>

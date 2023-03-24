@@ -10,13 +10,14 @@ type ValueOf<T> = T[keyof T];
 
 export type THistoryCategoryValues = ValueOf<typeof HISTORY_CATEGORY_TYPES>;
 export interface IHistoryCondition {
-  category: THistoryCategoryValues;
-  year: string;
+  category?: THistoryCategoryValues;
+  year?: string;
+  filteredCategory?: THistoryCategoryValues[];
 }
 
 export interface IGetHistoryList {
   botId: string;
-  category?: THistoryCategoryValues;
+  category?: THistoryCategoryValues | null;
   year?: string;
   pageNo?: number;
   countPerPage?: number;

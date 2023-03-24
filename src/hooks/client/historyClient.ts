@@ -24,7 +24,7 @@ export const useHistoryClient = () => {
     pageNo: number;
     countPerPage?: number;
     year?: string;
-    category?: THistoryCategoryValues;
+    category?: THistoryCategoryValues | null;
   }) => {
     return http
       .post<
@@ -60,7 +60,7 @@ export const useHistoryClient = () => {
           ...searchData,
           botId: searchData.botId,
           pageNo: pageParam,
-          category: searchData.category,
+          category: searchData.category || null,
           year: searchData.year,
         });
       },
