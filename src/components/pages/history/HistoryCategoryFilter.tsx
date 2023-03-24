@@ -25,9 +25,11 @@ export const HistoryCategoryFilter = () => {
   ];
 
   const {
+    register,
     setValue,
     getValues,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<IHistoryCondition>();
 
@@ -45,16 +47,18 @@ export const HistoryCategoryFilter = () => {
 
   const handleSetCategory = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCategory([...category, Number(e.currentTarget.value)]);
+
     setValue('category', filteredCategory);
   };
-  // console.log('filteredCategory', filteredCategory);
+  console.log('filteredCategory', filteredCategory);
+  console.log('@category', watch(`category`));
   return (
     <div className="quickFilterWrapper">
       <span className="filterTitle">{t(`QUICK_FILTER`)}</span>
       <div className="filterBtnWrapper">
         {filterBtnArr.map((item, i) => (
           <div key={i}>
-            {/* <Checkbox {...categoryField} /> */}
+            {/* <Checkbox {...register('category')} /> */}
             <Button
               className="filterBtn"
               key={i}

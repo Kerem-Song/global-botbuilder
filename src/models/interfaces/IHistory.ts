@@ -1,9 +1,9 @@
 export const HISTORY_CATEGORY_TYPES = {
-  SCENARIO: 1 << 1,
-  INTENT: 1 << 2,
-  SETTING: 1 << 3,
-  DEPLOYEMNT: 1 << 4,
-  ETC: 1 << 5,
+  SCENARIO: 1 << 1, //2
+  INTENT: 1 << 2, //4
+  SETTING: 1 << 3, //8
+  DEPLOYEMNT: 1 << 4, //16
+  ETC: 1 << 5, //32
 } as const;
 
 export type ValueOf<T> = T[keyof T];
