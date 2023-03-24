@@ -4,7 +4,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 interface IReactSelect {
-  value: string;
+  value: string | null;
   label: string;
 }
 
@@ -74,7 +74,7 @@ const reactSelectStyle: StylesConfig = {
 };
 
 const yearOptions: IReactSelect[] = [
-  { value: 'All', label: 'All' },
+  { value: null, label: 'All' },
   { value: '2023', label: '2023' },
   { value: '2022', label: '2022' },
   { value: '2021', label: '2021' },
@@ -84,6 +84,7 @@ const yearOptions: IReactSelect[] = [
 export const HistoryYearSelector = () => {
   const { t } = usePage();
   const {
+    getValues,
     control,
     formState: { errors },
   } = useFormContext<IHistoryCondition>();

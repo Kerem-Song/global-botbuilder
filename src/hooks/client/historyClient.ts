@@ -1,11 +1,5 @@
 import { useRootState } from '@hooks/useRootState';
-import {
-  IHasResult,
-  IHistoryListRes,
-  IPagingItems,
-  ISearchHistoryData,
-  THistoryCategoryValues,
-} from '@models';
+import { IHasResult, IPagingItems, THistoryCategoryValues } from '@models';
 import { IGetHistoryList, IResponseHistoryItem } from '@models';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -33,38 +27,41 @@ export const useHistoryClient = () => {
     category?: THistoryCategoryValues;
   }) => {
     return http
-      .post<IGetHistoryList, AxiosResponse<IHasResult<IPagingItems<IHistoryListRes>>>>(
-        'bot/searchhistory',
-        {
-          botId: botId,
-          pageNo: pageNo,
-          countPerPage: 100,
-          category: category,
-          year: year,
-        },
-      )
+      .post<
+        IGetHistoryList,
+        AxiosResponse<IHasResult<IPagingItems<IResponseHistoryItem>>>
+      >('bot/searchhistory', {
+        botId: botId,
+        pageNo: pageNo,
+        countPerPage: 100,
+        category: category,
+        year: year,
+      })
       .then((res) => {
         return res.data.result;
       });
   };
 
-  const invalidateGetHistoryListQuery = (searchData: ISearchHistoryData) => {
+  const invalidateGetHistoryListQuery = (searchData: IGetHistoryList) => {
     queryClient.invalidateQueries([
       HISTORY_LIST_KEY,
       searchData.botId,
       searchData.category,
       searchData.year,
+      searchData.pageNo,
     ]);
   };
 
-  const changeHistoryPageNumberQuery = (searchData: ISearchHistoryData) => {
+  const changeHistoryPageNumberQuery = (searchData: IGetHistoryList) => {
     return useInfiniteQuery(
       [HISTORY_LIST_KEY, token, searchData.botId, searchData.category, searchData.year],
       async ({ pageParam = 1 }) => {
         return await getHistoryListQuery({
-          pageNo: pageParam,
-          countPerPage: 100,
           ...searchData,
+          botId: searchData.botId,
+          pageNo: pageParam,
+          category: searchData.category,
+          year: searchData.year,
         });
       },
       {

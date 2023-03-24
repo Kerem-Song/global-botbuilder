@@ -24,7 +24,9 @@ export const HistoryMain = () => {
     watch,
     formState: { errors, isValid },
   } = formMethods;
+  const values = getValues();
 
+  console.log('@year value', getValues().year, 'category value', getValues().category);
   return (
     <>
       <div className="historyMain">
@@ -37,7 +39,7 @@ export const HistoryMain = () => {
             </Col>
           </Row>
           <HistoryCategoryFilter />
-          <HistoryListItem />
+          <HistoryListItem category={watch(`category`)} year={watch(`year`)} />
         </FormProvider>
       </div>
     </>

@@ -14,18 +14,12 @@ export interface IHistoryCondition {
   year: string;
 }
 
-export interface ISearchHistoryData {
-  botId: string;
-  category: THistoryCategoryValues;
-  year?: string;
-}
-
 export interface IGetHistoryList {
   botId: string;
   category?: THistoryCategoryValues;
-  year?: number;
-  pageNo: number;
-  countPerPage: number;
+  year?: string;
+  pageNo?: number;
+  countPerPage?: number;
 }
 
 // 봇빌더 히스토리 값 참고 https://lunasoft.atlassian.net/wiki/spaces/globaltft/pages/4307222806
@@ -79,12 +73,4 @@ export interface IResponseHistoryItem {
   createAt: string;
   no: number | null;
   flowName: string | null;
-}
-
-export interface IHistoryListRes {
-  items: IResponseHistoryItem[];
-  pagePerCount: number;
-  currentPage: number;
-  total: number;
-  totalPage: number;
 }

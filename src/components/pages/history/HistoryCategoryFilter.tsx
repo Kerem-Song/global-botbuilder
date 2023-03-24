@@ -4,7 +4,6 @@ import { useHistoryClient } from '@hooks/client/historyClient';
 import {
   HISTORY_CATEGORY_TYPES,
   IHistoryCondition,
-  ISearchHistoryData,
   THistoryCategoryValues,
 } from '@models';
 import { useState } from 'react';
@@ -43,11 +42,10 @@ export const HistoryCategoryFilter = () => {
     changeHistoryPageNumberQuery,
     invalidateGetHistoryListQuery,
   } = useHistoryClient();
-  const searchData: ISearchHistoryData = { botId: botId!, category: filteredCategory };
-  // console.log('@@values in category filter', getValues().category);
 
   const handleSetCategory = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCategory([...category, Number(e.currentTarget.value)]);
+    setValue('category', filteredCategory);
   };
   // console.log('filteredCategory', filteredCategory);
   return (
