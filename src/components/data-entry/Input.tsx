@@ -1,7 +1,16 @@
 import { Button } from '@components/general';
 import { IHasClassNameNStyle, SizeType } from '@models';
+import { util } from '@modules/util';
 import classNames from 'classnames';
-import { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FocusEvent,
+  forwardRef,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
@@ -18,12 +27,8 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
-  const [value, setValue] = useState<string | undefined>(args.value || args.defaultValue);
-
-  useEffect(() => {
-    setValue(args.value || args.defaultValue);
-  }, [args.value, args.defaultValue, args]);
-
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [textLength, setTextLength] = useState<number>(args.value?.length || 0);
   const {
     showCount,
     isError,
@@ -43,8 +48,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     }
     switch (e.key) {
       case 'Enter':
-        onPressEnter?.(value);
-        onSearch?.(value);
+        onPressEnter?.(args.value);
+        onSearch?.(args.value);
         if (onPressEnter || onSearch) {
           e.preventDefault();
           e.stopPropagation();
@@ -72,19 +77,37 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     'luna-input-small': size === 'small',
   });
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     args.onChange?.(e);
+    setTextLength(e.target.value?.length || 0);
   };
+
+  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+    args.onBlur?.(e);
+    onSearch?.(e.target.value);
+  };
+
+  useEffect(() => {
+    setTextLength(args.value?.length || 0);
+  }, [args.value]);
 
   const input = (
     <input
       className={inputClassName}
       {...inputProps}
-      //value={value}
-      onChange={onChangeHandler}
       onKeyUp={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
-      ref={ref}
+      ref={(current) => {
+        if (ref) {
+          if (typeof ref === 'function') {
+            ref(current);
+          } else {
+            ref.current = current;
+          }
+        }
+        inputRef.current = current;
+      }}
+      onChange={handleOnChange}
+      onBlur={handleOnBlur}
       aria-invalid={isError}
       aria-required={required}
     />
@@ -96,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         {showCount ? (
           <span className="count">
             <>
-              {value?.length || 0}
+              {textLength}
               {args.maxLength ? `/${args.maxLength}` : undefined}
             </>
           </span>
@@ -107,11 +130,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
             shape="ghost"
             className="input-button"
             onClick={() => {
-              setValue('');
+              util.TriggerInputOnChange(inputRef.current, '');
+              setTextLength(0);
               onSearch?.('');
             }}
           >
-            <div className={classNames('search', { clear: value?.length })} />
+            <div className={classNames('search', { clear: textLength })} />
           </Button>
         ) : undefined}
       </span>

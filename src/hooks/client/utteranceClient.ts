@@ -62,6 +62,7 @@ export const useUtteranceClient = () => {
   const invalidateIntentQuery = (searchData: ISearchData) => {
     queryClient.invalidateQueries([
       UTTERNACE_LIST_KEY,
+      token,
       searchData.sort,
       searchData.scenarios,
       searchData.searchWord,

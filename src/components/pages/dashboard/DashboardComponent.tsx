@@ -1,8 +1,10 @@
 import { icEmptyBot, icSuccess } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
+import { useInputState } from '@hooks/useInputState';
 import { IBotInput } from '@models';
-import { useState } from 'react';
+import { lunaToast } from '@modules/lunaToast';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { BotCard } from './BotCard';
@@ -10,7 +12,8 @@ import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
 
 export const DashboardComponent = () => {
-  const [searchKeyword, setSearchKeyword] = useState('');
+  //const [searchKeyword, setSearchKeyword] = useState('');
+  const { value: searchKeyword, onChange } = useInputState();
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
 
@@ -21,17 +24,13 @@ export const DashboardComponent = () => {
     const result = await botSaveAsync(model);
     if (result) {
       handleIsOpen(false);
-      const message = t('NEW_BOT_OK_MESSAGE');
-      toast.success(message, {
-        position: 'bottom-center',
-        icon: () => <img src={icSuccess} alt="success" />,
-        theme: 'dark',
-        hideProgressBar: true,
-        className: 'luna-toast',
-        bodyClassName: 'luna-toast-body',
-      });
+      lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
     }
   };
+
+  const filteredList = data?.filter((x) =>
+    x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()),
+  );
 
   const isEmpty = () => {
     if (!data) {
@@ -41,10 +40,7 @@ export const DashboardComponent = () => {
       return true;
     }
 
-    if (
-      data.filter((x) => x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()))
-        .length === 0
-    ) {
+    if (!filteredList?.length) {
       return true;
     }
 
@@ -56,12 +52,10 @@ export const DashboardComponent = () => {
       <Input
         size="large"
         search
+        maxLength={50}
         placeholder={t('SEARCH_PLACEHOLDER')}
         value={searchKeyword}
-        onChange={(e) => {
-          setSearchKeyword(e.target.value);
-        }}
-        onSearch={(v) => setSearchKeyword(v || '')}
+        onChange={onChange}
       />
       <p className="chatbot-wrap">
         <span className="my-chatbot">{t('MY_CHATBOT')}</span>
@@ -92,17 +86,13 @@ export const DashboardComponent = () => {
             <Col span={8}>
               <NewBotCard onClick={() => handleIsOpen(true)} />
             </Col>
-            {data
-              ?.filter((x) =>
-                x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()),
-              )
-              .map((bot) => {
-                return (
-                  <Col key={bot.id} span={8}>
-                    <BotCard model={bot} />
-                  </Col>
-                );
-              })}
+            {filteredList?.map((bot) => {
+              return (
+                <Col key={bot.id} span={8}>
+                  <BotCard model={bot} />
+                </Col>
+              );
+            })}
           </>
         )}
       </Row>
