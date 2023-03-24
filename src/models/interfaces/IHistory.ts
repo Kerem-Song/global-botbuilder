@@ -6,7 +6,7 @@ export const HISTORY_CATEGORY_TYPES = {
   ETC: 1 << 5, //32
 } as const;
 
-export type ValueOf<T> = T[keyof T];
+type ValueOf<T> = T[keyof T];
 
 export type THistoryCategoryValues = ValueOf<typeof HISTORY_CATEGORY_TYPES>;
 export interface IHistoryCondition {
