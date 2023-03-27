@@ -1,18 +1,15 @@
-import { icEmptyBot, icSuccess } from '@assets';
+import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
 import { IBotInput } from '@models';
 import { lunaToast } from '@modules/lunaToast';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
 
 export const DashboardComponent = () => {
-  //const [searchKeyword, setSearchKeyword] = useState('');
   const { value: searchKeyword, onChange } = useInputState();
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
@@ -55,6 +52,7 @@ export const DashboardComponent = () => {
         maxLength={50}
         placeholder={t('SEARCH_PLACEHOLDER')}
         value={searchKeyword}
+        onClear={() => console.log('clear')}
         onChange={onChange}
       />
       <p className="chatbot-wrap">

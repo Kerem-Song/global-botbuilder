@@ -20,10 +20,12 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   showCount?: boolean;
   size?: SizeType;
   search?: boolean;
+  clearable?: boolean;
 
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
+  onClear?: () => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
@@ -38,7 +40,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     onSearch,
     onPressEnter,
     onPressEsc,
+    onClear,
     className,
+    clearable,
     ...inputProps
   } = args;
 
@@ -64,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         break;
     }
   };
-  const isWrapping = false || showCount || search;
+  const isWrapping = false || showCount || search || clearable;
 
   const inputClassName = classNames(className, 'luna-input', {
     'luna-input-error': isError,
@@ -136,6 +140,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
             }}
           >
             <div className={classNames('search', { clear: textLength })} />
+          </Button>
+        ) : undefined}
+        {clearable && textLength && !search ? (
+          <Button
+            small
+            shape="ghost"
+            className="input-button"
+            onClick={() => {
+              util.TriggerInputOnChange(inputRef.current, '');
+              setTextLength(0);
+              onClear?.();
+            }}
+          >
+            <div className="clear" />
           </Button>
         ) : undefined}
       </span>
