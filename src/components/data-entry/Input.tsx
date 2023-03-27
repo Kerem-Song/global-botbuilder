@@ -21,6 +21,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   size?: SizeType;
   search?: boolean;
   clearable?: boolean;
+  isShawAlwaysClear?: boolean;
 
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
@@ -43,6 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     onClear,
     className,
     clearable,
+    isShawAlwaysClear,
     ...inputProps
   } = args;
 
@@ -70,12 +72,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   };
   const isWrapping = false || showCount || search || clearable;
 
-  const inputClassName = classNames(className, 'luna-input', {
+  const inputClassName = classNames(isWrapping ? '' : className, 'luna-input', {
     'luna-input-error': isError,
     'luna-input-large': size === 'large',
     'luna-input-normal': size === 'normal',
   });
-  const inputWrapClassName = classNames('luna-input-wrap', {
+  const inputWrapClassName = classNames(isWrapping ? className : '', 'luna-input-wrap', {
     'luna-input-error': isError,
     'luna-input-large': size === 'large',
     'luna-input-small': size === 'small',
@@ -142,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
             <div className={classNames('search', { clear: textLength })} />
           </Button>
         ) : undefined}
-        {clearable && textLength && !search ? (
+        {clearable && (isShawAlwaysClear || textLength) && !search ? (
           <Button
             small
             shape="ghost"
