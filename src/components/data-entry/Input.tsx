@@ -27,6 +27,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
   onClear?: () => void;
+  onChangeCount?: (count: number) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
@@ -42,6 +43,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     onPressEnter,
     onPressEsc,
     onClear,
+    onChangeCount,
     className,
     clearable,
     isShawAlwaysClear,
@@ -92,6 +94,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     args.onBlur?.(e);
     onSearch?.(e.target.value);
   };
+
+  useEffect(() => {
+    onChangeCount?.(textLength);
+  }, [textLength]);
 
   useEffect(() => {
     setTextLength(args.value?.length || 0);

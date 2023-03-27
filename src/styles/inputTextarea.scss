@@ -7,6 +7,10 @@
   border-radius: rem(8);
 }
 
+.textInput::-webkit-scrollbar {
+  display: none;
+}
+
 // .textCounter {
 //   position: absolute;
 //   top: rem(14);
@@ -27,7 +31,7 @@
     font-size: rem(15);
     font-weight: 500;
     color: #000000;
-    
+
     &.light {
       color: $gray500;
       font-size: rem(13);
@@ -42,7 +46,7 @@
 }
 
 .actValueIsUttrInput {
-  max-height: rem(40);
+  ///max-height: rem(40);
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -52,7 +56,7 @@
 }
 
 .textNodeTextArea {
-  max-height: rem(320);
+  //max-height: rem(320);
   overflow-y: auto;
   resize: none;
 }
