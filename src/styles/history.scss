@@ -79,6 +79,32 @@
           font-size: rem(19);
           line-height: rem(19);
           color: $gray700;
+          background-repeat: no-repeat;
+          background-position: center;
+          
+          &[data-img='2'] {
+            &::before {
+              content: url('@assets/icons/ic_scenario_select_history.svg');
+            }
+          }
+
+          &[data-img='4'] {
+            &::before {
+              content: url('@assets/icons/ic_utterance_select_history.svg');
+            }
+          }
+          &[data-img='8'] {
+            &::before {
+              content: url('@assets/icons/ic_setting_select_history.svg');
+            }
+          }
+
+          &[data-img='16'] {
+            &::before {
+              content: url('@assets/icons/ic_deploy_select_history.svg');
+            }
+          }
+
           img {
             width: rem(21.6);
             height: rem(21.6);
@@ -91,18 +117,33 @@
         }
 
         .historyListTitle {
+          display: flex;
+          padding-bottom: rem(8);
           font-weight: 500;
           font-size: rem(18);
           line-height: rem(22);
           color: $primary500;
 
           .viewerBtn {
+            display: flex;
+            flex-direction: row;
+            gap: rem(8);
+            margin-left: rem(8);
             padding: rem(5) rem(10);
-            width: rem(47);
             height: rem(24);
             background: $primary500;
             border-radius: rem(4);
             color: $grayWhite;
+
+            &:hover {
+              background-color: $primary700;
+            }
+
+            &::after {
+              // position: absolute;
+              content: url('@assets/icons/ic_history_viewer.svg');
+              right: 10;
+            }
           }
         }
 
