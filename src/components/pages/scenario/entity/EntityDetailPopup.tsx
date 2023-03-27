@@ -422,8 +422,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     size="small"
                     search
                     placeholder="Input search word"
-                    onBlur={(e) => setSearchKeyword(e.target.value)}
-                    onPressEnter={(value) => setSearchKeyword(value!)}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
                   ></Input>
                 </div>
               ) : null}

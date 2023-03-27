@@ -26,17 +26,20 @@ import { lunaToast } from '../../../../src/modules/lunaToast';
 import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export const UtteranceDetail = () => {
-  const { utteranceId, botId } = useParams();
   const { navigate, t, tc } = usePage();
-  const token = useRootState((state) => state.botInfoReducer.token);
+  const { utteranceId, botId } = useParams();
   const { confirm, error } = useSystemModal();
+
+  const token = useRootState((state) => state.botInfoReducer.token);
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const [searchWord, setSearchWord] = useState('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
+
   const utteranceRef = useRef<HTMLInputElement>(null);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
+
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
@@ -65,6 +68,7 @@ export const UtteranceDetail = () => {
   } = useForm<IUtteranceModel>({
     defaultValues: {
       name: '',
+      connectScenarioId: '',
       items: [],
     },
     resolver: yupResolver(schema),
@@ -419,6 +423,7 @@ export const UtteranceDetail = () => {
               </Col>
               <Col flex="auto">
                 <Select
+                  isSearchable={false}
                   {...scenarioListField}
                   styles={reactSelectStyle}
                   options={totalScenarioList}

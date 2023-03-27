@@ -13,7 +13,6 @@ import { EntityDetailPopup } from './EntityDetailPopup';
 
 export const MyEntity = () => {
   const [entryId, setEntryId] = useState<string>('');
-  const [searchKeyword, setSearchKeyword] = useState<string>();
   const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
   const { isOpen, handleIsOpen } = useModalOpen();
   const [ref, inView] = useInView();
@@ -24,7 +23,6 @@ export const MyEntity = () => {
   );
 
   const handleSearch = (keyword?: string) => {
-    setSearchKeyword(keyword);
     setSearchKeywordParameter(keyword);
   };
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -89,12 +87,7 @@ export const MyEntity = () => {
         <Input
           size="small"
           search
-          value={searchKeyword}
           placeholder="Input search word"
-          onBlur={(e) => {
-            handleSearch(e.target.value);
-          }}
-          onChange={(e) => setSearchKeyword(e.target.value)}
           onSearch={(value) => {
             handleSearch(value);
           }}
