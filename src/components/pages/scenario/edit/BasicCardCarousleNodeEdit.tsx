@@ -10,6 +10,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardCarousleNodeEdit = () => {
@@ -100,9 +101,9 @@ export const BasicCardCarousleNodeEdit = () => {
                   errors.view.childrenViews[index]?.description
                 }
               >
-                <InputTextarea
+                <InputTextAreaWithTitleCounter
                   label={t(`CONTENT_INPUT`)}
-                  height={100}
+                  maxRows={17}
                   showCount
                   maxLength={
                     watch(`view.useImageCtrl`) ||

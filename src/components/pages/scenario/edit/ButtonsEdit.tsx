@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonTypeSelector } from './ButtonTypeSelector';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
@@ -180,7 +181,7 @@ export const ButtonsEdit = ({
                       : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                   }
                 >
-                  <InputTextarea
+                  <InputTextAreaWithTitleCounter
                     className="actValueIsUttrInput"
                     label={t(`SET_MESSAGE`)}
                     showCount
