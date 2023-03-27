@@ -73,15 +73,20 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     };
   };
 
+  const handleViewerOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.value;
+    console.log('id:', id);
+  };
+
   return (
     <div className="historyListContainter" ref={ref}>
       {hasPage() ? (
-        data?.pages[0].items?.map((item, i) => (
+        data?.pages[0].items?.map((item) => (
           <Row
             className="historyListWarpper"
             justify="space-between"
             align="flex-end"
-            key={i}
+            key={item.id}
           >
             <Col className="historyList">
               {isFetching ? (
@@ -110,7 +115,12 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                 <p className="historyListTitle">
                   {item[matchCategory(item).property]}
                   {matchCategory(item).categoryChangeLotType.includes(2004) ? (
-                    <Button shape="ghost" className="viewerBtn">
+                    <Button
+                      shape="ghost"
+                      className="viewerBtn"
+                      onClick={(e) => handleViewerOpen(e)}
+                      value={item.id}
+                    >
                       {t(`VIEWER_BTN`)}
                     </Button>
                   ) : null}
