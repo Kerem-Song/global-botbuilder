@@ -9,6 +9,7 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonCtrlSelector } from './ButtonCtrlSelector';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
@@ -91,7 +92,7 @@ export const QuicksEdit = () => {
                   errors.view && errors.view.quicks && errors.view.quicks[i]?.actionValue
                 }
               >
-                <InputTextarea
+                <InputTextAreaWithTitleCounter
                   className="actValueIsUttrInput"
                   label={t(`SET_MESSAGE`)}
                   showCount

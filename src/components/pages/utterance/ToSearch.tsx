@@ -87,18 +87,12 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
             <Col>
               <div style={{ minWidth: '160px' }}>
                 <Select
+                  isSearchable={false}
                   options={SORT}
                   styles={reactSelectStyle}
                   value={SORT.find((x) => x.value === sort)}
                   onChange={(e: any) => {
                     setSort(e?.value);
-                  }}
-                  onBlur={() => {
-                    const searchData = {
-                      sort: Number(sort),
-                      scenarios: scenario,
-                    };
-                    setSearchData(searchData);
                   }}
                 />
               </div>

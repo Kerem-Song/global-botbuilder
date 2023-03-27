@@ -1,14 +1,14 @@
-import { Input, InputProps } from '@components/data-entry';
+import { InputTextarea, InputTextareaProps } from '@components/data-entry';
 import classNames from 'classnames';
 import { forwardRef } from 'react';
 
-interface InputWithTitleCounterProps extends InputProps {
+interface InputWithTitleCounterProps extends InputTextareaProps {
   label?: string;
   isLight?: boolean;
   textLength?: number;
 }
-export const InputWithTitleCounter = forwardRef<
-  HTMLInputElement,
+export const InputTextAreaWithTitleCounter = forwardRef<
+  HTMLTextAreaElement,
   InputWithTitleCounterProps
 >((args, ref) => {
   const { label, isLight, textLength, showCount, required, ...inputProps } = args;
@@ -27,9 +27,9 @@ export const InputWithTitleCounter = forwardRef<
           </span>
         ) : undefined}
       </div>
-      <Input {...inputProps} required={required} ref={ref} />
+      <InputTextarea {...inputProps} required={required} ref={ref} />
     </>
   );
 });
 
-InputWithTitleCounter.displayName = 'luna_input_with_title_counter';
+InputTextAreaWithTitleCounter.displayName = 'luna_input_textarea_with_title_counter';

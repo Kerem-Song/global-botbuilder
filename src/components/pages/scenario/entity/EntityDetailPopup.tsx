@@ -57,18 +57,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     representativeEntry: yup
       .string()
       .required('필수 입력 항목입니다.')
-      .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
-        if (!value) {
-          return false;
-        }
-        if (EMOJI_REGEX.test(value)) {
-          return false;
-        }
-        if (SPECIAL_CHARACTOR_REGEX.test(value)) {
-          return false;
-        }
-        return true;
-      })
       .max(125, `125자를 초과할 수 없습니다.`),
   });
 
@@ -82,7 +70,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .string()
         .trim()
         .required('엔티티 명은 필수입니다.')
-        .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
+        .test('emoji', '특수문자는 - _만 입력 가능합니다', (value) => {
           if (!value) {
             return false;
           }
@@ -185,10 +173,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   }, [isActive]);
 
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const regExp1 = /[\n]/g;
-
-    if (regExp1.test(e.target.value)) {
-      setEntryInputError('컨트롤 문자는 입력할 수 없습니다.');
+    if (e.target.value === ' ') {
+      e.target.value = '';
+      setEntryInputError('대표 엔트리는 최소 한 개 이상 등록되어야 합니다.');
     } else {
       setEntryInputError('');
     }
@@ -291,14 +278,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.indexOf(' ') > -1) {
-      lunaToast.error('엔티티명에 공백은 입력할 수 없습니다.');
       e.target.value = e.target.value.replaceAll(' ', '');
-    } else if (e.target.value.match(SPECIAL_CHARACTOR_REGEX)) {
-      lunaToast.error('특수문자 및 이모지는 입력할 수 없습니다.');
-      e.target.value = e.target.value.replaceAll(SPECIAL_CHARACTOR_REGEX, '');
-    } else if (e.target.value.match(EMOJI_REGEX)) {
-      lunaToast.error('특수문자 및 이모지는 입력할 수 없습니다.');
-      e.target.value = e.target.value.replaceAll(EMOJI_REGEX, '');
     }
     nameField.onChange(e);
     setIsActive(true);
@@ -344,7 +324,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     <Col flex="auto">
                       <FormItem error={errors.name}>
                         <Input
-                          placeholder="Input Intent Name"
+                          placeholder="엔티티명을 공백 없이 입력해주세요."
                           showCount
                           maxLength={20}
                           value={nameField.value}
@@ -401,7 +381,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <FormItem error={errors.entries?.[0]?.representativeEntry}>
                             <Input
                               {...register('entries.0.representativeEntry')}
-                              placeholder="Input Regular expression"
+                              // placeholder="Input Regular expression"
+                              placeholder="엔트리를 정규식으로 입력해주세요."
                               onChange={(e) => {
                                 setValue('entries.0.representativeEntry', e.target.value);
                                 setIsActive(true);
@@ -422,8 +403,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     size="small"
                     search
                     placeholder="Input search word"
-                    onBlur={(e) => setSearchKeyword(e.target.value)}
-                    onPressEnter={(value) => setSearchKeyword(value!)}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
                   ></Input>
                 </div>
               ) : null}
@@ -498,6 +478,27 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                 />
                               );
                             })}
+                            {fields.filter((x) =>
+                              x.representativeEntry.includes(searchKeyword),
+                            ).length === 0 ? (
+                              <div
+                                style={{
+                                  width: '100%',
+                                  marginTop: '12px',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <div className="emptyList">
+                                  <div className="empty">
+                                    <img src={icUtteranceEmpty} alt="empty" />
+                                    <span>No search results found.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
                           </>
                         ) : (
                           <></>
