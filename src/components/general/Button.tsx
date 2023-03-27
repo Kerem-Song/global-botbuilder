@@ -26,6 +26,7 @@ export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
   onDrop?: (e: React.DragEvent<HTMLButtonElement>) => void;
   onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
   onPointerDown?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onMouseDown?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -51,6 +52,7 @@ export const Button: FC<ButtonProps> = ({
   onDrop,
   onDragEnd,
   onPointerDown,
+  onMouseDown,
 }) => {
   if (children && label) {
     throw new Error('children과 label은 동시에 설정할 수 없다.');
@@ -97,6 +99,7 @@ export const Button: FC<ButtonProps> = ({
       onDrop,
       onDragEnd,
       onPointerDown,
+      onMouseDown,
     },
     iconNode,
     labelNode,

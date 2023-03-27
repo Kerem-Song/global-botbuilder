@@ -155,10 +155,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
             small
             shape="ghost"
             className="input-button"
-            onClick={() => {
+            onClick={(e) => {
               util.TriggerInputOnChange(inputRef.current, '');
               setTextLength(0);
               onClear?.();
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
             }}
           >
             <div className="clear" />
