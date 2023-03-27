@@ -20,15 +20,14 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   representativeEntry,
   setIsActive,
 }) => {
-  const { control, register, getValues, reset } = useFormContext();
-  const { fields, prepend, remove } = useFieldArray({
+  const { control, getValues } = useFormContext();
+  const { fields, append, remove } = useFieldArray({
     control,
     name: `entries.${index}.synonym`,
   });
 
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
-  const [editInputIndex, setEditInputIndex] = useState<number>(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
@@ -58,21 +57,24 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
 
   const handleInputConfirm = (value: string) => {
     if (!value || !value.trim()) {
+      setInputValue('');
       setInputVisible(false);
       return;
     }
 
     if (representativeEntry) {
-      if (representativeEntry.toLowerCase() === value.toLowerCase()) {
+      if (representativeEntry.trim() === value.trim()) {
         lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        inputRef.current?.select();
         return;
-      } else if (synonym?.find((x) => x.toLowerCase() === value.toLowerCase())) {
+      } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        inputRef.current?.select();
         return;
       } else {
-        prepend([value]);
-        setInputVisible(false);
+        append([value]);
         setInputValue('');
+        setInputVisible(false);
       }
     }
   };
@@ -80,61 +82,40 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   return (
     <>
       {fields.map((tag, i) => {
-        if (editInputIndex === i) {
-          return (
-            <div key={i} style={{ width: '100px', marginRight: '8px' }}>
-              <Input
-                className="entryInput"
-                ref={editInputRef}
-                // {...register(`entries.${index}.synonym.${i}`)}
-                onBlur={() => {
-                  setEditInputIndex(-1);
-                }}
-                onPressEnter={() => {
-                  setEditInputIndex(-1);
-                }}
-              ></Input>
-            </div>
-          );
-        } else {
-          return (
-            <div
-              key={i}
-              className="entry"
-              onDoubleClick={(e) => {
-                setEditInputIndex(i);
-                e.preventDefault();
-              }}
+        return (
+          <div key={i} className="entry">
+            <span>
+              {util.replaceKeywordMark(
+                getValues(`entries.${index}.synonym.${i}`),
+                searchKeyword,
+              )}
+            </span>
+            <button
+              type="button"
+              className="entryDeleteBtn"
+              onClick={() => handleDelete(i)}
             >
-              <span>
-                {util.replaceKeywordMark(
-                  getValues(`entries.${index}.synonym.${i}`),
-                  searchKeyword,
-                )}
-              </span>
-              <button
-                type="button"
-                className="entryDeleteBtn"
-                onClick={() => handleDelete(i)}
-              >
-                <img src={icPopupClose} alt="delete"></img>
-              </button>
-            </div>
-          );
-        }
+              <img src={icPopupClose} alt="delete"></img>
+            </button>
+          </div>
+        );
       })}
       {inputVisible ? (
         <Input
           className="visibleInput"
+          clearable
+          isShawAlwaysClear
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
           onBlur={() => handleInputConfirm(inputValue)}
+          onClear={() => setInputVisible(false)}
           onPressEnter={() => handleInputConfirm(inputValue)}
           onPressEsc={() => {
             setInputVisible(false);
             setInputValue('');
           }}
+          maxLength={125}
         />
       ) : (
         <div className="addBtnWrapper">
