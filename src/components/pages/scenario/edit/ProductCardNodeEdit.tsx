@@ -112,8 +112,11 @@ export const ProductCardNodeEdit = () => {
   }, [salePrice]);
 
   useEffect(() => {
-    setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
-  }, [watch(`view.discountPrice`)]);
+    if (!watch(`view.discountPrice`)) {
+      setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
+    }
+    // setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
+  }, [salePrice]);
 
   return (
     <>
