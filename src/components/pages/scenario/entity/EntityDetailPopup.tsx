@@ -39,6 +39,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   setEntryId,
 }) => {
   const [entryInputError, setEntryInputError] = useState<string>();
+  const [entryNameInputError, setEntryNameInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm, error: modalError } = useSystemModal();
@@ -69,7 +70,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       name: yup
         .string()
         .trim()
-        .required('엔티티 명은 필수입니다.')
+        .required('필수 입력 항목입니다.')
         .test('emoji', '특수문자는 - _만 입력 가능합니다', (value) => {
           if (!value) {
             return false;
@@ -105,6 +106,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     handleSubmit,
     watch,
     setValue,
+    getValues,
     formState: { errors },
   } = formMethods;
 
@@ -113,7 +115,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const { field: isRegexField } = useController({ name: 'isRegex', control });
   const { field: nameField } = useController({ name: 'name', control });
 
-  const entryGroupName = useRef<HTMLInputElement>(null);
+  const entryGroupNameRef = useRef<HTMLInputElement>(null);
 
   const preventGoBack = async () => {
     const result = await confirm({
@@ -172,6 +174,15 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   }, [isActive]);
 
+  const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.indexOf(' ') > -1) {
+      e.target.value = e.target.value.replaceAll(' ', '');
+    }
+    nameField.onChange(e);
+    setIsActive(true);
+    setEntryNameInputError('');
+  };
+
   const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === ' ') {
       e.target.value = '';
@@ -201,10 +212,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         },
         onError: (res) => {
           console.log(res);
-          modalError({
-            title: '중복 엔티티명',
-            description: <span>중복된 엔티티명입니다.</span>,
-          });
+          setEntryNameInputError('중복된 대표 엔트리가 있습니다.');
         },
       });
     } else {
@@ -222,10 +230,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
             lunaToast.success('저장되었습니다.');
             handleIsOpen(false);
           } else {
-            modalError({
-              title: '중복 엔티티명',
-              description: <span>중복된 엔티티명입니다.</span>,
-            });
+            setEntryNameInputError('중복된 대표 엔트리가 있습니다.');
           }
         },
       });
@@ -233,7 +238,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleRegisterEntry = (name?: string): void => {
-    console.log(name);
     if (!name) {
       return;
     }
@@ -245,8 +249,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     prepend({ representativeEntry: name, synonym: [] });
     setIsActive(true);
 
-    if (entryGroupName.current) {
-      entryGroupName.current.value = '';
+    if (entryGroupNameRef.current) {
+      entryGroupNameRef.current.value = '';
     }
   };
 
@@ -274,14 +278,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         handleIsOpen(false);
       }
     }
-  };
-
-  const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.indexOf(' ') > -1) {
-      e.target.value = e.target.value.replaceAll(' ', '');
-    }
-    nameField.onChange(e);
-    setIsActive(true);
   };
 
   return (
@@ -322,20 +318,23 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col flex="auto">
-                      <FormItem error={errors.name}>
-                        <Input
-                          placeholder="엔티티명을 공백 없이 입력해주세요."
-                          showCount
-                          maxLength={20}
-                          value={nameField.value}
-                          onChange={handleEntityName}
-                          onPressEnter={() => {
-                            return;
-                          }}
-                          ref={nameField.ref}
-                          onBlur={nameField.onBlur}
-                        />
-                      </FormItem>
+                      <Input
+                        placeholder="엔티티명을 공백 없이 입력해주세요."
+                        maxLength={20}
+                        showCount
+                        ref={nameField.ref}
+                        value={nameField.value}
+                        onChange={handleEntityName}
+                        onPressEnter={() => {
+                          return;
+                        }}
+                        onBlur={nameField.onBlur}
+                        isError={
+                          entryNameInputError || errors.name?.message ? true : false
+                        }
+                      />
+                      <span className="error-message">{entryNameInputError}</span>
+                      <span className="error-message">{errors.name?.message}</span>
                     </Col>
                   </Row>
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
@@ -419,9 +418,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             size="normal"
                             maxLength={125}
                             showCount
-                            ref={entryGroupName}
+                            ref={entryGroupNameRef}
                             onPressEnter={() =>
-                              handleRegisterEntry(entryGroupName.current?.value)
+                              handleRegisterEntry(entryGroupNameRef.current?.value)
                             }
                             onChange={(e) => {
                               isEntryInputError(e);
@@ -439,7 +438,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <Button
                             type="primary"
                             onClick={() => {
-                              handleRegisterEntry(entryGroupName.current?.value);
+                              handleRegisterEntry(entryGroupNameRef.current?.value);
                             }}
                           >
                             Register

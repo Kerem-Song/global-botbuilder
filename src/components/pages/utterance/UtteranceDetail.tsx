@@ -4,7 +4,7 @@ import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
@@ -15,7 +15,6 @@ import {
   IUtteranceModel,
 } from '@models';
 import { util } from '@modules/util';
-import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -26,7 +25,7 @@ import { lunaToast } from '../../../../src/modules/lunaToast';
 import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export const UtteranceDetail = () => {
-  const { navigate, t, tc } = usePage();
+  const { navigate, t } = usePage();
   const { utteranceId, botId } = useParams();
   const { confirm, error } = useSystemModal();
 
@@ -63,7 +62,6 @@ export const UtteranceDetail = () => {
     control,
     getValues,
     watch,
-    setValue,
     formState: { errors },
   } = useForm<IUtteranceModel>({
     defaultValues: {
@@ -340,7 +338,6 @@ export const UtteranceDetail = () => {
       {
         onSuccess: async (result) => {
           if (result.result === true) {
-            // if (isActive === true) return;
             await error({
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
@@ -394,6 +391,9 @@ export const UtteranceDetail = () => {
               <Col flex="auto">
                 <FormItem error={errors.name}>
                   <Input
+                    placeholder="Input Intent Name"
+                    showCount
+                    maxLength={20}
                     ref={(e) => {
                       nameField.ref(e);
                       intentNameRef.current = e;
@@ -406,9 +406,6 @@ export const UtteranceDetail = () => {
                     onPressEnter={() => {
                       return;
                     }}
-                    placeholder="Input Intent Name"
-                    showCount
-                    maxLength={20}
                     onBlur={() => {
                       nameField.onBlur();
                       handleNameBlur();
