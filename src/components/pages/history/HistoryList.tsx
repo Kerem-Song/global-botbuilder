@@ -3,26 +3,28 @@ import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
-import { IHistoryCondition } from '@models';
+import {
+  IHistoryCondition,
+  IHistoryProperty,
+  IHistoryValueMatch,
+  IResponseHistoryItem,
+} from '@models';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useParams } from 'react-router';
 
+import { HistoryValue } from './HistoryValue';
+
 export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const { t } = usePage();
-  // const category = '시나리오';
-  const title = '시나리오 01';
-  const desc = '시나리오가 생성되었습니다.';
   const { botId } = useParams();
-
   const { changeHistoryPageNumberQuery } = useHistoryClient();
   const { data, fetchNextPage, hasNextPage, isFetching } = changeHistoryPageNumberQuery({
     botId: botId!,
     category: category ? category : null,
     year: year,
   });
-
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -39,17 +41,57 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     return false;
   };
 
-  console.log('data.items', data?.pages[0].items);
+  const { historyValArr } = HistoryValue();
+  console.log('@data:', data?.pages[0].items);
+  const matchCategory = (item: IResponseHistoryItem) => {
+    const matched: IHistoryValueMatch[] = historyValArr.filter(
+      (v) => v.changeLogType === item.changeLogType,
+    );
+    const categoryLabel = matched.map((val) => val.categoryLabel);
+    const categoryValue = matched.map((val) => val.categoryValue);
+    const categoryChangeLotType = matched.map((val) => val.changeLogType);
+    const property = matched.map(
+      (val) => Object.values(val.property)[0],
+    )[0] as keyof IHistoryProperty;
+    const secondProperty = matched.map((val) =>
+      Object.keys(val.property),
+    )[0][1] as keyof IHistoryProperty;
+
+    const desc = matched.map((val) =>
+      t(`CAPTION_${val.name}`, {
+        firstParam: item[property],
+        secondParam: item[secondProperty],
+      }),
+    );
+    return {
+      categoryLabel,
+      categoryValue,
+      categoryChangeLotType,
+      desc,
+      property,
+      secondProperty,
+    };
+  };
+
+  const handleViewerOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.value;
+    console.log('id:', id);
+    window.open(
+      window.location.origin + `/${botId}/viewer`,
+      '_blank',
+      'toolbar=0,location=0,menubar=0',
+    );
+  };
 
   return (
     <div className="historyListContainter" ref={ref}>
       {hasPage() ? (
-        data?.pages[0].items?.map((item, i) => (
+        data?.pages[0].items?.map((item) => (
           <Row
             className="historyListWarpper"
             justify="space-between"
             align="flex-end"
-            key={i}
+            key={item.id}
           >
             <Col className="historyList">
               {isFetching ? (
@@ -60,9 +102,11 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   baseColor="#EDEDF0"
                 />
               ) : (
-                <div className="historyListCatetory">
-                  <img src={icUtteranceSelectHistory} alt="categoryImage" />
-                  <span>{}</span>
+                <div
+                  className="historyListCatetory"
+                  data-img={matchCategory(item).categoryValue}
+                >
+                  <span>{matchCategory(item).categoryLabel}</span>
                 </div>
               )}
               {isFetching ? (
@@ -74,8 +118,17 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                 />
               ) : (
                 <p className="historyListTitle">
-                  {title}
-                  <Button shape="ghost">{t(`VIEWER_BTN`)}</Button>
+                  {item[matchCategory(item).property]}
+                  {matchCategory(item).categoryChangeLotType.includes(2004) ? (
+                    <Button
+                      shape="ghost"
+                      className="viewerBtn"
+                      onClick={(e) => handleViewerOpen(e)}
+                      value={item.id}
+                    >
+                      {t(`VIEWER_BTN`)}
+                    </Button>
+                  ) : null}
                 </p>
               )}
               {isFetching ? (
@@ -87,7 +140,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                 />
               ) : (
                 <div>
-                  <span className="historyListDesc">{desc}</span>
+                  <span className="historyListDesc">{matchCategory(item).desc}</span>
                 </div>
               )}
             </Col>

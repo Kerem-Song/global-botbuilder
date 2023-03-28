@@ -51,6 +51,7 @@ import icHelpSelected from '@assets/icons/ic_help_select.svg';
 import icHide from '@assets/icons/ic_hide.svg';
 import icHistory from '@assets/icons/ic_history_default.svg';
 import icHistorySelected from '@assets/icons/ic_history_select.svg';
+import icHistoryViewer from '@assets/icons/ic_history_viewer.svg';
 import icImg from '@assets/icons/ic_img.svg';
 import icImgAddHover from '@assets/icons/ic_img_add_hover.svg';
 import icImgHover from '@assets/icons/ic_img_hover.svg';
@@ -132,6 +133,7 @@ import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
+
 export {
   icAdd,
   icBackActive,
@@ -186,6 +188,7 @@ export {
   icHide,
   icHistory,
   icHistorySelected,
+  icHistoryViewer,
   icImg,
   icImgAddHover,
   icImgHover,

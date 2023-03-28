@@ -58,6 +58,28 @@ export type IChangeLogType =
   | 9002
   | 9003;
 
+export interface IHistoryProperty {
+  botName?: string;
+  status?: string;
+  channelName?: string;
+  flowName?: string;
+  paramName?: string;
+  entityName?: string;
+  intentName?: string;
+  no?: string;
+}
+
+export interface IHistoryValueMatch {
+  categoryLabel: string;
+  categoryValue: THistoryCategoryValues | null;
+  name: string | null;
+  changeLogType: IChangeLogType;
+  header: string;
+  next: string | null;
+  prev: string | null;
+  // desc: string;
+  property: IHistoryProperty;
+}
 export interface IResponseHistoryItem {
   id: string;
   changeLogType: IChangeLogType;

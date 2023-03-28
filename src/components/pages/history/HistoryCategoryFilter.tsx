@@ -1,15 +1,7 @@
-import { Button, Checkbox, Checkboxes } from '@components';
 import { CheckboxButton } from '@components/data-entry/CheckboxButton';
 import { usePage } from '@hooks';
-import { useHistoryClient } from '@hooks/client/historyClient';
-import {
-  HISTORY_CATEGORY_TYPES,
-  IHistoryCondition,
-  THistoryCategoryValues,
-} from '@models';
-import { useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router';
+import { HISTORY_CATEGORY_TYPES, IHistoryCondition } from '@models';
+import { useFormContext } from 'react-hook-form';
 
 export const HistoryCategoryFilter = () => {
   const { t } = usePage();
