@@ -93,6 +93,9 @@
         }
       }
       .clear {
+        width: rem(16);
+        height: rem(16);
+        background-repeat: no-repeat;
         background-image: url('@assets/icons/ic_search_delete.svg');
         &:hover {
           background-image: url('@assets/icons/ic_search_delete_active.svg');

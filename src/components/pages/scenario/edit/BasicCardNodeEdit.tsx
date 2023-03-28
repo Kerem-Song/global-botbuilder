@@ -1,14 +1,16 @@
-import { FormItem, InputTextarea, Space } from '@components';
+import { FormItem, Input, InputTextarea, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageSettings } from './ImageSettings';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardNodeEdit = () => {
@@ -49,6 +51,13 @@ export const BasicCardNodeEdit = () => {
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
         <Space direction="vertical">
           {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
+          <div className="textareaWrapper">
+            <p className={classNames('textareaLabel', 'light')}>{t(`TITLE_INPUT`)}</p>
+            <span className="textCounter">
+              {watch('view.title')?.length || 0}
+              {`/20`}
+            </span>
+          </div>
           <FormItem error={errors.view && errors.view.title}>
             <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
@@ -62,10 +71,9 @@ export const BasicCardNodeEdit = () => {
           </FormItem>
 
           <FormItem error={errors.view && errors.view.description}>
-            <InputTextarea
+            <InputTextAreaWithTitleCounter
               label={t(`CONTENT_INPUT`)}
-              height={100}
-              style={{ minHeight: '100px', maxHeight: '320px' }}
+              maxRows={17}
               showCount
               maxLength={watch(`view.useImageCtrl`) || watch(`view.title`) ? 230 : 400}
               isLight={true}
