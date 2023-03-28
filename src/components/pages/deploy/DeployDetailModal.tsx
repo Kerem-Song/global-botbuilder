@@ -22,13 +22,13 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
   detailInfo,
 }) => {
   const [deployResult, setDeployResult] = useState<IDeployResult[]>([
-    { value: 0, message: '알수 없는 오류' },
+    { value: 0, message: '알 수 없는 오류' },
     { value: 1, message: '성공' },
-    { value: 2, message: '이미 다른 곳에서 사용중인 채널' },
-    { value: 3, message: 'S3에 연결 실패' },
-    { value: 6, message: '채널이 활성화 되어 있지 않음' },
-    { value: 8, message: '정상적이지 않은 FlowGroup' },
-    { value: 9, message: '채널을 찾지 못함' },
+    { value: 2, message: '사용 중인 채널' },
+    { value: 3, message: '서버 연결 실패' },
+    { value: 6, message: '비활성화된 채널' },
+    { value: 8, message: '시나리오 오류' },
+    { value: 9, message: '채널을 찾을 수 없음' },
   ]);
   const [isActive, setIsActive] = useState<boolean>(false);
   const { updateDeployHistoryComment } = useDeployClient();
@@ -128,7 +128,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           </div>
         </div>
         <form onSubmit={handleSubmit(handleSave)}>
-          <InputTextarea
+          <textarea
             className="deployNotes"
             placeholder={t('DEPLOY_NOTES')}
             ref={(e) => {
