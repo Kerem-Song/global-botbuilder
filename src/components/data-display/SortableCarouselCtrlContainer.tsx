@@ -1,5 +1,6 @@
 import { icCardDelete, icCardDuplication, icCardDuplicationDisabled } from '@assets';
 import { IPopperItem, Popper } from '@components/navigation';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import {
   closestCenter,
   DndContext,
@@ -132,6 +133,7 @@ export const SoratbleCarouselCtrlContainer = ({
                   m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
+                enabled={HistoryViewerMatch() ? false : true}
               >
                 <div
                   onContextMenu={(e) => {

@@ -7,6 +7,7 @@ import {
   icNodeBottom,
 } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
@@ -31,7 +32,9 @@ import { setClipBoard, setGuideStartNode, setSelected } from '@store/botbuilderS
 import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC, KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useMatch } from 'react-router';
 
 import { NODE_TYPES } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
@@ -255,6 +258,7 @@ export const Node: FC<INodeProps> = ({
         onChange={(m) => {
           m.data?.action?.(node);
         }}
+        enabled={HistoryViewerMatch() ? false : true}
       >
         <div
           tabIndex={0}
@@ -303,6 +307,7 @@ export const Node: FC<INodeProps> = ({
               onChange={(m) => {
                 m.data?.action?.(node);
               }}
+              enabled={HistoryViewerMatch() ? false : true}
             >
               <Button shape="ghost" small>
                 <i className="fa-solid fa-ellipsis-vertical" />
