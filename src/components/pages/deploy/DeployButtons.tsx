@@ -49,7 +49,8 @@ export const DeployButtons = () => {
     if (result) {
       const deployChannel: IDeploy = {
         botId: botId!,
-        isLive: testLinked ? false : true,
+        isLive: false,
+        // isLive: testLinked ? false : true,
       };
       const res = await deployingBot.mutateAsync(deployChannel);
       if (res && res.isSuccess) {
