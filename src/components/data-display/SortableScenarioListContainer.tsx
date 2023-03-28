@@ -71,7 +71,8 @@ export const SortableScenarioListContainer = ({
         <SortableContext
           items={list}
           strategy={verticalListSortingStrategy}
-          disabled={disabled}
+          // disabled={disabled} // 데모시연을 위해서 잠시 주석처리
+          disabled={true}
         >
           {list.map((item) => (
             <SortableScenarioListItem key={item.id} item={item} />

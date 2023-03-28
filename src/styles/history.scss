@@ -37,27 +37,6 @@
     .filterBtnWrapper {
       display: flex;
       gap: rem(10);
-      
-      .filterBtn {
-        padding: rem(8) rem(12) !important;
-        font-weight: 400;
-        font-size: rem(14);
-        // line-height: rem(17);
-        background-color: $grayWhite;
-        height: rem(33);
-        border: rem(1) solid $gray200;
-        border-radius: rem(99);
-  
-        &.selected {
-          background-color: $primary100;
-        }
-
-        &:focus {
-          border: rem(1) solid $primary500;
-          background-color: $primary100;
-        }
-        
-      }
     }
   }
 

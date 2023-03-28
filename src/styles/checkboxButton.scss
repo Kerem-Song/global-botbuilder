@@ -1,0 +1,31 @@
+.checkboxButtonContainer {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: block;
+    padding: rem(8) rem(12);
+    height: rem(33);
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: rem(17);
+    background-color: $grayWhite;
+    border: rem(1) solid $gray200;
+    border-radius: rem(99);
+  }
+
+  input {
+    position: absolute;
+    display: none;
+    color: #fff !important;
+  }
+  
+  input:checked + span {
+    background-color: $primary100;
+    border: rem(1) solid $primary500
+  }
+
+  input:hover + span {
+    background-color: $primary100;
+  }
+}

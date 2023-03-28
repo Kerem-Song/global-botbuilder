@@ -1,31 +1,26 @@
 export const HISTORY_CATEGORY_TYPES = {
-  SCENARIO: 1 << 1,
-  INTENT: 1 << 2,
-  SETTING: 1 << 3,
-  DEPLOYEMNT: 1 << 4,
-  ETC: 1 << 5,
+  SCENARIO: 1 << 1, //2
+  INTENT: 1 << 2, //4
+  SETTING: 1 << 3, //8
+  DEPLOYEMNT: 1 << 4, //16
+  ETC: 1 << 5, //32
 } as const;
 
-export type ValueOf<T> = T[keyof T];
+type ValueOf<T> = T[keyof T];
 
 export type THistoryCategoryValues = ValueOf<typeof HISTORY_CATEGORY_TYPES>;
 export interface IHistoryCondition {
-  category: THistoryCategoryValues;
-  year: string;
-}
-
-export interface ISearchHistoryData {
-  botId: string;
-  category: THistoryCategoryValues;
+  category?: THistoryCategoryValues;
   year?: string;
+  filteredCategory?: THistoryCategoryValues[];
 }
 
 export interface IGetHistoryList {
   botId: string;
-  category?: THistoryCategoryValues;
-  year?: number;
-  pageNo: number;
-  countPerPage: number;
+  category?: THistoryCategoryValues | null;
+  year?: string;
+  pageNo?: number;
+  countPerPage?: number;
 }
 
 // 봇빌더 히스토리 값 참고 https://lunasoft.atlassian.net/wiki/spaces/globaltft/pages/4307222806
@@ -79,12 +74,4 @@ export interface IResponseHistoryItem {
   createAt: string;
   no: number | null;
   flowName: string | null;
-}
-
-export interface IHistoryListRes {
-  items: IResponseHistoryItem[];
-  pagePerCount: number;
-  currentPage: number;
-  total: number;
-  totalPage: number;
 }
