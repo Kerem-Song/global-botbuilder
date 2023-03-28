@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
+import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -359,36 +360,40 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-          {isOpen && (
-            <NodeLinkPopUpMenu
-              handleIsOpen={handleIsOpen}
-              popUpPosition={popUpPosition}
-            />
-          )}
+          {HistoryViewerMatch()
+            ? null
+            : isOpen && (
+                <NodeLinkPopUpMenu
+                  handleIsOpen={handleIsOpen}
+                  popUpPosition={popUpPosition}
+                />
+              )}
           {otherFlowPopup && <OtherFlowScenariosPopup popUpPosition={popUpPosition} />}
-          {clicked && (
-            <div
-              className="luna-popup-container luna-chatbot-container"
-              style={{
-                top: points.y,
-                left: points.x,
-                position: 'absolute',
-                backgroundColor: '#ffffff',
-              }}
-            >
-              {canvasContextMenu.map((item, i) => (
+          {HistoryViewerMatch()
+            ? null
+            : clicked && (
                 <div
-                  key={i}
-                  className="luna-chatbot-list luna-popup-list"
-                  role="presentation"
-                  onClick={item.data?.action}
+                  className="luna-popup-container luna-chatbot-container"
+                  style={{
+                    top: points.y,
+                    left: points.x,
+                    position: 'absolute',
+                    backgroundColor: '#ffffff',
+                  }}
                 >
-                  <img src={item.icon} alt="icon" />
-                  <p className="items-name">{item.name}</p>
+                  {canvasContextMenu.map((item, i) => (
+                    <div
+                      key={i}
+                      className="luna-chatbot-list luna-popup-list"
+                      role="presentation"
+                      onClick={item.data?.action}
+                    >
+                      <img src={item.icon} alt="icon" />
+                      <p className="items-name">{item.name}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
         </div>
       </div>
 

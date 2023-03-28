@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '../../../modules';
+import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -301,6 +302,7 @@ export const NodeLinkPopUpMenu = ({
                     }}
                     popup
                     popupList
+                    enabled={HistoryViewerMatch() ? false : true}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>

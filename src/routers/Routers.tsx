@@ -1,6 +1,8 @@
 import { DefaultLayout } from '@components';
 import { BotLayout } from '@components/layout/BotLayout';
+import { HistoryViewerLayout } from '@components/layout/HistoryViewerLayout';
 import { Layout } from '@components/layout/Layout';
+import { HistoryViewer } from '@components/pages/history/HistoryViewer';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';
@@ -103,6 +105,18 @@ const finalRoutes = [
                   path: 'setting',
                   element: <SettingPage />,
                   handle: { title: 'SETTING', role: 256 },
+                },
+              ],
+            },
+            {
+              path: ':botId',
+              element: <HistoryViewerLayout />,
+              errorElement: <>404</>,
+              children: [
+                {
+                  path: 'viewer',
+                  element: <HistoryViewer />,
+                  handle: { title: 'HISTORY VIEWER' },
                 },
               ],
             },

@@ -76,6 +76,11 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const handleViewerOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.value;
     console.log('id:', id);
+    window.open(
+      window.location.origin + `/${botId}/viewer`,
+      '_blank',
+      'toolbar=0,location=0,menubar=0',
+    );
   };
 
   return (
