@@ -258,7 +258,7 @@ export const Node: FC<INodeProps> = ({
         onChange={(m) => {
           m.data?.action?.(node);
         }}
-        enabled={HistoryViewerMatch() ? false : true}
+        disabled={HistoryViewerMatch()}
       >
         <div
           tabIndex={0}
@@ -307,7 +307,7 @@ export const Node: FC<INodeProps> = ({
               onChange={(m) => {
                 m.data?.action?.(node);
               }}
-              enabled={HistoryViewerMatch() ? false : true}
+              disabled={HistoryViewerMatch()}
             >
               <Button shape="ghost" small>
                 <i className="fa-solid fa-ellipsis-vertical" />

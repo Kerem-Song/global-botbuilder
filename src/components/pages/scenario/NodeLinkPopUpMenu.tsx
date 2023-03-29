@@ -158,7 +158,6 @@ export const NodeLinkPopUpMenu = ({
       type: nodeType,
       title: nodeName,
       view: nodeView,
-      option: 1,
       seq: 0,
       x: Math.round(popUpPosition.x),
       y: Math.round(popUpPosition.y),
@@ -248,7 +247,6 @@ export const NodeLinkPopUpMenu = ({
       title: nodeName,
       x: popUpPosition.x,
       y: popUpPosition.y,
-      option: 64,
       seq: 0,
       nodeKind: getNodeKind(nodeType),
       view,
@@ -302,7 +300,7 @@ export const NodeLinkPopUpMenu = ({
                     }}
                     popup
                     popupList
-                    enabled={HistoryViewerMatch() ? false : true}
+                    disabled={HistoryViewerMatch()}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>

@@ -10,6 +10,7 @@ import { IPageProps } from '../../models/interfaces/IPageProps';
 export const PageContext = createContext<
   | {
       pageName: string;
+      isReadOnly?: boolean;
       t: TFunction<string, undefined>;
       tc: TFunction<string, undefined>;
       ts: TFunction<string, undefined>;
@@ -19,7 +20,7 @@ export const PageContext = createContext<
   | undefined
 >(undefined);
 
-export const PageProvider: FC<IPageProps> = ({ pageName, children }) => {
+export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children }) => {
   const { t } = useTranslation(pageName);
   const { t: tc, i18n } = useTranslation('common');
   const { t: ts } = useTranslation('sidebar');
@@ -46,7 +47,9 @@ export const PageProvider: FC<IPageProps> = ({ pageName, children }) => {
     <Navigate to={`/${i18n.language}/dashboard`} />;
   }
   return (
-    <PageContext.Provider value={{ t, tc, ts, i18n, pageName, navigate: localeNavigate }}>
+    <PageContext.Provider
+      value={{ t, tc, ts, i18n, pageName, isReadOnly, navigate: localeNavigate }}
+    >
       {children}
     </PageContext.Provider>
   );

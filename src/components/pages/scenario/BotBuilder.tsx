@@ -183,7 +183,6 @@ export const Botbuilder = () => {
       title: nodeName,
       nodeKind: getNodeKind(cardType),
       view: nodeView,
-      option: 1,
       seq: 0,
     };
 

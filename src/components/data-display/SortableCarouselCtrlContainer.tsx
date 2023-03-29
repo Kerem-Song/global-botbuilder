@@ -133,7 +133,7 @@ export const SoratbleCarouselCtrlContainer = ({
                   m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
-                enabled={HistoryViewerMatch() ? false : true}
+                disabled={HistoryViewerMatch()}
               >
                 <div
                   onContextMenu={(e) => {

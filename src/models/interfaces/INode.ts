@@ -9,7 +9,7 @@ export interface INode {
   title?: string;
   description?: string;
   nodeKind: NodeKind;
-  option: number;
+  option?: number;
   seq: number;
   x: number;
   y: number;

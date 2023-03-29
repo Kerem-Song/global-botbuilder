@@ -123,7 +123,6 @@ export const BotBuilderHeader = () => {
       title: nodeName,
       view: nodeView,
       nodeKind: getNodeKind(cardType),
-      option: 1,
       seq: 0,
       x:
         canvasRect && viewRect
