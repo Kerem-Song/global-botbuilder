@@ -1,5 +1,6 @@
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { IIntentView } from '@models/interfaces/res/IGetFlowRes';
 import { useFormContext } from 'react-hook-form';
@@ -7,6 +8,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectNode } from './SelectNode';
 
 export const IntentNodeEdit = () => {
+  useNodeEditSave();
   const { t } = usePage();
   const { getValues } = useFormContext<IGNodeEditModel<IIntentView>>();
   return (

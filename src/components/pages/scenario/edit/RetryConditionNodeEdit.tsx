@@ -1,6 +1,7 @@
 import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Divider, Space } from '@components/layout';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
@@ -24,6 +25,7 @@ const countOptions: IReactSelect[] = [
 ];
 
 export const RetryConditionNodeEdit = () => {
+  useNodeEditSave();
   const {
     getValues,
     control,

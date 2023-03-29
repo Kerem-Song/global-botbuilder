@@ -183,7 +183,6 @@ export const Node: FC<INodeProps> = ({
   ];
 
   const popperMenu = () => {
-    console.log('typename', typeName);
     switch (typeName) {
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
       case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:

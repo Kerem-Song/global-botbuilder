@@ -78,9 +78,9 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       {view.description !== undefined ? (
         <div className={classNames('productName', { empty: view.description })}>
           {view.description ? (
-            <MultiClamp clamp={2}>
-              <span style={{ whiteSpace: 'pre-line' }}>{view.description}</span>
-            </MultiClamp>
+            <span style={{ whiteSpace: 'pre-line' }}>
+              <MultiClamp clamp={2}>{view.description}</MultiClamp>
+            </span>
           ) : (
             <p>{t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}</p>
           )}

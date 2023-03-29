@@ -63,9 +63,9 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
         })}
       >
         {view.description ? (
-          <MultiClamp clamp={2}>
-            <span style={{ whiteSpace: 'pre-line' }}>{view.description}</span>
-          </MultiClamp>
+          <span style={{ whiteSpace: 'pre-line' }}>
+            <MultiClamp clamp={2}>{view.description}</MultiClamp>
+          </span>
         ) : (
           <p>Enter Content</p>
         )}

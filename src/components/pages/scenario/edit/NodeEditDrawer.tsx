@@ -31,7 +31,6 @@ import { TextNodeEdit } from './TextNodeEdit';
 export const NodeEditDrawer = () => {
   const { t } = usePage();
   const dispatch = useDispatch();
-  const [node, setNode] = useState<INode>();
   const { schema } = useYupValidation();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
@@ -39,9 +38,10 @@ export const NodeEditDrawer = () => {
   );
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
+  console.log(carouselIndexObj);
 
   const selectedNode = nodes.find((x) => x.id === selected);
-  const index = carouselIndexObj[`${NODE_PREFIX}${node?.id}`];
+  const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
 
   const invalidateNodes = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes,
@@ -66,31 +66,8 @@ export const NodeEditDrawer = () => {
     formState: { errors, isValid },
   } = formMethods;
 
-  const onSubmit = (node: INodeEditModel) => {
-    dispatch(editNode(node));
-    //dispatch(setSelected());
-  };
-
-  const validate = async () => {
-    if (node) {
-      const result = await schema.isValid(getValues());
-      if (!result) {
-        const view = node.view as IHasChildrenView;
-        console.log('view length', view.childrenViews?.length);
-        console.log('index', index);
-        if (view.childrenViews && view.childrenViews.length < index) {
-          return;
-        } else {
-          //onSubmit(getValues());
-        }
-      }
-      dispatch(setInvalidateNode({ id: node.id, isValid: result }));
-    }
-  };
-
   useEffect(() => {
     if (selectedNode) {
-      console.log('selected node next node id', selectedNode.nextNodeId);
       const model: INodeEditModel = {
         id: selectedNode.id,
         type: selectedNode.type,
@@ -113,27 +90,25 @@ export const NodeEditDrawer = () => {
         trigger();
       }
     } else {
-      if (node) {
-        handleSubmit(onSubmit)();
-        if (!isValid) {
-          const view = node.view as IHasChildrenView;
-
-          console.log('index', index);
-          if (view.childrenViews && view.childrenViews.length === index) {
-            return;
-          } else {
-            onSubmit(getValues());
-          }
-        }
-        dispatch(setInvalidateNode({ id: node.id, isValid }));
-        reset({ id: '', title: '' });
-      }
+      reset({ id: '', title: '' });
     }
-
-    setNode(selectedNode);
   }, [selectedNode, index]);
 
+  const onSubmit = (node: INodeEditModel) => {
+    dispatch(editNode(node));
+  };
+
   const editItem = () => {
+    if (!isEditDrawerOpen) {
+      return <></>;
+    }
+
+    if (
+      index !== undefined &&
+      ((selectedNode?.view as IHasChildrenView)?.childrenViews?.length || 0) <= index
+    ) {
+      return <></>;
+    }
     switch (selectedNode?.type) {
       case NODE_TYPES.TEXT_NODE:
         return <TextNodeEdit />;
@@ -167,7 +142,6 @@ export const NodeEditDrawer = () => {
   };
 
   console.log('errors in edit drawer', errors);
-  // console.log('get values', getValues());
   return (
     <Drawer
       className="botBuilderDrawer"
