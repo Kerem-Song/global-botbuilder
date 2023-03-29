@@ -165,6 +165,12 @@ mark {
         pointer-events: none;
       }
 
+      .carouselComponent {
+        button {
+          pointer-events: none ;
+        }
+      }
+
       .botBuilderDrawer {
         margin-top: rem(46);
         cursor: text;
@@ -193,6 +199,8 @@ mark {
           display: none;
         }
       }
+
+      
     }
   }
 }

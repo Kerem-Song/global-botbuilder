@@ -1,4 +1,5 @@
 import { INode } from './INode';
+import { IScenarioModel } from './IScenarioModel';
 
 export const HISTORY_CATEGORY_TYPES = {
   SCENARIO: 1 << 1, //2
@@ -105,8 +106,9 @@ export interface IGetFlowSnapShot {
   historyId: string;
 }
 
-export interface IGetFlowSnapShotRes {
+export interface IGetFlowSnapShotRes extends IScenarioModel {
   alias: string;
   id: string;
-  nodes: INode;
+  nodes: INode[];
+  seq: number;
 }

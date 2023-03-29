@@ -2,7 +2,6 @@ import { DefaultLayout } from '@components';
 import { BotLayout } from '@components/layout/BotLayout';
 import { HistoryViewerLayout } from '@components/layout/HistoryViewerLayout';
 import { Layout } from '@components/layout/Layout';
-import { HistoryViewer } from '@components/pages/history/HistoryViewer';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';
@@ -12,6 +11,7 @@ import DataApiPage from '../pages/DataApiPage';
 import DeploymentPage from '../pages/DeploymentPage';
 import HelpPage from '../pages/HelpPage';
 import HistoryPage from '../pages/HistoryPage';
+import { HistoryViewer } from '../pages/HistoryViewerPage';
 import ScenarioPage from '../pages/ScenarioPage';
 import SettingPage from '../pages/SettingPage';
 import StatisticsPage from '../pages/StatisticsPage';

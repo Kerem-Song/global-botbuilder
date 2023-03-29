@@ -2,8 +2,8 @@ import { useRootState, useScenarioClient } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { usePrompt } from '@hooks/usePrompt';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
-import { IScenarioModel } from '@models';
-import { initBotBuilder } from '@store/botbuilderSlice';
+import { INode, IScenarioModel } from '@models';
+import { initBotBuilder, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,6 @@ import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
 
 import { Botbuilder } from '../scenario/BotBuilder';
-import { ManagementComponent } from '../scenario/ManagementComponent';
 
 export const HistoryViewerComponent = () => {
   const dispatch = useDispatch();
@@ -28,26 +27,14 @@ export const HistoryViewerComponent = () => {
   }, []);
 
   const { getFlowSnapShot } = useHistoryClient();
-
-  // const { } = getFlowSnapShot({ botId: botId!, historyId: historyId! });
-
-  const [scenarioList, setScenarioList] = useState<IScenarioModel[]>([]);
-  // console.log('@data in viewer', data);
-  // useEffect(() => {
-  //   if (!data) {
-  //     return;
-  //   }
-  // setScenarioList(
-  // data
-  // .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
-  // .filter(
-  //   (x) =>
-  //     (!isActivated || x.activated) &&
-  //     (!searchKeyword ||
-  //       x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
-  // ),
-  // );
-  // }, [data]);
+  const { data } = getFlowSnapShot({ botId: botId!, historyId: historyId! });
+  console.log('@data in viewer', data?.result);
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+    dispatch(setSelectedScenario(data.result));
+  }, [data]);
 
   usePrompt(changed);
 
