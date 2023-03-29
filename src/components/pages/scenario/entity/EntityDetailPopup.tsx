@@ -42,7 +42,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [entryNameInputError, setEntryNameInputError] = useState<string>();
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const { confirm, error: modalError } = useSystemModal();
+  const { confirm } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -104,6 +104,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     register,
     control,
     handleSubmit,
+    trigger,
     watch,
     setValue,
     getValues,
@@ -297,12 +298,19 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         </button>
       </div>
       <FormProvider {...formMethods}>
-        <form onSubmit={handleSubmit(handleSave)}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="entitiesContainer">
             <div className="entitiesWrapper">
               <div className="entityDetailHeader">
                 <Title level={2}>Entity</Title>
-                <Button type="primary" large htmlType="submit">
+                <Button
+                  type="primary"
+                  large
+                  onClick={() => {
+                    trigger(['name', 'entries', 'isRegex']);
+                    handleSave(getValues());
+                  }}
+                >
                   Save
                 </Button>
               </div>
@@ -325,9 +333,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         ref={nameField.ref}
                         value={nameField.value}
                         onChange={handleEntityName}
-                        onPressEnter={() => {
-                          return;
-                        }}
                         onBlur={nameField.onBlur}
                         isError={
                           entryNameInputError || errors.name?.message ? true : false
@@ -477,10 +482,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                 />
                               );
                             })}
-                            {getValues().entries.filter(
+                            {searchKeyword.trim() !== '' &&
+                            getValues().entries.filter(
                               (x) =>
-                                x.representativeEntry.includes(searchKeyword) ||
-                                x.synonym!.find((s) => s.includes(searchKeyword)),
+                                (x.representativeEntry &&
+                                  x.representativeEntry?.includes(searchKeyword)) ||
+                                (x.synonym &&
+                                  x.synonym?.find((s) => s.includes(searchKeyword))),
                             ).length === 0 ? (
                               <div
                                 style={{

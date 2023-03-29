@@ -1,7 +1,8 @@
-import { Col, Row } from '@components';
+import { Col, FormItem, Input, Row } from '@components';
 import { useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
+import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
   FieldArrayWithId,
@@ -24,15 +25,20 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   index,
   entriesRemove,
   searchKeyword,
+  entryGroup,
   setIsActive,
 }) => {
+  const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     editInputRef.current?.focus();
   }, []);
 
-  const { control } = useFormContext<ISaveEntryGroup>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
   const openDeleteEntryModal = async () => {
     const result = await confirm({
@@ -67,29 +73,70 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     (searchKeyword && synonymField.value?.find((x: string) => x.includes(searchKeyword)))
   ) {
     return (
-      <Row gap={8}>
-        <Col span={5}>
-          <div className="representativeEntry">
-            <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>
-          </div>
-        </Col>
-        <Col span={18}>
-          <div className="entryList">
-            <div className="entries">
-              <AddEntryBtn
-                index={index}
-                searchKeyword={searchKeyword}
-                synonym={synonymField.value}
-                representativeEntry={field.value}
-                setIsActive={setIsActive}
-              />
-            </div>
-          </div>
-        </Col>
-        <Col span={1}>
-          <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
-        </Col>
-      </Row>
+      <>
+        {[entryGroup].map((item, i) => (
+          <Row key={i} gap={8}>
+            <Col
+              span={5}
+              className={classNames({ representativeEntryInput: editInputIndex === i })}
+            >
+              {editInputIndex === i ? (
+                <Input
+                  {...field}
+                  size="normal"
+                  maxLength={125}
+                  showCount
+                  className={classNames({
+                    'input-normal': !errors.entries?.[index]?.representativeEntry,
+                    'input-error': errors.entries?.[index]?.representativeEntry,
+                  })}
+                  onBlur={() => {
+                    setEditInputIndex(-1);
+                  }}
+                  isError={
+                    errors.entries?.[index]?.representativeEntry?.message ? true : false
+                  }
+                />
+              ) : (
+                <div
+                  className={classNames('representativeEntry', {
+                    error: errors.entries?.[index]?.representativeEntry,
+                  })}
+                  onDoubleClick={(e) => {
+                    setEditInputIndex(i);
+                    e.preventDefault();
+                  }}
+                >
+                  <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>
+                </div>
+              )}
+              <span className="error-message">
+                {errors.entries?.[index]?.representativeEntry?.message}
+              </span>
+            </Col>
+            <Col span={18}>
+              <div
+                className={classNames('entryList', {
+                  error: errors.entries?.[index]?.representativeEntry,
+                })}
+              >
+                <div className="entries">
+                  <AddEntryBtn
+                    index={index}
+                    searchKeyword={searchKeyword}
+                    representativeEntry={item.representativeEntry}
+                    synonym={synonymField.value}
+                    setIsActive={setIsActive}
+                  />
+                </div>
+              </div>
+            </Col>
+            <Col span={1}>
+              <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
+            </Col>
+          </Row>
+        ))}
+      </>
     );
   } else {
     return <></>;

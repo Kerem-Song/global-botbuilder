@@ -135,16 +135,11 @@
                 }
               }
               .representativeEntryInput {
-                div {
+                .input-normal {
                   height: 100%;
-                  .input-normal {
-                    min-height: rem(34);
-                    height: 100%;
-                  }
-                  .input-error {
-                    min-height: rem(34);
-                    height: calc(100% - rem(17));
-                  }
+                }
+                .input-error {
+                  min-height: rem(38);
                 }
               }
               .representativeEntry {
@@ -157,7 +152,8 @@
                 display: flex;
                 align-items: center;
                 width: rem(200);
-                height: 100%;
+                min-height: rem(38);
+                // height: 100%;
                 padding: 4px 11px;
                 color: $grayBlack;
                 font-size: rem(13);
@@ -170,11 +166,25 @@
                   width: 100%;
                   word-wrap: break-word;
                 }
+                &.error {
+                  border: 1px solid $red;
+                  &:focus-within {
+                    border-color: $red;
+                    box-shadow: 0 0 0 2px setAlpha($red, 0.2);
+                    border-right-width: 1px;
+                    outline: 0;
+                  }
+                  &:hover {
+                    border-color: #f00;
+                    border-right-width: 1px;
+                  }
+                }
               }
               .entryList {
                 width: 100%;
                 padding: rem(5) 0 rem(3) rem(3);
                 flex-wrap: wrap;
+                min-height: rem(34);
                 height: 100%;
                 border: 1px solid #dcdcdc;
                 border-radius: rem(8);
@@ -274,6 +284,9 @@
                   &:hover {
                     background-color: $primary150;
                   }
+                }
+                &.error {
+                  height: rem(38);
                 }
               }
 
