@@ -44,3 +44,20 @@ export interface IDeleteEntryGroup {
   sessionToken?: string;
   entryGroupId: string;
 }
+
+export interface IEntityGroupResult {
+  result: null;
+  exception: {
+    errorMessages: string[];
+    invalidateProperties: string[];
+    errorCode: number;
+    subErrorCode: number;
+    message: string;
+    targetSite: null;
+    innerException: null;
+    helpLink: null;
+    source: null;
+    hResult: -2146233088;
+    stackTrace: null;
+  };
+}

@@ -172,7 +172,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           }}
         />
       ) : (
-        <Tooltip tooltip={item.alias} placement="right">
+        <Tooltip tooltip={item.alias} placement="right" disable={item.alias.length <= 14}>
           <Row align="center" style={{ flexWrap: 'nowrap' }}>
             <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
               {item.alias}
