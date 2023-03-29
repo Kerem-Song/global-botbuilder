@@ -1,5 +1,11 @@
 import { useRootState } from '@hooks/useRootState';
-import { IHasResult, IPagingItems, THistoryCategoryValues } from '@models';
+import {
+  IGetFlowSnapShot,
+  IGetFlowSnapShotRes,
+  IHasResult,
+  IPagingItems,
+  THistoryCategoryValues,
+} from '@models';
 import { IGetHistoryList, IResponseHistoryItem } from '@models';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -81,9 +87,24 @@ export const useHistoryClient = () => {
     );
   };
 
+  const getFlowSnapShot = ({ botId, historyId }: IGetFlowSnapShot) => {
+    return http
+      .post<IGetFlowSnapShot, AxiosResponse<IHasResult<IGetFlowSnapShotRes>>>(
+        'bot/getflowsnapshot',
+        {
+          botId: botId,
+          historyId: historyId,
+        },
+      )
+      .then((res) => {
+        return res.data.result;
+      });
+  };
+
   return {
     getHistoryListQuery,
     invalidateGetHistoryListQuery,
     changeHistoryPageNumberQuery,
+    getFlowSnapShot,
   };
 };
