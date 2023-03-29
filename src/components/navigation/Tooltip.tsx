@@ -6,8 +6,9 @@ import { usePopper } from 'react-popper';
 export interface ITooltipProps extends IHasChildren {
   tooltip: string;
   placement?: Placement;
+  disable?: boolean;
 }
-export const Tooltip: FC<ITooltipProps> = ({ children, tooltip, placement }) => {
+export const Tooltip: FC<ITooltipProps> = ({ children, tooltip, disable, placement }) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
@@ -29,6 +30,10 @@ export const Tooltip: FC<ITooltipProps> = ({ children, tooltip, placement }) => 
   const handleLazyHide = () => {
     setShowPopper(false);
   };
+
+  if (disable) {
+    return <>{children}</>;
+  }
 
   return (
     <>
