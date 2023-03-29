@@ -168,3 +168,62 @@
     }
   }
 }
+
+.historyViewerMain {
+  padding-left: 0;
+  .scenarioWrapper {
+
+    .botBuilderWrapper {
+      width: 100%;
+
+      .icNodeBottom {
+        pointer-events: none;
+      }
+
+      .nextNode {
+        pointer-events: none;
+      }
+
+      .carouselComponent {
+        button {
+          pointer-events: none ;
+        }
+      }
+
+      .botBuilderDrawer {
+        margin-top: rem(46);
+        cursor: text;
+
+        input {
+          pointer-events: none; 
+        }
+
+        textarea {
+          pointer-events: none; 
+        }
+
+        .imgUpload {
+          pointer-events: none; 
+        }
+
+        .collapse {
+          pointer-events: none;
+        }
+
+        .required {
+          display: none;
+        }
+
+        .luna-btn {
+          display: none;
+        }
+
+        .wrapper {
+          height: calc(100vh);
+        }
+      }
+
+      
+    }
+  }
+}
