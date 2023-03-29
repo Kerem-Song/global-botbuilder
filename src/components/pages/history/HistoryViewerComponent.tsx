@@ -1,11 +1,9 @@
-import { useRootState, useScenarioClient } from '@hooks';
+import { useRootState } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { usePrompt } from '@hooks/usePrompt';
-import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
-import { INode, IScenarioModel } from '@models';
 import { initBotBuilder, setSelectedScenario } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
@@ -40,7 +38,6 @@ export const HistoryViewerComponent = () => {
 
   return (
     <div className="scenarioWrapper">
-      {/* <ManagementComponent /> */}
       <div className="botBuilderWrapper">
         <Botbuilder />
       </div>

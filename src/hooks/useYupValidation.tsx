@@ -197,7 +197,19 @@ export const useYupValidation = () => {
 
   const productCardNodeEditSchema = yup.object().shape({
     imageCtrl: yup.object().shape({
-      imageFile: imageFileEditSchema,
+      imageFile: yup
+        .mixed()
+        .nullable()
+        .test(
+          'fileSize',
+          t(`VALIDATION_FILE_SIZE`),
+          (value) => !value || (value && value[0]?.size <= FILE_SIZE),
+        )
+        .test(
+          'filetype',
+          t(`VALIDATION_FILE_TYPE`),
+          (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
+        ),
       imageUrl: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
     }),
     profileIconUrl: yup
