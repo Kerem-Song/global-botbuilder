@@ -1,6 +1,7 @@
 import { Col, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage, useRootState } from '@hooks';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
@@ -86,6 +87,7 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const ProductCardCarouselNodeEdit = () => {
+  useNodeEditSave();
   const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {

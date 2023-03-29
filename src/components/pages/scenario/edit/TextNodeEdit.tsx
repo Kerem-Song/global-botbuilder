@@ -1,5 +1,6 @@
-import { FormItem, InputTextarea } from '@components';
+import { FormItem } from '@components';
 import { usePage } from '@hooks';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import { useFormContext } from 'react-hook-form';
@@ -7,15 +8,16 @@ import { useFormContext } from 'react-hook-form';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 
 export const TextNodeEdit = () => {
+  useNodeEditSave();
+
   const { t } = usePage();
+
   const {
     register,
-    getValues,
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
 
-  console.log(getValues());
   return (
     <>
       <div className="node-item-wrap">

@@ -2,6 +2,7 @@ import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Space } from '@components/layout';
 import { usePage, useRootState } from '@hooks';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
@@ -14,6 +15,7 @@ import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardCarousleNodeEdit = () => {
+  useNodeEditSave();
   const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {

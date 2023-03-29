@@ -3,6 +3,7 @@ import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
 import { Divider } from '@components/layout';
 import { usePage } from '@hooks';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -11,6 +12,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { SelectNode } from './SelectNode';
 
 export const ParameterSetNodeEdit = () => {
+  useNodeEditSave();
   const { t } = usePage();
   const {
     register,

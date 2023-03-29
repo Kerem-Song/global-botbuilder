@@ -20,9 +20,9 @@ export const TextNode: FC<ITextNodeProps> = ({ node }) => {
         })}
       >
         {view.text ? (
-          <MultiClamp clamp={2}>
-            <span style={{ whiteSpace: 'pre-line' }}>{view.text}</span>
-          </MultiClamp>
+          <span style={{ whiteSpace: 'pre-line' }}>
+            <MultiClamp clamp={2}>{view.text}</MultiClamp>
+          </span>
         ) : (
           <p>Enter Content</p>
         )}

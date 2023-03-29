@@ -2,6 +2,7 @@ import { FormItem } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
+import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, VariableKind } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -18,6 +19,7 @@ export interface IParameterSelect {
 }
 
 export const AnswerNodeEdit = () => {
+  useNodeEditSave();
   const { t } = usePage();
 
   const {
