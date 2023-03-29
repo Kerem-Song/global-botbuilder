@@ -16,15 +16,10 @@ export const HistoryMain = () => {
   });
 
   const {
-    register,
-    handleSubmit,
-    reset,
     getValues,
-    trigger,
     watch,
     formState: { errors, isValid },
   } = formMethods;
-  const values = getValues();
 
   const filteredCategory = watch(`filteredCategory`)
     ?.map(Number)

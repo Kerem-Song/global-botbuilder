@@ -8,8 +8,7 @@ import { useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { BotAside } from './BotAside';
-import { Header } from './Header';
+import { HistoryViewerHeader } from './HistoryViewerHeader';
 
 export const HistoryViewerLayout = () => {
   const { botId } = useParams();
@@ -30,16 +29,14 @@ export const HistoryViewerLayout = () => {
 
   return (
     <>
-      <>
-        <div id="layout">
-          <Header isBotPage={false} />
-          <main className="historyViewerMain">
-            <Outlet />
-          </main>
-        </div>
-        <ToastContainer />
-        <SystemModalContainer />
-      </>
+      <div id="layout">
+        <HistoryViewerHeader isBotPage={false} />
+        <main className="historyViewerMain">
+          <Outlet />
+        </main>
+      </div>
+      <ToastContainer />
+      <SystemModalContainer />
     </>
   );
 };

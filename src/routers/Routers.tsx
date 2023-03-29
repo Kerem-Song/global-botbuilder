@@ -114,9 +114,9 @@ const finalRoutes = [
               errorElement: <>404</>,
               children: [
                 {
-                  path: 'viewer/:historyId',
+                  path: 'viewer/:historyId/:createAt/:actorEmail/:actorName',
                   element: <HistoryViewer />,
-                  handle: { title: 'HISTORY VIEWER' },
+                  handle: { title: `` },
                 },
               ],
             },

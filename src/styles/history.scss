@@ -169,8 +169,22 @@
   }
 }
 
+.historyViewerHeader {
+  padding-left: rem(12);
+
+  .rightNav {
+    span {
+      font-weight: 400;
+      font-size: rem(14);
+      line-height: rem(17);
+      color: $gray200;
+    }
+  }
+}
+
 .historyViewerMain {
   padding-left: 0;
+
   .scenarioWrapper {
 
     .botBuilderWrapper {

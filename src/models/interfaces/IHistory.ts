@@ -59,7 +59,8 @@ export type IChangeLogType =
   | 4002
   | 9001
   | 9002
-  | 9003;
+  | 9003
+  | null;
 
 export interface IHistoryProperty {
   botName?: string;

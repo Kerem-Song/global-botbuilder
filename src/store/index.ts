@@ -9,6 +9,7 @@ import botBuilderReducer from './botbuilderSlice';
 import botInfoReducer from './botInfoSlice';
 import botTesterReducer from './botTesterSlice';
 import brandInfoReducer from './brandInfoSlice';
+import historyInfoReducer from './historyInfoSlice';
 import intentListReducer from './intentListSlice';
 import intentReducer from './intentSlice';
 import makingNodeSliceReducer from './makingNode';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   intentReducer,
   intentListReducer,
   makingNodeSliceReducer: undoable(makingNodeSliceReducer, { debug: true, limit: 20 }),
+  historyInfoReducer,
 });
 
 type ReducerType = typeof rootReducer;

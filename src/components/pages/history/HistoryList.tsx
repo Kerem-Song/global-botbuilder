@@ -9,15 +9,18 @@ import {
   IHistoryValueMatch,
   IResponseHistoryItem,
 } from '@models';
+import { setHistoryInfo } from '@store/historyInfoSlice';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { HistoryValue } from './HistoryValue';
 
 export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const { t } = usePage();
+  const dispatch = useDispatch();
   const { botId } = useParams();
   const { changeHistoryPageNumberQuery } = useHistoryClient();
   const { data, fetchNextPage, hasNextPage, isFetching } = changeHistoryPageNumberQuery({
@@ -73,15 +76,24 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     };
   };
 
-  const handleViewerOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleViewerOpen = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: IResponseHistoryItem,
+  ) => {
     const id = e.currentTarget.value;
-    console.log('id:', id);
+    console.log('@item:', item);
+    dispatch(setHistoryInfo(item));
     window.open(
-      window.location.origin + `/${botId}/viewer/${id}`,
+      window.location.origin +
+        `/${botId}/viewer/${id}/${item.createAt}/${item.actorEmail}/${item.actorName}`,
       '_blank',
-      `toolbar=0,location=0,menubar=0,historyId=${id}`,
+      `toolbar=1,location=1,menubar=1`,
     );
   };
+
+  // useEffect(() => {
+  //   console.log('asdf');
+  // }, [handleViewerOpen]);
 
   return (
     <div className="historyListContainter" ref={ref}>
@@ -123,7 +135,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                     <Button
                       shape="ghost"
                       className="viewerBtn"
-                      onClick={(e) => handleViewerOpen(e)}
+                      onClick={(e) => handleViewerOpen(e, item)}
                       value={item.id}
                     >
                       {t(`VIEWER_BTN`)}
