@@ -1,11 +1,9 @@
-import { useTranslation } from 'react-i18next';
-import { useMatch } from 'react-router';
+import { usePage } from '@hooks';
 
 export const HistoryViewerMatch = () => {
-  const { i18n } = useTranslation();
-  const matchHistoryViewer = useMatch(`/${i18n.language}/:botId/viewer`);
+  const { isReadOnly } = usePage();
 
-  if (matchHistoryViewer) {
+  if (isReadOnly) {
     return true;
   }
   return false;

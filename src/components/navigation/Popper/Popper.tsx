@@ -43,7 +43,7 @@ export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   popupList?: boolean;
   logoutBtn?: boolean;
   offset?: [number, number];
-  enabled?: boolean;
+  disabled?: boolean;
 }
 
 export const Popper = <T extends object>({
@@ -56,7 +56,7 @@ export const Popper = <T extends object>({
   popperItems,
   popperSelect,
   offset,
-  enabled,
+  disabled,
   onChange,
   selectedId,
 }: IPopperProps<T>) => {
@@ -89,7 +89,7 @@ export const Popper = <T extends object>({
       (!popperSelect || popperSelect.length === 0)
     ) {
       return;
-    } else if (!enabled) {
+    } else if (disabled) {
       return;
     }
     update?.();

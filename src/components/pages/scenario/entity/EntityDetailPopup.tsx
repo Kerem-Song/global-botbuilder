@@ -477,8 +477,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                 />
                               );
                             })}
-                            {fields.filter((x) =>
-                              x.representativeEntry.includes(searchKeyword),
+                            {getValues().entries.filter(
+                              (x) =>
+                                x.representativeEntry.includes(searchKeyword) ||
+                                x.synonym!.find((s) => s.includes(searchKeyword)),
                             ).length === 0 ? (
                               <div
                                 style={{
