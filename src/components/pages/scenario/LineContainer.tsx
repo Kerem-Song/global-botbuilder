@@ -1,5 +1,5 @@
 import { icNodeBottom } from '@assets';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
 import { setSelected } from '@store/botbuilderSlice';
@@ -7,11 +7,13 @@ import { removeItem } from '@store/makingNode';
 import { FC, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
 import { ConnectLine } from './ConnectLine';
 
 export const LineContainer: FC = () => {
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
+  const { isReadOnly } = usePage();
   const lines = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const selectedLine = useRootState((state) => state.botBuilderReducer.selected);
   const guideInfo = useRootState((state) => state.botBuilderReducer.guideInfo);
@@ -21,6 +23,9 @@ export const LineContainer: FC = () => {
   }, [lines]);
 
   const handleLineClick = useCallback((l: IArrow) => {
+    if (isReadOnly) {
+      return;
+    }
     dispatch(setSelected(l));
   }, []);
 

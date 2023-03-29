@@ -1,3 +1,6 @@
+import { INode } from './INode';
+import { IScenarioModel } from './IScenarioModel';
+
 export const HISTORY_CATEGORY_TYPES = {
   SCENARIO: 1 << 1, //2
   INTENT: 1 << 2, //4
@@ -96,4 +99,16 @@ export interface IResponseHistoryItem {
   createAt: string;
   no: number | null;
   flowName: string | null;
+}
+
+export interface IGetFlowSnapShot {
+  botId: string;
+  historyId: string;
+}
+
+export interface IGetFlowSnapShotRes extends IScenarioModel {
+  alias: string;
+  id: string;
+  nodes: INode[];
+  seq: number;
 }

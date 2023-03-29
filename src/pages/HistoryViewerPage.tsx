@@ -1,7 +1,7 @@
 import { TitleHelmet } from '@components/common';
 import { PageProvider } from '@hooks/providers/PageProvider';
 
-import { HistoryViewerComponent } from './HistoryViewerComponent';
+import { HistoryViewerComponent } from '../components/pages/history/HistoryViewerComponent';
 
 export const HistoryViewer = () => {
   return (

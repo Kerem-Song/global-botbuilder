@@ -77,9 +77,9 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     const id = e.currentTarget.value;
     console.log('id:', id);
     window.open(
-      window.location.origin + `/${botId}/viewer`,
+      window.location.origin + `/${botId}/viewer/${id}`,
       '_blank',
-      'toolbar=0,location=0,menubar=0',
+      `toolbar=0,location=0,menubar=0,historyId=${id}`,
     );
   };
 
