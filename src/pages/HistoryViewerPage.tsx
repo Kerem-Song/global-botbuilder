@@ -5,7 +5,7 @@ import { HistoryViewerComponent } from '../components/pages/history/HistoryViewe
 
 export const HistoryViewer = () => {
   return (
-    <PageProvider pageName="hitoryViewer" isReadOnly>
+    <PageProvider pageName="scenario" isReadOnly>
       <TitleHelmet />
       <HistoryViewerComponent />
     </PageProvider>
