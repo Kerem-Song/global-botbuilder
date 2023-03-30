@@ -11,7 +11,7 @@ export const HistoryCategoryFilter = () => {
     { value: HISTORY_CATEGORY_TYPES.INTENT, label: t(`HISTORY_UTTERANCE`) },
     { value: HISTORY_CATEGORY_TYPES.DEPLOYEMNT, label: t(`HISTORY_DEPLOYMENT`) },
     { value: HISTORY_CATEGORY_TYPES.SETTING, label: t(`HISTORY_SETTING`) },
-    { value: HISTORY_CATEGORY_TYPES.ETC, label: t(`HISTORY_MY_HISTORY`) },
+    // { value: HISTORY_CATEGORY_TYPES.ETC, label: t(`HISTORY_MY_HISTORY`) },
   ];
 
   const { register } = useFormContext<IHistoryCondition>();
@@ -29,6 +29,9 @@ export const HistoryCategoryFilter = () => {
             <span>{item.label}</span>
           </CheckboxButton>
         ))}
+        <CheckboxButton {...register(`checkedMyHistory`)}>
+          <span>{t(`HISTORY_MY_HISTORY`)}</span>
+        </CheckboxButton>
       </div>
     </div>
   );

@@ -24,6 +24,8 @@ export const HistoryMain = () => {
     ?.map(Number)
     ?.reduce((a, b) => a + b, 0);
 
+  const checkedMyHistory = watch('checkedMyHistory');
+  console.log('checkedMyHistory', checkedMyHistory);
   // console.log('@year value', getValues().year, 'category value', filteredCategory);
   return (
     <>
@@ -39,7 +41,11 @@ export const HistoryMain = () => {
             </Row>
             <HistoryCategoryFilter />
           </div>
-          <HistoryListItem category={filteredCategory} year={watch(`year`)} />
+          <HistoryListItem
+            category={filteredCategory}
+            year={watch(`year`)}
+            checkedMyHistory={checkedMyHistory}
+          />
         </FormProvider>
       </div>
     </>

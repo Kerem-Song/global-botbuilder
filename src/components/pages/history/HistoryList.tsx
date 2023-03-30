@@ -1,7 +1,7 @@
 import { icNoResult, icUtteranceSelectHistory } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import {
   IHistoryCondition,
@@ -22,7 +22,11 @@ interface IReactSelect {
   value: string | null;
   label: string;
 }
-export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
+export const HistoryListItem = ({
+  category,
+  year,
+  checkedMyHistory,
+}: IHistoryCondition) => {
   const { t } = usePage();
   const dispatch = useDispatch();
   const { botId } = useParams();
@@ -116,10 +120,15 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     );
   };
 
+  const userId = useRootState((state) => state.userInfoReducer.loginId);
+  const myHistoryList = data?.pages[0].items?.filter(
+    (list) => list.actorName === 'QA 가상 이름',
+  );
+  console.log('myhistorylist', myHistoryList);
   return (
     <div className="historyListContainter" ref={ref}>
       {hasPage() ? (
-        data?.pages[0].items?.map((item) => (
+        (checkedMyHistory ? myHistoryList : data?.pages[0].items)?.map((item) => (
           <Row
             className="historyListWarpper"
             justify="space-between"

@@ -16,6 +16,7 @@ export interface IHistoryCondition {
   category?: THistoryCategoryValues;
   year?: string;
   filteredCategory?: THistoryCategoryValues[];
+  checkedMyHistory?: boolean;
 }
 
 export interface IGetHistoryList {
