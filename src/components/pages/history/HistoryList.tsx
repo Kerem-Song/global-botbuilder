@@ -54,10 +54,12 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
         new Date(v.createAt).getFullYear(),
       );
       const setYear = new Set(yearArr);
-      const uniqueYear: IReactSelect[] = [...setYear].map((year: number) => ({
-        value: year.toString(),
-        label: year.toString(),
-      }));
+      const uniqueYear: IReactSelect[] = [...setYear]
+        .map((year: number) => ({
+          value: year.toString(),
+          label: year.toString(),
+        }))
+        .sort((a, b) => (a > b ? -1 : 0));
       const yearOptions = [{ value: null, label: 'All' }, ...uniqueYear];
 
       dispatch(setHistoryYearSelector(yearOptions));
