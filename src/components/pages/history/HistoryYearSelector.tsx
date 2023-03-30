@@ -90,7 +90,6 @@ export const HistoryYearSelector = () => {
   const yearOptions = useRootState(
     (state) => state.historyInfoReducer.historyYearSelector,
   );
-  console.log('yearoptions[0]', yearOptions[0]);
 
   return (
     <Select

@@ -1,5 +1,4 @@
 import { Col, Row } from '@components/layout';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage } from '@hooks';
 import { IHistoryCondition } from '@models/interfaces/IHistory';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -25,7 +24,7 @@ export const HistoryMain = () => {
     ?.map(Number)
     ?.reduce((a, b) => a + b, 0);
 
-  console.log('@year value', getValues().year, 'category value', filteredCategory);
+  // console.log('@year value', getValues().year, 'category value', filteredCategory);
   return (
     <>
       <div className="historyMain">

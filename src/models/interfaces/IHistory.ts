@@ -88,6 +88,7 @@ export interface IResponseHistoryItem {
   id: string;
   changeLogType: IChangeLogType;
   createUtc: Date;
+  createAtByBrand: Date;
   actorEmail: string;
   actorName: string;
   channelName: string | null;

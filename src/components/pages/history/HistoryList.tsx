@@ -108,7 +108,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     window.open(
       window.location.origin +
-        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createUtc))}/${
+        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createAtByBrand))}/${
           item.actorEmail
         }/${item.actorName}`,
       '_blank',
@@ -186,7 +186,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   baseColor="#EDEDF0"
                 />
               ) : (
-                <p>{util.formatDateTime(new Date(item.createUtc))}</p>
+                <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
               )}
               {isFetching ? (
                 <ReactLoadingSkeleton

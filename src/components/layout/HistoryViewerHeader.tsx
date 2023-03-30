@@ -33,7 +33,7 @@ export const HistoryViewerHeader: FC<{ isBotPage?: boolean }> = ({ isBotPage }) 
     historyInfo?.createAt,
   );
 
-  const { createUtc, actorEmail, actorName } = useParams();
+  const { createByBrand, actorEmail, actorName } = useParams();
   return (
     <header className="historyViewerHeader">
       <div className="headerWapper">
@@ -42,7 +42,7 @@ export const HistoryViewerHeader: FC<{ isBotPage?: boolean }> = ({ isBotPage }) 
           <span className="pageName">{scenarioName}</span>
         </div>
         <div className="rightNav">
-          <span>{createUtc}</span>
+          <span>{createByBrand}</span>
           <span>{actorEmail}</span>
           <span>{actorName}</span>
         </div>
