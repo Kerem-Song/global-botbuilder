@@ -3,9 +3,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IHistoryInfo {
   historyInfo?: IResponseHistoryItem;
+  historyYearSelector: IReactSelect[];
 }
 
-const initialState: IHistoryInfo = {};
+interface IReactSelect {
+  value: string | null;
+  label: string;
+}
+const initialState: IHistoryInfo = {
+  historyInfo: undefined,
+  historyYearSelector: [],
+};
 
 export const historyInfoSlice = createSlice({
   name: 'historyInfo',
@@ -15,11 +23,11 @@ export const historyInfoSlice = createSlice({
       console.log('@action', action.payload);
       state.historyInfo = action.payload;
     },
-    // initHistoryInfo: (state) => {
-    //   state = initialState;
-    // },
+    setHistoryYearSelector: (state, action: PayloadAction<IReactSelect[]>) => {
+      state.historyYearSelector = action.payload;
+    },
   },
 });
 
-export const { setHistoryInfo } = historyInfoSlice.actions;
+export const { setHistoryInfo, setHistoryYearSelector } = historyInfoSlice.actions;
 export default historyInfoSlice.reducer;

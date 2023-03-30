@@ -10,7 +10,7 @@ import {
   IResponseHistoryItem,
 } from '@models';
 import { util } from '@modules/util';
-import { setHistoryInfo } from '@store/historyInfoSlice';
+import { setHistoryInfo, setHistoryYearSelector } from '@store/historyInfoSlice';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
@@ -18,7 +18,10 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { HistoryValue } from './HistoryValue';
-
+interface IReactSelect {
+  value: string | null;
+  label: string;
+}
 export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const { t } = usePage();
   const dispatch = useDispatch();
@@ -44,6 +47,22 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     return false;
   };
+
+  useEffect(() => {
+    if (data) {
+      const yearArr = data?.pages[0].items?.map((v) =>
+        new Date(v.createAt).getFullYear(),
+      );
+      const setYear = new Set(yearArr);
+      const uniqueYear: IReactSelect[] = [...setYear].map((year: number) => ({
+        value: year.toString(),
+        label: year.toString(),
+      }));
+      const yearOptions = [{ value: null, label: 'All' }, ...uniqueYear];
+
+      dispatch(setHistoryYearSelector(yearOptions));
+    }
+  }, [data]);
 
   const { historyValArr } = HistoryValue();
   console.log('@data:', data?.pages[0].items);
@@ -82,8 +101,9 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     item: IResponseHistoryItem,
   ) => {
     const id = e.currentTarget.value;
-    console.log('@item:', item);
+
     dispatch(setHistoryInfo(item));
+
     window.open(
       window.location.origin +
         `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createUtc))}/${
@@ -93,10 +113,6 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
       `toolbar=1,location=1,menubar=1`,
     );
   };
-
-  // useEffect(() => {
-  //   console.log('asdf');
-  // }, [handleViewerOpen]);
 
   return (
     <div className="historyListContainter" ref={ref}>

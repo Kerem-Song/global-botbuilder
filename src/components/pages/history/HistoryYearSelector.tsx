@@ -1,4 +1,4 @@
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IHistoryCondition } from '@models/interfaces/IHistory';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
@@ -75,16 +75,7 @@ const reactSelectStyle: StylesConfig = {
   }),
 };
 
-const yearOptions: IReactSelect[] = [
-  { value: null, label: 'All' },
-  { value: '2023', label: '2023' },
-  { value: '2022', label: '2022' },
-  { value: '2021', label: '2021' },
-  { value: '2020', label: '2020' },
-];
-
 export const HistoryYearSelector = () => {
-  const { t } = usePage();
   const {
     getValues,
     control,
@@ -96,11 +87,16 @@ export const HistoryYearSelector = () => {
     control,
   });
 
+  const yearOptions = useRootState(
+    (state) => state.historyInfoReducer.historyYearSelector,
+  );
+  console.log('yearoptions[0]', yearOptions[0]);
+
   return (
     <Select
       options={yearOptions}
       styles={reactSelectStyle}
-      defaultValue={yearOptions[0]}
+      defaultValue={{ value: null, label: 'All' }}
       value={yearOptions.find((item) => item.value === yearField.value)}
       onChange={(options: any) => yearField.onChange(options?.value)}
     />
