@@ -9,6 +9,7 @@ import {
   IHistoryValueMatch,
   IResponseHistoryItem,
 } from '@models';
+import { util } from '@modules/util';
 import { setHistoryInfo } from '@store/historyInfoSlice';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -85,7 +86,9 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     dispatch(setHistoryInfo(item));
     window.open(
       window.location.origin +
-        `/${botId}/viewer/${id}/${item.createAt}/${item.actorEmail}/${item.actorName}`,
+        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createUtc))}/${
+          item.actorEmail
+        }/${item.actorName}`,
       '_blank',
       `toolbar=1,location=1,menubar=1`,
     );
@@ -165,7 +168,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   baseColor="#EDEDF0"
                 />
               ) : (
-                <p>{item.createAt}</p>
+                <p>{util.formatDateTime(new Date(item.createUtc))}</p>
               )}
               {isFetching ? (
                 <ReactLoadingSkeleton

@@ -12,7 +12,7 @@ const checkNextNodeIdTypes: string[] = [
 export const useYupValidation = () => {
   const { t } = usePage();
 
-  const FILE_SIZE = 3.2 * 1024 * 1024; //3mb제한
+  const FILE_SIZE = 3 * 1024 * 1024; //3mb제한
 
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; //jpeg, png가능(Line 기준)
 

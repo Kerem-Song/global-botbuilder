@@ -87,7 +87,7 @@ export interface IHistoryValueMatch {
 export interface IResponseHistoryItem {
   id: string;
   changeLogType: IChangeLogType;
-  createUtc: string;
+  createUtc: Date;
   actorEmail: string;
   actorName: string;
   channelName: string | null;
@@ -97,7 +97,7 @@ export interface IResponseHistoryItem {
   paramName: string;
   name: string;
   status: boolean;
-  createAt: string;
+  createAt: Date;
   no: number | null;
   flowName: string | null;
 }

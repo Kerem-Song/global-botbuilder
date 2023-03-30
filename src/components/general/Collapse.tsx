@@ -83,6 +83,13 @@ export const Collapse: FC<CollapseProps> = ({
     }
   }, [watch(`view.useImageCtrl`)]);
 
+  useEffect(() => {
+    if (watch(`view.useImageCtrl`) === undefined && !watch(`view.imageCtrl.imageUrl`)) {
+      setValue(`view.useImageCtrl`, false);
+    }
+  }, [watch(`view.imageCtrl.imageUrl`)]);
+
+  console.log('watch(`view.useImageCtrl`)', watch(`view.useImageCtrl`));
   return (
     <div className="node-item-wrap collapse">
       <div className="collapseHeader">

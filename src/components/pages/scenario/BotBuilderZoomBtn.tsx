@@ -6,6 +6,8 @@ import { zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
+import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
+
 export const BotBuilderZoomBtn = () => {
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
@@ -32,26 +34,28 @@ export const BotBuilderZoomBtn = () => {
         <span>{scale * 100}</span>
         <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
       </Col>
-      <Col className="operationBtn">
-        <Button
-          small
-          className="undo"
-          disabled={!past}
-          onClick={() => {
-            updateLineAll();
-            dispatch(ActionCreators.undo());
-          }}
-        />
-        <Button
-          small
-          className="redo"
-          disabled={!future}
-          onClick={() => {
-            updateLineAll();
-            dispatch(ActionCreators.redo());
-          }}
-        />
-      </Col>
+      {!HistoryViewerMatch() && (
+        <Col className="operationBtn">
+          <Button
+            small
+            className="undo"
+            disabled={!past}
+            onClick={() => {
+              updateLineAll();
+              dispatch(ActionCreators.undo());
+            }}
+          />
+          <Button
+            small
+            className="redo"
+            disabled={!future}
+            onClick={() => {
+              updateLineAll();
+              dispatch(ActionCreators.redo());
+            }}
+          />
+        </Col>
+      )}
     </Row>
   );
 };
