@@ -31,13 +31,15 @@ export const HistoryMain = () => {
       <div className="historyMain">
         <p className="historyMainTitle">{t(`HISTORY`)}</p>
         <FormProvider {...formMethods}>
-          <Row className="inquiryYear" align="center">
-            <Col className="inquiryYear">{t(`INQUIRY_YEAR`)}</Col>
-            <Col className="">
-              <HistoryYearSelector />
-            </Col>
-          </Row>
-          <HistoryCategoryFilter />
+          <div className="historyHeader">
+            <Row className="inquiryYear" align="center">
+              <Col className="inquiryYear">{t(`INQUIRY_YEAR`)}</Col>
+              <Col className="">
+                <HistoryYearSelector />
+              </Col>
+            </Row>
+            <HistoryCategoryFilter />
+          </div>
           <HistoryListItem category={filteredCategory} year={watch(`year`)} />
         </FormProvider>
       </div>

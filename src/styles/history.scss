@@ -44,7 +44,10 @@
     display: flex;
     flex-direction: column;
     gap: rem(16);
-  
+    overflow: auto;
+    max-height: calc(100vh - rem(255));
+    scrollbar-width: none;
+    
     .historyListWarpper {
       gap: rem(12);
       padding: rem(32);
@@ -113,7 +116,6 @@
           span {
             padding-left: rem(8);
           }
-
         }
 
         .historyListTitle {
@@ -166,6 +168,10 @@
         text-align: end;     
       }
     }
+  }
+
+  .historyListContainter::-webkit-scrollbar {
+    display: none;
   }
 }
 
