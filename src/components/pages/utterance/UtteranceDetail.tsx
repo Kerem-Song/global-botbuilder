@@ -85,7 +85,7 @@ export const UtteranceDetail = () => {
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
 
   const filterKeyword = fields.filter((x) =>
-    x.text?.toLowerCase().includes(searchWord.toLowerCase()),
+    x.text?.trim().toLowerCase().includes(searchWord.trim().toLowerCase()),
   );
 
   useEffect(() => {
@@ -515,9 +515,7 @@ export const UtteranceDetail = () => {
                   </div>
                 </Col>
               </Row>
-            ) : fields.find((x) =>
-                x.text?.toLowerCase().includes(searchWord.toLowerCase()),
-              ) ? (
+            ) : filterKeyword.length > 0 ? (
               filterKeyword.map((v, i) => {
                 return (
                   <div key={v.id} className="utteranceItem">
