@@ -1,6 +1,6 @@
-import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
+import { Button, Col, Divider, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import {
   IPararmeterList,
@@ -10,7 +10,7 @@ import {
 } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import * as yup from 'yup';
@@ -29,12 +29,12 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   variableList,
 }) => {
   const [formats, setFormats] = useState<number>();
+  const [parameterInputError, setParameterInputError] = useState<string>('');
   const { variableMutate, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
   const { t, tc } = usePage();
-  const { confirm, error: modalError } = useSystemModal();
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
@@ -43,13 +43,17 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       .string()
       .lowercase()
       .trim()
-      .matches(/^[a-z0-9_]*$/, `영어 소문자, 숫자, 특수문자 _ 만 입력 가능합니다.`)
-      .required(`필수 입력 항목입니다.`),
+      .required(`필수 입력 항목입니다.`)
+      .matches(
+        /^.?([a-z]|[\d]|[-_])+$/,
+        `영어 소문자, 숫자, 특수문자 _,-,. 만 입력 가능합니다.\n(.은 변수명 앞머리에만 가능합니다.)`,
+      ),
   });
 
   const {
     reset,
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<ISaveParameterData>({
@@ -57,9 +61,19 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     resolver: yupResolver(variableNameSchema),
   });
 
+  const { field } = useController({ name: 'name', control });
+
+  const handleParameterName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.indexOf(' ') !== -1) {
+      e.target.value = e.target.value.replaceAll(' ', '');
+    }
+    field.onChange(e);
+    setParameterInputError('');
+  };
+
   const handleClose = () => {
-    handleIsOpen(false);
     reset();
+    handleIsOpen(false);
   };
 
   useEffect(() => {
@@ -73,7 +87,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       reset(resetValue);
       setFormats(variableList.formatType!);
     } else if (isOpen) {
-      reset({});
+      reset({ name: '' });
       setFormats(undefined);
     }
   }, [variableList?.id, isOpen]);
@@ -105,19 +119,15 @@ export const VariablePopup: FC<VariablePopupProps> = ({
         onSuccess: (submitResult) => {
           console.log('modifyParameter', submitResult);
           if (submitResult && submitResult.isSuccess) {
-            lunaToast.success();
+            lunaToast.success('수정되었습니다.');
             reset();
-            // setFormats(undefined);
             handleClose();
           }
         },
         onError: (error) => {
           console.log('modifyError', error);
           if (error) {
-            modalError({
-              title: '중복 변수명',
-              description: <span>중복된 변수명입니다.</span>,
-            });
+            setParameterInputError('중복된 변수명입니다.');
           }
         },
       });
@@ -139,10 +149,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             reset();
             handleClose();
           } else {
-            modalError({
-              title: '중복 변수명',
-              description: <span>중복된 변수명입니다.</span>,
-            });
+            setParameterInputError('중복된 변수명입니다.');
           }
         },
       });
@@ -154,7 +161,8 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       style={{
         content: {
           width: '600px',
-          height: '317px',
+          height: 'fit-content',
+          maxHeight: '340px',
           margin: 'auto',
           marginTop: '200px',
           padding: 0,
@@ -175,38 +183,38 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             <span style={{ color: 'red' }}>*</span>
           </Col>
           <Col span={18}>
-            <FormItem error={errors.name}>
-              <Input
-                style={{ textTransform: 'lowercase' }}
-                {...register('name')}
-                placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
-              />
-            </FormItem>
+            <Input
+              placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
+              style={{ textTransform: 'lowercase' }}
+              ref={field.ref}
+              value={field.value || ''}
+              onChange={handleParameterName}
+              onBlur={field.onBlur}
+              isError={parameterInputError || errors.name?.message ? true : false}
+            />
+            <span className="error-message">{parameterInputError}</span>
+            <span className="error-message parameter-error">{errors.name?.message}</span>
           </Col>
         </Row>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
           <Col span={6}>{t('VARIABLE_FORMAT')}</Col>
           <Col span={18}>
-            <FormItem>
-              <Select
-                options={totalFormatList}
-                styles={reactSelectStyle}
-                menuPortalTarget={document.body}
-                placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
-                value={totalFormatList?.find((x) => x.value === formats) || null}
-                onChange={(e: any) => {
-                  setFormats(e.value);
-                }}
-              ></Select>
-            </FormItem>
+            <Select
+              options={totalFormatList}
+              styles={reactSelectStyle}
+              menuPortalTarget={document.body}
+              placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
+              value={totalFormatList?.find((x) => x.value === formats) || null}
+              onChange={(e: any) => {
+                setFormats(e.value);
+              }}
+            ></Select>
           </Col>
         </Row>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
           <Col span={6}>{t('DEFAULT_VALUE')}</Col>
           <Col span={18}>
-            <FormItem>
-              <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
-            </FormItem>
+            <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
           </Col>
         </Row>
         <Row justify="flex-end" style={{ padding: '0 20px 20px 20px' }}>
