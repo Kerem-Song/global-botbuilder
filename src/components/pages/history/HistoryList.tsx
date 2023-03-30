@@ -1,4 +1,4 @@
-import { icUtteranceSelectHistory } from '@assets';
+import { icNoResult, icUtteranceSelectHistory } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { usePage } from '@hooks';
@@ -186,7 +186,10 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
           </Row>
         ))
       ) : (
-        <ReactLoadingSkeleton count={1} height={24} width={96} baseColor="#EDEDF0" />
+        <div className="emptyList">
+          <img src={icNoResult} alt="noResult" />
+          <span>{t(`NO_RESULT`)}</span>
+        </div>
       )}
     </div>
   );

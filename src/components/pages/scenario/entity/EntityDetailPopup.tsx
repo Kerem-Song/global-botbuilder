@@ -1,4 +1,4 @@
-import { icPopupClose, icPrev, icNoResult } from '@assets';
+import { icNoResult, icPopupClose, icPrev } from '@assets';
 import {
   Button,
   Card,

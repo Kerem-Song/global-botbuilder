@@ -47,11 +47,11 @@
     overflow: auto;
     max-height: calc(100vh - rem(255));
     scrollbar-width: none;
-    
+
     .historyListWarpper {
       gap: rem(12);
       padding: rem(32);
-      width: rem(1120);      
+      width: 100%;      
       height: rem(149);
       background-color: $grayWhite;
       border: rem(1) solid $gray200;
@@ -166,6 +166,23 @@
         line-height: rem(17);
         color: $gray500;
         text-align: end;     
+      }
+    }
+
+    .emptyList {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: rem(60);
+      width: 100%;
+      text-align: center;
+      background: $grayWhite;
+      border: rem(1) solid $gray200;
+      border-radius: rem(8);
+
+      span {
+        white-space: pre-line;
       }
     }
   }

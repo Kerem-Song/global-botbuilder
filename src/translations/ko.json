@@ -256,6 +256,7 @@
     "CAPTION_INTENTUTTERNACEUPDATED": "발화를 수정했습니다",
     "CAPTION_INTENTDELETED": "인텐트가 삭제되었습니다.",
     "CAPTION_LIVEDEPLOY": "배포",
-    "CAPTION_TESTDEPLOY": "배포"
+    "CAPTION_TESTDEPLOY": "배포",
+    "NO_RESULT": "조회된 히스토리가 없습니다. \n조건을 바꿔서 다시 시도해보세요."
   }
 }
