@@ -9,6 +9,7 @@ import {
   useController,
   UseFieldArrayRemove,
   useFormContext,
+  UseFormTrigger,
 } from 'react-hook-form';
 
 import { AddEntryBtn } from './AddEntryBtn';
@@ -19,6 +20,7 @@ export interface IEntityDetailItemProps {
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
   setIsActive: (value: boolean) => void;
+  trigger: UseFormTrigger<ISaveEntryGroup>;
 }
 
 export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
@@ -27,6 +29,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   searchKeyword,
   entryGroup,
   setIsActive,
+  trigger,
 }) => {
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
@@ -92,6 +95,11 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                   })}
                   onBlur={() => {
                     setEditInputIndex(-1);
+                    trigger(`entries.${index}.representativeEntry`);
+                  }}
+                  onPressEnter={() => {
+                    setEditInputIndex(-1);
+                    trigger(`entries.${index}.representativeEntry`);
                   }}
                   isError={
                     errors.entries?.[index]?.representativeEntry?.message ? true : false
@@ -124,7 +132,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                   <AddEntryBtn
                     index={index}
                     searchKeyword={searchKeyword}
-                    representativeEntry={item.representativeEntry}
+                    representativeEntry={field.value}
                     synonym={synonymField.value}
                     setIsActive={setIsActive}
                   />

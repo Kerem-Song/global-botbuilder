@@ -333,7 +333,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         ref={nameField.ref}
                         value={nameField.value}
                         onChange={handleEntityName}
-                        onBlur={nameField.onBlur}
+                        // onBlur={handleEntityName}
                         isError={
                           entryNameInputError || errors.name?.message ? true : false
                         }
@@ -424,9 +424,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             maxLength={125}
                             showCount
                             ref={entryGroupNameRef}
-                            onPressEnter={() =>
-                              handleRegisterEntry(entryGroupNameRef.current?.value)
-                            }
+                            onPressEnter={() => {
+                              handleRegisterEntry(entryGroupNameRef.current?.value);
+                              trigger('entries');
+                            }}
                             onChange={(e) => {
                               isEntryInputError(e);
                               setIsActive(true);
@@ -479,6 +480,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                   entriesRemove={remove}
                                   searchKeyword={searchKeyword}
                                   setIsActive={setIsActive}
+                                  trigger={trigger}
                                 />
                               );
                             })}
