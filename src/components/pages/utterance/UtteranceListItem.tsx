@@ -1,4 +1,4 @@
-import { icUtteranceEmpty } from '@assets';
+import { icNoResult } from '@assets';
 import { Col, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
@@ -192,7 +192,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       ) : (
         <tr className="emptyList">
           <td className="empty">
-            <img src={icUtteranceEmpty} alt="empty" />
+            <img src={icNoResult} alt="empty" />
             {searchData?.searchWord ? (
               <span>No search results found.</span>
             ) : (

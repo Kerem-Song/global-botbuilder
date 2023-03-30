@@ -1,4 +1,4 @@
-import { icPlusWhite, icUtteranceEmpty } from '@assets';
+import { icPlusWhite, icNoResult } from '@assets';
 import { Button, Card, Col, Input, Row, Title } from '@components';
 import { useModalOpen, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
@@ -158,11 +158,7 @@ export const MyEntity = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <img
-                    src={icUtteranceEmpty}
-                    alt="empty"
-                    style={{ marginBottom: '10px' }}
-                  />
+                  <img src={icNoResult} alt="empty" style={{ marginBottom: '10px' }} />
                   {searchKeywordParameter ? (
                     <span>No search results found.</span>
                   ) : (

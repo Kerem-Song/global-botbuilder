@@ -64,6 +64,7 @@ import icLnbShow from '@assets/icons/ic_lnb_show.svg';
 import icMinus from '@assets/icons/ic_minus.svg';
 import icNextActive from '@assets/icons/ic_next_active.svg';
 import icNextInactive from '@assets/icons/ic_next_inactive.svg';
+import icNoResult from '@assets/icons/ic_no_result.svg';
 import icNode from '@assets/icons/ic_node.svg';
 import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
 import icOtherFlowRedirect from '@assets/icons/ic_other_flow_redirect.svg';
@@ -126,7 +127,6 @@ import icUtteranceAdd from '@assets/icons/ic_utterance_add.svg';
 import icUtterance from '@assets/icons/ic_utterance_default.svg';
 import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.svg';
 import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
-import icUtteranceEmpty from '@assets/icons/ic_utterance_empty.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
 import icUtteranceSelectHistory from '@assets/icons/ic_utterance_select_history.svg';
 import icInsta from '@assets/images/img_insta.svg';
@@ -205,6 +205,7 @@ export {
   icNextInactive,
   icNode,
   icNodeBottom,
+  icNoResult,
   icOtherFlowRedirect,
   icOtherFlowRedirectHover,
   icPaste,
@@ -265,7 +266,6 @@ export {
   icUtteranceAdd,
   icUtteranceDeleteDefault,
   icUtteranceDeleteDisable,
-  icUtteranceEmpty,
   icUtteranceSelected,
   icUtteranceSelectHistory,
   imgInstabot,

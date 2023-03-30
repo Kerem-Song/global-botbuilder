@@ -1,4 +1,4 @@
-import { icUtteranceEmpty } from '@assets';
+import { icNoResult } from '@assets';
 import { Card, Col, Input, Row, Title } from '@components';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IPagingItems, IResponseEntryItems } from '@models';
@@ -102,7 +102,7 @@ export const SystemEntity = () => {
                       alignItems: 'center',
                     }}
                   >
-                    <img src={icUtteranceEmpty} alt="empty" />
+                    <img src={icNoResult} alt="empty" />
                     <span>No entries registered</span>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { icPopupClose, icPrev, icUtteranceEmpty } from '@assets';
+import { icPopupClose, icPrev, icNoResult } from '@assets';
 import {
   Button,
   Card,
@@ -462,7 +462,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           >
                             <div className="emptyList">
                               <div className="empty">
-                                <img src={icUtteranceEmpty} alt="empty" />
+                                <img src={icNoResult} alt="empty" />
                                 <span>No entries registered</span>
                               </div>
                             </div>
@@ -500,7 +500,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                               >
                                 <div className="emptyList">
                                   <div className="empty">
-                                    <img src={icUtteranceEmpty} alt="empty" />
+                                    <img src={icNoResult} alt="empty" />
                                     <span>No search results found.</span>
                                   </div>
                                 </div>

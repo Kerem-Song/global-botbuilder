@@ -1,4 +1,4 @@
-import { icEnter, icUtteranceEmpty } from '@assets';
+import { icEnter, icNoResult } from '@assets';
 import { Card } from '@components/data-display';
 import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
@@ -510,7 +510,7 @@ export const UtteranceDetail = () => {
               <Row style={{ width: '100%', marginTop: '12px' }}>
                 <Col className="emptyList utteranceItem">
                   <div className="empty">
-                    <img src={icUtteranceEmpty} alt="empty" />
+                    <img src={icNoResult} alt="empty" />
                     <span>No registered Utterance.</span>
                   </div>
                 </Col>
@@ -533,7 +533,7 @@ export const UtteranceDetail = () => {
               <Row style={{ width: '100%', marginTop: '12px' }}>
                 <div className="emptyList utteranceItem">
                   <div className="empty">
-                    <img src={icUtteranceEmpty} alt="empty" />
+                    <img src={icNoResult} alt="empty" />
                     <span>No search results found.</span>
                   </div>
                 </div>
