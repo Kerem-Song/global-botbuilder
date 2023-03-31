@@ -7,6 +7,7 @@ export const HISTORY_CATEGORY_TYPES = {
   SETTING: 1 << 3, //8
   DEPLOYEMNT: 1 << 4, //16
   ETC: 1 << 5, //32
+  MY_HISTORY: 1 << 6, //64
 } as const;
 
 type ValueOf<T> = T[keyof T];

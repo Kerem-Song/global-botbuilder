@@ -120,15 +120,10 @@ export const HistoryListItem = ({
     );
   };
 
-  const userId = useRootState((state) => state.userInfoReducer.loginId);
-  const myHistoryList = data?.pages[0].items?.filter(
-    (list) => list.actorName === 'QA 가상 이름',
-  );
-  console.log('myhistorylist', myHistoryList);
   return (
     <div className="historyListContainter" ref={ref}>
       {hasPage() ? (
-        (checkedMyHistory ? myHistoryList : data?.pages[0].items)?.map((item) => (
+        data?.pages[0].items?.map((item) => (
           <Row
             className="historyListWarpper"
             justify="space-between"
