@@ -38,8 +38,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
-  const [entryInputError, setEntryInputError] = useState<string>();
-  const [entryNameInputError, setEntryNameInputError] = useState<string>();
+  const [entryInputError, setEntryInputError] = useState<string>('');
+  const [entryNameInputError, setEntryNameInputError] = useState<string>('');
+  const [regexInputError, setRegexInputError] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm } = useSystemModal();
@@ -62,7 +63,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   });
 
   const regexSchema = yup.object({
-    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
+    representativeEntry: yup.string().trim().min(1, '필수 입력 항목입니다.'),
   });
 
   const entityNameSchema = yup
@@ -115,6 +116,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const { field: isRegexField } = useController({ name: 'isRegex', control });
   const { field: nameField } = useController({ name: 'name', control });
+
+  const { field } = useController({ name: 'entries', control });
 
   const entryGroupNameRef = useRef<HTMLInputElement>(null);
 
@@ -194,7 +197,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
-    if (entryData.entryGroupid!) {
+    if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
         name: entryData.name,
@@ -203,18 +206,29 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         entryGroupid: entryData.entryGroupid,
       };
 
+      console.log('modifyEntry', modifyEntry);
+
       entryGroupMutate.mutate(modifyEntry, {
         onSuccess: (res) => {
           if (res && res.isSuccess) {
             reset();
             lunaToast.success('수정되었습니다.');
             handleIsOpen(false);
+          } else {
+            setRegexInputError('필수 입력 항목입니다.');
           }
         },
-        onError: (res) => {
-          console.log(res);
-          setEntryNameInputError('중복된 대표 엔트리가 있습니다.');
-        },
+        // onError: (res) => {
+        //   if (res instanceof AxiosError) {
+        //     setEntryNameInputError('중복된 대표 엔트리가 있습니다.');
+        //   } else if (res instanceof Error) {
+        //     if (res.message === 'InvalidateDataException') {
+        //       console.error('에러 발생인데 InvalidateDataException임', res);
+        //     } else {
+        //       console.error('에러 발생', res);
+        //     }
+        //   }
+        // },
       });
     } else {
       const newEntry: ISaveEntryGroup = {
@@ -223,6 +237,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         isRegex: entryData.isRegex,
         entries: entryData.entries,
       };
+      console.log('newEntry', newEntry);
 
       entryGroupMutate.mutate(newEntry, {
         onSuccess: (res) => {
@@ -230,8 +245,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
             reset();
             lunaToast.success('저장되었습니다.');
             handleIsOpen(false);
-          } else {
-            setEntryNameInputError('중복된 대표 엔트리가 있습니다.');
+          } else if (res?.exception.errorCode === 7608) {
+            setEntryNameInputError('중복된 엔트리명 입니다.');
+          } else if (entryData.isRegex === true && res?.exception.errorCode === 7000) {
+            setRegexInputError('필수 입력 항목입니다.');
           }
         },
       });
@@ -248,6 +265,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
 
     prepend({ representativeEntry: name, synonym: [] });
+    trigger('entries');
     setIsActive(true);
 
     if (entryGroupNameRef.current) {
@@ -294,7 +312,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
           </Button>
         </div>
         <button className="closeBtn" onClick={handleClose}>
-          <img src={icPopupClose} alt="delete"></img>
+          <img src={icPopupClose} alt="modal close btn"></img>
         </button>
       </div>
       <FormProvider {...formMethods}>
@@ -333,7 +351,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         ref={nameField.ref}
                         value={nameField.value}
                         onChange={handleEntityName}
-                        // onBlur={handleEntityName}
                         isError={
                           entryNameInputError || errors.name?.message ? true : false
                         }
@@ -382,17 +399,25 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <span style={{ color: 'red' }}> *</span>
                         </Col>
                         <Col flex="auto">
-                          <FormItem error={errors.entries?.[0]?.representativeEntry}>
-                            <Input
-                              {...register('entries.0.representativeEntry')}
-                              // placeholder="Input Regular expression"
-                              placeholder="엔트리를 정규식으로 입력해주세요."
-                              onChange={(e) => {
-                                setValue('entries.0.representativeEntry', e.target.value);
-                                setIsActive(true);
-                              }}
-                            />
-                          </FormItem>
+                          <Input
+                            placeholder="엔트리를 정규식으로 입력해주세요."
+                            onChange={(e) => {
+                              // setValue('entries.0.representativeEntry', e.target.value);
+                              field.onChange([{ representativeEntry: e.target.value }]);
+                              setIsActive(true);
+                            }}
+                            isError={
+                              regexInputError || errors.entries?.[0]?.representativeEntry
+                                ? true
+                                : false
+                            }
+                            ref={field.ref}
+                            value={field.value?.[0]?.representativeEntry || ''}
+                          />
+                          <span className="error-message">{regexInputError}</span>
+                          <span className="error-message">
+                            {errors.entries?.[0]?.representativeEntry?.message}
+                          </span>
                         </Col>
                       </>
                     ) : (
@@ -426,11 +451,12 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             ref={entryGroupNameRef}
                             onPressEnter={() => {
                               handleRegisterEntry(entryGroupNameRef.current?.value);
+                              setIsActive(true);
                               trigger('entries');
                             }}
                             onChange={(e) => {
-                              isEntryInputError(e);
                               setIsActive(true);
+                              isEntryInputError(e);
                             }}
                             onBlur={isEntryInputError}
                             isError={
@@ -453,19 +479,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       </Row>
                       <Space gap={8} direction="vertical">
                         {watch('entries').length === 0 ? (
-                          <div
-                            style={{
-                              width: '100%',
-                              marginTop: '12px',
-                              display: 'flex',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <div className="emptyList">
-                              <div className="empty">
-                                <img src={icNoResult} alt="empty" />
-                                <span>No entries registered</span>
-                              </div>
+                          <div className="emptyList">
+                            <div className="empty">
+                              <img src={icNoResult} alt="empty" />
+                              <span>No entries registered</span>
                             </div>
                           </div>
                         ) : watch('isRegex') === false ||
@@ -492,19 +509,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                                 (x.synonym &&
                                   x.synonym?.find((s) => s.includes(searchKeyword))),
                             ).length === 0 ? (
-                              <div
-                                style={{
-                                  width: '100%',
-                                  marginTop: '12px',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <div className="emptyList">
-                                  <div className="empty">
-                                    <img src={icNoResult} alt="empty" />
-                                    <span>No search results found.</span>
-                                  </div>
+                              <div className="emptyList">
+                                <div className="empty">
+                                  <img src={icNoResult} alt="empty" />
+                                  <span>No search results found.</span>
                                 </div>
                               </div>
                             ) : (

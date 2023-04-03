@@ -97,9 +97,7 @@ export const MyEntity = () => {
         <Row gap={12}>
           {isExistInitialData(initialData) ? (
             initialData?.pages.map((v) => {
-              console.log('initialData', initialData);
               const pages = v.items;
-              console.log('pages', pages);
               return pages.map((x, i) => {
                 return (
                   <Col key={i} span={6}>

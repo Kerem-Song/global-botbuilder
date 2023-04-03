@@ -1,12 +1,12 @@
 import { useHttp, useRootState } from '@hooks';
 import { IHasResults, ISearchParameter } from '@models';
-import { IHasResult } from '@models/interfaces/IHasResult';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import {
   IDeleteParameter,
   IResponseDeleteParameter,
+  IResponseSaveParameter,
   ISaveParameter,
   ISaveParameterData,
   IVariableList,
@@ -37,7 +37,7 @@ export const useVariableClient = () => {
   const variableMutate = useMutation(async (variable: ISaveParameter) => {
     const result = await http.post<
       ISaveParameter,
-      AxiosResponse<IHasResult<ISaveParameterData>>
+      AxiosResponse<IResponseSaveParameter<ISaveParameterData>>
     >('Builder/SaveParameter', variable);
 
     if (result) {

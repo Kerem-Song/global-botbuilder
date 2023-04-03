@@ -72,8 +72,8 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   };
 
   const handleClose = () => {
-    reset();
     handleIsOpen(false);
+    setParameterInputError('');
   };
 
   useEffect(() => {
@@ -116,20 +116,20 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       };
 
       variableMutate.mutate(modifyParameter, {
-        onSuccess: (submitResult) => {
-          console.log('modifyParameter', submitResult);
-          if (submitResult && submitResult.isSuccess) {
+        onSuccess: (res) => {
+          console.log('modifyParameter', res);
+          if (res && res.isSuccess) {
             lunaToast.success('수정되었습니다.');
             reset();
             handleClose();
           }
         },
-        onError: (error) => {
-          console.log('modifyError', error);
-          if (error) {
-            setParameterInputError('중복된 변수명입니다.');
-          }
-        },
+        // onError: (error) => {
+        //   console.log('modifyError', error);
+        //   if (error) {
+        //     setParameterInputError('중복된 변수명입니다.');
+        //   }
+        // },
       });
     } else {
       const newVariable: ISaveParameter = {
@@ -142,13 +142,13 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       };
 
       variableMutate.mutate(newVariable, {
-        onSuccess: (submitResult) => {
-          console.log('newVariable', submitResult);
-          if (submitResult && submitResult.isSuccess) {
+        onSuccess: (res) => {
+          console.log('newVariable', res);
+          if (res && res.isSuccess) {
             lunaToast.success();
             reset();
             handleClose();
-          } else {
+          } else if (res?.exception?.errorCode === 7636) {
             setParameterInputError('중복된 변수명입니다.');
           }
         },

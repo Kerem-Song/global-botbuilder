@@ -39,8 +39,8 @@ export interface IResponseDeploy {
 }
 
 export interface IException {
-  errorCode: number;
   exceptionType: string;
-  message: string;
+  errorCode: number;
   subErrorCode: number;
+  message: string;
 }

@@ -57,6 +57,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
 
     if (result) {
       entriesRemove(index);
+      setIsActive(true);
     }
   };
 
@@ -69,6 +70,12 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     name: `entries.${index}.representativeEntry`,
     control,
   });
+
+  const handleRepresentativeEntry = () => {
+    setIsActive(true);
+    setEditInputIndex(-1);
+    trigger(`entries.${index}.representativeEntry`);
+  };
 
   if (
     searchKeyword === '' ||
@@ -93,14 +100,12 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                     'input-normal': !errors.entries?.[index]?.representativeEntry,
                     'input-error': errors.entries?.[index]?.representativeEntry,
                   })}
-                  onBlur={() => {
-                    setEditInputIndex(-1);
-                    trigger(`entries.${index}.representativeEntry`);
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
                   }}
-                  onPressEnter={() => {
-                    setEditInputIndex(-1);
-                    trigger(`entries.${index}.representativeEntry`);
-                  }}
+                  onBlur={handleRepresentativeEntry}
+                  onPressEnter={handleRepresentativeEntry}
+                  onPressEsc={handleRepresentativeEntry}
                   isError={
                     errors.entries?.[index]?.representativeEntry?.message ? true : false
                   }
@@ -111,8 +116,8 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
                     error: errors.entries?.[index]?.representativeEntry,
                   })}
                   onDoubleClick={(e) => {
-                    setEditInputIndex(i);
                     e.preventDefault();
+                    setEditInputIndex(i);
                   }}
                 >
                   <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>
