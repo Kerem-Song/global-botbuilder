@@ -31,14 +31,14 @@ export const Collapse: FC<CollapseProps> = ({
     setIsCollapsed(!isCollapsed);
   };
 
-  console.log(
-    'field in collapse',
-    field === 'useUtteranceParam'
-      ? `view.useUtteranceParam`
-      : index !== undefined
-      ? `view.childrenViews.${index}.useImageCtrl`
-      : `view.useImageCtrl`,
-  );
+  // console.log(
+  //   'field in collapse',
+  //   field === 'useUtteranceParam'
+  //     ? `view.useUtteranceParam`
+  //     : index !== undefined
+  //     ? `view.childrenViews.${index}.useImageCtrl`
+  //     : `view.useImageCtrl`,
+  // );
 
   const isCollapsedModalForImage = async () => {
     if (field === 'useImageCtrl' && index !== undefined) {
@@ -89,7 +89,6 @@ export const Collapse: FC<CollapseProps> = ({
     }
   }, [watch(`view.imageCtrl.imageUrl`)]);
 
-  console.log('watch(`view.useImageCtrl`)', watch(`view.useImageCtrl`));
   return (
     <div className="node-item-wrap collapse">
       <div className="collapseHeader">

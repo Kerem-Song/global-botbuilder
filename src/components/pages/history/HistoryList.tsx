@@ -22,11 +22,7 @@ interface IReactSelect {
   value: string | null;
   label: string;
 }
-export const HistoryListItem = ({
-  category,
-  year,
-  checkedMyHistory,
-}: IHistoryCondition) => {
+export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   const { t } = usePage();
   const dispatch = useDispatch();
   const { botId } = useParams();
