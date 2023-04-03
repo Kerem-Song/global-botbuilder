@@ -11,7 +11,7 @@ import {
 } from '@models';
 import { util } from '@modules/util';
 import { setHistoryInfo, setHistoryYearSelector } from '@store/historyInfoSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
@@ -32,10 +32,10 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     category: category ? category : null,
     year: year,
   });
-  const { ref, inView } = useInView();
+  const [ref, inView] = useInView();
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView]);
@@ -117,92 +117,96 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   };
 
   return (
-    <div className="historyListContainter" ref={ref}>
+    <div className="historyListContainter">
       {hasPage() ? (
-        data?.pages[0].items?.map((item) => (
-          <Row
-            className="historyListWarpper"
-            justify="space-between"
-            align="flex-end"
-            key={item.id}
-          >
-            <Col className="historyList">
-              {isFetching ? (
-                <ReactLoadingSkeleton
-                  count={1}
-                  height={24}
-                  width={96}
-                  baseColor="#EDEDF0"
-                />
-              ) : (
-                <div
-                  className="historyListCatetory"
-                  data-img={matchCategory(item).categoryValue}
-                >
-                  <span>{matchCategory(item).categoryLabel}</span>
-                </div>
-              )}
-              {isFetching ? (
-                <ReactLoadingSkeleton
-                  count={1}
-                  height={24}
-                  width={132}
-                  baseColor="#DFE8FF"
-                />
-              ) : (
-                <p className="historyListTitle">
-                  {item[matchCategory(item).property]}
-                  {matchCategory(item).categoryChangeLotType.includes(2004) ? (
-                    <Button
-                      shape="ghost"
-                      className="viewerBtn"
-                      onClick={(e) => handleViewerOpen(e, item)}
-                      value={item.id}
+        data?.pages.map((v) => {
+          const pages = v.items;
+          return pages.map((item) => (
+            <div key={item.id} ref={ref}>
+              <Row
+                className="historyListWarpper"
+                justify="space-between"
+                align="flex-end"
+              >
+                <Col className="historyList">
+                  {isFetching ? (
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={24}
+                      width={96}
+                      baseColor="#EDEDF0"
+                    />
+                  ) : (
+                    <div
+                      className="historyListCatetory"
+                      data-img={matchCategory(item).categoryValue}
                     >
-                      {t(`VIEWER_BTN`)}
-                    </Button>
-                  ) : null}
-                </p>
-              )}
-              {isFetching ? (
-                <ReactLoadingSkeleton
-                  count={1}
-                  height={24}
-                  width={360}
-                  baseColor="#EDEDF0"
-                />
-              ) : (
-                <div>
-                  <span className="historyListDesc">{matchCategory(item).desc}</span>
-                </div>
-              )}
-            </Col>
-            <Col className="historyDateActorWrapper">
-              {isFetching ? (
-                <ReactLoadingSkeleton
-                  count={1}
-                  height={24}
-                  width={135}
-                  baseColor="#EDEDF0"
-                />
-              ) : (
-                <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
-              )}
-              {isFetching ? (
-                <ReactLoadingSkeleton
-                  count={1}
-                  height={24}
-                  width={190}
-                  baseColor="#EDEDF0"
-                />
-              ) : (
-                <p>
-                  {item.actorEmail}({item.actorName})
-                </p>
-              )}
-            </Col>
-          </Row>
-        ))
+                      <span>{matchCategory(item).categoryLabel}</span>
+                    </div>
+                  )}
+                  {isFetching ? (
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={24}
+                      width={132}
+                      baseColor="#DFE8FF"
+                    />
+                  ) : (
+                    <p className="historyListTitle">
+                      {item[matchCategory(item).property]}
+                      {matchCategory(item).categoryChangeLotType.includes(2004) ? (
+                        <Button
+                          shape="ghost"
+                          className="viewerBtn"
+                          onClick={(e) => handleViewerOpen(e, item)}
+                          value={item.id}
+                        >
+                          {t(`VIEWER_BTN`)}
+                        </Button>
+                      ) : null}
+                    </p>
+                  )}
+                  {isFetching ? (
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={24}
+                      width={360}
+                      baseColor="#EDEDF0"
+                    />
+                  ) : (
+                    <div>
+                      <span className="historyListDesc">{matchCategory(item).desc}</span>
+                    </div>
+                  )}
+                </Col>
+                <Col className="historyDateActorWrapper">
+                  {isFetching ? (
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={24}
+                      width={135}
+                      baseColor="#EDEDF0"
+                    />
+                  ) : (
+                    <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
+                  )}
+                  {isFetching ? (
+                    <ReactLoadingSkeleton
+                      count={1}
+                      height={24}
+                      width={190}
+                      baseColor="#EDEDF0"
+                    />
+                  ) : (
+                    <p>
+                      {item.actorEmail}({item.actorName})
+                    </p>
+                  )}
+                </Col>
+              </Row>
+            </div>
+          ));
+        })
       ) : (
         <div className="emptyList">
           <img src={icNoResult} alt="noResult" />
