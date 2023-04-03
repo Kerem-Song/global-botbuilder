@@ -1,17 +1,15 @@
 import { Button, Input } from '@components';
-import { Col } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks';
 import {
   IQuickRepliesContent,
-  IRefreshBotTester,
   ISendMessage,
   ITesterDataType,
   ITesterDebugMeta,
   TESTER_DATA_TYPES,
 } from '@models';
 import { initMessages, setTesterData } from '@store/botTesterSlice';
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -26,7 +24,7 @@ export interface IBotTesterProps {
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { t } = useTranslation('botTest');
-  const { botTesterMutate, reFreshbotTester } = useBotTesterClient();
+  const { botTesterMutate, refreshBotTester } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
@@ -41,7 +39,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       sessionToken: token!,
     };
 
-    const res = await reFreshbotTester.mutateAsync(sendToken);
+    const res = await refreshBotTester.mutateAsync(sendToken);
 
     if (res) {
       dispatch(initMessages());
@@ -119,13 +117,13 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   return (
     <>
       {isOpen && (
-        <Draggable onDrag={undefined} bounds="#layout">
+        <Draggable handle=".botTesterHeader" onDrag={undefined} bounds="#layout">
           <div className="botTester">
-            <Col className="botTesterHeader">
-              <Col className="text">{t('HEADER')}</Col>
+            <div className="botTesterHeader">
+              <div className="text">{t('HEADER')}</div>
               <button className="icon refreshBtn" onClick={handleRefresh} />
               <button className="icon closeBtn" onClick={handleClose} />
-            </Col>
+            </div>
             <div
               className="botTesterContent"
               role="presentation"
@@ -133,7 +131,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
               ref={scrollRef}
             >
               {botTesterData.map((item, i) => {
-                console.log(item);
                 return (
                   <div
                     key={i}

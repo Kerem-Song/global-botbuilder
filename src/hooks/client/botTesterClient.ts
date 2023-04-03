@@ -20,7 +20,7 @@ export const useBotTesterClient = () => {
     return result.data;
   });
 
-  const reFreshbotTester = useMutation(async (reFreshBotToken: IRefreshBotTester) => {
+  const refreshBotTester = useMutation(async (reFreshBotToken: IRefreshBotTester) => {
     const result = await http.post<
       IRefreshBotTester,
       AxiosResponse<IResponseRefreshBotTester>
@@ -29,5 +29,5 @@ export const useBotTesterClient = () => {
     return result.data;
   });
 
-  return { botTesterMutate, reFreshbotTester };
+  return { botTesterMutate, refreshBotTester };
 };
