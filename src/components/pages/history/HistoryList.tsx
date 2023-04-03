@@ -1,7 +1,7 @@
-import { icNoResult, icUtteranceSelectHistory } from '@assets';
+import { icNoResult } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { usePage, useRootState } from '@hooks';
+import { usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import {
   IHistoryCondition,
@@ -11,7 +11,7 @@ import {
 } from '@models';
 import { util } from '@modules/util';
 import { setHistoryInfo, setHistoryYearSelector } from '@store/historyInfoSlice';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
@@ -118,6 +118,47 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
   return (
     <div className="historyListContainter">
+      {isFetching &&
+        util.range(5).map((n) => (
+          <div key={n}>
+            <Row className="historyListWarpper" justify="space-between" align="flex-end">
+              <Col className="historyList">
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={24}
+                  width={96}
+                  baseColor="#EDEDF0"
+                />{' '}
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={24}
+                  width={132}
+                  baseColor="#DFE8FF"
+                />
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={24}
+                  width={360}
+                  baseColor="#EDEDF0"
+                />
+              </Col>
+              <Col className="historyDateActorWrapper">
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={24}
+                  width={135}
+                  baseColor="#EDEDF0"
+                />
+                <ReactLoadingSkeleton
+                  count={1}
+                  height={24}
+                  width={190}
+                  baseColor="#EDEDF0"
+                />
+              </Col>
+            </Row>
+          </div>
+        ))}
       {hasPage() ? (
         data?.pages.map((v) => {
           const pages = v.items;
@@ -129,79 +170,37 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                 align="flex-end"
               >
                 <Col className="historyList">
-                  {isFetching ? (
-                    <ReactLoadingSkeleton
-                      count={1}
-                      height={24}
-                      width={96}
-                      baseColor="#EDEDF0"
-                    />
-                  ) : (
-                    <div
-                      className="historyListCatetory"
-                      data-img={matchCategory(item).categoryValue}
-                    >
-                      <span>{matchCategory(item).categoryLabel}</span>
-                    </div>
-                  )}
-                  {isFetching ? (
-                    <ReactLoadingSkeleton
-                      count={1}
-                      height={24}
-                      width={132}
-                      baseColor="#DFE8FF"
-                    />
-                  ) : (
-                    <p className="historyListTitle">
-                      {item[matchCategory(item).property]}
-                      {matchCategory(item).categoryChangeLotType.includes(2004) ? (
-                        <Button
-                          shape="ghost"
-                          className="viewerBtn"
-                          onClick={(e) => handleViewerOpen(e, item)}
-                          value={item.id}
-                        >
-                          {t(`VIEWER_BTN`)}
-                        </Button>
-                      ) : null}
-                    </p>
-                  )}
-                  {isFetching ? (
-                    <ReactLoadingSkeleton
-                      count={1}
-                      height={24}
-                      width={360}
-                      baseColor="#EDEDF0"
-                    />
-                  ) : (
-                    <div>
-                      <span className="historyListDesc">{matchCategory(item).desc}</span>
-                    </div>
-                  )}
+                  <div
+                    className="historyListCatetory"
+                    data-img={matchCategory(item).categoryValue}
+                  >
+                    <span>{matchCategory(item).categoryLabel}</span>
+                  </div>
+
+                  <p className="historyListTitle">
+                    {item[matchCategory(item).property]}
+                    {matchCategory(item).categoryChangeLotType.includes(2004) ? (
+                      <Button
+                        shape="ghost"
+                        className="viewerBtn"
+                        onClick={(e) => handleViewerOpen(e, item)}
+                        value={item.id}
+                      >
+                        {t(`VIEWER_BTN`)}
+                      </Button>
+                    ) : null}
+                  </p>
+
+                  <div>
+                    <span className="historyListDesc">{matchCategory(item).desc}</span>
+                  </div>
                 </Col>
                 <Col className="historyDateActorWrapper">
-                  {isFetching ? (
-                    <ReactLoadingSkeleton
-                      count={1}
-                      height={24}
-                      width={135}
-                      baseColor="#EDEDF0"
-                    />
-                  ) : (
-                    <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
-                  )}
-                  {isFetching ? (
-                    <ReactLoadingSkeleton
-                      count={1}
-                      height={24}
-                      width={190}
-                      baseColor="#EDEDF0"
-                    />
-                  ) : (
-                    <p>
-                      {item.actorEmail}({item.actorName})
-                    </p>
-                  )}
+                  <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
+
+                  <p>
+                    {item.actorEmail}({item.actorName})
+                  </p>
                 </Col>
               </Row>
             </div>
