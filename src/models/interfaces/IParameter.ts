@@ -1,3 +1,5 @@
+import { IException } from './IResponse';
+
 export interface ISearchParameter {
   sessionToken: string;
 }
@@ -29,6 +31,7 @@ export interface IResponseDeleteParameter {
   result: boolean;
   exception?: string | null;
   isSuccess?: boolean;
+  newToken?: string | null;
 }
 
 export interface IGetParameterFormats {
@@ -42,4 +45,11 @@ export interface IGetParameterFormats {
 export interface IPararmeterList {
   value: number;
   label: string;
+}
+
+export interface IResponseSaveParameter<T> {
+  result: T;
+  exception: IException;
+  isSuccess: boolean;
+  newToken: string | null;
 }

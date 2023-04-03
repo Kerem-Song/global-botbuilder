@@ -4,6 +4,7 @@ import {
   IGetEntryGroup,
   IHasResult,
   IPagingItems,
+  IResponseEntity,
   IResponseEntryItems,
   IResponseSaveEntryGroup,
   ISaveEntryGroup,
@@ -65,7 +66,7 @@ export const useEntityClient = () => {
   const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
     const result = await http.post<
       ISaveEntryGroup,
-      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
+      AxiosResponse<IResponseEntity<IResponseSaveEntryGroup>>
     >('Builder/SaveEntryGroup', entry);
 
     if (result) {
