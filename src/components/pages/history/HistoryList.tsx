@@ -12,6 +12,7 @@ import {
 import { util } from '@modules/util';
 import { setHistoryInfo, setHistoryYearSelector } from '@store/historyInfoSlice';
 import { useEffect } from 'react';
+import { Trans } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
@@ -73,28 +74,41 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
       (v) => v.changeLogType === item.changeLogType,
     );
     const categoryLabel = matched.map((val) => val.categoryLabel);
+
     const categoryValue = matched.map((val) => val.categoryValue);
+
     const categoryChangeLotType = matched.map((val) => val.changeLogType);
+
     const property = matched.map(
       (val) => Object.values(val.property)[0],
     )[0] as keyof IHistoryProperty;
+
     const secondProperty = matched.map((val) =>
       Object.keys(val.property),
     )[0][1] as keyof IHistoryProperty;
 
-    const desc = matched.map((val) =>
-      t(`CAPTION_${val.name}`, {
-        firstParam: item[property],
-        secondParam: item[secondProperty],
-      }),
-    );
+    const description = matched.map((val, i) => {
+      const firstParam = item[property];
+      const secondParam = item[secondProperty];
+      return (
+        <Trans key={`${val.categoryLabel}-${i}`} i18nKey={t(`CAPTION_${val.name}`)}>
+          <span>
+            {t(`CAPTION_${val.name}`, {
+              firstParam,
+              secondParam,
+            })}
+          </span>
+        </Trans>
+      );
+    });
+
     return {
       categoryLabel,
       categoryValue,
       categoryChangeLotType,
-      desc,
       property,
       secondProperty,
+      description,
     };
   };
 
@@ -192,7 +206,10 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   </p>
 
                   <div>
-                    <span className="historyListDesc">{matchCategory(item).desc}</span>
+                    {/* <span className="historyListDesc">{matchCategory(item).desc}</span> */}
+                    <span className="historyListDesc">
+                      {matchCategory(item).description}
+                    </span>
                   </div>
                 </Col>
                 <Col className="historyDateActorWrapper">

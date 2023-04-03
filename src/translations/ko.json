@@ -230,11 +230,11 @@
     "HISTORY_MY_HISTORY": "나의 히스토리",
     "CAPTION_BOTNAMECREATED": "봇이 생성되었습니다.",
     "CAPTION_BOTNAMEUPDATED": "봇 이름이 변경되었습니다.",
-    "CAPTION_BOTACTIVATEUPDATED": "봇을 {{secondParam}} 했습니다.",
-    "CAPTION_TESTCHANNELLINKED": "테스트채널 {{firstParam}}를 {{secondParam}}했습니다.",
-    "CAPTION_LIVECHANNELLINKED": "라이브채널 {{firstParam}}를 {{secondParam}}했습니다.",
+    "CAPTION_BOTACTIVATEUPDATED": "봇을 <strong>{{secondParam}}</strong> 했습니다.",
+    "CAPTION_TESTCHANNELLINKED": "테스트채널 <strong>{{firstParam}}</strong>를 <strong>{{secondParam}}</strong>했습니다.",
+    "CAPTION_LIVECHANNELLINKED": "라이브채널 <strong>{{firstParam}}</strong>를 <strong>{{secondParam}}</strong>했습니다.",
     "CAPTION_FLOWGROUPEXPORT": "봇을 내보내기 했습니다.",
-    "CAPTION_FLOWGROUPIMPORT": "{{firstParam}} 봇을 가져오기 했습니다.",
+    "CAPTION_FLOWGROUPIMPORT": "<strong>{{firstParam}}</strong> 봇을 가져오기 했습니다.",
     "CAPTION_FLOWNAMECREATED": "시나리오가 생성되었습니다.",
     "CAPTION_FLOWNAMEUPDATED": "시나리오 이름이 변경되었습니다.",
     "CAPTION_FLOWNAMEDELETED": "시나리오가 삭제되었습니다.",
@@ -250,13 +250,13 @@
     "CAPTION_ENTRYGROUPNAMEUPDATED": "엔티티명이 수정되었습니다.",
     "CAPTION_ENTRYUPDATED": "엔트리가 수정 되었습니다.",
     "CAPTION_REGEXUPDATED": "정규식이 수정되었습니다.",
-    "CAPTION_INTENTNAMECREATED": "인텐트가 등록되었습니다.",
-    "CAPTION_INTENTLINKFLOW": "인텐트에 연결된 시나리오를 수정했습니다",
+    "CAPTION_INTENTNAMECREATED": "인텐트가 등록되었습니다. <br />연결된 시나리오 : <strong>{{secondParam}}</strong>",
+    "CAPTION_INTENTLINKFLOW": "인텐트에 연결된 시나리오를 수정했습니다. <br />연결된 시나리오 : <strong>{{secondParam}}</strong>",
     "CAPTION_INTENTNAMEUPDATED": "인텐트명을 수정했습니다.",
-    "CAPTION_INTENTUTTERNACEUPDATED": "발화를 수정했습니다",
+    "CAPTION_INTENTUTTERNACEUPDATED": "발화를 수정했습니다.",
     "CAPTION_INTENTDELETED": "인텐트가 삭제되었습니다.",
     "CAPTION_LIVEDEPLOY": "배포",
     "CAPTION_TESTDEPLOY": "배포",
-    "NO_RESULT": "조회된 히스토리가 없습니다. \n조건을 바꿔서 다시 시도해보세요."
+    "NO_RESULT": "조회된 히스토리가 없습니다. <br />조건을 바꿔서 다시 시도해보세요."
   }
 }
