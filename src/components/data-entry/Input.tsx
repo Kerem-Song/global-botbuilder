@@ -56,8 +56,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     }
     switch (e.key) {
       case 'Enter':
-        onPressEnter?.(args.value);
-        onSearch?.(args.value);
+        onPressEnter?.(inputRef.current?.value);
+        onSearch?.(inputRef.current?.value);
         if (onPressEnter || onSearch) {
           e.preventDefault();
           e.stopPropagation();
