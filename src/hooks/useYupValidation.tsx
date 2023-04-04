@@ -237,7 +237,7 @@ export const useYupValidation = () => {
       })
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .transform((value, originalValue) => {
-        return originalValue === '' ? undefined : Number(value);
+        return Number.isNaN(originalValue) ? undefined : Number(value);
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .required(t(`VALIDATION_REQUIRED`)),
@@ -252,8 +252,8 @@ export const useYupValidation = () => {
       })
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .transform((value, originalValue) => {
-        // console.log('value@@,:', value, originalValue);
-        return originalValue === '' ? undefined : Number(value);
+        console.log('value@@,:', value, originalValue);
+        return Number.isNaN(originalValue) ? 0 : Number(value);
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),
 
