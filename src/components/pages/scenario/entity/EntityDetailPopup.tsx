@@ -38,9 +38,9 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
-  const [entryInputError, setEntryInputError] = useState<string>('');
   const [entryNameInputError, setEntryNameInputError] = useState<string>('');
   const [regexInputError, setRegexInputError] = useState<string>('');
+  const [synonym, setSynonym] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm } = useSystemModal();
@@ -119,8 +119,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const { field } = useController({ name: 'entries', control });
 
-  const entryGroupNameRef = useRef<HTMLInputElement>(null);
-
   const preventGoBack = async () => {
     const result = await confirm({
       title: '저장하기',
@@ -187,15 +185,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     setEntryNameInputError('');
   };
 
-  const isEntryInputError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === ' ') {
-      e.target.value = '';
-      setEntryInputError('대표 엔트리는 최소 한 개 이상 등록되어야 합니다.');
-    } else {
-      setEntryInputError('');
-    }
-  };
-
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
     if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
@@ -255,22 +244,17 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   };
 
-  const handleRegisterEntry = (name?: string): void => {
+  const handleRegisterEntry = (): void => {
+    const name = synonym.trim();
+    trigger('entries');
     if (!name) {
       return;
     }
 
-    if (entryInputError) {
-      return;
-    }
-
     prepend({ representativeEntry: name, synonym: [] });
-    trigger('entries');
-    setIsActive(true);
 
-    if (entryGroupNameRef.current) {
-      entryGroupNameRef.current.value = '';
-    }
+    setIsActive(true);
+    setSynonym('');
   };
 
   const handleClose = async () => {
@@ -448,29 +432,25 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             size="normal"
                             maxLength={125}
                             showCount
-                            ref={entryGroupNameRef}
+                            value={synonym}
                             onPressEnter={() => {
-                              handleRegisterEntry(entryGroupNameRef.current?.value);
+                              handleRegisterEntry();
                               setIsActive(true);
                               trigger('entries');
                             }}
                             onChange={(e) => {
                               setIsActive(true);
-                              isEntryInputError(e);
+                              setSynonym(e.target.value);
                             }}
-                            onBlur={isEntryInputError}
-                            isError={
-                              entryInputError || errors.entries?.message ? true : false
-                            }
+                            isError={errors.entries?.message ? true : false}
                           ></Input>
-                          <span className="error-message">{entryInputError}</span>
                           <span className="error-message">{errors.entries?.message}</span>
                         </Col>
                         <Col>
                           <Button
                             type="primary"
                             onClick={() => {
-                              handleRegisterEntry(entryGroupNameRef.current?.value);
+                              handleRegisterEntry();
                             }}
                           >
                             Register
