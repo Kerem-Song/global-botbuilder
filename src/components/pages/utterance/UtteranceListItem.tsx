@@ -144,7 +144,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
       )}
       {isExistInitialData(initialData) ? (
         initialData?.pages.map((v) => {
-          console.log(v);
           const pages = v.items;
           return pages.map((x, i) => {
             const foundFlow = data?.find((item) => item.id === x.flowId);

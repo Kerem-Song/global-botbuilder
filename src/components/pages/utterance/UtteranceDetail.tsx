@@ -107,10 +107,7 @@ export const UtteranceDetail = () => {
   };
 
   const handleListBtn = async () => {
-    if (intentNameRef.current) {
-      console.log('gd');
-    }
-    if (isActive === true) {
+    if (nameField.value.length > 0 || isActive === true) {
       const result = await confirm({
         title: '저장하기',
         description: (
@@ -121,6 +118,7 @@ export const UtteranceDetail = () => {
           </span>
         ),
       });
+
       if (result) {
         navigate(`/${botId}/utterance`);
       }
@@ -254,37 +252,33 @@ export const UtteranceDetail = () => {
     };
 
     const res = await intentMutate.mutateAsync(saveIntent);
-    if (res) {
+
+    if (res?.isSuccess) {
       lunaToast.success();
       navigate(`/${botId}/utterance`);
-    }
-  };
-
-  const handleNameBlur = async () => {
-    if (!getValues('name')) return;
-
-    checkIntentDuplicationMutate.mutate(
-      {
-        name: getValues('name'),
-        intentId: getValues('intentId'),
-      },
-      {
-        onSuccess: async (result) => {
-          if (result.result === true) {
-            await error({
-              title: '중복 인텐트명',
-              description: <span>이미 있는 인텐트명입니다.</span>,
-            });
-
-            if (intentNameRef.current) {
-              intentNameRef.current.select();
-              setIsActive(false);
-            }
-            return;
-          }
+    } else if (res?.exception.errorCode === 7612) {
+      checkIntentDuplicationMutate.mutate(
+        {
+          name: getValues('name'),
+          intentId: getValues('intentId'),
         },
-      },
-    );
+        {
+          onSuccess: async (result) => {
+            if (result.result === true) {
+              await error({
+                title: '중복 인텐트명',
+                description: <span>이미 있는 인텐트명입니다.</span>,
+              });
+              if (intentNameRef.current) {
+                intentNameRef.current.select();
+                setIsActive(false);
+              }
+              return;
+            }
+          },
+        },
+      );
+    }
   };
 
   useEffect(() => {
@@ -336,10 +330,10 @@ export const UtteranceDetail = () => {
   }, [isActive]);
 
   useEffect(() => {
-    if (!utteranceWord && utteranceRef.current) {
-      utteranceRef.current.focus();
+    if (nameField.value === '' && intentNameRef.current) {
+      intentNameRef.current.focus();
     }
-  }, [utteranceWord]);
+  }, [nameField.value]);
 
   return (
     <div className="utteranceDetailWrap">
@@ -392,8 +386,6 @@ export const UtteranceDetail = () => {
                       nameField.onChange(e);
                       setIsActive(true);
                     }}
-                    onPressEnter={handleNameBlur}
-                    onBlur={handleNameBlur}
                   />
                 </FormItem>
               </Col>
