@@ -1,3 +1,4 @@
+import { IException } from './IResponse';
 export interface IIntentListItem {
   updateUtc: string;
   intentId: string;
@@ -92,8 +93,8 @@ export interface ICheckDuplicateIntent {
 }
 
 export interface IResponseCheckDuplication {
-  result: boolean;
-  exception: null;
+  result: null;
+  exception: IException;
   isSuccess: boolean;
   newToken: null;
 }

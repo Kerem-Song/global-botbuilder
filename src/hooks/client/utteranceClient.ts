@@ -123,7 +123,7 @@ export const useUtteranceClient = () => {
   };
 
   const intentMutate = useMutation(async (intent: ISaveIntent) => {
-    const result = await http.post<ISaveIntent, AxiosResponse<IResponseIntentData>>(
+    const result = await http.post<ISaveIntent, AxiosResponse<IResponseCheckDuplication>>(
       'Builder/SaveIntent',
       intent,
     );
