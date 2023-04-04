@@ -52,7 +52,7 @@
       gap: rem(12);
       padding: rem(32);
       width: 100%;      
-      height: rem(149);
+      max-height: rem(168);
       background-color: $grayWhite;
       border: rem(1) solid $gray200;
       border-radius: rem(8);
@@ -74,17 +74,24 @@
       }
 
       .historyList {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+
         .historyListCatetory {
           display: flex;
           align-items: center;
-          padding-bottom: rem(6);
           font-weight: 500;
-          font-size: rem(19);
+          font-size: rem(16);
           line-height: rem(19);
           color: $gray700;
           background-repeat: no-repeat;
           background-position: center;
           
+          &::before {
+            padding-top: rem(3);
+          }
+
           &[data-img='2'] {
             &::before {
               content: url('@assets/icons/ic_scenario_select_history.svg');
@@ -96,6 +103,7 @@
               content: url('@assets/icons/ic_utterance_select_history.svg');
             }
           }
+
           &[data-img='8'] {
             &::before {
               content: url('@assets/icons/ic_setting_select_history.svg');
@@ -120,7 +128,7 @@
 
         .historyListTitle {
           display: flex;
-          padding-bottom: rem(8);
+          padding: rem(12) 0 rem(8) 0;
           font-weight: 500;
           font-size: rem(18);
           line-height: rem(22);
@@ -165,6 +173,7 @@
       .historyDateActorWrapper {
         display: flex;
         flex-direction: column;
+        justify-content: flex-end;
         gap: rem(8);
         font-weight: 400;
         font-size: rem(14);

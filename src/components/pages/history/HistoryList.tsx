@@ -178,11 +178,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
           const pages = v.items;
           return pages.map((item) => (
             <div key={item.id} ref={ref}>
-              <Row
-                className="historyListWarpper"
-                justify="space-between"
-                align="flex-end"
-              >
+              <Row className="historyListWarpper" justify="space-between">
                 <Col className="historyList">
                   <div
                     className="historyListCatetory"
