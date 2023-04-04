@@ -6,6 +6,7 @@ import { systemModalOpen } from '../store/systemModalSlice';
 export interface IInfoModal {
   title: ReactNode;
   description?: ReactNode;
+  afterFocusInput?: HTMLInputElement;
 }
 
 export const useSystemModal = () => {
@@ -18,6 +19,9 @@ export const useSystemModal = () => {
           description: args.description,
           confirmButton: 'OK',
           callbackFunc: () => {
+            resolve(true);
+          },
+          closeFunc: () => {
             resolve(true);
           },
         }),
@@ -33,6 +37,9 @@ export const useSystemModal = () => {
           description: args.description,
           confirmButton: 'OK',
           callbackFunc: () => {
+            resolve(true);
+          },
+          closeFunc: () => {
             resolve(true);
           },
         }),

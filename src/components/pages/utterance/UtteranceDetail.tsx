@@ -15,7 +15,7 @@ import {
   IUtteranceModel,
 } from '@models';
 import { util } from '@modules/util';
-import { useEffect, useRef, useState } from 'react';
+import { FocusEvent, useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
@@ -275,6 +275,7 @@ export const UtteranceDetail = () => {
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
+
             if (intentNameRef.current) {
               intentNameRef.current.select();
               setIsActive(false);
@@ -391,9 +392,7 @@ export const UtteranceDetail = () => {
                       nameField.onChange(e);
                       setIsActive(true);
                     }}
-                    onPressEnter={() => {
-                      return;
-                    }}
+                    onPressEnter={handleNameBlur}
                     onBlur={handleNameBlur}
                   />
                 </FormItem>

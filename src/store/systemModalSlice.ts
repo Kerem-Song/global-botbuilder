@@ -36,13 +36,13 @@ export const systemModalSlice = createSlice({
       } = action.payload;
 
       state.isOpen = true;
-      state.message = message && message;
-      state.description = description && description;
-      state.confirmButton = confirmButton && confirmButton;
-      state.cancelButton = cancelButton && cancelButton;
-      state.callbackFunc = callbackFunc && callbackFunc;
-      state.cancelFunc = cancelFunc && cancelFunc;
-      state.closeFunc = closeFunc && closeFunc;
+      state.message = message;
+      state.description = description;
+      state.confirmButton = confirmButton;
+      state.cancelButton = cancelButton;
+      state.callbackFunc = callbackFunc;
+      state.cancelFunc = cancelFunc;
+      state.closeFunc = closeFunc;
     },
 
     systemModalClose: (state) => {
