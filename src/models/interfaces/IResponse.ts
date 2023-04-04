@@ -9,4 +9,5 @@ export interface IException {
   errorCode: number;
   subErrorCode: number;
   message: string;
+  invalidateProperties?: string[];
 }
