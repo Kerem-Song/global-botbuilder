@@ -1,6 +1,7 @@
 import { Button, Input, Space } from '@components';
 import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
@@ -60,6 +61,7 @@ export const QuicksEdit = () => {
                 isLight={true}
                 {...register(`view.quicks.${i}.label`)}
                 textLength={watch(`view.quicks.${i}.label`)?.length || 0}
+                readOnly={HistoryViewerMatch()}
               />
             </FormItem>
             <div>
@@ -102,6 +104,7 @@ export const QuicksEdit = () => {
                   placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
                   {...register(`view.quicks.${i}.actionValue`)}
                   textLength={watch(`view.quicks.${i}.actionValue`)?.length || 0}
+                  readOnly={HistoryViewerMatch()}
                 />
               </FormItem>
             )}

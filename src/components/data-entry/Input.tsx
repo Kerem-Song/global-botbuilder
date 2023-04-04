@@ -1,4 +1,5 @@
 import { Button } from '@components/general';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { IHasClassNameNStyle, SizeType } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
@@ -22,7 +23,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   search?: boolean;
   clearable?: boolean;
   isShawAlwaysClear?: boolean;
-
+  readOnly?: boolean;
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
@@ -47,6 +48,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     className,
     clearable,
     isShawAlwaysClear,
+    readOnly,
     ...inputProps
   } = args;
 
@@ -122,6 +124,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       onBlur={handleOnBlur}
       aria-invalid={isError}
       aria-required={required}
+      readOnly={readOnly}
+      title={inputRef.current?.value}
     />
   );
   if (isWrapping) {

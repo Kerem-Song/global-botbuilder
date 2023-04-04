@@ -1,5 +1,6 @@
 import { Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -168,6 +169,7 @@ export const ProductCardNodeEdit = () => {
                   maxLength={15}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
+                  readOnly={HistoryViewerMatch()}
                 />
               </FormItem>
             </Space>
@@ -186,6 +188,7 @@ export const ProductCardNodeEdit = () => {
                   required={true}
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}
+                  readOnly={HistoryViewerMatch()}
                 />
               </FormItem>
 
@@ -199,10 +202,12 @@ export const ProductCardNodeEdit = () => {
                         {...register(`view.retailPrice`, {
                           valueAsNumber: true,
                         })}
+                        readOnly={HistoryViewerMatch()}
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
                       <Select
+                        className="react-selector"
                         {...currencyField}
                         options={currencyOptions.sort((a, b) =>
                           b.value > a.value ? 1 : -1,
@@ -227,6 +232,7 @@ export const ProductCardNodeEdit = () => {
                   {...register(`view.discountPrice`, {
                     valueAsNumber: true,
                   })}
+                  readOnly={HistoryViewerMatch()}
                 />
               </FormItem>
             </Space>

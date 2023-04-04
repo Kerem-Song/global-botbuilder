@@ -1,5 +1,6 @@
 import { FormItem, Input, InputTextarea, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -69,6 +70,7 @@ export const BasicCardNodeEdit = () => {
               {...register('view.title')}
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
               textLength={watch('view.title')?.length || 0}
+              readOnly={HistoryViewerMatch()}
             />
           </FormItem>
 
@@ -82,6 +84,7 @@ export const BasicCardNodeEdit = () => {
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
               textLength={watch('view.description')?.length || 0}
+              readOnly={HistoryViewerMatch()}
             />
           </FormItem>
         </Space>

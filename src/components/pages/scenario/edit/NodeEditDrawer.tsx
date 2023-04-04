@@ -1,4 +1,5 @@
 import { FormItem, Input } from '@components';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
@@ -169,6 +170,7 @@ export const NodeEditDrawer = () => {
                   {...register('title')}
                   disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
                   textLength={watch('title')?.length || 0}
+                  readOnly={HistoryViewerMatch()}
                 />
               </FormItem>
             </div>

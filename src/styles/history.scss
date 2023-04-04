@@ -245,19 +245,23 @@
         margin-top: rem(46);
         cursor: text;
 
-        input {
-          pointer-events: none; 
-        }
+        // input {
+        //   pointer-events: none; 
+        // }
 
-        textarea {
-          pointer-events: none; 
-        }
+        // textarea {
+        //   pointer-events: none; 
+        // }
 
         .imgUpload {
           pointer-events: none; 
         }
 
-        .collapse {
+        // .collapse {
+        //   pointer-events: none;
+        // }
+
+        .react-selector {
           pointer-events: none;
         }
 

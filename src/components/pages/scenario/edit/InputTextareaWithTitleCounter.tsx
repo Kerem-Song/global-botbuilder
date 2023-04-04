@@ -1,4 +1,5 @@
 import { InputTextarea, InputTextareaProps } from '@components/data-entry';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import classNames from 'classnames';
 import { forwardRef } from 'react';
 
@@ -11,7 +12,8 @@ export const InputTextAreaWithTitleCounter = forwardRef<
   HTMLTextAreaElement,
   InputWithTitleCounterProps
 >((args, ref) => {
-  const { label, isLight, textLength, showCount, required, ...inputProps } = args;
+  const { label, isLight, textLength, showCount, required, readOnly, ...inputProps } =
+    args;
 
   return (
     <>
@@ -27,7 +29,7 @@ export const InputTextAreaWithTitleCounter = forwardRef<
           </span>
         ) : undefined}
       </div>
-      <InputTextarea {...inputProps} required={required} ref={ref} />
+      <InputTextarea {...inputProps} required={required} ref={ref} readOnly={readOnly} />
     </>
   );
 });

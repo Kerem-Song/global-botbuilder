@@ -93,6 +93,7 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
 
   return (
     <Select
+      className="react-selector"
       {...field}
       options={selectOptions}
       styles={reactSelectStyle}

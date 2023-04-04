@@ -1,3 +1,4 @@
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import React, {
@@ -23,13 +24,14 @@ export interface InputTextareaProps extends IHasClassNameNStyle {
   value?: string;
   isError?: boolean;
   required?: boolean;
+  readOnly?: boolean;
   onBlur?: (e: FocusEvent<HTMLTextAreaElement>) => void;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(
   (args, ref) => {
-    const { style, isError, showCount, ...inputProps } = args;
+    const { style, isError, showCount, readOnly, ...inputProps } = args;
     const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       args.onChange?.(e);
     };
@@ -43,6 +45,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
         placeholder={args.placeholder}
         maxLength={args.maxLength}
         ref={ref}
+        readOnly={readOnly}
       />
     );
   },

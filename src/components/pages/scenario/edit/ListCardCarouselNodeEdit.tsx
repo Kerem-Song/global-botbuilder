@@ -1,5 +1,6 @@
 import { Button, Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage, useRootState } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -83,6 +84,7 @@ export const ListCardCarouselNodeEdit = () => {
                 maxLength={15}
                 {...register(`view.childrenViews.${index}.header`)}
                 textLength={watch(`view.childrenViews.${index}.header`)?.length || 0}
+                readOnly={HistoryViewerMatch()}
               />
             </FormItem>
           </div>
@@ -162,6 +164,7 @@ export const ListCardCarouselNodeEdit = () => {
                             watch(`view.childrenViews.${index}.items.${i}.title`)
                               ?.length || 0
                           }
+                          readOnly={HistoryViewerMatch()}
                         />
                       </FormItem>
                     </span>
@@ -182,6 +185,7 @@ export const ListCardCarouselNodeEdit = () => {
                           watch(`view.childrenViews.${index}.items.${i}.description`)
                             ?.length || 0
                         }
+                        readOnly={HistoryViewerMatch()}
                       />
                     </span>
                   </Space>

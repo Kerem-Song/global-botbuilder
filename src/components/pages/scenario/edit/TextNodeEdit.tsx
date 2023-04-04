@@ -1,4 +1,5 @@
 import { FormItem } from '@components';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
@@ -32,6 +33,7 @@ export const TextNodeEdit = () => {
             placeholder="Input Text"
             {...register('view.text')}
             textLength={watch(`view.text`)?.length || 0}
+            readOnly={HistoryViewerMatch()}
           />
         </FormItem>
       </div>

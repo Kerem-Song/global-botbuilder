@@ -100,6 +100,7 @@ export const ButtonTypeSelector = ({
 
   return (
     <Select
+      className="react-selector"
       {...field}
       options={options}
       styles={reactSelectStyle}

@@ -91,6 +91,7 @@ export const OperatorSelector = ({ index }: { index: number }) => {
 
   return (
     <Select
+      className="react-selector"
       {...operatorField}
       options={operatorOptions}
       styles={reactSelectStyle}
