@@ -253,7 +253,7 @@
     "CAPTION_REGEXUPDATED": "정규식이 수정되었습니다.",
     "CAPTION_INTENTNAMECREATED": "인텐트가 등록되었습니다. <br />연결된 시나리오: <strong>{{secondParam}}</strong>",
     "CAPTION_INTENTLINKFLOW": "인텐트에 연결된 시나리오를 수정했습니다. <br />연결된 시나리오: <strong>{{secondParam}}</strong>",
-    "CAPTION_INTENTNAMEUPDATED": "인텐트-명을 수정했습니다.",
+    "CAPTION_INTENTNAMEUPDATED": "인텐트명을 수정했습니다.",
     "CAPTION_INTENTUTTERNACEUPDATED": "발화를 수정했습니다.",
     "CAPTION_INTENTDELETED": "인텐트가 삭제되었습니다.",
     "CAPTION_LIVEDEPLOY": "{{firstParam}} 채널에 배포되었습니다. (배포번호 {{secondParam}})",

@@ -26,6 +26,7 @@ export const ParameterSelector = <T extends object>({
 
   return (
     <CreatableSelect
+      className="react-selector"
       placeholder={placeholder}
       styles={getReactSelectStyle<IVariable>(true)}
       isDisabled={isDisabled}

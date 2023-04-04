@@ -71,6 +71,7 @@ export const ListCardCarouselNodeEdit = () => {
     trigger();
   }, [index]);
 
+  console.log('@fields', fields);
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (
