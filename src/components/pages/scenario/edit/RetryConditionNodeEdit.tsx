@@ -49,6 +49,7 @@ export const RetryConditionNodeEdit = () => {
         </div>
         <div className={classnames('input m-b-8', {})}>
           <Select
+            className="react-selector"
             {...field}
             options={countOptions}
             styles={reactSelectStyle}

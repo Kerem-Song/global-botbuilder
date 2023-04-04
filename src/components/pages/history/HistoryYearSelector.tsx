@@ -76,6 +76,7 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const HistoryYearSelector = () => {
+  const { t } = usePage();
   const { control } = useFormContext<IHistoryCondition>();
 
   const { field: yearField } = useController({
@@ -91,7 +92,7 @@ export const HistoryYearSelector = () => {
     <Select
       options={yearOptions}
       styles={reactSelectStyle}
-      defaultValue={{ value: null, label: 'All' }}
+      defaultValue={{ value: null, label: t(`ALL_YEAR`) }}
       value={yearOptions.find((item) => item.value === yearField.value)}
       onChange={(options: any) => yearField.onChange(options?.value)}
     />

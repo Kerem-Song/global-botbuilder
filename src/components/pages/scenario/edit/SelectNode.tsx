@@ -47,6 +47,7 @@ export const SelectNode = ({
 
   return (
     <Select
+      className="react-selector"
       {...field}
       options={nodeList}
       styles={reactSelectStyle}

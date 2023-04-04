@@ -62,7 +62,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
           label: year.toString(),
         }))
         .sort((a, b) => (a > b ? -1 : 0));
-      const yearOptions = [{ value: null, label: 'All' }, ...uniqueYear];
+      const yearOptions = [{ value: null, label: t(`ALL_YEAR`) }, ...uniqueYear];
 
       dispatch(setHistoryYearSelector(yearOptions));
     }

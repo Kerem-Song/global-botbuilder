@@ -11,7 +11,8 @@ export const InputWithTitleCounter = forwardRef<
   HTMLInputElement,
   InputWithTitleCounterProps
 >((args, ref) => {
-  const { label, isLight, textLength, showCount, required, ...inputProps } = args;
+  const { label, isLight, textLength, showCount, required, readOnly, ...inputProps } =
+    args;
 
   return (
     <>
@@ -27,7 +28,7 @@ export const InputWithTitleCounter = forwardRef<
           </span>
         ) : undefined}
       </div>
-      <Input {...inputProps} required={required} ref={ref} />
+      <Input {...inputProps} required={required} ref={ref} readOnly={readOnly} />
     </>
   );
 });

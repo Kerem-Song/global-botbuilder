@@ -1,5 +1,6 @@
 import { Col, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage, useRootState } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -207,6 +208,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       textLength={
                         watch(`view.childrenViews.${index}.profileName`)?.length || 0
                       }
+                      readOnly={HistoryViewerMatch()}
                     />
                   </FormItem>
                 </Space>
@@ -233,6 +235,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       textLength={
                         watch(`view.childrenViews.${index}.description`)?.length || 0
                       }
+                      readOnly={HistoryViewerMatch()}
                     />
                   </FormItem>
 
@@ -246,10 +249,12 @@ export const ProductCardCarouselNodeEdit = () => {
                             {...register(`view.childrenViews.${index}.retailPrice`, {
                               valueAsNumber: true,
                             })}
+                            readOnly={HistoryViewerMatch()}
                           />
                         </Col>
                         <Col className="productSelectorWrapper" span={8}>
                           <Select
+                            className="react-selector"
                             {...currencyField}
                             options={currencyOptions}
                             styles={reactSelectStyle}
@@ -291,6 +296,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           valueAsNumber: true,
                         },
                       )}
+                      readOnly={HistoryViewerMatch()}
                     />
                   </FormItem>
                 </Space>

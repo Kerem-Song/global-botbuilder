@@ -53,6 +53,7 @@ export const OtherFlowRedirectNodeEdit = () => {
           </div>
           <FormItem error={errors.nextNodeId}>
             <Select
+              className="react-selector"
               {...field}
               options={scenarioList}
               styles={reactSelectStyle}
