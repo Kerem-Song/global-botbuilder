@@ -1,6 +1,4 @@
-import { useRootState } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
-import { usePrompt } from '@hooks/usePrompt';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,7 +11,7 @@ export const HistoryViewerComponent = () => {
   const { botId, historyId } = useParams();
   const { getFlowSnapShot } = useHistoryClient();
   const { data } = getFlowSnapShot({ botId: botId!, historyId: historyId! });
-  console.log('@data in viewer', data?.result);
+
   useEffect(() => {
     if (!data) {
       return;

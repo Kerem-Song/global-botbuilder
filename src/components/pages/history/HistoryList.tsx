@@ -17,6 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+import { boolean } from 'yup';
 
 import { HistoryValue } from './HistoryValue';
 interface IReactSelect {
@@ -89,7 +90,22 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     const description = matched.map((val, i) => {
       const firstParam = item[property];
-      const secondParam = item[secondProperty];
+      let secondParam = item[secondProperty];
+
+      // 연결/해제, 활성화/비활성화
+      if (secondParam === true) {
+        if (val.changeLogType === (1006 || 1007)) {
+          secondParam = t(`CAPTION_CONNECTED`);
+        } else if (val.changeLogType === (1003 || 2005)) {
+          secondParam = t(`CAPTION_ACTIVATED`);
+        }
+      } else if (secondParam === false) {
+        if (val.changeLogType === (1006 || 1007)) {
+          secondParam = t(`CAPTION_DISCONNECTED`);
+        } else if (val.changeLogType === (1003 || 2005)) {
+          secondParam = t(`CAPTION_DEACTIVATED`);
+        }
+      }
 
       return (
         <Trans
