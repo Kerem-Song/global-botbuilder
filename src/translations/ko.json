@@ -219,7 +219,7 @@
     "TEST": "테스트 채널"
   },
   "history": {
-    "HISTORY": "히스토리",
+    "TITLE": "히스토리",
     "INQUIRY_YEAR": "조회 연도",
     "QUICK_FILTER": "빠른 필터",
     "VIEWER_BTN": "뷰어로 보기",

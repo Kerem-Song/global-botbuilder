@@ -3,12 +3,6 @@ import { HISTORY_CATEGORY_TYPES, IHistoryValueMatch } from '@models';
 
 export const HistoryValue = () => {
   const { t } = usePage();
-  const isActivated = '활성/비활성';
-  const isLinked = '연결/해제';
-  const botName = '가져온 봇 네임';
-  const channelName = '채널명';
-  const flowName = '플로우 별칭';
-  const paramName = '파라미터 이름';
 
   const historyValArr: IHistoryValueMatch[] = [
     {

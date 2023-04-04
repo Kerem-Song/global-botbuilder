@@ -90,14 +90,14 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     const description = matched.map((val, i) => {
       const firstParam = item[property];
       const secondParam = item[secondProperty];
+
       return (
-        <Trans key={`${val.categoryLabel}-${i}`} i18nKey={t(`CAPTION_${val.name}`)}>
-          <span>
-            {t(`CAPTION_${val.name}`, {
-              firstParam,
-              secondParam,
-            })}
-          </span>
+        <Trans
+          key={`CAPTION_${val.name}-${val.changeLogType}`}
+          t={t}
+          values={{ firstParam, secondParam }}
+        >
+          {`CAPTION_${val.name}`}
         </Trans>
       );
     });
@@ -202,7 +202,6 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   </p>
 
                   <div>
-                    {/* <span className="historyListDesc">{matchCategory(item).desc}</span> */}
                     <span className="historyListDesc">
                       {matchCategory(item).description}
                     </span>

@@ -76,11 +76,7 @@ const reactSelectStyle: StylesConfig = {
 };
 
 export const HistoryYearSelector = () => {
-  const {
-    getValues,
-    control,
-    formState: { errors },
-  } = useFormContext<IHistoryCondition>();
+  const { control } = useFormContext<IHistoryCondition>();
 
   const { field: yearField } = useController({
     name: `year`,

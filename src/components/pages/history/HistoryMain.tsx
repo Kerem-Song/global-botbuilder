@@ -14,23 +14,16 @@ export const HistoryMain = () => {
     mode: 'onSubmit',
   });
 
-  const {
-    getValues,
-    watch,
-    formState: { errors, isValid },
-  } = formMethods;
+  const { watch } = formMethods;
 
   const filteredCategory = watch(`filteredCategory`)
     ?.map(Number)
     ?.reduce((a, b) => a + b, 0);
 
-  const checkedMyHistory = watch('checkedMyHistory');
-  console.log('checkedMyHistory', checkedMyHistory);
-  // console.log('@year value', getValues().year, 'category value', filteredCategory);
   return (
     <>
       <div className="historyMain">
-        <p className="historyMainTitle">{t(`HISTORY`)}</p>
+        <p className="historyMainTitle">{t(`TITLE`)}</p>
         <FormProvider {...formMethods}>
           <div className="historyHeader">
             <Row className="inquiryYear" align="center">
@@ -41,11 +34,7 @@ export const HistoryMain = () => {
             </Row>
             <HistoryCategoryFilter />
           </div>
-          <HistoryListItem
-            category={filteredCategory}
-            year={watch(`year`)}
-            checkedMyHistory={checkedMyHistory}
-          />
+          <HistoryListItem category={filteredCategory} year={watch(`year`)} />
         </FormProvider>
       </div>
     </>

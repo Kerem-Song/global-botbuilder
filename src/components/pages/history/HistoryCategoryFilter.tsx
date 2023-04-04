@@ -24,14 +24,11 @@ export const HistoryCategoryFilter = () => {
           <CheckboxButton
             {...register(`filteredCategory.${i}`, { valueAsNumber: true })}
             value={item.value.toString()}
-            key={i}
+            key={item.value}
           >
             <span>{item.label}</span>
           </CheckboxButton>
         ))}
-        {/* <CheckboxButton {...register(`checkedMyHistory`)}>
-          <span>{t(`HISTORY_MY_HISTORY`)}</span>
-        </CheckboxButton> */}
       </div>
     </div>
   );
