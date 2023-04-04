@@ -149,7 +149,7 @@ export const useUtteranceClient = () => {
     );
 
     if (result) {
-      queryClient.invalidateQueries([UTTERNACE_LIST_KEY]);
+      queryClient.removeQueries([UTTERNACE_LIST_KEY]);
       return result.data;
     }
   });

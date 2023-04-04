@@ -15,7 +15,7 @@ import {
   IUtteranceModel,
 } from '@models';
 import { util } from '@modules/util';
-import { useEffect, useRef, useState } from 'react';
+import { FocusEvent, useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
@@ -88,39 +88,6 @@ export const UtteranceDetail = () => {
     x.text?.trim().toLowerCase().includes(searchWord.trim().toLowerCase()),
   );
 
-  useEffect(() => {
-    if (hasUtteranceId && hasUtteranceId.data) {
-      const resetValue = {
-        name: hasUtteranceId.data.result.intentName,
-        intentId: hasUtteranceId.data.result.intentId,
-        connectScenarioId: hasUtteranceId.data.result.flowId,
-        connectScenarioName: hasUtteranceId.data.result.flowName,
-      };
-      reset(resetValue);
-
-      prepend(
-        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
-          return { text: x.text, id: x.id };
-        }) || [],
-      );
-    }
-  }, [hasUtteranceId?.data]);
-
-  useEffect(() => {
-    const scenarioList = data
-      ?.filter((item) => !item.isFallbackFlow)
-      .map((x) => {
-        return { value: x.id, label: x.alias };
-      });
-
-    const total = [
-      { value: '', label: '시나리오를 선택해주세요' },
-      ...(scenarioList ? scenarioList : []),
-    ];
-
-    setTotalScenarioList(total);
-  }, [data]);
-
   const preventGoBack = async () => {
     const result = await confirm({
       title: '저장하기',
@@ -140,6 +107,9 @@ export const UtteranceDetail = () => {
   };
 
   const handleListBtn = async () => {
+    if (intentNameRef.current) {
+      console.log('gd');
+    }
     if (isActive === true) {
       const result = await confirm({
         title: '저장하기',
@@ -159,47 +129,10 @@ export const UtteranceDetail = () => {
     }
   };
 
-  useEffect(() => {
-    if (isActive === true) {
-      (() => {
-        history.pushState(null, '', location.href);
-        window.addEventListener('popstate', preventGoBack);
-      })();
-
-      return () => {
-        window.removeEventListener('popstate', preventGoBack);
-      };
-    }
-  }, [isActive]);
-
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = '';
   };
-
-  useEffect(() => {
-    if (isActive) {
-      (() => {
-        window.addEventListener('beforeunload', preventClose);
-      })();
-
-      return () => {
-        window.removeEventListener('beforeunload', preventClose);
-      };
-    }
-  }, [isActive]);
-
-  useEffect(() => {
-    if (isEditing && utteranceRef.current) {
-      utteranceRef.current.select();
-    }
-  }, [isEditing]);
-
-  useEffect(() => {
-    if (!utteranceWord && utteranceRef.current) {
-      utteranceRef.current.focus();
-    }
-  }, [utteranceWord]);
 
   const openDeleteCheckboxModal = async () => {
     const deleteItems = getValues().items.filter((x) => x.isChecked);
@@ -310,7 +243,7 @@ export const UtteranceDetail = () => {
   };
 
   const handleSave = async (itemData: IUtteranceModel): Promise<void> => {
-    const modifyIntent: ISaveIntent = {
+    const saveIntent: ISaveIntent = {
       sessionToken: token!,
       intentId: itemData.intentId,
       intentName: itemData.name,
@@ -320,7 +253,7 @@ export const UtteranceDetail = () => {
       flowId: itemData.connectScenarioId,
     };
 
-    const res = await intentMutate.mutateAsync(modifyIntent);
+    const res = await intentMutate.mutateAsync(saveIntent);
     if (res) {
       lunaToast.success();
       navigate(`/${botId}/utterance`);
@@ -342,8 +275,10 @@ export const UtteranceDetail = () => {
               title: '중복 인텐트명',
               description: <span>이미 있는 인텐트명입니다.</span>,
             });
+
             if (intentNameRef.current) {
               intentNameRef.current.select();
+              setIsActive(false);
             }
             return;
           }
@@ -351,6 +286,60 @@ export const UtteranceDetail = () => {
       },
     );
   };
+
+  useEffect(() => {
+    if (hasUtteranceId && hasUtteranceId.data) {
+      const resetValue = {
+        name: hasUtteranceId.data.result.intentName,
+        intentId: hasUtteranceId.data.result.intentId,
+        connectScenarioId: hasUtteranceId.data.result.flowId,
+        connectScenarioName: hasUtteranceId.data.result.flowName,
+      };
+      reset(resetValue);
+
+      prepend(
+        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { text: x.text, id: x.id };
+        }) || [],
+      );
+    }
+  }, [hasUtteranceId?.data]);
+
+  useEffect(() => {
+    const scenarioList = data
+      ?.filter((item) => !item.isFallbackFlow)
+      .map((x) => {
+        return { value: x.id, label: x.alias };
+      });
+
+    const total = [
+      { value: '', label: '시나리오를 선택해주세요' },
+      ...(scenarioList ? scenarioList : []),
+    ];
+
+    setTotalScenarioList(total);
+  }, [data]);
+
+  useEffect(() => {
+    if (isActive) {
+      (() => {
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+        window.addEventListener('beforeunload', preventClose);
+      })();
+
+      return () => {
+        window.removeEventListener('popstate', preventGoBack);
+        window.removeEventListener('beforeunload', preventClose);
+      };
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    if (!utteranceWord && utteranceRef.current) {
+      utteranceRef.current.focus();
+    }
+  }, [utteranceWord]);
 
   return (
     <div className="utteranceDetailWrap">
@@ -403,13 +392,8 @@ export const UtteranceDetail = () => {
                       nameField.onChange(e);
                       setIsActive(true);
                     }}
-                    onPressEnter={() => {
-                      return;
-                    }}
-                    onBlur={() => {
-                      nameField.onBlur();
-                      handleNameBlur();
-                    }}
+                    onPressEnter={handleNameBlur}
+                    onBlur={handleNameBlur}
                   />
                 </FormItem>
               </Col>

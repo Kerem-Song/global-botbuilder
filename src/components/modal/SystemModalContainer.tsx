@@ -9,7 +9,6 @@ import { systemModalClose } from '../../store/systemModalSlice';
 export const SystemModalContainer = () => {
   const modalInfo = useRootState((state) => state.systemModalReducer);
   const dispatch = useDispatch();
-
   const handleClose = () => {
     modalInfo.cancelFunc?.();
     dispatch(systemModalClose());
@@ -20,27 +19,16 @@ export const SystemModalContainer = () => {
     dispatch(systemModalClose());
   };
 
-  const keyEvent = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      modalInfo.closeFunc?.();
-      dispatch(systemModalClose());
-    }
-  };
-
-  useEffect(() => {
-    if (modalInfo.isOpen) {
-      window.addEventListener('keyup', keyEvent);
-    } else {
-      window.removeEventListener('keyup', keyEvent);
-    }
-    return () => window.removeEventListener('keyup', keyEvent);
-  }, [modalInfo.isOpen]);
-
   return (
     <ReactModal
       className="luna-system-modal"
       isOpen={modalInfo.isOpen}
       overlayClassName="luna-system-modal-overlay"
+      shouldCloseOnOverlayClick={false}
+      onRequestClose={() => {
+        modalInfo.closeFunc?.();
+        dispatch(systemModalClose());
+      }}
     >
       <div className="title">
         <Title level={4}>{modalInfo.message}</Title>
