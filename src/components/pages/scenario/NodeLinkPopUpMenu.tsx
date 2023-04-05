@@ -22,8 +22,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
+import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '../../../modules';
-import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
@@ -135,7 +135,7 @@ export const NodeLinkPopUpMenu = ({
 
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const {
     register,
     handleSubmit,
@@ -300,7 +300,7 @@ export const NodeLinkPopUpMenu = ({
                     }}
                     popup
                     popupList
-                    disabled={HistoryViewerMatch()}
+                    disabled={isHistoryViewer}
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>

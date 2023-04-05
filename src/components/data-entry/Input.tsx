@@ -1,5 +1,5 @@
 import { Button } from '@components/general';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IHasClassNameNStyle, SizeType } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';

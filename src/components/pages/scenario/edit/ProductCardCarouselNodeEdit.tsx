@@ -1,7 +1,7 @@
 import { Col, FormItem, Input, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
@@ -105,7 +105,7 @@ export const ProductCardCarouselNodeEdit = () => {
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const { field: currencyField } = useController({
     name: `view.childrenViews.${index}.currencyUnit`,
     control,
@@ -208,7 +208,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       textLength={
                         watch(`view.childrenViews.${index}.profileName`)?.length || 0
                       }
-                      readOnly={HistoryViewerMatch()}
+                      readOnly={isHistoryViewer}
                     />
                   </FormItem>
                 </Space>
@@ -235,7 +235,7 @@ export const ProductCardCarouselNodeEdit = () => {
                       textLength={
                         watch(`view.childrenViews.${index}.description`)?.length || 0
                       }
-                      readOnly={HistoryViewerMatch()}
+                      readOnly={isHistoryViewer}
                     />
                   </FormItem>
 
@@ -249,7 +249,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             {...register(`view.childrenViews.${index}.retailPrice`, {
                               valueAsNumber: true,
                             })}
-                            readOnly={HistoryViewerMatch()}
+                            readOnly={isHistoryViewer}
                           />
                         </Col>
                         <Col className="productSelectorWrapper" span={8}>
@@ -296,7 +296,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           valueAsNumber: true,
                         },
                       )}
-                      readOnly={HistoryViewerMatch()}
+                      readOnly={isHistoryViewer}
                     />
                   </FormItem>
                 </Space>

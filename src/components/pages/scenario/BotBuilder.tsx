@@ -15,10 +15,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
+import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
 import { nodeHelper } from '../../../modules/nodeHelper';
 import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
-import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
@@ -359,7 +359,7 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-          {HistoryViewerMatch()
+          {useHistoryViewerMatch()
             ? null
             : isOpen && (
                 <NodeLinkPopUpMenu
@@ -368,7 +368,7 @@ export const Botbuilder = () => {
                 />
               )}
           {otherFlowPopup && <OtherFlowScenariosPopup popUpPosition={popUpPosition} />}
-          {HistoryViewerMatch()
+          {useHistoryViewerMatch()
             ? null
             : clicked && (
                 <div

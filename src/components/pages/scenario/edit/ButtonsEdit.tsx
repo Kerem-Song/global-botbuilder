@@ -1,7 +1,7 @@
 import { Button, Input, Space } from '@components';
 import { FormItem, InputTextarea } from '@components/data-entry';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
@@ -43,7 +43,7 @@ export const ButtonsEdit = ({
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const { fields, append, remove } = useFieldArray({
     name: index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
     control,
@@ -101,7 +101,7 @@ export const ButtonsEdit = ({
                       : `view.childrenViews.${index}.buttons.${i}.label`,
                   )?.length || 0
                 }
-                readOnly={HistoryViewerMatch()}
+                readOnly={isHistoryViewer}
               />
             </FormItem>
             <span className="subLabel">
@@ -203,7 +203,7 @@ export const ButtonsEdit = ({
                           : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                       )?.length || 0
                     }
-                    readOnly={HistoryViewerMatch()}
+                    readOnly={isHistoryViewer}
                   />
                 </FormItem>
               </>

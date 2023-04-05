@@ -7,7 +7,6 @@ import {
   icNodeBottom,
 } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
@@ -23,6 +22,7 @@ import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetN
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useModalOpen, usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
@@ -91,6 +91,7 @@ export const Node: FC<INodeProps> = ({
 
   const titleClass = classNames('luna-node-head');
   const bodyClass = classNames('luna-node-body');
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleDuplicationCard = (node: INode) => {
     dispatch(setClipBoard(node));
@@ -257,7 +258,7 @@ export const Node: FC<INodeProps> = ({
         onChange={(m) => {
           m.data?.action?.(node);
         }}
-        disabled={HistoryViewerMatch()}
+        disabled={isHistoryViewer}
       >
         <div
           tabIndex={0}
@@ -306,7 +307,7 @@ export const Node: FC<INodeProps> = ({
               onChange={(m) => {
                 m.data?.action?.(node);
               }}
-              disabled={HistoryViewerMatch()}
+              disabled={isHistoryViewer}
             >
               <Button shape="ghost" small>
                 <i className="fa-solid fa-ellipsis-vertical" />

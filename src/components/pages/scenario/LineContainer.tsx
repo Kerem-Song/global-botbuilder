@@ -7,7 +7,7 @@ import { removeItem } from '@store/makingNode';
 import { FC, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
+import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
 import { ConnectLine } from './ConnectLine';
 
 export const LineContainer: FC = () => {

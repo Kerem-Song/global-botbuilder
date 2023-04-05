@@ -1,6 +1,6 @@
 import { usePage } from '@hooks';
 
-export const HistoryViewerMatch = () => {
+export const useHistoryViewerMatch = () => {
   const { isReadOnly } = usePage();
 
   if (isReadOnly) {

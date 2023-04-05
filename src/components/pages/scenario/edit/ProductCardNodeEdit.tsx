@@ -1,7 +1,7 @@
 import { Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
@@ -100,7 +100,7 @@ export const ProductCardNodeEdit = () => {
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
   console.log('value.view', values.view);
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const { field: currencyField } = useController({
     name: `view.currencyUnit`,
     control,
@@ -169,7 +169,7 @@ export const ProductCardNodeEdit = () => {
                   maxLength={15}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             </Space>
@@ -188,7 +188,7 @@ export const ProductCardNodeEdit = () => {
                   required={true}
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
 
@@ -202,7 +202,7 @@ export const ProductCardNodeEdit = () => {
                         {...register(`view.retailPrice`, {
                           valueAsNumber: true,
                         })}
-                        readOnly={HistoryViewerMatch()}
+                        readOnly={isHistoryViewer}
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
@@ -232,7 +232,7 @@ export const ProductCardNodeEdit = () => {
                   {...register(`view.discountPrice`, {
                     valueAsNumber: true,
                   })}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             </Space>

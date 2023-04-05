@@ -1,4 +1,4 @@
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import React, {

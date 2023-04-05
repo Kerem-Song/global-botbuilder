@@ -1,7 +1,7 @@
 import { FormItem, Input } from '@components';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useYupValidation } from '@hooks/useYupValidation';
 import { INode, NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
@@ -32,6 +32,7 @@ import { TextNodeEdit } from './TextNodeEdit';
 export const NodeEditDrawer = () => {
   const { t } = usePage();
   const dispatch = useDispatch();
+  const isHistoryViewer = useHistoryViewerMatch();
   const { schema } = useYupValidation();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
@@ -170,7 +171,7 @@ export const NodeEditDrawer = () => {
                   {...register('title')}
                   disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
                   textLength={watch('title')?.length || 0}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             </div>

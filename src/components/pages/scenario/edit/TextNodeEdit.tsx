@@ -1,6 +1,6 @@
 import { FormItem } from '@components';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
@@ -18,6 +18,7 @@ export const TextNodeEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
+  const isHistoryViewer = useHistoryViewerMatch();
 
   return (
     <>
@@ -33,7 +34,7 @@ export const TextNodeEdit = () => {
             placeholder="Input Text"
             {...register('view.text')}
             textLength={watch(`view.text`)?.length || 0}
-            readOnly={HistoryViewerMatch()}
+            readOnly={isHistoryViewer}
           />
         </FormItem>
       </div>

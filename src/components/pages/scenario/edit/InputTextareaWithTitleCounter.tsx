@@ -1,5 +1,5 @@
 import { InputTextarea, InputTextareaProps } from '@components/data-entry';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import classNames from 'classnames';
 import { forwardRef } from 'react';
 

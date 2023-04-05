@@ -6,7 +6,7 @@ import { zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
-import { HistoryViewerMatch } from '../history/HistoryViewerMatch';
+import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
 
 export const BotBuilderZoomBtn = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const BotBuilderZoomBtn = () => {
         <span>{scale * 100}</span>
         <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
       </Col>
-      {!HistoryViewerMatch() && (
+      {!useHistoryViewerMatch() && (
         <Col className="operationBtn">
           <Button
             small

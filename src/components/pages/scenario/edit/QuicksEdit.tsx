@@ -1,8 +1,8 @@
 import { Button, Input, Space } from '@components';
 import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { QUICK_MAX_COUNT } from '@modules';
@@ -23,7 +23,7 @@ export const QuicksEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IAnswerView>>();
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const values = getValues();
   const { fields, append, remove } = useFieldArray({
     name: 'view.quicks',
@@ -61,7 +61,7 @@ export const QuicksEdit = () => {
                 isLight={true}
                 {...register(`view.quicks.${i}.label`)}
                 textLength={watch(`view.quicks.${i}.label`)?.length || 0}
-                readOnly={HistoryViewerMatch()}
+                readOnly={isHistoryViewer}
               />
             </FormItem>
             <div>
@@ -87,7 +87,7 @@ export const QuicksEdit = () => {
               >
                 <Input
                   {...register(`view.quicks.${i}.actionValue`)}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             )}
@@ -107,7 +107,7 @@ export const QuicksEdit = () => {
                   placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
                   {...register(`view.quicks.${i}.actionValue`)}
                   textLength={watch(`view.quicks.${i}.actionValue`)?.length || 0}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             )}

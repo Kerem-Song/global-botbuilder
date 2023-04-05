@@ -1,6 +1,5 @@
 import { icCardDelete, icCardDuplication, icCardDuplicationDisabled } from '@assets';
 import { IPopperItem, Popper } from '@components/navigation';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import {
   closestCenter,
   DndContext,
@@ -15,6 +14,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { useEffect, useState } from 'react';
@@ -44,6 +44,7 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -131,7 +132,7 @@ export const SoratbleCarouselCtrlContainer = ({
                   m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
-                disabled={HistoryViewerMatch()}
+                disabled={isHistoryViewer}
               >
                 <div
                   onContextMenu={(e) => {

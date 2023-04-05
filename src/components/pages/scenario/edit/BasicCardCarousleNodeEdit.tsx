@@ -1,8 +1,8 @@
 import { FormItem, InputTextarea } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { Space } from '@components/layout';
-import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
@@ -33,6 +33,7 @@ export const BasicCardCarousleNodeEdit = () => {
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const { fields } = useFieldArray({
     name: `view.childrenViews.${index}.buttons`,
@@ -94,7 +95,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   {...register(`view.childrenViews.${index}.title`)}
                   placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                   textLength={watch(`view.childrenViews.${index}.title`)?.length || 0}
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
 
@@ -121,7 +122,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   textLength={
                     watch(`view.childrenViews.${index}.description`)?.length || 0
                   }
-                  readOnly={HistoryViewerMatch()}
+                  readOnly={isHistoryViewer}
                 />
               </FormItem>
             </Space>
