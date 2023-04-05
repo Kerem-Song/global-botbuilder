@@ -105,6 +105,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     setTextLength(args.value?.length || 0);
   }, [args.value]);
 
+  useEffect(() => {
+    setTextLength(inputRef.current?.value.length || 0);
+  }, [inputRef.current?.value]);
+
   const input = (
     <input
       className={inputClassName}

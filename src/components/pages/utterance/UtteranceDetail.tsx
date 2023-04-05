@@ -14,8 +14,9 @@ import {
   IUtteranceItem,
   IUtteranceModel,
 } from '@models';
+import { BOTNAME_REGEX } from '@modules';
 import { util } from '@modules/util';
-import { FocusEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useController, useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Select from 'react-select';
@@ -52,7 +53,9 @@ export const UtteranceDetail = () => {
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
 
   const schema = yup.object({
-    name: yup.string().trim().required('필수 입력 항목입니다.'),
+    name: yup.string().trim().required('필수 입력 항목입니다.').matches(BOTNAME_REGEX, {
+      message: '특수문자는 ~.,?_ - ! # $ % ^ & * () = []() + < > 만 사용',
+    }),
   });
 
   const {
@@ -107,7 +110,7 @@ export const UtteranceDetail = () => {
   };
 
   const handleListBtn = async () => {
-    if (nameField.value.length > 0 || isActive === true) {
+    if (isActive === true) {
       const result = await confirm({
         title: '저장하기',
         description: (
@@ -271,7 +274,6 @@ export const UtteranceDetail = () => {
               });
               if (intentNameRef.current) {
                 intentNameRef.current.select();
-                setIsActive(false);
               }
               return;
             }

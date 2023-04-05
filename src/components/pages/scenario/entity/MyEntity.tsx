@@ -69,6 +69,9 @@ export const MyEntity = () => {
   };
 
   useEffect(() => {
+    if (!initialData) {
+      return;
+    }
     if (inView) {
       fetchNextPage();
     }

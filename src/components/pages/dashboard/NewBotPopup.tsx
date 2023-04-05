@@ -2,7 +2,7 @@ import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@compo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { IBotInput, SnsKind } from '@models';
-import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
+import { BOTNAME_REGEX, EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -28,21 +28,8 @@ export const NewBotPopup: FC<{
         .string()
         .trim()
         .required(tc('REQUIRE_MESSAGE'))
-        .test('emoji', '문자, 숫자, 공백, _- 만 허용합니다.', (value) => {
-          if (!value) {
-            return false;
-          }
-
-          if (EMOJI_REGEX.test(value)) {
-            return false;
-          }
-
-          if (SPECIAL_CHARACTOR_REGEX.test(value)) {
-            return false;
-          }
-
-          return true;
-        }),
+        .min(2, '최소 2자리 이상입니다.')
+        .matches(BOTNAME_REGEX, { message: '문자, 숫자, 공백, _- 만 허용합니다.' }),
     })
     .required();
 

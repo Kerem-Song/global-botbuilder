@@ -2,7 +2,7 @@ import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
-import { IBotInput } from '@models';
+import { IBotInput, IException } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 
 import { BotCard } from './BotCard';
@@ -19,9 +19,12 @@ export const DashboardComponent = () => {
 
   const handleSave = async (model: IBotInput) => {
     const result = await botSaveAsync(model);
-    if (result) {
+    if (result?.data.isSuccess) {
       handleIsOpen(false);
       lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
+    } else {
+      const exception = result?.data.exception as IException;
+      lunaToast.error(exception?.message || '');
     }
   };
 
