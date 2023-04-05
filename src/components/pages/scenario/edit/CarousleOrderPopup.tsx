@@ -34,9 +34,9 @@ export const CarouselOrderPopup: FC<{
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
 
-  useEffect(() => {
-    console.log('caropopup', nodeView.childrenViews === carouselNode);
-  }, [carouselNode]);
+  // useEffect(() => {
+  //   console.log('caropopup', nodeView.childrenViews === carouselNode);
+  // }, [carouselNode]);
 
   const handleClose = async () => {
     if (nodeView.childrenViews !== carouselNode) {
@@ -70,7 +70,6 @@ export const CarouselOrderPopup: FC<{
 
   const HandleAddCarousel = () => {
     const type = nodeView.typeName;
-
     setCarouselNode([...carouselNode, defaultView(type)]);
   };
 

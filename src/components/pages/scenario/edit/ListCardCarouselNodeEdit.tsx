@@ -35,7 +35,7 @@ export const ListCardCarouselNodeEdit = () => {
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
 
   const { fields, append, remove } = useFieldArray({
-    name: `view.childrenViews.${index}.items`,
+    name: `view.childrenViews.${index ? index : 0}.items`,
     control,
   });
 
@@ -71,7 +71,6 @@ export const ListCardCarouselNodeEdit = () => {
     trigger();
   }, [index]);
 
-  console.log('@fields', fields);
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) && (

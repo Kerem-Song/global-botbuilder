@@ -17,10 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
-import { setSelected } from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';
@@ -36,7 +33,6 @@ export const SoratbleCarouselCtrlContainer = ({
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
-  const dispatch = useDispatch();
   const [isDisable, setIsDisable] = useState<boolean>(false);
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -48,15 +44,6 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
-  // useEffect(() => {
-  //   console.log('carouselnode lenght', carouselNode.length);
-  //   if (carouselNode.length === 10) {
-  //     setIsDisable(true);
-  //   }
-  // }, [carouselNode.length, setIsDisable]);
-  // console.log('isDisable', isDisable);
-  // console.log('caro num', carouselNode.length);
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -74,7 +61,7 @@ export const SoratbleCarouselCtrlContainer = ({
   const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
     const target = node.find((item) => item.id === id);
 
-    if (target && carouselNode.length < 10) {
+    if (target && !isDisable) {
       const duplicated = nodeHelper.cloneView(target);
       setCarouselNode([...node, duplicated]);
     }
@@ -95,9 +82,9 @@ export const SoratbleCarouselCtrlContainer = ({
       id: 'duplicate-carousel',
       name: 'Duplication',
       type: 'icon-front',
-      icon: carouselNode.length < 10 ? icCardDuplication : icCardDuplicationDisabled,
+      icon: !isDisable ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: handleDuplicationCard,
+        action: !isDisable ? handleDuplicationCard : null,
       },
     },
     {
@@ -110,6 +97,14 @@ export const SoratbleCarouselCtrlContainer = ({
       },
     },
   ];
+
+  useEffect(() => {
+    if (carouselNode.length >= 10) {
+      setIsDisable(true);
+    } else {
+      setIsDisable(false);
+    }
+  }, [carouselNode, isDisable]);
 
   return (
     <DndContext
@@ -130,6 +125,9 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
+                  if (isDisable && m.data?.action?.name.match('handleDuplicationCard')) {
+                    return;
+                  }
                   m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
