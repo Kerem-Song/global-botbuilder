@@ -1,5 +1,12 @@
 import { useRootState } from '@hooks/useRootState';
-import { IGetBotReq, IHasResult, IHasResults, ISaveBotReq, ISearchBotReq } from '@models';
+import {
+  IGetBotReq,
+  IHasResult,
+  IHasResults,
+  IResponse,
+  ISaveBotReq,
+  ISearchBotReq,
+} from '@models';
 import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -54,10 +61,15 @@ export const useBotClient = () => {
   };
 
   const botSaveMutate = useMutation(async (botInput: IBotInput) => {
-    const res = await http.post('/bot/createbot', botInput);
+    const res = await http.post<IBotInput, AxiosResponse<IResponse>>(
+      '/bot/createbot',
+      botInput,
+    );
 
     if (res) {
-      queryClient.invalidateQueries(['bot-list']);
+      if (res.data.isSuccess) {
+        queryClient.invalidateQueries(['bot-list']);
+      }
       return res;
     }
   });

@@ -19,9 +19,11 @@ export const DashboardComponent = () => {
 
   const handleSave = async (model: IBotInput) => {
     const result = await botSaveAsync(model);
-    if (result) {
+    if (result?.data.isSuccess) {
       handleIsOpen(false);
       lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
+    } else {
+      lunaToast.error(result?.data.exception?.message || '');
     }
   };
 

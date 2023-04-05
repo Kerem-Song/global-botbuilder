@@ -1,5 +1,5 @@
 export interface IResponse {
-  exception: string | null;
+  exception: string | IException | null;
   isSuccess: boolean;
   newToken?: string | null;
 }
