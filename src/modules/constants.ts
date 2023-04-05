@@ -11,4 +11,5 @@ export const EMOJI_REGEX =
 export const SPECIAL_CHARACTOR_REGEX = /[`~!@#$%^&*()|+=?;:'",.<>\{\}\[\]\\\/]/g;
 export const CONTROL_CHARACTOR_REGEX = /\p{Cc}/gu;
 export const BOTNAME_REGEX =
-  /^([\p{L}]|[\d]|[_-]|[\u0a80-\u0aff]|[\u0900-\u097F]|[\u0780-\u07BF]|[\u0E80-\u0EFF]|[\u0D00-\u0D7F]|[\u1000-\u109F]|[\u0980-\u09FF]|[\u0D80-\u0DFF]|[\u0600-\u06FF]|[\u0B00-\u0B7F]|[\u0C80-\u0CFF]|[\u1780-\u17FF]|[\u0B80-\u0BFF]|[\u0E00-\u0E7F]|[\u0C00-\u0C7F]|[\u0A00-\u0A7F]|[\u0590-\u05ff])+$/gu;
+  // eslint-disable-next-line no-useless-escape
+  /^([\p{L}]|\d| |[~!#$%^&*()_+-=\[\]|,.\/:<>\\?]|[\u0a80-\u0aff]|[\u0900-\u097F]|[\u0780-\u07BF]|[\u0E80-\u0EFF]|[\u0D00-\u0D7F]|[\u1000-\u109F]|[\u0980-\u09FF]|[\u0D80-\u0DFF]|[\u0600-\u06FF]|[\u0B00-\u0B7F]|[\u0C80-\u0CFF]|[\u1780-\u17FF]|[\u0B80-\u0BFF]|[\u0E00-\u0E7F]|[\u0C00-\u0C7F]|[\u0A00-\u0A7F]|[\u0590-\u05ff])+$/gu;
