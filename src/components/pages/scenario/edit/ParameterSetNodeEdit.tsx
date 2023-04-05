@@ -2,6 +2,7 @@ import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
 import { Divider } from '@components/layout';
+import { HistoryViewerMatch } from '@components/pages/history/HistoryViewerMatch';
 import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
@@ -59,6 +60,7 @@ export const ParameterSetNodeEdit = () => {
               <Input
                 {...register(`view.parameters.${i}.name`)}
                 placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
+                readOnly={HistoryViewerMatch()}
               />
             </FormItem>
 
@@ -74,6 +76,7 @@ export const ParameterSetNodeEdit = () => {
               <Input
                 {...register(`view.parameters.${i}.value`)}
                 placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
+                readOnly={HistoryViewerMatch()}
               />
             </FormItem>
             {i > 0 && (

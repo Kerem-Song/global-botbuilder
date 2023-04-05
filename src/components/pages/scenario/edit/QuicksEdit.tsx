@@ -85,7 +85,10 @@ export const QuicksEdit = () => {
                   errors.view && errors.view.quicks && errors.view.quicks[i]?.actionValue
                 }
               >
-                <Input {...register(`view.quicks.${i}.actionValue`)} />
+                <Input
+                  {...register(`view.quicks.${i}.actionValue`)}
+                  readOnly={HistoryViewerMatch()}
+                />
               </FormItem>
             )}
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (

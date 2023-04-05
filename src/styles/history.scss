@@ -261,7 +261,23 @@
         //   pointer-events: none;
         // }
 
+        .collapseTitle {
+          pointer-events: none;
+        }
+
+        .radioContainer {
+          pointer-events: none;
+        }
+
+        .imgUploadLabel {
+          pointer-events: none;
+        }
+
         .react-selector {
+          pointer-events: none;
+        }
+
+        .joinWrapper {
           pointer-events: none;
         }
 
