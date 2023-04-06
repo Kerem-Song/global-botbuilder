@@ -3,7 +3,7 @@ import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 
 export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
   return (
-    <Row justify="flex-start" align="center">
+    <Row justify="flex-start" align="center" key={item.id}>
       <Col span={18} className="listItemsContent">
         {item.title ? (
           <p className="title">{item.title}</p>

@@ -1,30 +1,29 @@
-import { FormItem, Input } from '@components';
+import { FormItem } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useYupValidation } from '@hooks/useYupValidation';
-import { INode, NODE_TYPES } from '@models';
+import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
-import { setInvalidateNode } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
-import { BasicCardCarousleNodeEdit } from './BasicCardCarousleNodeEdit';
+import { BasicCardCarousleNodeEditTest } from './BasicCardCarouselNodeEditTest';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { IntentNodeEdit } from './IntentNodeEdit';
-import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
+import { ListCardCarouselNodeEditTest } from './ListCardCarouselNodeEditTest';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
 import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
-import { ProductCardCarouselNodeEdit } from './ProductCardCarouselNodeEdit';
+import { ProductCardCarouselNodeEditTest } from './ProductCardCarouselNodeEditTest';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
@@ -121,11 +120,11 @@ export const NodeEditDrawer = () => {
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <ProductCardNodeEdit />;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-        return <BasicCardCarousleNodeEdit />;
+        return <BasicCardCarousleNodeEditTest />;
       case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-        return <ListCardCarouselNodeEdit />;
+        return <ListCardCarouselNodeEditTest />;
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return <ProductCardCarouselNodeEdit />;
+        return <ProductCardCarouselNodeEditTest />;
       case NODE_TYPES.ANSWER_NODE:
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:
