@@ -25,6 +25,7 @@ export const MyEntity = () => {
   const handleSearch = (keyword?: string) => {
     setSearchKeywordParameter(keyword);
   };
+
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
@@ -93,6 +94,9 @@ export const MyEntity = () => {
           placeholder="Input search word"
           onSearch={(value) => {
             handleSearch(value);
+          }}
+          onChange={(e) => {
+            handleSearch(e.target.value);
           }}
         ></Input>
       </div>
