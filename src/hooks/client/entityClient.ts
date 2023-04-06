@@ -63,6 +63,10 @@ export const useEntityClient = () => {
     );
   };
 
+  const removeQueries = () => {
+    queryClient.removeQueries(['change-pageNumber']);
+  };
+
   const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
     const result = await http.post<
       ISaveEntryGroup,
@@ -70,7 +74,7 @@ export const useEntityClient = () => {
     >('Builder/SaveEntryGroup', entry);
 
     if (result) {
-      queryClient.removeQueries(['change-pageNumber']);
+      removeQueries();
       return result.data;
     }
   });
@@ -82,7 +86,7 @@ export const useEntityClient = () => {
     >('Builder/DeleteEntryGroup', deleteEntry);
 
     if (result) {
-      queryClient.invalidateQueries(['change-pageNumber']);
+      removeQueries();
       return result.data;
     }
   });
@@ -114,5 +118,6 @@ export const useEntityClient = () => {
     entryGroupMutate,
     entryGroupDeleteMutate,
     getEntryDetailQuery,
+    removeQueries,
   };
 };
