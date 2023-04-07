@@ -105,7 +105,21 @@
   }
 
   .carouselWrapper::-webkit-scrollbar {
-    display: none;
+    width: rem(8);
+    height: rem(8);
+    background-color: rgba(208, 221, 255, 0); /*스크롤바 뒷 배경 색상*/
+  }
+
+  .carouselWrapper::-webkit-scrollbar-thumb {
+    /* 스크롤바의 길이 */
+    height: 30%;
+    background-color: rgba(208, 221, 255, 0); /* 스크롤바의 색상 */
+    border-radius: rem(18);
+    transition: background-color 2s ease-out;
+  }
+
+  .carouselWrapper:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
   }
 
   .luna-card {
