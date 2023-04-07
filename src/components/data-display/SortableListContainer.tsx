@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
-import { updateListItemOrder, updateNode } from '@store/makingNode';
+import { updateListItemOrder } from '@store/makingNode';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

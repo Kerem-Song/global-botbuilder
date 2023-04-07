@@ -1,7 +1,5 @@
-import * as yup from 'yup';
-
 import { TNodeTypes } from './ICard';
-import { ACTION_TYPES, IViewBase } from './res/IGetFlowRes';
+import { IViewBase } from './res/IGetFlowRes';
 
 export interface IGNodeEditModel<T extends IViewBase> extends INodeEditModel {
   view?: T;

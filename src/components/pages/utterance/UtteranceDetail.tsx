@@ -243,6 +243,10 @@ export const UtteranceDetail = () => {
     );
   };
 
+  const handleSearch = (keyword?: string) => {
+    setSearchWord(keyword!);
+  };
+
   const handleSave = async (itemData: IUtteranceModel): Promise<void> => {
     const saveIntent: ISaveIntent = {
       sessionToken: token!,
@@ -467,8 +471,8 @@ export const UtteranceDetail = () => {
               search
               placeholder="Input search text"
               value={searchWord}
-              onSearch={(value) => setSearchWord(value!)}
-              onChange={(e) => setSearchWord(e.target.value)}
+              onSearch={(value) => handleSearch(value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </FormItem>
           <Button
