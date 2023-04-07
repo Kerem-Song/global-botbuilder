@@ -84,7 +84,12 @@ export const MyEntity = () => {
         <Title level={2}>Manage my entities</Title>
       </div>
       <div className="entity">
-        <Button type="primary" onClick={() => handleIsOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() => {
+            handleIsOpen(true);
+          }}
+        >
           <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
           <span>Add entity</span>
         </Button>

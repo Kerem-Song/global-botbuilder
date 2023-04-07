@@ -32,7 +32,7 @@ export const UtteranceDetail = () => {
 
   const token = useRootState((state) => state.botInfoReducer.token);
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
-  const [searchWord, setSearchWord] = useState('');
+  const [searchWord, setSearchWord] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
