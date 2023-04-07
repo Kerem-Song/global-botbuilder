@@ -71,7 +71,7 @@ export const TesterMessagesItemButton = ({
 
   const handleActValueIsUttr = () => {
     const actValueIsUttr: ITesterDataType = {
-      value: item.label,
+      value: item.postback.actValueIsUttr!,
       isMe: true,
       type: 'text',
     };

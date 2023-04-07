@@ -25,6 +25,7 @@ export const MyEntity = () => {
   const handleSearch = (keyword?: string) => {
     setSearchKeywordParameter(keyword);
   };
+
   const token = useRootState((state) => state.botInfoReducer.token);
 
   const { confirm } = useSystemModal();
@@ -83,7 +84,12 @@ export const MyEntity = () => {
         <Title level={2}>Manage my entities</Title>
       </div>
       <div className="entity">
-        <Button type="primary" onClick={() => handleIsOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() => {
+            handleIsOpen(true);
+          }}
+        >
           <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
           <span>Add entity</span>
         </Button>
@@ -93,6 +99,9 @@ export const MyEntity = () => {
           placeholder="Input search word"
           onSearch={(value) => {
             handleSearch(value);
+          }}
+          onChange={(e) => {
+            handleSearch(e.target.value);
           }}
         ></Input>
       </div>

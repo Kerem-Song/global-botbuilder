@@ -1,5 +1,5 @@
 import { icPopupClose } from '@assets';
-import { usePage } from '@hooks';
+import { useEntityClient, usePage } from '@hooks';
 import { useState } from 'react';
 import { FC } from 'react';
 import ReactModal from 'react-modal';
@@ -17,10 +17,14 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
   handleIsOpen,
 }) => {
   const [activeIndex, setAcitveIndex] = useState<number>(0);
-  const { t, tc } = usePage();
+  const { t } = usePage();
+  const { removeQueries } = useEntityClient();
+
   const handleClose = () => {
+    removeQueries();
     handleIsOpen(false);
   };
+
   const tabClickedHandler = (index: number) => {
     setAcitveIndex(index);
   };

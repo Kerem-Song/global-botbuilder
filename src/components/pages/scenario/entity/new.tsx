@@ -32,7 +32,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [synonym, setSynonym] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
+  const { entryGroupMutate, getEntryDetailQuery, removeEntryDetailQuery } =
+    useEntityClient();
   const { confirm } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -46,10 +47,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const regexSchema = yup.object({
-    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
+    representativeEntry: yup.string().trim().required('필수 입력 항목입니다람쥐.'),
   });
 
-  const entityNameSchema = yup
+  const entitySchema = yup
     .object({
       name: yup
         .string()
@@ -79,7 +80,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
 
   const formMethods = useForm<ISaveEntryGroup>({
     defaultValues,
-    resolver: yupResolver(entityNameSchema),
+    resolver: yupResolver(entitySchema),
   });
 
   const {
@@ -166,11 +167,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleRegexExpression = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('field', field);
+    console.log(field);
     field.onChange([{ representativeEntry: e.target.value }]);
     setIsActive(true);
     setRegexInputError('');
   };
+  console.log('nameField', nameField);
+  console.log('field', field);
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
     if (entryData.entryGroupid) {
@@ -188,9 +191,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         onSuccess: (res) => {
           if (res && res.isSuccess) {
             reset();
-            remove();
-            setEntryId('');
             handleIsOpen(false);
+            removeEntryDetailQuery(entryId);
             lunaToast.success('수정되었습니다.');
           } else if (
             entryData.isRegex === true &&

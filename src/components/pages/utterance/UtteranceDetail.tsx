@@ -32,7 +32,7 @@ export const UtteranceDetail = () => {
 
   const token = useRootState((state) => state.botInfoReducer.token);
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
-  const [searchWord, setSearchWord] = useState('');
+  const [searchWord, setSearchWord] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
@@ -241,6 +241,10 @@ export const UtteranceDetail = () => {
         },
       },
     );
+  };
+
+  const handleSearch = (keyword?: string) => {
+    setSearchWord(keyword!);
   };
 
   const handleSave = async (itemData: IUtteranceModel): Promise<void> => {
@@ -467,8 +471,8 @@ export const UtteranceDetail = () => {
               search
               placeholder="Input search text"
               value={searchWord}
-              onSearch={(value) => setSearchWord(value!)}
-              onChange={(e) => setSearchWord(e.target.value)}
+              onSearch={(value) => handleSearch(value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </FormItem>
           <Button
