@@ -13,6 +13,7 @@ import historyInfoReducer from './historyInfoSlice';
 import intentListReducer from './intentListSlice';
 import intentReducer from './intentSlice';
 import makingNodeSliceReducer from './makingNode';
+import otherFlowScenariosPopupStatusReducer from './otherFlowScenarioPopupSlice';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
 import userInfoReducer from './userInfSlice';
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   intentListReducer,
   makingNodeSliceReducer: undoable(makingNodeSliceReducer, { debug: true, limit: 20 }),
   historyInfoReducer,
+  otherFlowScenariosPopupStatusReducer,
 });
 
 type ReducerType = typeof rootReducer;

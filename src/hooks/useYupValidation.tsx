@@ -133,8 +133,8 @@ export const useYupValidation = () => {
       .when('title', {
         is: (title: string) => !title,
         then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
-      })
-      .required(t(`VALIDATION_REQUIRED`)),
+      }),
+
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
@@ -163,8 +163,7 @@ export const useYupValidation = () => {
       .when('title', {
         is: (title: string) => !title,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
-      })
-      .required(t(`VALIDATION_REQUIRED`)),
+      }),
 
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
@@ -252,7 +251,6 @@ export const useYupValidation = () => {
       })
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .transform((value, originalValue) => {
-        console.log('value@@,:', value, originalValue);
         return Number.isNaN(originalValue) ? 0 : Number(value);
       })
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),

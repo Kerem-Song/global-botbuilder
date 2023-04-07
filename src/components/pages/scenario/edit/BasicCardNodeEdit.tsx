@@ -1,4 +1,4 @@
-import { FormItem, Input, InputTextarea, Space } from '@components';
+import { FormItem, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -6,7 +6,6 @@ import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
-import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -54,13 +53,13 @@ export const BasicCardNodeEdit = () => {
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
         <Space direction="vertical">
           {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
-          <div className="textareaWrapper">
+          {/* <div className="textareaWrapper">
             <p className={classNames('textareaLabel', 'light')}>{t(`TITLE_INPUT`)}</p>
             <span className="textCounter">
               {watch('view.title')?.length || 0}
               {`/20`}
             </span>
-          </div>
+          </div> */}
           <FormItem error={errors.view && errors.view.title}>
             <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}

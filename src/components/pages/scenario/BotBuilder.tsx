@@ -11,6 +11,10 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import {
+  otherFlowScenariosPopupStatus,
+  setOtherFlowPopupPosition,
+} from '@store/otherFlowScenarioPopupSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
@@ -24,7 +28,7 @@ import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 import { Node } from './nodes';
-import { OtherFlowScenariosPopup } from './nodes/OtherFlowScenariosPopup';
+import { OtherFlowScenariosPopup } from './OtherFlowScenariosPopup';
 
 let dirtySelect: string | undefined;
 
@@ -41,7 +45,10 @@ export const Botbuilder = () => {
     x: 0,
     y: 0,
   });
-  const [otherFlowPopup, setOtherFlowPopup] = useState<boolean>(false);
+
+  const otherFlowPopupIsOpen = useRootState(
+    (state) => state.otherFlowScenariosPopupStatusReducer.isOpen,
+  );
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
@@ -61,6 +68,7 @@ export const Botbuilder = () => {
 
   const { isOpen, handleIsOpen } = useModalOpen();
 
+  const isHistoryViewer = useHistoryViewerMatch();
   useEffect(() => {
     const event = () => {
       setIsPanning(false);
@@ -160,17 +168,17 @@ export const Botbuilder = () => {
       return;
     }
 
-    // if (cardType === 'OtherFlowRedirectNode') {
-    //   console.log('akak');
-    //   setPopUpPosition({
-    //     x: Math.round(e.clientX / scale) - canvasRect.left,
-    //     y: Math.round(e.clientY / scale) - canvasRect.top,
-    //   });
+    if (cardType === 'OtherFlowRedirectNode') {
+      dispatch(
+        setOtherFlowPopupPosition({
+          x: Math.round(e.clientX / scale) - canvasRect.left,
+          y: Math.round(e.clientY / scale) - canvasRect.top,
+        }),
+      );
+      dispatch(otherFlowScenariosPopupStatus(true));
 
-    //   setOtherFlowPopup(true);
-
-    //   return;
-    // }
+      return;
+    }
     const nodeName = e.dataTransfer.getData('nodeName') as string;
 
     const nodeView = nodeDefaultHelper.createDefaultView(cardType);
@@ -214,19 +222,11 @@ export const Botbuilder = () => {
     }
   };
 
-  const [cutNode, setCutNode] = useState<INode>();
-
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
       dispatch(appendNode({ ...clone, x: points.x, y: points.y }));
     }
-    console.log('------------');
-    // console.log('cutnode in paste', cutNode);
-    // if (cutNode) {
-    //   console.log('handlePasteCard cutNode: ', cutNode);
-    //   dispatch(appendNode(cutNode));
-    // }
   };
 
   const canvasContextMenu: IPopperItem<{ action: () => void }>[] = [
@@ -270,7 +270,6 @@ export const Botbuilder = () => {
   const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log('on context click');
     setClicked(true);
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     setPoints({
@@ -279,7 +278,6 @@ export const Botbuilder = () => {
     });
   };
 
-  console.log('other flow popup', otherFlowPopup);
   return (
     <>
       <div
@@ -359,7 +357,7 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-          {useHistoryViewerMatch()
+          {isHistoryViewer
             ? null
             : isOpen && (
                 <NodeLinkPopUpMenu
@@ -367,8 +365,8 @@ export const Botbuilder = () => {
                   popUpPosition={popUpPosition}
                 />
               )}
-          {otherFlowPopup && <OtherFlowScenariosPopup popUpPosition={popUpPosition} />}
-          {useHistoryViewerMatch()
+          {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
+          {isHistoryViewer
             ? null
             : clicked && (
                 <div

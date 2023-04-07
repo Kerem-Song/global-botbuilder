@@ -15,7 +15,7 @@ export const BotBuilderZoomBtn = () => {
   const past = useRootState((state) => state.makingNodeSliceReducer.past).length !== 0;
   const future =
     useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const handleZoomOut = () => {
     dispatch(zoomOut());
   };
@@ -34,7 +34,7 @@ export const BotBuilderZoomBtn = () => {
         <span>{scale * 100}</span>
         <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
       </Col>
-      {!useHistoryViewerMatch() && (
+      {!isHistoryViewer && (
         <Col className="operationBtn">
           <Button
             small

@@ -6,8 +6,13 @@ import { useYupValidation } from '@hooks/useYupValidation';
 import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { setEditDrawerToggle, setInvalidateNode } from '@store/botbuilderSlice';
+import { setInvalidateNode } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
+import {
+  otherFlowScenariosPopupStatus,
+  setIsClickHeaderBtn,
+  setOtherFlowPopupPosition,
+} from '@store/otherFlowScenarioPopupSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -117,6 +122,24 @@ export const BotBuilderHeader = () => {
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
+    if (cardType === 'OtherFlowRedirectNode') {
+      console.log('@other botbuilderheader');
+      dispatch(
+        setOtherFlowPopupPosition({
+          x:
+            canvasRect && viewRect
+              ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+              : 0,
+          y:
+            canvasRect && viewRect
+              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+              : 0,
+        }),
+      );
+      dispatch(otherFlowScenariosPopupStatus(true));
+      dispatch(setIsClickHeaderBtn(true));
+      return;
+    }
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: cardType,
