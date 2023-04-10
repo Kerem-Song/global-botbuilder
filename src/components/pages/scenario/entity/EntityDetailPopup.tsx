@@ -165,15 +165,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
-    const result = await error({
-      title: 'error',
-      description: (
-        <span>
-          Validation failed: -- RepresentativeEntry: There are characters that are not
-          allowed in the representative entry. Severity: Error
-        </span>
-      ),
-    });
     if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -199,9 +190,19 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
           ) {
             setRegexInputError('필수 입력 항목입니다.');
           } else if (
+            res?.exception.errorCode === 7000 &&
             res?.exception.invalidateProperties.includes('RepresentativeEntry')
           ) {
-            result;
+            const result = error({
+              title: 'error',
+              description: (
+                <span>
+                  Validation failed: -- RepresentativeEntry: There are characters that are
+                  not allowed in the representative entry. Severity: Error
+                </span>
+              ),
+            });
+            return result;
           }
         },
       });
@@ -227,6 +228,20 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
             res?.exception.invalidateProperties.includes('Entries')
           ) {
             setRegexInputError('필수 입력 항목입니다.');
+          } else if (
+            res?.exception.errorCode === 7000 &&
+            res?.exception.invalidateProperties.includes('RepresentativeEntry')
+          ) {
+            const result = error({
+              title: 'error',
+              description: (
+                <span>
+                  Validation failed: -- RepresentativeEntry: There are characters that are
+                  not allowed in the representative entry. Severity: Error
+                </span>
+              ),
+            });
+            return result;
           }
         },
       });
