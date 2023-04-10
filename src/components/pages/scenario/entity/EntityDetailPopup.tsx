@@ -3,7 +3,7 @@ import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, useRootState, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
-import { EMOJI_REGEX, SPECIAL_CHARACTOR_REGEX } from '@modules';
+import { ENTITY_NAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import React, { Dispatch, FC, useEffect, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
@@ -33,7 +33,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [synonym, setSynonym] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const { confirm } = useSystemModal();
+  const { confirm, error } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -45,6 +45,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     entries: [],
   };
 
+  const stringSchema = yup.object({
+    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
+  });
+
   const regexSchema = yup.object({
     representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
   });
@@ -55,25 +59,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .string()
         .trim()
         .required('필수 입력 항목입니다.')
-        .test('emoji', '특수문자는 - _만 입력 가능합니다', (value) => {
-          if (!value) {
-            return false;
-          }
-
-          if (EMOJI_REGEX.test(value)) {
-            return false;
-          }
-
-          if (SPECIAL_CHARACTOR_REGEX.test(value)) {
-            return false;
-          }
-          return true;
-        })
+        .matches(ENTITY_NAME_REGEX, '특수문자는 - _만 입력 가능합니다.')
         .max(20, `20자를 초과할 수 없습니다.`),
       entries: yup
         .array()
         .min(1, '필수 입력 항목입니다.')
-        .when('isRegex', { is: true, then: yup.array().of(regexSchema) }),
+        .when('isRegex', { is: true, then: yup.array().of(regexSchema) })
+        .when('isRegex', { is: false, then: yup.array().of(stringSchema) }),
     })
     .required();
 
@@ -173,6 +165,15 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
+    const result = await error({
+      title: 'error',
+      description: (
+        <span>
+          Validation failed: -- RepresentativeEntry: There are characters that are not
+          allowed in the representative entry. Severity: Error
+        </span>
+      ),
+    });
     if (entryData.entryGroupid) {
       const modifyEntry: ISaveEntryGroup = {
         sessionToken: token,
@@ -196,7 +197,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
             entryData.isRegex === true &&
             res?.exception.invalidateProperties.includes('Entries')
           ) {
-            setRegexInputError('필수 입력 항목입니다.설마이거?');
+            setRegexInputError('필수 입력 항목입니다.');
+          } else if (
+            res?.exception.invalidateProperties.includes('RepresentativeEntry')
+          ) {
+            result;
           }
         },
       });
@@ -221,7 +226,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
             entryData.isRegex === true &&
             res?.exception.invalidateProperties.includes('Entries')
           ) {
-            setRegexInputError('필수 입력 항목입니다.아님너냐');
+            setRegexInputError('필수 입력 항목입니다.');
           }
         },
       });
