@@ -182,7 +182,7 @@ export const ImageFileUploader = ({
               imageCtrl === IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL ||
               imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL ||
               imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL,
-            regtangle: imageRatio === ImageAspectRatio.Rectangle,
+            rectangle: imageRatio === ImageAspectRatio.Rectangle,
             invalid: !isValid,
           })}
         >
@@ -193,19 +193,22 @@ export const ImageFileUploader = ({
                 alt="templateImage"
               />
             ) : (
-              <img src={icImg} alt="icImg" />
-            )}
-            {(imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL ||
-              imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) && (
               <>
-                <p>{t(`RECOMMENDED_SIZE`)}</p>
-                <p>
-                  {imageRatio === ImageAspectRatio.Rectangle
-                    ? t(`IMAGE_TYPE_RECTANGLE`) + ' : 800 x 400'
-                    : t(`IMAGE_TYPE_SQUARE`) + ' : 800 x 800'}
-                </p>
+                <img src={icImg} alt="icImg" />
+                {(imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL ||
+                  imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) && (
+                  <>
+                    <p>{t(`RECOMMENDED_SIZE`)}</p>
+                    <p>
+                      {imageRatio === ImageAspectRatio.Rectangle
+                        ? t(`IMAGE_TYPE_RECTANGLE`) + ' : 800 x 400'
+                        : t(`IMAGE_TYPE_SQUARE`) + ' : 800 x 800'}
+                    </p>
+                  </>
+                )}
               </>
             )}
+
             <input
               type="file"
               id={handleImageCtrlIdPath().htmlForId}

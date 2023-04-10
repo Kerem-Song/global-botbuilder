@@ -298,6 +298,14 @@
             background: $grayWhite;
             border: rem(1) dashed $gray200;
             border-radius: rem(8);
+
+            .imgUploadSkeleton {
+              img {
+                width: rem(30);
+                height: rem(30);
+                border: none;
+              }
+            }
           }
         }
 
@@ -322,7 +330,7 @@
 
         .imgUploadWrapper {
           position: relative;
-          height: rem(200);
+          height: rem(236);
 
           .imgUploadSkeleton {
             position: absolute;
@@ -333,8 +341,10 @@
             text-align: center;
 
             img {
-              max-width: rem(200);
-              max-height: rem(180);
+              width: rem(236);
+              height: rem(236);
+              border: rem(1) solid $gray200;
+              border-radius: rem(8);
             }
           }
 
@@ -351,6 +361,16 @@
 
           &.invalid {
             border: rem(1) solid $red;
+          }
+        }
+
+        .rectangle {
+          height: rem(118);
+          
+          img {
+            border: rem(1) solid $gray200;
+            border-radius: rem(8);
+            max-height: rem(118);
           }
         }
       }
