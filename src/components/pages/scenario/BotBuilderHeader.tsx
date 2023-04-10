@@ -13,7 +13,7 @@ import {
   setIsClickHeaderBtn,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ID_GEN, ID_TYPES } from '../../../modules';
@@ -75,7 +75,7 @@ export const BotBuilderHeader = () => {
   );
 
   const cardNum = nodes.length;
-
+  const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
   const dispatch = useDispatch();
   const { scenarioSaveAsync, scenarioSaving } = useScenarioClient();
 
@@ -140,10 +140,30 @@ export const BotBuilderHeader = () => {
       dispatch(setIsClickHeaderBtn(true));
       return;
     }
+
+    const basicNameNodesRegex = new RegExp(`${nodeName}`);
+    const filtered = nodes.filter((node) => basicNameNodesRegex.test(node.title!));
+    let index = 1;
+
+    if (filtered || tempNodeNames) {
+      const regex = /[^0-9]/g;
+      const results = filtered?.map((x) => Number(x.title?.replace(regex, ''))) || [];
+      const max = Math.max(...results, ...tempNodeNames);
+
+      for (let i = 1; i <= max + 1; i++) {
+        if (!results.includes(i)) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    setTempNodeNames([...tempNodeNames, index]);
+
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: cardType,
-      title: nodeName,
+      title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       view: nodeView,
       nodeKind: getNodeKind(cardType),
       seq: 0,
@@ -165,6 +185,10 @@ export const BotBuilderHeader = () => {
     const data = e.currentTarget.getAttribute('data') as string;
     e.dataTransfer.setData('nodeName', data);
   };
+
+  useEffect(() => {
+    setTempNodeNames([]);
+  }, [nodes]);
 
   return (
     <div className="botBuilderHeader">

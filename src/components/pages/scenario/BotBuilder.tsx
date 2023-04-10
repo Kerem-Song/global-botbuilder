@@ -46,6 +46,7 @@ export const Botbuilder = () => {
     x: 0,
     y: 0,
   });
+  const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
 
   const otherFlowPopupIsOpen = useRootState(
     (state) => state.otherFlowScenariosPopupStatusReducer.isOpen,
@@ -180,16 +181,35 @@ export const Botbuilder = () => {
 
       return;
     }
-    const nodeName = e.dataTransfer.getData('nodeName') as string;
 
+    const nodeName = e.dataTransfer.getData('nodeName') as string;
     const nodeView = nodeDefaultHelper.createDefaultView(cardType);
+
+    const basicNameNodesRegex = new RegExp(`${nodeName}`);
+    const filtered = nodes.filter((node) => basicNameNodesRegex.test(node.title!));
+    let index = 1;
+
+    if (filtered || tempNodeNames) {
+      const regex = /[^0-9]/g;
+      const results = filtered?.map((x) => Number(x.title?.replace(regex, ''))) || [];
+      const max = Math.max(...results, ...tempNodeNames);
+
+      for (let i = 1; i <= max + 1; i++) {
+        if (!results.includes(i)) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    setTempNodeNames([...tempNodeNames, index]);
 
     const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: cardType,
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
-      title: nodeName,
+      title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       nodeKind: getNodeKind(cardType),
       view: nodeView,
       seq: 0,
@@ -278,6 +298,10 @@ export const Botbuilder = () => {
       y: Math.round(e.clientY / scale) - canvasRect.top,
     });
   };
+
+  useEffect(() => {
+    setTempNodeNames([]);
+  }, [nodes]);
 
   return (
     <>
