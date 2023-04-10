@@ -345,6 +345,8 @@
               height: rem(236);
               border: rem(1) solid $gray200;
               border-radius: rem(8);
+              object-fit: contain;
+              background-color: $grayWhite;
             }
           }
 
