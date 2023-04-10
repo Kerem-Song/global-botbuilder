@@ -3,6 +3,7 @@ import {
   icCardDeleteDisabled,
   icCardDuplicationDisabled,
   icCardPaste,
+  icCardPasteDisabled,
 } from '@assets';
 import { IPopperItem } from '@components/navigation';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
@@ -252,9 +253,9 @@ export const Botbuilder = () => {
       id: 'paste',
       name: 'To Paste',
       type: 'icon-front',
-      icon: icCardPaste,
+      icon: clipBoard ? icCardPaste : icCardPasteDisabled,
       data: {
-        action: handlePasteCard,
+        action: clipBoard ? handlePasteCard : () => null,
       },
     },
     {
