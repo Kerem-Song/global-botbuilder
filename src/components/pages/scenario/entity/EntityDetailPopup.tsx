@@ -45,10 +45,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     entries: [],
   };
 
-  const stringSchema = yup.object({
-    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
-  });
-
   const regexSchema = yup.object({
     representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
   });
@@ -64,8 +60,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       entries: yup
         .array()
         .min(1, '필수 입력 항목입니다.')
-        .when('isRegex', { is: true, then: yup.array().of(regexSchema) })
-        .when('isRegex', { is: false, then: yup.array().of(stringSchema) }),
+        .when('isRegex', { is: true, then: yup.array().of(regexSchema) }),
     })
     .required();
 
@@ -109,45 +104,6 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (entryDetails && entryDetails.data) {
-      const resetValue = {
-        entryGroupid: entryDetails.data.id,
-        name: entryDetails.data.name,
-        entryGroupType: entryDetails.data.entryGroupType,
-        isRegex: entryDetails.data.entryGroupType === 2,
-        usingName: entryDetails.data.usingName,
-        entryStr: entryDetails.data.entryStr,
-        entries: entryDetails.data.entries,
-      };
-      reset(resetValue);
-    }
-  }, [entryDetails?.data]);
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === 'isRegex' && type === 'change') {
-        setValue('entries', []);
-      }
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [watch]);
-
-  useEffect(() => {
-    if (isActive === true) {
-      (() => {
-        history.pushState(null, '', location.href);
-        window.addEventListener('popstate', preventGoBack);
-      })();
-
-      return () => {
-        window.removeEventListener('popstate', preventGoBack);
-      };
-    }
-  }, [isActive]);
-
   const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.indexOf(' ') > -1) {
       e.target.value = e.target.value.replaceAll(' ', '');
@@ -158,10 +114,12 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleRegexExpression = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('field', field);
-    field.onChange([{ representativeEntry: e.target.value }]);
-    setIsActive(true);
-    setRegexInputError('');
+    if (e.target.value === '') {
+      field.onChange([]);
+    } else {
+      field.onChange([{ representativeEntry: e.target.value }]);
+      setIsActive(true);
+    }
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
@@ -219,8 +177,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         onSuccess: (res) => {
           if (res && res.isSuccess) {
             reset();
-            lunaToast.success('저장되었습니다.');
             handleIsOpen(false);
+            lunaToast.success('저장되었습니다.');
           } else if (res?.exception.errorCode === 7608) {
             setEntryNameInputError('중복된 엔트리명 입니다.');
           } else if (
@@ -285,6 +243,45 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (entryDetails && entryDetails.data) {
+      const resetValue = {
+        entryGroupid: entryDetails.data.id,
+        name: entryDetails.data.name,
+        entryGroupType: entryDetails.data.entryGroupType,
+        isRegex: entryDetails.data.entryGroupType === 2,
+        usingName: entryDetails.data.usingName,
+        entryStr: entryDetails.data.entryStr,
+        entries: entryDetails.data.entries,
+      };
+      reset(resetValue);
+    }
+  }, [entryDetails?.data]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === 'isRegex' && type === 'change') {
+        setValue('entries', []);
+      }
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [watch]);
+
+  useEffect(() => {
+    if (isActive === true) {
+      (() => {
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+      })();
+
+      return () => {
+        window.removeEventListener('popstate', preventGoBack);
+      };
+    }
+  }, [isActive]);
 
   return (
     <ReactModal
