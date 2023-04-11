@@ -10,9 +10,11 @@ import {
   IListCardCarouselView,
   IProductCardCarouselView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { updateNode } from '@store/makingNode';
+import { setCarouselIndex } from '@store/botbuilderSlice';
+import { editNode, updateNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
@@ -33,10 +35,6 @@ export const CarouselOrderPopup: FC<{
   useEffect(() => {
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
-
-  // useEffect(() => {
-  //   console.log('caropopup', nodeView.childrenViews === carouselNode);
-  // }, [carouselNode]);
 
   const handleClose = async () => {
     if (nodeView.childrenViews !== carouselNode) {
@@ -85,6 +83,13 @@ export const CarouselOrderPopup: FC<{
     };
 
     dispatch(updateNode(upNode));
+
+    dispatch(
+      setCarouselIndex({
+        id: `${NODE_PREFIX}${upNode.id}`,
+        index: upNode.view?.childrenViews?.length - 1,
+      }),
+    );
     handleIsOpen(false);
 
     lunaToast.success(tc(`ACCEPTED`));

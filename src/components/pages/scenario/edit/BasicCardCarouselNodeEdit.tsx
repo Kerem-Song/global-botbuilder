@@ -15,7 +15,7 @@ import { ImageSettings } from './ImageSettings';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
-export const BasicCardCarousleNodeEditTest = () => {
+export const BasicCardCarousleNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -26,6 +26,7 @@ export const BasicCardCarousleNodeEditTest = () => {
     watch,
     control,
     trigger,
+    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardCarouselView>>();
   const values = getValues();
@@ -42,12 +43,17 @@ export const BasicCardCarousleNodeEditTest = () => {
 
   useEffect(() => {
     if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {
-      console.log('@no imageurl', index);
       setValue(`view.useImageCtrl`, true);
     }
     trigger();
   }, [index]);
-  console.log('@basic field', childrenViewsField);
+
+  useEffect(() => {
+    console.log('@watch', watch(`view.childrenViews`));
+    console.log('@basic field', childrenViewsField);
+    reset();
+  }, [childrenViewsField]);
+
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) &&

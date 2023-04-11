@@ -26,10 +26,12 @@ export const BasicCardCarouselNode: FC<IBasicCardCarouselNodeProps> = ({ node })
       ...view.childrenViews,
       nodeDefaultHelper.createDefaultBasicCardView(),
     ];
+
     const upNode = {
       ...node,
       view: { ...view, childrenViews } as IBasicCardCarouselView,
     };
+
     dispatch(updateNode(upNode));
   };
 

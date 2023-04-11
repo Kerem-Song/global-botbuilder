@@ -28,10 +28,15 @@ import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { lunaToast } from '@modules/lunaToast';
-import { setClipBoard, setGuideStartNode, setSelected } from '@store/botbuilderSlice';
+import {
+  setClipBoard,
+  setEditDrawerToggle,
+  setGuideStartNode,
+  setSelected,
+} from '@store/botbuilderSlice';
 import { appendNode, removeItem } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, KeyboardEvent } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useMatch } from 'react-router';
@@ -105,10 +110,6 @@ export const Node: FC<INodeProps> = ({
     dispatch(removeItem(node.id));
   };
 
-  const handlePasteCard = (node: INode) => {
-    console.log('handle Paste');
-  };
-
   const handleDeleteCard = (node: INode) => {
     deleteCard(node.id);
   };
@@ -123,7 +124,7 @@ export const Node: FC<INodeProps> = ({
   };
 
   const handleChangeCarouselOrder = () => {
-    console.log('handle change carousel order');
+    dispatch(setEditDrawerToggle(false));
     handleIsOpen(true);
   };
 

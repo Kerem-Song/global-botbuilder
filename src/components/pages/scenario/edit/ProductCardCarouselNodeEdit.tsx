@@ -8,7 +8,7 @@ import { ImageAspectRatio } from '@models/enum';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import { useEffect, useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -110,6 +110,10 @@ export const ProductCardCarouselNodeEdit = () => {
     name: `view.childrenViews.${index}.currencyUnit`,
     control,
   });
+  const { fields: childrenViewsField } = useFieldArray({
+    name: `view.childrenViews`,
+    control,
+  });
 
   useEffect(() => {
     trigger();
@@ -136,137 +140,152 @@ export const ProductCardCarouselNodeEdit = () => {
     );
   }, [watch(`view.childrenViews.${index}.discountPrice`)]);
 
-  const [isOut, setIsOut] = useState<boolean>();
   return (
     <>
-      {watch(`view.childrenViews.${index}.id`) && (
-        <>
-          <div className="node-item-wrap collapse">
-            <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false} index={index}>
-              <FormItem error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}>
-                <ImageSettings
-                  imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
-                  setImageRatio={setImageRatio}
-                  imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
-                  index={index}
-                  isValid={
-                    errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl
-                      ? false
-                      : true
-                  }
-                />
-              </FormItem>
-            </Collapse>
-          </div>
-          <div className="node-item-wrap collapse">
-            <Collapse label={t(`PROFILE`)} useSwitch={false}>
-              <div className="m-b-8">
-                <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
-                <span className="required">*</span>
-              </div>
-              <div className="m-b-8">
-                <Space direction="vertical">
-                  <FormItem
-                    error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}
-                  >
-                    <Row align="center" gap={12} style={{ margin: 0 }}>
-                      <Col span={7} className="itemProfileImg">
-                        <ImageFileUploader
-                          imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL}
-                          index={index}
-                          isValid={
-                            errors.view?.childrenViews?.[index]?.profileIconUrl
-                              ? false
-                              : true
+      {watch(`view.childrenViews.${index}.id`) &&
+        childrenViewsField.map(
+          (childrenView, i) =>
+            index === i && (
+              <div key={childrenView.id}>
+                <div className="node-item-wrap collapse">
+                  <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false} index={index}>
+                    <FormItem
+                      error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}
+                    >
+                      <ImageSettings
+                        imageRatio={watch(
+                          `view.childrenViews.${index}.imageCtrl.aspectRatio`,
+                        )}
+                        setImageRatio={setImageRatio}
+                        imageCtrl={IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL}
+                        index={index}
+                        isValid={
+                          errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl
+                            ? false
+                            : true
+                        }
+                      />
+                    </FormItem>
+                  </Collapse>
+                </div>
+                <div className="node-item-wrap collapse">
+                  <Collapse label={t(`PROFILE`)} useSwitch={false}>
+                    <div className="m-b-8">
+                      <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
+                      <span className="required">*</span>
+                    </div>
+                    <div className="m-b-8">
+                      <Space direction="vertical">
+                        <FormItem
+                          error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}
+                        >
+                          <Row align="center" gap={12} style={{ margin: 0 }}>
+                            <Col span={7} className="itemProfileImg">
+                              <ImageFileUploader
+                                imageCtrl={
+                                  IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
+                                }
+                                index={index}
+                                isValid={
+                                  errors.view?.childrenViews?.[index]?.profileIconUrl
+                                    ? false
+                                    : true
+                                }
+                              />
+                            </Col>
+                            <Col span={15}>
+                              <p>{t(`RECOMMENDED_SIZE`)}</p>
+                              <p>640 x 640</p>
+                            </Col>
+                          </Row>
+                        </FormItem>
+                      </Space>
+                    </div>
+                    <div className="m-b-8">
+                      <Space direction="vertical">
+                        <FormItem
+                          error={
+                            errors.view &&
+                            errors.view.childrenViews &&
+                            errors.view.childrenViews[index]?.profileName
                           }
-                        />
-                      </Col>
-                      <Col span={15}>
-                        <p>{t(`RECOMMENDED_SIZE`)}</p>
-                        <p>640 x 640</p>
-                      </Col>
-                    </Row>
-                  </FormItem>
-                </Space>
-              </div>
-              <div className="m-b-8">
-                <Space direction="vertical">
-                  <FormItem
-                    error={
-                      errors.view &&
-                      errors.view.childrenViews &&
-                      errors.view.childrenViews[index]?.profileName
-                    }
-                  >
-                    <InputWithTitleCounter
-                      label={t(`PRODUCT_NODE_BRAND_NAME`)}
-                      required={true}
-                      showCount={true}
-                      maxLength={15}
-                      isLight={true}
-                      {...register(`view.childrenViews.${index}.profileName`)}
-                      textLength={
-                        watch(`view.childrenViews.${index}.profileName`)?.length || 0
-                      }
-                      readOnly={isHistoryViewer}
-                    />
-                  </FormItem>
-                </Space>
-              </div>
-            </Collapse>
-          </div>
-          <div className="node-item-wrap collapse">
-            <div className="m-b-8">
-              <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
-                <Space direction="vertical">
-                  <FormItem
-                    error={
-                      errors.view &&
-                      errors.view.childrenViews &&
-                      errors.view.childrenViews[index]?.description
-                    }
-                  >
-                    <InputWithTitleCounter
-                      label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
-                      showCount={true}
-                      maxLength={30}
-                      required={true}
-                      {...register(`view.childrenViews.${index}.description`)}
-                      textLength={
-                        watch(`view.childrenViews.${index}.description`)?.length || 0
-                      }
-                      readOnly={isHistoryViewer}
-                    />
-                  </FormItem>
-
-                  <div className="m-b-8">
-                    <FormItem error={errors.view?.childrenViews?.[index]?.retailPrice}>
-                      <Row justify="space-between">
-                        <Col span={16} className="retailPrice">
+                        >
                           <InputWithTitleCounter
-                            label={t(`PRODUCT_NODE_PRICE`)}
+                            label={t(`PRODUCT_NODE_BRAND_NAME`)}
                             required={true}
-                            {...register(`view.childrenViews.${index}.retailPrice`, {
-                              valueAsNumber: true,
-                            })}
+                            showCount={true}
+                            maxLength={15}
+                            isLight={true}
+                            {...register(`view.childrenViews.${index}.profileName`)}
+                            textLength={
+                              watch(`view.childrenViews.${index}.profileName`)?.length ||
+                              0
+                            }
                             readOnly={isHistoryViewer}
                           />
-                        </Col>
-                        <Col className="productSelectorWrapper" span={8}>
-                          <Select
-                            className="react-selector"
-                            {...currencyField}
-                            options={currencyOptions}
-                            styles={reactSelectStyle}
-                            defaultValue={currencyOptions[0]}
-                            value={currencyOptions.find(
-                              (item) => item.value === currencyField.value,
-                            )}
-                            onChange={(options: any) =>
-                              currencyField.onChange(options?.value)
+                        </FormItem>
+                      </Space>
+                    </div>
+                  </Collapse>
+                </div>
+                <div className="node-item-wrap collapse">
+                  <div className="m-b-8">
+                    <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
+                      <Space direction="vertical">
+                        <FormItem
+                          error={
+                            errors.view &&
+                            errors.view.childrenViews &&
+                            errors.view.childrenViews[index]?.description
+                          }
+                        >
+                          <InputWithTitleCounter
+                            label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                            showCount={true}
+                            maxLength={30}
+                            required={true}
+                            {...register(`view.childrenViews.${index}.description`)}
+                            textLength={
+                              watch(`view.childrenViews.${index}.description`)?.length ||
+                              0
                             }
+                            readOnly={isHistoryViewer}
                           />
-                          {/* <select
+                        </FormItem>
+
+                        <div className="m-b-8">
+                          <FormItem
+                            error={errors.view?.childrenViews?.[index]?.retailPrice}
+                          >
+                            <Row justify="space-between">
+                              <Col span={16} className="retailPrice">
+                                <InputWithTitleCounter
+                                  label={t(`PRODUCT_NODE_PRICE`)}
+                                  required={true}
+                                  {...register(
+                                    `view.childrenViews.${index}.retailPrice`,
+                                    {
+                                      valueAsNumber: true,
+                                    },
+                                  )}
+                                  readOnly={isHistoryViewer}
+                                />
+                              </Col>
+                              <Col className="productSelectorWrapper" span={8}>
+                                <Select
+                                  className="react-selector"
+                                  {...currencyField}
+                                  options={currencyOptions}
+                                  styles={reactSelectStyle}
+                                  defaultValue={currencyOptions[0]}
+                                  value={currencyOptions.find(
+                                    (item) => item.value === currencyField.value,
+                                  )}
+                                  onChange={(options: any) =>
+                                    currencyField.onChange(options?.value)
+                                  }
+                                />
+                                {/* <select
                             onPointerLeave={() => {
                               console.log('setout');
                               setIsOut(true);
@@ -281,40 +300,45 @@ export const ProductCardCarouselNodeEdit = () => {
                               </option>
                             ))}
                           </select> */}
-                        </Col>
-                      </Row>
-                    </FormItem>
+                              </Col>
+                            </Row>
+                          </FormItem>
+                        </div>
+
+                        <FormItem
+                          error={errors.view?.childrenViews?.[index]?.discountPrice}
+                        >
+                          <InputWithTitleCounter
+                            label={t(`PRODUCT_NODE_DISCOUNT`)}
+                            {...register(
+                              `view.childrenViews.${index}.discountPrice`,
+
+                              {
+                                valueAsNumber: true,
+                              },
+                            )}
+                            readOnly={isHistoryViewer}
+                          />
+                        </FormItem>
+                      </Space>
+                    </Collapse>
                   </div>
-
-                  <FormItem error={errors.view?.childrenViews?.[index]?.discountPrice}>
-                    <InputWithTitleCounter
-                      label={t(`PRODUCT_NODE_DISCOUNT`)}
-                      {...register(
-                        `view.childrenViews.${index}.discountPrice`,
-
-                        {
-                          valueAsNumber: true,
-                        },
+                </div>
+                <Collapse label={t(`BUTTON`)} useSwitch={false}>
+                  {values.view && values.view.childrenViews[index].buttons && (
+                    <ButtonsEdit
+                      index={index}
+                      isCarousel={true}
+                      imageRatio={watch(
+                        `view.childrenViews.${index}.imageCtrl.aspectRatio`,
                       )}
-                      readOnly={isHistoryViewer}
+                      nodeId={values.id}
                     />
-                  </FormItem>
-                </Space>
-              </Collapse>
-            </div>
-          </div>
-          <Collapse label={t(`BUTTON`)} useSwitch={false}>
-            {values.view && values.view.childrenViews[index].buttons && (
-              <ButtonsEdit
-                index={index}
-                isCarousel={true}
-                imageRatio={watch(`view.childrenViews.${index}.imageCtrl.aspectRatio`)}
-                nodeId={values.id}
-              />
-            )}
-          </Collapse>
-        </>
-      )}
+                  )}
+                </Collapse>
+              </div>
+            ),
+        )}
     </>
   );
 };

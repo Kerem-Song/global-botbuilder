@@ -14,16 +14,16 @@ import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
 import { AnswerNodeEdit } from './AnswerNodeEdit';
-import { BasicCardCarousleNodeEditTest } from './BasicCardCarouselNodeEditTest';
+import { BasicCardCarousleNodeEdit } from './BasicCardCarouselNodeEdit';
 import { BasicCardNodeEdit } from './BasicCardNodeEdit';
 import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { IntentNodeEdit } from './IntentNodeEdit';
-import { ListCardCarouselNodeEditTest } from './ListCardCarouselNodeEditTest';
+import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
 import { ListCardNodeEdit } from './ListCardNodeEdit';
 import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
 import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
-import { ProductCardCarouselNodeEditTest } from './ProductCardCarouselNodeEditTest';
+import { ProductCardCarouselNodeEdit } from './ProductCardCarouselNodeEdit';
 import { ProductCardNodeEdit } from './ProductCardNodeEdit';
 import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
 import { TextNodeEdit } from './TextNodeEdit';
@@ -120,11 +120,11 @@ export const NodeEditDrawer = () => {
       case NODE_TYPES.PRODUCT_CARD_NODE:
         return <ProductCardNodeEdit />;
       case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-        return <BasicCardCarousleNodeEditTest />;
+        return <BasicCardCarousleNodeEdit />;
       case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-        return <ListCardCarouselNodeEditTest />;
+        return <ListCardCarouselNodeEdit />;
       case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return <ProductCardCarouselNodeEditTest />;
+        return <ProductCardCarouselNodeEdit />;
       case NODE_TYPES.ANSWER_NODE:
         return <AnswerNodeEdit />;
       case NODE_TYPES.CONDITION_NODE:

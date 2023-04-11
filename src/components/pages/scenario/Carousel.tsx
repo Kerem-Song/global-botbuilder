@@ -6,6 +6,7 @@ import {
 } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
+import { useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
@@ -28,6 +29,19 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
 
   const length = children.length + (addCarousel ? 1 : 0);
   const dispatch = useDispatch();
+  const storeCarouselIndex = useRootState(
+    (state) => state.botBuilderReducer.carouselIndex,
+  );
+  const result = { ...storeCarouselIndex };
+  const storeIndex = result[nodeId];
+
+  useEffect(() => {
+    if (!storeIndex) {
+      setCurrent(0);
+    } else {
+      setCurrent(storeIndex);
+    }
+  }, [storeCarouselIndex]);
 
   useEffect(() => {
     setStyle({ marginLeft: `${current * -190}px`, transition: 'all 0.3s ease-out' });
@@ -72,7 +86,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
           </Col>
           <Col>
             <p className="page">
-              {current === children.length
+              {current >= children.length
                 ? undefined
                 : `${current + 1}/${children.length}`}
             </p>
