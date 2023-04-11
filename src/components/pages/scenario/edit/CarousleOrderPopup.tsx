@@ -2,8 +2,8 @@ import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
 import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
-import { usePage, useSystemModal } from '@hooks';
-import { INode } from '@models';
+import { usePage, useRootState, useSystemModal } from '@hooks';
+import { INode, INodeEditModel } from '@models';
 import {
   IBasicCardCarouselView,
   IHasChildrenView,
@@ -82,7 +82,15 @@ export const CarouselOrderPopup: FC<{
       view: { ...view, childrenViews: carouselNode },
     };
 
-    dispatch(updateNode(upNode));
+    const editedNode: INodeEditModel = {
+      ...upNode,
+      title: node.title || '',
+      caption: t(`CAPTION_${node.type.toUpperCase()}`),
+      nextNodeId: node.nextNodeId,
+    };
+
+    // dispatch(updateNode(upNode));
+    dispatch(editNode(editedNode));
 
     dispatch(
       setCarouselIndex({
