@@ -91,9 +91,11 @@
           }
           .memo {
             width: rem(187);
+            text-align: center;
           }
           .text {
             width: rem(187);
+            text-align: left;
             word-wrap: break-word;
             &.empty {
               height: fit-content;
@@ -153,7 +155,6 @@
         }
       }
     }
-
     .nextBtn {
       margin-left: rem(8);
       border: 1px solid $gray200;
@@ -181,25 +182,21 @@
   border-radius: rem(12);
   border: rem(1) solid $gray200;
   background-color: $grayWhite;
-
   .contents {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: rem(56) rem(10);
-
     .loading {
       width: rem(50);
       height: rem(50);
     }
-
     .title {
       margin-top: rem(20);
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
     }
-
     .text {
       margin-top: rem(8);
       text-align: center;
@@ -275,19 +272,17 @@
     }
     .deployNotes::-webkit-scrollbar {
       width: rem(8);
-      height: rem(0);
+      height: rem(8);
       background-color: rgba(208, 221, 255, 0);
     }
-
     .deployNotes::-webkit-scrollbar-thumb {
       height: 30%;
       background-color: rgba(208, 221, 255, 0);
       border-radius: rem(18);
-      transition: background-color 3s ease-out;
-
-      &:hover {
-        background-color: rgba(208, 221, 255, 0.8);
-      }
+      transition: background-color 2s ease-out;
+    }
+    *:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(208, 221, 255, 0.8);
     }
     .modalBtns {
       margin-top: rem(10);

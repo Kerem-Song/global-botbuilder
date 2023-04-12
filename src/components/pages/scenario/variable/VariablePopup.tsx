@@ -104,56 +104,34 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   }, [parameterFormats]);
 
   const handleSave = (variable: ISaveParameterData): void => {
-    if (variableList?.id) {
-      const modifyParameter: ISaveParameter = {
-        sessionToken: token!,
-        data: {
-          id: variableList.id,
-          name: variable.name,
-          defaultValue: variable.defaultValue,
-          formatType: formats!,
-        },
-      };
+    const saveParameter: ISaveParameter = {
+      sessionToken: token!,
+      data: {
+        id: variableList?.id,
+        name: variable.name,
+        defaultValue: variable.defaultValue,
+        formatType: formats!,
+      },
+    };
 
-      variableMutate.mutate(modifyParameter, {
-        onSuccess: (res) => {
-          console.log('modifyParameter', res);
-          if (res && res.isSuccess) {
-            lunaToast.success('수정되었습니다.');
-            reset();
-            handleClose();
-          }
-        },
-        // onError: (error) => {
-        //   console.log('modifyError', error);
-        //   if (error) {
-        //     setParameterInputError('중복된 변수명입니다.');
-        //   }
-        // },
-      });
-    } else {
-      const newVariable: ISaveParameter = {
-        sessionToken: token!,
-        data: {
-          name: variable.name,
-          defaultValue: variable.defaultValue,
-          formatType: formats!,
-        },
-      };
-
-      variableMutate.mutate(newVariable, {
-        onSuccess: (res) => {
-          console.log('newVariable', res);
-          if (res && res.isSuccess) {
-            lunaToast.success();
-            reset();
-            handleClose();
-          } else if (res?.exception?.errorCode === 7636) {
-            setParameterInputError('중복된 변수명입니다.');
-          }
-        },
-      });
-    }
+    variableMutate.mutate(saveParameter, {
+      onSuccess: (res) => {
+        console.log('modifyParameter', res);
+        if (res && res.isSuccess) {
+          lunaToast.success('수정되었습니다.');
+          reset();
+          handleClose();
+        } else if (res?.exception?.errorCode === 7636) {
+          setParameterInputError('중복된 변수명입니다.');
+        }
+      },
+      // onError: (error) => {
+      //   console.log('modifyError', error);
+      //   if (error) {
+      //     setParameterInputError('중복된 변수명입니다.');
+      //   }
+      // },
+    });
   };
 
   return (
