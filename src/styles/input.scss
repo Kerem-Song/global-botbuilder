@@ -131,6 +131,7 @@
 
 .luna-input-error {
   border: 1px solid $red;
+  border-radius: rem(8);
   &:focus-within {
     border-color: $red;
     box-shadow: 0 0 0 2px setAlpha($red, 0.2);

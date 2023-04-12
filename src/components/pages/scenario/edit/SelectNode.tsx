@@ -1,6 +1,7 @@
 import { useRootState } from '@hooks';
 import { NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
+import classNames from 'classnames';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -22,7 +23,10 @@ export const SelectNode = ({
 }) => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const { field } = useController({
     name: `${fieldName}`,
     control,
@@ -47,7 +51,9 @@ export const SelectNode = ({
 
   return (
     <Select
-      className="react-selector"
+      className={classNames('react-selector', {
+        'luna-input-error': errors,
+      })}
       {...field}
       options={nodeList}
       styles={reactSelectStyle}
