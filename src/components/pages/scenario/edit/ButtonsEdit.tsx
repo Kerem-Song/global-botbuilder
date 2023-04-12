@@ -139,6 +139,11 @@ export const ButtonsEdit = ({
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`
                     }
                     nodeId={nodeId}
+                    error={
+                      index === undefined
+                        ? errors.view?.buttons?.[i]?.actionValue
+                        : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
+                    }
                   />
                 </FormItem>
               </>

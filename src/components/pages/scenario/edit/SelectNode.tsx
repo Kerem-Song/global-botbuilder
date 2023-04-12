@@ -3,10 +3,10 @@ import { NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
 import { useController, useFormContext } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import Select from 'react-select';
 
 import { reactSelectStyle } from './ButtonTypeSelector';
-
 interface IReactSelect {
   value: string;
   label: string;
@@ -16,17 +16,16 @@ export const SelectNode = ({
   fieldName,
   defaultValue,
   nodeId,
+  error,
 }: {
   fieldName: string;
   defaultValue?: string;
   nodeId?: string;
+  error?: FieldError;
 }) => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
+  const { control } = useFormContext();
   const { field } = useController({
     name: `${fieldName}`,
     control,
@@ -52,7 +51,7 @@ export const SelectNode = ({
   return (
     <Select
       className={classNames('react-selector', {
-        'luna-input-error': errors,
+        'luna-input-error': error,
       })}
       {...field}
       options={nodeList}

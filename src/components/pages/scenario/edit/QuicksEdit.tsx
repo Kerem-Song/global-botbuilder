@@ -73,11 +73,14 @@ export const QuicksEdit = () => {
               value={`view.quicks.${i}.actionValue`}
             />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <SelectNode
-                fieldName={`view.quicks.${i}.actionValue`}
-                defaultValue={values.view?.quicks?.[i].actionValue}
-                nodeId={getValues().id}
-              />
+              <FormItem error={errors.view?.quicks?.[i]?.actionValue}>
+                <SelectNode
+                  fieldName={`view.quicks.${i}.actionValue`}
+                  defaultValue={values.view?.quicks?.[i].actionValue}
+                  nodeId={getValues().id}
+                  error={errors.view?.quicks?.[i]?.actionValue}
+                />
+              </FormItem>
             )}
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.URL && (
               <FormItem

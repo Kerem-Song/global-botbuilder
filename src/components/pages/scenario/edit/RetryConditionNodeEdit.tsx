@@ -66,7 +66,11 @@ export const RetryConditionNodeEdit = () => {
               <span className="required">*</span>
             </div>
             <FormItem error={errors.view?.trueThenNextNodeId}>
-              <SelectNode fieldName={'view.trueThenNextNodeId'} nodeId={getValues().id} />
+              <SelectNode
+                fieldName={'view.trueThenNextNodeId'}
+                nodeId={getValues().id}
+                error={errors.view?.trueThenNextNodeId}
+              />
             </FormItem>
           </Space>
 
@@ -82,6 +86,7 @@ export const RetryConditionNodeEdit = () => {
               <SelectNode
                 fieldName={'view.falseThenNextNodeId'}
                 nodeId={getValues().id}
+                error={errors.view?.falseThenNextNodeId}
               />
             </FormItem>
           </Space>

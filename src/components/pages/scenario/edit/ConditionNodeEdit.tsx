@@ -277,6 +277,7 @@ export const ConditionNodeEdit = () => {
                 <SelectNode
                   fieldName={'view.trueThenNextNodeId'}
                   nodeId={getValues().id}
+                  error={errors.view?.trueThenNextNodeId}
                 />
               </FormItem>
             </Space>
@@ -294,6 +295,7 @@ export const ConditionNodeEdit = () => {
                 <SelectNode
                   fieldName={'view.falseThenNextNodeId'}
                   nodeId={getValues().id}
+                  error={errors.view?.falseThenNextNodeId}
                 />
               </FormItem>
             </Space>

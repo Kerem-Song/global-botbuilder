@@ -87,7 +87,11 @@ export const AnswerNodeEdit = () => {
                 <span className="required">*</span>
               </div>
               <FormItem error={errors.nextNodeId}>
-                <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
+                <SelectNode
+                  fieldName={'nextNodeId'}
+                  nodeId={getValues().id}
+                  error={errors.nextNodeId}
+                />
               </FormItem>
             </>
           )}
