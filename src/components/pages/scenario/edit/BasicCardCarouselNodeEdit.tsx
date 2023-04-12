@@ -48,12 +48,6 @@ export const BasicCardCarousleNodeEdit = () => {
     trigger();
   }, [index]);
 
-  useEffect(() => {
-    console.log('@watch', watch(`view.childrenViews`));
-    console.log('@basic field', childrenViewsField);
-    reset();
-  }, [childrenViewsField]);
-
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) &&
@@ -131,9 +125,9 @@ export const BasicCardCarousleNodeEdit = () => {
                 </Collapse>
 
                 <Collapse label={t(`BUTTON`)} useSwitch={false}>
-                  {values.view?.childrenViews?.[index]?.buttons && (
+                  {values.view?.childrenViews?.[i]?.buttons && (
                     <ButtonsEdit
-                      index={index}
+                      index={i}
                       isCarousel={true}
                       imageRatio={watch(
                         `view.childrenViews.${index}.imageCtrl.aspectRatio`,
