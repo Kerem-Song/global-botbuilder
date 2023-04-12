@@ -31,7 +31,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const dispatch = useDispatch();
 
   const handleRefresh = async () => {
@@ -49,8 +49,9 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   const handleClose = () => {
-    handleIsOpen(false);
+    setScrollPosition(scrollRef.current?.scrollTop || 0);
     setText('');
+    handleIsOpen(false);
   };
 
   const handleText = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -102,8 +103,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   useEffect(() => {
-    if (isOpen === false) {
-      dispatch(initMessages());
+    if (isOpen && scrollRef.current) {
+      scrollRef.current.scrollTop = scrollPosition;
       setDebugMeta(undefined);
     }
   }, [isOpen]);
@@ -153,9 +154,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 value={text}
                 onChange={handleText}
                 placeholder={t('ENTER_TEXT')}
-                onPressEnter={() => {
-                  handleSend();
-                }}
+                onPressEnter={handleSend}
               />
               <Button
                 style={{
