@@ -49,6 +49,8 @@ export const util = {
     )?.set;
     nativeInputValueSetter?.call(input, value);
     const ev2 = new Event('input', { bubbles: true });
+    console.log('befor event');
     input.dispatchEvent(ev2);
+    console.log('after event');
   },
 };

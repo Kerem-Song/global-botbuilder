@@ -21,7 +21,9 @@ export const ID_GEN = {
       resultPreFix.padStart(4, 'a');
     }
 
-    const x162 = Date.now().toString(16).padStart(16, '0');
+    const x162 = (new Date().getTime() * 10000 + 621355968000000000)
+      .toString(16)
+      .padStart(16, '0');
 
     const result = `${resultPreFix}${x162}${rnd().toString(16)}`;
     return result;

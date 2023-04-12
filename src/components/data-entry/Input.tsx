@@ -28,6 +28,7 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
   onClear?: () => void;
+  onFocus?: () => void;
   onChangeCount?: (count: number) => void;
 }
 
