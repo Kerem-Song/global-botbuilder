@@ -13,6 +13,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -24,6 +25,8 @@ export interface IBotTesterProps {
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { t } = useTranslation('botTest');
+  const { botId } = useParams();
+
   const { botTesterMutate, refreshBotTester } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
@@ -31,8 +34,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const dispatch = useDispatch();
+
+  console.log('botTesterData', botTesterData);
 
   const handleRefresh = async () => {
     const sendToken = {
@@ -49,8 +54,9 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   const handleClose = () => {
-    handleIsOpen(false);
+    setScrollPosition(scrollRef.current?.scrollTop || 0);
     setText('');
+    handleIsOpen(false);
   };
 
   const handleText = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -102,8 +108,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   useEffect(() => {
-    if (isOpen === false) {
-      dispatch(initMessages());
+    if (isOpen && scrollRef.current) {
+      scrollRef.current.scrollTop = scrollPosition;
       setDebugMeta(undefined);
     }
   }, [isOpen]);
@@ -113,6 +119,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
     }
   }, [botTesterData]);
+
+  useEffect(() => {
+    dispatch(initMessages());
+  }, [botId]);
 
   return (
     <>
@@ -153,9 +163,7 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
                 value={text}
                 onChange={handleText}
                 placeholder={t('ENTER_TEXT')}
-                onPressEnter={() => {
-                  handleSend();
-                }}
+                onPressEnter={handleSend}
               />
               <Button
                 style={{

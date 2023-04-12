@@ -572,7 +572,7 @@
   }
   .botTesterContent::-webkit-scrollbar {
     width: rem(8);
-    height: rem(0);
+    height: rem(8);
     background-color: rgba(208, 221, 255, 0);
   }
 
@@ -580,11 +580,10 @@
     height: 30%;
     background-color: rgba(208, 221, 255, 0);
     border-radius: rem(18);
-    transition: background-color 3s ease-out;
-
-    &:hover {
-      background-color: rgba(208, 221, 255, 0.8);
-    }
+    transition: background-color 2s ease-out;
+  }
+  *:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(208, 221, 255, 0.8);
   }
 
   .botTesterInput {

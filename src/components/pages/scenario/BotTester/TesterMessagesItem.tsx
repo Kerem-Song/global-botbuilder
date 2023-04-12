@@ -13,7 +13,6 @@ export interface TesterProps {
 }
 
 export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
-  console.log(item.type);
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:

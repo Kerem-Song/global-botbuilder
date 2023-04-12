@@ -31,6 +31,8 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const [entryNameInputError, setEntryNameInputError] = useState<string>('');
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [synonym, setSynonym] = useState<string>('');
+  const [representativeEntryInputError, setRepresentativeEntryInputError] =
+    useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm, error } = useSystemModal();
@@ -45,11 +47,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     entries: [],
   };
 
-  const regexSchema = yup.object({
-    representativeEntry: yup.string().trim().required('필수 입력 항목입니다.'),
-  });
-
-  const entityNameSchema = yup
+  const entitySchema = yup
     .object({
       name: yup
         .string()
@@ -57,16 +55,13 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         .required('필수 입력 항목입니다.')
         .matches(ENTITY_NAME_REGEX, '특수문자는 - _만 입력 가능합니다.')
         .max(20, `20자를 초과할 수 없습니다.`),
-      entries: yup
-        .array()
-        .min(1, '필수 입력 항목입니다.')
-        .when('isRegex', { is: true, then: yup.array().of(regexSchema) }),
+      entries: yup.array().min(1, '필수 입력 항목입니다.'),
     })
     .required();
 
   const formMethods = useForm<ISaveEntryGroup>({
     defaultValues,
-    resolver: yupResolver(entityNameSchema),
+    resolver: yupResolver(entitySchema),
   });
 
   const {
@@ -114,7 +109,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleRegexExpression = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '') {
+    if (e.target.value.trim() === '') {
       field.onChange([]);
     } else {
       field.onChange([{ representativeEntry: e.target.value }]);
@@ -123,95 +118,62 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   };
 
   const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
-    if (entryData.entryGroupid) {
-      const modifyEntry: ISaveEntryGroup = {
-        sessionToken: token,
-        name: entryData.name,
-        isRegex: entryData.isRegex,
-        entries: entryData.entries,
-        entryGroupid: entryData.entryGroupid,
-      };
+    const saveEntry: ISaveEntryGroup = {
+      sessionToken: token,
+      name: entryData.name,
+      isRegex: entryData.isRegex,
+      entries: entryData.entries,
+      entryGroupid: entryData.entryGroupid,
+    };
 
-      console.log('modifyEntry', modifyEntry);
+    console.log('saveEntry', saveEntry);
 
-      entryGroupMutate.mutate(modifyEntry, {
-        onSuccess: (res) => {
-          if (res && res.isSuccess) {
-            reset();
-            remove();
-            setEntryId('');
-            handleIsOpen(false);
-            lunaToast.success('수정되었습니다.');
-          } else if (
-            entryData.isRegex === true &&
-            res?.exception.invalidateProperties.includes('Entries')
-          ) {
-            setRegexInputError('필수 입력 항목입니다.');
-          } else if (
-            res?.exception.errorCode === 7000 &&
-            res?.exception.invalidateProperties.includes('RepresentativeEntry')
-          ) {
-            const result = error({
-              title: 'error',
-              description: (
-                <span>
-                  Validation failed: -- RepresentativeEntry: There are characters that are
-                  not allowed in the representative entry. Severity: Error
-                </span>
-              ),
-            });
-            return result;
-          }
-        },
-      });
-    } else {
-      const newEntry: ISaveEntryGroup = {
-        sessionToken: token,
-        name: entryData.name,
-        isRegex: entryData.isRegex,
-        entries: entryData.entries,
-      };
-      console.log('newEntry', newEntry);
-
-      entryGroupMutate.mutate(newEntry, {
-        onSuccess: (res) => {
-          if (res && res.isSuccess) {
-            reset();
-            handleIsOpen(false);
-            lunaToast.success('저장되었습니다.');
-          } else if (res?.exception.errorCode === 7608) {
-            setEntryNameInputError('중복된 엔트리명 입니다.');
-          } else if (
-            entryData.isRegex === true &&
-            res?.exception.invalidateProperties.includes('Entries')
-          ) {
-            setRegexInputError('필수 입력 항목입니다.');
-          } else if (
-            res?.exception.errorCode === 7000 &&
-            res?.exception.invalidateProperties.includes('RepresentativeEntry')
-          ) {
-            const result = error({
-              title: 'error',
-              description: (
-                <span>
-                  Validation failed: -- RepresentativeEntry: There are characters that are
-                  not allowed in the representative entry. Severity: Error
-                </span>
-              ),
-            });
-            return result;
-          }
-        },
-      });
-    }
+    entryGroupMutate.mutate(saveEntry, {
+      onSuccess: (res) => {
+        if (res && res.isSuccess) {
+          reset();
+          remove();
+          setEntryId('');
+          handleIsOpen(false);
+          lunaToast.success('수정되었습니다.');
+        } else if (res?.exception.errorCode === 7608) {
+          setEntryNameInputError('중복된 엔트리명 입니다.');
+        } else if (
+          entryData.isRegex === true &&
+          res?.exception.invalidateProperties.includes('Entries')
+        ) {
+          setRegexInputError('필수 입력 항목입니다.');
+        } else if (
+          res?.exception.errorCode === 7000 &&
+          res?.exception.invalidateProperties.includes('RepresentativeEntry')
+        ) {
+          const result = error({
+            title: 'error',
+            description: (
+              <span>
+                Validation failed: -- RepresentativeEntry: There are characters that are
+                not allowed in the representative entry. Severity: Error
+              </span>
+            ),
+          });
+          return result;
+        }
+      },
+    });
   };
 
-  const handleRegisterEntry = (): void => {
+  const handleRegisterEntry = () => {
     const name = synonym.trim();
-    if (name === '' || name === ' ') {
+
+    if (name === '') {
       trigger('entries');
+    }
+
+    if (fields.length > 0 && synonym.length > 0 && name === '') {
+      setRepresentativeEntryInputError('필수 입력 항목입니다.');
+      setIsActive(true);
       return;
-    } else {
+    } else if (name !== '') {
       prepend({ representativeEntry: name, synonym: [] });
       setIsActive(true);
       setSynonym('');
@@ -429,26 +391,25 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                             maxLength={125}
                             showCount
                             value={synonym}
-                            onPressEnter={() => {
-                              handleRegisterEntry();
-                              setIsActive(true);
-                              trigger('entries');
-                            }}
+                            onPressEnter={handleRegisterEntry}
                             onChange={(e) => {
                               setIsActive(true);
                               setSynonym(e.target.value);
+                              setRepresentativeEntryInputError('');
                             }}
-                            isError={errors.entries?.message ? true : false}
+                            isError={
+                              representativeEntryInputError || errors.entries?.message
+                                ? true
+                                : false
+                            }
                           ></Input>
+                          <span className="error-message">
+                            {representativeEntryInputError}
+                          </span>
                           <span className="error-message">{errors.entries?.message}</span>
                         </Col>
                         <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => {
-                              handleRegisterEntry();
-                            }}
-                          >
+                          <Button type="primary" onClick={handleRegisterEntry}>
                             Register
                           </Button>
                         </Col>

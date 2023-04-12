@@ -2,7 +2,6 @@
   width: rem(1080);
   height: rem(652);
   margin: auto;
-  // margin-top: calc(100vh - rem(770));
   padding: 0;
   border-radius: rem(12);
   background-color: $grayWhite;
@@ -75,16 +74,14 @@
     height: rem(0);
     background-color: rgba(208, 221, 255, 0);
   }
-
   .myEntitiesContainer::-webkit-scrollbar-thumb {
     height: 30%;
     background-color: rgba(208, 221, 255, 0);
     border-radius: rem(18);
     transition: background-color 3s ease-out;
-
-    &:hover {
-      background-color: rgba(208, 221, 255, 0.8);
-    }
+  }
+  *:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(208, 221, 255, 0.8);
   }
 
   .entitiesContainer {
@@ -111,19 +108,17 @@
         }
         .entityDetail::-webkit-scrollbar {
           width: rem(8);
-          height: rem(0);
+          height: rem(8);
           background-color: rgba(208, 221, 255, 0);
         }
-
         .entityDetail::-webkit-scrollbar-thumb {
           height: 30%;
           background-color: rgba(208, 221, 255, 0);
           border-radius: rem(18);
-          transition: background-color 3s ease-out;
-
-          &:hover {
-            background-color: rgba(208, 221, 255, 0.8);
-          }
+          transition: background-color 2s ease-out;
+        }
+        *:hover::-webkit-scrollbar-thumb {
+          background-color: rgba(208, 221, 255, 0.8);
         }
 
         div {
@@ -313,7 +308,6 @@
                 }
               }
             }
-
             .emptyList {
               height: rem(185);
               display: flex;
@@ -342,15 +336,3 @@
     }
   }
 }
-
-.detail {
-}
-
-// 추후 스크롤바 css
-// .entityModal::-webkit-scrollbar {
-// }
-
-// .entityModal::-webkit-scrollbar-thumb {
-//   &:hover {
-//   }
-// }
