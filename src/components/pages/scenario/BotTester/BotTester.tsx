@@ -13,6 +13,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -24,6 +25,8 @@ export interface IBotTesterProps {
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const { t } = useTranslation('botTest');
+  const { botId } = useParams();
+
   const { botTesterMutate, refreshBotTester } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
@@ -33,6 +36,8 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const dispatch = useDispatch();
+
+  console.log('botTesterData', botTesterData);
 
   const handleRefresh = async () => {
     const sendToken = {
@@ -114,6 +119,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
     }
   }, [botTesterData]);
+
+  useEffect(() => {
+    dispatch(initMessages());
+  }, [botId]);
 
   return (
     <>
