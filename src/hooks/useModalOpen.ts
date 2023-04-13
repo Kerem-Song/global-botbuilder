@@ -11,13 +11,13 @@ export const useModalOpen = () => {
     setIsOpen(value);
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      window.addEventListener('keyup', keyEvent);
-    } else {
-      window.removeEventListener('keyup', keyEvent);
-    }
-    return () => window.removeEventListener('keyup', keyEvent);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     window.addEventListener('keyup', keyEvent);
+  //   } else {
+  //     window.removeEventListener('keyup', keyEvent);
+  //   }
+  //   return () => window.removeEventListener('keyup', keyEvent);
+  // }, [isOpen]);
   return { isOpen, handleIsOpen };
 };
