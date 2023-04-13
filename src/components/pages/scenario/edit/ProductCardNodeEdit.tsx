@@ -6,6 +6,7 @@ import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
@@ -96,6 +97,7 @@ export const ProductCardNodeEdit = () => {
     control,
     watch,
     setValue,
+    trigger,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
@@ -106,21 +108,40 @@ export const ProductCardNodeEdit = () => {
     control,
   });
 
+  const checkPriceRegex = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    price: 'retailPrice' | 'discountPrice',
+  ) => {
+    const regex = /^\d{0,8}[.]\d{0,2}?$/;
+    if (regex.test(e.target.value)) {
+      return;
+    }
+    trigger(`view.${price}`);
+  };
+
   const salePrice =
     Number(watch(`view.retailPrice`)) -
     (watch(`view.discountPrice`) ? Number(watch(`view.discountPrice`)) : 0);
 
   useEffect(() => {
-    setValue(`view.salePrice`, salePrice);
+    setValue(`view.salePrice`, salePrice || 0);
   }, [salePrice]);
 
   useEffect(() => {
     if (!watch(`view.discountPrice`)) {
-      setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
+      setValue(
+        `view.discountPrice`,
+        watch(`view.retailPrice`) - watch(`view.salePrice`) || 0,
+      );
     }
     // setValue(`view.discountPrice`, watch(`view.retailPrice`) - watch(`view.salePrice`));
   }, [salePrice]);
 
+  useEffect(() => {
+    if (!watch(`view.retailPrice`)) {
+      setValue(`view.retailPrice`, 0);
+    }
+  }, [watch(`view.retailPrice`)]);
   return (
     <>
       <div className="node-item-wrap collapse">
@@ -197,11 +218,17 @@ export const ProductCardNodeEdit = () => {
                   <Row justify="space-between">
                     <Col span={16} className="retailPrice">
                       <InputWithTitleCounter
+                        className={classNames({
+                          'luna-input-error': errors.view?.retailPrice,
+                        })}
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
                         {...register(`view.retailPrice`, {
                           valueAsNumber: true,
+                          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                            checkPriceRegex(e, 'retailPrice'),
                         })}
+                        maxLength={11}
                         readOnly={isHistoryViewer}
                       />
                     </Col>
@@ -231,7 +258,10 @@ export const ProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountPrice`, {
                     valueAsNumber: true,
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                      checkPriceRegex(e, 'discountPrice'),
                   })}
+                  maxLength={11}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>

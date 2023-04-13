@@ -227,7 +227,8 @@ export const useYupValidation = () => {
       .required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
       .number()
-      .positive()
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
+      // .positive()
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
           return patternTwoDigisAfterComma.test(val);
@@ -236,12 +237,12 @@ export const useYupValidation = () => {
       })
       .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
       .transform((value, originalValue) => {
-        return Number.isNaN(originalValue) ? undefined : Number(value);
+        return Number.isNaN(originalValue) ? '' : Number(value);
       })
-      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .required(t(`VALIDATION_REQUIRED`)),
     discountPrice: yup
       .number()
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .nullable()
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
@@ -249,12 +250,13 @@ export const useYupValidation = () => {
         }
         return true;
       })
-      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
+      .max(
+        yup.ref('retailPrice'),
+        t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: yup.ref('retailPrice') }),
+      )
       .transform((value, originalValue) => {
-        return Number.isNaN(originalValue) ? 0 : Number(value);
-      })
-      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`)),
-
+        return Number.isNaN(originalValue) ? '' : Number(value);
+      }),
     buttons: buttonsEditSchema,
   });
 

@@ -239,7 +239,7 @@
         .infoContent {
           width: calc(100% - rem(126));
           margin-left: rem(10);
-          // word-wrap: break-word;
+          word-wrap: break-word;
           .success {
             width: fit-content;
             padding: rem(2) rem(6);

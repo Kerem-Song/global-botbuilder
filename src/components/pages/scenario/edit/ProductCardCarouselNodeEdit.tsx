@@ -7,6 +7,7 @@ import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
@@ -115,6 +116,18 @@ export const ProductCardCarouselNodeEdit = () => {
     control,
   });
 
+  const checkPriceRegex = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    price: 'retailPrice' | 'discountPrice',
+  ) => {
+    const regex = /^\d{0,8}[.]\d{0,2}?$/;
+    if (regex.test(e.target.value)) {
+      return;
+    }
+    trigger(`view.childrenViews.${index}.${price}`);
+  };
+
   useEffect(() => {
     trigger();
   }, [index]);
@@ -126,7 +139,7 @@ export const ProductCardCarouselNodeEdit = () => {
       : 0);
 
   useEffect(() => {
-    setValue(`view.childrenViews.${index}.salePrice`, salePrice);
+    setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0);
   }, [salePrice]);
 
   useEffect(() => {
@@ -136,9 +149,15 @@ export const ProductCardCarouselNodeEdit = () => {
     setValue(
       `view.childrenViews.${index}.discountPrice`,
       watch(`view.childrenViews.${index}.retailPrice`) -
-        watch(`view.childrenViews.${index}.salePrice`),
+        watch(`view.childrenViews.${index}.salePrice`) || 0,
     );
   }, [watch(`view.childrenViews.${index}.discountPrice`)]);
+
+  useEffect(() => {
+    if (!watch(`view.childrenViews.${index}.retailPrice`)) {
+      setValue(`view.childrenViews.${index}.retailPrice`, 0);
+    }
+  }, [watch(`view.childrenViews.${index}.retailPrice`)]);
 
   return (
     <>
@@ -260,14 +279,22 @@ export const ProductCardCarouselNodeEdit = () => {
                             <Row justify="space-between">
                               <Col span={16} className="retailPrice">
                                 <InputWithTitleCounter
+                                  className={classNames({
+                                    'luna-input-error':
+                                      errors.view?.childrenViews?.[index]?.retailPrice,
+                                  })}
                                   label={t(`PRODUCT_NODE_PRICE`)}
                                   required={true}
                                   {...register(
                                     `view.childrenViews.${index}.retailPrice`,
                                     {
                                       valueAsNumber: true,
+                                      onChange: (
+                                        e: React.ChangeEvent<HTMLInputElement>,
+                                      ) => checkPriceRegex(e, index, 'retailPrice'),
                                     },
                                   )}
+                                  maxLength={11}
                                   readOnly={isHistoryViewer}
                                 />
                               </Col>
@@ -285,21 +312,6 @@ export const ProductCardCarouselNodeEdit = () => {
                                     currencyField.onChange(options?.value)
                                   }
                                 />
-                                {/* <select
-                            onPointerLeave={() => {
-                              console.log('setout');
-                              setIsOut(true);
-                            }}
-                            {...register(`view.childrenViews.${index}.currencyUnit`)}
-                            className="currencySelector"
-                            data-arrow={isOut}
-                          >
-                            {currencyOptions.map((item, i) => (
-                              <option key={i} value={item.value}>
-                                {item.label}
-                              </option>
-                            ))}
-                          </select> */}
                               </Col>
                             </Row>
                           </FormItem>
@@ -315,8 +327,11 @@ export const ProductCardCarouselNodeEdit = () => {
 
                               {
                                 valueAsNumber: true,
+                                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                                  checkPriceRegex(e, index, 'discountPrice'),
                               },
                             )}
+                            maxLength={11}
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>
