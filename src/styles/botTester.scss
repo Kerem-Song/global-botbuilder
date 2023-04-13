@@ -124,7 +124,6 @@
             width: 100%;
             height: rem(132);
             object-fit: contain;
-            background-color: $grayWhite;
             border-radius: rem(16) rem(16) 0 0;
           }
           .productCardImg_square {
@@ -294,7 +293,6 @@
             width: rem(264);
             height: rem(132);
             object-fit: contain;
-            background-color: $grayWhite;
             margin-bottom: rem(4);
             border-radius: rem(16) rem(16) 0 0;
           }
@@ -331,6 +329,9 @@
               background-color: #75767a;
             }
           }
+          &:hover {
+            border: 1px solid $primary500;
+          }
         }
       }
 
@@ -343,7 +344,6 @@
           width: rem(264);
           height: rem(132);
           object-fit: contain;
-          background-color: $grayWhite;
           border-radius: rem(16) rem(16) 0 0;
         }
         .cardImg_square {
@@ -386,6 +386,9 @@
             &:hover {
               background-color: #75767a;
             }
+          }
+          &:hover {
+            border: 1px solid $primary500;
           }
         }
       }
@@ -436,7 +439,6 @@
             width: 100%;
             height: rem(132);
             object-fit: contain;
-            background-color: $grayWhite;
             margin-bottom: rem(8);
           }
           .listCardImg_square {
@@ -508,6 +510,9 @@
                 background-color: #75767a;
               }
             }
+          }
+          &:hover {
+            border: 1px solid $primary500;
           }
         }
       }

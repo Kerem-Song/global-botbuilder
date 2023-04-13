@@ -30,21 +30,6 @@ export const TesterSlide = ({
     transition: 'none',
   });
 
-  useEffect(() => {
-    if (slideRef.current && slideRef.current.children.length) {
-      let marginLeft = 0;
-      for (let i = 0; i < current; i++) {
-        marginLeft -=
-          slideRef.current.children[i].getBoundingClientRect().width + gapSize;
-      }
-      marginLeft += offset;
-      setStyle({
-        marginLeft: `${Math.min(marginLeft, 0)}px`,
-        transition: 'all 0.3s ease-out',
-      });
-    }
-  }, [current]);
-
   const handleNextClick = () => {
     setCurrent(Math.min(current + 1, children.length - 1));
   };
@@ -59,6 +44,21 @@ export const TesterSlide = ({
   const nextSliderContainer = classNames(className, 'luna-carousel-slide-right', {
     'luna-quickreply-slide-right': quickReplies,
   });
+
+  useEffect(() => {
+    if (slideRef.current && slideRef.current.children.length) {
+      let marginLeft = 0;
+      for (let i = 0; i < current; i++) {
+        marginLeft -=
+          slideRef.current.children[i].getBoundingClientRect().width + gapSize;
+      }
+      marginLeft += offset;
+      setStyle({
+        marginLeft: `${Math.min(marginLeft, 0)}px`,
+        transition: 'all 0.3s ease-out',
+      });
+    }
+  }, [current]);
 
   return (
     <>

@@ -37,8 +37,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const dispatch = useDispatch();
 
-  console.log('botTesterData', botTesterData);
-
   const handleRefresh = async () => {
     const sendToken = {
       sessionToken: token!,
