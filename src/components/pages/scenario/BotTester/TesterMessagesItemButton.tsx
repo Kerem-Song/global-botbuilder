@@ -38,7 +38,7 @@ export const TesterMessagesItemButton = ({
 
   const handleNodeUrl = () => {
     const replyNodeLink: ITesterDataType = {
-      value: item.label,
+      value: item.label!,
       isMe: true,
       type: 'text',
     };
@@ -103,6 +103,40 @@ export const TesterMessagesItemButton = ({
     });
   };
 
+  const handlelblIsUttr = () => {
+    const lblIsUttr: ITesterDataType = {
+      value: item.label!,
+      isMe: true,
+      type: 'text',
+    };
+    dispatch(setTesterData([lblIsUttr]));
+
+    const sendlblIsUttr: ISendMessage = {
+      sessionToken: token!,
+      lunaMessage: {
+        id: 'lblIsUttr',
+        utterance: {
+          value: item.label!,
+        },
+      },
+    };
+
+    botTesterMutate.mutate(sendlblIsUttr, {
+      onSuccess: (submitResult) => {
+        console.log('결과', submitResult);
+        const updateTesterData = submitResult.result?.messages || [];
+        if (submitResult.result?.quickReplies) {
+          const quickpRepliesContent: IQuickRepliesContent = {
+            quickReplies: submitResult.result.quickReplies,
+            type: TESTER_DATA_TYPES.quickReplies,
+          };
+          updateTesterData.push(quickpRepliesContent);
+        }
+        dispatch(setTesterData(updateTesterData));
+      },
+    });
+  };
+
   const itemButton = classNames(className, 'luna-testerItem-btn', {
     'luna-testerItem-cardBtn': card,
     'luna-testerItem-cardCarouselBtn': cardCarousel,
@@ -129,6 +163,18 @@ export const TesterMessagesItemButton = ({
         onClick={(e) => {
           e.stopPropagation();
           handleActValueIsUttr();
+        }}
+      >
+        {item.label}
+      </button>
+    );
+  } else if (actionType === 'lblIsUttr') {
+    return (
+      <button
+        className={itemButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          handlelblIsUttr();
         }}
       >
         {item.label}
