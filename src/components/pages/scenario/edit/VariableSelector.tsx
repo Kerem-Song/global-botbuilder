@@ -1,19 +1,20 @@
+import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
-import { getReactSelectStyle } from '@modules/getReactSelectStyle';
-import { Control, Path, useController } from 'react-hook-form';
-import CreatableSelect from 'react-select/creatable';
+import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IVariableSelectorProps<T extends object> {
   control: Control<T, any> | undefined;
   path: Path<T>;
+  readOnly?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
 }
 
 export const VariableSelector = <T extends object>({
   isDisabled,
+  readOnly,
   placeholder,
   control,
   path,
@@ -21,70 +22,36 @@ export const VariableSelector = <T extends object>({
   const {
     getVariableSelectListQuery: { data },
   } = useVariableSelectClient();
+  const { setValue } = useFormContext();
   const { field } = useController({ name: path, control });
   const variables = data || [];
 
-  const getValue = () => {
-    if (!field.value) {
-      return null;
-    }
-
-    const found = variables.find((x) => x.usingName === field.value);
-    if (found) {
-      return found;
+  const handleCreate = (value: string | undefined) => {
+    if (!value) {
+      return undefined;
     }
 
     return {
-      name: field.value,
-      usingName: field.value,
-      kind: VariableKind.Parameter,
-    };
+      kind: VariableKind.Unknown,
+      name: value,
+      usingName: value,
+    } as IVariable;
   };
 
   return (
-    <CreatableSelect
-      className="react-selector"
-      placeholder={placeholder}
-      styles={getReactSelectStyle<IVariable>(true)}
+    <Autocomplete
+      items={variables}
+      displayName="usingName"
       isDisabled={isDisabled}
-      isClearable
-      value={getValue()}
-      getNewOptionData={(v) => {
-        const newOption: IVariable = {
-          name: v,
-          usingName: v,
-          kind: VariableKind.Unknown,
-        };
-        return newOption;
-      }}
-      getOptionValue={(v) => {
-        return v.usingName;
-      }}
-      formatOptionLabel={(value) => {
-        return value?.usingName;
-      }}
-      onBlur={(e) => {
-        if (e.target.value) {
-          field.onChange(e.target.value);
-        }
-      }}
+      placeholder={placeholder}
+      readOnly={readOnly}
+      defaultValue={
+        variables.find((x) => x.usingName === field.value) || handleCreate(field.value)
+      }
       onChange={(value) => {
-        if (
-          value?.usingName?.startsWith('@sys.') &&
-          !variables.find((x) => x.usingName === value?.usingName)
-        ) {
-          field.onChange(null);
-          return;
-        }
-
-        if (!value) {
-          field.onChange(null);
-          return;
-        }
-
-        field.onChange(value.usingName);
+        setValue<string>(path, value?.usingName || '');
       }}
-      options={variables}
+      create={handleCreate}
     />
   );
 };

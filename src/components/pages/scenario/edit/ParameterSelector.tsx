@@ -1,11 +1,8 @@
-import { Input } from '@components/data-entry';
 import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
-import { getReactSelectStyle } from '@modules/getReactSelectStyle';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
-import CreatableSelect from 'react-select/creatable';
 
 export interface IParameterSelectorProps<T extends object> {
   control: Control<T, any> | undefined;
@@ -58,7 +55,7 @@ export const ParameterSelector = <T extends object>({
           parameters.find((x) => x.name === field.value) || handleCreate(field.value)
         }
         onChange={(value) => {
-          setValue<string>(path, value?.name);
+          setValue<string>(path, value?.name || '');
         }}
         create={handleCreate}
       />
