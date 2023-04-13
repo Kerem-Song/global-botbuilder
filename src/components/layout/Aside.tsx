@@ -5,14 +5,15 @@ import {
   icLnbHide,
   icLnbShow,
 } from '@assets/index';
+import { useOutsideClick } from '@hooks/useOutsideClick';
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
-import { setSidebarStatus } from '../../store/sidebarStatusSlice';
+import { setSidebarClose, setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const Aside = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const Aside = () => {
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
-
+  const sidebarRef = useRef<HTMLElement>(null);
   const getMenuItem = (
     id: number,
     url: string,
@@ -44,8 +45,13 @@ export const Aside = () => {
 
   const subMenu = [getMenuItem(1, 'help', 'help', icHelp, icHelpSelected)];
 
+  useOutsideClick(sidebarRef, () => {
+    console.log('@sidebar out ');
+    dispatch(setSidebarClose());
+  });
+
   return (
-    <aside className={css}>
+    <aside className={css} ref={sidebarRef}>
       <div className="mainMenuWrapper">
         <div className="expand">
           <button

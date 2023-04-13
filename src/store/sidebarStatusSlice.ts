@@ -13,8 +13,11 @@ export const sideBarStatusSlice = createSlice({
     setSidebarStatus: (state) => {
       state.isOpen = !state.isOpen;
     },
+    setSidebarClose: (state) => {
+      state.isOpen = false;
+    },
   },
 });
 
-export const { setSidebarStatus } = sideBarStatusSlice.actions;
+export const { setSidebarStatus, setSidebarClose } = sideBarStatusSlice.actions;
 export default sideBarStatusSlice.reducer;
