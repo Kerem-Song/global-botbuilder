@@ -8,6 +8,7 @@ import {
   FocusEvent,
   forwardRef,
   KeyboardEvent,
+  ReactNode,
   useEffect,
   useRef,
   useState,
@@ -24,6 +25,8 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   clearable?: boolean;
   isShawAlwaysClear?: boolean;
   readOnly?: boolean;
+  prefix?: ReactNode;
+  sufix?: ReactNode;
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
@@ -52,6 +55,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     clearable,
     isShawAlwaysClear,
     readOnly,
+    prefix,
+    sufix,
     ...inputProps
   } = args;
 
@@ -77,7 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         break;
     }
   };
-  const isWrapping = false || showCount || search || clearable;
+  const isWrapping = false || showCount || search || clearable || prefix || sufix;
 
   const inputClassName = classNames(isWrapping ? '' : className, 'luna-input', {
     'luna-input-error': isError,
@@ -139,6 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
   if (isWrapping) {
     return (
       <span className={inputWrapClassName}>
+        {prefix}
         {input}
         {showCount ? (
           <span className="count">
@@ -180,6 +186,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
             <div className="clear" />
           </Button>
         ) : undefined}
+        {sufix}
       </span>
     );
   }

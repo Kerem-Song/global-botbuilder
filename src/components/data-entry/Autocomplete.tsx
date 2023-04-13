@@ -1,6 +1,6 @@
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import { Input } from './Input';
@@ -13,6 +13,8 @@ export interface AutocompleteProps<T extends object> {
   isDisabled?: boolean;
   readOnly?: boolean;
   placeholder?: string;
+  prefix?: ReactNode;
+  sufix?: ReactNode;
   create?: (value: string | undefined) => T | undefined;
   onChange?: (value: T | undefined) => void;
 }
@@ -107,6 +109,8 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
           onFocus={() => handleShowPopper()}
           onBlur={() => handleHidePopper()}
           onKeydown={handleInputKeydown}
+          prefix={args.prefix}
+          sufix={args.sufix}
           readOnly={args.readOnly}
           disabled={args.isDisabled}
           placeholder={args.placeholder}

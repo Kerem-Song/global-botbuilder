@@ -51,6 +51,16 @@ export const ParameterSelector = <T extends object>({
         isDisabled={isDisabled}
         placeholder={placeholder}
         readOnly={readOnly}
+        prefix={
+          <span style={{ color: '#4478FF' }} className="m-r-5">
+            {'{{'}
+          </span>
+        }
+        sufix={
+          <span style={{ color: '#4478FF' }} className="m-l-5">
+            {'}}'}
+          </span>
+        }
         defaultValue={
           parameters.find((x) => x.name === field.value) || handleCreate(field.value)
         }
