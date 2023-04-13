@@ -150,7 +150,7 @@ export const NodeEditDrawer = () => {
       direction="right"
       enableOverlay={false}
       duration={200}
-      size={260}
+      size={360}
     >
       <div className="wrapper">
         <FormProvider {...formMethods}>

@@ -12,6 +12,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
+import { VariableSelector } from './VariableSelector';
 
 export const ParameterSetNodeEdit = () => {
   useNodeEditSave();
@@ -64,11 +65,6 @@ export const ParameterSetNodeEdit = () => {
                 placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
                 readOnly={isHistoryViewer}
               />
-              {/* <Input
-                {...register(`view.parameters.${i}.name`)}
-                placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
-                readOnly={isHistoryViewer}
-              /> */}
             </FormItem>
 
             <div className="m-b-8">
@@ -80,9 +76,10 @@ export const ParameterSetNodeEdit = () => {
                 errors.view && errors.view.parameters && errors.view.parameters[i]?.value
               }
             >
-              <Input
-                {...register(`view.parameters.${i}.value`)}
+              <VariableSelector
                 placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
+                control={control}
+                path={`view.parameters.${i}.value`}
                 readOnly={isHistoryViewer}
               />
             </FormItem>

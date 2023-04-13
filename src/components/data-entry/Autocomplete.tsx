@@ -59,6 +59,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
 
   const handleSearchChange = (value: string) => {
     handleShowPopper();
+    setFocusedItem(undefined);
     setSearch(value);
     args.onChange?.(
       items?.find((x) => (displayName ? x[displayName] : `${x}`) === value) ||
@@ -132,6 +133,8 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
         style={{
           ...styles.popper,
           width: referenceElement.current?.clientWidth,
+          maxHeight: '400px',
+          overflowY: 'auto',
           display:
             showPopper && filteredList && filteredList.length > 0 ? 'block' : 'none',
         }}
