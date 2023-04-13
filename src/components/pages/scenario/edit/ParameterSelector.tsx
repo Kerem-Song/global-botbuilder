@@ -10,6 +10,7 @@ import CreatableSelect from 'react-select/creatable';
 export interface IParameterSelectorProps<T extends object> {
   control: Control<T, any> | undefined;
   path: Path<T>;
+  readOnly?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
 }
@@ -17,6 +18,7 @@ export interface IParameterSelectorProps<T extends object> {
 export const ParameterSelector = <T extends object>({
   isDisabled,
   placeholder,
+  readOnly,
   path,
 }: IParameterSelectorProps<T>) => {
   const {
@@ -32,7 +34,7 @@ export const ParameterSelector = <T extends object>({
     if (!value) {
       return undefined;
     }
-    console.log(value, value.substring(2, value.length - 2));
+
     return {
       kind: VariableKind.Parameter,
       name: byUsingName
@@ -49,44 +51,17 @@ export const ParameterSelector = <T extends object>({
       <Autocomplete
         items={parameters}
         displayName="name"
+        isDisabled={isDisabled}
+        placeholder={placeholder}
+        readOnly={readOnly}
         defaultValue={
-          parameters.find((x) => x.usingName === field.value) ||
-          handleCreate(field.value, true)
+          parameters.find((x) => x.name === field.value) || handleCreate(field.value)
         }
         onChange={(value) => {
-          setValue<string>(path, value?.usingName);
+          setValue<string>(path, value?.name);
         }}
         create={handleCreate}
       />
-      {/* <CreatableSelect
-        className="react-selector"
-        placeholder={placeholder}
-        styles={getReactSelectStyle<IVariable>(true)}
-        isDisabled={isDisabled}
-        value={
-          parameters.find((x) => x.usingName === field.value) || {
-            name: field.value ? `${field.value}`.replace('{{', '').replace('}}', '') : '',
-            usingName: field.value,
-            kind: VariableKind.Parameter,
-          }
-        }
-        getNewOptionData={(v) => {
-          console.log(v);
-          const newOption: IVariable = {
-            name: v,
-            usingName: `{{${v}}}`,
-            kind: VariableKind.Parameter,
-          };
-          return newOption;
-        }}
-        getOptionValue={(v) => v.usingName || ''}
-        formatOptionLabel={(value) => value?.name}
-        onBlur={() => field.onBlur()}
-        onChange={(value) => {
-          field.onChange(value?.usingName);
-        }}
-        options={parameters}
-      /> */}
     </>
   );
 };

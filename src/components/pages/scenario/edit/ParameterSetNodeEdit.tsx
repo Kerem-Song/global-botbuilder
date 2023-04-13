@@ -10,6 +10,7 @@ import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 
 export const ParameterSetNodeEdit = () => {
@@ -57,11 +58,17 @@ export const ParameterSetNodeEdit = () => {
                 errors.view && errors.view.parameters && errors.view.parameters[i]?.name
               }
             >
-              <Input
+              <ParameterSelector
+                control={control}
+                path={`view.parameters.${i}.name`}
+                placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+                readOnly={isHistoryViewer}
+              />
+              {/* <Input
                 {...register(`view.parameters.${i}.name`)}
                 placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
                 readOnly={isHistoryViewer}
-              />
+              /> */}
             </FormItem>
 
             <div className="m-b-8">

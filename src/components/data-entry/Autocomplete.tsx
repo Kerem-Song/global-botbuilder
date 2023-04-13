@@ -1,7 +1,6 @@
-import { IDataEntryProp } from '@models';
-import { IVariable } from '@models/interfaces/IVariable';
 import { util } from '@modules/util';
-import { ChangeEvent, forwardRef, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import { Input } from './Input';
@@ -11,6 +10,9 @@ export interface AutocompleteProps<T extends object> {
   defaultValue?: T;
   displayName?: keyof T;
   valuePath?: keyof T;
+  isDisabled?: boolean;
+  readOnly?: boolean;
+  placeholder?: string;
   create?: (value: string | undefined) => T | undefined;
   onChange?: (value: T | undefined) => void;
 }
@@ -20,13 +22,13 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
   const [search, setSearch] = useState<string>('');
   const referenceElement = useRef<HTMLInputElement | null>(null);
   const popperElement = useRef<HTMLDivElement>(null);
+  const [focusedItem, setFocusedItem] = useState<T>();
 
   const { items, displayName } = args;
 
   useEffect(() => {
     if (args.defaultValue) {
       if (displayName) {
-        console.log('args.defaultValue', args.defaultValue);
         setSearch(`${args.defaultValue[displayName]}`);
       } else {
         setSearch(`${args.defaultValue}`);
@@ -45,14 +47,23 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
     },
   );
 
-  const handleSearchChange = (value: string) => {
+  const handleShowPopper = () => {
     setShowPopper(true);
+    update?.();
+  };
+
+  const handleHidePopper = () => {
+    setFocusedItem(undefined);
+    setShowPopper(false);
+  };
+
+  const handleSearchChange = (value: string) => {
+    handleShowPopper();
     setSearch(value);
     args.onChange?.(
       items?.find((x) => (displayName ? x[displayName] : `${x}`) === value) ||
         args.create?.(value),
     );
-    update?.();
   };
 
   const filteredList = items?.filter((x) => {
@@ -63,18 +74,54 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
     return value.startsWith(search);
   });
 
+  const handleInputKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown') {
+      if (!filteredList?.length) {
+        return;
+      }
+
+      if (!showPopper) {
+        handleShowPopper();
+        return;
+      }
+
+      const index = focusedItem
+        ? Math.min(filteredList.indexOf(focusedItem) + 1, filteredList.length - 1)
+        : 0;
+      setFocusedItem(filteredList[index]);
+    } else if (e.key === 'ArrowUp') {
+      if (!filteredList?.length) {
+        return;
+      }
+
+      const index = focusedItem ? Math.max(filteredList.indexOf(focusedItem) - 1, 0) : 0;
+      setFocusedItem(filteredList[index]);
+    }
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <div ref={referenceElement}>
         <Input
-          onFocus={() => {
-            setShowPopper(true);
-            update?.();
+          onFocus={() => handleShowPopper()}
+          onBlur={() => handleHidePopper()}
+          onKeydown={handleInputKeydown}
+          readOnly={args.readOnly}
+          disabled={args.isDisabled}
+          placeholder={args.placeholder}
+          onPressEnter={() => {
+            if (showPopper) {
+              if (focusedItem) {
+                const value = displayName
+                  ? `${focusedItem[displayName]}`
+                  : `${focusedItem}`;
+                handleSearchChange(value);
+              }
+              handleHidePopper();
+            } else {
+              handleShowPopper();
+            }
           }}
-          onBlur={(e) => {
-            setShowPopper(false);
-          }}
-          onPressEnter={() => setShowPopper(false)}
           value={search}
           onChange={(e) => handleSearchChange(e.target.value)}
         />
@@ -92,22 +139,25 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
       >
         {filteredList?.map((item: T, index: number) => {
           const display = displayName ? `${item[displayName]}` : `${item}`;
+          const focused = item === focusedItem;
+          const itemClassName = classNames('luna-popup-list', {
+            'luna-popup-list-focused': focused,
+          });
           return (
             <div
               role="presentation"
               key={index}
-              className="luna-popup-list"
+              className={itemClassName}
               style={{ width: '100%' }}
               onMouseDown={(e) => {
                 e.stopPropagation();
                 if (referenceElement.current) {
                   const value = displayName ? `${item[displayName]}` : `${item}`;
                   handleSearchChange(value);
-                  //util.TriggerInputOnChange(referenceElement.current, value);
                 }
               }}
             >
-              <span>{util.replaceKeywordMark(display, `^${search}`)}</span>
+              <span>{util.replaceKeywordMark(display, search, true)}</span>
             </div>
           );
         })}

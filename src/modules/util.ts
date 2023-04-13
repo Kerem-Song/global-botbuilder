@@ -1,9 +1,13 @@
 import parse from 'html-react-parser';
 
 export const util = {
-  replaceKeywordMark: (text: string, keyword?: string) => {
+  replaceKeywordMark: (text: string, keyword?: string, isStart = false) => {
+    if (!keyword) {
+      return text;
+    }
+
     return parse(
-      text.replace(new RegExp(keyword!, 'gi'), (match) => {
+      text.replace(new RegExp(`${isStart ? '^' : ''}${keyword}`, 'gi'), (match) => {
         if (match) {
           return `<mark>${match}</mark>`;
         } else {
