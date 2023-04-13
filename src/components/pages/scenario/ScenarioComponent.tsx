@@ -13,8 +13,10 @@ import { ManagementComponent } from './ManagementComponent';
 export const ScenarioComponent = () => {
   const dispatch = useDispatch();
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
+
   useEffect(() => {
     dispatch(initBotBuilder());
+
     return () => {
       dispatch(initBotBuilder());
       dispatch(initNodes([]));

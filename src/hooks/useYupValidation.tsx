@@ -286,7 +286,7 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .matches(/^[a-z0-9]*$/, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
         value: yup
           .string()
@@ -397,20 +397,20 @@ export const useYupValidation = () => {
           is: NODE_TYPES.ANSWER_NODE,
           then: answerNodeEditSchema,
         }),
-      nextNodeId: yup
-        .string()
-        .nullable()
-        .when('type', {
-          is: (nodeType: string) => {
-            // console.log(nodeType);
-            return checkNextNodeIdTypes.includes(nodeType);
-          },
-          then: parameterSetNodeEditNextNodeIdSchema,
-        })
-        .when('type', {
-          is: NODE_TYPES.ANSWER_NODE,
-          then: answerNodeEditNextNodeIdSchema,
-        }),
+      // nextNodeId: yup
+      //   .string()
+      //   .nullable()
+      //   .when('type', {
+      //     is: (nodeType: string) => {
+      //       // console.log(nodeType);
+      //       return checkNextNodeIdTypes.includes(nodeType);
+      //     },
+      //     then: parameterSetNodeEditNextNodeIdSchema,
+      //   })
+      //   .when('type', {
+      //     is: NODE_TYPES.ANSWER_NODE,
+      //     then: answerNodeEditNextNodeIdSchema,
+      //   }),
     })
     .required();
 

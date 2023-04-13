@@ -1,9 +1,13 @@
 import parse from 'html-react-parser';
 
 export const util = {
-  replaceKeywordMark: (text: string, keyword?: string) => {
+  replaceKeywordMark: (text: string, keyword?: string, isStart = false) => {
+    if (!keyword) {
+      return text;
+    }
+
     return parse(
-      text.replace(new RegExp(keyword!, 'gi'), (match) => {
+      text.replace(new RegExp(`${isStart ? '^' : ''}${keyword}`, 'gi'), (match) => {
         if (match) {
           return `<mark>${match}</mark>`;
         } else {
@@ -49,6 +53,8 @@ export const util = {
     )?.set;
     nativeInputValueSetter?.call(input, value);
     const ev2 = new Event('input', { bubbles: true });
+    console.log('befor event');
     input.dispatchEvent(ev2);
+    console.log('after event');
   },
 };

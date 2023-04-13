@@ -71,13 +71,27 @@ export const Botbuilder = () => {
   const { isOpen, handleIsOpen } = useModalOpen();
 
   const isHistoryViewer = useHistoryViewerMatch();
+
+  const handleWheel = (e: WheelEvent) => {
+    if (e.ctrlKey) {
+      if (e.deltaY > 0) {
+        handleZoomOut();
+      } else {
+        handleZoomIn();
+      }
+      e.preventDefault();
+    }
+  };
+
   useEffect(() => {
     const event = () => {
       setIsPanning(false);
     };
+    window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('mouseup', event);
     return () => {
       window.removeEventListener('mouseup', event);
+      window.removeEventListener('wheel', handleWheel);
     };
   }, []);
 
@@ -114,6 +128,7 @@ export const Botbuilder = () => {
   };
 
   const outterMouseWheelHandler = (e: React.WheelEvent<HTMLDivElement>): void => {
+    console.log(e);
     if (e.nativeEvent.deltaY > 0) {
       handleZoomOut();
     } else {
@@ -307,7 +322,7 @@ export const Botbuilder = () => {
     <>
       <div
         className="botBuilderMain"
-        onWheel={outterMouseWheelHandler}
+        //onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
         //onMouseUpCapture={handleCanvasClick}

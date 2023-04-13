@@ -27,7 +27,9 @@ export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   onPressEnter?: (value: string | undefined) => void;
   onSearch?: (value: string | undefined) => void;
   onPressEsc?: () => void;
+  onKeydown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   onClear?: () => void;
+  onFocus?: () => void;
   onChangeCount?: (count: number) => void;
 }
 
@@ -45,6 +47,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     onPressEsc,
     onClear,
     onChangeCount,
+    onKeydown,
     className,
     clearable,
     isShawAlwaysClear,
@@ -114,6 +117,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       className={inputClassName}
       {...inputProps}
       onKeyUp={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
+      onKeyDown={onKeydown}
       ref={(current) => {
         if (ref) {
           if (typeof ref === 'function') {
