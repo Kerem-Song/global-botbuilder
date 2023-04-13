@@ -79,8 +79,8 @@ export const Botbuilder = () => {
       } else {
         handleZoomIn();
       }
+      e.preventDefault();
     }
-    e.preventDefault();
   };
 
   useEffect(() => {
