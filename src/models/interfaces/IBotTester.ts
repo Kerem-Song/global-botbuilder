@@ -50,6 +50,7 @@ export interface ITesterQuickReply {
     text?: string;
     lunaNodeLink?: string;
     actValueIsUttr?: string;
+    lblIsUttr?: string;
   };
 }
 
