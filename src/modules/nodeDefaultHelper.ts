@@ -190,7 +190,7 @@ export const nodeDefaultHelper = {
       seq: 0,
       items: [
         nodeDefaultHelper.createDefaultListCardItem(),
-        nodeDefaultHelper.createDefaultListCardItem(),
+        nodeDefaultHelper.createDefaultListCardItem(1),
       ],
       useImageCtrl: true,
       imageCtrl: {
