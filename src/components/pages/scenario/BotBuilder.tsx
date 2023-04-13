@@ -332,6 +332,7 @@ export const Botbuilder = () => {
         onDragOver={(e) => {
           e.preventDefault();
         }}
+        onContextMenu={(e) => e.preventDefault()}
       >
         <BotBuilderZoomBtn />
 

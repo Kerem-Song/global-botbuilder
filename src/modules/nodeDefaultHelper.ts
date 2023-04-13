@@ -188,7 +188,10 @@ export const nodeDefaultHelper = {
       typeName: VIEW_TYPES.LIST_CARD_VIEW,
       header: '',
       seq: 0,
-      items: [nodeDefaultHelper.createDefaultListCardItem()],
+      items: [
+        nodeDefaultHelper.createDefaultListCardItem(),
+        nodeDefaultHelper.createDefaultListCardItem(),
+      ],
       useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',
