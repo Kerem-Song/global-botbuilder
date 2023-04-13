@@ -112,19 +112,37 @@ export const TesterMessagesItemButton = ({
 
   if (actionType === 'linkWebUrl') {
     return (
-      <button className={itemButton} onClick={() => window.open(webLinkUrl)}>
+      <button
+        className={itemButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          window.open(webLinkUrl);
+        }}
+      >
         {item.label}
       </button>
     );
   } else if (actionType === 'actValueIsUttr') {
     return (
-      <button className={itemButton} onClick={() => handleActValueIsUttr()}>
+      <button
+        className={itemButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleActValueIsUttr();
+        }}
+      >
         {item.label}
       </button>
     );
   } else {
     return (
-      <button className={itemButton} onClick={() => handleNodeUrl()}>
+      <button
+        className={itemButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleNodeUrl();
+        }}
+      >
         {item.label}
       </button>
     );

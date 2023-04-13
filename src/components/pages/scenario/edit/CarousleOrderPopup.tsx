@@ -2,7 +2,7 @@ import { icClosed } from '@assets';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
 import { Button } from '@components/general';
 import { Col, Divider, Row } from '@components/layout';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { INode, INodeEditModel } from '@models';
 import {
   IBasicCardCarouselView,
@@ -14,7 +14,7 @@ import { NODE_PREFIX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setCarouselIndex } from '@store/botbuilderSlice';
-import { editNode, updateNode } from '@store/makingNode';
+import { editNode } from '@store/makingNode';
 import { FC, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
@@ -28,6 +28,7 @@ export const CarouselOrderPopup: FC<{
   node: INode;
 }> = ({ isOpen, handleIsOpen, handleSave, nodeId, nodeView, node }) => {
   const [carouselNode, setCarouselNode] = useState<IHasChildrenView['childrenViews']>([]);
+  const [closeOnEsc, setCloseOnEsc] = useState<boolean>(true);
   const { t, tc } = usePage();
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
@@ -38,6 +39,7 @@ export const CarouselOrderPopup: FC<{
 
   const handleClose = async () => {
     if (nodeView.childrenViews !== carouselNode) {
+      setCloseOnEsc(false);
       const checkSaving = await confirm({
         title: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_TITLE`),
         description: t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_DESCRIPTION`),
@@ -45,6 +47,7 @@ export const CarouselOrderPopup: FC<{
       if (checkSaving) {
         setCarouselNode(nodeView.childrenViews);
         handleIsOpen(false);
+        setCloseOnEsc(true);
       } else {
         handleIsOpen(true);
       }
@@ -103,11 +106,29 @@ export const CarouselOrderPopup: FC<{
     lunaToast.success(tc(`ACCEPTED`));
   };
 
+  const esckeyEvent = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      console.log('@esc');
+
+      handleClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener('keyup', esckeyEvent);
+    } else {
+      window.removeEventListener('keyup', esckeyEvent);
+    }
+    return () => window.removeEventListener('keyup', esckeyEvent);
+  }, [carouselNode, isOpen]);
+
   return (
     <ReactModal
       isOpen={isOpen}
       className="carouselOrderPopupWrapper node-draggable-ignore"
       overlayClassName="carouselPopupOverlay"
+      shouldCloseOnEsc={closeOnEsc}
     >
       <div onWheel={(e) => e.stopPropagation()}>
         <Row justify="space-between" align="center" className="titleWrapper">

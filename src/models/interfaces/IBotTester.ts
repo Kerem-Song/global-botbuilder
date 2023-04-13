@@ -66,6 +66,7 @@ export interface ITesterCard {
     url: string;
   };
   title: string;
+  debugMeta?: ITesterDebugMeta;
   contentText?: string;
   description: string;
   price?: {
