@@ -95,7 +95,7 @@ export const Collapse: FC<CollapseProps> = ({
         <Row
           style={{ justifyContent: 'space-between', alignItems: 'center', width: '100%' }}
         >
-          <Col span={20} flex={20} className="collapseTitle">
+          <Col span={21} flex={20} className="collapseTitle">
             <span className="label" style={{ paddingRight: '10px' }}>
               {label}
             </span>
@@ -124,7 +124,7 @@ export const Collapse: FC<CollapseProps> = ({
               />
             )}
           </Col>
-          <Col span={4}>
+          <Col span={3}>
             <Button shape="ghost" onClick={handleCollapse}>
               <img src={isCollapsed ? icCollapseClose : icCollapseOpen} alt="collapsed" />
             </Button>
