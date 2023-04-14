@@ -101,7 +101,7 @@ export interface INodeBase {
   left: number;
   nextNodeId?: string;
   nodeKind: NodeKind;
-  option: number;
+  option?: number;
   seq: number;
   top: number;
   typeName: TNodeTypes;
