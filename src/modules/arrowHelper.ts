@@ -307,6 +307,15 @@ export const arrowHelper = {
       return 'Answer노드는 다음노드로 지정할 수 없음';
     }
 
+    // 시작노드에서 Count노드 제외
+    if (
+      isNext &&
+      startNode.type === NODE_TYPES.INTENT_NODE &&
+      endNode.type === NODE_TYPES.RETRY_CONDITION_NODE
+    ) {
+      return 'Count노드는 다음 노드로 지정할 수 없음';
+    }
+
     // 연속 노드에 응답이 아닌 노드 연결 할 경우
     // 연속 노드에 다른시나리오나 시작노드 연결 할 경우
     if (

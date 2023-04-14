@@ -21,16 +21,17 @@ import {
 } from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { useBotClient } from '@hooks';
+import { useOutsideClick } from '@hooks/useOutsideClick';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
-import { setSidebarStatus } from '../../store/sidebarStatusSlice';
+import { setSidebarClose, setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const BotAside = () => {
   const location = useLocation();
@@ -130,8 +131,20 @@ export const BotAside = () => {
     },
   ];
 
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  useOutsideClick(sidebarRef, () => {
+    dispatch(setSidebarClose());
+  });
+
+  // useEffect(() => {
+  //   if (sidebarStatus) {
+  //     outsideClick;
+  //   }
+  // }, [sidebarStatus]);
+
   return (
-    <aside className={css}>
+    <aside className={css} ref={sidebarRef}>
       <div className="mainMenuWrapper">
         <div className="expand">
           <button
@@ -190,7 +203,10 @@ export const BotAside = () => {
                 <NavLink
                   key={item.id}
                   to={`${item.url}`}
-                  onClick={() => setPage(item.name)}
+                  onClick={() => {
+                    setPage(item.name);
+                    dispatch(setSidebarClose());
+                  }}
                 >
                   <li className={page === item.name ? 'selected' : ''}>
                     <span className="menuImg">
@@ -217,7 +233,10 @@ export const BotAside = () => {
                 <NavLink
                   key={item.id}
                   to={`${item.url}`}
-                  onClick={() => setPage(item.url)}
+                  onClick={() => {
+                    setPage(item.url);
+                    dispatch(setSidebarClose());
+                  }}
                 >
                   <li className={page === item.url ? 'selected' : ''}>
                     <span className="menuImg">
