@@ -286,7 +286,7 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(/^[a-z0-9@._]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
         value: yup
           .string()
