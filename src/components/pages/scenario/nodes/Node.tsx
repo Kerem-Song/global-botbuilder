@@ -9,14 +9,8 @@ import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { lunaToast } from '@modules/lunaToast';
-import {
-  setClipBoard,
-  setEditDrawerToggle,
-  setGuideStartNode,
-  setSelected,
-} from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
+import { setEditDrawerToggle, setGuideStartNode } from '@store/botbuilderSlice';
+import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
@@ -25,7 +19,7 @@ import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
-import { NODE_PREFIX } from '../../../../modules';
+import { NODE_PREFIX, nodeHelper } from '../../../../modules';
 import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
@@ -65,6 +59,7 @@ export const Node: FC<INodeProps> = ({
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
   );
+  const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
@@ -78,7 +73,8 @@ export const Node: FC<INodeProps> = ({
   const bodyClass = classNames('luna-node-body');
   const isHistoryViewer = useHistoryViewerMatch();
 
-  const { deleteCard, getNodeMenu } = useNodeContextMenu({ handleIsOpen });
+  const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
+    useNodeContextMenu({ handleIsOpen });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -125,11 +121,42 @@ export const Node: FC<INodeProps> = ({
     onClick?.(e);
   };
 
+  const handlePasteCard = () => {
+    const view = document.querySelector('.botBuilderMain');
+    const canvas = document.querySelector('.canvasWrapper');
+    const canvasRect = canvas?.getBoundingClientRect();
+    const viewRect = view?.getBoundingClientRect();
+
+    if (clipBoard) {
+      const clone = nodeHelper.cloneNode(clipBoard);
+      dispatch(
+        appendNode({
+          ...clone,
+          x:
+            canvasRect && viewRect
+              ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+              : 0,
+          y:
+            canvasRect && viewRect
+              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+              : 0,
+        }),
+      );
+    }
+  };
+
   const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Delete') {
       deleteCard(node);
     } else if (e.key === 'c' && e.ctrlKey) {
-      console.log(e);
+      console.log('@ctrl c');
+      handleDuplicationCard(node);
+    } else if (e.key === 'x' && e.ctrlKey) {
+      console.log('@ctrl x');
+      handleCutCard(node);
+    } else if (e.key === 'v' && e.ctrlKey) {
+      console.log('@ctrl v');
+      handlePasteCard();
     }
   };
 
