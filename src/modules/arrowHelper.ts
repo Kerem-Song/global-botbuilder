@@ -331,8 +331,9 @@ export const arrowHelper = {
       endNode.nodeKind === NodeKind.InputNode &&
       startNode.nodeKind === NodeKind.InputNode
     ) {
-      const count = arrowHelper.checkParent(2, startNode.id, nodes);
-      if (count > 3) {
+      const parentCnt = arrowHelper.checkParent(2, startNode.id, nodes);
+      const childCnt = arrowHelper.checkChild(0, nodes, endNode.nextNodeId);
+      if (parentCnt + childCnt > 3) {
         return '연속응답 노드는 3개까지만 가능합니다.';
       }
     }
@@ -349,6 +350,20 @@ export const arrowHelper = {
         return arrowHelper.checkParent(depth + 1, p.id, nodes);
       });
       return Math.max(...parentDepths);
+    }
+
+    return depth;
+  },
+  checkChild: (depth: number, nodes: INode[], nextNodeId?: string): number => {
+    if (!nextNodeId) {
+      return depth;
+    }
+
+    const child = nodes.find(
+      (x) => x.id === nextNodeId && x.nodeKind === NodeKind.InputNode,
+    );
+    if (child) {
+      return arrowHelper.checkChild(depth + 1, nodes, child.nextNodeId);
     }
 
     return depth;
