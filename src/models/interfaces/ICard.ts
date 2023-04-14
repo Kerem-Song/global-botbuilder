@@ -79,27 +79,7 @@ export const NODE_TYPES = {
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;
 export type TNodeTypes = ValueOf<typeof NODE_TYPES>;
-export const getNodeKind = (nodeType: TNodeTypes) => {
-  console.log('nodetype in get node kind', nodeType);
-  switch (nodeType) {
-    case NODE_TYPES.ANSWER_NODE:
-      return NodeKind.AnswerNode;
-    case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-    case NODE_TYPES.BASIC_CARD_CAROUSEL_TEMPLATE_NODE:
-    case NODE_TYPES.BASIC_CARD_NODE:
-    case NODE_TYPES.IMAGE_NODE:
-    case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-    case NODE_TYPES.LIST_CARD_NODE:
-    case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-    case NODE_TYPES.PRODUCT_CARD_CAROUSEL_TEMPLATE_NODE:
-    case NODE_TYPES.PRODUCT_CARD_NODE:
-    case NODE_TYPES.PRODUCT_CARD_TEMPLATE_NODE:
-    case NODE_TYPES.TEXT_NODE:
-      return NodeKind.InputNode;
-    default:
-      return NodeKind.CommandNode;
-  }
-};
+
 export interface IButtonType {
   id: UniqueIdentifier;
   label: string;

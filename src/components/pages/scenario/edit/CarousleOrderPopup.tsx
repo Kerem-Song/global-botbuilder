@@ -63,7 +63,7 @@ export const CarouselOrderPopup: FC<{
       case 'ListCardCarouselView':
         return nodeDefaultHelper.createDefaultListCardView();
       case 'ProductCardCarouselView':
-        return nodeDefaultHelper.createCommerceView();
+        return nodeDefaultHelper.createDefaultCommerceView();
       default:
         return nodeDefaultHelper.createDefaultBasicCardView();
     }

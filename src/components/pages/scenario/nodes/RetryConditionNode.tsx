@@ -1,14 +1,11 @@
 import { Card } from '@components';
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
-import { INode } from '@models';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FALSE_SUFFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';
 import { FC } from 'react';
 
-interface IRetryConditionProps {
-  node: INode;
-}
-export const RetryConditionNode: FC<IRetryConditionProps> = ({ node }) => {
+export const RetryConditionNode: FC<IHasNode> = ({ node }) => {
   const view: IRetryConditionView = node.view as IRetryConditionView;
 
   return (

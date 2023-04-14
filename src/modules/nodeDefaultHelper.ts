@@ -1,6 +1,5 @@
 import {
   ConditionJoin,
-  ConditionOperator,
   ImageAspectRatio,
   NODE_TYPES,
   TNodeTypes,
@@ -23,40 +22,15 @@ import {
   IRetryConditionView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
 import { ID_GEN, ID_TYPES } from './idGen';
 
 export const nodeDefaultHelper = {
   createDefaultView: (nodeType: TNodeTypes) => {
-    switch (nodeType) {
-      case NODE_TYPES.TEXT_NODE:
-        return nodeDefaultHelper.createDefaultTextView();
-      case NODE_TYPES.BASIC_CARD_NODE:
-        return nodeDefaultHelper.createDefaultBasicCardView();
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-        return nodeDefaultHelper.createDefaultBasicCardCarouselView();
-      case NODE_TYPES.LIST_CARD_NODE:
-        return nodeDefaultHelper.createDefaultListCardView();
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-        return nodeDefaultHelper.createDefaultListCardCarouselView();
-      case NODE_TYPES.CONDITION_NODE:
-        return nodeDefaultHelper.createDefaultConditionView();
-      case NODE_TYPES.ANSWER_NODE:
-        return nodeDefaultHelper.createDefaultAnswerView();
-      case NODE_TYPES.PARAMETER_SET_NODE:
-        return nodeDefaultHelper.createDefaultParameterSetView();
-      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return nodeDefaultHelper.createDefaultOtherFlowRedirectView();
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        return nodeDefaultHelper.createCommerceView();
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return nodeDefaultHelper.createCommerceCarouselView();
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        return nodeDefaultHelper.createDefaultRetryConditionView();
-      default:
-        return undefined;
-    }
+    return nodeFactory.getFactory(nodeType)?.getDefaultView();
   },
+
   createDefaultRetryConditionView: () => {
     const result: IRetryConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
@@ -217,7 +191,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createCommerceView: () => {
+  createDefaultCommerceView: () => {
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
@@ -242,11 +216,11 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createCommerceCarouselView: () => {
+  createDefaultCommerceCarouselView: () => {
     const result: IProductCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW,
-      childrenViews: [nodeDefaultHelper.createCommerceView()],
+      childrenViews: [nodeDefaultHelper.createDefaultCommerceView()],
       isSuffle: false,
       count: 10,
     };

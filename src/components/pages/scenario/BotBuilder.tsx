@@ -9,7 +9,8 @@ import { IPopperItem } from '@components/navigation';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { getNodeKind, IArrow, INode, TNodeTypes } from '@models';
+import { IArrow, INode, NodeKind, TNodeTypes } from '@models';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import {
@@ -127,15 +128,6 @@ export const Botbuilder = () => {
     }px`;
   };
 
-  const outterMouseWheelHandler = (e: React.WheelEvent<HTMLDivElement>): void => {
-    console.log(e);
-    if (e.nativeEvent.deltaY > 0) {
-      handleZoomOut();
-    } else {
-      handleZoomIn();
-    }
-  };
-
   const outterMouseMoveHandler = (e: React.MouseEvent): void => {
     e.stopPropagation();
     isPanning && panning(e.movementX, e.movementY);
@@ -225,7 +217,7 @@ export const Botbuilder = () => {
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
       title: `${nodeName} ` + `${index}`.padStart(2, '0'),
-      nodeKind: getNodeKind(cardType),
+      nodeKind: nodeFactory.getFactory(cardType)?.nodeKind || NodeKind.Unkonown,
       view: nodeView,
       seq: 0,
     };

@@ -1,15 +1,11 @@
 import { Card } from '@components/data-display';
-import { INode } from '@models';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { FC } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
-export interface ITextNodeProps {
-  node: INode;
-}
-
-export const TextNode: FC<ITextNodeProps> = ({ node }) => {
+export const TextNode: FC<IHasNode> = ({ node }) => {
   const view = node.view as ITextView;
   return (
     <Card>

@@ -1,5 +1,5 @@
 import { Carousel } from '@components/pages/scenario/Carousel';
-import { INode } from '@models';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { IListCardCarouselView, IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -10,11 +10,7 @@ import { useDispatch } from 'react-redux';
 
 import { ListCardView } from '../views/ListCardView';
 
-export interface IListCardCarouselNodeProps {
-  node: INode;
-}
-
-export const ListCardCarouselNode: FC<IListCardCarouselNodeProps> = ({ node }) => {
+export const ListCardCarouselNode: FC<IHasNode> = ({ node }) => {
   const dispatch = useDispatch();
   const view = node.view as IListCardCarouselView;
 

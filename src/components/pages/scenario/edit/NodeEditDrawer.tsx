@@ -6,6 +6,7 @@ import { useYupValidation } from '@hooks/useYupValidation';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { NODE_PREFIX } from '@modules';
 import { editNode } from '@store/makingNode';
 import { useEffect } from 'react';
@@ -13,20 +14,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
-import { AnswerNodeEdit } from './AnswerNodeEdit';
-import { BasicCardCarousleNodeEdit } from './BasicCardCarouselNodeEdit';
-import { BasicCardNodeEdit } from './BasicCardNodeEdit';
-import { ConditionNodeEdit } from './ConditionNodeEdit';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
-import { IntentNodeEdit } from './IntentNodeEdit';
-import { ListCardCarouselNodeEdit } from './ListCardCarouselNodeEdit';
-import { ListCardNodeEdit } from './ListCardNodeEdit';
-import { OtherFlowRedirectNodeEdit } from './OtherFlowRedirectNodeEdit';
-import { ParameterSetNodeEdit } from './ParameterSetNodeEdit';
-import { ProductCardCarouselNodeEdit } from './ProductCardCarouselNodeEdit';
-import { ProductCardNodeEdit } from './ProductCardNodeEdit';
-import { RetryConditionNodeEdit } from './RetryConditionNodeEdit';
-import { TextNodeEdit } from './TextNodeEdit';
 
 export const NodeEditDrawer = () => {
   const { t } = usePage();
@@ -110,36 +98,13 @@ export const NodeEditDrawer = () => {
     ) {
       return <></>;
     }
-    switch (selectedNode?.type) {
-      case NODE_TYPES.TEXT_NODE:
-        return <TextNodeEdit />;
-      case NODE_TYPES.BASIC_CARD_NODE:
-        return <BasicCardNodeEdit />;
-      case NODE_TYPES.LIST_CARD_NODE:
-        return <ListCardNodeEdit />;
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        return <ProductCardNodeEdit />;
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-        return <BasicCardCarousleNodeEdit />;
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-        return <ListCardCarouselNodeEdit />;
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return <ProductCardCarouselNodeEdit />;
-      case NODE_TYPES.ANSWER_NODE:
-        return <AnswerNodeEdit />;
-      case NODE_TYPES.CONDITION_NODE:
-        return <ConditionNodeEdit />;
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        return <RetryConditionNodeEdit />;
-      case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSetNodeEdit />;
-      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return <OtherFlowRedirectNodeEdit />;
-      case NODE_TYPES.INTENT_NODE:
-        return <IntentNodeEdit />;
-      default:
-        <></>;
+    const EditElement = nodeFactory.getFactory(selectedNode?.type)?.getEditElement();
+
+    if (!EditElement) {
+      return <></>;
     }
+
+    return <EditElement />;
   };
 
   console.log('errors in edit drawer', errors);

@@ -1,15 +1,13 @@
 import { Card } from '@components';
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { useI18n } from '@hooks';
-import { ConditionJoin, INode } from '@models';
+import { ConditionJoin } from '@models';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { FALSE_SUFFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';
 import { FC } from 'react';
 
-interface IConditionNodeProps {
-  node: INode;
-}
-export const ConditionNode: FC<IConditionNodeProps> = ({ node }) => {
+export const ConditionNode: FC<IHasNode> = ({ node }) => {
   const { getConditionOperatorLabel } = useI18n();
   const view: IConditionView = node.view as IConditionView;
   return (

@@ -26,7 +26,7 @@ export const CommerceCardCarouselNode: FC<ICommerceCardCarouselNodeProps> = ({
   const HandleAddCarousel = () => {
     const childrenViews: IProductCardView[] = [
       ...view.childrenViews,
-      nodeDefaultHelper.createCommerceView(),
+      nodeDefaultHelper.createDefaultCommerceView(),
     ];
     const upNode = {
       ...node,

@@ -2,17 +2,11 @@ import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
-import { useRootState, useScenarioClient } from '@hooks';
+import { useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import {
-  getNodeKind,
-  INode,
-  NODE_TYPES,
-  NodeKind,
-  TCardsValues,
-  TNodeTypes,
-} from '@models';
+import { INode, NODE_TYPES, NodeKind, TCardsValues, TNodeTypes } from '@models';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { addArrow, appendNode } from '@store/makingNode';
@@ -161,7 +155,7 @@ export const NodeLinkPopUpMenu = ({
       seq: 0,
       x: Math.round(popUpPosition.x),
       y: Math.round(popUpPosition.y),
-      nodeKind: getNodeKind(nodeType),
+      nodeKind: nodeFactory.getFactory(nodeType)?.nodeKind || NodeKind.Unkonown,
     };
 
     dispatch(appendNode(addNode));
@@ -248,7 +242,7 @@ export const NodeLinkPopUpMenu = ({
       x: popUpPosition.x,
       y: popUpPosition.y,
       seq: 0,
-      nodeKind: getNodeKind(nodeType),
+      nodeKind: nodeFactory.getFactory(nodeType)?.nodeKind || NodeKind.Unkonown,
       view,
       nextNodeId: firstNodeId,
     };

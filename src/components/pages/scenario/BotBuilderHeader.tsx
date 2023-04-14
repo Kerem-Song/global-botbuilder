@@ -3,7 +3,8 @@ import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { usePage, useRootState, useScenarioClient } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
-import { getNodeKind, INode, NODE_TYPES, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
@@ -165,7 +166,7 @@ export const BotBuilderHeader = () => {
       type: cardType,
       title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       view: nodeView,
-      nodeKind: getNodeKind(cardType),
+      nodeKind: nodeFactory.getFactory(cardType)?.nodeKind || NodeKind.Unkonown,
       seq: 0,
       x:
         canvasRect && viewRect

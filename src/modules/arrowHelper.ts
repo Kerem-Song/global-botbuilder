@@ -1,4 +1,4 @@
-import { IArrow, INode, INodeEditModel, NODE_TYPES, NodeKind } from '@models';
+import { IArrow, INode, INodeEditModel, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import {
   ACTION_TYPES,
   IAnswerView,
@@ -9,6 +9,7 @@ import {
   IRetryConditionView,
   ITrueFalseViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
 
@@ -43,9 +44,18 @@ export const arrowHelper = {
       type: 'blue',
     };
   },
-  createAnswerNodeArrow: (nodeId: string, view: IAnswerView): IArrow[] => {
+  createAnswerNodeArrow: (
+    nodeId: string,
+    view?: IAnswerView,
+    nextNodeId?: string,
+  ): IArrow[] => {
     const result: IArrow[] = [];
-    view.quicks?.map((x) => {
+
+    if (nextNodeId) {
+      result.push(arrowHelper.createNextArrow(nodeId, nextNodeId));
+    }
+
+    view?.quicks?.map((x) => {
       if (x.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && x.actionValue) {
         result.push({
           start: `${NEXT_BUTTON_PREFIX}${x.id}`,
@@ -59,9 +69,9 @@ export const arrowHelper = {
 
     return result;
   },
-  createConditionNodeArrow: (nodeId: string, view: IConditionView): IArrow[] => {
+  createConditionNodeArrow: (nodeId: string, view?: IConditionView): IArrow[] => {
     const result: IArrow[] = [];
-    if (view.falseThenNextNodeId) {
+    if (view && view.falseThenNextNodeId) {
       result.push({
         start: `${NEXT_BUTTON_PREFIX}${nodeId}${FALSE_SUFFIX}`,
         updateKey: `${NODE_PREFIX}${nodeId}`,
@@ -71,7 +81,7 @@ export const arrowHelper = {
       });
     }
 
-    if (view.trueThenNextNodeId) {
+    if (view && view.trueThenNextNodeId) {
       result.push({
         start: `${NEXT_BUTTON_PREFIX}${nodeId}${TRUE_SUFFIX}`,
         updateKey: `${NODE_PREFIX}${nodeId}`,
@@ -85,11 +95,11 @@ export const arrowHelper = {
   },
   createRetryConditionNodeArrow: (
     nodeId: string,
-    view: IRetryConditionView,
+    view?: IRetryConditionView,
   ): IArrow[] => {
     const result: IArrow[] = [];
 
-    if (view.falseThenNextNodeId) {
+    if (view && view.falseThenNextNodeId) {
       result.push({
         start: `${NEXT_BUTTON_PREFIX}${nodeId}${FALSE_SUFFIX}`,
         updateKey: `${NODE_PREFIX}${nodeId}`,
@@ -99,7 +109,7 @@ export const arrowHelper = {
       });
     }
 
-    if (view.trueThenNextNodeId) {
+    if (view && view.trueThenNextNodeId) {
       result.push({
         start: `${NEXT_BUTTON_PREFIX}${nodeId}${TRUE_SUFFIX}`,
         updateKey: `${NODE_PREFIX}${nodeId}`,
@@ -111,9 +121,18 @@ export const arrowHelper = {
 
     return result;
   },
-  createHasButtonsArrow: (nodeId: string, view: IHasButtonViewBase): IArrow[] => {
+  createHasButtonsArrow: (
+    nodeId: string,
+    view?: IHasButtonViewBase,
+    nextNodeId?: string,
+  ): IArrow[] => {
     const result: IArrow[] = [];
-    view.buttons?.forEach((b) => {
+
+    if (nextNodeId) {
+      result.push(arrowHelper.createConnectArrow(nodeId, nextNodeId));
+    }
+
+    view?.buttons?.forEach((b) => {
       if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
         result.push({
           start: `${NEXT_BUTTON_PREFIX}${b.id}`,
@@ -124,57 +143,41 @@ export const arrowHelper = {
         });
       }
     });
-    console.log('createbuttonsArrow', result);
+
     return result;
   },
   createHasButtonsCarouselArrow: (
     nodeId: string,
-    view: IHasButtonCarouselViewBase,
+    view?: IHasButtonCarouselViewBase,
+    nextNodeId?: string,
   ): IArrow[] => {
     const result: IArrow[] = [];
-    result.push(
-      ...view.childrenViews
-        .map((view) => arrowHelper.createHasButtonsArrow(nodeId, view))
-        .flat(1),
-    );
+    if (nextNodeId) {
+      result.push(arrowHelper.createConnectArrow(nodeId, nextNodeId));
+    }
+
+    if (view) {
+      result.push(
+        ...view.childrenViews
+          .map((view) => arrowHelper.createHasButtonsArrow(nodeId, view))
+          .flat(1),
+      );
+    }
     return result;
   },
-  // createBasicCardArrow: (nodeId: string, view: IBasicCardView): IArrow[] => {
-  //   const result: IArrow[] = [];
-  //   view.buttons?.forEach((b) => {
-  //     if (b.actionType === ACTION_TYPES.LUNA_NODE_REDIRECT && b.actionValue) {
-  //       result.push({
-  //         start: `${NEXT_BUTTON_PREFIX}${b.id}`,
-  //         updateKey: `${NODE_PREFIX}${nodeId}`,
-  //         end: `${NODE_PREFIX}${b.actionValue}`,
-  //         isNextNode: true,
-  //         type: 'blue',
-  //       });
-  //     }
-  //   });
-  //   return result;
-  // },
-  // createBasicCardCarouselArrow: (
-  //   nodeId: string,
-  //   view: IBasicCardCarouselView,
-  // ): IArrow[] => {
-  //   const result: IArrow[] = [];
-  //   result.push(
-  //     ...view.childrenViews
-  //       .map((view) => arrowHelper.createHasButtonsArrow(nodeId, view))
-  //       .flat(1),
-  //   );
-  //   return result;
-  // },
+
   editArrows: (node: INodeEditModel, arrows: IArrow[]): IArrow[] | undefined => {
     if (!editableArrowNodeTypes.includes(node.type)) {
       return undefined;
     }
 
     const removeArrows = arrows.filter(
-      (x) => x.updateKey === `${NODE_PREFIX}${node.id}` && x.isNextNode,
+      (x) =>
+        x.updateKey === `${NODE_PREFIX}${node.id}` ||
+        x.start === `${NODE_PREFIX}${node.id}`,
     );
 
+    console.log('removeArrows', removeArrows);
     if (removeArrows.length) {
       removeArrows.forEach((arrow) => {
         const index = arrows.indexOf(arrow);
@@ -182,105 +185,25 @@ export const arrowHelper = {
       });
     }
 
-    if (node.nextNodeId) {
-      if (node.type !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
-        arrows.push(arrowHelper.createNextArrow(node.id, node.nextNodeId));
-      }
-    }
-
-    console.log('node.type', node.type);
-    switch (node.type) {
-      case NODE_TYPES.ANSWER_NODE:
-        arrows.push(
-          ...arrowHelper.createAnswerNodeArrow(node.id, node.view as IAnswerView),
-        );
-        break;
-      case NODE_TYPES.BASIC_CARD_NODE:
-      case NODE_TYPES.LIST_CARD_NODE:
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        arrows.push(
-          ...arrowHelper.createHasButtonsArrow(node.id, node.view as IHasButtonViewBase),
-        );
-        break;
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        arrows.push(
-          ...arrowHelper.createHasButtonsCarouselArrow(
-            node.id,
-            node.view as IHasButtonCarouselViewBase,
-          ),
-        );
-        break;
-      case NODE_TYPES.CONDITION_NODE:
-        arrows.push(
-          ...arrowHelper.createConditionNodeArrow(node.id, node.view as IConditionView),
-        );
-        break;
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        arrows.push(
-          ...arrowHelper.createRetryConditionNodeArrow(
-            node.id,
-            node.view as IRetryConditionView,
-          ),
-        );
-        break;
-    }
+    arrows.push(
+      ...(nodeFactory
+        .getFactory(node.type)
+        ?.createArrows(node.id, node.nextNodeId, node.view) || []),
+    );
 
     return arrows;
   },
 
   initArrows: (node: INodeBase): IArrow[] => {
     const arrows: IArrow[] = [];
-    if (node.nextNodeId) {
-      if (node.nodeKind === NodeKind.InputNode) {
-        arrows.push(arrowHelper.createConnectArrow(node.id, node.nextNodeId));
-      } else if (node.typeName !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
-        arrows.push(arrowHelper.createNextArrow(node.id, node.nextNodeId));
-      }
-    }
-
-    switch (node.typeName) {
-      case NODE_TYPES.ANSWER_NODE:
-        arrows.push(
-          ...arrowHelper.createAnswerNodeArrow(node.id, node.view as IAnswerView),
-        );
-        break;
-      case NODE_TYPES.CONDITION_NODE:
-        arrows.push(
-          ...arrowHelper.createConditionNodeArrow(node.id, node.view as IConditionView),
-        );
-        break;
-
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        arrows.push(
-          ...arrowHelper.createRetryConditionNodeArrow(
-            node.id,
-            node.view as IRetryConditionView,
-          ),
-        );
-        break;
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        arrows.push(
-          ...arrowHelper.createHasButtonsCarouselArrow(
-            node.id,
-            node.view as IHasButtonCarouselViewBase,
-          ),
-        );
-        break;
-      case NODE_TYPES.BASIC_CARD_NODE:
-      case NODE_TYPES.LIST_CARD_NODE:
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        arrows.push(
-          ...arrowHelper.createHasButtonsArrow(node.id, node.view as IHasButtonViewBase),
-        );
-        break;
-    }
-
+    arrows.push(
+      ...(nodeFactory
+        .getFactory(node.typeName)
+        ?.createArrows(node.id, node.nextNodeId, node.view) || []),
+    );
     return arrows;
   },
+
   syncArrow: (start: string, end?: string, node?: INode) => {
     if (!node) {
       return;
@@ -289,42 +212,16 @@ export const arrowHelper = {
     const startId = start.substring(5);
     const endId = end?.substring(5);
 
-    if (start.startsWith(NODE_PREFIX)) {
+    const syncNextNodeType: TNodeTypes[] = [
+      NODE_TYPES.ANSWER_NODE,
+      NODE_TYPES.INTENT_NODE,
+      NODE_TYPES.PARAMETER_SET_NODE,
+    ];
+    if (start.startsWith(NODE_PREFIX) || syncNextNodeType.includes(node.type)) {
       node.nextNodeId = endId;
     }
 
-    switch (node.type) {
-      case NODE_TYPES.ANSWER_NODE:
-        node.nextNodeId = endId;
-        arrowHelper.syncAnswerNodeArrow(startId, endId, node.view as IAnswerView);
-        break;
-      case NODE_TYPES.CONDITION_NODE:
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        arrowHelper.syncTrueFalseNodeArrow(
-          startId,
-          endId,
-          node.view as ITrueFalseViewBase,
-        );
-        break;
-      case NODE_TYPES.BASIC_CARD_NODE:
-      case NODE_TYPES.LIST_CARD_NODE:
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        arrowHelper.syncHasButtonArrow(startId, endId, node.view as IHasButtonViewBase);
-        break;
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        arrowHelper.syncHasButtonCarouselArrow(
-          startId,
-          endId,
-          node.view as IHasButtonCarouselViewBase,
-        );
-        break;
-      case NODE_TYPES.INTENT_NODE:
-      case NODE_TYPES.PARAMETER_SET_NODE:
-        node.nextNodeId = endId;
-        break;
-    }
+    nodeFactory.getFactory(node.type)?.syncArrow(startId, endId, node.view);
   },
   syncAnswerNodeArrow: (startId: string, endId?: string, view?: IAnswerView) => {
     if (!view) {

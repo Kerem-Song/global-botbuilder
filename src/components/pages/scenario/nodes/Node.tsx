@@ -1,32 +1,14 @@
-import {
-  icCardCut,
-  icCardDelete,
-  icCardDuplication,
-  icCardPaste,
-  icEditCarousel,
-  icNodeBottom,
-} from '@assets';
-import { Button, IPopperItem, Popper } from '@components';
+import { icNodeBottom } from '@assets';
+import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
-import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
-import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
-import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
-import { CommerceCardCarouselNode } from '@components/pages/scenario/nodes/CommerceCardCarouselNode';
-import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
-import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
-import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
-import { ListCardCarouselNode } from '@components/pages/scenario/nodes/ListCardCarouselNode';
-import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
-import { OtherFlowRedirectNode } from '@components/pages/scenario/nodes/OtherFlowRedirectNode';
-import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
-import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
-import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { useModalOpen, usePage, useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
+import { useNodeContextMenu } from '@hooks/useNodeContextMenu';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { lunaToast } from '@modules/lunaToast';
 import {
   setClipBoard,
@@ -34,23 +16,21 @@ import {
   setGuideStartNode,
   setSelected,
 } from '@store/botbuilderSlice';
-import { appendNode, removeItem } from '@store/makingNode';
+import { removeItem } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, KeyboardEvent, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useMatch } from 'react-router';
 
-import { NODE_TYPES } from '../../../../models/interfaces/ICard';
+import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
-import { NODE_PREFIX, nodeHelper } from '../../../../modules';
+import { NODE_PREFIX } from '../../../../modules';
 import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
-  typeName: string;
+  typeName: TNodeTypes;
   nodekind: NodeKind;
   title?: React.ReactNode;
   bordered?: boolean;
@@ -98,30 +78,7 @@ export const Node: FC<INodeProps> = ({
   const bodyClass = classNames('luna-node-body');
   const isHistoryViewer = useHistoryViewerMatch();
 
-  const handleDuplicationCard = (node: INode) => {
-    dispatch(setClipBoard(node));
-  };
-
-  const handleCutCard = (node: INode) => {
-    if (node.type === NODE_TYPES.INTENT_NODE) {
-      return;
-    }
-    dispatch(setClipBoard(node));
-    dispatch(removeItem(node.id));
-  };
-
-  const handleDeleteCard = (node: INode) => {
-    deleteCard(node.id);
-  };
-
-  const deleteCard = (nodeId: string) => {
-    if (node.type === NODE_TYPES.INTENT_NODE) {
-      return;
-    }
-    dispatch(removeItem(nodeId));
-    dispatch(setSelected());
-    lunaToast.success(tc('DELETE_MESSAGE'));
-  };
+  const { deleteCard, getNodeMenu } = useNodeContextMenu({ handleIsOpen });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -145,94 +102,23 @@ export const Node: FC<INodeProps> = ({
     }
   };
 
-  const nodeMenu: IPopperItem<{ action: (node: INode) => void }>[] = [
-    {
-      id: 'duplication',
-      name: 'Duplication',
-      type: 'icon-front',
-      icon: icCardDuplication,
-      data: {
-        action: handleDuplicationCard,
-      },
-    },
-    {
-      id: 'cut',
-      name: 'Cut',
-      type: 'icon-front',
-      icon: icCardCut,
-      data: {
-        action: handleCutCard,
-      },
-    },
-    {
-      id: 'delete',
-      name: 'Delete',
-      type: 'icon-front',
-      icon: icCardDelete,
-      data: {
-        action: handleDeleteCard,
-      },
-    },
-    {
-      id: 'carousel',
-      name: 'Carousel',
-      type: 'icon-front',
-      icon: icEditCarousel,
-      data: {
-        action: handleChangeCarouselOrder,
-      },
-    },
-  ];
-
-  const popperMenu = () => {
-    switch (typeName) {
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return nodeMenu;
-      case NODE_TYPES.INTENT_NODE:
-        return [];
-      default:
-        return nodeMenu.slice(0, 3);
-    }
-  };
+  const popperMenu = getNodeMenu(typeName);
 
   const handleShowingNodesWithoutCards = () => {
-    // console.log(node);
-    switch (typeName) {
-      case NODE_TYPES.INTENT_NODE:
-        return <IntentNode id={id} />;
-      case NODE_TYPES.CONDITION_NODE:
-        return <ConditionNode node={node} />;
-      case NODE_TYPES.RETRY_CONDITION_NODE:
-        return <RetryConditionNode node={node} />;
-      case NODE_TYPES.PARAMETER_SET_NODE:
-        return <ParameterSetNode node={node} />;
-      case NODE_TYPES.JSON_REQUEST_NODE:
-        return (
-          <div className="command-node">
-            <NextNodeButton ctrlId={`${id}`} nodeId={`${NODE_PREFIX}${id}`} type="blue" />
-          </div>
-        );
-      case NODE_TYPES.OTHER_FLOW_REDIRECT_NODE:
-        return <OtherFlowRedirectNode />;
-      case NODE_TYPES.ANSWER_NODE:
-        return <AnswerNode nodeId={`${id}`} node={node} />;
-      case NODE_TYPES.TEXT_NODE:
-        return <TextNode node={node} />;
-      case NODE_TYPES.BASIC_CARD_NODE:
-        return <BasicCardNode node={node} />;
-      case NODE_TYPES.BASIC_CARD_CAROUSEL_NODE:
-        return <BasicCardCarouselNode node={node} />;
-      case NODE_TYPES.LIST_CARD_NODE:
-        return <ListCardNode node={node} />;
-      case NODE_TYPES.LIST_CARD_CAROUSEL_NODE:
-        return <ListCardCarouselNode node={node} />;
-      case NODE_TYPES.PRODUCT_CARD_NODE:
-        return <CommerceCardNode node={node} />;
-      case NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE:
-        return <CommerceCardCarouselNode node={node} />;
+    if (typeName === NODE_TYPES.JSON_REQUEST_NODE) {
+      return (
+        <div className="command-node">
+          <NextNodeButton ctrlId={`${id}`} nodeId={`${NODE_PREFIX}${id}`} type="blue" />
+        </div>
+      );
     }
+
+    const NodeElement = nodeFactory.getFactory(typeName)?.getNodeElement();
+    if (!NodeElement) {
+      return <></>;
+    }
+
+    return <NodeElement node={node} />;
   };
 
   const HandleNodeSelect = async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -241,7 +127,7 @@ export const Node: FC<INodeProps> = ({
 
   const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Delete') {
-      deleteCard(node.id);
+      deleteCard(node);
     } else if (e.key === 'c' && e.ctrlKey) {
       console.log(e);
     }
@@ -255,7 +141,7 @@ export const Node: FC<INodeProps> = ({
         offset={[0, -100]}
         popup
         popupList
-        popperItems={popperMenu()}
+        popperItems={popperMenu}
         onChange={(m) => {
           m.data?.action?.(node);
         }}
@@ -299,21 +185,25 @@ export const Node: FC<INodeProps> = ({
         >
           <div className={titleClass}>
             {title ? <p>{title}</p> : undefined}
-            <Popper
-              placement="right-start"
-              // offset={[-10, 15]}
-              popup
-              popupList
-              popperItems={popperMenu()}
-              onChange={(m) => {
-                m.data?.action?.(node);
-              }}
-              disabled={isHistoryViewer}
-            >
-              <Button shape="ghost" small>
-                <i className="fa-solid fa-ellipsis-vertical" />
-              </Button>
-            </Popper>
+            {popperMenu.length === 0 ? (
+              <></>
+            ) : (
+              <Popper
+                placement="right-start"
+                // offset={[-10, 15]}
+                popup
+                popupList
+                popperItems={popperMenu}
+                onChange={(m) => {
+                  m.data?.action?.(node);
+                }}
+                disabled={isHistoryViewer}
+              >
+                <Button shape="ghost" small>
+                  <i className="fa-solid fa-ellipsis-vertical" />
+                </Button>
+              </Popper>
+            )}
           </div>
           <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
           {nodekind === NodeKind.InputNode && (

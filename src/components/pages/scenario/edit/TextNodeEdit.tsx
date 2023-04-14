@@ -41,3 +41,5 @@ export const TextNodeEdit = () => {
     </>
   );
 };
+
+export default TextNodeEdit;

@@ -1,12 +1,12 @@
 import { Card } from '@components/data-display';
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
-import { INode } from '@models';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { FC } from 'react';
 
 import { NODE_PREFIX } from '../../../../modules';
 
-export const ParameterSetNode: FC<{ node: INode }> = ({ node }) => {
+export const ParameterSetNode: FC<IHasNode> = ({ node }) => {
   const view = node.view as IParameterSetView;
 
   return (

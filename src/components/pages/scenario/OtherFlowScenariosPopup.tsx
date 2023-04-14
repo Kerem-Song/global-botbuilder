@@ -2,7 +2,8 @@ import { Col, Input, ItemType, Row } from '@components';
 import { useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { getNodeKind, INode, NODE_TYPES } from '@models';
+import { INode, NODE_TYPES, NodeKind } from '@models';
+import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
@@ -60,7 +61,7 @@ export const OtherFlowScenariosPopup = () => {
       y: popUpPosition.y,
       option: 64,
       seq: 0,
-      nodeKind: getNodeKind(nodeType),
+      nodeKind: nodeFactory.getFactory(nodeType)?.nodeKind || NodeKind.Unkonown,
       view,
       nextNodeId: firstNodeId,
     };
