@@ -1,10 +1,14 @@
 import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
-import { useModalOpen, usePage, useRootState } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeContextMenu } from '@hooks/useNodeContextMenu';
-import { useUpdateLines } from '@hooks/useUpdateLines';
+import {
+  useHistoryViewerMatch,
+  useModalOpen,
+  useNodeContextMenu,
+  usePage,
+  useRootState,
+  useUpdateLines,
+} from '@hooks';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
@@ -154,6 +158,7 @@ export const Node: FC<INodeProps> = ({
     } else if (e.key === 'x' && e.ctrlKey) {
       console.log('@ctrl x');
       handleCutCard(node);
+      dispatch(setEditDrawerToggle(false));
     } else if (e.key === 'v' && e.ctrlKey) {
       console.log('@ctrl v');
       handlePasteCard();

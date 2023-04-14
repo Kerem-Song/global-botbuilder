@@ -2,11 +2,12 @@ import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
-import { useRootState } from '@hooks';
+import { useHistoryViewerMatch, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { INode, NODE_TYPES, NodeKind, TCardsValues, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
+import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { addArrow, appendNode } from '@store/makingNode';
@@ -15,9 +16,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-
-import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
-import { ID_GEN, ID_TYPES, NODE_PREFIX } from '../../../modules';
 
 interface INodeLinkPopUpFormValue {
   cardType: TCardsValues;
