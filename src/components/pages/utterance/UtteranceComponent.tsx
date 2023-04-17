@@ -1,3 +1,4 @@
+import { usePage } from '@hooks';
 import { ISearchData } from '@models/interfaces/IUtterance';
 import { useState } from 'react';
 
@@ -6,6 +7,7 @@ import { UtteranceListHeader } from './UtteranceListHeader';
 import { UtteranceListItem } from './UtteranceListItem';
 
 export const UtteranceComponent = () => {
+  const { t } = usePage();
   const [searchData, setSearchData] = useState<ISearchData>({
     sort: 1,
     scenarios: 'all',
@@ -14,7 +16,7 @@ export const UtteranceComponent = () => {
 
   return (
     <div className="utteranceWrap">
-      <div className="title">Intent Management</div>
+      <div className="title">{t('TITLE')}</div>
       <ToSearch searchData={searchData} setSearchData={setSearchData} />
       <div className="utteranceListWrap">
         <table className="utteranceTable">

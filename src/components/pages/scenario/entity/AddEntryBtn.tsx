@@ -1,5 +1,6 @@
-import { icPopupClose } from '@assets';
-import { Input } from '@components';
+import { icPopupClose, icUtteranceAdd } from '@assets';
+import { Button, Input } from '@components';
+import { usePage } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -20,6 +21,7 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
   representativeEntry,
   setIsActive,
 }) => {
+  const { t } = usePage();
   const { control, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -31,16 +33,6 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (inputVisible && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [inputVisible]);
-
-  useEffect(() => {
-    editInputRef.current?.focus();
-  }, []);
 
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
@@ -64,11 +56,11 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
 
     if (representativeEntry) {
       if (representativeEntry.trim() === value.trim()) {
-        lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         return;
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
-        lunaToast.error('중복되었습니다. 다시 입력해주세요.');
+        lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         return;
       } else {
@@ -78,6 +70,16 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (inputVisible && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputVisible]);
+
+  useEffect(() => {
+    editInputRef.current?.focus();
+  }, []);
 
   return (
     <>
@@ -118,10 +120,11 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
           maxLength={125}
         />
       ) : (
-        <div className="addBtnWrapper">
-          <button type="button" className="addBtn" onClick={showInput}>
-            <span>Add</span>
-          </button>
+        <div className="addEntryBtnWrapper">
+          <Button shape="ghost" className="addEntryBtn" onClick={showInput}>
+            <img className="addEntryBtnImg" src={icUtteranceAdd} alt="add" />
+            <span className="addEntryBtnName">{t('ADD_ENTRY')}</span>
+          </Button>
         </div>
       )}
     </>

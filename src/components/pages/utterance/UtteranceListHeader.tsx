@@ -13,11 +13,11 @@ export const UtteranceListHeader = () => {
   return (
     <tr>
       <th className="utteranceList intent add">
-        Intent
+        {t('INTENT')}
         <button className="addBtn" onClick={goToDetail} />
       </th>
-      <th className="utteranceList connectScenarios">Connect Scenarios</th>
-      <th className="utteranceList utterance">Utterance</th>
+      <th className="utteranceList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
+      <th className="utteranceList utterance">{t('UTTERANCE')}</th>
       <th className="utteranceList icon" />
     </tr>
   );

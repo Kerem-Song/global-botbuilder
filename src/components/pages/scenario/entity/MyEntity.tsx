@@ -1,6 +1,6 @@
 import { icNoResult, icPlusWhite } from '@assets';
 import { Button, Card, Col, Input, Row, Title } from '@components';
-import { useModalOpen, useRootState, useSystemModal } from '@hooks';
+import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
@@ -12,33 +12,30 @@ import MultiClamp from 'react-multi-clamp';
 import { EntityDetailPopup } from './EntityDetailPopup';
 
 export const MyEntity = () => {
-  const [entryId, setEntryId] = useState<string>('');
-  const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
+  const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
-  const [ref, inView] = useInView();
   const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
+  const { confirm } = useSystemModal();
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const [ref, inView] = useInView();
+  const [entryId, setEntryId] = useState<string>('');
+  const [searchKeyword, setSearchKeyword] = useState<string>();
   const { data: initialData, fetchNextPage } = changePageNumberQuery(
-    searchKeywordParameter,
+    searchKeyword,
     false,
   );
 
   const handleSearch = (keyword?: string) => {
-    setSearchKeywordParameter(keyword);
+    setSearchKeyword(keyword);
   };
-
-  const token = useRootState((state) => state.botInfoReducer.token);
-
-  const { confirm } = useSystemModal();
 
   const openDeleteEntryModal = async (id: string) => {
     const result = await confirm({
-      title: '엔티티 삭제',
+      title: t('DELETE_ENTITY'),
       description: (
-        <span>
-          엔티티를 삭제하면 해당 엔티티를 사용하는 시나리오가
-          <br /> 정상 작동 하지 않을 수 있습니다.
-          <br /> 정말 삭제하시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('DELETE_ENTITY_MESSAGE')}</p>
+        </div>
       ),
     });
 
@@ -81,7 +78,7 @@ export const MyEntity = () => {
   return (
     <>
       <div className="entitiesTitle">
-        <Title level={2}>Manage my entities</Title>
+        <Title level={2}>{t('MANAGE_MY_ENTITIES')}</Title>
       </div>
       <div className="entity">
         <Button
@@ -91,12 +88,12 @@ export const MyEntity = () => {
           }}
         >
           <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
-          <span>Add entity</span>
+          <span>{t('ADD_ENTITY')}</span>
         </Button>
         <Input
           size="small"
           search
-          placeholder="Input search word"
+          placeholder={t('INPUT_SEARCH_WORD')}
           onSearch={(value) => {
             handleSearch(value);
           }}
@@ -121,7 +118,7 @@ export const MyEntity = () => {
                     >
                       <div className="cardHeader">
                         <span className="title">
-                          {util.replaceKeywordMark(x.usingName, searchKeywordParameter)}
+                          {util.replaceKeywordMark(x.usingName, searchKeyword)}
                         </span>
                         <button
                           className="icDelete"
@@ -134,10 +131,7 @@ export const MyEntity = () => {
                       <div className="entries">
                         <span className="entry">
                           <MultiClamp clamp={4}>
-                            {util.replaceKeywordMark(
-                              x.entries.join(', '),
-                              searchKeywordParameter,
-                            )}
+                            {util.replaceKeywordMark(x.entries.join(', '), searchKeyword)}
                           </MultiClamp>
                         </span>
                       </div>
@@ -147,36 +141,14 @@ export const MyEntity = () => {
               });
             })
           ) : (
-            <Card
-              radius="normal"
-              bodyStyle={{ padding: '20px' }}
-              style={{
-                border: '1px solid #DCDCDC',
-                marginTop: '20px',
-                width: '1080px',
-                height: '440px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <div className="emptyList">
-                <div
-                  className="empty"
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <img src={icNoResult} alt="empty" style={{ marginBottom: '10px' }} />
-                  {searchKeywordParameter ? (
-                    <span>No search results found.</span>
-                  ) : (
-                    <span>No entries registered</span>
-                  )}
-                </div>
+            <Card radius="normal" className="emptyEntityCardWrapper">
+              <div className="emptyEntityCard">
+                <img className="emptyImg" src={icNoResult} alt="empty" />
+                {searchKeyword ? (
+                  <span>{t('NO_SEARCH_ENTRIES_RESULT_FOUND')}</span>
+                ) : (
+                  <span>{t('NO_ENTRIES_REGISTERED')}</span>
+                )}
               </div>
             </Card>
           )}

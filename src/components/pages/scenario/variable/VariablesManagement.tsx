@@ -1,6 +1,6 @@
 import { icPlusWhite, icUtteranceDeleteDefault } from '@assets';
 import { Button } from '@components/general/Button';
-import { useModalOpen, useRootState, useSystemModal } from '@hooks';
+import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import { IDeleteParameter, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
@@ -10,6 +10,7 @@ import { SettingEntity } from '../entity/SettingEntity';
 import { VariablePopup } from './VariablePopup';
 
 export const VariablesManagement = () => {
+  const { t } = usePage();
   const { getVariableListQuery, variableDeleteMutate } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
 
@@ -19,15 +20,11 @@ export const VariablesManagement = () => {
 
   const openDeleteVariableModal = async (parameterId: string) => {
     const result = await confirm({
-      title: '변수 삭제',
+      title: t('DELETE_VARIABLE'),
       description: (
-        <span>
-          현재 시나리오에서 사용하고 있는 변수의 경우,
-          <br />
-          변수 목록에서 완전히 삭제되지 않을 수 있습니다.
-          <br />
-          삭제하시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('DELETE_VARIABLE_MESSAGE')}</p>
+        </div>
       ),
     });
 
@@ -61,24 +58,24 @@ export const VariablesManagement = () => {
       <SettingEntity />
       <div className="variableWrapper">
         <div className="variableHeader">
-          <span className="title">Variable List</span>
+          <span className="title">{t('VARIABLE_LIST')}</span>
           <Button
             type="primary"
-            style={{ width: '84px', display: 'flex', justifyContent: 'center' }}
+            className="addVariableBtn"
             onClick={() => {
               handleId();
               handleIsOpen(true);
             }}
           >
             <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
-            <span>variable</span>
+            <span>{t('ADD_VARIABLE')}</span>
           </Button>
         </div>
         <div className="variableListWrapper">
           <div className="variableLists">
             <div className="variableListHeader">
-              <span className="variableName">Name</span>
-              <span className="varibleType">Value</span>
+              <span className="variableName">{t('NAME')}</span>
+              <span className="varibleType">{t('VARIABLE_VALUE')}</span>
             </div>
             {variableList && variableList.result.length > 0 ? (
               variableList?.result.map((item, i) => (
@@ -110,7 +107,7 @@ export const VariablesManagement = () => {
               ))
             ) : (
               <div className="emptyVariableList">
-                <span>No registered Variable</span>
+                <span>{t('NO_REGISTERED_VARIABLE')}</span>
               </div>
             )}
           </div>

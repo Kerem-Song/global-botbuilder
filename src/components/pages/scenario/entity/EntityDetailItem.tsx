@@ -1,5 +1,5 @@
 import { Col, Input, Row } from '@components';
-import { useSystemModal } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
@@ -31,27 +31,30 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
   setIsActive,
   trigger,
 }) => {
+  const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    editInputRef.current?.focus();
-  }, []);
-
   const {
     control,
     formState: { errors },
   } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
+  const { field: synonymField } = useController({
+    control,
+    name: `entries.${index}.synonym`,
+  });
+  const { field } = useController({
+    name: `entries.${index}.representativeEntry`,
+    control,
+  });
+
   const openDeleteEntryModal = async () => {
     const result = await confirm({
-      title: '엔트리 그룹 삭제',
+      title: t('DELETE_ENTRY_GROUP'),
       description: (
-        <span>
-          그룹에 있는 모든 엔트리가 삭제됩니다.
-          <br />
-          삭제하시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('DELETE_ENTRY_GROUP_MESSAGE')}</p>
+        </div>
       ),
     });
 
@@ -61,21 +64,15 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
     }
   };
 
-  const { field: synonymField } = useController({
-    control,
-    name: `entries.${index}.synonym`,
-  });
-
-  const { field } = useController({
-    name: `entries.${index}.representativeEntry`,
-    control,
-  });
-
   const handleRepresentativeEntry = () => {
     setIsActive(true);
     setEditInputIndex(-1);
     trigger(`entries.${index}.representativeEntry`);
   };
+
+  useEffect(() => {
+    editInputRef.current?.focus();
+  }, []);
 
   if (
     searchKeyword === '' ||
