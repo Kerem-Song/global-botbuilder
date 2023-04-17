@@ -150,16 +150,17 @@ export const Node: FC<INodeProps> = ({
   };
 
   const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
+    console.log('@ctrl key event', e);
     if (e.key === 'Delete') {
       deleteCard(node);
-    } else if (e.key === 'c' && e.ctrlKey) {
+    } else if (e.code === 'KeyC' && e.ctrlKey) {
       console.log('@ctrl c');
       handleDuplicationCard(node);
-    } else if (e.key === 'x' && e.ctrlKey) {
+    } else if (e.code === 'KeyX' && e.ctrlKey) {
       console.log('@ctrl x');
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
-    } else if (e.key === 'v' && e.ctrlKey) {
+    } else if (e.code === 'KeyV' && e.ctrlKey) {
       console.log('@ctrl v');
       handlePasteCard();
     }
