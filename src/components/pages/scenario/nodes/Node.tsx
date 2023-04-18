@@ -13,10 +13,14 @@ import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { setEditDrawerToggle, setGuideStartNode } from '@store/botbuilderSlice';
+import {
+  setClipBoard,
+  setEditDrawerToggle,
+  setGuideStartNode,
+} from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, KeyboardEvent } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
@@ -146,10 +150,11 @@ export const Node: FC<INodeProps> = ({
               : 0,
         }),
       );
+      dispatch(setClipBoard(undefined));
     }
   };
 
-  const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
+  const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
     console.log('@ctrl key event', e);
     if (e.key === 'Delete') {
       deleteCard(node);
@@ -160,11 +165,27 @@ export const Node: FC<INodeProps> = ({
       console.log('@ctrl x');
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
-    } else if (e.code === 'KeyV' && e.ctrlKey) {
+    }
+  };
+
+  const handleCtrlVCommand = (e: KeyboardEvent) => {
+    console.log('@ctrl v test 입니다');
+    console.log('@ctrl v test', e);
+
+    if (e.code === 'KeyV' && e.ctrlKey) {
       console.log('@ctrl v');
       handlePasteCard();
     }
   };
+
+  useEffect(() => {
+    if (clipBoard) {
+      window.addEventListener('keydown', handleCtrlVCommand);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleCtrlVCommand);
+    };
+  }, [clipBoard]);
 
   return (
     <>

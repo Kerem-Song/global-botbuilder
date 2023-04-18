@@ -15,14 +15,13 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { nodeHelper } from '@modules/nodeHelper';
-import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import { setClipBoard, setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { addArrow, appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { KeyboardEvent } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 
@@ -251,11 +250,11 @@ export const Botbuilder = () => {
   };
 
   const handlePasteCard = () => {
-    console.log('@ctrl clipboard, ', clipBoard);
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
       console.log('@ctrl clone', clone);
       dispatch(appendNode({ ...clone, x: points.x, y: points.y }));
+      dispatch(setClipBoard(undefined));
     }
   };
 
