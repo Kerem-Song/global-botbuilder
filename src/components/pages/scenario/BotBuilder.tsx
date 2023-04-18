@@ -24,6 +24,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
+import { ActionCreators } from 'redux-undo';
 
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
@@ -69,6 +70,8 @@ export const Botbuilder = () => {
   getScenario(selectedScenario?.id);
 
   const { isOpen, handleIsOpen } = useModalOpen();
+
+  const { updateLineAll } = useUpdateLines();
 
   const isHistoryViewer = useHistoryViewerMatch();
 
@@ -307,6 +310,18 @@ export const Botbuilder = () => {
     });
   };
 
+  const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === 'KeyZ' && e.ctrlKey) {
+      updateLineAll();
+      dispatch(ActionCreators.undo());
+
+      if (e.shiftKey) {
+        updateLineAll();
+        dispatch(ActionCreators.redo());
+      }
+    }
+  };
+
   useEffect(() => {
     setTempNodeNames([]);
   }, [nodes]);
@@ -326,6 +341,7 @@ export const Botbuilder = () => {
           e.preventDefault();
         }}
         onContextMenu={(e) => e.preventDefault()}
+        onKeyDown={handleUndoRedoKeydown}
       >
         <BotBuilderZoomBtn />
 
