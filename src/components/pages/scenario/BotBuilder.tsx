@@ -336,6 +336,10 @@ export const Botbuilder = () => {
         //onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
         role="presentation"
+        onDragStart={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
         onDrop={handleChatbubbleDrop}
         onDragOver={(e) => {
           e.preventDefault();

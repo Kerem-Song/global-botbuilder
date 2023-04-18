@@ -2,6 +2,7 @@ import { icNodeBottom } from '@assets';
 import { usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow } from '@models';
+import { NODE_PREFIX } from '@modules';
 import { setSelected } from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
 import { FC, useCallback, useEffect } from 'react';
@@ -45,6 +46,11 @@ export const LineContainer: FC = () => {
           endId={l.end}
           type={l.type}
           isNextNode={l.isNextNode}
+          highlight={
+            l.start === `${NODE_PREFIX}${selectedLine}` ||
+            l.end === `${NODE_PREFIX}${selectedLine}` ||
+            l.updateKey === `${NODE_PREFIX}${selectedLine}`
+          }
           active={selectedLine === l}
           onDelete={() => handleLineDelete(l)}
         />
