@@ -4,7 +4,7 @@ import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import {
@@ -26,23 +26,12 @@ import { lunaToast } from '../../../../src/modules/lunaToast';
 import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export const UtteranceDetail = () => {
+  const { i18n } = useI18n();
   const { navigate, t } = usePage();
   const { utteranceId, botId } = useParams();
   const { confirm, error } = useSystemModal();
-
-  const token = useRootState((state) => state.botInfoReducer.token);
-  const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
-  const [searchWord, setSearchWord] = useState<string>('');
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [utteranceWord, setUtteranceWord] = useState<string>('');
-
-  const utteranceRef = useRef<HTMLInputElement>(null);
-  const intentNameRef = useRef<HTMLInputElement | null>(null);
-
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-
   const {
     intentMutate,
     getIntentDetailQuery,
@@ -51,10 +40,19 @@ export const UtteranceDetail = () => {
     checkUtteranceDuplicationMutate,
   } = useUtteranceClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
+  const language = i18n.language;
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const utteranceRef = useRef<HTMLInputElement>(null);
+  const intentNameRef = useRef<HTMLInputElement | null>(null);
+  const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [utteranceWord, setUtteranceWord] = useState<string>('');
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const schema = yup.object({
-    name: yup.string().trim().required('필수 입력 항목입니다.').matches(BOTNAME_REGEX, {
-      message: '특수문자는 ~.,?_ - ! # $ % ^ & * () = []() + < > 만 사용',
+    name: yup.string().trim().required(t('VALIDATION_REQUIRED')).matches(BOTNAME_REGEX, {
+      message: '특수문자는 ~.,?_ - ! # $ % ^ & * () = []() + < > 만 사용 가능합니다.',
     }),
   });
 
@@ -93,13 +91,11 @@ export const UtteranceDetail = () => {
 
   const preventGoBack = async () => {
     const result = await confirm({
-      title: '저장하기',
+      title: t('SAVE'),
       description: (
-        <span>
-          변경사항이 저장되지 않았습니다.
-          <br />
-          정말 나가시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('SAVE_MESSAGE')}</p>
+        </div>
       ),
     });
     if (result) {
@@ -112,13 +108,11 @@ export const UtteranceDetail = () => {
   const handleListBtn = async () => {
     if (isActive === true) {
       const result = await confirm({
-        title: '저장하기',
+        title: t('SAVE'),
         description: (
-          <span>
-            변경사항이 저장되지 않았습니다.
-            <br />
-            정말 나가시겠습니까?
-          </span>
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <p>{t('SAVE_MESSAGE')}</p>
+          </div>
         ),
       });
 
@@ -142,7 +136,7 @@ export const UtteranceDetail = () => {
       return;
     }
     const result = await confirm({
-      title: '발화 삭제',
+      title: t('DELETE_UTTERANCE'),
       description: <span>{t('DELETE_CONFIRM', { count: deleteItems.length })}</span>,
     });
 
@@ -157,13 +151,11 @@ export const UtteranceDetail = () => {
 
   const openDeleteIntentModal = async () => {
     const result = await confirm({
-      title: '인텐트 삭제',
+      title: t('DELETE_INTENT'),
       description: (
-        <span>
-          인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.
-          <br />
-          삭제하시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('DELETE_INTENT_MESSAGE')}</p>
+        </div>
       ),
     });
 
@@ -196,12 +188,12 @@ export const UtteranceDetail = () => {
         ?.includes(utteranceWord)
     ) {
       error({
-        title: '중복 인텐트명',
+        title: t('DUPLICATE_INTENT'),
         description: (
-          <span>
-            이미 있는 인텐트명입니다. <br />
-            등록위치: <span style={{ color: 'red' }}>{getValues('name')}</span>
-          </span>
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <span>{t('DUPLICATE_INTENT_MESSAGE_WITH_INFO')}</span>
+            <span style={{ color: 'red' }}>{getValues('name')}</span>
+          </div>
         ),
       });
       if (utteranceRef.current) {
@@ -218,13 +210,12 @@ export const UtteranceDetail = () => {
         onSuccess: (result) => {
           if (result.length > 0) {
             error({
-              title: '중복 발화',
+              title: t('DUPLICATE_UTTERANCE'),
               description: (
-                <span>
-                  이미 등록된 발화입니다.
-                  <br />
-                  등록위치: <span style={{ color: 'red' }}>{result[0].intentName}</span>
-                </span>
+                <div style={{ whiteSpace: 'pre-wrap' }}>
+                  <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
+                  <span style={{ color: 'red' }}>{result[0].intentName}</span>
+                </div>
               ),
             });
             if (utteranceRef.current) {
@@ -273,8 +264,8 @@ export const UtteranceDetail = () => {
           onSuccess: async (result) => {
             if (result.result === true) {
               await error({
-                title: '중복 인텐트명',
-                description: <span>이미 있는 인텐트명입니다.</span>,
+                title: t('DUPLICATE_INTENT'),
+                description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
               });
               if (intentNameRef.current) {
                 intentNameRef.current.select();
@@ -313,12 +304,12 @@ export const UtteranceDetail = () => {
       });
 
     const total = [
-      { value: '', label: '시나리오를 선택해주세요' },
+      { value: '', label: t('SELECT_SCENARIO') },
       ...(scenarioList ? scenarioList : []),
     ];
 
     setTotalScenarioList(total);
-  }, [data]);
+  }, [data, language]);
 
   useEffect(() => {
     if (isActive) {
@@ -346,7 +337,7 @@ export const UtteranceDetail = () => {
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="detailButtons">
           <div>
-            <Button onClick={handleListBtn}>List</Button>
+            <Button onClick={handleListBtn}>{t('LIST')}</Button>
           </div>
           <div>
             <Button
@@ -354,7 +345,7 @@ export const UtteranceDetail = () => {
               onClick={openDeleteIntentModal}
               disabled={watch('name') ? false : true}
             >
-              Delete intent
+              {t('DELETE_INTENT')}
             </Button>
             <Button
               large
@@ -362,7 +353,7 @@ export const UtteranceDetail = () => {
               htmlType="submit"
               disabled={isActive ? false : true}
             >
-              Save
+              {t('SAVE')}
             </Button>
           </div>
         </div>
@@ -372,41 +363,39 @@ export const UtteranceDetail = () => {
           style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
         >
           <Space direction="vertical">
-            <p style={{ fontSize: '16px', fontWeight: 500 }}>Group Information</p>
+            <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('TITLE')}</p>
             <Row align="center" gap={10}>
-              <Col style={{ width: '128px' }}>
-                <span>Intent Name</span>
+              <Col style={{ width: '130px' }}>
+                <span>{t('INTENT_NAME')}</span>
+                <span style={{ color: 'red' }}> *</span>
               </Col>
               <Col flex="auto">
                 <FormItem error={errors.name}>
                   <Input
-                    placeholder="Input Intent Name"
-                    showCount
-                    maxLength={20}
+                    value={nameField.value}
                     ref={(e) => {
                       nameField.ref(e);
                       intentNameRef.current = e;
                     }}
-                    value={nameField.value}
                     onChange={(e) => {
                       nameField.onChange(e);
                       setIsActive(true);
                     }}
+                    placeholder={t('INPUT_INTENT_NAME')}
+                    maxLength={20}
+                    showCount
                   />
                 </FormItem>
               </Col>
             </Row>
             <Row align="center" gap={10}>
-              <Col>
-                <span>Connect Scenarios</span>
+              <Col style={{ width: '130px' }}>
+                <span>{t('CONNECT_SCENARIOS')}</span>
               </Col>
               <Col flex="auto">
                 <Select
-                  isSearchable={false}
                   {...scenarioListField}
-                  styles={reactSelectStyle}
                   options={totalScenarioList}
-                  placeholder="시나리오를 선택해주세요."
                   value={totalScenarioList?.find(
                     (item) => item.value === scenarioListField.value,
                   )}
@@ -414,6 +403,9 @@ export const UtteranceDetail = () => {
                     scenarioListField.onChange(options.value);
                     setIsActive(true);
                   }}
+                  styles={reactSelectStyle}
+                  isSearchable={false}
+                  placeholder={t('SELECT_SCENARIO')}
                 />
               </Col>
             </Row>
@@ -422,7 +414,7 @@ export const UtteranceDetail = () => {
       </form>
       <div className="utterance add">
         <Space direction="vertical">
-          <p style={{ fontSize: '16px', fontWeight: 500 }}>Add Utterance</p>
+          <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('ADD_UTTERANCE')}</p>
           <Row>
             <Col flex="auto">
               <Input
@@ -433,7 +425,7 @@ export const UtteranceDetail = () => {
                   setIsEditing(true);
                 }}
                 onPressEnter={handleAddUtternace}
-                placeholder="Press Enter and enter the utterance keyword."
+                placeholder={t('ENTER_UTTERANCE')}
               />
             </Col>
             <Col style={{ marginLeft: '8px' }}>
@@ -460,7 +452,7 @@ export const UtteranceDetail = () => {
       <div className="utterance list">
         <Space direction="horizontal">
           <span className="title">
-            Utterance{' '}
+            {t('UTTERANCE')}{' '}
             <span className="utteranceLength">
               {filterKeyword ? filterKeyword.length : watch('items').length}
             </span>
@@ -469,7 +461,7 @@ export const UtteranceDetail = () => {
             <Input
               size="small"
               search
-              placeholder="Input search text"
+              placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
               value={searchWord}
               onSearch={(value) => handleSearch(value)}
               onChange={(e) => handleSearch(e.target.value)}
@@ -493,7 +485,7 @@ export const UtteranceDetail = () => {
                 <Col className="emptyList utteranceItem">
                   <div className="empty">
                     <img src={icNoResult} alt="empty" />
-                    <span>No registered Utterance.</span>
+                    <span>{t('NO_REGISTERED_UTTERANCE')}</span>
                   </div>
                 </Col>
               </Row>
@@ -514,7 +506,7 @@ export const UtteranceDetail = () => {
                 <div className="emptyList utteranceItem">
                   <div className="empty">
                     <img src={icNoResult} alt="empty" />
-                    <span>No search results found.</span>
+                    <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
                   </div>
                 </div>
               </Row>

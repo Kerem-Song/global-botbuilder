@@ -1,10 +1,11 @@
 import { icNoResult, icPopupClose, icPrev } from '@assets';
 import { Button, Card, Col, Input, Radio, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEntityClient, useRootState, useSystemModal } from '@hooks';
+import { useEntityClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { ENTITY_NAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
+import { t } from 'i18next';
 import React, { Dispatch, FC, useEffect, useState } from 'react';
 import { FormProvider, useController, useFieldArray, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -28,18 +29,18 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
+  const { t } = usePage();
+  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
+  const { confirm, error } = useSystemModal();
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const entryDetails = getEntryDetailQuery(entryId);
   const [entryNameInputError, setEntryNameInputError] = useState<string>('');
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [synonym, setSynonym] = useState<string>('');
   const [representativeEntryInputError, setRepresentativeEntryInputError] =
     useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
-  const { confirm, error } = useSystemModal();
   const [isActive, setIsActive] = useState<boolean>(false);
-
-  const token = useRootState((state) => state.botInfoReducer.token);
-  const entryDetails = getEntryDetailQuery(entryId);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -52,10 +53,10 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       name: yup
         .string()
         .trim()
-        .required('필수 입력 항목입니다.')
+        .required(t('VALIDATION_REQUIRED'))
         .matches(ENTITY_NAME_REGEX, '특수문자는 - _만 입력 가능합니다.')
         .max(20, `20자를 초과할 수 없습니다.`),
-      entries: yup.array().min(1, '필수 입력 항목입니다.'),
+      entries: yup.array().min(1, t('VALIDATION_REQUIRED')),
     })
     .required();
 
@@ -75,21 +76,17 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   } = formMethods;
 
   const { fields, prepend, remove } = useFieldArray({ control, name: 'entries' });
-
+  const { field } = useController({ name: 'entries', control });
   const { field: isRegexField } = useController({ name: 'isRegex', control });
   const { field: nameField } = useController({ name: 'name', control });
 
-  const { field } = useController({ name: 'entries', control });
-
   const preventGoBack = async () => {
     const result = await confirm({
-      title: '저장하기',
+      title: t('SAVE_ENTITY'),
       description: (
-        <span>
-          변경사항이 저장되지 않았습니다.
-          <br />
-          정말 나가시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('SAVE_MESSAGE')}</p>
+        </div>
       ),
     });
     if (result) {
@@ -135,14 +132,14 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
           remove();
           setEntryId('');
           handleIsOpen(false);
-          lunaToast.success('수정되었습니다.');
+          lunaToast.success(t('MODIFY_MESSAGE'));
         } else if (res?.exception.errorCode === 7608) {
-          setEntryNameInputError('중복된 엔트리명 입니다.');
+          setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
         } else if (
           entryData.isRegex === true &&
           res?.exception.invalidateProperties.includes('Entries')
         ) {
-          setRegexInputError('필수 입력 항목입니다.');
+          setRegexInputError(t('VALIDATION_REQUIRED'));
         } else if (
           res?.exception.errorCode === 7000 &&
           res?.exception.invalidateProperties.includes('RepresentativeEntry')
@@ -170,7 +167,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
     }
 
     if (fields.length > 0 && synonym.length > 0 && name === '') {
-      setRepresentativeEntryInputError('필수 입력 항목입니다.');
+      setRepresentativeEntryInputError(t('VALIDATION_REQUIRED'));
       setIsActive(true);
       return;
     } else if (name !== '') {
@@ -188,13 +185,11 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       handleIsOpen(false);
     } else {
       const result = await confirm({
-        title: '저장하기',
+        title: t('SAVE_ENTITY'),
         description: (
-          <span>
-            변경사항이 저장되지 않았습니다.
-            <br />
-            정말 나가시겠습니까?
-          </span>
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <p>{t('SAVE_MESSAGE')}</p>
+          </div>
         ),
       });
       if (result) {
@@ -254,7 +249,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       <div className="detail header">
         <div className="listBtn">
           <Button icon={icPrev} onClick={handleClose}>
-            List
+            {t('ENTITY_LIST')}
           </Button>
         </div>
         <button className="closeBtn" onClick={handleClose}>
@@ -266,7 +261,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
           <div className="entitiesContainer">
             <div className="entitiesWrapper">
               <div className="entityDetailHeader">
-                <Title level={2}>Entity</Title>
+                <Title level={2}>{t('ENTITY_DETAIL')}</Title>
                 <Button
                   type="primary"
                   large
@@ -275,7 +270,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     handleSave(getValues());
                   }}
                 >
-                  Save
+                  {t('SAVE_ENTITY')}
                 </Button>
               </div>
               <Card
@@ -286,12 +281,12 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                 <Space direction="vertical">
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
                     <Col style={{ width: '140px' }}>
-                      <span>Entity Name</span>
+                      <span>{t('ENTITY_NAME')}</span>
                       <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col flex="auto">
                       <Input
-                        placeholder="엔티티명을 공백 없이 입력해주세요."
+                        placeholder={t('INPUT_ENTITY_NAME')}
                         maxLength={20}
                         showCount
                         ref={nameField.ref}
@@ -307,7 +302,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   </Row>
                   <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
                     <Col style={{ width: '140px' }}>
-                      <span>Entry type</span>
+                      <span>{t('ENTRY_TYPE')}</span>
                       <span style={{ color: 'red' }}> *</span>
                     </Col>
                     <Col style={{ display: 'flex' }}>
@@ -341,12 +336,12 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                     entryDetails?.data?.entryGroupType === 2 ? (
                       <>
                         <Col style={{ width: '140px' }}>
-                          <span>Regular expression</span>
+                          <span>{t('REGULAR_EXPRESSION')}</span>
                           <span style={{ color: 'red' }}> *</span>
                         </Col>
                         <Col flex="auto">
                           <Input
-                            placeholder="엔트리를 정규식으로 입력해주세요."
+                            placeholder={t('INPUT_REGULAR_EXPRESSION')}
                             onChange={handleRegexExpression}
                             isError={
                               regexInputError || errors.entries?.[0]?.representativeEntry
@@ -373,7 +368,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                   <Input
                     size="small"
                     search
-                    placeholder="Input search word"
+                    placeholder={t('INPUT_SEARCH_WORD')}
                     onChange={(e) => setSearchKeyword(e.target.value)}
                   ></Input>
                 </div>
@@ -386,7 +381,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                       <Row gap={8}>
                         <Col flex="auto">
                           <Input
-                            placeholder="Input Representative entry."
+                            placeholder={t('INPUT_REPRESENTATIVE_ENTRY')}
                             size="normal"
                             maxLength={125}
                             showCount
@@ -410,7 +405,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                         </Col>
                         <Col>
                           <Button type="primary" onClick={handleRegisterEntry}>
-                            Register
+                            {t('REGISTER_ENTRY')}
                           </Button>
                         </Col>
                       </Row>
@@ -419,7 +414,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                           <div className="emptyList">
                             <div className="empty">
                               <img src={icNoResult} alt="empty" />
-                              <span>No entries registered</span>
+                              <span>{t('NO_ENTRY_REGISTERED')}</span>
                             </div>
                           </div>
                         ) : watch('isRegex') === false ||
@@ -449,7 +444,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
                               <div className="emptyList">
                                 <div className="empty">
                                   <img src={icNoResult} alt="empty" />
-                                  <span>No search results found.</span>
+                                  <span>{t('NO_SEARCH_ENTRY_RESULT_FOUND')}</span>
                                 </div>
                               </div>
                             ) : (

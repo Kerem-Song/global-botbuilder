@@ -1,5 +1,6 @@
 import { icNoResult } from '@assets';
 import { Card, Col, Input, Row, Title } from '@components';
+import { usePage } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
@@ -8,9 +9,10 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 export const SystemEntity = () => {
-  const [searchKeyword, setSearchKeyword] = useState<string>();
-  const [ref, inView] = useInView();
+  const { t } = usePage();
   const { changePageNumberQuery } = useEntityClient();
+  const [ref, inView] = useInView();
+  const [searchKeyword, setSearchKeyword] = useState<string>();
   const { data: initialData, fetchNextPage } = changePageNumberQuery(searchKeyword, true);
 
   const isExistInitialData = (
@@ -31,16 +33,16 @@ export const SystemEntity = () => {
   return (
     <>
       <div className="entitiesTitle">
-        <Title level={2}>Manage system entities</Title>
+        <Title level={2}>{t('MANAGE_SYSTEM_ENTITIES')}</Title>
       </div>
-      <div className="entity">
-        <div></div>
+      <div className="entity systemEntity">
         <Input
           size="small"
           search
-          placeholder="Input search word"
+          placeholder={t('INPUT_SEARCH_WORD')}
           onBlur={(e) => setSearchKeyword(e.target.value)}
           onPressEnter={(value) => setSearchKeyword(value)}
+          onChange={(e) => setSearchKeyword(e.target.value)}
         ></Input>
       </div>
       <div className="entityWrapper">
@@ -70,43 +72,15 @@ export const SystemEntity = () => {
               });
             })
           ) : (
-            <Card
-              radius="normal"
-              bodyStyle={{ padding: '20px' }}
-              style={{
-                border: '1px solid #DCDCDC',
-                marginTop: '20px',
-                width: '1080px',
-                height: '440px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Row
-                style={{
-                  width: '100%',
-                  marginTop: '12px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <div className="emptyList">
-                  <div
-                    className="empty"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <img src={icNoResult} alt="empty" />
-                    <span>No entries registered</span>
-                  </div>
-                </div>
-              </Row>
+            <Card radius="normal" className="emptyEntityCardWrapper">
+              <div className="emptyEntityCard">
+                <img className="emptyImg" src={icNoResult} alt="empty" />
+                {searchKeyword ? (
+                  <span>{t('NO_SEARCH_ENTRIES_RESULT_FOUND')}</span>
+                ) : (
+                  <span>{t('NO_ENTRIES_REGISTERED')}</span>
+                )}
+              </div>
             </Card>
           )}
         </Row>

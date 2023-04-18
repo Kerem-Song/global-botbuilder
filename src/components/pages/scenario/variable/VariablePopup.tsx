@@ -1,6 +1,6 @@
 import { Button, Col, Divider, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState } from '@hooks';
+import { useI18n, usePage, useRootState } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import {
   IPararmeterList,
@@ -8,6 +8,7 @@ import {
   ISaveParameterData,
   IVariableList,
 } from '@models';
+import { PARAMETER_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
@@ -28,13 +29,14 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   handleIsOpen,
   variableList,
 }) => {
+  const { i18n } = useI18n();
+  const { t, tc } = usePage();
+  const language = i18n.language;
   const [formats, setFormats] = useState<number>();
   const [parameterInputError, setParameterInputError] = useState<string>('');
   const { variableMutate, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
-
-  const { t, tc } = usePage();
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
@@ -43,9 +45,9 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       .string()
       .lowercase()
       .trim()
-      .required(`필수 입력 항목입니다.`)
+      .required(t('VALIDATION_REQUIRED'))
       .matches(
-        /^.?([a-z]|[\d]|[-_])+$/,
+        PARAMETER_REGEX,
         `영어 소문자, 숫자, 특수문자 _,-,. 만 입력 가능합니다.\n(.은 변수명 앞머리에만 가능합니다.)`,
       ),
   });
@@ -69,6 +71,31 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     }
     field.onChange(e);
     setParameterInputError('');
+  };
+
+  const handleSave = (variable: ISaveParameterData): void => {
+    const saveParameter: ISaveParameter = {
+      sessionToken: token!,
+      data: {
+        id: variableList?.id,
+        name: variable.name,
+        defaultValue: variable.defaultValue,
+        formatType: formats!,
+      },
+    };
+
+    variableMutate.mutate(saveParameter, {
+      onSuccess: (res) => {
+        console.log('modifyParameter', res);
+        if (res && res.isSuccess) {
+          lunaToast.success(t('MODIFY_MESSAGE'));
+          reset();
+          handleClose();
+        } else if (res?.exception?.errorCode === 7636) {
+          setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
+        }
+      },
+    });
   };
 
   const handleClose = () => {
@@ -97,42 +124,11 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       return { value: x.formatType, label: x.example };
     });
     const totalFormatList = [
-      { value: 0, label: '변수 포맷을 선택해주세요.' },
+      { value: 0, label: t('VARIABLE_FORMAT_PLACEHOLDER') },
       ...(formatList ? formatList : []),
     ];
     setTotalScenarioList(totalFormatList);
-  }, [parameterFormats]);
-
-  const handleSave = (variable: ISaveParameterData): void => {
-    const saveParameter: ISaveParameter = {
-      sessionToken: token!,
-      data: {
-        id: variableList?.id,
-        name: variable.name,
-        defaultValue: variable.defaultValue,
-        formatType: formats!,
-      },
-    };
-
-    variableMutate.mutate(saveParameter, {
-      onSuccess: (res) => {
-        console.log('modifyParameter', res);
-        if (res && res.isSuccess) {
-          lunaToast.success('수정되었습니다.');
-          reset();
-          handleClose();
-        } else if (res?.exception?.errorCode === 7636) {
-          setParameterInputError('중복된 변수명입니다.');
-        }
-      },
-      // onError: (error) => {
-      //   console.log('modifyError', error);
-      //   if (error) {
-      //     setParameterInputError('중복된 변수명입니다.');
-      //   }
-      // },
-    });
-  };
+  }, [parameterFormats, language]);
 
   return (
     <ReactModal
@@ -150,8 +146,9 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       isOpen={isOpen}
     >
       <div style={{ padding: '14px 20px 2px 20px' }}>
-        <Title level={4}>{variableList?.id ? '변수 수정' : '변수 추가'}</Title>
-        {/* <Title level={4}>{t('ADD_VARIABLE')}</Title> */}
+        <Title level={4}>
+          {variableList?.id ? t('MODIFY_VARIABLE') : t('ADD_VARIABLE')}
+        </Title>
       </div>
       <Divider />
       <form onSubmit={handleSubmit(handleSave)}>
@@ -186,7 +183,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
               onChange={(e: any) => {
                 setFormats(e.value);
               }}
-            ></Select>
+            />
           </Col>
         </Row>
         <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>

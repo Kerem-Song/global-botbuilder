@@ -7,14 +7,18 @@ export interface ISearchDeployHistory {
 export interface IResponseSearchDeployHistory {
   uid: number;
   id: string;
-  no: string;
+  seq: string;
   isLive: boolean;
   snsChannel: string;
-  deployedTime: string;
+  createUtc: string;
   actorEmail: string;
   actorName: string;
-  isSuccess: boolean;
+  deployResult: number;
   comment?: string;
+  no: string;
+  isSuccess: boolean;
+  createAt: string;
+  createAtByBrand: string;
 }
 
 export interface IDeploy {

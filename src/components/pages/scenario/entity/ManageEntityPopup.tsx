@@ -16,19 +16,6 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
   isOpen,
   handleIsOpen,
 }) => {
-  const [activeIndex, setAcitveIndex] = useState<number>(0);
-  const { t } = usePage();
-  const { removeQueries } = useEntityClient();
-
-  const handleClose = () => {
-    removeQueries();
-    handleIsOpen(false);
-  };
-
-  const tabClickedHandler = (index: number) => {
-    setAcitveIndex(index);
-  };
-
   const tabArr = [
     {
       tabTitle: 'MY_ENTITY',
@@ -39,6 +26,18 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
       tabCont: <SystemEntity />,
     },
   ];
+  const { t } = usePage();
+  const { removeQueries } = useEntityClient();
+  const [activeIndex, setAcitveIndex] = useState<number>(0);
+
+  const handleClose = () => {
+    removeQueries();
+    handleIsOpen(false);
+  };
+
+  const tabClickedHandler = (index: number) => {
+    setAcitveIndex(index);
+  };
 
   return (
     <ReactModal

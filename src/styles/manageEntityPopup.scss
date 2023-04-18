@@ -67,6 +67,95 @@
         justify-content: space-between;
         align-items: center;
       }
+      .systemEntity {
+        justify-content: right;
+      }
+      .entityWrapper {
+        max-width: rem(1140);
+        margin-left: auto;
+        margin-right: auto;
+
+        div {
+          div {
+            .entityCard {
+              width: rem(251);
+              height: rem(162);
+              border: 1px solid $gray200;
+              border-radius: rem(8);
+              padding: rem(20);
+              cursor: pointer;
+              .cardHeader {
+                width: rem(211);
+                height: rem(38);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: rem(16);
+                .title {
+                  font-size: rem(16);
+                  font-weight: 500;
+                  line-height: rem(19);
+                }
+                .icDelete {
+                  width: rem(38);
+                  height: rem(38);
+                  padding: rem(8);
+                  background-color: $grayWhite;
+                  border: 1px solid $gray200;
+                  border-radius: rem(8);
+                  cursor: pointer;
+                  background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  &:hover {
+                    background-color: $primary100;
+                  }
+                  &:disabled {
+                    background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    &:hover {
+                      background-color: $grayWhite;
+                    }
+                  }
+                }
+              }
+              .entries {
+                width: rem(211);
+                max-height: rem(65);
+                line-height: rem(18);
+                .entry {
+                  color: $gray500;
+                  word-break: break-word;
+                }
+              }
+              &:hover {
+                background-color: $primary100;
+              }
+            }
+          }
+          .emptyEntityCardWrapper {
+            padding: rem(20);
+            margin-top: rem(20);
+            width: 100%;
+            height: rem(440);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: rem(1) solid $gray200;
+            border-radius: rem(8);
+            .emptyEntityCard {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              .emptyImg {
+                margin-bottom: rem(10);
+              }
+            }
+          }
+        }
+      }
     }
   }
   .myEntitiesContainer::-webkit-scrollbar {
@@ -148,7 +237,6 @@
                 align-items: center;
                 width: rem(200);
                 min-height: rem(38);
-                // height: 100%;
                 padding: 4px 11px;
                 color: $grayBlack;
                 font-size: rem(13);
@@ -244,39 +332,42 @@
                     padding-left: rem(3);
                   }
                 }
-                .addBtnWrapper {
+                .addEntryBtnWrapper {
                   position: relative;
-                  margin-left: rem(2);
-                  display: flex;
-                  justify-items: center;
-                  align-items: center;
-                  width: rem(63);
+                  min-width: rem(63);
                   height: rem(25);
-                  border: 1px solid $gray200;
-                  border-radius: rem(99);
                   background-color: $grayWhite;
 
-                  .addBtn {
-                    z-index: 100;
+                  .addEntryBtn {
                     position: absolute;
-                    margin-left: rem(7);
-                    margin-right: rem(4);
+                    padding: rem(5);
+                    min-width: rem(63);
+                    width: fit-content;
+                    height: 100%;
                     display: flex;
-                    justify-items: center;
+                    justify-content: center;
                     align-items: center;
-                    width: rem(16);
-                    height: rem(16);
-                    border: none;
-                    background-color: transparent;
-                    background-image: url('@assets/icons/ic_utterance_add.svg');
+                    border: 1px solid $gray200;
+                    border-radius: rem(99);
                     cursor: pointer;
-                    background-position: center;
-                    background-repeat: no-repeat;
+                    z-index: 100;
+
                     span {
-                      margin-left: rem(20);
+                      display: flex;
+                      align-items: center;
+                      .addEntryBtnImg {
+                        width: rem(16);
+                        height: rem(16);
+                      }
+                      .addEntryBtnName {
+                        width: fit-content;
+                        font-size: rem(13);
+                        margin-left: rem(3);
+                      }
                     }
                   }
                   &:hover {
+                    border-radius: rem(99);
                     background-color: $primary150;
                   }
                 }
