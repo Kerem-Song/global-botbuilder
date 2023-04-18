@@ -38,7 +38,7 @@ export const useYupValidation = () => {
             is: ACTION_TYPES.URL,
             then: yup
               .string()
-              .url(t(`VALIDATION_URL`))
+              // .url(t(`VALIDATION_URL`))
               .required(t(`VALIDATION_REQUIRED`)),
           })
           .when('actionType', {
@@ -67,7 +67,7 @@ export const useYupValidation = () => {
             is: ACTION_TYPES.URL,
             then: yup
               .string()
-              .url(t(`VALIDATION_URL`))
+              // .url(t(`VALIDATION_URL`))
               .required(t(`VALIDATION_REQUIRED`)),
           })
           .when('actionType', {
@@ -106,7 +106,10 @@ export const useYupValidation = () => {
     is: true,
     then: yup.object().shape({
       imageFile: imageFileEditSchema,
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup
+        .string()
+        // .url(t(`VALIDATION_URL`))
+        .required(t(`VALIDATION_REQUIRED`)),
     }),
   });
 
@@ -188,7 +191,7 @@ export const useYupValidation = () => {
         imageFile: imageFileEditSchema,
         imageUrl: yup
           .string()
-          .url(t(`VALIDATION_URL`))
+          // .url(t(`VALIDATION_URL`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
@@ -210,11 +213,14 @@ export const useYupValidation = () => {
           t(`VALIDATION_FILE_TYPE`),
           (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
         ),
-      imageUrl: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup
+        .string()
+        // .url(t(`VALIDATION_URL`))
+        .required(t(`VALIDATION_REQUIRED`)),
     }),
     profileIconUrl: yup
       .string()
-      .url(t(`VALIDATION_URL`))
+      // .url(t(`VALIDATION_URL`))
       .required(t(`VALIDATION_REQUIRED`)),
     profileName: yup
       .string()
