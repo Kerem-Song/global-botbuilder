@@ -8,6 +8,7 @@ interface IConnectLineProps {
   updateKey?: string;
   isNextNode?: boolean;
   active?: boolean;
+  highlight?: boolean;
   type: 'blue' | 'green' | 'red' | 'yellow';
   onClick?: () => void;
   onDelete?: () => void;
@@ -27,6 +28,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   isNextNode,
   active,
   type,
+  highlight,
   onClick,
   onDelete,
 }) => {
@@ -109,7 +111,9 @@ export const ConnectLine: FC<IConnectLineProps> = ({
           pointerEvents: 'stroke',
         }}
         ref={lineMouseRef}
-        stroke="#FFFFFF01"
+        //strokeOpacity={highlight ? 0.3 : 0}
+        strokeOpacity={0}
+        stroke={stroke}
         strokeWidth="10"
         fill="none"
       />
