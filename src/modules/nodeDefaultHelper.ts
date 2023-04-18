@@ -12,6 +12,7 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
+  IJsonRequestView,
   IListCardCarouselView,
   IListCardItem,
   IListCardView,
@@ -223,6 +224,19 @@ export const nodeDefaultHelper = {
       childrenViews: [nodeDefaultHelper.createDefaultCommerceView()],
       isSuffle: false,
       count: 10,
+    };
+    return result;
+  },
+  createDefaultJsonRequestView: () => {
+    const result: IJsonRequestView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.JSON_REQUEST_VIEW,
+      body: {},
+      headers: {},
+      method: 'POST',
+      queryStrings: {},
+      responseMapping: {},
+      url: '',
     };
     return result;
   },

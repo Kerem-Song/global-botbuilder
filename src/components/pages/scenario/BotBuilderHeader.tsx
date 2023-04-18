@@ -64,6 +64,17 @@ const buttonNodes = [
   },
 ];
 
+const apiNodes = [
+  {
+    className: 'icApiRequest',
+    value: NODE_TYPES.JSON_REQUEST_NODE,
+    nodeName: 'Api Request',
+  },
+  { className: 'icDataBasic', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 기본 카드' },
+  { className: 'icDataList', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 리스트' },
+  { className: 'icDataCommerce', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 커머스' },
+];
+
 export const BotBuilderHeader = () => {
   const { t, tc } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
