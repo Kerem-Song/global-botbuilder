@@ -132,6 +132,7 @@
   "setting": {
     "TITLE": "Chatbot Setting",
     "DEFAULT_SETTING": "Default Setting",
+    "DELETE_BOT_TITLE": "Deleted the bot",
     "DELETE": "Delete",
     "CANCEL_DELETION": "Cancel Deletion",
     "SAVE": "Save",

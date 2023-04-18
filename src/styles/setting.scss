@@ -16,20 +16,27 @@
     line-height: rem(14);
     color: $red;
   }
-  div {
+  .settingCardWrap {
+    border: 1px solid $gray200;
+    margin-bottom: rem(20);
+    .settingCardTitle {
+      font-size: rem($defaultSize);
+      font-weight: 500;
+    }
+    .botInfo {
+      width: rem(85);
+    }
+    .botId {
+      background-color: $gray100;
+    }
     .activateWrap {
       div {
-        .activateBotHeader {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .botCardContainer {
+        .botActivateCardContainer {
           display: flex;
           gap: rem(12);
-          .botCardWrap {
+          .botActivateCardWrap {
             width: 534px;
-            .botCard {
+            .botActivateCard {
               width: 100%;
               display: flex;
               justify-content: space-between;
@@ -69,25 +76,41 @@
         }
       }
     }
-    .handleScenariosWrap {
-      div {
-        .handleScenarioInfo {
-          border-bottom: 1px solid $gray200;
-          margin-bottom: rem(3);
-          .infoText {
-            margin-bottom: rem(12);
-            color: $gray300;
-          }
+  }
+
+  .handleScenariosWrap {
+    div {
+      .handleScenarioInfo {
+        border-bottom: 1px solid $gray200;
+        margin-bottom: rem(3);
+        .infoText {
+          margin-bottom: rem(12);
+          color: $gray300;
         }
-        .duplicateScenarios {
-          display: flex;
-          align-items: center;
-          .text {
-            width: rem(140);
-            font-size: rem(13);
-            line-height: rem(16);
-          }
+      }
+      .duplicateScenarios {
+        display: flex;
+        align-items: center;
+        .duplicateBtn {
+          margin-right: rem(10);
         }
+        .text {
+          width: rem(140);
+          font-size: rem(13);
+          line-height: rem(16);
+        }
+      }
+      .deleteBot {
+        display: flex;
+        align-items: center;
+        .deleteBotTitle {
+          margin-right: rem(30);
+        }
+      }
+      .deleteBotDesc {
+        white-space: pre-wrap;
+        line-height: rem(20);
+        color: $gray300;
       }
     }
   }
