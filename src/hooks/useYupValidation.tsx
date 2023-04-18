@@ -118,6 +118,7 @@ export const useYupValidation = () => {
       .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
     description: yup
       .string()
+      .nullable()
       .when('useImageCtrl', {
         is: true,
         then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
@@ -286,13 +287,9 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(/^[a-z0-9]*$/, t(`VALIDATION_REGEX_MATCH`))
-          .required(t(`VALIDATION_REQUIRED`)),
-        value: yup
-          .string()
-          .trim()
           .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
+        value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
   });

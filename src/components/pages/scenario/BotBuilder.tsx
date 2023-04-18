@@ -8,11 +8,15 @@ import {
 import { IPopperItem } from '@components/navigation';
 import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
 import { useContextMenu } from '@hooks/useContextMenu';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
+import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import { nodeHelper } from '@modules/nodeHelper';
+import { setClipBoard, setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import { addArrow, appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
@@ -20,18 +24,14 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
+import { ActionCreators } from 'redux-undo';
 
-import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
-import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '../../../modules';
-import { nodeHelper } from '../../../modules/nodeHelper';
-import { addArrow, appendNode, updateNode } from '../../../store/makingNode';
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 import { Node } from './nodes';
 import { OtherFlowScenariosPopup } from './OtherFlowScenariosPopup';
-
 let dirtySelect: string | undefined;
 
 export const Botbuilder = () => {
@@ -70,6 +70,8 @@ export const Botbuilder = () => {
   getScenario(selectedScenario?.id);
 
   const { isOpen, handleIsOpen } = useModalOpen();
+
+  const { updateLineAll } = useUpdateLines();
 
   const isHistoryViewer = useHistoryViewerMatch();
 
@@ -253,7 +255,9 @@ export const Botbuilder = () => {
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
+      console.log('@ctrl clone', clone);
       dispatch(appendNode({ ...clone, x: points.x, y: points.y }));
+      dispatch(setClipBoard(undefined));
     }
   };
 
@@ -306,6 +310,18 @@ export const Botbuilder = () => {
     });
   };
 
+  const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === 'KeyZ' && e.ctrlKey) {
+      updateLineAll();
+      dispatch(ActionCreators.undo());
+
+      if (e.shiftKey) {
+        updateLineAll();
+        dispatch(ActionCreators.redo());
+      }
+    }
+  };
+
   useEffect(() => {
     setTempNodeNames([]);
   }, [nodes]);
@@ -325,6 +341,7 @@ export const Botbuilder = () => {
           e.preventDefault();
         }}
         onContextMenu={(e) => e.preventDefault()}
+        onKeyDown={handleUndoRedoKeydown}
       >
         <BotBuilderZoomBtn />
 

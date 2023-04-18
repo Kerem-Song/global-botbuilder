@@ -24,22 +24,16 @@ header {
     }
 
     .rightNav {
-      //grid-column: 12/12;
       display: flex;
       align-items: center;
       gap: rem(5);
 
       .testerBtn {
-        width: rem(50);
-        padding: rem(8.5) rem(5.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $primary500;
-        color: $grayWhite;
-        font-size: rem(12);
-        line-height: rem(14);
-        border: none;
+        padding: rem(0) rem(5);
+        margin-right: rem(1);
+        min-width: rem(50);
+        width: fit-content;
+        height: rem(32);
         border-radius: rem(6);
         cursor: pointer;
       }

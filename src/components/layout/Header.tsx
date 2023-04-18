@@ -1,4 +1,4 @@
-import { IPopperItem, Popper } from '@components';
+import { Button, IPopperItem, Popper } from '@components';
 import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
 import { useModalOpen } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
@@ -9,31 +9,6 @@ import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 
 export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
-  const { i18n, t, ts } = useI18n();
-  const location = useLocation();
-  const language = i18n.language;
-  const { isOpen, handleIsOpen } = useModalOpen();
-  const userInfo = useRootState((state) => state.userInfoReducer);
-
-  const navigate = useNavigate();
-  const matches = useMatches();
-  const changeLanguageHandler = (lang: string) => {
-    i18n.changeLanguage(lang, () => {
-      const paths = location.pathname.split('/');
-      paths[1] = lang;
-      navigate(paths.join('/'));
-    });
-  };
-
-  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
-  const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
-  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
-  const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
-
-  useEffect(() => {
-    handleIsOpen(false);
-  }, [location]);
-
   const languageMenus = [
     {
       id: `ko`,
@@ -56,7 +31,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
       select: 'Key',
     },
   ];
-
+  const userInfo = useRootState((state) => state.userInfoReducer);
   const userInfoMenus: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'info',
@@ -87,8 +62,28 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
       },
     },
   ];
-
+  const { i18n, ts } = useI18n();
+  const location = useLocation();
+  const language = i18n.language;
+  const { isOpen, handleIsOpen } = useModalOpen();
+  const navigate = useNavigate();
+  const matches = useMatches();
+  const changeLanguageHandler = (lang: string) => {
+    i18n.changeLanguage(lang, () => {
+      const paths = location.pathname.split('/');
+      paths[1] = lang;
+      navigate(paths.join('/'));
+    });
+  };
+  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
+  const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
+  const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
+
+  useEffect(() => {
+    handleIsOpen(false);
+  }, [location]);
 
   return (
     <header>
@@ -99,9 +94,13 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
         </div>
         <div className="rightNav">
           {isBotPage && (
-            <button className="testerBtn" onClick={() => handleIsOpen(true)}>
-              Test
-            </button>
+            <Button
+              type="primary"
+              className="testerBtn"
+              onClick={() => handleIsOpen(true)}
+            >
+              테스트하기
+            </Button>
           )}
           <Popper
             popperSelect={languageMenus}

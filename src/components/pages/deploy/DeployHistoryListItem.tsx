@@ -13,9 +13,9 @@ export interface IDeployHistoryListItem {
 }
 
 export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
-  const [detailInfo, setDetailInfo] = useState({});
-  const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
+  const { isOpen, handleIsOpen } = useModalOpen();
+  const [detailInfo, setDetailInfo] = useState({});
   return (
     <tbody>
       {data?.result.items.map((x, i) => {
@@ -35,7 +35,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
             </td>
             <td className="deployHistoryList channelName">{x.snsChannel}</td>
             <td className="deployHistoryList deployDateTime">
-              {util.formatDateTime(new Date(x.deployedTime))}
+              {util.formatDateTime(new Date(x.createAtByBrand))}
             </td>
             <td className="deployHistoryList accountInfo">
               <MultiClamp clamp={1}>{x.actorName}</MultiClamp>

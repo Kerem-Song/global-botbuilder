@@ -47,13 +47,11 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
 
   const openModal = async (intentId: string) => {
     const result = await confirm({
-      title: t('DELETE_HEADER'),
+      title: t('DELETE_INTENT'),
       description: (
-        <span>
-          인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.
-          <br />
-          삭제하시겠습니까?
-        </span>
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          <p>{t('DELETE_INTENT_MESSAGE')}</p>
+        </div>
       ),
     });
 
@@ -193,9 +191,9 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
           <td className="empty">
             <img src={icNoResult} alt="empty" />
             {searchData?.searchWord ? (
-              <span>No search results found.</span>
+              <span>{t('NO_SEARCH_INTENT_RESULT_FOUND')}</span>
             ) : (
-              <span>No registered Utterance.</span>
+              <span>{t('NO_REGISTERED_INTENT')}</span>
             )}
           </td>
         </tr>

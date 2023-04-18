@@ -1,12 +1,11 @@
 import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
+import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
-
-import { useHistoryViewerMatch } from '../../../hooks/useHistoryViewerMatch';
 
 export const BotBuilderZoomBtn = () => {
   const dispatch = useDispatch();

@@ -48,39 +48,41 @@
           font-size: rem(13);
           line-height: rem(16);
           .deployHistoryList {
-            padding-left: rem(20);
+            padding: rem(12);
+            width: fit-content;
           }
           .deployNumber {
-            width: rem(94);
+            min-width: rem(120);
+            text-align: center;
           }
           .channelType {
-            width: rem(85);
+            min-width: rem(120);
+            text-align: center;
           }
           .channelName {
-            width: rem(180);
+            min-width: rem(150);
           }
           .deployDateTime {
-            width: rem(185);
+            min-width: rem(185);
             text-align: center;
           }
           .account {
             width: rem(187);
-            height: rem(32);
-            padding-top: rem(8);
           }
           .accountInfo {
+            padding: 0 0 0 rem(12);
             width: rem(187);
             height: rem(32);
             word-wrap: break-word;
           }
           .status {
-            width: rem(141);
+            min-width: rem(141);
             display: flex;
             justify-content: center;
+            align-items: center;
             .success {
-              width: fit-content;
               padding: rem(2) rem(6);
-              background: rgba(3, 191, 78, 0.15);
+              background-color: rgba(3, 191, 78, 0.15);
               color: #03bf4e;
               border-radius: rem(4);
               &.failed {

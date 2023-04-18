@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 export const Setting = () => {
-  const { t, tc, navigate } = usePage();
+  const { t, navigate } = usePage();
   const { confirm } = useSystemModal();
   const { botId } = useParams();
   const {
@@ -22,22 +22,7 @@ export const Setting = () => {
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();
   const [botName, setBotName] = useState<string>();
-
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  useEffect(() => {
-    if (botId) {
-      refetchBotInfo(botId);
-    }
-  }, [botId]);
-
-  useEffect(() => {
-    if (botInfo) {
-      setActivate(botInfo.activated);
-      setBotName(botInfo.botName);
-      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
-      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
-    }
-  }, [botInfo]);
 
   const handleCopyBotId = async () => {
     await util.copyClipboard(botInfo?.id);
@@ -55,20 +40,17 @@ export const Setting = () => {
     let result: boolean | undefined = true;
     if (botInfo?.activated) {
       result = await confirm({
-        title: '봇 비활성화',
+        title: t('DEACTIVATE_BOT'),
         description: (
-          <>
-            <span>봇을 비활성화 하면, 모든 채놀과 연결이 끊어지고</span>
-            <br />
-            <span>채널에서 더 이상 봇이 동작하지 않습니다.</span>
-            <br />
-            <span>비활성화 하시겠습니까?</span>
-          </>
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <p>{t('DEACTIVATE_BOT_MESSAGE')}</p>
+          </div>
         ),
       });
     }
     if (result) {
       setActivate(false);
+      lunaToast.success(t('DEACTIVATE_BOT_SUCCESS_MESSAGE'));
     }
   };
 
@@ -105,7 +87,7 @@ export const Setting = () => {
     });
 
     if (res) {
-      lunaToast.success('저장되었습니다.');
+      lunaToast.success(t('UPDATE_BOT_SUCCESS_MESSAGE'));
     }
   };
 
@@ -133,11 +115,26 @@ export const Setting = () => {
     return false;
   };
 
+  useEffect(() => {
+    if (botId) {
+      refetchBotInfo(botId);
+    }
+  }, [botId]);
+
+  useEffect(() => {
+    if (botInfo) {
+      setActivate(botInfo.activated);
+      setBotName(botInfo.botName);
+      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
+      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
+    }
+  }, [botInfo]);
+
   return (
     <div className="settingWrap">
       <Row justify="space-between" align="center" className="m-b-20">
         <Col>
-          <div className="title">챗봇 설정</div>
+          <div className="title">{t('TITLE')}</div>
         </Col>
         <Col>
           <Space gap={8}>
@@ -145,19 +142,19 @@ export const Setting = () => {
               <Row align="center" gap={16}>
                 <Col>
                   <span className="delete-message">
-                    {new Date(botInfo?.removeCancelExpireUtc).toLocaleString()}에 봇이
-                    삭제될 예정입니다.
+                    {new Date(botInfo?.removeCancelExpireUtc).toLocaleString()}
+                    {t('DELETE_BOT_MESSAGE')}
                   </span>
                 </Col>
                 <Col>
                   <Button type="lineBlue" onClick={() => handleRecoverBot()}>
-                    삭제 취소
+                    {t('CANCEL_DELETION')}
                   </Button>
                 </Col>
               </Row>
             ) : (
               <Button type="lineBlue" onClick={() => handleDeleteBot()}>
-                봇 삭제하기
+                {t('DELETE')}
               </Button>
             )}
             <Button
@@ -165,12 +162,11 @@ export const Setting = () => {
               disabled={!checkChange()}
               onClick={() => handleUpdateBot()}
             >
-              저장하기
+              {t('SAVE')}
             </Button>
           </Space>
         </Col>
       </Row>
-
       <Card
         radius="normal"
         bodyStyle={{ padding: '20px' }}
@@ -178,15 +174,15 @@ export const Setting = () => {
       >
         <form>
           <Space direction="vertical">
-            <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('BASIC_SETTING')}</p>
+            <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('DEFAULT_SETTING')}</p>
             <Row align="center" gap={10}>
-              <Col>
-                <span>봇 이름</span>
+              <Col style={{ width: '75px' }}>
+                <span>{t('BOT_NAME')}</span>
               </Col>
               <Col flex="auto">
                 <FormItem>
                   <Input
-                    value={botName}
+                    value={botName || ''}
                     onChange={(e) => setBotName(e.target.value)}
                     showCount
                     maxLength={20}
@@ -196,15 +192,15 @@ export const Setting = () => {
               </Col>
             </Row>
             <Row align="center" gap={10}>
-              <Col style={{ width: '69px' }}>
-                <span>봇 ID</span>
+              <Col style={{ width: '75px' }}>
+                <span>{t('BOT_ID')}</span>
               </Col>
               <Col flex="auto">
-                <Input disabled value={botInfo?.id} />
+                <Input disabled value={botInfo?.id || ''} />
               </Col>
               <Col>
                 <Button onClick={handleCopyBotId} icon={icCopy}>
-                  Copy
+                  {t('COPY')}
                 </Button>
               </Col>
             </Row>
@@ -220,20 +216,22 @@ export const Setting = () => {
           <Space direction="vertical">
             <Row justify="space-between" align="center">
               <Col>
-                <p style={{ fontSize: '16px', fontWeight: 500 }}>봇 활성화</p>
+                <p style={{ fontSize: '16px', fontWeight: 500 }}>
+                  {t('ACTIVATED_THE_BOT')}
+                </p>
               </Col>
               <Space gap={8}>
                 {activate ? (
                   <Button type="lineBlue" onClick={() => handleDisableBot()}>
-                    비활성화
+                    {t('DEACTIVATE')}
                   </Button>
                 ) : (
                   <Button type="primary" onClick={() => setActivate(true)}>
-                    활성화
+                    {t('ACTIVATE')}
                   </Button>
                 )}
 
-                <Button onClick={() => navigate('/dashboard')}>봇 목록 가기</Button>
+                <Button onClick={() => navigate('/dashboard')}>{t('BOT_LIST')}</Button>
               </Space>
             </Row>
             <div className="botCardContainer">
@@ -248,7 +246,7 @@ export const Setting = () => {
                       />
                     </div>
                     <div className="channelInfo">
-                      <p className="channelState">Operating channel</p>
+                      <p className="channelState">{t('OPERATING_CHANNEL')}</p>
                       <p className="channelName">
                         {botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -'}
                       </p>
@@ -256,11 +254,11 @@ export const Setting = () => {
                   </div>
                   {opLinked ? (
                     <Button type="lineBlue" small onClick={() => setOpLinked(false)}>
-                      연결 해제
+                      {t('DISCONNECT')}
                     </Button>
                   ) : (
                     <Button type="primary" small onClick={() => setOpLinked(true)}>
-                      연결
+                      {t('CONNECT')}
                     </Button>
                   )}
                 </div>
@@ -276,7 +274,7 @@ export const Setting = () => {
                       />
                     </div>
                     <div className="channelInfo">
-                      <p className="channelState">Test channel</p>
+                      <p className="channelState">{t('TEST_CHANNEL')}</p>
                       <p className="channelName">
                         {botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -'}
                       </p>
@@ -284,11 +282,11 @@ export const Setting = () => {
                   </div>
                   {testLinked ? (
                     <Button type="lineBlue" small onClick={() => setTestLinked(false)}>
-                      연결 해제
+                      {t('DISCONNECT')}
                     </Button>
                   ) : (
                     <Button type="primary" small onClick={() => setTestLinked(true)}>
-                      연결
+                      {t('CONNECT')}
                     </Button>
                   )}
                 </div>
@@ -305,27 +303,23 @@ export const Setting = () => {
         <div className="handleScenariosWrap">
           <Space direction="vertical">
             <p style={{ fontSize: '16px', fontWeight: 500 }}>
-              시나리오 내보내기/가져오기
+              {t('EXPORT_IMPORT_SCENARIOS')}
             </p>
             <div className="handleScenarioInfo">
-              <p className="infoText">
-                시나리오를 ‘가져오기’ 할 경우, 기존에 세팅된 시나리오, 발화, 변수, 엔티티
-                등은 덮어씌워집니다. <br />
-                통계 및 히스토리는 덮어씌워지지 않습니다.
-              </p>
+              <p className="infoText">{t('EXPORT_IMPORT_SCENARIOS_DESC')}</p>
             </div>
             <div className="duplicateScenarios">
               <div className="text">
-                <p>시나리오 복사</p>
+                <p>{t('DUPLICATE_SCENARIOS')}</p>
               </div>
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
                 onClick={handleExport}
               >
-                Export
+                {t('EXPORT')}
               </Button>
-              <Button type="lineBlue">Import</Button>
+              <Button type="lineBlue">{t('IMPORT')}</Button>
               <Space />
             </div>
           </Space>

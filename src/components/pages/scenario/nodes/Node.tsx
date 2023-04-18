@@ -1,31 +1,33 @@
 import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
-import { useModalOpen, usePage, useRootState } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeContextMenu } from '@hooks/useNodeContextMenu';
-import { useUpdateLines } from '@hooks/useUpdateLines';
+import {
+  useHistoryViewerMatch,
+  useModalOpen,
+  useNodeContextMenu,
+  usePage,
+  useRootState,
+  useUpdateLines,
+} from '@hooks';
 import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { lunaToast } from '@modules/lunaToast';
 import {
   setClipBoard,
   setEditDrawerToggle,
   setGuideStartNode,
-  setSelected,
 } from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
+import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, KeyboardEvent } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
-import { NODE_PREFIX } from '../../../../modules';
+import { NODE_PREFIX, nodeHelper } from '../../../../modules';
 import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
@@ -65,6 +67,7 @@ export const Node: FC<INodeProps> = ({
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
   );
+  const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
@@ -78,7 +81,8 @@ export const Node: FC<INodeProps> = ({
   const bodyClass = classNames('luna-node-body');
   const isHistoryViewer = useHistoryViewerMatch();
 
-  const { deleteCard, getNodeMenu } = useNodeContextMenu({ handleIsOpen });
+  const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
+    useNodeContextMenu({ handleIsOpen });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -125,13 +129,63 @@ export const Node: FC<INodeProps> = ({
     onClick?.(e);
   };
 
-  const keyEvent = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Delete') {
-      deleteCard(node);
-    } else if (e.key === 'c' && e.ctrlKey) {
-      console.log(e);
+  const handlePasteCard = () => {
+    const view = document.querySelector('.botBuilderMain');
+    const canvas = document.querySelector('.canvasWrapper');
+    const canvasRect = canvas?.getBoundingClientRect();
+    const viewRect = view?.getBoundingClientRect();
+
+    if (clipBoard) {
+      const clone = nodeHelper.cloneNode(clipBoard);
+      dispatch(
+        appendNode({
+          ...clone,
+          x:
+            canvasRect && viewRect
+              ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+              : 0,
+          y:
+            canvasRect && viewRect
+              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+              : 0,
+        }),
+      );
+      dispatch(setClipBoard(undefined));
     }
   };
+
+  const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log('@ctrl key event', e);
+    if (e.key === 'Delete') {
+      deleteCard(node);
+    } else if (e.code === 'KeyC' && e.ctrlKey) {
+      console.log('@ctrl c');
+      handleDuplicationCard(node);
+    } else if (e.code === 'KeyX' && e.ctrlKey) {
+      console.log('@ctrl x');
+      handleCutCard(node);
+      dispatch(setEditDrawerToggle(false));
+    }
+  };
+
+  const handleCtrlVCommand = (e: KeyboardEvent) => {
+    console.log('@ctrl v test 입니다');
+    console.log('@ctrl v test', e);
+
+    if (e.code === 'KeyV' && e.ctrlKey) {
+      console.log('@ctrl v');
+      handlePasteCard();
+    }
+  };
+
+  useEffect(() => {
+    if (clipBoard) {
+      window.addEventListener('keydown', handleCtrlVCommand);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleCtrlVCommand);
+    };
+  }, [clipBoard]);
 
   return (
     <>

@@ -106,5 +106,5 @@ export const useNodeContextMenu = ({
     console.log(typeName, result);
     return result;
   };
-  return { deleteCard, getNodeMenu, nodeMenu };
+  return { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu, nodeMenu };
 };
