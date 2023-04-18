@@ -170,11 +170,16 @@ export const Popper = <T extends object>({
         {children}
       </div>
       <div
+        role="presentation"
         className={popperContainer}
         ref={popperElement}
         style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         {...attributes.popper}
       >
         {popperItems?.some((item) => item.type === 'search') ? (

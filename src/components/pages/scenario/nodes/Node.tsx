@@ -204,6 +204,14 @@ export const Node: FC<INodeProps> = ({
         <div
           tabIndex={0}
           onKeyDown={keyEvent}
+          onDragStart={(e) => {
+            const from = e.dataTransfer.getData('id');
+            if (from) {
+              return;
+            }
+            e.stopPropagation();
+            e.preventDefault();
+          }}
           onDragOver={(e) => {
             e.preventDefault();
           }}
@@ -232,7 +240,7 @@ export const Node: FC<INodeProps> = ({
           style={style}
           role="button"
           onClick={HandleNodeSelect}
-          onMouseUp={(e) => e.stopPropagation()}
+          //onMouseUp={(e) => e.stopPropagation()}
           onContextMenu={(e) => {
             e.preventDefault();
           }}
