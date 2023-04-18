@@ -1,3 +1,4 @@
+import { FormItem } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
@@ -10,7 +11,13 @@ import { SelectNode } from './SelectNode';
 export const IntentNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
-  const { getValues } = useFormContext<IGNodeEditModel<IIntentView>>();
+  const {
+    getValues,
+    formState: { errors },
+  } = useFormContext<IGNodeEditModel<IIntentView>>();
+  console.log('@values intent', getValues());
+  console.log('@values intent@', getValues().view);
+  console.log('@values intent error', errors);
   return (
     <>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
@@ -19,7 +26,9 @@ export const IntentNodeEdit = () => {
           <span className="required">*</span>
         </div>
 
+        {/* <FormItem error={errors.nextNodeId}> */}
         <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
+        {/* </FormItem> */}
       </Collapse>
     </>
   );

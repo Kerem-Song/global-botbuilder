@@ -337,6 +337,10 @@ export const Botbuilder = () => {
         ref={botbuilderRef}
         role="presentation"
         onDragStart={(e) => {
+          const from = e.dataTransfer.getData('id');
+          if (from) {
+            return;
+          }
           e.stopPropagation();
           e.preventDefault();
         }}
