@@ -1,5 +1,5 @@
-import { icCopy, icLine } from '@assets';
-import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
+import { icCopy, imgLinebot, imgLinebotInactivate } from '@assets';
+import { Button, Card, Col, Input, Row, Space } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { IBotSetting } from '@models/interfaces/IBotSetting';
@@ -13,9 +13,10 @@ import * as yup from 'yup';
 
 export const Setting = () => {
   const { t, tc, navigate } = usePage();
-  const { confirm } = useSystemModal();
+  const { confirm, info } = useSystemModal();
   const { botId } = useParams();
-  const { refetchBotInfo, botExportAsync, botUpdateAsync } = useBotClient();
+  const { refetchBotInfo, botExportAsync, botUpdateAsync, botActivateAsync } =
+    useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
@@ -94,32 +95,106 @@ export const Setting = () => {
     await botExportAsync({ botId: botInfo.id, botName: botInfo.botName });
   };
 
+  const handleActivateBot = async () => {
+    if (!botInfo) {
+      return;
+    }
+    const res = await botActivateAsync({
+      botId: botInfo.id,
+      isActivate: true,
+    });
+
+    if (res?.data.isSuccess === true) {
+      console.log('res', res);
+    } else if (res?.data.exception.errorCode === 7631) {
+      await info({
+        title: t('DISABLED_BOT_ACTIVATED'),
+        description: (
+          <p style={{ whiteSpace: 'pre-wrap' }}>{t('DISABLED_BOT_ACTIVATED_MESSAGE')}</p>
+        ),
+      });
+    }
+  };
+
   const handleDisableBot = async () => {
     let result: boolean | undefined = true;
     if (botInfo?.activated) {
       result = await confirm({
         title: t('DEACTIVATE_BOT'),
         description: (
-          <div style={{ whiteSpace: 'pre-wrap' }}>
-            <p>{t('DEACTIVATE_BOT_MESSAGE')}</p>
-          </div>
+          <p style={{ whiteSpace: 'pre-wrap' }}>{t('DEACTIVATE_BOT_MESSAGE')}</p>
         ),
       });
     }
     if (result) {
-      setActivate(false);
+      await botActivateAsync({
+        botId: botInfo!.id,
+        isActivate: false,
+      });
       lunaToast.success(t('DEACTIVATE_BOT_SUCCESS_MESSAGE'));
+    }
+  };
+
+  const handleConnectOpChannel = async () => {
+    if (!opLinked) {
+      const res = await confirm({
+        title: t('CONNECT_CHANNEL'),
+        description: (
+          <>
+            <span className="connetChannel">@루나소프트 </span>
+            <span>{t('CONFIRM_CONNECT_CHANNEL_MESSAGE')}</span>
+          </>
+        ),
+      });
+      if (res) {
+        setOpLinked(true);
+        await info({
+          title: t('CONNECT_CHANNEL'),
+          description: (
+            <>
+              <span className="connetChannel">@루나소프트 </span>
+              <span style={{ whiteSpace: 'pre-wrap' }}>
+                {t('CONNECT_CHANNEL_SUCCESS_MESSAGE')}
+              </span>
+            </>
+          ),
+        });
+      }
+    }
+  };
+
+  const handleConnectTestChannel = async () => {
+    if (!testLinked) {
+      const res = await confirm({
+        title: t('CONNECT_CHANNEL'),
+        description: (
+          <>
+            <span className="connetChannel">@루나소프트 </span>
+            <span>{t('CONFIRM_CONNECT_CHANNEL_MESSAGE')}</span>
+          </>
+        ),
+      });
+      if (res) {
+        setTestLinked(true);
+        await info({
+          title: t('CONNECT_CHANNEL'),
+          description: (
+            <>
+              <span className="connetChannel">@루나소프트 </span>
+              <span style={{ whiteSpace: 'pre-wrap' }}>
+                {t('CONNECT_CHANNEL_SUCCESS_MESSAGE')}
+              </span>
+            </>
+          ),
+        });
+      }
     }
   };
 
   const preventGoBack = async () => {
     const result = await confirm({
       title: t('SAVE'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
     if (result) {
       history.go(-1);
@@ -226,7 +301,7 @@ export const Setting = () => {
                     {t('DEACTIVATE')}
                   </Button>
                 ) : (
-                  <Button type="primary" onClick={() => setActivate(true)}>
+                  <Button type="primary" onClick={handleActivateBot}>
                     {t('ACTIVATE')}
                   </Button>
                 )}
@@ -238,7 +313,11 @@ export const Setting = () => {
                 <div className="botActivateCard">
                   <div className="channel">
                     <div className="channelImg">
-                      <img src={icLine} alt="socialImg" />
+                      {opLinked ? (
+                        <img src={imgLinebot} alt="socialImg" />
+                      ) : (
+                        <img src={imgLinebotInactivate} alt="socialImg" />
+                      )}
                     </div>
                     <div className="channelInfo">
                       <p className="channelState">{t('OPERATING_CHANNEL')}</p>
@@ -252,7 +331,12 @@ export const Setting = () => {
                       {t('DISCONNECT')}
                     </Button>
                   ) : (
-                    <Button type="primary" small onClick={() => setOpLinked(true)}>
+                    <Button
+                      type="primary"
+                      disabled={activate === false ? true : false}
+                      small
+                      onClick={handleConnectOpChannel}
+                    >
                       {t('CONNECT')}
                     </Button>
                   )}
@@ -262,7 +346,11 @@ export const Setting = () => {
                 <div className="botActivateCard">
                   <div className="channel">
                     <div className="channelImg">
-                      <img src={icLine} alt="socialImg" />
+                      {testLinked ? (
+                        <img src={imgLinebot} alt="socialImg" />
+                      ) : (
+                        <img src={imgLinebotInactivate} alt="socialImg" />
+                      )}
                     </div>
                     <div className="channelInfo">
                       <p className="channelState">{t('TEST_CHANNEL')}</p>
@@ -276,7 +364,12 @@ export const Setting = () => {
                       {t('DISCONNECT')}
                     </Button>
                   ) : (
-                    <Button type="primary" small onClick={() => setTestLinked(true)}>
+                    <Button
+                      type="primary"
+                      disabled={activate === false ? true : false}
+                      small
+                      onClick={handleConnectTestChannel}
+                    >
                       {t('CONNECT')}
                     </Button>
                   )}

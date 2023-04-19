@@ -32,11 +32,7 @@ export const MyEntity = () => {
   const openDeleteEntryModal = async (id: string) => {
     const result = await confirm({
       title: t('DELETE_ENTITY'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('DELETE_ENTITY_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_ENTITY_MESSAGE')}</p>,
     });
 
     if (result) {

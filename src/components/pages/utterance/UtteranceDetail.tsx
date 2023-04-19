@@ -96,11 +96,7 @@ export const UtteranceDetail = () => {
   const preventGoBack = async () => {
     const result = await confirm({
       title: t('SAVE'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
     if (result) {
       history.go(-1);
@@ -114,9 +110,7 @@ export const UtteranceDetail = () => {
       const result = await confirm({
         title: t('SAVE'),
         description: (
-          <div style={{ whiteSpace: 'pre-wrap' }}>
-            <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-          </div>
+          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         ),
       });
 
@@ -156,11 +150,7 @@ export const UtteranceDetail = () => {
   const openDeleteIntentModal = async () => {
     const result = await confirm({
       title: t('DELETE_INTENT'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('DELETE_INTENT_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
     if (result) {

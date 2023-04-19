@@ -7,6 +7,7 @@ import {
   ISaveBotReq,
   ISearchBotReq,
 } from '@models';
+import { IUpdateBotActivate } from '@models/interfaces/IBotSetting';
 import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -114,6 +115,14 @@ export const useBotClient = () => {
     }
   });
 
+  const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
+    const res = await http.post('/bot/updatebotactivate', args);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
   return {
     getBotListQuery,
     getCachedBotList,
@@ -124,5 +133,6 @@ export const useBotClient = () => {
     botDeleteAsync: botDeleteMutate.mutateAsync,
     botRecoverAsync: botRecoverMutate.mutateAsync,
     botUpdateAsync: botUpdateMutate.mutateAsync,
+    botActivateAsync: botActivateMutate.mutateAsync,
   };
 };
