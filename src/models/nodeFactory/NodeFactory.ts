@@ -9,6 +9,7 @@ import { BasicCardCarouselNodeFactory } from './BasicCardCarouselNodeFactory';
 import { BasicCardNodeFactory } from './BasicCardNodeFactory';
 import { ConditionNodeFactory } from './ConditionNodeFactory';
 import { IntentNodeFactory } from './IntentNodeFactory';
+import { JsonRequestNodeFactory } from './JsonRequestNodeFactory';
 import { ListCardCarouselNodeFactory } from './ListCardCarouselNodeFactory';
 import { ListCardNodeFactory } from './ListCardNodeFactory';
 import { OtherFlowRedirectNodeFactory } from './OtherFlowRedirectNodeFactory';
@@ -42,6 +43,7 @@ const otherFlowRedirectNodeFactory = new OtherFlowRedirectNodeFactory();
 const productCardNodeFactory = new ProductCardNodeFactory();
 const productCardCarouselNodeFactory = new ProductCardCarouselNodeFactory();
 const retryConditionNodeFactory = new RetryConditionNodeFactory();
+const jsonRequestNodeFactory = new JsonRequestNodeFactory();
 
 export const nodeFactory = {
   getFactory: (TNodeTypes: TNodeTypes | undefined): INodeFactory | undefined => {
@@ -72,6 +74,8 @@ export const nodeFactory = {
         return productCardCarouselNodeFactory;
       case NODE_TYPES.RETRY_CONDITION_NODE:
         return retryConditionNodeFactory;
+      case NODE_TYPES.JSON_REQUEST_NODE:
+        return jsonRequestNodeFactory;
       default:
         return undefined;
     }

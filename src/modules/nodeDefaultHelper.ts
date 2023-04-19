@@ -231,11 +231,11 @@ export const nodeDefaultHelper = {
     const result: IJsonRequestView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.JSON_REQUEST_VIEW,
-      body: {},
-      headers: {},
+      body: '',
+      headers: [{ key: '', value: '' }],
       method: 'POST',
-      queryStrings: {},
-      responseMapping: {},
+      queryStrings: [{ key: '', value: '' }],
+      responseMapping: [{ jsonPath: '', variable: '' }],
       url: '',
     };
     return result;

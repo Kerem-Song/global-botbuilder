@@ -324,12 +324,16 @@ export interface IProductCardCarouselView extends IViewBase {
   childrenViews: IProductCardView[];
 }
 
+export interface IJson {
+  key: string;
+  value: string;
+}
 export interface IJsonRequestView extends IViewBase {
-  body: Record<string, any>;
-  headers: Record<string, string>;
+  body: string;
+  headers: IJson[];
   method: 'POST' | 'GET';
-  queryStrings: Record<string, any>;
-  responseMapping: Record<string, any>;
+  queryStrings: IJson[];
+  responseMapping: { jsonPath: string; variable: string }[];
   url: string;
 }
 
