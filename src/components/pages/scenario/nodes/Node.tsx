@@ -109,15 +109,8 @@ export const Node: FC<INodeProps> = ({
   const popperMenu = getNodeMenu(typeName);
 
   const handleShowingNodesWithoutCards = () => {
-    if (typeName === NODE_TYPES.JSON_REQUEST_NODE) {
-      return (
-        <div className="command-node">
-          <NextNodeButton ctrlId={`${id}`} nodeId={`${NODE_PREFIX}${id}`} type="blue" />
-        </div>
-      );
-    }
-
     const NodeElement = nodeFactory.getFactory(typeName)?.getNodeElement();
+
     if (!NodeElement) {
       return <></>;
     }

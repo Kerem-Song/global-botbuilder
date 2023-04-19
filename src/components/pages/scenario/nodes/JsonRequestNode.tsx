@@ -8,10 +8,12 @@ import MultiClamp from 'react-multi-clamp';
 import { NextNodeButton } from '../NextNodeButton';
 
 export const JsonRequestNode: FC<IHasNode> = ({ node }) => {
-  const view = node.view as IJsonRequestView;
+  const view: IJsonRequestView = node.view as IJsonRequestView;
+  console.log('@view jsonreqNode', node);
+  console.log('@@@');
   return (
     <Card>
-      <div className="command-node">
+      <div className="countConditionWrapper">
         {view.url ? (
           <span style={{ whiteSpace: 'pre-line' }}>
             <MultiClamp clamp={2}>{view.url}</MultiClamp>
@@ -19,6 +21,7 @@ export const JsonRequestNode: FC<IHasNode> = ({ node }) => {
         ) : (
           <span>Api URL입력</span>
         )}
+
         <NextNodeButton
           ctrlId={`${node.id}`}
           nodeId={`${NODE_PREFIX}${node.id}`}

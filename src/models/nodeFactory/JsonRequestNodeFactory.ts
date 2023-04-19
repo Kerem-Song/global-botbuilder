@@ -1,4 +1,5 @@
 import { JsonRequestNodeEdit } from '@components/pages/scenario/edit/JsonRequestNodeEdit';
+import { ConditionNode } from '@components/pages/scenario/nodes';
 import { JsonRequestNode } from '@components/pages/scenario/nodes/JsonRequestNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
@@ -36,10 +37,14 @@ export class JsonRequestNodeFactory implements INodeFactory {
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    return arrowHelper.createHasButtonsArrow(nodeId, view, nextNodeId);
+    if (!nextNodeId) {
+      return [];
+    }
+
+    return [arrowHelper.createNextArrow(nodeId, nextNodeId)];
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
-    arrowHelper.syncHasButtonArrow(startId, endId, view);
+    return;
   }
 }

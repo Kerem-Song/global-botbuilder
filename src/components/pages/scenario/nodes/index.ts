@@ -5,6 +5,7 @@ export * from './CommerceCardCarouselNode';
 export * from './CommerceCardNode';
 export * from './ConditionNode';
 export * from './IntentNode';
+export * from './JsonRequestNode';
 export * from './ListCardCarouselNode';
 export * from './ListCardNode';
 export * from './Node';
