@@ -27,7 +27,7 @@ import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export const UtteranceDetail = () => {
   const { i18n } = useI18n();
-  const { navigate, t } = usePage();
+  const { navigate, t, tc } = usePage();
   const { utteranceId, botId } = useParams();
   const { confirm, error } = useSystemModal();
   const { getScenarioList } = useScenarioSelectClient();
@@ -51,9 +51,13 @@ export const UtteranceDetail = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const schema = yup.object({
-    name: yup.string().trim().required(t('VALIDATION_REQUIRED')).matches(BOTNAME_REGEX, {
-      message: '특수문자는 ~.,?_ - ! # $ % ^ & * () = []() + < > 만 사용 가능합니다.',
-    }),
+    name: yup
+      .string()
+      .trim()
+      .required(t('VALIDATION_REQUIRED'))
+      .matches(BOTNAME_REGEX, {
+        message: tc('BOTNAME_REGEX_MESSAGE'),
+      }),
   });
 
   const {
@@ -94,7 +98,7 @@ export const UtteranceDetail = () => {
       title: t('SAVE'),
       description: (
         <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('SAVE_MESSAGE')}</p>
+          <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         </div>
       ),
     });
@@ -111,7 +115,7 @@ export const UtteranceDetail = () => {
         title: t('SAVE'),
         description: (
           <div style={{ whiteSpace: 'pre-wrap' }}>
-            <p>{t('SAVE_MESSAGE')}</p>
+            <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
           </div>
         ),
       });

@@ -29,7 +29,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   entryId,
   setEntryId,
 }) => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const { entryGroupMutate, getEntryDetailQuery } = useEntityClient();
   const { confirm, error } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -85,7 +85,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       title: t('SAVE_ENTITY'),
       description: (
         <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('SAVE_MESSAGE')}</p>
+          <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         </div>
       ),
     });
@@ -188,7 +188,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
         title: t('SAVE_ENTITY'),
         description: (
           <div style={{ whiteSpace: 'pre-wrap' }}>
-            <p>{t('SAVE_MESSAGE')}</p>
+            <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
           </div>
         ),
       });
