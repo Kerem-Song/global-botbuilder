@@ -1,7 +1,7 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
-import { usePage, useRootState, useScenarioClient } from '@hooks';
+import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -93,6 +93,22 @@ export const BotBuilderHeader = () => {
 
   const { schema } = useYupValidation();
   console.log(selectedScenario);
+
+  const { error } = useSystemModal();
+
+  const checkFallbackStart = async () => {
+    await error({
+      title: t(`VALIDATION_CHECK_FALLBACK_START_TITLE`),
+      description: (
+        <>
+          <span style={{ whiteSpace: 'pre-line' }}>
+            {t(`VALIDATION_CHECK_FALLBACK_START_DESC`)}
+          </span>
+        </>
+      ),
+    });
+  };
+
   const handleScenarioSave = async () => {
     if (isEditDrawOpen) {
       return;
@@ -103,9 +119,14 @@ export const BotBuilderHeader = () => {
         nodes.map(async (n) => {
           try {
             await schema.validate(n);
+
             dispatch(setInvalidateNode({ id: n.id, isValid: true }));
             return true;
           } catch (e) {
+            if (n.option === 20) {
+              checkFallbackStart();
+            }
+
             dispatch(setInvalidateNode({ id: n.id, isValid: false }));
             return false;
           }

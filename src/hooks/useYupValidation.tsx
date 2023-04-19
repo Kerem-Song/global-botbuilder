@@ -331,13 +331,7 @@ export const useYupValidation = () => {
     //otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
-  const intentNodeEditSchema = yup
-    .string()
-    .when('option', {
-      is: 20,
-      then: yup.string().required(t(`VALIDATION_REQUIRED`)),
-    })
-    .required(t(`VALIDATION_REQUIRED`));
+  const intentNodeEditSchema = yup.string().nullable().required(t(`VALIDATION_REQUIRED`));
 
   const basicCardCarouselNodeEditSchema = yup.object().shape({
     childrenViews: yup.array().of(basicCardCarouselNodeEditSchemaForScript),
@@ -422,10 +416,15 @@ export const useYupValidation = () => {
       //     is: NODE_TYPES.ANSWER_NODE,
       //     then: answerNodeEditNextNodeIdSchema,
       //   }),
-      // nextNodeId: yup.string().nullable().when('type', {
-      //   is: NODE_TYPES.INTENT_NODE,
-      //   then: intentNodeEditSchema,
-      // }),
+      nextNodeId: yup
+        .string()
+        .nullable()
+        .when(['type', 'option'], {
+          is: (type: string, option: number) => {
+            return type === NODE_TYPES.INTENT_NODE && option === 20;
+          },
+          then: intentNodeEditSchema,
+        }),
     })
     .required();
 

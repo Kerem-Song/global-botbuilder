@@ -15,9 +15,6 @@ export const IntentNodeEdit = () => {
     getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IIntentView>>();
-  console.log('@values intent', getValues());
-  console.log('@values intent@', getValues().view);
-  console.log('@values intent error', errors);
   return (
     <>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
@@ -26,9 +23,9 @@ export const IntentNodeEdit = () => {
           <span className="required">*</span>
         </div>
 
-        {/* <FormItem error={errors.nextNodeId}> */}
-        <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
-        {/* </FormItem> */}
+        <FormItem error={errors.nextNodeId}>
+          <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
+        </FormItem>
       </Collapse>
     </>
   );

@@ -11,4 +11,5 @@ export interface INodeEditModel {
   title: string;
   nextNodeId?: string;
   view?: IViewBase;
+  option?: number;
 }

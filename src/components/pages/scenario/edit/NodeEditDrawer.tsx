@@ -64,6 +64,7 @@ export const NodeEditDrawer = () => {
         title: selectedNode.title || '',
         view: selectedNode.view,
         nextNodeId: selectedNode.nextNodeId,
+        option: selectedNode.option,
       };
 
       if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
