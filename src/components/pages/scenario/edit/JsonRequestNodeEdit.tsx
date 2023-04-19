@@ -112,10 +112,10 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={2} align="center">
                 <Col span={8}>
-                  <Input placeholder="Key" />
+                  <Input placeholder="Key" {...register(`view.headers.${i}.key`)} />
                 </Col>
                 <Col span={14}>
-                  <Input placeholder="Value" />
+                  <Input placeholder="Value" {...register(`view.headers.${i}.value`)} />
                 </Col>
                 <Col span={2}>
                   <Button
@@ -143,10 +143,13 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={2} align="center">
                 <Col span={8}>
-                  <Input placeholder="Key" />
+                  <Input placeholder="Key" {...register(`view.queryStrings.${i}.key`)} />
                 </Col>
                 <Col span={14}>
-                  <Input placeholder="Value" />
+                  <Input
+                    placeholder="Value"
+                    {...register(`view.queryStrings.${i}.value`)}
+                  />
                 </Col>
                 <Col span={2}>
                   <Button
