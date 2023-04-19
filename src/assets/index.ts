@@ -133,6 +133,7 @@ import icInsta from '@assets/images/img_insta.svg';
 import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
+import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
 
 export {
   icAdd,
@@ -270,4 +271,5 @@ export {
   icUtteranceSelectHistory,
   imgInstabot,
   imgLinebot,
+  imgLinebotInactivate,
 };

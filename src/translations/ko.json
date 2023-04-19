@@ -301,7 +301,13 @@
     "DEACTIVATE_BOT": "봇 비활성화",
     "DEACTIVATE_BOT_MESSAGE": "봇을 비활성화 하면, 모든 채널과 연결이 끊어지고\n채널에서 더 이상 봇이 동작하지 않습니다.\n비활성화 하시겠습니까?",
     "DEACTIVATE_BOT_SUCCESS_MESSAGE": "봇이 비활성화되었습니다.",
-    "DELETE_BOT_DESC": "봇 삭제는 '마스터' 이상 권한을 가져야만 가능하며, 삭제하기 신청 후 삭제까지 72시간이 소요됩니다.\n삭제된 봇은 다시 복구할 수 없으니 꼭 필요한 경우에만 삭제해주세요."
+    "DELETE_BOT_DESC": "봇 삭제는 '마스터' 이상 권한을 가져야만 가능하며, 삭제하기 신청 후 삭제까지 72시간이 소요됩니다.\n삭제된 봇은 다시 복구할 수 없으니 꼭 필요한 경우에만 삭제해주세요.",
+    "DISABLED_BOT_ACTIVATED": "봇 활성화 불가",
+    "DISABLED_BOT_ACTIVATED_MESSAGE": "이미 다른 봇이 활성화 되었습니다.\n활성화된 봇을 비활성화 후, 다시 시도해주세요.",
+    "CONNECT_CHANNEL": "채널 연결",
+    "CONFIRM_CONNECT_CHANNEL_MESSAGE": "채널과 연결할까요?",
+    "CONNECT_CHANNEL_SUCCESS": "채널 연결 완료",
+    "CONNECT_CHANNEL_SUCCESS_MESSAGE": "채널과 연결되었습니다.\n봇 배포를 편집한 봇을 작동시키려면 '배포' 메뉴에서 진행해주세요."
   },
   "deployment": {
     "TITLE": "배포",
