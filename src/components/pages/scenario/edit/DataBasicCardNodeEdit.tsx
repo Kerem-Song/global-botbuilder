@@ -27,7 +27,9 @@ export const DataBasicCardNodeEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataBasicCardView>>();
-  const [carouselNum, setCarouselNum] = useState<number>(0);
+  const [carouselNum, setCarouselNum] = useState<number>(
+    Number(watch('view.carousel')) || 1,
+  );
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
   const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
@@ -41,8 +43,10 @@ export const DataBasicCardNodeEdit = () => {
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);
+      setValue('view.carousel', carouselNum + 1);
     } else {
       setCarouselNum((prev) => prev - 1);
+      setValue('view.carousel', carouselNum - 1);
     }
   };
 
@@ -50,9 +54,9 @@ export const DataBasicCardNodeEdit = () => {
 
   useEffect(() => {
     if (watch(`view.carousel`)) {
-      setCarouselNum(Number(watch(`view.carousel`)));
+      setCarouselNum(watch(`view.carousel`));
     }
-  }, [carouselNum]);
+  }, [watch(`view.carousel`)]);
 
   return (
     <>
@@ -71,11 +75,19 @@ export const DataBasicCardNodeEdit = () => {
       <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
         <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
         <div className="dataCardCrouselSlideBtns">
-          <Button shape="ghost" onClick={() => handleCarouselNum(false)}>
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(false)}
+            disabled={carouselNum <= 1}
+          >
             -
           </Button>
-          <span {...register(`view.carousel`)}>{carouselNum}</span>
-          <Button shape="ghost" onClick={() => handleCarouselNum(true)}>
+          <span>{watch(`view.carousel`)}</span>
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(true)}
+            disabled={carouselNum >= 10}
+          >
             +
           </Button>
         </div>
