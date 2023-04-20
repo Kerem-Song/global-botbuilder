@@ -88,7 +88,7 @@ export const ImageSettings = ({
         imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL &&
         ratio === ImageAspectRatio.Rectangle
       ) {
-        desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
+        desc = t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`);
       } else {
         desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
       }

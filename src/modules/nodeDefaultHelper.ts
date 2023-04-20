@@ -13,8 +13,8 @@ import {
   IBasicCardView,
   IConditionView,
   IDataBasicCardView,
-  IDataCommerceCardView,
   IDataListCardView,
+  IDataProductCardView,
   IJsonRequestView,
   IListCardCarouselView,
   IListCardItem,
@@ -264,8 +264,8 @@ export const nodeDefaultHelper = {
     };
     return result;
   },
-  createDefaultDataCommerceCardView: () => {
-    const result: IDataCommerceCardView = {
+  createDefaultDataProductCardView: () => {
+    const result: IDataProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
       attribute: '',

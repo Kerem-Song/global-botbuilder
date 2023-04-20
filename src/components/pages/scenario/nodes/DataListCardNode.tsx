@@ -1,15 +1,15 @@
 import { Card } from '@components';
 import { usePage } from '@hooks';
 import { IHasNode } from '@models/interfaces/IHasNode';
-import { IDataBasicCardView } from '@models/interfaces/res/IGetFlowRes';
+import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { SortableButtonCtrlContainer } from '../SortableButtonCtrlContainer';
 
-export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
-  const view: IDataBasicCardView = node.view as IDataBasicCardView;
+export const DataListCardNode: FC<IHasNode> = ({ node }) => {
+  const view: IDataListCardView = node.view as IDataListCardView;
   const { t } = usePage();
 
   return (
@@ -30,6 +30,12 @@ export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
         <span style={{ whiteSpace: 'pre-line' }}>
           <MultiClamp clamp={2} ellipsis={'...'}>
             print: {view.print}
+          </MultiClamp>
+        </span>
+
+        <span style={{ whiteSpace: 'pre-line' }}>
+          <MultiClamp clamp={2} ellipsis={'...'}>
+            headline: {view.header}
           </MultiClamp>
         </span>
 
@@ -56,16 +62,23 @@ export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
 
         <span style={{ whiteSpace: 'pre-line' }}>
           <MultiClamp clamp={2} ellipsis={'...'}>
-            title: {view.title}
+            title: {view.items[0].title}
           </MultiClamp>
         </span>
 
         <span style={{ whiteSpace: 'pre-line' }}>
           <MultiClamp clamp={2} ellipsis={'...'}>
-            description: {view.description}
+            description: {view.items[0].description}
+          </MultiClamp>
+        </span>
+
+        <span style={{ whiteSpace: 'pre-line' }}>
+          <MultiClamp clamp={2} ellipsis={'...'}>
+            list image: {view.items[0].imageUrl}
           </MultiClamp>
         </span>
       </div>
+
       <div className="buttonWrapper node-draggable-ignore">
         {view.buttons && (
           <SortableButtonCtrlContainer

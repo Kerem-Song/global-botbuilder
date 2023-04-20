@@ -1,15 +1,15 @@
 import { Card } from '@components';
 import { usePage } from '@hooks';
 import { IHasNode } from '@models/interfaces/IHasNode';
-import { IDataBasicCardView } from '@models/interfaces/res/IGetFlowRes';
+import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { SortableButtonCtrlContainer } from '../SortableButtonCtrlContainer';
 
-export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
-  const view: IDataBasicCardView = node.view as IDataBasicCardView;
+export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
+  const view: IDataProductCardView = node.view as IDataProductCardView;
   const { t } = usePage();
 
   return (
@@ -56,7 +56,25 @@ export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
 
         <span style={{ whiteSpace: 'pre-line' }}>
           <MultiClamp clamp={2} ellipsis={'...'}>
-            title: {view.title}
+            profile image: {view.profileIconUrl}
+          </MultiClamp>
+        </span>
+
+        <span style={{ whiteSpace: 'pre-line' }}>
+          <MultiClamp clamp={2} ellipsis={'...'}>
+            shop name: {view.profileName}
+          </MultiClamp>
+        </span>
+
+        <span style={{ whiteSpace: 'pre-line' }}>
+          <MultiClamp clamp={2} ellipsis={'...'}>
+            price: {view.retailPrice}
+          </MultiClamp>
+        </span>
+
+        <span style={{ whiteSpace: 'pre-line' }}>
+          <MultiClamp clamp={2} ellipsis={'...'}>
+            discount: {view.discountPrice}
           </MultiClamp>
         </span>
 

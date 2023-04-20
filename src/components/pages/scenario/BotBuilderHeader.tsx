@@ -81,8 +81,8 @@ const apiNodes = [
     nodeName: 'Data 리스트',
   },
   {
-    className: 'icDataCommerce',
-    value: NODE_TYPES.DATA_COMMERCE_CARD_NODE,
+    className: 'icDataProduct',
+    value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
     nodeName: 'Data 커머스',
   },
 ];

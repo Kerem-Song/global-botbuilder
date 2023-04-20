@@ -55,7 +55,7 @@ export const VIEW_TYPES = {
   RETRY_CONDITION_VIEW: 'RetryConditionView',
   PARAMETER_SET_NODE_VIEW: 'ParameterSetView',
   DATA_BASIC_CARD_VIEW: 'DataBasicCardView',
-  DATA_COMMERCE_CARD_VIEW: 'DataCommerceCardView',
+  DATA_PRODUCT_CARD_VIEW: 'DataProductCardView',
   DATA_LIST_CARD_VIEW: 'DataListCardView',
 };
 
@@ -79,7 +79,7 @@ export const NODE_TYPES = {
   LIST_CARD_CAROUSEL_NODE: 'ListCardCarouselNode',
   RETRY_CONDITION_NODE: 'RetryConditionNode',
   DATA_BASIC_CARD_NODE: 'DataBasicCardNode',
-  DATA_COMMERCE_CARD_NODE: 'DataCommerceCardNode',
+  DATA_PRODUCT_CARD_NODE: 'DataProductCardNode',
   DATA_LIST_CARD_NODE: 'DataListCardNode',
 } as const;
 

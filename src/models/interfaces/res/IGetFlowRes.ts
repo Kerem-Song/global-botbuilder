@@ -345,7 +345,7 @@ export interface IDataCardView extends IViewBase {
 
 export interface IDataBasicCardView extends IBasicCardView, IDataCardView {}
 
-export interface IDataCommerceCardView extends IProductCardView, IDataCardView {}
+export interface IDataProductCardView extends IProductCardView, IDataCardView {}
 
 export interface IDataListCardView extends IListCardView, IDataCardView {}
 export interface IGetFlowRes {
