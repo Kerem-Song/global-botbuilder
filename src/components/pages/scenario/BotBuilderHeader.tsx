@@ -70,9 +70,21 @@ const apiNodes = [
     value: NODE_TYPES.JSON_REQUEST_NODE,
     nodeName: 'Api Request',
   },
-  { className: 'icDataBasic', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 기본 카드' },
-  { className: 'icDataList', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 리스트' },
-  { className: 'icDataCommerce', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 커머스' },
+  {
+    className: 'icDataBasic',
+    value: NODE_TYPES.DATA_BASIC_CARD_NODE,
+    nodeName: 'Data 기본 카드',
+  },
+  {
+    className: 'icDataList',
+    value: NODE_TYPES.DATA_LIST_CARD_NODE,
+    nodeName: 'Data 리스트',
+  },
+  {
+    className: 'icDataCommerce',
+    value: NODE_TYPES.DATA_COMMERCE_CARD_NODE,
+    nodeName: 'Data 커머스',
+  },
 ];
 
 export const BotBuilderHeader = () => {

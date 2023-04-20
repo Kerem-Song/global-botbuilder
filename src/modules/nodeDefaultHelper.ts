@@ -12,6 +12,9 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
+  IDataBasicCardView,
+  IDataCommerceCardView,
+  IDataListCardView,
   IJsonRequestView,
   IListCardCarouselView,
   IListCardItem,
@@ -237,6 +240,79 @@ export const nodeDefaultHelper = {
       queryStrings: [{ key: '', value: '' }],
       responseMapping: [{ jsonPath: '', variable: '' }],
       url: '',
+    };
+    return result;
+  },
+  createDefaultDataBasicCardView: () => {
+    const result: IDataBasicCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
+      attribute: '',
+      carousel: 0,
+      print: 'order',
+      useImageCtrl: false,
+      title: '',
+      description: '',
+      imageCtrl: {
+        imageUrl: '',
+        altText: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
+      },
+      buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
+    };
+    return result;
+  },
+  createDefaultDataCommerceCardView: () => {
+    const result: IDataCommerceCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
+      attribute: '',
+      carousel: 0,
+      print: 'order',
+      useImageCtrl: false,
+      retailPrice: 0,
+      salePrice: 0,
+      discountPrice: 0,
+      profileIconUrl: '',
+      profileName: '',
+      description: '',
+      seq: 0,
+      currencyUnit: 'KRW',
+      imageCtrl: {
+        imageUrl: '',
+        altText: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
+      },
+      buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
+    };
+    return result;
+  },
+  createDefaultDataListCardView: () => {
+    const result: IDataListCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
+      attribute: '',
+      carousel: 0,
+      print: 'order',
+      useImageCtrl: false,
+      header: '',
+      seq: 0,
+      items: [
+        nodeDefaultHelper.createDefaultListCardItem(),
+        nodeDefaultHelper.createDefaultListCardItem(1),
+      ],
+      imageCtrl: {
+        imageUrl: '',
+        altText: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
+        typeName: CTRL_TYPES.IMAGE_CTRL,
+        aspectRatio: ImageAspectRatio.Rectangle,
+      },
+      buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
     return result;
   },
