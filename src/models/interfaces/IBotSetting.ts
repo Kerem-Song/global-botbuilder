@@ -7,3 +7,9 @@ export interface IUpdateBotActivate {
   isActivate: boolean;
   botId: string;
 }
+
+export interface IUpdateChannelActivate {
+  isActivate: boolean;
+  isLive: boolean;
+  botId: string;
+}

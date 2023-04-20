@@ -155,7 +155,8 @@
     "BOT_NAME_PLACEHOLDER": "Input Bot Name",
     "COPY_BOT_ID_MESSAGE": "Copied Bot ID",
     "DEACTIVATE_BOT": "Deactivate Bot",
-    "DEACTIVATE_BOT_SUCCESS_MESSAGE": "Deactivated the bot."
+    "DEACTIVATE_BOT_SUCCESS_MESSAGE": "Deactivated the bot.",
+    "GO_TO_PARTNERS_CENTER": "Go to Partners Center"
   },
   "deployment": {
     "TITLE": "Deploy",
