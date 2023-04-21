@@ -345,7 +345,8 @@
     "SUCCESS": "성공",
     "FAILED": "실패",
     "OPERATIONAL": "운영 채널",
-    "TEST": "테스트 채널"
+    "TEST": "테스트 채널",
+    "NO_DEPLOYMENT_HISTORY": "아직 배포 이력이 없습니다."
   },
   "history": {
     "TITLE": "히스토리",

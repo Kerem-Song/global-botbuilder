@@ -166,7 +166,7 @@
     "DEPLOY_NUMBER": "Deploy Number",
     "CHANNEL_TYPE": "Channel Type",
     "CHANNEL_NAME": "Channel Name",
-    "DEPLOYMENT_DATE_AND_TIME": "Deployment Date and Time",
+    "DEPLOYMENT_DATE_AND_TIME": "Date and Time",
     "OPERATOR": "Operator",
     "OPERATOR_ACCOUNT": "Operator(Account)",
     "DEPLOYMENT_STATUS": "Deployment Status",
@@ -177,6 +177,7 @@
     "SUCCESS": "Success",
     "FAILED": "Failed",
     "OPERATIONAL": "Operational",
-    "TEST": "Test"
+    "TEST": "Test",
+    "NO_DEPLOYMENT_HISTORY": "No deployment history."
   }
 }
