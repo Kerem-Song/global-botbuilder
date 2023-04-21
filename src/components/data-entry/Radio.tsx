@@ -14,7 +14,7 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>((args, ref) => {
   const { children, ...inputArgs } = args;
   return (
     <label className="radioContainer">
-      <input {...inputArgs} className="radio" type="radio" name="radio" ref={ref} />
+      <input {...inputArgs} className="radio" type="radio" name={args.name} ref={ref} />
       {children}
     </label>
   );

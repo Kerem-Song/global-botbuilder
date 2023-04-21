@@ -133,6 +133,7 @@ export const DataProductCardNodeEdit = () => {
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
               <Radio
+                name="view.print"
                 checked={watch('view.print') === 'order'}
                 onChange={() => setValue(`view.print`, 'order')}
                 ref={carouselPrintOutField.ref}
@@ -142,6 +143,7 @@ export const DataProductCardNodeEdit = () => {
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
+                name="view.print"
                 checked={watch('view.print') === 'random'}
                 onChange={() => setValue(`view.print`, 'random')}
                 ref={carouselPrintOutField.ref}

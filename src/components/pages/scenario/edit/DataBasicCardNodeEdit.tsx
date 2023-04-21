@@ -96,18 +96,22 @@ export const DataBasicCardNodeEdit = () => {
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
               <Radio
+                name="view.print"
                 checked={watch('view.print') === 'order'}
                 onChange={() => setValue(`view.print`, 'order')}
                 ref={carouselPrintOutField.ref}
+                value="order"
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_ORDER`)}</span>
               </Radio>
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
+                name="view.print"
                 checked={watch('view.print') === 'random'}
                 onChange={() => setValue(`view.print`, 'random')}
                 ref={carouselPrintOutField.ref}
+                value="random"
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_RANDOM`)}</span>
               </Radio>
