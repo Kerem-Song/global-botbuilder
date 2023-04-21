@@ -1,4 +1,4 @@
-import { Button, Col, Row } from '@components';
+import { Button, Col, Divider, Row } from '@components';
 import { FormItem, Input, Radio } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { useHistoryViewerMatch, usePage } from '@hooks';
@@ -73,7 +73,7 @@ export const JsonRequestNodeEdit = () => {
   };
 
   const handleAddResMappingButton = () => {
-    resMappingAppend({ jsonPath: '', variable: '' });
+    resMappingAppend({ key: '', value: '' });
   };
 
   const handleDeleteResMappingButton = (index: number) => {
@@ -83,6 +83,7 @@ export const JsonRequestNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
+        <p className="m-b-8">Method</p>
         <FormItem error={errors.view?.method}>
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
@@ -112,6 +113,7 @@ export const JsonRequestNodeEdit = () => {
             {...register('view.url')}
           />
         </FormItem>
+        <Divider />
         {headersField.map((header, i) => (
           <div key={header.id}>
             <div className="m-b-8">
@@ -141,6 +143,7 @@ export const JsonRequestNodeEdit = () => {
             + Header
           </Button>
         </div>
+        <Divider />
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
             <div className="m-b-8">
@@ -180,6 +183,7 @@ export const JsonRequestNodeEdit = () => {
             + Query String{' '}
           </Button>
         </div>
+        <Divider />
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
@@ -190,7 +194,7 @@ export const JsonRequestNodeEdit = () => {
             readOnly={isHistoryViewer}
           />
         </FormItem>
-
+        <Divider />
         <Row align="center">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
@@ -209,7 +213,7 @@ export const JsonRequestNodeEdit = () => {
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
           <div key={res.id}>
-            <FormItem error={errors.view?.responseMapping?.[i]?.jsonPath}>
+            <FormItem error={errors.view?.responseMapping?.[i]?.key}>
               <InputTextAreaWithTitleCounter
                 placeholder={t(
                   `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
@@ -217,10 +221,10 @@ export const JsonRequestNodeEdit = () => {
                 readOnly={isHistoryViewer}
               />
             </FormItem>
-            <FormItem error={errors.view?.responseMapping?.[i]?.variable}>
+            <FormItem error={errors.view?.responseMapping?.[i]?.value}>
               <ParameterSelector
                 control={control}
-                path={`view.responseMapping.${i}.variable`}
+                path={`view.responseMapping.${i}.value`}
                 placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
                 readOnly={isHistoryViewer}
               />

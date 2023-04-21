@@ -11,20 +11,19 @@ import { NextNodeButton } from '../NextNodeButton';
 export const JsonRequestNode: FC<IHasNode> = ({ node }) => {
   const view: IJsonRequestView = node.view as IJsonRequestView;
   const { t } = usePage();
-  console.log('@view jsonreqNode', node);
-  console.log('@@@');
+
   return (
     <Card>
       <div className="method">{view.method}</div>
       <div className="countConditionWrapper">
         {view.url ? (
-          <span style={{ whiteSpace: 'pre-line' }}>
+          <span className="dataCardDesc">
             <MultiClamp clamp={2} ellipsis={'...'}>
               {view.url}
             </MultiClamp>
           </span>
         ) : (
-          <span style={{ whiteSpace: 'pre-line', color: '#929292' }}>
+          <span className="dataCardDesc" style={{ color: '#929292' }}>
             <MultiClamp clamp={2} ellipsis={'...'}>
               {t(`API_REQUEST_PLACEHOLDLER`)}
             </MultiClamp>

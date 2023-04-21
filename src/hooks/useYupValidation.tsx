@@ -349,6 +349,10 @@ export const useYupValidation = () => {
     childrenViews: yup.array().of(productCardNodeEditSchema),
   });
 
+  const jsonRequestNodeEdtiSchema = yup.object().shape({
+    url: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
+  });
+
   const schema = yup
     .object({
       title: yup.string().required(t(`VALIDATION_REQUIRED`)),
@@ -401,6 +405,10 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.ANSWER_NODE,
           then: answerNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.JSON_REQUEST_NODE,
+          then: jsonRequestNodeEdtiSchema,
         }),
       // nextNodeId: yup
       //   .string()

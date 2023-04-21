@@ -333,7 +333,7 @@ export interface IJsonRequestView extends IViewBase {
   headers: IJson[];
   method: 'POST' | 'GET';
   queryStrings: IJson[];
-  responseMapping: { jsonPath: string; variable: string }[];
+  responseMapping: IJson[];
   url: string;
 }
 

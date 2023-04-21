@@ -238,7 +238,7 @@ export const nodeDefaultHelper = {
       headers: [{ key: '', value: '' }],
       method: 'POST',
       queryStrings: [{ key: '', value: '' }],
-      responseMapping: [{ jsonPath: '', variable: '' }],
+      responseMapping: [{ key: '', value: '' }],
       url: '',
     };
     return result;

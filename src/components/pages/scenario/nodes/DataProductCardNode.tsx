@@ -15,37 +15,37 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
   return (
     <Card>
       <div className="countConditionWrapper">
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             attribute: {view.attribute}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             carousel: {view.carousel}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             print: {view.print}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
-            image: {view.useImageCtrl ? 'Y' : 'N'}
+            image: {view.imageCtrl?.imageUrl ? 'Y' : 'N'}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             image value: {view.imageCtrl?.imageUrl}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             image type:
             {view.imageCtrl?.aspectRatio
@@ -54,31 +54,31 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             profile image: {view.profileIconUrl}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             shop name: {view.profileName}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             price: {view.retailPrice}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             discount: {view.discountPrice}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             description: {view.description}
           </MultiClamp>

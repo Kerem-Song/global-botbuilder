@@ -321,7 +321,8 @@ export const arrowHelper = {
     if (
       !isNext &&
       (endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE ||
-        endNode.type === NODE_TYPES.INTENT_NODE)
+        endNode.type === NODE_TYPES.INTENT_NODE ||
+        endNode.type === NODE_TYPES.JSON_REQUEST_NODE)
     ) {
       return '연속노드로 응답노드만 연결 할 수 있습니다.';
     }

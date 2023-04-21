@@ -15,43 +15,43 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
   return (
     <Card>
       <div className="countConditionWrapper">
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             attribute: {view.attribute}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             carousel: {view.carousel}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             print: {view.print}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             headline: {view.header}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
-            image: {view.useImageCtrl ? 'Y' : 'N'}
+            image: {view.imageCtrl?.imageUrl ? 'Y' : 'N'}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             image value: {view.imageCtrl?.imageUrl}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             image type:
             {view.imageCtrl?.aspectRatio
@@ -60,19 +60,19 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             title: {view.items[0].title}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             description: {view.items[0].description}
           </MultiClamp>
         </span>
 
-        <span style={{ whiteSpace: 'pre-line' }}>
+        <span className="dataCardDesc">
           <MultiClamp clamp={2} ellipsis={'...'}>
             list image: {view.items[0].imageUrl}
           </MultiClamp>
