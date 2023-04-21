@@ -88,22 +88,18 @@ export const ImageSettings = ({
         imageCtrl === IMAGE_CTRL_TYPES.IMAGE_CTRL &&
         ratio === ImageAspectRatio.Rectangle
       ) {
-        desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
+        desc = t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`);
       } else {
         desc = t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`);
       }
       return desc;
     };
+
     const result = await confirm({
       title: t(`IMAGE_TYPE_CHANGE`),
       description: (
         <>
-          <span style={{ whiteSpace: 'pre-line' }}>
-            {/* {ratio === ImageAspectRatio.Rectangle
-              ? t(`IMAGE_SETTING_TYPE_RECTANGLE_WARNING`)
-              : t(`IMAGE_SETTING_TYPE_SQUARE_WARNING`)} */}
-            {handleDesc()}
-          </span>
+          <span style={{ whiteSpace: 'pre-line' }}>{handleDesc()}</span>
         </>
       ),
     });
@@ -159,6 +155,7 @@ export const ImageSettings = ({
       <Row justify="space-between">
         <Col span={12} className="radioContainer">
           <Radio
+            name="aspectRatio"
             checked={
               watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
               ImageAspectRatio.Rectangle
@@ -171,6 +168,7 @@ export const ImageSettings = ({
         </Col>
         <Col span={12} className="radioContainer">
           <Radio
+            name="aspectRatio"
             checked={
               watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
               ImageAspectRatio.Square

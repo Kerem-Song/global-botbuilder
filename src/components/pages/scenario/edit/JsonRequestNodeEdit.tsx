@@ -72,6 +72,14 @@ export const JsonRequestNodeEdit = () => {
     queryStringRemove(index);
   };
 
+  const handleAddResMappingButton = () => {
+    resMappingAppend({ jsonPath: '', variable: '' });
+  };
+
+  const handleDeleteResMappingButton = (index: number) => {
+    resMappingRemove(index);
+  };
+
   return (
     <>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
@@ -143,12 +151,17 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={2} align="center">
                 <Col span={8}>
-                  <Input placeholder="Key" {...register(`view.queryStrings.${i}.key`)} />
+                  <Input
+                    placeholder="Key"
+                    {...register(`view.queryStrings.${i}.key`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Col>
                 <Col span={14}>
                   <Input
                     placeholder="Value"
                     {...register(`view.queryStrings.${i}.value`)}
+                    readOnly={isHistoryViewer}
                   />
                 </Col>
                 <Col span={2}>
@@ -178,16 +191,19 @@ export const JsonRequestNodeEdit = () => {
           />
         </FormItem>
 
-        <Row>
-          <Col>{t(`API_REQUEST_VALIDATION`)}</Col>
-          <Col>
-            <Button shape="ghost">{t(`API_REQUEST_VALIDATION_START`)}</Button>
+        <Row align="center">
+          <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
+          <Col span={2}>
+            <Button small type="primary">
+              {t(`API_REQUEST_VALIDATION_START`)}
+            </Button>
           </Col>
         </Row>
         <InputTextAreaWithTitleCounter
           className="textNodeTextArea"
           maxRows={17}
           placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
+          readOnly={isHistoryViewer}
         />
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
@@ -198,6 +214,7 @@ export const JsonRequestNodeEdit = () => {
                 placeholder={t(
                   `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
                 )}
+                readOnly={isHistoryViewer}
               />
             </FormItem>
             <FormItem error={errors.view?.responseMapping?.[i]?.variable}>
@@ -208,16 +225,21 @@ export const JsonRequestNodeEdit = () => {
                 readOnly={isHistoryViewer}
               />
             </FormItem>
+            <div className="deleteBtn">
+              <Button shape="ghost" onClick={() => handleDeleteResMappingButton(i)}>
+                {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
+              </Button>
+            </div>
           </div>
         ))}
 
         <div className="apiFieldAddBtn m-b-8">
-          <Button className="addBtn" shape="ghost" onClick={handleAddQueryStringsButton}>
+          <Button className="addBtn" shape="ghost" onClick={handleAddResMappingButton}>
             + {t(`API_REQUEST_RESPONSE_MAPPING_ADD`)}
           </Button>
         </div>
       </Collapse>
-      <Collapse label={t(``)} useSwitch={false}>
+      <Collapse label={t(`API_REQUEST_MESSAGE_CONNECT_SETTING`)} useSwitch={false}>
         <>
           <div className="m-b-8">
             <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>

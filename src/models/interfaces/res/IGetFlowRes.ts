@@ -337,6 +337,17 @@ export interface IJsonRequestView extends IViewBase {
   url: string;
 }
 
+export interface IDataCardView extends IViewBase {
+  attribute: string;
+  carousel: number;
+  print: 'order' | 'random';
+}
+
+export interface IDataBasicCardView extends IBasicCardView, IDataCardView {}
+
+export interface IDataProductCardView extends IProductCardView, IDataCardView {}
+
+export interface IDataListCardView extends IListCardView, IDataCardView {}
 export interface IGetFlowRes {
   alias: string;
   id: string;
