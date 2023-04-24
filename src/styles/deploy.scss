@@ -117,6 +117,28 @@
             background-color: $primary100;
           }
         }
+        .emptyList {
+          background-color: $grayWhite;
+          height: rem(248);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: rem(10);
+            img {
+              width: rem(56);
+              height: rem(56);
+            }
+            span {
+              font-size: rem(14);
+              font-weight: rem(500);
+              line-height: rem(25);
+            }
+          }
+        }
       }
     }
   }
@@ -154,6 +176,7 @@
         &.active {
           background-color: $primary500;
           color: $grayWhite;
+          border: none;
         }
       }
     }
@@ -235,7 +258,8 @@
         display: flex;
         align-items: center;
         .infoTitle {
-          width: rem(116);
+          width: rem(130);
+          word-break: break-all;
           color: $gray500;
         }
         .infoContent {

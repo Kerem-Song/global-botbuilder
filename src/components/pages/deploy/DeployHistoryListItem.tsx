@@ -1,3 +1,4 @@
+import { icNoResult } from '@assets';
 import { useModalOpen, usePage } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import { IResponseSearchDeployHistory } from '@models/interfaces/IDeploy';
@@ -18,44 +19,55 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
   const [detailInfo, setDetailInfo] = useState({});
   return (
     <tbody>
-      {data?.result.items.map((x, i) => {
-        return (
-          <tr
-            className="list"
-            key={i}
-            role="presentation"
-            onClick={() => {
-              setDetailInfo(x);
-              handleIsOpen(true);
-            }}
-          >
-            <td className="deployHistoryList deployNumber">{x.no}</td>
-            <td className="deployHistoryList channelType">
-              {x.isLive === true ? t('OPERATIONAL') : t('TEST')}
-            </td>
-            <td className="deployHistoryList channelName">{x.snsChannel}</td>
-            <td className="deployHistoryList deployDateTime">
-              {util.formatDateTime(new Date(x.createAtByBrand))}
-            </td>
-            <td className="deployHistoryList accountInfo">
-              <MultiClamp clamp={1}>{x.actorName}</MultiClamp>
-              <MultiClamp clamp={1}>{x.actorEmail}</MultiClamp>
-            </td>
-            <td className="deployHistoryList status">
-              <span className={classNames('success', { failed: x.isSuccess === false })}>
-                {x.isSuccess === true ? t('SUCCESS') : t('FAILED')}
-              </span>
-            </td>
-            <td
-              className={classNames('deployHistoryList memo text', {
-                empty: x.comment === null,
-              })}
+      {data && data.result.items.length > 0 ? (
+        data?.result.items.map((x, i) => {
+          return (
+            <tr
+              className="list"
+              key={i}
+              role="presentation"
+              onClick={() => {
+                setDetailInfo(x);
+                handleIsOpen(true);
+              }}
             >
-              <MultiClamp clamp={2}>{x.comment ? x.comment : '-'}</MultiClamp>
-            </td>
-          </tr>
-        );
-      })}
+              <td className="deployHistoryList deployNumber">{x.no}</td>
+              <td className="deployHistoryList channelType">
+                {x.isLive === true ? t('OPERATIONAL') : t('TEST')}
+              </td>
+              <td className="deployHistoryList channelName">{x.snsChannel}</td>
+              <td className="deployHistoryList deployDateTime">
+                {util.formatDateTime(new Date(x.createAt))}
+              </td>
+              <td className="deployHistoryList accountInfo">
+                <MultiClamp clamp={1}>{x.actorName}</MultiClamp>
+                <MultiClamp clamp={1}>{x.actorEmail}</MultiClamp>
+              </td>
+              <td className="deployHistoryList status">
+                <span
+                  className={classNames('success', { failed: x.isSuccess === false })}
+                >
+                  {x.isSuccess === true ? t('SUCCESS') : t('FAILED')}
+                </span>
+              </td>
+              <td
+                className={classNames('deployHistoryList memo text', {
+                  empty: x.comment === null,
+                })}
+              >
+                <MultiClamp clamp={2}>{x.comment ? x.comment : '-'}</MultiClamp>
+              </td>
+            </tr>
+          );
+        })
+      ) : (
+        <tr className="emptyList">
+          <td className="empty">
+            <img src={icNoResult} alt="empty" />
+            <span>{t('NO_DEPLOYMENT_HISTORY')}</span>
+          </td>
+        </tr>
+      )}
       {isOpen && (
         <DeployDetailModal
           isOpen={isOpen}

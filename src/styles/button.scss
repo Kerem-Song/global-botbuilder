@@ -138,3 +138,16 @@ a.luna-btn {
     background: transparent;
   }
 }
+
+.luna-btn-disabled {
+  border: 0;
+  // background: $primary500;
+  // color: #ffffff;
+  background: $primary200;
+  color: #ffffff;
+  cursor: not-allowed;
+  &:hover {
+    background: $primary200;
+    color: #ffffff;
+  }
+}
