@@ -64,3 +64,14 @@
 .textNodeTextArea::-webkit-scrollbar {
   display: none;
 }
+
+.apiResLoading {
+  position: absolute;
+  top: 80%;
+  right: 44%;
+  z-index: 9998;
+}
+
+.jsonResOverlay {
+  opacity: 0.5;
+}

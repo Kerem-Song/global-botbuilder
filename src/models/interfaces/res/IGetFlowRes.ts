@@ -329,12 +329,22 @@ export interface IJson {
   value: string;
 }
 export interface IJsonRequestView extends IViewBase {
-  body: string;
-  headers: IJson[];
   method: 'POST' | 'GET';
-  queryStrings: IJson[];
-  responseMapping: IJson[];
   url: string;
+  headers: IJson[];
+  queryStrings?: IJson[];
+  body?: string;
+  responseMapping?: IJson[];
+  apiRes?: string;
+}
+
+export interface IJsonCheckApiValidation {
+  method: 'POST' | 'GET';
+  url: string;
+  headers: IJson[];
+  queryStrings?: IJson[];
+  body?: string;
+  responseMapping?: IJson[];
 }
 
 export interface IDataCardView extends IViewBase {

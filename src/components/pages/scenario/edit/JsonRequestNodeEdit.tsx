@@ -2,10 +2,14 @@ import { Button, Col, Divider, Row } from '@components';
 import { FormItem, Input, Radio } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { useHistoryViewerMatch, usePage } from '@hooks';
+import { useDataApiClient } from '@hooks/client/dataApiClient';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
+import { useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import ReactLoading from 'react-loading';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
@@ -25,7 +29,9 @@ export const JsonRequestNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
+  const [loading, setLoading] = useState<boolean>(true);
   const isHistoryViewer = useHistoryViewerMatch();
+  const { checkApiValidation } = useDataApiClient();
 
   const { field: method } = useController({ name: 'view.method', control });
 
@@ -78,6 +84,26 @@ export const JsonRequestNodeEdit = () => {
 
   const handleDeleteResMappingButton = (index: number) => {
     resMappingRemove(index);
+  };
+
+  const handleApiValidation = () => {
+    setLoading(true);
+    return checkApiValidation({
+      method: watch(`view.method`),
+      url: watch(`view.url`),
+      headers: watch(`view.headers`),
+      body: watch(`view.body`),
+    })
+      .then((res) => {
+        console.log('@res in handle api validation', res);
+        setValue('view.apiRes', JSON.stringify(res, null, 2));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log('@err in handle api validation', err);
+        setValue('view.apiRes', JSON.stringify(err, null, 2));
+        setLoading(false);
+      });
   };
 
   return (
@@ -198,17 +224,32 @@ export const JsonRequestNodeEdit = () => {
         <Row align="center">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
-            <Button small type="primary">
+            <Button small type="primary" onClick={handleApiValidation}>
               {t(`API_REQUEST_VALIDATION_START`)}
             </Button>
           </Col>
         </Row>
-        <InputTextAreaWithTitleCounter
-          className="textNodeTextArea"
-          maxRows={17}
-          placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
-          readOnly={isHistoryViewer}
-        />
+
+        <div>
+          {loading && (
+            <ReactLoading
+              type="bubbles"
+              color="#4478FF"
+              height={50}
+              width={50}
+              className="apiResLoading"
+            />
+          )}
+
+          <InputTextAreaWithTitleCounter
+            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
+            maxRows={17}
+            minRows={17}
+            placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
+            {...register(`view.apiRes`)}
+            readOnly={true}
+          />
+        </div>
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
