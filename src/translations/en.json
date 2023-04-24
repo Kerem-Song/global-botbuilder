@@ -155,7 +155,8 @@
     "BOT_NAME_PLACEHOLDER": "Input Bot Name",
     "COPY_BOT_ID_MESSAGE": "Copied Bot ID",
     "DEACTIVATE_BOT": "Deactivate Bot",
-    "DEACTIVATE_BOT_SUCCESS_MESSAGE": "Deactivated the bot."
+    "DEACTIVATE_BOT_SUCCESS_MESSAGE": "Deactivated the bot.",
+    "GO_TO_PARTNERS_CENTER": "Go to Partners Center"
   },
   "deployment": {
     "TITLE": "Deploy",
@@ -165,7 +166,7 @@
     "DEPLOY_NUMBER": "Deploy Number",
     "CHANNEL_TYPE": "Channel Type",
     "CHANNEL_NAME": "Channel Name",
-    "DEPLOYMENT_DATE_AND_TIME": "Deployment Date and Time",
+    "DEPLOYMENT_DATE_AND_TIME": "Date and Time",
     "OPERATOR": "Operator",
     "OPERATOR_ACCOUNT": "Operator(Account)",
     "DEPLOYMENT_STATUS": "Deployment Status",
@@ -176,6 +177,7 @@
     "SUCCESS": "Success",
     "FAILED": "Failed",
     "OPERATIONAL": "Operational",
-    "TEST": "Test"
+    "TEST": "Test",
+    "NO_DEPLOYMENT_HISTORY": "No deployment history."
   }
 }

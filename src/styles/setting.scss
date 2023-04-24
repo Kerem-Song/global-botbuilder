@@ -31,12 +31,12 @@
     }
     .activateWrap {
       div {
-        .botActivateCardContainer {
+        .connectChannelCardContainer {
           display: flex;
           gap: rem(12);
-          .botActivateCardWrap {
+          .connectChannelCardWrap {
             width: 534px;
-            .botActivateCard {
+            .connectChannelCard {
               width: 100%;
               display: flex;
               justify-content: space-between;
@@ -73,6 +73,10 @@
                     line-height: rem(14);
                   }
                 }
+              }
+              .connectBtns {
+                display: flex;
+                gap: rem(8);
               }
             }
           }
@@ -122,7 +126,7 @@
   }
 }
 
-.connetChannel {
+.connectChannel {
   color: red;
   font-size: $defaultSize;
 }

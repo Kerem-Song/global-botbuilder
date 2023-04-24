@@ -70,7 +70,7 @@ export const DeployPagination: FC<IDeployPagination> = ({
         <img src={currentPage > limit ? icBackActive : icBackInactive} alt="prev" />
       </Button>
       <div className="pageNumBtns">
-        {data &&
+        {data && data?.result.items.length > 0 ? (
           currentPagesArray &&
           currentPagesArray.map((index) => (
             <Button
@@ -82,8 +82,18 @@ export const DeployPagination: FC<IDeployPagination> = ({
             >
               {index}
             </Button>
-          ))}
+          ))
+        ) : (
+          <Button
+            className={classNames('pageNumBtn', {
+              active: currentPage,
+            })}
+          >
+            {currentPage}
+          </Button>
+        )}
       </div>
+
       <Button
         shape="ghost"
         className="nextBtn"
