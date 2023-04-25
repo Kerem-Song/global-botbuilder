@@ -38,7 +38,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   instance.interceptors.response.use(
     async function (response) {
       if (response.data.newToken) {
-        dispatch(setToken(response.data.newToken));
+        dispatch(setToken({ refreshToken: response.data.newToken }));
       }
       if (!response.data.isSuccess) {
         if (
