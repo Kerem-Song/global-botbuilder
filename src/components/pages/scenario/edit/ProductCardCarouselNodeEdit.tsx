@@ -31,7 +31,7 @@ const reactSelectStyle: StylesConfig = {
     border: '1px solid #DCDCDC',
     borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
     fontSize: '13px',
-    width: '76px',
+    width: '109px',
     ':hover': {
       borderColor: '#e7e7e7',
     },
@@ -216,6 +216,12 @@ export const ProductCardCarouselNodeEdit = () => {
                               <p>{t(`RECOMMENDED_SIZE`)}</p>
                               <p>640 x 640</p>
                             </Col>
+                            <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
+                            <Input
+                              {...register(`view.childrenViews.${index}.profileIconUrl`)}
+                              placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+                              readOnly={isHistoryViewer}
+                            />
                           </Row>
                         </FormItem>
                       </Space>
@@ -276,7 +282,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           <FormItem
                             error={errors.view?.childrenViews?.[index]?.retailPrice}
                           >
-                            <Row justify="space-between">
+                            <Row justify="space-between" gap={4}>
                               <Col span={16} className="retailPrice">
                                 <InputWithTitleCounter
                                   className={classNames({

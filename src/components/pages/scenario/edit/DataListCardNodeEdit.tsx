@@ -1,4 +1,4 @@
-import { Button, Col, FormItem, Radio, Row, Space } from '@components';
+import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -179,6 +179,12 @@ export const DataListCardNodeEdit = () => {
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>
+                    <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
+                    <Input
+                      {...register(`view.items.${i}.imageUrl`)}
+                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+                      readOnly={isHistoryViewer}
+                    />
                   </Row>
                 </FormItem>
               </Space>

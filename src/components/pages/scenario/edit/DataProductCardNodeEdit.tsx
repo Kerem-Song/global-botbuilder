@@ -1,4 +1,4 @@
-import { Button, Col, FormItem, Radio, Row, Space } from '@components';
+import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -187,6 +187,12 @@ export const DataProductCardNodeEdit = () => {
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
+                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
+                  <Input
+                    {...register(`view.profileIconUrl`)}
+                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Row>
               </FormItem>
             </Space>
@@ -226,7 +232,7 @@ export const DataProductCardNodeEdit = () => {
 
               <div className="m-b-8">
                 <FormItem error={errors.view && errors.view.retailPrice}>
-                  <Row justify="space-between">
+                  <Row justify="space-between" gap={4}>
                     <Col span={16} className="retailPrice">
                       <InputWithTitleCounter
                         className={classNames({

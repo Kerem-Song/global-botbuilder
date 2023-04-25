@@ -1,6 +1,6 @@
-import { Radio } from '@components';
+import { Input, Radio } from '@components';
 import { Col, Row, Space } from '@components/layout';
-import { usePage, useSystemModal } from '@hooks';
+import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import { Dispatch, SetStateAction, useEffect } from 'react';
@@ -26,8 +26,9 @@ export const ImageSettings = ({
 }: IImageSetting) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
-  const { getValues, setValue, watch, control } = useFormContext();
+  const { getValues, setValue, register, watch, control } = useFormContext();
   const values = getValues();
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleImageCtrlIdPath = () => {
     switch (imageCtrl) {
@@ -35,36 +36,42 @@ export const ImageSettings = ({
         return {
           imageCtrl: values.view.imageCtrl,
           imageFilePath: 'view.imageCtrl',
+          imageUrl: 'view.imageCtrl.imageUrl',
         };
 
       case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
         return {
           imageCtrl: values.view.items[listItemIndex!].imageCtrl,
           imageFilePath: `view.items.${listItemIndex}`,
+          imageUrl: `view.items.${listItemIndex}.imageUrl`,
         };
 
       case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
         return {
           imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
           imageFilePath: `view.childrenViews.${index}.imageCtrl`,
+          imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
         };
 
       case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
         return {
           imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
           imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
+          imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
         };
 
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
         return {
           imageCtrl: values.view.profileIconUrl,
           imageFilePath: `view.profileIconUrl`,
+          imageUrl: `view.profileIconUrl`,
         };
 
       case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
         return {
           imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
           imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
+          imageUrl: `view.childrenViews.${index}.profileIconUrl`,
         };
       default:
         return { imageCtrl: '', imageFilePath: '' };
@@ -146,11 +153,6 @@ export const ImageSettings = ({
 
   return (
     <Space direction="vertical">
-      <div className="m-b-8">
-        <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
-        <span className="required">*</span>
-      </div>
-
       <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
       <Row justify="space-between">
         <Col span={12} className="radioContainer">
@@ -181,12 +183,24 @@ export const ImageSettings = ({
         </Col>
       </Row>
 
+      <div className="m-b-8">
+        <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
+        <span className="required">*</span>
+      </div>
+
       <ImageFileUploader
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
         imageRatio={watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`)}
         isValid={isValid}
+      />
+
+      <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
+      <Input
+        {...register(handleImageCtrlIdPath().imageUrl!)}
+        placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+        readOnly={isHistoryViewer}
       />
     </Space>
   );

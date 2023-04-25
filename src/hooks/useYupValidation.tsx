@@ -278,8 +278,8 @@ export const useYupValidation = () => {
         op2: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
-    trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
-    falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    // trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    // falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
   const retryConditionNodeEditSchema = yup.object().shape({
@@ -353,6 +353,107 @@ export const useYupValidation = () => {
     url: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
   });
 
+  const dataBasicCardNodeEditSchema = yup.object().shape({
+    attribute: yup
+      .string()
+      .trim()
+      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+      .required(t(`VALIDATION_REQUIRED`)),
+    imageCtrl: imageCtrlEditSchema,
+    buttons: buttonsEditSchema,
+  });
+
+  const dataListCardNodeEditSchema = yup.object().shape({
+    attribute: yup
+      .string()
+      .trim()
+      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+      .required(t(`VALIDATION_REQUIRED`)),
+    header: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    imageCtrl: imageCtrlEditSchema,
+    items: yup.array().of(
+      yup.object().shape({
+        title: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        imageFile: imageFileEditSchema,
+        imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
+      }),
+    ),
+    buttons: buttonsEditSchema,
+  });
+
+  const dataProductCardNodeEditSchema = yup.object().shape({
+    attribute: yup
+      .string()
+      .trim()
+      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+      .required(t(`VALIDATION_REQUIRED`)),
+    imageCtrl: yup.object().shape({
+      imageFile: yup
+        .mixed()
+        .nullable()
+        .test(
+          'fileSize',
+          t(`VALIDATION_FILE_SIZE`),
+          (value) => !value || (value && value[0]?.size <= FILE_SIZE),
+        )
+        .test(
+          'filetype',
+          t(`VALIDATION_FILE_TYPE`),
+          (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
+        ),
+      imageUrl: yup
+        .string()
+        // .url(t(`VALIDATION_URL`))
+        .required(t(`VALIDATION_REQUIRED`)),
+    }),
+    profileIconUrl: yup
+      .string()
+      // .url(t(`VALIDATION_URL`))
+      .required(t(`VALIDATION_REQUIRED`)),
+    profileName: yup
+      .string()
+      .trim()
+      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
+      .required(t(`VALIDATION_REQUIRED`)),
+    description: yup
+      .string()
+      .trim()
+      .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
+      .required(t(`VALIDATION_REQUIRED`)),
+    retailPrice: yup
+      .number()
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
+      // .positive()
+      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
+        if (val != undefined) {
+          return patternTwoDigisAfterComma.test(val);
+        }
+        return true;
+      })
+      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
+      .transform((value, originalValue) => {
+        return Number.isNaN(originalValue) ? '' : Number(value);
+      })
+      .required(t(`VALIDATION_REQUIRED`)),
+    discountPrice: yup
+      .number()
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
+      .nullable()
+      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
+        if (val != undefined) {
+          return patternTwoDigisAfterComma.test(val);
+        }
+        return true;
+      })
+      .max(
+        yup.ref('retailPrice'),
+        t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: yup.ref('retailPrice') }),
+      )
+      .transform((value, originalValue) => {
+        return Number.isNaN(originalValue) ? '' : Number(value);
+      }),
+    buttons: buttonsEditSchema,
+  });
   const schema = yup
     .object({
       title: yup.string().required(t(`VALIDATION_REQUIRED`)),
@@ -409,7 +510,20 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.JSON_REQUEST_NODE,
           then: jsonRequestNodeEdtiSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.DATA_BASIC_CARD_NODE,
+          then: dataBasicCardNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.DATA_LIST_CARD_NODE,
+          then: dataListCardNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+          then: dataProductCardNodeEditSchema,
         }),
+
       // nextNodeId: yup
       //   .string()
       //   .nullable()

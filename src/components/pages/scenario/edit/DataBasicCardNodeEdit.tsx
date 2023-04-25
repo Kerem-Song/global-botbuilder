@@ -142,7 +142,7 @@ export const DataBasicCardNodeEdit = () => {
               maxLength={20}
               isLight={true}
               {...register('view.title')}
-              placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+              placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               textLength={watch('view.title')?.length || 0}
               readOnly={isHistoryViewer}
             />
@@ -155,7 +155,7 @@ export const DataBasicCardNodeEdit = () => {
               showCount
               maxLength={watch(`view.useImageCtrl`) || watch(`view.title`) ? 230 : 400}
               isLight={true}
-              placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
+              placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
               textLength={watch('view.description')?.length || 0}
               readOnly={isHistoryViewer}
