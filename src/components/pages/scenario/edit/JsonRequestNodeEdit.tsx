@@ -29,7 +29,7 @@ export const JsonRequestNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
   const { checkApiValidation } = useDataApiClient();
 
@@ -259,6 +259,7 @@ export const JsonRequestNodeEdit = () => {
                 placeholder={t(
                   `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
                 )}
+                {...register(`view.responseMapping.${i}.key`)}
                 readOnly={isHistoryViewer}
               />
             </FormItem>
