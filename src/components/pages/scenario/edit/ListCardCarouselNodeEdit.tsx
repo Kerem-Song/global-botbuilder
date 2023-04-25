@@ -130,7 +130,7 @@ export const ListCardCarouselNodeEdit = () => {
 
                 <ListCardCarouselItems nestedIndex={i} />
 
-                <Collapse label={t(`BUTTON`)} useSwitch={false}>
+                <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
                   {values.view && values.view?.childrenViews[index]?.buttons && (
                     <ButtonsEdit
                       index={index}

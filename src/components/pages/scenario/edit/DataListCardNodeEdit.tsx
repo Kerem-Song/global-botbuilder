@@ -133,10 +133,7 @@ export const DataListCardNodeEdit = () => {
           <InputWithTitleCounter
             label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
             required={true}
-            showCount={true}
-            maxLength={15}
             {...register('view.header')}
-            textLength={watch('view.header')?.length || 0}
             readOnly={isHistoryViewer}
           />
         </FormItem>
@@ -195,12 +192,9 @@ export const DataListCardNodeEdit = () => {
                   <FormItem error={errors.view?.items?.[i]?.title}>
                     <InputWithTitleCounter
                       label={t(`TITLE_INPUT`)}
-                      showCount={true}
-                      maxLength={36}
                       required={true}
                       isLight={true}
                       {...register(`view.items.${i}.title`)}
-                      textLength={watch(`view.items.${i}.title`)?.length || 0}
                       readOnly={isHistoryViewer}
                     />
                   </FormItem>
@@ -212,11 +206,8 @@ export const DataListCardNodeEdit = () => {
                 <span className="label">
                   <InputWithTitleCounter
                     label={t(`CONTENT_INPUT`)}
-                    showCount
-                    maxLength={16}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
-                    textLength={watch(`view.items.${i}.description`)?.length || 0}
                     readOnly={isHistoryViewer}
                   />
                 </span>
@@ -240,7 +231,7 @@ export const DataListCardNodeEdit = () => {
         </div>
       </Collapse>
 
-      <Collapse label={'버튼'} useSwitch={false}>
+      <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}

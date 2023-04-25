@@ -138,12 +138,9 @@ export const DataBasicCardNodeEdit = () => {
           <FormItem error={errors.view && errors.view.title}>
             <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
-              showCount={true}
-              maxLength={20}
               isLight={true}
               {...register('view.title')}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-              textLength={watch('view.title')?.length || 0}
               readOnly={isHistoryViewer}
             />
           </FormItem>
@@ -152,19 +149,16 @@ export const DataBasicCardNodeEdit = () => {
             <InputTextAreaWithTitleCounter
               label={t(`CONTENT_INPUT`)}
               maxRows={17}
-              showCount
-              maxLength={watch(`view.useImageCtrl`) || watch(`view.title`) ? 230 : 400}
               isLight={true}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
-              textLength={watch('view.description')?.length || 0}
               readOnly={isHistoryViewer}
             />
           </FormItem>
         </Space>
       </Collapse>
 
-      <Collapse label={t(`BUTTON`)} useSwitch={false}>
+      <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
