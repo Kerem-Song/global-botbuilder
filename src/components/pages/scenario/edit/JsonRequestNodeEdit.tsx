@@ -143,18 +143,18 @@ export const JsonRequestNodeEdit = () => {
             {...register('view.url')}
           />
         </FormItem>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         {headersField.map((header, i) => (
           <div key={header.id}>
             <div className="m-b-8">
               <span className="subLabel">{t(`API_REQUEST_HEADER_INPUT_LABEL`)}</span>
             </div>
             <div className="m-b-8">
-              <Row gap={2} align="center">
-                <Col span={8}>
+              <Row gap={4} align="center">
+                <Col span={9}>
                   <Input placeholder="Key" {...register(`view.headers.${i}.key`)} />
                 </Col>
-                <Col span={14}>
+                <Col span={12}>
                   <Input placeholder="Value" {...register(`view.headers.${i}.value`)} />
                 </Col>
                 <Col span={2}>
@@ -173,7 +173,7 @@ export const JsonRequestNodeEdit = () => {
             + Header
           </Button>
         </div>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
             <div className="m-b-8">
@@ -182,15 +182,15 @@ export const JsonRequestNodeEdit = () => {
               </span>
             </div>
             <div className="m-b-8">
-              <Row gap={2} align="center">
-                <Col span={8}>
+              <Row gap={4} align="center">
+                <Col span={9}>
                   <Input
                     placeholder="Key"
                     {...register(`view.queryStrings.${i}.key`)}
                     readOnly={isHistoryViewer}
                   />
                 </Col>
-                <Col span={14}>
+                <Col span={12}>
                   <Input
                     placeholder="Value"
                     {...register(`view.queryStrings.${i}.value`)}
@@ -213,7 +213,7 @@ export const JsonRequestNodeEdit = () => {
             + Query String{' '}
           </Button>
         </div>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
@@ -225,7 +225,7 @@ export const JsonRequestNodeEdit = () => {
             readOnly={isHistoryViewer}
           />
         </FormItem>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         <Row align="center">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
@@ -259,6 +259,9 @@ export const JsonRequestNodeEdit = () => {
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
           <div key={res.id}>
+            <div className="m-b-4">
+              <span className="subLabel">Json Path</span>
+            </div>
             <FormItem error={errors.view?.responseMapping?.[i]?.key}>
               <InputTextAreaWithTitleCounter
                 placeholder={t(
@@ -266,8 +269,13 @@ export const JsonRequestNodeEdit = () => {
                 )}
                 {...register(`view.responseMapping.${i}.key`)}
                 readOnly={isHistoryViewer}
+                className="m-b-12"
               />
             </FormItem>
+            <div className="m-b-8">
+              <p className="subLabel m-b-12">Set to</p>
+              <p className="subLabel">variable</p>
+            </div>
             <FormItem error={errors.view?.responseMapping?.[i]?.value}>
               <ParameterSelector
                 control={control}

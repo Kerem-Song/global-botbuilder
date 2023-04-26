@@ -34,7 +34,7 @@ export const reactSelectStyleProduct: StylesConfig = {
     ':hover': {
       borderColor: '#e7e7e7',
     },
-    minHeight: '34px',
+    minHeight: '40px',
   }),
 
   dropdownIndicator: () => ({

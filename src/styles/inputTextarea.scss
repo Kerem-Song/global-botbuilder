@@ -5,11 +5,22 @@
   border: 1px solid $gray200;
   font-family: 'Pretendard';
   border-radius: rem(8);
-  
 }
 
+// .textInput::-webkit-scrollbar {
+//   display: none;
+// }
 .textInput::-webkit-scrollbar {
-  display: none;
+  width: rem(8);
+  height: rem(8);
+  background: transparent; /*스크롤바 뒷 배경 색상*/
+}
+
+.textInput::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
+  border-radius: rem(18);
+  transition: background-color 2s ease-out;
 }
 
 // .textCounter {
@@ -62,17 +73,17 @@
   resize: none;
 
   &.jsonResOverlay {
-    background:rgba(0,0,0,0.5);
+    background: rgba(255, 255, 255, 0.8);
   }
 }
 
-.textNodeTextArea::-webkit-scrollbar {
-  display: none;
-}
+// .textNodeTextArea::-webkit-scrollbar {
+//   display: none;
+// }
 
 .apiResLoading {
   position: absolute;
-  top: 80%;
+  top: 89%;
   right: 44%;
   z-index: 9998;
 }
