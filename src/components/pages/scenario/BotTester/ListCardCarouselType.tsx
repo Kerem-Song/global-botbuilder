@@ -35,15 +35,23 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
                 <img src={x.image?.imageUrl} alt="img"></img>
               </div>
             </div>
-            {item.items.length - 1 === i ? <></> : <Divider />}
+            {item.items.length - 1 === i ? (
+              <></>
+            ) : (
+              <div className="dividerWrap">
+                <Divider />
+              </div>
+            )}
           </div>
         );
       })}
-      <div className="listCardBtns">
-        {item.buttons?.map((v, i) => {
-          return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
-        })}
-      </div>
+      {item.buttons.length > 0 ? (
+        <div className="listCardBtns">
+          {item.buttons?.map((v, i) => {
+            return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

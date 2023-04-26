@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-const manualExceptionCode = [7604, 7636, 7608, 7633, 7610, 7000, 7612];
+const manualExceptionCode = [7604, 7636, 7608, 7633, 7610, 7000, 7612, 7631];
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
@@ -38,7 +38,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   instance.interceptors.response.use(
     async function (response) {
       if (response.data.newToken) {
-        dispatch(setToken(response.data.newToken));
+        dispatch(setToken({ refreshToken: response.data.newToken }));
       }
       if (!response.data.isSuccess) {
         if (

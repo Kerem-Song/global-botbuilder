@@ -7,6 +7,10 @@ import {
   ISaveBotReq,
   ISearchBotReq,
 } from '@models';
+import {
+  IUpdateBotActivate,
+  IUpdateChannelActivate,
+} from '@models/interfaces/IBotSetting';
 import { setBotInfo } from '@store/botInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -76,7 +80,7 @@ export const useBotClient = () => {
 
   const botExportMutate = useMutation(
     async (args: { botId: string; botName: string }) => {
-      const res = await http.post('/bot/exportflowgroupcurrent', args, {
+      const res = await http.post('/bot/exportcurrentflowgroup', args, {
         responseType: 'blob',
       });
 
@@ -114,6 +118,22 @@ export const useBotClient = () => {
     }
   });
 
+  const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
+    const res = await http.post('/bot/updatebotactivate', args);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
+  const botChannelActivateMutate = useMutation(async (args: IUpdateChannelActivate) => {
+    const res = await http.post('/bot/updatechannelactivate', args);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
   return {
     getBotListQuery,
     getCachedBotList,
@@ -124,5 +144,7 @@ export const useBotClient = () => {
     botDeleteAsync: botDeleteMutate.mutateAsync,
     botRecoverAsync: botRecoverMutate.mutateAsync,
     botUpdateAsync: botUpdateMutate.mutateAsync,
+    botActivateAsync: botActivateMutate.mutateAsync,
+    botChannelActivateAsync: botChannelActivateMutate.mutateAsync,
   };
 };

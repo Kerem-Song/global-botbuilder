@@ -43,8 +43,8 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
 
   console.log(userInfo.starffType, handle?.role, role);
-  if (userInfo.starffType !== 0 && handle?.role && (role & handle.role) === handle.role) {
-    <Navigate to={`/${i18n.language}/dashboard`} />;
+  if (userInfo.starffType !== 0 && handle?.role && (role & handle.role) !== handle.role) {
+    return <Navigate to={`/${i18n.language}/dashboard`} />;
   }
   return (
     <PageContext.Provider

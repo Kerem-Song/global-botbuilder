@@ -10,6 +10,7 @@ export interface IUserInfo {
 }
 
 const initialState: IUserInfo = {
+  starffType: 0,
   loginUserName: '아무나',
   loginId: 'unkown@lunasoft.co.kr',
 };

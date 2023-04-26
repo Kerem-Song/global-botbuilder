@@ -31,12 +31,12 @@
     }
     .activateWrap {
       div {
-        .botActivateCardContainer {
+        .connectChannelCardContainer {
           display: flex;
           gap: rem(12);
-          .botActivateCardWrap {
+          .connectChannelCardWrap {
             width: 534px;
-            .botActivateCard {
+            .connectChannelCard {
               width: 100%;
               display: flex;
               justify-content: space-between;
@@ -52,6 +52,12 @@
                 align-items: center;
                 .channelImg {
                   margin-right: rem(12);
+                  width: rem(48);
+                  height: rem(48);
+                  img {
+                    width: 100%;
+                    height: 100%;
+                  }
                 }
                 .channelInfo {
                   .channelState {
@@ -67,6 +73,10 @@
                     line-height: rem(14);
                   }
                 }
+              }
+              .connectBtns {
+                display: flex;
+                gap: rem(8);
               }
             }
           }
@@ -114,4 +124,9 @@
       }
     }
   }
+}
+
+.connectChannel {
+  color: red;
+  font-size: $defaultSize;
 }

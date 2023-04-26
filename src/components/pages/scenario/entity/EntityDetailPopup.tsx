@@ -83,11 +83,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
   const preventGoBack = async () => {
     const result = await confirm({
       title: t('SAVE_ENTITY'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
     if (result) {
       history.go(-1);
@@ -187,9 +183,7 @@ export const EntityDetailPopup: FC<EntityDetailProps> = ({
       const result = await confirm({
         title: t('SAVE_ENTITY'),
         description: (
-          <div style={{ whiteSpace: 'pre-wrap' }}>
-            <p>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-          </div>
+          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         ),
       });
       if (result) {

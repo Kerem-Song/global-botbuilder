@@ -48,11 +48,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const openModal = async (intentId: string) => {
     const result = await confirm({
       title: t('DELETE_INTENT'),
-      description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('DELETE_INTENT_MESSAGE')}</p>
-        </div>
-      ),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
     if (result) {

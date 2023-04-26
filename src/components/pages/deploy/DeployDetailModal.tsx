@@ -37,6 +37,23 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
   const { field } = useController({ name: 'comment', control: control });
   const { t, tc } = usePage();
 
+  const handleCancel = () => {
+    handleIsOpen(false);
+  };
+
+  const handleSave = async () => {
+    const updateComment: IUpdateDeployHistoryComment = {
+      comment: getValues('comment'),
+      deployHistoryId: detailInfo.id,
+    };
+    const res = await updateDeployHistoryComment.mutateAsync(updateComment);
+    if (res && res.isSuccess) {
+      lunaToast.success();
+      reset();
+      handleCancel();
+    }
+  };
+
   useEffect(() => {
     if (detailInfo.comment) {
       const resetValue = {
@@ -56,23 +73,6 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     }
   }, [detailInfo.deployResult]);
 
-  const handleCancel = () => {
-    handleIsOpen(false);
-  };
-
-  const handleSave = async () => {
-    const updateComment: IUpdateDeployHistoryComment = {
-      comment: getValues('comment'),
-      deployHistoryId: detailInfo.id,
-    };
-    const res = await updateDeployHistoryComment.mutateAsync(updateComment);
-    if (res && res.isSuccess) {
-      lunaToast.success();
-      reset();
-      handleCancel();
-    }
-  };
-
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}
@@ -86,7 +86,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       <div className="contents">
         <div className="deployNumber">
           <Title level={2}>
-            {t('DEPLOY_NUMBER')} {detailInfo.no} (
+            {t('DEPLOY_NUMBER')} : {detailInfo.no} (
             {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
           </Title>
         </div>
@@ -98,7 +98,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>
             <span className="infoContent">
-              {util.formatDateTime(new Date(detailInfo.deployedTime))}
+              {util.formatDateTime(new Date(detailInfo.createAt))}
             </span>
           </div>
           <div className="info">

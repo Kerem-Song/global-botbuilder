@@ -9,8 +9,9 @@ body,
 
 html {
   font-size: 16px;
-  font-family: 'Montserrat', 'Pretendard-Regular', 'AppleSDGothicNeo',
-    'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif' !important;
+  font-weight: 400;
+  font-family: 'Pretendard', 'AppleSDGothicNeo', 'Apple SD Gothic Neo',
+    'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif' !important;
 }
 
 body {
@@ -18,8 +19,9 @@ body {
 }
 
 button {
-  font-family: 'Montserrat', 'Pretendard-Regular', 'AppleSDGothicNeo',
-    'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif';
+  font-weight: 400;
+  font-family: 'Pretendard', 'AppleSDGothicNeo', 'Apple SD Gothic Neo',
+    'Apple SD 산돌고딕 Neo', '돋움', 'dotum', 'sans-serif';
 }
 
 #root {

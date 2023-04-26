@@ -22,9 +22,7 @@ export const VariablesManagement = () => {
     const result = await confirm({
       title: t('DELETE_VARIABLE'),
       description: (
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <p>{t('DELETE_VARIABLE_MESSAGE')}</p>
-        </div>
+        <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_VARIABLE_MESSAGE')}</p>
       ),
     });
 
