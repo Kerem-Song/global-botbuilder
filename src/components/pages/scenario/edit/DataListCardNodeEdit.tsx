@@ -1,22 +1,22 @@
-import { Button, Col, FormItem, Input, Row, Space } from '@components';
+import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
-import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useEffect, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
+import { ParameterSelector } from './ParameterSelector';
 
-export const ListCardNodeEdit = () => {
+export const DataListCardNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
@@ -27,7 +27,10 @@ export const ListCardNodeEdit = () => {
     control,
     watch,
     formState: { errors },
-  } = useFormContext<IGNodeEditModel<IListCardView>>();
+  } = useFormContext<IGNodeEditModel<IDataListCardView>>();
+  const [carouselNum, setCarouselNum] = useState<number>(
+    Number(watch('view.carousel')) || 1,
+  );
   const values = getValues();
   console.log('list card node edit value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
@@ -35,20 +38,28 @@ export const ListCardNodeEdit = () => {
     name: `view.items`,
     control,
   });
+  const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
 
   const handleAddListButton = () => {
     console.log('handle add list btn');
-    // e.preventDefault();
+
     if (fields.length < 5) {
       append(nodeDefaultHelper.createDefaultListCardItem(fields.length));
-    } else {
-      //modal alert
-      console.log('5개까지 가능');
     }
   };
 
   const handleDeleteListButton = (index: number) => {
     remove(index);
+  };
+
+  const handleCarouselNum = (button: boolean) => {
+    if (button) {
+      setCarouselNum((prev) => prev + 1);
+      setValue('view.carousel', carouselNum + 1);
+    } else {
+      setCarouselNum((prev) => prev - 1);
+      setValue('view.carousel', carouselNum - 1);
+    }
   };
 
   useEffect(() => {
@@ -59,15 +70,70 @@ export const ListCardNodeEdit = () => {
 
   return (
     <>
+      <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
+        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <FormItem error={errors.view?.attribute}>
+          <ParameterSelector
+            control={control}
+            path={`view.attribute`}
+            placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+            readOnly={isHistoryViewer}
+          />
+        </FormItem>
+      </Collapse>
+
+      <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
+        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
+        <div className="dataCardCrouselSlideBtns">
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(false)}
+            disabled={carouselNum <= 1}
+          >
+            -
+          </Button>
+          <span>{watch(`view.carousel`)}</span>
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(true)}
+            disabled={carouselNum >= 10}
+          >
+            +
+          </Button>
+        </div>
+        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <div className="dataCarouselPrintOut">
+          <Row justify="space-between" className="m-b-8">
+            <Col span={12} className="radioContainer">
+              <Radio
+                name="view.print"
+                checked={watch('view.print') === 'order'}
+                onChange={() => setValue(`view.print`, 'order')}
+                ref={carouselPrintOutField.ref}
+              >
+                <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_ORDER`)}</span>
+              </Radio>
+            </Col>
+            <Col span={12} className="radioContainer">
+              <Radio
+                name="view.print"
+                checked={watch('view.print') === 'random'}
+                onChange={() => setValue(`view.print`, 'random')}
+                ref={carouselPrintOutField.ref}
+              >
+                <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_RANDOM`)}</span>
+              </Radio>
+            </Col>
+          </Row>
+        </div>
+      </Collapse>
+
       <div className="node-item-wrap">
         <FormItem error={errors.view?.header}>
           <InputWithTitleCounter
             label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
             required={true}
-            showCount={true}
-            maxLength={15}
             {...register('view.header')}
-            textLength={watch('view.header')?.length || 0}
             readOnly={isHistoryViewer}
           />
         </FormItem>
@@ -126,12 +192,9 @@ export const ListCardNodeEdit = () => {
                   <FormItem error={errors.view?.items?.[i]?.title}>
                     <InputWithTitleCounter
                       label={t(`TITLE_INPUT`)}
-                      showCount={true}
-                      maxLength={36}
                       required={true}
                       isLight={true}
                       {...register(`view.items.${i}.title`)}
-                      textLength={watch(`view.items.${i}.title`)?.length || 0}
                       readOnly={isHistoryViewer}
                     />
                   </FormItem>
@@ -143,11 +206,8 @@ export const ListCardNodeEdit = () => {
                 <span className="label">
                   <InputWithTitleCounter
                     label={t(`CONTENT_INPUT`)}
-                    showCount
-                    maxLength={16}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
-                    textLength={watch(`view.items.${i}.description`)?.length || 0}
                     readOnly={isHistoryViewer}
                   />
                 </span>
@@ -170,7 +230,7 @@ export const ListCardNodeEdit = () => {
           ) : null}
         </div>
       </Collapse>
-      {/* {values.view && values.view.buttons && <ButtonsEdit />} */}
+
       <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
           <ButtonsEdit

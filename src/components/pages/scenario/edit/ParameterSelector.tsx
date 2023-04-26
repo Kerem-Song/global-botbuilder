@@ -2,6 +2,7 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
+import classNames from 'classnames';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IParameterSelectorProps<T extends object> {
@@ -10,6 +11,7 @@ export interface IParameterSelectorProps<T extends object> {
   readOnly?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
+  error?: any;
 }
 
 export const ParameterSelector = <T extends object>({
@@ -17,6 +19,7 @@ export const ParameterSelector = <T extends object>({
   placeholder,
   readOnly,
   path,
+  error,
 }: IParameterSelectorProps<T>) => {
   const {
     getVariableSelectListQuery: { data },
@@ -42,7 +45,7 @@ export const ParameterSelector = <T extends object>({
       usingName: byUsingName ? value : `{{${value}}}`,
     } as IVariable;
   };
-
+  console.log('@err', error);
   return (
     <>
       <Autocomplete
@@ -68,6 +71,7 @@ export const ParameterSelector = <T extends object>({
           setValue<string>(path, value?.name || '');
         }}
         create={handleCreate}
+        error={error}
       />
     </>
   );

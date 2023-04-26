@@ -1,15 +1,13 @@
 import { imgLinebot, imgLinebotInactivate } from '@assets';
 import { Button } from '@components';
-import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
 
 export const ConnectChannel = () => {
   const { t } = usePage();
   const { confirm, info } = useSystemModal();
-  const { botChannelActivateAsync } = useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const brandId = useRootState((state) => state.brandInfoReducer.brandId);
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();

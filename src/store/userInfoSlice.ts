@@ -5,12 +5,12 @@ export interface IUserInfo {
   loginUserName?: string;
   loginId?: string;
   companyName?: string;
-  starffType?: number;
+  staffType?: number;
   role?: number;
 }
 
 const initialState: IUserInfo = {
-  starffType: 0,
+  staffType: 0,
   loginUserName: '아무나',
   loginId: 'unkown@lunasoft.co.kr',
 };
@@ -20,11 +20,11 @@ export const UserInfoSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action: PayloadAction<IUserInfo>) => {
-      const { loginUserName, loginId, role, companyName, starffType } = action.payload;
+      const { loginUserName, loginId, role, companyName, staffType } = action.payload;
       state.loginUserName = loginUserName;
       state.loginId = loginId;
       state.companyName = companyName;
-      state.starffType = starffType;
+      state.staffType = staffType;
       state.role = role;
     },
   },

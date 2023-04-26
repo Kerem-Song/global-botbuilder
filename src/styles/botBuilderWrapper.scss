@@ -122,8 +122,25 @@
   border-left: 1px solid $gray200;
 
   .wrapper::-webkit-scrollbar {
-    display: none;
+    width: rem(8);
+    height: rem(8);
+    background: transparent; /*스크롤바 뒷 배경 색상*/
   }
+
+  .wrapper::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background-color: rgba(208, 221, 255, 0); /* 스크롤바의 색상 */
+    border-radius: rem(18);
+    transition: background-color 2s ease-out;
+  }
+
+  .wrapper:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
+  }
+  
+  // .wrapper::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   .wrapper {
     height: calc(100vh - rem(97));

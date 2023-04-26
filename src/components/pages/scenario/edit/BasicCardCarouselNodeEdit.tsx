@@ -124,7 +124,7 @@ export const BasicCardCarousleNodeEdit = () => {
                   </Space>
                 </Collapse>
 
-                <Collapse label={t(`BUTTON`)} useSwitch={false}>
+                <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
                   {values.view?.childrenViews?.[i]?.buttons && (
                     <ButtonsEdit
                       index={i}

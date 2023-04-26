@@ -13,3 +13,8 @@ export interface IUpdateChannelActivate {
   isLive: boolean;
   botId: string;
 }
+
+export interface IImportFlowGroup {
+  botId: string;
+  file: File;
+}

@@ -1,108 +1,43 @@
-import { Col, FormItem, Input, Row, Space } from '@components';
+import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
-import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
+import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import Select, { StylesConfig } from 'react-select';
+import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
+import { ParameterSelector } from './ParameterSelector';
+import { currencyOptions, reactSelectStyleProduct } from './ProductCardNodeEdit';
 
-export const currencyOptions = [
-  { value: 'USD', label: 'USD' },
-  { value: 'JPY', label: 'JPY' },
-  { value: 'KRW', label: 'KRW' },
-];
-
-export const reactSelectStyleProduct: StylesConfig = {
-  control: (provided, state) => ({
-    ...provided,
-    alignItems: 'center',
-    borderRadius: '8px',
-    border: '1px solid #DCDCDC',
-    borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
-    fontSize: '13px',
-    width: '109px',
-    ':hover': {
-      borderColor: '#e7e7e7',
-    },
-    minHeight: '34px',
-  }),
-
-  dropdownIndicator: () => ({
-    color: '#B5B4B4',
-  }),
-  indicatorsContainer: () => ({}),
-  valueContainer: (provided) => ({
-    ...provided,
-    alignItems: 'center',
-  }),
-  placeholder: (provided) => ({
-    ...provided,
-    whiteSpace: 'nowrap',
-    color: '#000',
-  }),
-  input: (provided) => ({
-    ...provided,
-    color: 'transparent',
-    textShadow: '0 0 0 black',
-  }),
-  option: (provided) => ({
-    ...provided,
-    width: '100%',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-
-    padding: '6px 10px',
-    fontSize: '13px',
-    fontWeight: 400,
-    color: '#757575',
-    lineHeight: 1.5,
-    backgroundColor: 'white',
-    ':hover': {
-      color: '#222222',
-      backgroundColor: '#ECF2FF',
-      borderRadius: '6px',
-    },
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    fontSize: '13px',
-    color: '#222222',
-    overflow: 'unset',
-    textOverflow: 'unset',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    border: '1px solid #DCDCDC',
-    borderRadius: '8px',
-  }),
-};
-
-export const ProductCardNodeEdit = () => {
+export const DataProductCardNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
     getValues,
+    setValue,
     control,
     watch,
-    setValue,
     trigger,
     formState: { errors },
-  } = useFormContext<IGNodeEditModel<IProductCardView>>();
+  } = useFormContext<IGNodeEditModel<IDataProductCardView>>();
+  const [carouselNum, setCarouselNum] = useState<number>(
+    Number(watch('view.carousel')) || 1,
+  );
   const values = getValues();
-  console.log('value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
+
+  const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
   const { field: currencyField } = useController({
     name: `view.currencyUnit`,
     control,
@@ -124,6 +59,12 @@ export const ProductCardNodeEdit = () => {
     (watch(`view.discountPrice`) ? Number(watch(`view.discountPrice`)) : 0);
 
   useEffect(() => {
+    if (!watch(`view.retailPrice`)) {
+      setValue(`view.retailPrice`, 0);
+    }
+  }, [watch(`view.retailPrice`)]);
+
+  useEffect(() => {
     setValue(`view.salePrice`, salePrice || 0);
   }, [salePrice]);
 
@@ -136,13 +77,84 @@ export const ProductCardNodeEdit = () => {
     }
   }, [salePrice]);
 
-  useEffect(() => {
-    if (!watch(`view.retailPrice`)) {
-      setValue(`view.retailPrice`, 0);
+  const handleCarouselNum = (button: boolean) => {
+    if (button) {
+      setCarouselNum((prev) => prev + 1);
+      setValue('view.carousel', carouselNum + 1);
+    } else {
+      setCarouselNum((prev) => prev - 1);
+      setValue('view.carousel', carouselNum - 1);
     }
-  }, [watch(`view.retailPrice`)]);
+  };
+
+  console.log('values in basiccard node edit', values.view);
+
+  useEffect(() => {
+    if (watch(`view.carousel`)) {
+      setCarouselNum(watch(`view.carousel`));
+    }
+  }, [watch(`view.carousel`)]);
+
   return (
     <>
+      <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
+        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <FormItem error={errors.view?.attribute}>
+          <ParameterSelector
+            control={control}
+            path={`view.attribute`}
+            placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+            readOnly={isHistoryViewer}
+          />
+        </FormItem>
+      </Collapse>
+
+      <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
+        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
+        <div className="dataCardCrouselSlideBtns">
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(false)}
+            disabled={carouselNum <= 1}
+          >
+            -
+          </Button>
+          <span>{watch(`view.carousel`)}</span>
+          <Button
+            shape="ghost"
+            onClick={() => handleCarouselNum(true)}
+            disabled={carouselNum >= 10}
+          >
+            +
+          </Button>
+        </div>
+        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <div className="dataCarouselPrintOut">
+          <Row justify="space-between" className="m-b-8">
+            <Col span={12} className="radioContainer">
+              <Radio
+                name="view.print"
+                checked={watch('view.print') === 'order'}
+                onChange={() => setValue(`view.print`, 'order')}
+                ref={carouselPrintOutField.ref}
+              >
+                <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_ORDER`)}</span>
+              </Radio>
+            </Col>
+            <Col span={12} className="radioContainer">
+              <Radio
+                name="view.print"
+                checked={watch('view.print') === 'random'}
+                onChange={() => setValue(`view.print`, 'random')}
+                ref={carouselPrintOutField.ref}
+              >
+                <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_RANDOM`)}</span>
+              </Radio>
+            </Col>
+          </Row>
+        </div>
+      </Collapse>
+
       <div className="node-item-wrap collapse">
         <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
           <FormItem error={errors.view?.imageCtrl?.imageUrl}>
@@ -274,6 +286,7 @@ export const ProductCardNodeEdit = () => {
           </Collapse>
         </div>
       </div>
+
       <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
           <ButtonsEdit

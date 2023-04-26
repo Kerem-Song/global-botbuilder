@@ -329,14 +329,35 @@ export interface IJson {
   value: string;
 }
 export interface IJsonRequestView extends IViewBase {
-  body: string;
-  headers: IJson[];
   method: 'POST' | 'GET';
-  queryStrings: IJson[];
-  responseMapping: { jsonPath: string; variable: string }[];
   url: string;
+  headers: IJson[];
+  queryStrings?: IJson[];
+  body?: string;
+  responseMapping?: IJson[];
+  apiRes?: string;
 }
 
+export interface IJsonCheckApiValidation {
+  method: 'POST' | 'GET';
+  url: string;
+  headers: IJson[];
+  queryStrings?: IJson[];
+  body?: string;
+  responseMapping?: IJson[];
+}
+
+export interface IDataCardView extends IViewBase {
+  attribute: string;
+  carousel: number;
+  print: 'order' | 'random';
+}
+
+export interface IDataBasicCardView extends IBasicCardView, IDataCardView {}
+
+export interface IDataProductCardView extends IProductCardView, IDataCardView {}
+
+export interface IDataListCardView extends IListCardView, IDataCardView {}
 export interface IGetFlowRes {
   alias: string;
   id: string;

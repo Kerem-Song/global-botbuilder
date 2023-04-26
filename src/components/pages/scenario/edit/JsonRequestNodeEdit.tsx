@@ -1,13 +1,18 @@
-import { Button, Col, Row } from '@components';
+import { Button, Col, Divider, Row } from '@components';
 import { FormItem, Input, Radio } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { useHistoryViewerMatch, usePage } from '@hooks';
+import { useDataApiClient } from '@hooks/client/dataApiClient';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
+import { useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import ReactLoading from 'react-loading';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 
@@ -25,7 +30,9 @@ export const JsonRequestNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
+  const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
+  const { checkApiValidation } = useDataApiClient();
 
   const { field: method } = useController({ name: 'view.method', control });
 
@@ -72,9 +79,40 @@ export const JsonRequestNodeEdit = () => {
     queryStringRemove(index);
   };
 
+  const handleAddResMappingButton = () => {
+    resMappingAppend({ key: '', value: '' });
+  };
+
+  const handleDeleteResMappingButton = (index: number) => {
+    resMappingRemove(index);
+  };
+
+  const handleApiValidation = () => {
+    setLoading(true);
+    return checkApiValidation({
+      method: watch(`view.method`),
+      url: watch(`view.url`),
+      headers: watch(`view.headers`),
+      body: watch(`view.body`),
+    })
+      .then((res) => {
+        console.log('@res in handle api validation', res);
+        setValue('view.apiRes', JSON.stringify(res, null, 2));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log('@err in handle api validation', err);
+        setValue('view.apiRes', JSON.stringify(err, null, 2));
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
+        <p className="m-b-8">
+          Method <span className="required">*</span>
+        </p>
         <FormItem error={errors.view?.method}>
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
@@ -98,12 +136,14 @@ export const JsonRequestNodeEdit = () => {
           </Row>
         </FormItem>
         <FormItem error={errors.view?.url}>
-          <InputTextAreaWithTitleCounter
+          <InputWithTitleCounter
             label={t(`API_REQUEST_URL_LABEL`)}
             placeholder={t(`API_REQUEST_URL_PLACEHOLDER`)}
+            required={true}
             {...register('view.url')}
           />
         </FormItem>
+        <Divider />
         {headersField.map((header, i) => (
           <div key={header.id}>
             <div className="m-b-8">
@@ -112,10 +152,10 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={2} align="center">
                 <Col span={8}>
-                  <Input placeholder="Key" />
+                  <Input placeholder="Key" {...register(`view.headers.${i}.key`)} />
                 </Col>
                 <Col span={14}>
-                  <Input placeholder="Value" />
+                  <Input placeholder="Value" {...register(`view.headers.${i}.value`)} />
                 </Col>
                 <Col span={2}>
                   <Button
@@ -133,6 +173,7 @@ export const JsonRequestNodeEdit = () => {
             + Header
           </Button>
         </div>
+        <Divider />
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
             <div className="m-b-8">
@@ -143,10 +184,18 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={2} align="center">
                 <Col span={8}>
-                  <Input placeholder="Key" />
+                  <Input
+                    placeholder="Key"
+                    {...register(`view.queryStrings.${i}.key`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Col>
                 <Col span={14}>
-                  <Input placeholder="Value" />
+                  <Input
+                    placeholder="Value"
+                    {...register(`view.queryStrings.${i}.value`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Col>
                 <Col span={2}>
                   <Button
@@ -164,57 +213,84 @@ export const JsonRequestNodeEdit = () => {
             + Query String{' '}
           </Button>
         </div>
+        <Divider />
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
-            maxRows={17}
+            maxRows={6}
+            minRows={6}
             label={t(`API_REQUEST_JSON_BODY_LABEL`)}
             placeholder={t(`API_REQUEST_JSON_BODY_PLACEHOLDER`)}
             {...register('view.body')}
             readOnly={isHistoryViewer}
           />
         </FormItem>
-
-        <Row>
-          <Col>{t(`API_REQUEST_VALIDATION`)}</Col>
-          <Col>
-            <Button shape="ghost">{t(`API_REQUEST_VALIDATION_START`)}</Button>
+        <Divider />
+        <Row align="center">
+          <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
+          <Col span={2}>
+            <Button small type="primary" onClick={handleApiValidation}>
+              {t(`API_REQUEST_VALIDATION_START`)}
+            </Button>
           </Col>
         </Row>
-        <InputTextAreaWithTitleCounter
-          className="textNodeTextArea"
-          maxRows={17}
-          placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
-        />
+
+        <div>
+          {loading && (
+            <ReactLoading
+              type="spin"
+              color="#4478FF"
+              height={50}
+              width={50}
+              className="apiResLoading"
+            />
+          )}
+
+          <InputTextAreaWithTitleCounter
+            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
+            maxRows={6}
+            minRows={6}
+            placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
+            {...register(`view.apiRes`)}
+            readOnly={true}
+          />
+        </div>
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
           <div key={res.id}>
-            <FormItem error={errors.view?.responseMapping?.[i]?.jsonPath}>
+            <FormItem error={errors.view?.responseMapping?.[i]?.key}>
               <InputTextAreaWithTitleCounter
                 placeholder={t(
                   `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
                 )}
+                {...register(`view.responseMapping.${i}.key`)}
+                readOnly={isHistoryViewer}
               />
             </FormItem>
-            <FormItem error={errors.view?.responseMapping?.[i]?.variable}>
+            <FormItem error={errors.view?.responseMapping?.[i]?.value}>
               <ParameterSelector
                 control={control}
-                path={`view.responseMapping.${i}.variable`}
+                path={`view.responseMapping.${i}.value`}
                 placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
                 readOnly={isHistoryViewer}
               />
             </FormItem>
+            <div className="deleteBtn">
+              <Button shape="ghost" onClick={() => handleDeleteResMappingButton(i)}>
+                {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
+              </Button>
+            </div>
           </div>
         ))}
 
         <div className="apiFieldAddBtn m-b-8">
-          <Button className="addBtn" shape="ghost" onClick={handleAddQueryStringsButton}>
+          <Button className="addBtn" shape="ghost" onClick={handleAddResMappingButton}>
             + {t(`API_REQUEST_RESPONSE_MAPPING_ADD`)}
           </Button>
         </div>
       </Collapse>
-      <Collapse label={t(``)} useSwitch={false}>
+      <Collapse label={t(`API_REQUEST_MESSAGE_CONNECT_SETTING`)} useSwitch={false}>
         <>
           <div className="m-b-8">
             <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>

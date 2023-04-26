@@ -17,6 +17,7 @@ export interface AutocompleteProps<T extends object> {
   sufix?: ReactNode;
   create?: (value: string | undefined) => T | undefined;
   onChange?: (value: T | undefined) => void;
+  error?: any;
 }
 
 export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
@@ -106,6 +107,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
     <div style={{ position: 'relative' }}>
       <div ref={referenceElement}>
         <Input
+          className={classNames('luna-input', { 'luna-input-error': args.error })}
           onFocus={() => handleShowPopper()}
           onBlur={() => handleHidePopper()}
           onKeydown={handleInputKeydown}

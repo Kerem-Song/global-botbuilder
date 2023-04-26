@@ -16,7 +16,7 @@ import makingNodeSliceReducer from './makingNode';
 import otherFlowScenariosPopupStatusReducer from './otherFlowScenarioPopupSlice';
 import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
-import userInfoReducer from './userInfSlice';
+import userInfoReducer from './userInfoSlice';
 
 const rootReducer = combineReducers({
   authReducer,

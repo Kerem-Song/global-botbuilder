@@ -89,7 +89,7 @@ export const BasicCardNodeEdit = () => {
         </Space>
       </Collapse>
 
-      <Collapse label={t(`BUTTON`)} useSwitch={false}>
+      <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}

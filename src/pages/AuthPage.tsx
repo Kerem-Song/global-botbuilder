@@ -2,7 +2,7 @@ import { useAuthClient } from '@hooks/client/authClient';
 import { useQueryParams } from '@hooks/useQueryParams';
 import { setToken } from '@store/authSlice';
 import { setBrandInfo } from '@store/brandInfoSlice';
-import { setUserInfo } from '@store/userInfSlice';
+import { setUserInfo } from '@store/userInfoSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router';
@@ -28,7 +28,7 @@ export const AuthPage = () => {
         loginUserName: res.loginUserName,
         companyName: res.companyName,
         role: res.role,
-        starffType: res.staffType,
+        staffType: res.staffType,
       }),
     );
     navigate('/');
