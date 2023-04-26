@@ -27,7 +27,6 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
                     {model.lastUpdateUTC
                       ? new Date(model.lastUpdateUTC).toLocaleDateString()
                       : ''}
-                    ,
                   </span>
                 </Col>
               </Row>
