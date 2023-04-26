@@ -16,43 +16,43 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
     <Card>
       <div className="countConditionWrapper">
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             attribute: {view.attribute}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             carousel: {view.carousel}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             print: {view.print}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             headline: {view.header}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             image: {view.imageCtrl?.imageUrl ? 'Y' : 'N'}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             image value: {view.imageCtrl?.imageUrl}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             image type:
             {view.imageCtrl?.aspectRatio
               ? t(`IMAGE_TYPE_SQUARE`)
@@ -61,19 +61,19 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             title: {view.items[0].title}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             description: {view.items[0].description}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
-          <MultiClamp clamp={2} ellipsis={'...'}>
+          <MultiClamp clamp={1} ellipsis={'...'}>
             list image: {view.items[0].imageUrl}
           </MultiClamp>
         </span>

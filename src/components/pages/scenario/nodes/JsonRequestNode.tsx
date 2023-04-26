@@ -16,20 +16,21 @@ export const JsonRequestNode: FC<IHasNode> = ({ node }) => {
     <Card>
       <div className="method">{view.method}</div>
       <div className="countConditionWrapper">
-        {view.url ? (
-          <span className="dataCardDesc">
-            <MultiClamp clamp={2} ellipsis={'...'}>
-              {view.url}
-            </MultiClamp>
-          </span>
-        ) : (
-          <span className="dataCardDesc" style={{ color: '#929292' }}>
-            <MultiClamp clamp={2} ellipsis={'...'}>
-              {t(`API_REQUEST_PLACEHOLDLER`)}
-            </MultiClamp>
-          </span>
-        )}
-
+        <div className="dataCardJson">
+          {view.url ? (
+            <span className="dataCardDesc">
+              <MultiClamp clamp={2} ellipsis={'...'}>
+                {view.url}
+              </MultiClamp>
+            </span>
+          ) : (
+            <span className="dataCardDesc" style={{ color: '#929292' }}>
+              <MultiClamp clamp={2} ellipsis={'...'}>
+                {t(`API_REQUEST_PLACEHOLDLER`)}
+              </MultiClamp>
+            </span>
+          )}
+        </div>
         <NextNodeButton
           ctrlId={`${node.id}`}
           nodeId={`${NODE_PREFIX}${node.id}`}

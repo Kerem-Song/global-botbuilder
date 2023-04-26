@@ -12,6 +12,7 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import ReactLoading from 'react-loading';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
+import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 
@@ -109,7 +110,9 @@ export const JsonRequestNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
-        <p className="m-b-8">Method</p>
+        <p className="m-b-8">
+          Method <span className="required">*</span>
+        </p>
         <FormItem error={errors.view?.method}>
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
@@ -133,9 +136,10 @@ export const JsonRequestNodeEdit = () => {
           </Row>
         </FormItem>
         <FormItem error={errors.view?.url}>
-          <InputTextAreaWithTitleCounter
+          <InputWithTitleCounter
             label={t(`API_REQUEST_URL_LABEL`)}
             placeholder={t(`API_REQUEST_URL_PLACEHOLDER`)}
+            required={true}
             {...register('view.url')}
           />
         </FormItem>
@@ -213,7 +217,8 @@ export const JsonRequestNodeEdit = () => {
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
-            maxRows={17}
+            maxRows={6}
+            minRows={6}
             label={t(`API_REQUEST_JSON_BODY_LABEL`)}
             placeholder={t(`API_REQUEST_JSON_BODY_PLACEHOLDER`)}
             {...register('view.body')}
@@ -233,7 +238,7 @@ export const JsonRequestNodeEdit = () => {
         <div>
           {loading && (
             <ReactLoading
-              type="bubbles"
+              type="spin"
               color="#4478FF"
               height={50}
               width={50}
@@ -243,8 +248,8 @@ export const JsonRequestNodeEdit = () => {
 
           <InputTextAreaWithTitleCounter
             className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
-            maxRows={17}
-            minRows={17}
+            maxRows={6}
+            minRows={6}
             placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
             {...register(`view.apiRes`)}
             readOnly={true}

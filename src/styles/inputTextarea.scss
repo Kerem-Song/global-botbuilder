@@ -5,6 +5,7 @@
   border: 1px solid $gray200;
   font-family: 'Pretendard';
   border-radius: rem(8);
+  
 }
 
 .textInput::-webkit-scrollbar {
@@ -59,6 +60,10 @@
   //max-height: rem(320);
   overflow-y: auto;
   resize: none;
+
+  &.jsonResOverlay {
+    background:rgba(0,0,0,0.5);
+  }
 }
 
 .textNodeTextArea::-webkit-scrollbar {
@@ -72,6 +77,3 @@
   z-index: 9998;
 }
 
-.jsonResOverlay {
-  opacity: 0.5;
-}

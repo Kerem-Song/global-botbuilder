@@ -3,6 +3,7 @@ import { Col, Row, Space } from '@components/layout';
 import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
+import classNames from 'classnames';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
@@ -201,6 +202,7 @@ export const ImageSettings = ({
         {...register(handleImageCtrlIdPath().imageUrl!)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
+        className={classNames('luna-input', { 'luna-input-error': isValid })}
       />
     </Space>
   );

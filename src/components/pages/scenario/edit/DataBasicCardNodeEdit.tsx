@@ -68,6 +68,7 @@ export const DataBasicCardNodeEdit = () => {
             path={`view.attribute`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
             readOnly={isHistoryViewer}
+            error={errors.view?.attribute}
           />
         </FormItem>
       </Collapse>
