@@ -66,7 +66,7 @@ const buttonNodes = [
 
 const apiNodes = [
   {
-    className: 'icApiRequest',
+    className: 'icJsonRequest',
     value: NODE_TYPES.JSON_REQUEST_NODE,
     nodeName: 'Api Request',
   },

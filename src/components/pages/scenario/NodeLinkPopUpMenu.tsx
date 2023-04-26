@@ -106,7 +106,7 @@ const cardTypeValue = [
     nodeKind: NodeKind.CommandNode,
   },
   {
-    className: 'ic',
+    className: 'icDataBasic',
     value: NODE_TYPES.DATA_BASIC_CARD_NODE,
     nodeName: 'Data 기본 카드',
     nodeKind: NodeKind.InputNode,

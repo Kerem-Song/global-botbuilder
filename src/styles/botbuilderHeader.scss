@@ -141,6 +141,38 @@
             background-image: url('@assets/icons/ic_other_flow_redirect_hover.svg');
           }
         }
+
+        .icJsonRequest {
+          background-image: url('@assets/icons/ic_api_request.svg');
+
+          &:hover {
+            background-image: url('@assets/icons/ic_api_request_hover.svg');
+          }
+        }
+
+        .icDataBasic {
+          background-image: url('@assets/icons/ic_data_basic_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_basic_card_hover.svg');
+          }
+        }
+
+        .icDataList {
+          background-image: url('@assets/icons/ic_data_list_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_list_card_hover.svg');
+          }
+        }
+
+        .icDataProduct {
+          background-image: url('@assets/icons/ic_data_commerce_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_commerce_card_hover.svg');
+          }
+        }
       }
     }
   }
