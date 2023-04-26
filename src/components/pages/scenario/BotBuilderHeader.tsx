@@ -70,9 +70,21 @@ const apiNodes = [
     value: NODE_TYPES.JSON_REQUEST_NODE,
     nodeName: 'Api Request',
   },
-  { className: 'icDataBasic', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 기본 카드' },
-  { className: 'icDataList', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 리스트' },
-  { className: 'icDataCommerce', value: NODE_TYPES.ANSWER_NODE, nodeName: 'Data 커머스' },
+  {
+    className: 'icDataBasic',
+    value: NODE_TYPES.DATA_BASIC_CARD_NODE,
+    nodeName: 'Data 기본 카드',
+  },
+  {
+    className: 'icDataList',
+    value: NODE_TYPES.DATA_LIST_CARD_NODE,
+    nodeName: 'Data 리스트',
+  },
+  {
+    className: 'icDataProduct',
+    value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+    nodeName: 'Data 커머스',
+  },
 ];
 
 export const BotBuilderHeader = () => {
@@ -119,10 +131,10 @@ export const BotBuilderHeader = () => {
         nodes.map(async (n) => {
           try {
             await schema.validate(n);
-
             dispatch(setInvalidateNode({ id: n.id, isValid: true }));
             return true;
           } catch (e) {
+            // 챗봇 도움말일 경우 얼럿
             if (n.option === 20) {
               checkFallbackStart();
             }
@@ -156,7 +168,6 @@ export const BotBuilderHeader = () => {
     const viewRect = view?.getBoundingClientRect();
 
     if (cardType === 'OtherFlowRedirectNode') {
-      console.log('@other botbuilderheader');
       dispatch(
         setOtherFlowPopupPosition({
           x:
@@ -270,6 +281,23 @@ export const BotBuilderHeader = () => {
           <span className="btnCategory">{t(`FUNCTION`)}</span>
           <Col className="btnWrapper">
             {buttonNodes.map((item, i) => (
+              <Tooltip tooltip={item.nodeName} key={i}>
+                <Button
+                  className={`${item.nodeName} icon ${item.className} `}
+                  onDragStart={(e) => handleDragStart(e)}
+                  onClick={(e) => handleMakingChatbubbleClick(e)}
+                  draggable={true}
+                  value={item.value}
+                  data={item.nodeName}
+                />
+              </Tooltip>
+            ))}
+          </Col>
+        </div>
+        <div className="makingBtn">
+          <span className="btnCategory">API</span>
+          <Col className="btnWrapper">
+            {apiNodes.map((item, i) => (
               <Tooltip tooltip={item.nodeName} key={i}>
                 <Button
                   className={`${item.nodeName} icon ${item.className} `}

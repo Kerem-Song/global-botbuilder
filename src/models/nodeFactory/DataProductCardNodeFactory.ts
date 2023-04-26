@@ -1,6 +1,5 @@
-import { JsonRequestNodeEdit } from '@components/pages/scenario/edit/JsonRequestNodeEdit';
-import { ConditionNode } from '@components/pages/scenario/nodes';
-import { JsonRequestNode } from '@components/pages/scenario/nodes/JsonRequestNode';
+import { DataProductCardNodeEdit } from '@components/pages/scenario/edit/DataProductCardNodeEdit';
+import { DataProductCardNode } from '@components/pages/scenario/nodes/DataProductCardNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { NODE_TYPES, TNodeTypes } from '@models/interfaces';
@@ -10,10 +9,10 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
 
-export class JsonRequestNodeFactory implements INodeFactory {
+export class DataProductCardNodeFactory implements INodeFactory {
   constructor() {
-    this.typeName = NODE_TYPES.JSON_REQUEST_NODE;
-    this.nodeKind = NodeKind.CommandNode;
+    this.typeName = NODE_TYPES.DATA_BASIC_CARD_NODE;
+    this.nodeKind = NodeKind.InputNode;
     this.NodeContextMenuKinds =
       NodeContextMenuKind.Duplication |
       NodeContextMenuKind.Cut |
@@ -25,26 +24,22 @@ export class JsonRequestNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultJsonRequestView();
+    return nodeDefaultHelper.createDefaultDataProductCardView();
   }
 
   getEditElement() {
-    return JsonRequestNodeEdit;
+    return DataProductCardNodeEdit;
   }
 
   getNodeElement() {
-    return JsonRequestNode;
+    return DataProductCardNode;
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    if (!nextNodeId) {
-      return [];
-    }
-
-    return [arrowHelper.createNextArrow(nodeId, nextNodeId)];
+    return arrowHelper.createHasButtonsArrow(nodeId, view, nextNodeId);
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
-    return;
+    arrowHelper.syncHasButtonArrow(startId, endId, view);
   }
 }

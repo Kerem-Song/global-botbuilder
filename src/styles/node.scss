@@ -316,6 +316,11 @@
           background-color: $gray100;
           border: rem(1) solid $gray200;
           border-radius: rem(8);
+
+          .dataCardDesc {
+            white-space: pre-line;
+            word-break: break-all;
+          }
         }
 
         .nextNodeDrag {
@@ -508,4 +513,17 @@
   .textCard {
     display: none;
   }
+}
+
+.method {
+  padding-bottom: rem(8);
+}
+
+.dataCardJson div{
+  padding: rem(10) rem(8) 0 rem(8);
+  overflow: hidden;
+}
+
+.dataCard {
+  padding: rem(10) rem(8);
 }

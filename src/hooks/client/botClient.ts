@@ -8,6 +8,7 @@ import {
   ISearchBotReq,
 } from '@models';
 import {
+  IImportFlowGroup,
   IUpdateBotActivate,
   IUpdateChannelActivate,
 } from '@models/interfaces/IBotSetting';
@@ -134,6 +135,17 @@ export const useBotClient = () => {
     }
   });
 
+  const botImportFlowGroupMutate = useMutation(async (args: IImportFlowGroup) => {
+    const formData = new FormData();
+    formData.append('file', args.file);
+    formData.append('botId', args.botId);
+    const res = await http.post('/Bot/ImportFlowGroup', formData);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
   return {
     getBotListQuery,
     getCachedBotList,
@@ -146,5 +158,6 @@ export const useBotClient = () => {
     botUpdateAsync: botUpdateMutate.mutateAsync,
     botActivateAsync: botActivateMutate.mutateAsync,
     botChannelActivateAsync: botChannelActivateMutate.mutateAsync,
+    botImportAsync: botImportFlowGroupMutate.mutateAsync,
   };
 };

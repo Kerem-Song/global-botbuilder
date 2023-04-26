@@ -1,4 +1,4 @@
-import { FormItem } from '@components/data-entry';
+import { FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Collapse } from '@components/general/Collapse';
 import { Col, Row, Space } from '@components/layout';
@@ -77,6 +77,12 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>400 x 400 </p>
                   </Col>
+                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
+                  <Input
+                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`)}
+                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Row>
               </FormItem>
             </Space>

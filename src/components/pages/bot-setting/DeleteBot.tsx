@@ -1,123 +1,105 @@
 import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
-import { useAuthClient } from '@hooks/client/authClient';
-import { useQueryParams } from '@hooks/useQueryParams';
 import { useEffect, useState } from 'react';
 
 export const DeleteBot = () => {
   const { t } = usePage();
-  const { confirm, info } = useSystemModal();
-  const { IssueTokenAsync } = useAuthClient();
+  const { confirm } = useSystemModal();
   const { botDeleteAsync, botRecoverAsync } = useBotClient();
-  const queryParams = useQueryParams();
-  const code = queryParams.get('code');
-  const brandId = queryParams.get('state');
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const [isDeleteBtnActive, setIsDeleteBtnActive] = useState<boolean>(false);
-  const [isRecoverBtnActive, setIsRecoverBtnActive] = useState<boolean>(false);
+  const staffType = useRootState((state) => state.userInfoReducer.staffType);
+  const isManager = staffType === 2;
+  const removeCancelExpireUtc = botInfo && botInfo.removeCancelExpireUtc;
+  const [activeDeleteBtn, setActiveDeleteBtn] = useState<boolean>(false);
+  const [activeRecoverBtn, setActiveRecoverBtn] = useState<boolean>(false);
 
-  const handleDeleteBtnStatus = async () => {
-    if (!brandId || !code) {
-      return <></>;
-    }
-    const res = await IssueTokenAsync({ brandId, tokenCode: code });
-    if (res.staffType === 0 || res.staffType === 1) {
-      setIsDeleteBtnActive(true);
-    } else if (res.staffType === 2) {
-      setIsDeleteBtnActive(false);
+  const checkActivatedBot = async (isManager: number) => {
+    if (botInfo && !isManager) {
+      const title = botInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
+      const message = botInfo.activated
+        ? t('DISABLED_DELETE_BOT_MESSAGE')
+        : t('DELETE_BOT_CONFIRM_MESSAGE');
+      const result = await confirm({
+        title,
+        description: <p style={{ whiteSpace: 'pre-wrap' }}>{message}</p>,
+      });
+      if (result && !botInfo.activated) {
+        await botDeleteAsync({ botId: botInfo.id }).then((res) => {
+          console.log(res?.data);
+          setActiveRecoverBtn(true);
+        });
+      }
     }
   };
 
   const handleDeleteBtn = async () => {
-    if (!brandId || !code) {
-      return <></>;
-    }
-    const res = await IssueTokenAsync({ brandId, tokenCode: code });
-    if (res.staffType === 0 || res.staffType === 1) {
-      if (botInfo?.activated === true) {
-        const disabledDelete = await confirm({
-          title: t('DISABLED_DELETE_BOT'),
-          description: <p>{t('DISABLED_DELETE_BOT_MESSAGE')}</p>,
-        });
-        if (disabledDelete) {
-          setIsRecoverBtnActive(false);
-        }
-      } else if (botInfo?.activated === false) {
-        const deleteConfirm = await confirm({
-          title: t('DELETE_BOT'),
-          description: (
-            <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_BOT_CONFIRM_MESSAGE')}</p>
-          ),
-        });
-        if (deleteConfirm) {
-          await botDeleteAsync({ botId: botInfo!.id });
-          setIsRecoverBtnActive(true);
-        }
-      }
-    } else if (res.staffType === 2) {
-      setIsDeleteBtnActive(false);
-      await info({
-        title: t('NO_DELETE_BOT_ACCESS'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{t('NO_DELETE_BOT_ACCESS_MESSAGE')}</p>
-        ),
-      });
+    if (!isManager) {
+      await checkActivatedBot(staffType!);
+    } else {
+      setActiveDeleteBtn(false);
     }
   };
 
   const handleRecoverBtn = async () => {
-    if (!brandId || !code) {
-      return <></>;
-    }
-    const res = await IssueTokenAsync({ brandId, tokenCode: code });
-    if (res.staffType === 0 || res.staffType === 1) {
+    if (!isManager) {
       const recoverConfirm = await confirm({
         title: t('RECOVER_BOT'),
         description: <p>{t('RECOVER_BOT_MESSAGE')}</p>,
       });
       if (recoverConfirm) {
         await botRecoverAsync({ botId: botInfo!.id });
-        setIsRecoverBtnActive(false);
+        setActiveRecoverBtn(false);
       }
-    } else if (res.staffType === 2) {
-      setIsDeleteBtnActive(false);
-      await info({
-        title: t('NO_RECOVER_BOT_ACCESS'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{t('NO_RECOVER_BOT_ACCESS_MESSAGE')}</p>
-        ),
-      });
     }
   };
 
   useEffect(() => {
-    handleDeleteBtnStatus();
-  }, [brandId, code]);
+    if (botInfo && !isManager) {
+      if (removeCancelExpireUtc === null) {
+        setActiveDeleteBtn(true);
+      } else if (removeCancelExpireUtc !== null) {
+        setActiveRecoverBtn(true);
+      }
+    }
+  }, [botInfo && botInfo.id, removeCancelExpireUtc, isManager]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
-      <Row className="handleScenariosWrap">
-        <Space direction="vertical" gap={10}>
-          <Col className="deleteBot">
-            <p className="settingCardTitle deleteBotTitle">{t('DELETE_BOT_TITLE')}</p>
-            {isRecoverBtnActive ? (
-              <Button type="lineBlue" onClick={handleRecoverBtn}>
-                {t('RECOVER_BOT')}
-              </Button>
-            ) : (
-              <Button
-                className={isDeleteBtnActive ? 'luna-btn-primary' : 'luna-btn-disabled'}
-                onClick={handleDeleteBtn}
-              >
-                {t('DELETE_BOT')}
-              </Button>
-            )}
-          </Col>
-          <Col>
-            <p className="deleteBotDesc">{t('DELETE_BOT_DESC')}</p>
-          </Col>
-        </Space>
-      </Row>
+      {botInfo && (
+        <Row className="handleScenariosWrap">
+          <Space direction="vertical" gap={10}>
+            <Col className="deleteBot">
+              <p className="settingCardTitle deleteBotTitle">{t('DELETE_BOT_TITLE')}</p>
+              {activeRecoverBtn ? (
+                <Button
+                  type="lineBlue"
+                  disabled={activeRecoverBtn ? false : true}
+                  onClick={handleRecoverBtn}
+                >
+                  {t('RECOVER_BOT')}
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  disabled={activeDeleteBtn ? false : true}
+                  onClick={handleDeleteBtn}
+                >
+                  {t('DELETE_BOT')}
+                </Button>
+              )}
+              {removeCancelExpireUtc !== null ? (
+                <p className="cancelExpireUtc">
+                  {removeCancelExpireUtc}
+                  {t('CANCEL_EXPIRE_MESSAGE')}
+                </p>
+              ) : null}
+            </Col>
+            <Col>
+              <p className="deleteBotDesc">{t('DELETE_BOT_DESC')}</p>
+            </Col>
+          </Space>
+        </Row>
+      )}
     </Card>
   );
 };

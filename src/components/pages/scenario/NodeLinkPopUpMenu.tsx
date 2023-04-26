@@ -99,6 +99,30 @@ const cardTypeValue = [
     nodeName: '시나리오',
     nodeKind: NodeKind.CommandNode,
   },
+  {
+    className: 'icJsonRequest',
+    value: NODE_TYPES.JSON_REQUEST_NODE,
+    nodeName: 'API Request',
+    nodeKind: NodeKind.CommandNode,
+  },
+  {
+    className: 'ic',
+    value: NODE_TYPES.DATA_BASIC_CARD_NODE,
+    nodeName: 'Data 기본 카드',
+    nodeKind: NodeKind.InputNode,
+  },
+  {
+    className: 'icDataList',
+    value: NODE_TYPES.DATA_LIST_CARD_NODE,
+    nodeName: 'Data 리스트',
+    nodeKind: NodeKind.InputNode,
+  },
+  {
+    className: 'icDataProduct',
+    value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+    nodeName: 'Data 커머스',
+    nodeKind: NodeKind.InputNode,
+  },
 ];
 
 export const NodeLinkPopUpMenu = ({

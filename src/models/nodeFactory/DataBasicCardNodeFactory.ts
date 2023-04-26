@@ -1,19 +1,20 @@
-import { JsonRequestNodeEdit } from '@components/pages/scenario/edit/JsonRequestNodeEdit';
-import { ConditionNode } from '@components/pages/scenario/nodes';
-import { JsonRequestNode } from '@components/pages/scenario/nodes/JsonRequestNode';
+import { DataBasicCardNodeEdit } from '@components/pages/scenario/edit/DataBasicCardNodeEdit';
+import { DataBasicCardNode } from '@components/pages/scenario/nodes/DataBasicCardNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
-import { NODE_TYPES, TNodeTypes } from '@models/interfaces';
+import { IArrow, NODE_TYPES, TNodeTypes } from '@models/interfaces';
+import { IHasNode } from '@models/interfaces/IHasNode';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { FC } from 'react';
 
 import { INodeFactory } from './NodeFactory';
 
-export class JsonRequestNodeFactory implements INodeFactory {
+export class DataBasicCardNodeFactory implements INodeFactory {
   constructor() {
-    this.typeName = NODE_TYPES.JSON_REQUEST_NODE;
-    this.nodeKind = NodeKind.CommandNode;
+    this.typeName = NODE_TYPES.DATA_BASIC_CARD_NODE;
+    this.nodeKind = NodeKind.InputNode;
     this.NodeContextMenuKinds =
       NodeContextMenuKind.Duplication |
       NodeContextMenuKind.Cut |
@@ -25,26 +26,22 @@ export class JsonRequestNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultJsonRequestView();
+    return nodeDefaultHelper.createDefaultDataBasicCardView();
   }
 
   getEditElement() {
-    return JsonRequestNodeEdit;
+    return DataBasicCardNodeEdit;
   }
 
   getNodeElement() {
-    return JsonRequestNode;
+    return DataBasicCardNode;
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    if (!nextNodeId) {
-      return [];
-    }
-
-    return [arrowHelper.createNextArrow(nodeId, nextNodeId)];
+    return arrowHelper.createHasButtonsArrow(nodeId, view, nextNodeId);
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
-    return;
+    arrowHelper.syncHasButtonArrow(startId, endId, view);
   }
 }
