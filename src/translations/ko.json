@@ -328,6 +328,11 @@
     "DUPLICATE_SCENARIOS": "시나리오 복사",
     "EXPORT": "내보내기",
     "IMPORT": "가져오기",
+    "IMPORT_SCENARIO": "시나리오 가져오기",
+    "CONFIRM_IMPORT_SCENARIO_MESSAGE": "다른 봇을 가져오기 하면 현재 설정된 봇은 덮어씌워지며,\n기존 데이터를 원복할 수 없습니다.\n정말 선택한 파일을 덮어씌우시겠습니까?",
+    "IMPORT_SCENARIO_SUCCESS": "봇 가져오기가 완료되었습니다.",
+    "DISABLED_IMPORT_SCENARIO": "시나리오 가져오기 불가",
+    "DISABLED_IMPORT_SCENARIO_MESSAGE": "가져올 수 없는 파일입니다.\n다시 선택해주세요.",
     "DEACTIVATE_BOT": "봇 비활성화",
     "DEACTIVATE_BOT_MESSAGE": "봇을 비활성화 하면, 모든 채널과 연결이 끊어지고\n채널에서 더 이상 봇이 동작하지 않습니다.\n비활성화 하시겠습니까?",
     "DEACTIVATE_BOT_SUCCESS_MESSAGE": "봇이 비활성화되었습니다.",
@@ -350,7 +355,8 @@
     "RECOVER_BOT": "봇 삭제 취소",
     "NO_RECOVER_BOT_ACCESS": "삭제 취소 권한 없음",
     "NO_RECOVER_BOT_ACCESS_MESSAGE": "봇 삭제 취소는 마스터 권한 이상만 가능합니다.",
-    "RECOVER_BOT_MESSAGE": "봇 삭제를 정말 취소하시겠습니까?"
+    "RECOVER_BOT_MESSAGE": "봇 삭제를 정말 취소하시겠습니까?",
+    "CANCEL_EXPIRE_MESSAGE": "에 봇이 삭제될 예정입니다."
   },
   "deployment": {
     "TITLE": "배포",
