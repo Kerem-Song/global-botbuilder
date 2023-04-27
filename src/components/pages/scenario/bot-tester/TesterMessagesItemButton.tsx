@@ -33,7 +33,6 @@ export const TesterMessagesItemButton = ({
   const actionType = item.actionType;
   const lunaNodeLink = item.postback?.lunaNodeLink;
   const webLinkUrl = item.postback?.webLinkUrl;
-
   const dispatch = useDispatch();
 
   const handleNodeUrl = () => {
@@ -55,11 +54,11 @@ export const TesterMessagesItemButton = ({
     };
 
     botTesterMutate.mutate(sendLunaNodeLink, {
-      onSuccess: (submitResult) => {
-        const updateTesterData = submitResult.result?.messages || [];
-        if (submitResult.result?.quickReplies) {
+      onSuccess: (res) => {
+        const updateTesterData = res?.messages || [];
+        if (res?.quickReplies) {
           const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: submitResult.result.quickReplies,
+            quickReplies: res.quickReplies,
             type: TESTER_DATA_TYPES.quickReplies,
           };
           updateTesterData.push(quickpRepliesContent);
@@ -88,12 +87,12 @@ export const TesterMessagesItemButton = ({
     };
 
     botTesterMutate.mutate(sendActValueIsUttr, {
-      onSuccess: (submitResult) => {
-        console.log('결과', submitResult);
-        const updateTesterData = submitResult.result?.messages || [];
-        if (submitResult.result?.quickReplies) {
+      onSuccess: (res) => {
+        console.log('결과', res);
+        const updateTesterData = res?.messages || [];
+        if (res?.quickReplies) {
           const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: submitResult.result.quickReplies,
+            quickReplies: res.quickReplies,
             type: TESTER_DATA_TYPES.quickReplies,
           };
           updateTesterData.push(quickpRepliesContent);
@@ -122,12 +121,12 @@ export const TesterMessagesItemButton = ({
     };
 
     botTesterMutate.mutate(sendlblIsUttr, {
-      onSuccess: (submitResult) => {
-        console.log('결과', submitResult);
-        const updateTesterData = submitResult.result?.messages || [];
-        if (submitResult.result?.quickReplies) {
+      onSuccess: (res) => {
+        console.log('결과', res);
+        const updateTesterData = res?.messages || [];
+        if (res?.quickReplies) {
           const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: submitResult.result.quickReplies,
+            quickReplies: res.quickReplies,
             type: TESTER_DATA_TYPES.quickReplies,
           };
           updateTesterData.push(quickpRepliesContent);

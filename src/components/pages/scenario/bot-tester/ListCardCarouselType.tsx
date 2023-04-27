@@ -21,7 +21,7 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
           }
           src={item.image?.imageUrl}
           alt="img"
-        ></img>
+        />
       )}
       {item.items.map((x, i) => {
         return (

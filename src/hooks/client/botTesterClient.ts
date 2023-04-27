@@ -13,21 +13,23 @@ export const useBotTesterClient = () => {
   const http = useHttp();
   const botTesterMutate = useMutation(async (sendMessage: ISendMessage) => {
     const result = await http.post<ISendMessage, AxiosResponse<IBotTester>>(
-      'bottest/send',
+      'BotTest/Send',
       sendMessage,
     );
 
-    return result.data;
+    return result.data.result;
   });
 
-  const refreshBotTester = useMutation(async (reFreshBotToken: IRefreshBotTester) => {
-    const result = await http.post<
-      IRefreshBotTester,
-      AxiosResponse<IResponseRefreshBotTester>
-    >('BotTest/Refresh', reFreshBotToken);
+  const refreshBotTesterMutate = useMutation(
+    async (reFreshBotToken: IRefreshBotTester) => {
+      const result = await http.post<
+        IRefreshBotTester,
+        AxiosResponse<IResponseRefreshBotTester>
+      >('BotTest/Refresh', reFreshBotToken);
 
-    return result.data;
-  });
+      return result.data;
+    },
+  );
 
-  return { botTesterMutate, refreshBotTester };
+  return { botTesterMutate, refreshBotTesterAsync: refreshBotTesterMutate.mutateAsync };
 };

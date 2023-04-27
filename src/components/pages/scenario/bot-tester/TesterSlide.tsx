@@ -24,7 +24,6 @@ export const TesterSlide = ({
 }: ITesterSlideProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
-
   const [style, setStyle] = useState({
     marginLeft: '0px',
     transition: 'none',

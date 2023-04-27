@@ -24,25 +24,24 @@ export interface IBotTesterProps {
 }
 
 export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
-  const { t } = useTranslation('botTest');
-  const { botId } = useParams();
-
-  const { botTesterMutate, refreshBotTester } = useBotTesterClient();
-  const token = useRootState((state) => state.botInfoReducer.token);
-  const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const [text, setText] = useState<string>('');
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const { t } = useTranslation('botTest');
+  const { botId } = useParams();
   const dispatch = useDispatch();
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const botTesterData = useRootState((state) => state.botTesterReducer.messages);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { botTesterMutate, refreshBotTesterAsync } = useBotTesterClient();
 
   const handleRefresh = async () => {
     const sendToken = {
       sessionToken: token!,
     };
 
-    const res = await refreshBotTester.mutateAsync(sendToken);
+    const res = await refreshBotTesterAsync(sendToken);
 
     if (res) {
       dispatch(initMessages());
@@ -61,14 +60,14 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
     setText(e.target.value);
   };
 
-  const handleSend = (): void => {
+  const handleSend = () => {
+    if (!text || !text.trim()) return;
+
     const newMessage: ITesterDataType = {
       value: text,
       isMe: true,
       type: 'text',
     };
-    if (!text || !text.trim()) return;
-    dispatch(setTesterData([newMessage]));
 
     const sendMessage: ISendMessage = {
       sessionToken: token!,
@@ -80,12 +79,14 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       },
     };
 
+    dispatch(setTesterData([newMessage]));
+
     botTesterMutate.mutate(sendMessage, {
-      onSuccess: (submitResult) => {
-        const updateTesterData = submitResult.result?.messages || [];
-        if (submitResult.result?.quickReplies) {
+      onSuccess: (res) => {
+        const updateTesterData = res?.messages || [];
+        if (res?.quickReplies) {
           const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: submitResult.result.quickReplies,
+            quickReplies: res?.quickReplies,
             type: TESTER_DATA_TYPES.quickReplies,
           };
           updateTesterData.push(quickpRepliesContent);
@@ -106,6 +107,10 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   };
 
   useEffect(() => {
+    dispatch(initMessages());
+  }, [botId]);
+
+  useEffect(() => {
     if (isOpen && scrollRef.current) {
       scrollRef.current.scrollTop = scrollPosition;
       setDebugMeta(undefined);
@@ -117,10 +122,6 @@ export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
       scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
     }
   }, [botTesterData]);
-
-  useEffect(() => {
-    dispatch(initMessages());
-  }, [botId]);
 
   return (
     <>

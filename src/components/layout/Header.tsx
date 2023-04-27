@@ -1,8 +1,9 @@
 import { Button, IPopperItem, Popper } from '@components';
-import { BotTester } from '@components/pages/scenario/BotTester/BotTester';
+import { BotTester } from '@components/pages/scenario/bot-tester/BotTester';
 import { useModalOpen } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -62,12 +63,12 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
       },
     },
   ];
-  const { i18n, ts } = useI18n();
   const location = useLocation();
-  const language = i18n.language;
-  const { isOpen, handleIsOpen } = useModalOpen();
-  const navigate = useNavigate();
   const matches = useMatches();
+  const { i18n, ts } = useI18n();
+  const { t } = useTranslation('botTest');
+  const navigate = useNavigate();
+
   const changeLanguageHandler = (lang: string) => {
     i18n.changeLanguage(lang, () => {
       const paths = location.pathname.split('/');
@@ -75,11 +76,15 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
       navigate(paths.join('/'));
     });
   };
+
+  const language = i18n.language;
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
   const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
+
+  const { isOpen, handleIsOpen } = useModalOpen();
 
   useEffect(() => {
     handleIsOpen(false);
@@ -99,7 +104,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
               className="testerBtn"
               onClick={() => handleIsOpen(true)}
             >
-              테스트하기
+              {t('TITLE')}
             </Button>
           )}
           <Popper
