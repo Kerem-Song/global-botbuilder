@@ -7,6 +7,7 @@ import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
 import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -87,6 +88,7 @@ export const DataListCardNodeEdit = () => {
         <Row className="dataCardCrouselSlideBtns">
           <Col span={3}>
             <Button
+              className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
               disabled={carouselNum <= 1}
@@ -97,6 +99,7 @@ export const DataListCardNodeEdit = () => {
           </Col>
           <Col span={3}>
             <Button
+              className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
               disabled={carouselNum >= 10}
@@ -167,14 +170,14 @@ export const DataListCardNodeEdit = () => {
               <Space direction="vertical">
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={7} className="itemProfileImg">
+                    <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                         listItemIndex={i}
                         isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                       />
                     </Col>
-                    <Col span={15}>
+                    <Col span={19}>
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>
@@ -183,6 +186,11 @@ export const DataListCardNodeEdit = () => {
                       {...register(`view.items.${i}.imageUrl`)}
                       placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                       readOnly={isHistoryViewer}
+                      className={classNames('luna-input', {
+                        'luna-input-error': errors.view?.items?.[i]?.imageUrl
+                          ? true
+                          : false,
+                      })}
                     />
                   </Row>
                 </FormItem>

@@ -99,14 +99,14 @@ export const ListCardNodeEdit = () => {
               <Space direction="vertical">
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={7} className="itemProfileImg">
+                    <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                         listItemIndex={i}
                         isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                       />
                     </Col>
-                    <Col span={15}>
+                    <Col span={19}>
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>

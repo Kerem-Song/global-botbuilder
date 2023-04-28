@@ -61,7 +61,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
               >
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={7} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
                       index={nestedIndex}
@@ -73,7 +73,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                       }
                     />
                   </Col>
-                  <Col span={15}>
+                  <Col span={19}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>400 x 400 </p>
                   </Col>

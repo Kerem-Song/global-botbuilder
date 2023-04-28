@@ -165,13 +165,13 @@ export const ProductCardNodeEdit = () => {
             <Space direction="vertical">
               <FormItem error={errors.view?.imageCtrl?.imageUrl}>
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={8} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                       isValid={errors.view?.profileIconUrl ? false : true}
                     />
                   </Col>
-                  <Col span={14}>
+                  <Col span={19}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>

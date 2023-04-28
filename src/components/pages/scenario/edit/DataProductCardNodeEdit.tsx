@@ -114,6 +114,7 @@ export const DataProductCardNodeEdit = () => {
         <div className="dataCardCrouselSlideBtns">
           <Col span={3}>
             <Button
+              className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
               disabled={carouselNum <= 1}
@@ -124,6 +125,7 @@ export const DataProductCardNodeEdit = () => {
           </Col>
           <Col span={3}>
             <Button
+              className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
               disabled={carouselNum >= 10}
@@ -179,13 +181,13 @@ export const DataProductCardNodeEdit = () => {
             <Space direction="vertical">
               <FormItem error={errors.view?.imageCtrl?.imageUrl}>
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={8} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                       isValid={errors.view?.profileIconUrl ? false : true}
                     />
                   </Col>
-                  <Col span={14}>
+                  <Col span={19}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
@@ -194,6 +196,9 @@ export const DataProductCardNodeEdit = () => {
                     {...register(`view.profileIconUrl`)}
                     placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                     readOnly={isHistoryViewer}
+                    className={classNames('luna-input', {
+                      'luna-input-error': errors.view?.profileIconUrl ? true : false,
+                    })}
                   />
                 </Row>
               </FormItem>

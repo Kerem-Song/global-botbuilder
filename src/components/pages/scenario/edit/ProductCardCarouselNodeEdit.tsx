@@ -199,7 +199,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}
                         >
                           <Row align="center" gap={12} style={{ margin: 0 }}>
-                            <Col span={7} className="itemProfileImg">
+                            <Col span={5} className="itemProfileImg">
                               <ImageFileUploader
                                 imageCtrl={
                                   IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
@@ -212,7 +212,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 }
                               />
                             </Col>
-                            <Col span={15}>
+                            <Col span={19}>
                               <p>{t(`RECOMMENDED_SIZE`)}</p>
                               <p>640 x 640</p>
                             </Col>
