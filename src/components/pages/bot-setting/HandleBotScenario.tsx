@@ -60,7 +60,7 @@ export const HandleBotScenario = () => {
       return;
     }
     inputRef.current.click();
-  }, []);
+  }, [inputRef]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
