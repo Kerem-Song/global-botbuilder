@@ -84,24 +84,26 @@ export const DataListCardNodeEdit = () => {
 
       <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
         <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
-        <div className="dataCardCrouselSlideBtns">
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(false)}
-            disabled={carouselNum <= 1}
-          >
-            -
-          </Button>
-          <span>{watch(`view.carousel`)}</span>
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(true)}
-            disabled={carouselNum >= 10}
-          >
-            +
-          </Button>
-        </div>
-        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <Row className="dataCardCrouselSlideBtns">
+          <Col span={3}>
+            <Button
+              shape="ghost"
+              onClick={() => handleCarouselNum(false)}
+              disabled={carouselNum <= 1}
+            />
+          </Col>
+          <Col span={3}>
+            <span>{watch(`view.carousel`)}</span>
+          </Col>
+          <Col span={3}>
+            <Button
+              shape="ghost"
+              onClick={() => handleCarouselNum(true)}
+              disabled={carouselNum >= 10}
+            />
+          </Col>
+        </Row>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">

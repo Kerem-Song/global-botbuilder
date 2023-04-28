@@ -1,5 +1,5 @@
 import { Button, Col, Divider, Row } from '@components';
-import { FormItem, Input, Radio } from '@components/data-entry';
+import { FormItem, Input, InputTextarea, Radio } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { useDataApiClient } from '@hooks/client/dataApiClient';
@@ -30,7 +30,7 @@ export const JsonRequestNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const isHistoryViewer = useHistoryViewerMatch();
   const { checkApiValidation } = useDataApiClient();
 
@@ -226,7 +226,7 @@ export const JsonRequestNodeEdit = () => {
           />
         </FormItem>
         <Divider style={{ margin: '28px 0' }} />
-        <Row align="center">
+        <Row align="center" className="apiValidationHeader">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
             <Button small type="primary" onClick={handleApiValidation}>
@@ -235,7 +235,7 @@ export const JsonRequestNodeEdit = () => {
           </Col>
         </Row>
 
-        <div>
+        <div className="apiResWrapper">
           {loading && (
             <ReactLoading
               type="spin"
@@ -245,14 +245,13 @@ export const JsonRequestNodeEdit = () => {
               className="apiResLoading"
             />
           )}
-
-          <InputTextAreaWithTitleCounter
-            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
-            maxRows={6}
+          <InputTextarea
             minRows={6}
+            maxRows={6}
             placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
             {...register(`view.apiRes`)}
             readOnly={true}
+            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
           />
         </div>
       </Collapse>

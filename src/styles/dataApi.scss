@@ -1,0 +1,48 @@
+.apiValidationHeader {
+  padding-bottom: rem(8);
+}
+
+.apiResWrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: rem(122);
+
+  .apiResLoading {
+    margin: auto;
+    z-index: 9998;
+  }
+}
+
+.dataCardCrouselSlideBtns {
+  display: flex;
+  // gap: rem(8);
+  padding: rem(8) 0 rem(12) 0;
+  align-items: center;
+  text-align: center;
+
+  .counterBtn {
+    background-color: $grayWhite;
+    border: rem(1) solid $gray200;
+    width: rem(40);
+    height: rem(40);
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.positive {
+      background-image: url('@assets/icons/ic_counter_plus.svg');
+    }
+
+    &.positive[disabled] {
+      background-image: url('@assets/icons/ic_counter_plus_disabled.svg');
+    }
+
+    &.negative {
+      background-image: url('@assets/icons/ic_counter_minus.svg');
+    }
+
+    &.negative[disabled] {
+      background-image: url('@assets/icons/ic_counter_minus_disabled.svg');
+    }
+  }
+}

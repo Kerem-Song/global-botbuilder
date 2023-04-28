@@ -23,23 +23,13 @@
   transition: background-color 2s ease-out;
 }
 
-// .textCounter {
-//   position: absolute;
-//   top: rem(14);
-//   right: 0;
-//   padding-right: rem(14);
-//   color: $gray300;
-//   font-size: rem(12);
-//   line-height: rem(14);
-// }
-
 .textareaWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: rem(8);
 
   .textareaLabel {
+    padding-bottom: rem(8);
     font-size: rem(15);
     font-weight: 500;
     color: #000000;
@@ -73,6 +63,7 @@
   resize: none;
 
   &.jsonResOverlay {
+    position: absolute;
     background: rgba(255, 255, 255, 0.8);
   }
 }
@@ -81,10 +72,4 @@
 //   display: none;
 // }
 
-.apiResLoading {
-  position: absolute;
-  top: 89%;
-  right: 44%;
-  z-index: 9998;
-}
 
