@@ -28,17 +28,15 @@ export const ImageInput = ({
   const { imageUrl } = handleImageCtrlIdPath({ imageCtrl, index, listItemIndex });
 
   const handleImgUrlInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('@handle input img url check', e.target.value);
-
     clearTimeout(timer);
 
     const newTimer = setTimeout(() => {
       if (e.target.value.trim()) {
         setValue(
           imageUrl,
-          `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
-            e.target.value
-          }&sessionToken=${token}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
         );
       }
     }, 1000);
