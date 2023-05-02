@@ -6,7 +6,7 @@ import { util } from '@modules/util';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-export interface AddEntryBtnProps {
+export interface IAddSynonymBtnProps {
   index: number;
   searchKeyword: string;
   representativeEntry?: string;
@@ -14,7 +14,7 @@ export interface AddEntryBtnProps {
   setIsActive: (value: boolean) => void;
 }
 
-export const AddEntryBtn: FC<AddEntryBtnProps> = ({
+export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   index,
   searchKeyword,
   synonym,
@@ -85,20 +85,19 @@ export const AddEntryBtn: FC<AddEntryBtnProps> = ({
     <>
       {fields.map((tag, i) => {
         return (
-          <div key={i} className="entry">
+          <div key={i} className="synonym">
             <span>
               {util.replaceKeywordMark(
                 getValues(`entries.${index}.synonym.${i}`),
                 searchKeyword,
               )}
             </span>
-            <button
-              type="button"
-              className="entryDeleteBtn"
+            <Button
+              shape="ghost"
+              className="synonymDeleteBtn"
               onClick={() => handleDelete(i)}
-            >
-              <img src={icPopupClose} alt="delete"></img>
-            </button>
+              icon={icPopupClose}
+            />
           </div>
         );
       })}

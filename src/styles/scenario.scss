@@ -179,16 +179,16 @@
       height: rem(8);
       background-color: #f7f7fa; /*스크롤바 뒷 배경 색상*/
     }
-  
+
     .scenarioListWrapper::-webkit-scrollbar-thumb {
       height: 30%; /* 스크롤바의 길이 */
       background-color: rgba(208, 221, 255, 0); /* 스크롤바의 색상 */
       border-radius: rem(18);
       transition: background-color 2s ease-out;
     }
-  
+
     .scenarioListWrapper:hover::-webkit-scrollbar-thumb {
-      background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
+      background-color: rgba(208, 221, 255, 0.8); /* 스크롤바의 색상 */
     }
 
     .search {
@@ -267,6 +267,7 @@
         overflow-y: auto;
 
         .variableList {
+          width: 100%;
           height: rem(38);
           display: grid;
           grid-template-columns: 5fr 5fr 1fr;
@@ -286,8 +287,10 @@
             margin-right: rem(2);
           }
           .deleteBtn {
+            padding: 0;
             border: none;
             background-color: transparent;
+            cursor: pointer;
           }
         }
 

@@ -1,4 +1,4 @@
-import { icPlusWhite, icUtteranceDeleteDefault } from '@assets';
+import { icDeleteDefault, icPlusWhite } from '@assets';
 import { Button } from '@components/general/Button';
 import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
@@ -99,7 +99,7 @@ export const VariablesManagement = () => {
                       openDeleteVariableModal(item.id);
                     }}
                   >
-                    <img src={icUtteranceDeleteDefault} alt="delete"></img>
+                    <img src={icDeleteDefault} alt="delete" />
                   </button>
                 </div>
               ))
