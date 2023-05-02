@@ -1,0 +1,20 @@
+.variableModal {
+  width: rem(600);
+  height: fit-content;
+  max-height: rem(340);
+  margin: auto;
+  margin-top: rem(250);
+  padding: 0;
+  overflow-y: hidden;
+  background-color: $grayWhite;
+  border-radius: rem(12);
+  .header {
+    padding: rem(14) rem(20) rem(0) rem(20);
+  }
+  .variableInfo {
+    padding: rem(9) rem(20) rem(20) rem(20);
+  }
+  .variableModalBtns {
+    padding: rem(0) rem(20) rem(20) rem(20);
+  }
+}

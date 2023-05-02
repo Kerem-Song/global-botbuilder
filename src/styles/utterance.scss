@@ -85,14 +85,14 @@
               border: 1px solid $gray200;
               border-radius: rem(8);
               cursor: pointer;
-              background-image: url('@assets/icons/ic_utterance_delete_default.svg');
+              background-image: url('@assets/icons/ic_delete_default.svg');
               background-position: center;
               background-repeat: no-repeat;
               &:hover {
                 background-color: $primary100;
               }
               &:disabled {
-                background-image: url('@assets/icons/ic_utterance_delete_disable.svg');
+                background-image: url('@assets/icons/ic_delete_disable.svg');
                 background-position: center;
                 background-repeat: no-repeat;
                 &:hover {

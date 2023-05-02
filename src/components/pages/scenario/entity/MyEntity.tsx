@@ -1,5 +1,5 @@
-import { icNoResult, icPlusWhite } from '@assets';
-import { Button, Card, Col, Input, Row, Title } from '@components';
+import { icPlusWhite } from '@assets';
+import { Button, Col, Input, Row, Title } from '@components';
 import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
@@ -9,12 +9,13 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import MultiClamp from 'react-multi-clamp';
 
+import { EmptyEntityCard } from './EmptyEntityCard';
 import { EntityDetailPopup } from './EntityDetailPopup';
 
 export const MyEntity = () => {
   const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
-  const { changePageNumberQuery, entryGroupDeleteMutate } = useEntityClient();
+  const { changePageNumberQuery, entryGroupDeleteMutateAsync } = useEntityClient();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const [ref, inView] = useInView();
@@ -40,9 +41,9 @@ export const MyEntity = () => {
         sessionToken: token,
         entryGroupId: id,
       };
-      entryGroupDeleteMutate.mutate(deleteEntry, {
-        onSuccess: (submitResult) => {
-          console.log(submitResult);
+      entryGroupDeleteMutateAsync(deleteEntry, {
+        onSuccess: (res) => {
+          console.log(res);
         },
       });
     }
@@ -96,7 +97,7 @@ export const MyEntity = () => {
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
-        ></Input>
+        />
       </div>
       <div className="entityWrapper">
         <Row gap={12}>
@@ -107,10 +108,10 @@ export const MyEntity = () => {
                 return (
                   <Col key={i} span={6}>
                     <div
+                      ref={ref}
                       className="entityCard"
                       role="presentation"
                       onClick={() => handleEntryDetail(x.id)}
-                      ref={ref}
                     >
                       <div className="cardHeader">
                         <span className="title">
@@ -137,16 +138,7 @@ export const MyEntity = () => {
               });
             })
           ) : (
-            <Card radius="normal" className="emptyEntityCardWrapper">
-              <div className="emptyEntityCard">
-                <img className="emptyImg" src={icNoResult} alt="empty" />
-                {searchKeyword ? (
-                  <span>{t('NO_SEARCH_ENTRIES_RESULT_FOUND')}</span>
-                ) : (
-                  <span>{t('NO_ENTRIES_REGISTERED')}</span>
-                )}
-              </div>
-            </Card>
+            <EmptyEntityCard searchKeyword={searchKeyword} />
           )}
         </Row>
         {isOpen && (

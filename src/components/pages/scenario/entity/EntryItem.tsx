@@ -1,4 +1,4 @@
-import { Col, Input, Row } from '@components';
+import { Button, Col, Input, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import { util } from '@modules/util';
@@ -12,7 +12,7 @@ import {
   UseFormTrigger,
 } from 'react-hook-form';
 
-import { AddEntryBtn } from './AddEntryBtn';
+import { AddSynonymBtn } from './AddSynonymBtn';
 
 export interface IEntityDetailItemProps {
   index: number;
@@ -23,7 +23,7 @@ export interface IEntityDetailItemProps {
   trigger: UseFormTrigger<ISaveEntryGroup>;
 }
 
-export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
+export const EntryItem: FC<IEntityDetailItemProps> = ({
   index,
   entriesRemove,
   searchKeyword,
@@ -124,12 +124,12 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
             </Col>
             <Col span={18}>
               <div
-                className={classNames('entryList', {
+                className={classNames('synonymListWrapper', {
                   error: errors.entries?.[index]?.representativeEntry,
                 })}
               >
-                <div className="entries">
-                  <AddEntryBtn
+                <div className="synonymList">
+                  <AddSynonymBtn
                     index={index}
                     searchKeyword={searchKeyword}
                     representativeEntry={field.value}
@@ -140,7 +140,7 @@ export const EntityDetailItem: FC<IEntityDetailItemProps> = ({
               </div>
             </Col>
             <Col span={1}>
-              <button type="button" className="icDelete" onClick={openDeleteEntryModal} />
+              <Button className="icDelete" onClick={openDeleteEntryModal} />
             </Col>
           </Row>
         ))}
