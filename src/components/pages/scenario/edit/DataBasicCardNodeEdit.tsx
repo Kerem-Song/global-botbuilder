@@ -50,8 +50,6 @@ export const DataBasicCardNodeEdit = () => {
     }
   };
 
-  console.log('@values in basiccard node edit', values.view);
-  console.log('@err in basiccard node edit', errors.view?.imageCtrl?.imageUrl);
   useEffect(() => {
     if (watch(`view.carousel`)) {
       setCarouselNum(watch(`view.carousel`));
@@ -61,7 +59,7 @@ export const DataBasicCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.attribute}>
           <ParameterSelector
             control={control}

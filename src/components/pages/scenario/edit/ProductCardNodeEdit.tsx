@@ -1,4 +1,4 @@
-import { Col, FormItem, Input, Row, Space } from '@components';
+import { Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -13,6 +13,7 @@ import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
@@ -175,12 +176,7 @@ export const ProductCardNodeEdit = () => {
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
-                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                  <Input
-                    {...register(`view.profileIconUrl`)}
-                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
-                  />
+                  <ImageInput imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL} />
                 </Row>
               </FormItem>
             </Space>

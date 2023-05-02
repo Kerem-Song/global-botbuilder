@@ -1,18 +1,18 @@
-import { Button, Col, FormItem, Input, Row, Space } from '@components';
+import { Button, Col, FormItem, Row, Space } from '@components';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { ImageAspectRatio } from '@models/enum';
-import { CTRL_TYPES, IListCardView } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
@@ -110,11 +110,9 @@ export const ListCardNodeEdit = () => {
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>
-                    <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                    <Input
-                      {...register(`view.items.${i}.imageUrl`)}
-                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                      readOnly={isHistoryViewer}
+                    <ImageInput
+                      imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
+                      listItemIndex={i}
                     />
                   </Row>
                 </FormItem>

@@ -7,7 +7,9 @@ import classNames from 'classnames';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
+import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 interface IImageSetting {
   imageRatio: ImageAspectRatio | undefined;
   setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
@@ -25,60 +27,61 @@ export const ImageSettings = ({
   listItemIndex,
   isValid,
 }: IImageSetting) => {
-  const [timer, setTimer] = useState<NodeJS.Timeout>();
+  // const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const { getValues, setValue, register, watch, control } = useFormContext();
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+  // const isHistoryViewer = useHistoryViewerMatch();
 
-  const handleImageCtrlIdPath = () => {
-    switch (imageCtrl) {
-      case IMAGE_CTRL_TYPES.IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.imageCtrl,
-          imageFilePath: 'view.imageCtrl',
-          imageUrl: 'view.imageCtrl.imageUrl',
-        };
+  // const handleImageCtrlIdPath = () => {
+  //   switch (imageCtrl) {
+  //     case IMAGE_CTRL_TYPES.IMAGE_CTRL:
+  //       return {
+  //         imageCtrl: values.view.imageCtrl,
+  //         imageFilePath: 'view.imageCtrl',
+  //         imageUrl: 'view.imageCtrl.imageUrl',
+  //       };
 
-      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.items[listItemIndex!].imageCtrl,
-          imageFilePath: `view.items.${listItemIndex}`,
-          imageUrl: `view.items.${listItemIndex}.imageUrl`,
-        };
+  //     case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
+  //       return {
+  //         imageCtrl: values.view.items[listItemIndex!].imageCtrl,
+  //         imageFilePath: `view.items.${listItemIndex}`,
+  //         imageUrl: `view.items.${listItemIndex}.imageUrl`,
+  //       };
 
-      case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
-          imageFilePath: `view.childrenViews.${index}.imageCtrl`,
-          imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
-        };
+  //     case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
+  //       return {
+  //         imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
+  //         imageFilePath: `view.childrenViews.${index}.imageCtrl`,
+  //         imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
+  //       };
 
-      case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
-          imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
-          imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
-        };
+  //     case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
+  //       return {
+  //         imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
+  //         imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
+  //         imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
+  //       };
 
-      case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
-        return {
-          imageCtrl: values.view.profileIconUrl,
-          imageFilePath: `view.profileIconUrl`,
-          imageUrl: `view.profileIconUrl`,
-        };
+  //     case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
+  //       return {
+  //         imageCtrl: values.view.profileIconUrl,
+  //         imageFilePath: `view.profileIconUrl`,
+  //         imageUrl: `view.profileIconUrl`,
+  //       };
 
-      case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
-          imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
-          imageUrl: `view.childrenViews.${index}.profileIconUrl`,
-        };
-      default:
-        return { imageCtrl: '', imageFilePath: '' };
-    }
-  };
+  //     case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
+  //       return {
+  //         imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
+  //         imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
+  //         imageUrl: `view.childrenViews.${index}.profileIconUrl`,
+  //       };
+  //     default:
+  //       return { imageCtrl: '', imageFilePath: '' };
+  //   }
+  // };
+  const { imageCtrlPath } = handleImageCtrlIdPath({ imageCtrl, index, listItemIndex });
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
     const handleDesc = () => {
@@ -117,57 +120,25 @@ export const ImageSettings = ({
       if (ratio === ImageAspectRatio.Rectangle) {
         setImageRatio(ImageAspectRatio.Rectangle);
 
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Rectangle,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
       }
       if (ratio === ImageAspectRatio.Square) {
         setImageRatio(ImageAspectRatio.Square);
 
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Square,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
       }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Square,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
         setImageRatio(ImageAspectRatio.Rectangle);
       } else {
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Rectangle,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
         setImageRatio(ImageAspectRatio.Square);
       }
     }
   };
 
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
-
-  const token = useRootState((state) => state.botInfoReducer.token);
-  const handleImgUrlInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('@handle input img url check', e.target.value);
-
-    clearTimeout(timer);
-
-    const newTimer = setTimeout(() => {
-      if (e.target.value) {
-        setValue(
-          handleImageCtrlIdPath().imageUrl!,
-          `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
-            e.target.value
-          }&sessionToken=${token}`,
-        );
-      }
-    }, 1000);
-
-    setTimer(newTimer);
-  };
 
   return (
     <Space direction="vertical">
@@ -176,10 +147,7 @@ export const ImageSettings = ({
         <Col span={12} className="radioContainer">
           <Radio
             name="aspectRatio"
-            checked={
-              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
-              ImageAspectRatio.Rectangle
-            }
+            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle}
             onChange={() => setImageAspectRatioModal(ImageAspectRatio.Rectangle)}
             ref={aspectRatio.ref}
           >
@@ -189,10 +157,7 @@ export const ImageSettings = ({
         <Col span={12} className="radioContainer">
           <Radio
             name="aspectRatio"
-            checked={
-              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
-              ImageAspectRatio.Square
-            }
+            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
             onChange={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
             ref={aspectRatio.ref}
           >
@@ -210,18 +175,10 @@ export const ImageSettings = ({
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
-        imageRatio={watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`)}
+        imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
         isValid={isValid}
       />
-
-      <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-      <Input
-        // {...register(handleImageCtrlIdPath().imageUrl!)}
-        placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-        readOnly={isHistoryViewer}
-        // className={classNames('luna-input', { 'luna-input-error': !isValid })}
-        onChange={handleImgUrlInput}
-      />
+      <ImageInput imageCtrl={imageCtrl} index={index} listItemIndex={listItemIndex} />
     </Space>
   );
 };

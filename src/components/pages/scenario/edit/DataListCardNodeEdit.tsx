@@ -13,6 +13,7 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
@@ -72,7 +73,7 @@ export const DataListCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.attribute}>
           <ParameterSelector
             control={control}
@@ -181,16 +182,9 @@ export const DataListCardNodeEdit = () => {
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>
-                    <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                    <Input
-                      {...register(`view.items.${i}.imageUrl`)}
-                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                      readOnly={isHistoryViewer}
-                      className={classNames('luna-input', {
-                        'luna-input-error': errors.view?.items?.[i]?.imageUrl
-                          ? true
-                          : false,
-                      })}
+                    <ImageInput
+                      imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
+                      listItemIndex={i}
                     />
                   </Row>
                 </FormItem>

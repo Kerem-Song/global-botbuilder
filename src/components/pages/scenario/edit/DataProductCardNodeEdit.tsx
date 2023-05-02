@@ -13,6 +13,7 @@ import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
@@ -98,7 +99,7 @@ export const DataProductCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.attribute}>
           <ParameterSelector
             control={control}
@@ -191,15 +192,7 @@ export const DataProductCardNodeEdit = () => {
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
-                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                  <Input
-                    {...register(`view.profileIconUrl`)}
-                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
-                    className={classNames('luna-input', {
-                      'luna-input-error': errors.view?.profileIconUrl ? true : false,
-                    })}
-                  />
+                  <ImageInput imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL} />
                 </Row>
               </FormItem>
             </Space>
