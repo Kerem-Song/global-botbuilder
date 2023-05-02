@@ -1,10 +1,10 @@
 import { Input, Radio } from '@components';
 import { Col, Row, Space } from '@components/layout';
-import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState, useSystemModal } from '@hooks';
 import { ImageAspectRatio } from '@models/enum';
 import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
 import classNames from 'classnames';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { ImageFileUploader } from './ImageFileUploader';
@@ -25,6 +25,8 @@ export const ImageSettings = ({
   listItemIndex,
   isValid,
 }: IImageSetting) => {
+  const [imageUrlValue, setImageUrlValue] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const { getValues, setValue, register, watch, control } = useFormContext();
@@ -148,9 +150,26 @@ export const ImageSettings = ({
 
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
 
-  useEffect(() => {
-    console.log('image settings');
-  }, [aspectRatio]);
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const handleImgUrlInput = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('@handle input img url check');
+    setImageUrlValue(e.target.value);
+
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      console.log('@target value', imageUrlValue);
+
+      setValue(
+        handleImageCtrlIdPath().imageUrl!,
+        `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+          e.target.value
+        }&sessionToken=${token}`,
+      );
+    }, 2000);
+
+    setTimer(newTimer);
+  };
 
   return (
     <Space direction="vertical">
@@ -203,6 +222,7 @@ export const ImageSettings = ({
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
         className={classNames('luna-input', { 'luna-input-error': !isValid })}
+        onChange={handleImgUrlInput}
       />
     </Space>
   );

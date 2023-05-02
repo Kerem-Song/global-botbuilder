@@ -187,7 +187,7 @@ export const DataProductCardNodeEdit = () => {
                       isValid={errors.view?.profileIconUrl ? false : true}
                     />
                   </Col>
-                  <Col span={19}>
+                  <Col span={18}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
