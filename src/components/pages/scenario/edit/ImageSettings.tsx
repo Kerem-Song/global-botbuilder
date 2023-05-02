@@ -25,7 +25,6 @@ export const ImageSettings = ({
   listItemIndex,
   isValid,
 }: IImageSetting) => {
-  const [imageUrlValue, setImageUrlValue] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
@@ -152,21 +151,20 @@ export const ImageSettings = ({
 
   const token = useRootState((state) => state.botInfoReducer.token);
   const handleImgUrlInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('@handle input img url check');
-    setImageUrlValue(e.target.value);
+    console.log('@handle input img url check', e.target.value);
 
     clearTimeout(timer);
 
     const newTimer = setTimeout(() => {
-      console.log('@target value', imageUrlValue);
-
-      setValue(
-        handleImageCtrlIdPath().imageUrl!,
-        `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
-          e.target.value
-        }&sessionToken=${token}`,
-      );
-    }, 2000);
+      if (e.target.value) {
+        setValue(
+          handleImageCtrlIdPath().imageUrl!,
+          `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+            e.target.value
+          }&sessionToken=${token}`,
+        );
+      }
+    }, 1000);
 
     setTimer(newTimer);
   };
