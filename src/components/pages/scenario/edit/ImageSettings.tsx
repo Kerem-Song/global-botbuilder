@@ -218,10 +218,10 @@ export const ImageSettings = ({
 
       <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
       <Input
-        {...register(handleImageCtrlIdPath().imageUrl!)}
+        // {...register(handleImageCtrlIdPath().imageUrl!)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
-        className={classNames('luna-input', { 'luna-input-error': !isValid })}
+        // className={classNames('luna-input', { 'luna-input-error': !isValid })}
         onChange={handleImgUrlInput}
       />
     </Space>
