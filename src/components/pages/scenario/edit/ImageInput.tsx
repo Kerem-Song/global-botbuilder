@@ -33,7 +33,7 @@ export const ImageInput = ({
     clearTimeout(timer);
 
     const newTimer = setTimeout(() => {
-      if (e.target.value) {
+      if (e.target.value.trim()) {
         setValue(
           imageUrl,
           `${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
