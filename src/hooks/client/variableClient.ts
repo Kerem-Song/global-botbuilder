@@ -78,8 +78,8 @@ export const useVariableClient = () => {
 
   return {
     getVariableListQuery,
-    variableMutate,
-    variableDeleteMutate,
+    variableMutateAsync: variableMutate.mutateAsync,
+    variableDeleteMutateAsync: variableDeleteMutate.mutateAsync,
     getParameterFormatsQuery,
   };
 };

@@ -11,7 +11,7 @@ import { VariablePopup } from './VariablePopup';
 
 export const VariablesManagement = () => {
   const { t } = usePage();
-  const { getVariableListQuery, variableDeleteMutate } = useVariableClient();
+  const { getVariableListQuery, variableDeleteMutateAsync } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
 
   const { confirm } = useSystemModal();
@@ -31,9 +31,9 @@ export const VariablesManagement = () => {
         sessionToken: token!,
         parameterId: parameterId,
       };
-      variableDeleteMutate.mutate(deleteVariable, {
-        onSuccess: (submitResult) => {
-          if (submitResult && submitResult.isSuccess) {
+      variableDeleteMutateAsync(deleteVariable, {
+        onSuccess: (res) => {
+          if (res && res.isSuccess) {
             lunaToast.success();
           }
         },
@@ -65,12 +65,12 @@ export const VariablesManagement = () => {
               handleIsOpen(true);
             }}
           >
-            <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
+            <img className="plusBtn" src={icPlusWhite} alt="add" />
             <span>{t('ADD_VARIABLE')}</span>
           </Button>
         </div>
         <div className="variableListWrapper">
-          <div className="variableLists">
+          <div className="variableList">
             <div className="variableListHeader">
               <span className="variableName">{t('NAME')}</span>
               <span className="varibleType">{t('VARIABLE_VALUE')}</span>
@@ -79,15 +79,15 @@ export const VariablesManagement = () => {
               variableList?.result.map((item, i) => (
                 <div
                   role="presentation"
-                  className="variableList"
+                  className="variableItemList"
                   key={i}
                   onDoubleClick={() => {
                     handleId(item);
                     handleIsOpen(true);
                   }}
                 >
-                  <span>{item.name}</span>
-                  <span>
+                  <span className="variableInfo">{item.name}</span>
+                  <span className="variableInfo">
                     {item.defaultValue === null || item.defaultValue === ''
                       ? '-'
                       : item.defaultValue}
@@ -105,7 +105,7 @@ export const VariablesManagement = () => {
               ))
             ) : (
               <div className="emptyVariableList">
-                <span>{t('NO_REGISTERED_VARIABLE')}</span>
+                <span className="emptyVariable">{t('NO_REGISTERED_VARIABLE')}</span>
               </div>
             )}
           </div>
