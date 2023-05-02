@@ -1,23 +1,11 @@
-import { Input, Radio } from '@components';
-import { Col, Row, Space } from '@components/layout';
-import { useHistoryViewerMatch, usePage, useRootState, useSystemModal } from '@hooks';
-import { ImageAspectRatio } from '@models/enum';
-import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
-import classNames from 'classnames';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { Col, Radio, Row, Space } from '@components';
+import { usePage, useSystemModal } from '@hooks';
+import { IImageSetting, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
-interface IImageSetting {
-  imageRatio: ImageAspectRatio | undefined;
-  setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
-  imageCtrl: TImageTypes;
-  index?: number;
-  listItemIndex?: number;
-  isValid?: boolean;
-}
 
 export const ImageSettings = ({
   imageRatio,
@@ -27,60 +15,10 @@ export const ImageSettings = ({
   listItemIndex,
   isValid,
 }: IImageSetting) => {
-  // const [timer, setTimer] = useState<NodeJS.Timeout>();
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const { confirm } = useSystemModal();
-  const { getValues, setValue, register, watch, control } = useFormContext();
-  const values = getValues();
-  // const isHistoryViewer = useHistoryViewerMatch();
+  const { setValue, watch, control } = useFormContext();
 
-  // const handleImageCtrlIdPath = () => {
-  //   switch (imageCtrl) {
-  //     case IMAGE_CTRL_TYPES.IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.imageCtrl,
-  //         imageFilePath: 'view.imageCtrl',
-  //         imageUrl: 'view.imageCtrl.imageUrl',
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.items[listItemIndex!].imageCtrl,
-  //         imageFilePath: `view.items.${listItemIndex}`,
-  //         imageUrl: `view.items.${listItemIndex}.imageUrl`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
-  //         imageFilePath: `view.childrenViews.${index}.imageCtrl`,
-  //         imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
-  //         imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
-  //         imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
-  //       return {
-  //         imageCtrl: values.view.profileIconUrl,
-  //         imageFilePath: `view.profileIconUrl`,
-  //         imageUrl: `view.profileIconUrl`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
-  //         imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
-  //         imageUrl: `view.childrenViews.${index}.profileIconUrl`,
-  //       };
-  //     default:
-  //       return { imageCtrl: '', imageFilePath: '' };
-  //   }
-  // };
   const { imageCtrlPath } = handleImageCtrlIdPath({ imageCtrl, index, listItemIndex });
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {

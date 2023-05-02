@@ -1,4 +1,3 @@
-import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import { Dispatch, SetStateAction } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';

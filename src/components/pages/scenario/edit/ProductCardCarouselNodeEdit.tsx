@@ -1,10 +1,6 @@
-import { Col, FormItem, Row, Space } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage, useRootState } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { Col, Collapse, FormItem, Row, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import classNames from 'classnames';

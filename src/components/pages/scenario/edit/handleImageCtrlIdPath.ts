@@ -1,19 +1,11 @@
-import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
+import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES } from '@models';
 import { useFormContext } from 'react-hook-form';
-
-interface IImageSetting {
-  imageCtrl: TImageTypes;
-  index?: number;
-  listItemIndex?: number;
-  imageRatio?: ImageAspectRatio | undefined;
-  isValid?: boolean;
-}
 
 export const handleImageCtrlIdPath = ({
   imageCtrl,
   index,
   listItemIndex,
-}: IImageSetting) => {
+}: IImageCtrlIdPathProps) => {
   const { getValues } = useFormContext();
   const values = getValues();
 

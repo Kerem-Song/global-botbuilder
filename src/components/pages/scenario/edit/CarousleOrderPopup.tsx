@@ -1,7 +1,6 @@
 import { icClosed } from '@assets';
+import { Button, Col, Divider, Row } from '@components';
 import { SoratbleCarouselCtrlContainer } from '@components/data-display/SortableCarouselCtrlContainer';
-import { Button } from '@components/general';
-import { Col, Divider, Row } from '@components/layout';
 import { usePage, useSystemModal } from '@hooks';
 import { INode, INodeEditModel } from '@models';
 import {

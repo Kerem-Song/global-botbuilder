@@ -2,7 +2,6 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
-import classNames from 'classnames';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IParameterSelectorProps<T extends object> {

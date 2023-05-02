@@ -2,8 +2,7 @@ import { useRootState } from '@hooks';
 import { NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
-import { useController, useFormContext } from 'react-hook-form';
-import { FieldError } from 'react-hook-form';
+import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
 import { reactSelectStyle } from './ButtonTypeSelector';

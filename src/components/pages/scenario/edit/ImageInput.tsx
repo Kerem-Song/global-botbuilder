@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
-interface IImageSetting {
+interface IImageCtrlIdPathProps {
   imageCtrl: TImageTypes;
   index?: number;
   listItemIndex?: number;
@@ -14,7 +14,11 @@ interface IImageSetting {
   isValid?: boolean;
 }
 
-export const ImageInput = ({ imageCtrl, index, listItemIndex }: IImageSetting) => {
+export const ImageInput = ({
+  imageCtrl,
+  index,
+  listItemIndex,
+}: IImageCtrlIdPathProps) => {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t } = usePage();
   const { setValue } = useFormContext();

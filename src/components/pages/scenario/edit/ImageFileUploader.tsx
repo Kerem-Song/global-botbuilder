@@ -1,7 +1,6 @@
 import { icImg } from '@assets';
-import { usePage, useRootState, useSystemModal } from '@hooks';
-import { imageUploadClient } from '@hooks/client/uploadImageClient';
-import { IMAGE_CTRL_TYPES, ImageAspectRatio, TImageTypes } from '@models';
+import { imageUploadClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
 import { useEffect } from 'react';
@@ -9,21 +8,13 @@ import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
-interface IImageSetting {
-  imageCtrl: TImageTypes;
-  index?: number;
-  listItemIndex?: number;
-  imageRatio?: ImageAspectRatio | undefined;
-  isValid?: boolean;
-}
-
 export const ImageFileUploader = ({
   imageCtrl,
   index,
   listItemIndex,
   imageRatio,
   isValid,
-}: IImageSetting) => {
+}: IImageCtrlIdPathProps) => {
   const { t } = usePage();
   const {
     getValues,

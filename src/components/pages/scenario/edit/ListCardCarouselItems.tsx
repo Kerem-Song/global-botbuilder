@@ -1,9 +1,6 @@
-import { FormItem, Input } from '@components/data-entry';
-import { Button } from '@components/general';
-import { Collapse } from '@components/general/Collapse';
-import { Col, Row, Space } from '@components/layout';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
+import { Button, Col, Collapse, Row, Space } from '@components';
+import { FormItem } from '@components/data-entry';
+import { useHistoryViewerMatch, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
