@@ -160,7 +160,7 @@ export const ProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+              <FormItem error={errors.view?.profileIconUrl}>
                 <Row align="center" gap={12} style={{ margin: 0 }}>
                   <Col span={5} className="itemProfileImg">
                     <ImageFileUploader

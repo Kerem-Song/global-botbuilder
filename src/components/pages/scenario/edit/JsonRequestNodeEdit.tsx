@@ -41,7 +41,7 @@ export const JsonRequestNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
   const { checkApiValidation } = useDataApiClient();
 

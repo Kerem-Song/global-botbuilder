@@ -193,7 +193,7 @@ export const ProductCardCarouselNodeEdit = () => {
                     <div className="m-b-8">
                       <Space direction="vertical">
                         <FormItem
-                          error={errors.view?.childrenViews?.[index]?.imageCtrl?.imageUrl}
+                          error={errors.view?.childrenViews?.[index]?.profileIconUrl}
                         >
                           <Row align="center" gap={12} style={{ margin: 0 }}>
                             <Col span={5} className="itemProfileImg">
