@@ -218,6 +218,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
                               }
                               index={index}
+                              registerName={`view.childrenViews.${index}.profileIconUrl`}
                             />
                           </Row>
                         </FormItem>

@@ -32,6 +32,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
         typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
         description: '',
         imageUrl: '',
+        imgPath: '',
         title: '',
         seq: 0,
         actionType: '',
@@ -79,6 +80,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                     imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
                     index={nestedIndex}
                     listItemIndex={j}
+                    registerName={`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`}
                   />
                 </Row>
               </FormItem>

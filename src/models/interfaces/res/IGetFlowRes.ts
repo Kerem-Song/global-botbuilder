@@ -210,6 +210,7 @@ export interface IImageCtrl extends ICtrlBase {
   imageUrl: string;
   previewImageUrl?: string;
   aspectRatio?: ImageAspectRatio;
+  imgPath: string;
 }
 
 export interface IButtonCtrl extends ICtrlBase {
@@ -276,6 +277,7 @@ export interface IListCardItem extends ICtrlBase {
   seq: number;
   title: string;
   aspectRatio?: ImageAspectRatio;
+  imgPath: string;
 }
 
 export interface IListCardCarouselView extends IHasButtonCarouselViewBase {
@@ -294,6 +296,7 @@ export interface IProductCardView extends IHasButtonViewBase {
   profileIconUrl: string;
   profileName: string;
   seq: number;
+  profileImgPath: string;
 }
 
 export interface IProductCardNode extends INodeBase {

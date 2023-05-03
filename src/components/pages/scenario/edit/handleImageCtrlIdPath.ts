@@ -16,6 +16,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: 'view.imageCtrl',
         imageFilePath: 'view.imageCtrl.imageFile',
         imageUrl: 'view.imageCtrl.imageUrl',
+        imgPath: `view.imageCtrl.imgPath`,
         htmlForId: 'imgUpload',
       };
 
@@ -25,6 +26,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: `view.items.${listItemIndex}`,
         imageFilePath: `view.items.${listItemIndex}.imageFile`,
         imageUrl: `view.items.${listItemIndex}.imageUrl`,
+        imgPath: `view.items.${listItemIndex}.imgPath`,
         htmlForId: `smallImgUpload-${listItemIndex}`,
       };
 
@@ -34,6 +36,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: `view.childrenViews.${index}.imageCtrl`,
         imageFilePath: `view.childrenViews.${index}.imageFile`,
         imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
+        imgPath: `view.childrenViews.${index}.imageCtrl.imgPath`,
         htmlForId: 'imgUpload',
       };
 
@@ -43,6 +46,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: `view.childrenViews.${index}.items.${listItemIndex}`,
         imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}.imageFile`,
         imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
+        imgPath: `view.childrenViews.${index}.items.${listItemIndex}.imgPath`,
         htmlForId: `smallImgUpload-${listItemIndex}`,
       };
 
@@ -52,6 +56,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: `view.profileIconUrl`,
         imageFilePath: `view.profileIconUrlImageFile`,
         imageUrl: `view.profileIconUrl`,
+        imgPath: `view.profileImgPath`,
         htmlForId: 'smallImgUpload',
       };
 
@@ -61,6 +66,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: `view.childrenViews.${index}.profileIconUrl`,
         imageFilePath: `view.childrenViews.${index}.profileIconUrlImageFile`,
         imageUrl: `view.childrenViews.${index}.profileIconUrl`,
+        imgPath: `view.childrenViews.${index}.profileImgPath`,
         htmlForId: 'smallImgUpload',
       };
     default:
@@ -69,6 +75,7 @@ export const handleImageCtrlIdPath = ({
         imageCtrlPath: '',
         imageFilePath: '',
         imageUrl: '',
+        imgPath: '',
         htmlForId: '',
       };
   }

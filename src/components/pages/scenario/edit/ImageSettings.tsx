@@ -19,7 +19,11 @@ export const ImageSettings = ({
   const { confirm } = useSystemModal();
   const { setValue, watch, control } = useFormContext();
 
-  const { imageCtrlPath } = handleImageCtrlIdPath({ imageCtrl, index, listItemIndex });
+  const { imageCtrlPath, imageUrl } = handleImageCtrlIdPath({
+    imageCtrl,
+    index,
+    listItemIndex,
+  });
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
     const handleDesc = () => {
@@ -116,7 +120,12 @@ export const ImageSettings = ({
         imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
         isValid={isValid}
       />
-      <ImageInput imageCtrl={imageCtrl} index={index} listItemIndex={listItemIndex} />
+      <ImageInput
+        imageCtrl={imageCtrl}
+        index={index}
+        listItemIndex={listItemIndex}
+        registerName={imageUrl}
+      />
     </Space>
   );
 };

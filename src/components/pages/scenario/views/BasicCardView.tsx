@@ -1,5 +1,6 @@
 import { Card } from '@components/data-display';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
+import { useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -19,6 +20,8 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
     textCard: false,
   });
 
+  const token = useRootState((state) => state.botInfoReducer.token);
+
   return (
     <Card>
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
@@ -34,7 +37,12 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
           )}
         >
           {view.imageCtrl?.imageUrl ? (
-            <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
+            <img
+              src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+                view.imageCtrl.imageUrl
+              }&sessionToken=${token}`}
+              alt="thumbnailImage"
+            />
           ) : (
             <div className="skeleton"></div>
           )}

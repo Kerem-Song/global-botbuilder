@@ -1,8 +1,8 @@
 import { Collapse, FormItem } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
-import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
+import { IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -35,36 +35,6 @@ export const ListCardCarouselNodeEdit = () => {
     name: `view.childrenViews`,
     control,
   });
-
-  const { fields, append, remove } = useFieldArray({
-    name: `view.childrenViews.${index ? index : 0}.items`,
-    control,
-  });
-
-  const handleAddListButton = () => {
-    console.log('handle add list btn');
-    // e.preventDefault();
-    if (fields.length < 5) {
-      append({
-        id: ID_GEN.generate(ID_TYPES.CTRL),
-        typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
-        description: '',
-        imageUrl: '',
-        title: '',
-        seq: 0,
-        actionType: '',
-        actionValue: '',
-        aspectRatio: 0,
-      });
-    } else {
-      //modal alert
-      console.log('5개까지 가능');
-    }
-  };
-
-  const handleDeleteListButton = (index: number) => {
-    remove(index);
-  };
 
   useEffect(() => {
     if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {

@@ -239,7 +239,7 @@ export const BotBuilderHeader = () => {
       <span className="cardNumWrapper">
         {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
       </span>
-      <div className="makingBtnWrapper">
+      <div className="makingBtnWrapper" data-tutorial={true}>
         <div className="makingBtn">
           <span className="btnCategory">{t(`SINGLE`)}</span>
           <Col className="btnWrapper">

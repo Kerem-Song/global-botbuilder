@@ -29,61 +29,9 @@ export const ImageFileUploader = ({
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  // const handleImageCtrlIdPath = () => {
-  //   switch (imageCtrl) {
-  //     case IMAGE_CTRL_TYPES.IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.imageCtrl,
-  //         imageFilePath: 'view.imageCtrl.imageFile',
-  //         imageUrl: 'view.imageCtrl.imageUrl',
-  //         htmlForId: 'imgUpload',
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.items?.[listItemIndex!],
-  //         imageFilePath: `view.items.${listItemIndex}.imageFile`,
-  //         imageUrl: `view.items.${listItemIndex}.imageUrl`,
-  //         htmlForId: `smallImgUpload-${listItemIndex}`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
-  //         imageFilePath: `view.childrenViews.${index}.imageFile`,
-  //         imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
-  //         htmlForId: 'imgUpload',
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.items?.[listItemIndex!],
-  //         imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}.imageFile`,
-  //         imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
-  //         htmlForId: `smallImgUpload-${listItemIndex}`,
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
-  //       return {
-  //         imageCtrl: values.view.profileIconUrl,
-  //         imageFilePath: `view.profileIconUrlImageFile`,
-  //         imageUrl: `view.profileIconUrl`,
-  //         htmlForId: 'smallImgUpload',
-  //       };
-
-  //     case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
-  //       return {
-  //         imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
-  //         imageFilePath: `view.childrenViews.${index}.profileIconUrlImageFile`,
-  //         imageUrl: `view.childrenViews.${index}.profileIconUrl`,
-  //         htmlForId: 'smallImgUpload',
-  //       };
-  //     default:
-  //       return { imageCtrl: '', imageFilePath: '', imageUrl: '', htmlForId: '' };
-  //   }
-  // };
   const {
     imageCtrl: imgCtrl,
+    imageCtrlPath,
     imageFilePath,
     imageUrl,
     htmlForId,
@@ -121,6 +69,7 @@ export const ImageFileUploader = ({
         .catch((err) => {
           setValue(imageUrl, null);
           setValue(imageFilePath, null);
+
           //modal 띄우기?
           console.log('upload 실패', err);
         });
@@ -133,15 +82,6 @@ export const ImageFileUploader = ({
     const FILE_SIZE = 3.2 * 1000 * 1000; //3mb제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
     if (e.target.files) {
-      console.log('file', e.target.files);
-      console.log(
-        'file size:',
-        e.target.files[0].size,
-        'limit size:',
-        FILE_SIZE,
-        '업로드파일 리미트와 비교',
-        e.target.files[0].size > FILE_SIZE,
-      );
       if (e.target.files[0].size > FILE_SIZE) {
         e.target.files = null;
         e.target.value = '';
@@ -161,7 +101,6 @@ export const ImageFileUploader = ({
       setValue(imageFilePath, e.target.files);
     }
   };
-  console.log('imageRatio', imageRatio);
 
   useEffect(() => {
     if (token && !!getValues(imageFilePath)) {
@@ -190,7 +129,14 @@ export const ImageFileUploader = ({
         >
           <div className={classnames('imgUploadSkeleton')}>
             {watch(imageUrl) ? (
-              <img src={getValues(imageUrl)} alt="templateImage" />
+              <img
+                src={`${
+                  import.meta.env.VITE_API_BASE_URL
+                }/builderimage/forbuilder?origin=${getValues(
+                  imageUrl,
+                )}&sessionToken=${token}`}
+                alt="templateImage"
+              />
             ) : (
               <>
                 <img src={icImg} alt="icImg" />

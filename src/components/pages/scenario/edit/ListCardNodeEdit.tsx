@@ -109,6 +109,7 @@ export const ListCardNodeEdit = () => {
                     <ImageInput
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                       listItemIndex={i}
+                      registerName={`view.items.${i}.imageUrl`}
                     />
                   </Row>
                 </FormItem>

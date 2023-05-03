@@ -188,7 +188,10 @@ export const DataProductCardNodeEdit = () => {
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
-                  <ImageInput imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL} />
+                  <ImageInput
+                    imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                    registerName={`view.profileIconUrl`}
+                  />
                 </Row>
               </FormItem>
             </Space>
