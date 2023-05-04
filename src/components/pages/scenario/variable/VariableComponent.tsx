@@ -6,17 +6,17 @@ import { IDeleteParameter, IVariableList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { useState } from 'react';
 
-import { SettingEntity } from '../entity/SettingEntity';
+import { EntityComponent } from '../entity/EntityComponent';
 import { VariablePopup } from './VariablePopup';
 
-export const VariablesManagement = () => {
+export const VariableComponent = () => {
+  const [isVariableList, setIsVariableList] = useState<IVariableList>();
   const { t } = usePage();
-  const { getVariableListQuery, variableDeleteMutateAsync } = useVariableClient();
+  const { getVariableListQuery, variableDeleteAsync } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
-
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const [isVariableList, setIsVariableList] = useState<IVariableList>();
+  const { isOpen, handleIsOpen } = useModalOpen();
 
   const openDeleteVariableModal = async (parameterId: string) => {
     const result = await confirm({
@@ -31,17 +31,13 @@ export const VariablesManagement = () => {
         sessionToken: token!,
         parameterId: parameterId,
       };
-      variableDeleteMutateAsync(deleteVariable, {
-        onSuccess: (res) => {
-          if (res && res.isSuccess) {
-            lunaToast.success();
-          }
-        },
-      });
+
+      const res = await variableDeleteAsync(deleteVariable);
+      if (res && res.isSuccess) {
+        lunaToast.success('삭제되었습니다.');
+      }
     }
   };
-
-  const { isOpen, handleIsOpen } = useModalOpen();
 
   const handleId = (item?: IVariableList) => {
     if (item) {
@@ -53,7 +49,7 @@ export const VariablesManagement = () => {
 
   return (
     <div className="variableTabWrapper">
-      <SettingEntity />
+      <EntityComponent />
       <div className="variableWrapper">
         <div className="variableHeader">
           <span className="title">{t('VARIABLE_LIST')}</span>

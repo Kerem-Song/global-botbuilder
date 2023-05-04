@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 export const UtteranceListHeader = () => {
   const { utterancdId, botId } = useParams();
-  const { navigate, t, tc } = usePage();
+  const { navigate, t } = usePage();
 
   const goToDetail = () => {
     if (!utterancdId) {

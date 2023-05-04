@@ -24,7 +24,6 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const [sort, setSort] = useState<string | undefined>('1');
   const [scenario, setScenario] = useState<string>('all');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [searchKeywordParameter, setSearchKeywordParameter] = useState<string>();
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
@@ -53,7 +52,6 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
 
   const handleSearch = (keyword?: string) => {
     setSearchKeyword(keyword!);
-    setSearchKeywordParameter(keyword);
     handleSearchBtn(keyword);
   };
 
@@ -74,20 +72,16 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   }, [data, language]);
 
   return (
-    <Card
-      radius="normal"
-      bodyStyle={{ padding: '20px' }}
-      style={{ border: '1px solid #DCDCDC' }}
-    >
+    <Card className="toSearchCard" radius="normal">
       <form>
         <Space direction="vertical">
-          <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('TO_SEARCH')}</p>
+          <p className="cardTitle">{t('TO_SEARCH')}</p>
           <Row align="center" gap={10}>
             <Col>
               <span>{t('SORT')}</span>
             </Col>
             <Col>
-              <div style={{ minWidth: '160px' }}>
+              <div className="selectBox">
                 <Select
                   isSearchable={false}
                   options={SORT}
@@ -103,7 +97,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
               <span>{t('SCENARIOS')}</span>
             </Col>
             <Col>
-              <div style={{ minWidth: '160px' }}>
+              <div className="selectBox">
                 <Select
                   options={totalScenarioList}
                   styles={reactSelectStyle}

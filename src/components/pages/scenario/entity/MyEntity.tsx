@@ -15,7 +15,7 @@ import { EntityDetailPopup } from './EntityDetailPopup';
 export const MyEntity = () => {
   const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
-  const { changePageNumberQuery, entryGroupDeleteMutateAsync } = useEntityClient();
+  const { changePageNumberQuery, entryGroupDeleteAsync } = useEntityClient();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const [ref, inView] = useInView();
@@ -41,11 +41,11 @@ export const MyEntity = () => {
         sessionToken: token,
         entryGroupId: id,
       };
-      entryGroupDeleteMutateAsync(deleteEntry, {
-        onSuccess: (res) => {
-          console.log(res);
-        },
-      });
+      const res = await entryGroupDeleteAsync(deleteEntry);
+
+      if (res && res.isSuccess) {
+        console.log('res', res);
+      }
     }
   };
 

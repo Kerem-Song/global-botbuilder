@@ -16,7 +16,6 @@ export const useDeployClient = () => {
   const http = useHttp();
   const queryClient = useQueryClient();
   const token = useRootState((state) => state.botInfoReducer.token);
-
   const DEPLOY_HISTORY_LIST_KEY = 'deploy-history-list';
 
   const getDeployHistoryListQuery = ({
@@ -53,7 +52,18 @@ export const useDeployClient = () => {
     );
   };
 
-  const updateDeployHistoryComment = useMutation(
+  const deployingBotMutate = useMutation(async (data: IDeploy) => {
+    const result = await http.post<IDeploy, AxiosResponse<IResponseDeploy>>(
+      'Bot/Deploy',
+      data,
+    );
+    if (result) {
+      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
+      return result.data;
+    }
+  });
+
+  const updateDeployHistoryCommentMutate = useMutation(
     async (data: IUpdateDeployHistoryComment) => {
       const result = await http.post<
         IUpdateDeployHistoryComment,
@@ -66,21 +76,10 @@ export const useDeployClient = () => {
     },
   );
 
-  const deployingBot = useMutation(async (data: IDeploy) => {
-    const result = await http.post<IDeploy, AxiosResponse<IResponseDeploy>>(
-      'Bot/Deploy',
-      data,
-    );
-    if (result) {
-      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
-      return result.data;
-    }
-  });
-
   return {
     getDeployHistoryListQuery,
-    updateDeployHistoryComment,
-    deployingBot,
-    isDeployingBotIsLoading: deployingBot.isLoading,
+    isDeployingBotIsLoading: deployingBotMutate.isLoading,
+    deployingBotAsync: deployingBotMutate.mutateAsync,
+    updateDeployHistoryCommentAsync: updateDeployHistoryCommentMutate.mutateAsync,
   };
 };

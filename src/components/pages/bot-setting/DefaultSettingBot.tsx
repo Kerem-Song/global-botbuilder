@@ -13,7 +13,7 @@ import * as yup from 'yup';
 export const DefaultSettingBot = () => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
-  const { botUpdateAsync } = useBotClient();
+  const { botUpdateNameAsync } = useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ export const DefaultSettingBot = () => {
       return;
     }
 
-    const res = await botUpdateAsync({
+    const res = await botUpdateNameAsync({
       botId: botInfo.id,
       botName: name !== botInfo.botName ? name : undefined,
     });

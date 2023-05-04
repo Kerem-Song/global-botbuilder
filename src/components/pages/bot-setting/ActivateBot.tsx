@@ -16,10 +16,15 @@ export const ActivateBot = () => {
     if (!botInfo) {
       return;
     }
-    const res = await botActivateAsync({
-      botId: botInfo.id,
+
+    const { id } = botInfo;
+
+    const botActivate = {
+      botId: id,
       isActivate: true,
-    });
+    };
+
+    const res = await botActivateAsync(botActivate);
 
     if (res?.data.isSuccess) {
       console.log('res', res);
@@ -34,20 +39,30 @@ export const ActivateBot = () => {
   };
 
   const handleDisableBot = async () => {
-    let result: boolean | undefined = true;
-    if (botInfo?.activated) {
-      result = await confirm({
-        title: t('DEACTIVATE_BOT'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{t('DEACTIVATE_BOT_MESSAGE')}</p>
-        ),
-      });
+    if (!botInfo) {
+      return;
     }
-    if (result) {
-      await botActivateAsync({
-        botId: botInfo!.id,
-        isActivate: false,
-      });
+
+    const { id, activated } = botInfo;
+
+    if (!activated) {
+      return;
+    }
+
+    const botInactivate = {
+      botId: id,
+      isActivate: false,
+    };
+
+    const res = await confirm({
+      title: t('DEACTIVATE_BOT'),
+      description: (
+        <p style={{ whiteSpace: 'pre-wrap' }}>{t('DEACTIVATE_BOT_MESSAGE')}</p>
+      ),
+    });
+
+    if (res) {
+      await botActivateAsync(botInactivate);
       lunaToast.success(t('DEACTIVATE_BOT_SUCCESS_MESSAGE'));
     }
   };
