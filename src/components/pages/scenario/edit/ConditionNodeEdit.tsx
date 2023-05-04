@@ -1,8 +1,5 @@
-import { Button, FormItem, Input, Radio } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { Divider, Space } from '@components/layout';
-import { usePage, useRootState, useScenarioClient } from '@hooks';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
+import { Button, Collapse, Divider, FormItem, Radio, Space } from '@components';
+import { useNodeEditSave, usePage, useRootState, useScenarioClient } from '@hooks';
 import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';

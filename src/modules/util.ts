@@ -31,9 +31,9 @@ export const util = {
   formatDateTime: (d: Date) => {
     return (
       d.getFullYear() +
-      '-' +
+      '.' +
       util.pad(d.getMonth() + 1) +
-      '-' +
+      '.' +
       util.pad(d.getDate()) +
       ' ' +
       util.pad(d.getHours()) +

@@ -11,6 +11,7 @@ export * from './IHasResult';
 export * from './IHasResults';
 export * from './IHasStyle';
 export * from './IHistory';
+export * from './IImageUpload';
 export * from './INode';
 export * from './INodeEditModel';
 export * from './IPageProps';

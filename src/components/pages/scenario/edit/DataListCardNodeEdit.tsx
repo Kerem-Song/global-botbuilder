@@ -1,10 +1,7 @@
-import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
+import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
+import { useHistoryViewerMatch, usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useEffect, useState } from 'react';
@@ -12,6 +9,7 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
@@ -71,7 +69,7 @@ export const DataListCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.attribute}>
           <ParameterSelector
             control={control}
@@ -84,24 +82,28 @@ export const DataListCardNodeEdit = () => {
 
       <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
         <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
-        <div className="dataCardCrouselSlideBtns">
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(false)}
-            disabled={carouselNum <= 1}
-          >
-            -
-          </Button>
-          <span>{watch(`view.carousel`)}</span>
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(true)}
-            disabled={carouselNum >= 10}
-          >
-            +
-          </Button>
-        </div>
-        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <Row className="dataCardCrouselSlideBtns">
+          <Col span={3}>
+            <Button
+              className="counterBtn negative"
+              shape="ghost"
+              onClick={() => handleCarouselNum(false)}
+              disabled={carouselNum <= 1}
+            />
+          </Col>
+          <Col span={3}>
+            <span>{watch(`view.carousel`)}</span>
+          </Col>
+          <Col span={3}>
+            <Button
+              className="counterBtn positive"
+              shape="ghost"
+              onClick={() => handleCarouselNum(true)}
+              disabled={carouselNum >= 10}
+            />
+          </Col>
+        </Row>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
@@ -165,22 +167,21 @@ export const DataListCardNodeEdit = () => {
               <Space direction="vertical">
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={7} className="itemProfileImg">
+                    <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                         listItemIndex={i}
                         isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                       />
                     </Col>
-                    <Col span={15}>
+                    <Col span={19}>
                       <p>{t(`RECOMMENDED_SIZE`)}</p>
                       <p>400 x 400 </p>
                     </Col>
-                    <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                    <Input
-                      {...register(`view.items.${i}.imageUrl`)}
-                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                      readOnly={isHistoryViewer}
+                    <ImageInput
+                      imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
+                      listItemIndex={i}
+                      registerName={`view.items.${i}.imageUrl`}
                     />
                   </Row>
                 </FormItem>

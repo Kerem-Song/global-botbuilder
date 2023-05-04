@@ -1,7 +1,7 @@
 import { Card } from '@components/data-display';
 import { Divider } from '@components/layout';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -22,12 +22,19 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
     textCard: false,
   });
 
+  const token = useRootState((state) => state.botInfoReducer.token);
+
   return (
     <Card onClick={() => console.log('card click')}>
       {view.useImageCtrl || view.imageCtrl?.imageUrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl.imageUrl ? (
-            <img src={view.imageCtrl.imageUrl} alt="thumbnailImage" />
+            <img
+              src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+                view.imageCtrl.imageUrl
+              }&sessionToken=${token}`}
+              alt="thumbnailImage"
+            />
           ) : (
             <div className="skeleton"></div>
           )}
@@ -38,7 +45,14 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
         <>
           <div className="profile">
             {view.profileIconUrl ? (
-              <img src={view.profileIconUrl} alt="profileImage" />
+              <img
+                src={`${
+                  import.meta.env.VITE_API_BASE_URL
+                }/builderimage/forbuilder?origin=${
+                  view.profileIconUrl
+                }&sessionToken=${token}`}
+                alt="profileImage"
+              />
             ) : (
               <div className="skeleton"></div>
             )}

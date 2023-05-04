@@ -1,7 +1,5 @@
 import { FormItem } from '@components';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import { useFormContext } from 'react-hook-form';

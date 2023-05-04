@@ -1,15 +1,13 @@
-import { FormItem, Input } from '@components/data-entry';
-import { Button } from '@components/general';
-import { Collapse } from '@components/general/Collapse';
-import { Col, Row, Space } from '@components/layout';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
+import { Button, Col, Collapse, Row, Space } from '@components';
+import { FormItem } from '@components/data-entry';
+import { useHistoryViewerMatch, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) => {
@@ -34,6 +32,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
         typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
         description: '',
         imageUrl: '',
+        imgPath: '',
         title: '',
         seq: 0,
         actionType: '',
@@ -61,7 +60,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
               >
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={7} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
                       index={nestedIndex}
@@ -73,15 +72,15 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                       }
                     />
                   </Col>
-                  <Col span={15}>
+                  <Col span={19}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>400 x 400 </p>
                   </Col>
-                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                  <Input
-                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`)}
-                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                  <ImageInput
+                    imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}
+                    index={nestedIndex}
+                    listItemIndex={j}
+                    registerName={`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`}
                   />
                 </Row>
               </FormItem>

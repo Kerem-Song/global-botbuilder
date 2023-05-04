@@ -20,6 +20,7 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
             attribute: {view.attribute}
           </MultiClamp>
         </span>
+        <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
@@ -32,12 +33,14 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
             print: {view.print}
           </MultiClamp>
         </span>
+        <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
             headline: {view.header}
           </MultiClamp>
         </span>
+        <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
@@ -59,6 +62,7 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
               : t(`IMAGE_TYPE_RECTANGLE`)}
           </MultiClamp>
         </span>
+        <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>

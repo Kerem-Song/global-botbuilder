@@ -9,7 +9,7 @@ export const SettingEntity = () => {
 
   return (
     <>
-      <div className="addEntityBtn">
+      <div className="settingEntityBtn">
         <Button type="lineBlue" onClick={() => handleIsOpen(true)}>
           {t('SETTING_ENTITY')}
         </Button>

@@ -1,9 +1,20 @@
-import { Button, Col, Divider, Row } from '@components';
-import { FormItem, Input, Radio } from '@components/data-entry';
-import { Collapse } from '@components/general/Collapse';
-import { useHistoryViewerMatch, usePage } from '@hooks';
-import { useDataApiClient } from '@hooks/client/dataApiClient';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
+import {
+  Button,
+  Col,
+  Collapse,
+  Divider,
+  FormItem,
+  Input,
+  InputTextarea,
+  Radio,
+  Row,
+} from '@components';
+import {
+  useDataApiClient,
+  useHistoryViewerMatch,
+  useNodeEditSave,
+  usePage,
+} from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -143,18 +154,18 @@ export const JsonRequestNodeEdit = () => {
             {...register('view.url')}
           />
         </FormItem>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         {headersField.map((header, i) => (
           <div key={header.id}>
             <div className="m-b-8">
               <span className="subLabel">{t(`API_REQUEST_HEADER_INPUT_LABEL`)}</span>
             </div>
             <div className="m-b-8">
-              <Row gap={2} align="center">
-                <Col span={8}>
+              <Row gap={4} align="center">
+                <Col span={9}>
                   <Input placeholder="Key" {...register(`view.headers.${i}.key`)} />
                 </Col>
-                <Col span={14}>
+                <Col span={12}>
                   <Input placeholder="Value" {...register(`view.headers.${i}.value`)} />
                 </Col>
                 <Col span={2}>
@@ -173,7 +184,7 @@ export const JsonRequestNodeEdit = () => {
             + Header
           </Button>
         </div>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
             <div className="m-b-8">
@@ -182,15 +193,15 @@ export const JsonRequestNodeEdit = () => {
               </span>
             </div>
             <div className="m-b-8">
-              <Row gap={2} align="center">
-                <Col span={8}>
+              <Row gap={4} align="center">
+                <Col span={9}>
                   <Input
                     placeholder="Key"
                     {...register(`view.queryStrings.${i}.key`)}
                     readOnly={isHistoryViewer}
                   />
                 </Col>
-                <Col span={14}>
+                <Col span={12}>
                   <Input
                     placeholder="Value"
                     {...register(`view.queryStrings.${i}.value`)}
@@ -213,7 +224,7 @@ export const JsonRequestNodeEdit = () => {
             + Query String{' '}
           </Button>
         </div>
-        <Divider />
+        <Divider style={{ margin: '28px 0' }} />
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
@@ -225,8 +236,8 @@ export const JsonRequestNodeEdit = () => {
             readOnly={isHistoryViewer}
           />
         </FormItem>
-        <Divider />
-        <Row align="center">
+        <Divider style={{ margin: '28px 0' }} />
+        <Row align="center" className="apiValidationHeader">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
             <Button small type="primary" onClick={handleApiValidation}>
@@ -235,7 +246,7 @@ export const JsonRequestNodeEdit = () => {
           </Col>
         </Row>
 
-        <div>
+        <div className="apiResWrapper">
           {loading && (
             <ReactLoading
               type="spin"
@@ -245,20 +256,22 @@ export const JsonRequestNodeEdit = () => {
               className="apiResLoading"
             />
           )}
-
-          <InputTextAreaWithTitleCounter
-            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
-            maxRows={6}
+          <InputTextarea
             minRows={6}
+            maxRows={6}
             placeholder={t(`API_REQUEST_VALIDATION_PLACEHOLDER`)}
             {...register(`view.apiRes`)}
             readOnly={true}
+            className={classNames('textNodeTextArea', { jsonResOverlay: loading })}
           />
         </div>
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
           <div key={res.id}>
+            <div className="m-b-4">
+              <span className="subLabel">Json Path</span>
+            </div>
             <FormItem error={errors.view?.responseMapping?.[i]?.key}>
               <InputTextAreaWithTitleCounter
                 placeholder={t(
@@ -266,8 +279,13 @@ export const JsonRequestNodeEdit = () => {
                 )}
                 {...register(`view.responseMapping.${i}.key`)}
                 readOnly={isHistoryViewer}
+                className="m-b-12"
               />
             </FormItem>
+            <div className="m-b-8">
+              <p className="subLabel m-b-12">Set to</p>
+              <p className="subLabel">variable</p>
+            </div>
             <FormItem error={errors.view?.responseMapping?.[i]?.value}>
               <ParameterSelector
                 control={control}

@@ -1,10 +1,6 @@
-import { FormItem, Space } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { Collapse, FormItem, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';

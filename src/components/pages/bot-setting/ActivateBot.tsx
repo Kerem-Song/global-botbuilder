@@ -21,7 +21,7 @@ export const ActivateBot = () => {
       isActivate: true,
     });
 
-    if (res?.data.isSuccess === true) {
+    if (res?.data.isSuccess) {
       console.log('res', res);
     } else if (res?.data.exception.errorCode === 7631) {
       await info({

@@ -1,10 +1,6 @@
-import { Col, FormItem, Input, Row, Space } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { Col, Collapse, FormItem, Row, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -13,6 +9,7 @@ import Select, { StylesConfig } from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
@@ -34,7 +31,7 @@ export const reactSelectStyleProduct: StylesConfig = {
     ':hover': {
       borderColor: '#e7e7e7',
     },
-    minHeight: '34px',
+    minHeight: '40px',
   }),
 
   dropdownIndicator: () => ({
@@ -163,23 +160,21 @@ export const ProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+              <FormItem error={errors.view?.profileIconUrl}>
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={8} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                       isValid={errors.view?.profileIconUrl ? false : true}
                     />
                   </Col>
-                  <Col span={14}>
+                  <Col span={19}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
-                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                  <Input
-                    {...register(`view.profileIconUrl`)}
-                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                  <ImageInput
+                    imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                    registerName={`view.profileIconUrl`}
                   />
                 </Row>
               </FormItem>

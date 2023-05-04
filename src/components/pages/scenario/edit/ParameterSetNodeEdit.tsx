@@ -1,10 +1,5 @@
-import { FormItem, Input } from '@components/data-entry';
-import { Button } from '@components/general';
-import { Collapse } from '@components/general/Collapse';
-import { Divider } from '@components/layout';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
+import { Button, Collapse, Divider, FormItem } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';

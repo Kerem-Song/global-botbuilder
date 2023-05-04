@@ -179,16 +179,16 @@
       height: rem(8);
       background-color: #f7f7fa; /*스크롤바 뒷 배경 색상*/
     }
-  
+
     .scenarioListWrapper::-webkit-scrollbar-thumb {
       height: 30%; /* 스크롤바의 길이 */
       background-color: rgba(208, 221, 255, 0); /* 스크롤바의 색상 */
       border-radius: rem(18);
       transition: background-color 2s ease-out;
     }
-  
+
     .scenarioListWrapper:hover::-webkit-scrollbar-thumb {
-      background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
+      background-color: rgba(208, 221, 255, 0.8); /* 스크롤바의 색상 */
     }
 
     .search {
@@ -199,106 +199,108 @@
     .variableTabWrapper {
       width: 100%;
       height: 100%;
-    }
 
-    .addEntityBtn {
-      padding: rem(10);
+      .settingEntityBtn {
+        padding: rem(10);
 
-      & button {
-        width: 100%;
-        border: 1px solid rgb(78, 132, 239);
-        border-radius: rem(5);
-        color: rgb(78, 132, 239);
-      }
-    }
-
-    .variableWrapper {
-      padding: rem(10);
-
-      .variableHeader {
-        width: rem(196);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: rem(10);
-
-        .title {
-          font-size: rem(14);
-          font-weight: rem(500);
+        & button {
+          width: 100%;
+          border: 1px solid rgb(78, 132, 239);
+          border-radius: rem(5);
+          color: rgb(78, 132, 239);
         }
+      }
 
-        .addVariableBtn {
-          min-width: rem(84);
-          width: fit-content;
+      .variableWrapper {
+        padding: rem(10);
+
+        .variableHeader {
+          width: rem(196);
           display: flex;
-          justify-content: center;
           align-items: center;
-        }
-      }
+          justify-content: space-between;
+          margin-bottom: rem(10);
 
-      .addVariableBtn {
-        display: flex;
-      }
-    }
-
-    .variableListWrapper {
-      border: 1px solid $gray200;
-      border-radius: rem(6);
-      background-color: $grayWhite;
-
-      .variableListHeader {
-        padding: rem(12);
-        display: grid;
-        align-items: center;
-        grid-template-columns: 5fr 5fr 1fr;
-        background-color: $gray150;
-
-        .variableName {
-          grid-column: 1/1;
-        }
-
-        .varibleType {
-          grid-column: 2 / span 2;
-        }
-      }
-
-      .variableLists {
-        max-height: calc(100vh - rem(230));
-        overflow-y: auto;
-
-        .variableList {
-          height: rem(38);
-          display: grid;
-          grid-template-columns: 5fr 5fr 1fr;
-          align-items: center;
-          word-break: break-all;
-          padding: 0 rem(12);
-          cursor: pointer;
-
-          &:hover {
-            background-color: $primary100;
+          .title {
+            font-size: rem(14);
+            font-weight: rem(500);
           }
 
-          span {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            margin-right: rem(2);
-          }
-          .deleteBtn {
-            border: none;
-            background-color: transparent;
+          .addVariableBtn {
+            min-width: rem(84);
+            width: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .plusBtn {
+              margin-right: rem(3);
+            }
           }
         }
 
-        .emptyVariableList {
-          height: rem(50);
-          display: flex;
-          justify-content: center;
-          align-items: center;
+        .variableListWrapper {
+          border: 1px solid $gray200;
+          border-radius: rem(6);
+          background-color: $grayWhite;
 
-          span {
-            color: $gray300;
+          .variableList {
+            max-height: calc(100vh - rem(230));
+            overflow-y: auto;
+
+            .variableListHeader {
+              padding: rem(12);
+              display: grid;
+              align-items: center;
+              grid-template-columns: 5fr 5fr 1fr;
+              background-color: $gray150;
+
+              .variableName {
+                grid-column: 1/1;
+              }
+
+              .varibleType {
+                grid-column: 2 / span 2;
+              }
+            }
+
+            .variableItemList {
+              width: 100%;
+              height: rem(38);
+              display: grid;
+              grid-template-columns: 5fr 5fr 1fr;
+              align-items: center;
+              word-break: break-all;
+              padding: 0 rem(12);
+              cursor: pointer;
+
+              &:hover {
+                background-color: $primary100;
+              }
+
+              .variableInfo {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                margin-right: rem(2);
+              }
+              .deleteBtn {
+                padding: 0;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+              }
+            }
+
+            .emptyVariableList {
+              height: rem(50);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .emptyVariable {
+                color: $gray300;
+              }
+            }
           }
         }
       }

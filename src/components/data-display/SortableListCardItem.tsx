@@ -1,7 +1,10 @@
 import { Col, Row } from '@components/layout';
+import { useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 
 export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
+  const token = useRootState((state) => state.botInfoReducer.token);
+
   return (
     <Row justify="flex-start" align="center" key={item.id}>
       <Col span={18} className="listItemsContent">
@@ -18,7 +21,12 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
       </Col>
       <Col span={6}>
         {item.imageUrl ? (
-          <img src={item.imageUrl} alt="itemThumbnail" />
+          <img
+            src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+              item.imageUrl
+            }&sessionToken=${token}`}
+            alt="itemThumbnail"
+          />
         ) : (
           <div className="listItemThumbnailSkeleton"></div>
         )}

@@ -63,6 +63,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
@@ -152,6 +153,7 @@ export const nodeDefaultHelper = {
       typeName: CTRL_TYPES.LISTCARD_ITEM_CTRL,
       description: '',
       imageUrl: '',
+      imgPath: '',
       title: '',
       seq: seq || 0,
       actionType: '',
@@ -174,6 +176,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
@@ -203,6 +206,7 @@ export const nodeDefaultHelper = {
       salePrice: 0,
       discountPrice: 0,
       profileIconUrl: '',
+      profileImgPath: '',
       profileName: '',
       description: '',
       seq: 0,
@@ -211,6 +215,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
@@ -256,6 +261,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
@@ -276,6 +282,7 @@ export const nodeDefaultHelper = {
       salePrice: 0,
       discountPrice: 0,
       profileIconUrl: '',
+      profileImgPath: '',
       profileName: '',
       description: '',
       seq: 0,
@@ -283,6 +290,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
@@ -308,6 +316,7 @@ export const nodeDefaultHelper = {
       imageCtrl: {
         imageUrl: '',
         altText: '',
+        imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,

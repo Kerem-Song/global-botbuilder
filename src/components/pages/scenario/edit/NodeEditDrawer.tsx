@@ -1,8 +1,6 @@
 import { FormItem } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useYupValidation } from '@hooks/useYupValidation';
+import { useHistoryViewerMatch, usePage, useRootState, useYupValidation } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';

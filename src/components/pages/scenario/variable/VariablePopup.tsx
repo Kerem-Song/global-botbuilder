@@ -34,7 +34,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const language = i18n.language;
   const [formats, setFormats] = useState<number>();
   const [parameterInputError, setParameterInputError] = useState<string>('');
-  const { variableMutate, getParameterFormatsQuery } = useVariableClient();
+  const { variableMutateAsync, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
@@ -84,7 +84,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       },
     };
 
-    variableMutate.mutate(saveParameter, {
+    variableMutateAsync(saveParameter, {
       onSuccess: (res) => {
         console.log('modifyParameter', res);
         if (res && res.isSuccess) {
@@ -131,28 +131,15 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   }, [parameterFormats, language]);
 
   return (
-    <ReactModal
-      style={{
-        content: {
-          width: '600px',
-          height: 'fit-content',
-          maxHeight: '340px',
-          margin: 'auto',
-          marginTop: '200px',
-          padding: 0,
-          overflowY: 'hidden',
-        },
-      }}
-      isOpen={isOpen}
-    >
-      <div style={{ padding: '14px 20px 2px 20px' }}>
+    <ReactModal className="variableModal" isOpen={isOpen}>
+      <div className="header">
         <Title level={4}>
           {variableList?.id ? t('MODIFY_VARIABLE') : t('ADD_VARIABLE')}
         </Title>
       </div>
       <Divider />
       <form onSubmit={handleSubmit(handleSave)}>
-        <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
+        <Row align="center" className="variableInfo">
           <Col span={6}>
             {t('VARIABLE_NAME')}
             <span style={{ color: 'red' }}>*</span>
@@ -171,7 +158,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             <span className="error-message parameter-error">{errors.name?.message}</span>
           </Col>
         </Row>
-        <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
+        <Row align="center" className="variableInfo">
           <Col span={6}>{t('VARIABLE_FORMAT')}</Col>
           <Col span={18}>
             <Select
@@ -186,13 +173,13 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             />
           </Col>
         </Row>
-        <Row align="center" style={{ padding: '9px 20px 20px 20px' }}>
+        <Row align="center" className="variableInfo">
           <Col span={6}>{t('DEFAULT_VALUE')}</Col>
           <Col span={18}>
             <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
           </Col>
         </Row>
-        <Row justify="flex-end" style={{ padding: '0 20px 20px 20px' }}>
+        <Row justify="flex-end" className="variableModalBtns">
           <Space>
             <Button className="min-w-100" onClick={handleClose}>
               {tc('CANCEL')}

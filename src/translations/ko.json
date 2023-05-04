@@ -246,6 +246,7 @@
     "TITLE": "이미지 편집"
   },
   "botTest": {
+    "TITLE": "테스트하기",
     "HEADER": "봇 테스트하기",
     "ENTER_TEXT": "텍스트를 입력해주세요.",
     "SEND": "전송",

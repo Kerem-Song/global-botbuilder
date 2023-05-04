@@ -66,7 +66,7 @@ const buttonNodes = [
 
 const apiNodes = [
   {
-    className: 'icApiRequest',
+    className: 'icJsonRequest',
     value: NODE_TYPES.JSON_REQUEST_NODE,
     nodeName: 'Api Request',
   },
@@ -240,13 +240,13 @@ export const BotBuilderHeader = () => {
         {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
       </span>
       <div className="makingBtnWrapper">
-        <div className="makingBtn">
+        <div className="makingBtn" data-tutorial={true}>
           <span className="btnCategory">{t(`SINGLE`)}</span>
           <Col className="btnWrapper">
             {singleNodes.map((item, i) => (
               <Tooltip tooltip={item.nodeName} key={i}>
                 <Button
-                  className={`${item.nodeName} icon ${item.className} `}
+                  className={`${item.nodeName} icon ${item.className}`}
                   onDragStart={(e) => handleDragStart(e)}
                   onClick={(e) => {
                     handleMakingChatbubbleClick(e);
@@ -259,7 +259,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn">
+        <div className="makingBtn" data-tutorial={true}>
           <span className="btnCategory">{t(`CAROUSEL`)}</span>
           <Col className="btnWrapper">
             {carousleNodes.map((item, i) => (
@@ -277,7 +277,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn">
+        <div className="makingBtn" data-tutorial={true}>
           <span className="btnCategory">{t(`FUNCTION`)}</span>
           <Col className="btnWrapper">
             {buttonNodes.map((item, i) => (
@@ -294,7 +294,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn">
+        <div className="makingBtn" data-tutorial={true}>
           <span className="btnCategory">API</span>
           <Col className="btnWrapper">
             {apiNodes.map((item, i) => (

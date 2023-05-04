@@ -115,8 +115,8 @@ export const useEntityClient = () => {
   return {
     getEntityListQuery,
     changePageNumberQuery,
-    entryGroupMutate,
-    entryGroupDeleteMutate,
+    entryGroupMutateAsync: entryGroupMutate.mutateAsync,
+    entryGroupDeleteMutateAsync: entryGroupDeleteMutate.mutateAsync,
     getEntryDetailQuery,
     removeQueries,
   };

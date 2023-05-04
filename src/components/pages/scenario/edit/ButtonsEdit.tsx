@@ -1,7 +1,5 @@
-import { Button, Input, Space } from '@components';
-import { FormItem, InputTextarea } from '@components/data-entry';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
+import { Button, FormItem, Input, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
@@ -41,6 +39,8 @@ export const ButtonsEdit = ({
     register,
     control,
     watch,
+    resetField,
+    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
   const isHistoryViewer = useHistoryViewerMatch();
@@ -69,6 +69,12 @@ export const ButtonsEdit = ({
       handleDeleteButton(fields.length - 1);
     }
   }, [imageRatio]);
+
+  useEffect(() => {
+    resetField(
+      index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
+    );
+  }, [nodeId]);
 
   return (
     <>

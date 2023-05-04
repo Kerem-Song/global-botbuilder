@@ -1,7 +1,5 @@
-import { FormItem } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
+import { Collapse, FormItem } from '@components';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IIntentView } from '@models/interfaces/res/IGetFlowRes';
 import { useFormContext } from 'react-hook-form';

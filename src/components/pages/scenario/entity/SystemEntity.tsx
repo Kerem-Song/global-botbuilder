@@ -1,5 +1,4 @@
-import { icNoResult } from '@assets';
-import { Card, Col, Input, Row, Title } from '@components';
+import { Col, Input, Row, Title } from '@components';
 import { usePage } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IPagingItems, IResponseEntryItems } from '@models';
@@ -7,6 +6,8 @@ import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+
+import { EmptyEntityCard } from './EmptyEntityCard';
 
 export const SystemEntity = () => {
   const { t } = usePage();
@@ -43,7 +44,7 @@ export const SystemEntity = () => {
           onBlur={(e) => setSearchKeyword(e.target.value)}
           onPressEnter={(value) => setSearchKeyword(value)}
           onChange={(e) => setSearchKeyword(e.target.value)}
-        ></Input>
+        />
       </div>
       <div className="entityWrapper">
         <Row gap={12}>
@@ -72,16 +73,7 @@ export const SystemEntity = () => {
               });
             })
           ) : (
-            <Card radius="normal" className="emptyEntityCardWrapper">
-              <div className="emptyEntityCard">
-                <img className="emptyImg" src={icNoResult} alt="empty" />
-                {searchKeyword ? (
-                  <span>{t('NO_SEARCH_ENTRIES_RESULT_FOUND')}</span>
-                ) : (
-                  <span>{t('NO_ENTRIES_REGISTERED')}</span>
-                )}
-              </div>
-            </Card>
+            <EmptyEntityCard searchKeyword={searchKeyword} />
           )}
         </Row>
       </div>

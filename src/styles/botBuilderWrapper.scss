@@ -212,9 +212,11 @@
 
       .input {
         &.disabled {
+          span {
+            background-color: $gray150;
+          }
           input {
             background-color: $gray150;
-            border: 1px solid $gray200;
           }
         }
       }
@@ -310,12 +312,25 @@
       }
 
       .imgUploadLabel {
+        display: flex;
+        justify-content: center;
         &.skeleton {
+          // display: flex;
+          // justify-content: center;
+
           .imgUploadWrapper {
             background: $grayWhite;
             border: rem(1) dashed $gray200;
             border-radius: rem(8);
 
+            &:hover {
+              box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              -webkit-box-sizing: border-box;
+              border: rem(1) dashed $primary300;
+              border-radius: rem(8);
+            }
+          
             .imgUploadSkeleton {
               img {
                 width: rem(30);
@@ -327,11 +342,11 @@
         }
 
         &.skeleton:hover {
-          box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          border: rem(1) dashed $primary300;
-          border-radius: rem(8);
+          // box-sizing: border-box;
+          // -moz-box-sizing: border-box;
+          // -webkit-box-sizing: border-box;
+          // border: rem(1) dashed $primary300;
+          // border-radius: rem(8);
 
           .imgUploadSkeleton {
             display: none;
@@ -346,8 +361,11 @@
         }
 
         .imgUploadWrapper {
+          display: flex;
+          justify-content: center;
           position: relative;
-          height: rem(236);
+          width: rem(218);
+          height: rem(218);
 
           .imgUploadSkeleton {
             position: absolute;
@@ -358,8 +376,8 @@
             text-align: center;
 
             img {
-              width: rem(236);
-              height: rem(236);
+              width: rem(218);
+              height: rem(218);
               border: rem(1) solid $gray200;
               border-radius: rem(8);
               object-fit: contain;
@@ -384,7 +402,8 @@
         }
 
         .rectangle {
-          height: rem(118);
+          width: 100%;
+          height: rem(218);
           
           img {
             border: rem(1) solid $gray200;

@@ -1,21 +1,11 @@
-import { Input, Radio } from '@components';
-import { Col, Row, Space } from '@components/layout';
-import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
-import { ImageAspectRatio } from '@models/enum';
-import { IMAGE_CTRL_TYPES, TImageTypes } from '@models/types/ImageType';
-import classNames from 'classnames';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Col, Radio, Row, Space } from '@components';
+import { usePage, useSystemModal } from '@hooks';
+import { IImageSetting, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { useController, useFormContext } from 'react-hook-form';
 
+import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 import { ImageFileUploader } from './ImageFileUploader';
-interface IImageSetting {
-  imageRatio: ImageAspectRatio | undefined;
-  setImageRatio: Dispatch<SetStateAction<ImageAspectRatio | undefined>>;
-  imageCtrl: TImageTypes;
-  index?: number;
-  listItemIndex?: number;
-  isValid?: boolean;
-}
+import { ImageInput } from './ImageInput';
 
 export const ImageSettings = ({
   imageRatio,
@@ -25,59 +15,15 @@ export const ImageSettings = ({
   listItemIndex,
   isValid,
 }: IImageSetting) => {
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const { confirm } = useSystemModal();
-  const { getValues, setValue, register, watch, control } = useFormContext();
-  const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+  const { setValue, watch, control } = useFormContext();
 
-  const handleImageCtrlIdPath = () => {
-    switch (imageCtrl) {
-      case IMAGE_CTRL_TYPES.IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.imageCtrl,
-          imageFilePath: 'view.imageCtrl',
-          imageUrl: 'view.imageCtrl.imageUrl',
-        };
-
-      case IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.items[listItemIndex!].imageCtrl,
-          imageFilePath: `view.items.${listItemIndex}`,
-          imageUrl: `view.items.${listItemIndex}.imageUrl`,
-        };
-
-      case IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.imageCtrl,
-          imageFilePath: `view.childrenViews.${index}.imageCtrl`,
-          imageUrl: `view.childrenViews.${index}.imageCtrl.imageUrl`,
-        };
-
-      case IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.items[listItemIndex!],
-          imageFilePath: `view.childrenViews.${index}.items.${listItemIndex}`,
-          imageUrl: `view.childrenViews.${index}.items.${listItemIndex}.imageUrl`,
-        };
-
-      case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
-        return {
-          imageCtrl: values.view.profileIconUrl,
-          imageFilePath: `view.profileIconUrl`,
-          imageUrl: `view.profileIconUrl`,
-        };
-
-      case IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL:
-        return {
-          imageCtrl: values.view.childrenViews[index!]?.profileIconUrl,
-          imageFilePath: `view.childrenViews.${index}.profileIconUrl`,
-          imageUrl: `view.childrenViews.${index}.profileIconUrl`,
-        };
-      default:
-        return { imageCtrl: '', imageFilePath: '' };
-    }
-  };
+  const { imageCtrlPath, imageUrl } = handleImageCtrlIdPath({
+    imageCtrl,
+    index,
+    listItemIndex,
+  });
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
     const handleDesc = () => {
@@ -116,41 +62,25 @@ export const ImageSettings = ({
       if (ratio === ImageAspectRatio.Rectangle) {
         setImageRatio(ImageAspectRatio.Rectangle);
 
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Rectangle,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
       }
       if (ratio === ImageAspectRatio.Square) {
         setImageRatio(ImageAspectRatio.Square);
 
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Square,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
       }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Square,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
         setImageRatio(ImageAspectRatio.Rectangle);
       } else {
-        setValue(
-          handleImageCtrlIdPath().imageFilePath + `.aspectRatio`,
-          ImageAspectRatio.Rectangle,
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
         setImageRatio(ImageAspectRatio.Square);
       }
     }
   };
 
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
-
-  useEffect(() => {
-    console.log('image settings');
-  }, [aspectRatio]);
 
   return (
     <Space direction="vertical">
@@ -159,10 +89,7 @@ export const ImageSettings = ({
         <Col span={12} className="radioContainer">
           <Radio
             name="aspectRatio"
-            checked={
-              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
-              ImageAspectRatio.Rectangle
-            }
+            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle}
             onChange={() => setImageAspectRatioModal(ImageAspectRatio.Rectangle)}
             ref={aspectRatio.ref}
           >
@@ -172,10 +99,7 @@ export const ImageSettings = ({
         <Col span={12} className="radioContainer">
           <Radio
             name="aspectRatio"
-            checked={
-              watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`) ===
-              ImageAspectRatio.Square
-            }
+            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
             onChange={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
             ref={aspectRatio.ref}
           >
@@ -193,16 +117,14 @@ export const ImageSettings = ({
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
-        imageRatio={watch(handleImageCtrlIdPath().imageFilePath + `.aspectRatio`)}
+        imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
         isValid={isValid}
       />
-
-      <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-      <Input
-        {...register(handleImageCtrlIdPath().imageUrl!)}
-        placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-        readOnly={isHistoryViewer}
-        className={classNames('luna-input', { 'luna-input-error': isValid })}
+      <ImageInput
+        imageCtrl={imageCtrl}
+        index={index}
+        listItemIndex={listItemIndex}
+        registerName={imageUrl}
       />
     </Space>
   );

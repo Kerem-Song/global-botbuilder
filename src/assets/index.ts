@@ -39,6 +39,8 @@ import icCountHover from '@assets/icons/ic_count_hover.svg';
 import icDataApi from '@assets/icons/ic_data_api_default.svg';
 import icDataApiSelcted from '@assets/icons/ic_data_api_selected.svg';
 import icDelete from '@assets/icons/ic_delete.svg';
+import icDeleteDefault from '@assets/icons/ic_delete_default.svg';
+import icDeleteDisable from '@assets/icons/ic_delete_disable.svg';
 import icDeploy from '@assets/icons/ic_deploy_default.svg';
 import icDeploySelected from '@assets/icons/ic_deploy_select.svg';
 import icDeploySelectHistory from '@assets/icons/ic_deploy_select_history.svg';
@@ -125,8 +127,6 @@ import icTextHover from '@assets/icons/ic_text_hover.svg';
 import icUser from '@assets/icons/ic_user.svg';
 import icUtteranceAdd from '@assets/icons/ic_utterance_add.svg';
 import icUtterance from '@assets/icons/ic_utterance_default.svg';
-import icUtteranceDeleteDefault from '@assets/icons/ic_utterance_delete_default.svg';
-import icUtteranceDeleteDisable from '@assets/icons/ic_utterance_delete_disable.svg';
 import icUtteranceSelected from '@assets/icons/ic_utterance_select.svg';
 import icUtteranceSelectHistory from '@assets/icons/ic_utterance_select_history.svg';
 import icInsta from '@assets/images/img_insta.svg';
@@ -177,6 +177,8 @@ export {
   icDataApi,
   icDataApiSelcted,
   icDelete,
+  icDeleteDefault,
+  icDeleteDisable,
   icDeploy,
   icDeploySelected,
   icDeploySelectHistory,
@@ -265,8 +267,6 @@ export {
   icUser,
   icUtterance,
   icUtteranceAdd,
-  icUtteranceDeleteDefault,
-  icUtteranceDeleteDisable,
   icUtteranceSelected,
   icUtteranceSelectHistory,
   imgInstabot,

@@ -75,48 +75,56 @@
         background-color: $grayWhite;
       }
     }
+
     .icText {
       background-image: url('@assets/icons/ic_text.svg');
       &:hover {
         background-image: url('@assets/icons/ic_text_hover.svg');
       }
     }
+
     .icBtnTemple {
       background-image: url('@assets/icons/ic_btn_temple.svg');
       &:hover {
         background-image: url('@assets/icons/ic_btn_temple_hover.svg');
       }
     }
+    
     .icList {
       background-image: url('@assets/icons/ic_list.svg');
       &:hover {
         background-image: url('@assets/icons/ic_list_hover.svg');
       }
     }
+
     .icCommerce {
       background-image: url('@assets/icons/ic_commerce.svg');
       &:hover {
         background-image: url('@assets/icons/ic_commerce_hover.svg');
       }
     }
+
     .icCaroImg {
       background-image: url('@assets/icons/ic_caro_img.svg');
       &:hover {
         background-image: url('@assets/icons/ic_caro_img_hover.svg');
       }
     }
+
     .icCaroList {
       background-image: url('@assets/icons/ic_caro_list.svg');
       &:hover {
         background-image: url('@assets/icons/ic_caro_list_hover.svg');
       }
     }
+
     .icCaroCommerce {
       background-image: url('@assets/icons/ic_commerce.svg');
       &:hover {
         background-image: url('@assets/icons/ic_commerce_hover.svg');
       }
     }
+
     .icQuickBtn {
       background-image: url('@assets/icons/ic_quick_btn.svg');
       &:hover {
@@ -129,22 +137,57 @@
         background-image: url('@assets/icons/ic_condition_hover.svg');
       }
     }
+
     .icCount {
       background-image: url('@assets/icons/ic_count.svg');
       &:hover {
         background-image: url('@assets/icons/ic_count_hover.svg');
       }
     }
+
     .icSetParameter {
       background-image: url('@assets/icons/ic_set_parameter.svg');
       &:hover {
         background-image: url('@assets/icons/ic_set_parameter_hover.svg');
       }
     }
+
     .icOtherFlowRedirect {
       background-image: url('@assets/icons/ic_other_flow_redirect.svg');
       &:hover {
         background-image: url('@assets/icons/ic_other_flow_redirect_hover.svg');
+      }
+    }
+
+    .icJsonRequest {
+      background-image: url('@assets/icons/ic_api_request.svg');
+
+      &:hover {
+        background-image: url('@assets/icons/ic_api_request_hover.svg');
+      }
+    }
+
+    .icDataBasic {
+      background-image: url('@assets/icons/ic_data_basic_card.svg');
+    
+      &:hover {
+        background-image: url('@assets/icons/ic_data_basic_card_hover.svg');
+      }
+    }
+
+    .icDataList {
+      background-image: url('@assets/icons/ic_data_list_card.svg');
+    
+      &:hover {
+        background-image: url('@assets/icons/ic_data_list_card_hover.svg');
+      }
+    }
+
+    .icDataProduct {
+      background-image: url('@assets/icons/ic_data_commerce_card.svg');
+    
+      &:hover {
+        background-image: url('@assets/icons/ic_data_commerce_card_hover.svg');
       }
     }
   }

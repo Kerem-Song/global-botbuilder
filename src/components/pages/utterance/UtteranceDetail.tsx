@@ -1,4 +1,4 @@
-import { icEnter, icNoResult } from '@assets';
+import { icDelete, icDeleteDefault, icEnter, icNoResult } from '@assets';
 import { Card } from '@components/data-display';
 import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
@@ -433,6 +433,7 @@ export const UtteranceDetail = () => {
             />
           </FormItem>
           <Button
+            shape="ghost"
             className="icDelete"
             onClick={openDeleteCheckboxModal}
             disabled={

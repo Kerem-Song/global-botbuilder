@@ -1,10 +1,6 @@
-import { Button, Col, FormItem, Input, Radio, Row, Space } from '@components';
-import { Collapse } from '@components/general/Collapse';
-import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { useNodeEditSave } from '@hooks/useNodeEditSave';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -13,6 +9,7 @@ import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
+import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
@@ -98,7 +95,7 @@ export const DataProductCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p>{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.attribute}>
           <ParameterSelector
             control={control}
@@ -112,21 +109,25 @@ export const DataProductCardNodeEdit = () => {
       <Collapse label={t(`DATA_BASIC_CARD_NODE_CAROUSEL_SETTING`)} useSwitch={false}>
         <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_NUMBER`)}</p>
         <div className="dataCardCrouselSlideBtns">
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(false)}
-            disabled={carouselNum <= 1}
-          >
-            -
-          </Button>
-          <span>{watch(`view.carousel`)}</span>
-          <Button
-            shape="ghost"
-            onClick={() => handleCarouselNum(true)}
-            disabled={carouselNum >= 10}
-          >
-            +
-          </Button>
+          <Col span={3}>
+            <Button
+              className="counterBtn negative"
+              shape="ghost"
+              onClick={() => handleCarouselNum(false)}
+              disabled={carouselNum <= 1}
+            />
+          </Col>
+          <Col span={3}>
+            <span>{watch(`view.carousel`)}</span>
+          </Col>
+          <Col span={3}>
+            <Button
+              className="counterBtn positive"
+              shape="ghost"
+              onClick={() => handleCarouselNum(true)}
+              disabled={carouselNum >= 10}
+            />
+          </Col>
         </div>
         <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
@@ -175,23 +176,21 @@ export const DataProductCardNodeEdit = () => {
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
-              <FormItem error={errors.view?.imageCtrl?.imageUrl}>
+              <FormItem error={errors.view?.profileIconUrl}>
                 <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={8} className="itemProfileImg">
+                  <Col span={5} className="itemProfileImg">
                     <ImageFileUploader
                       imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                       isValid={errors.view?.profileIconUrl ? false : true}
                     />
                   </Col>
-                  <Col span={14}>
+                  <Col span={18}>
                     <p>{t(`RECOMMENDED_SIZE`)}</p>
                     <p>640 x 640</p>
                   </Col>
-                  <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-                  <Input
-                    {...register(`view.profileIconUrl`)}
-                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                  <ImageInput
+                    imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                    registerName={`view.profileIconUrl`}
                   />
                 </Row>
               </FormItem>

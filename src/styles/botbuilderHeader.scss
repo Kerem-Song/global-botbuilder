@@ -22,11 +22,32 @@
     justify-content: center;
     gap: rem(40);
 
+
+
+
     .makingBtn {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: rem(8);
+
+      // &[data-tutorial='true'] {
+      //   pointer-events: none;
+        
+      //   .luna-btn {
+      //     background-color: rgba(0, 0, 0, .1);
+      //     border: rem(1) solid rgba(0, 0, 0, .1);
+      //   }
+      //   .icBtnTemple {
+      //     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
+      //     background-color: $grayWhite;
+      //     pointer-events: auto;
+
+      //     &::after{
+            
+      //     }
+      //   }
+      // } 
 
       .btnCategory {
         color: $gray500;
@@ -139,6 +160,38 @@
 
           &:hover {
             background-image: url('@assets/icons/ic_other_flow_redirect_hover.svg');
+          }
+        }
+
+        .icJsonRequest {
+          background-image: url('@assets/icons/ic_api_request.svg');
+
+          &:hover {
+            background-image: url('@assets/icons/ic_api_request_hover.svg');
+          }
+        }
+
+        .icDataBasic {
+          background-image: url('@assets/icons/ic_data_basic_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_basic_card_hover.svg');
+          }
+        }
+
+        .icDataList {
+          background-image: url('@assets/icons/ic_data_list_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_list_card_hover.svg');
+          }
+        }
+
+        .icDataProduct {
+          background-image: url('@assets/icons/ic_data_commerce_card.svg');
+        
+          &:hover {
+            background-image: url('@assets/icons/ic_data_commerce_card_hover.svg');
           }
         }
       }

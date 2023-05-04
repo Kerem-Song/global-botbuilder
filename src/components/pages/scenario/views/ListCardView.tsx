@@ -1,6 +1,7 @@
 import { Card } from '@components/data-display';
 import { SortableListContainer } from '@components/data-display/SortableListContainer';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
+import { useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -17,6 +18,7 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
     square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
     textCard: false,
   });
+  const token = useRootState((state) => state.botInfoReducer.token);
 
   return (
     <Card onClick={() => console.log('card click')}>
@@ -32,7 +34,12 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div className={thumbnailClass}>
           {view.imageCtrl?.imageUrl ? (
-            <img src={view.imageCtrl?.imageUrl} alt="thumbnailImage" />
+            <img
+              src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
+                view.imageCtrl.imageUrl
+              }&sessionToken=${token}`}
+              alt="thumbnailImage"
+            />
           ) : (
             <div className="skeleton"></div>
           )}

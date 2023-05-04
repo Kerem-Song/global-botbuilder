@@ -5,30 +5,31 @@
   border: 1px solid $gray200;
   font-family: 'Pretendard';
   border-radius: rem(8);
-  
 }
 
-.textInput::-webkit-scrollbar {
-  display: none;
-}
-
-// .textCounter {
-//   position: absolute;
-//   top: rem(14);
-//   right: 0;
-//   padding-right: rem(14);
-//   color: $gray300;
-//   font-size: rem(12);
-//   line-height: rem(14);
+// .textInput::-webkit-scrollbar {
+//   display: none;
 // }
+.textInput::-webkit-scrollbar {
+  width: rem(8);
+  height: rem(8);
+  background: transparent; /*스크롤바 뒷 배경 색상*/
+}
+
+.textInput::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
+  border-radius: rem(18);
+  transition: background-color 2s ease-out;
+}
 
 .textareaWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: rem(8);
 
   .textareaLabel {
+    padding-bottom: rem(8);
     font-size: rem(15);
     font-weight: 500;
     color: #000000;
@@ -62,18 +63,13 @@
   resize: none;
 
   &.jsonResOverlay {
-    background:rgba(0,0,0,0.5);
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
   }
 }
 
-.textNodeTextArea::-webkit-scrollbar {
-  display: none;
-}
+// .textNodeTextArea::-webkit-scrollbar {
+//   display: none;
+// }
 
-.apiResLoading {
-  position: absolute;
-  top: 80%;
-  right: 44%;
-  z-index: 9998;
-}
 
