@@ -22,20 +22,32 @@
     justify-content: center;
     gap: rem(40);
 
-    // &[data-tutorial='true'] {
-    //   pointer-events: none;
 
-    //   .icBtnTemple button {
-    //     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .3);
-    //     pointer-events: auto;
-    //   }
-    // } 
+
 
     .makingBtn {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: rem(8);
+
+      // &[data-tutorial='true'] {
+      //   pointer-events: none;
+        
+      //   .luna-btn {
+      //     background-color: rgba(0, 0, 0, .1);
+      //     border: rem(1) solid rgba(0, 0, 0, .1);
+      //   }
+      //   .icBtnTemple {
+      //     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
+      //     background-color: $grayWhite;
+      //     pointer-events: auto;
+
+      //     &::after{
+            
+      //     }
+      //   }
+      // } 
 
       .btnCategory {
         color: $gray500;

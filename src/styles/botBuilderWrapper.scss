@@ -212,9 +212,11 @@
 
       .input {
         &.disabled {
+          span {
+            background-color: $gray150;
+          }
           input {
             background-color: $gray150;
-            border: 1px solid $gray200;
           }
         }
       }
