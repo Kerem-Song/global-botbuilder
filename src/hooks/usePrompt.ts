@@ -2,36 +2,12 @@
  * Prompts a user when they exit the page
  */
 
-import { useContext, useEffect } from 'react';
-import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom';
+import { useEffect } from 'react';
 
-import { useSelectedScenarioChange } from './useSelectedScenarioChange';
-
-function useConfirmExit(confirmExit: () => Promise<boolean>, when = true) {
-  const { navigator } = useContext(NavigationContext);
-
-  useEffect(() => {
-    if (!when) {
-      return;
-    }
-
-    const push = navigator.push;
-
-    navigator.push = async (...args: Parameters<typeof push>) => {
-      const result = await confirmExit();
-      if (result !== false) {
-        push(...args);
-      }
-    };
-
-    return () => {
-      navigator.push = push;
-    };
-  }, [navigator, confirmExit, when]);
-}
+import { useCallbackPrompt } from './useCallbackPrompt';
 
 export function usePrompt(when = true) {
-  const { handleChangeSelectedScenario } = useSelectedScenarioChange();
+  useCallbackPrompt(when);
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = '';
@@ -46,11 +22,4 @@ export function usePrompt(when = true) {
       window.removeEventListener('beforeunload', preventClose);
     };
   }, [when]);
-
-  const confirmExit = async () => {
-    const result = await handleChangeSelectedScenario();
-    console.log(result);
-    return result;
-  };
-  useConfirmExit(confirmExit, when);
 }

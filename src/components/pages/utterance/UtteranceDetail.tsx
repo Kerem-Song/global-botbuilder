@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
+import { usePrompt } from '@hooks/usePrompt';
 import {
   IDeleteIntent,
   IReactSelect,
@@ -49,6 +50,8 @@ export const UtteranceDetail = () => {
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  usePrompt(isActive);
 
   const schema = yup.object({
     name: yup
@@ -93,18 +96,6 @@ export const UtteranceDetail = () => {
     x.text?.trim().toLowerCase().includes(searchWord.trim().toLowerCase()),
   );
 
-  const preventGoBack = async () => {
-    const result = await confirm({
-      title: t('SAVE'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
-    });
-    if (result) {
-      history.go(-1);
-    } else {
-      history.pushState(null, '', location.href);
-    }
-  };
-
   const handleListBtn = async () => {
     if (isActive === true) {
       const result = await confirm({
@@ -120,11 +111,6 @@ export const UtteranceDetail = () => {
     } else {
       navigate(`/${botId}/utterance`);
     }
-  };
-
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = '';
   };
 
   const openDeleteCheckboxModal = async () => {
@@ -304,21 +290,6 @@ export const UtteranceDetail = () => {
 
     setTotalScenarioList(total);
   }, [data, language]);
-
-  useEffect(() => {
-    if (isActive) {
-      (() => {
-        history.pushState(null, '', location.href);
-        window.addEventListener('popstate', preventGoBack);
-        window.addEventListener('beforeunload', preventClose);
-      })();
-
-      return () => {
-        window.removeEventListener('popstate', preventGoBack);
-        window.removeEventListener('beforeunload', preventClose);
-      };
-    }
-  }, [isActive]);
 
   useEffect(() => {
     if (nameField.value === '' && intentNameRef.current) {

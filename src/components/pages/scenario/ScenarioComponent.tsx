@@ -1,4 +1,5 @@
 import { useRootState } from '@hooks';
+import { useCallbackPrompt } from '@hooks/useCallbackPrompt';
 import { usePrompt } from '@hooks/usePrompt';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';

@@ -1,37 +1,44 @@
-import { Transition } from 'history';
-import { useCallback, useState } from 'react';
-import { useLocation } from 'react-router';
+import { createElement, useEffect } from 'react';
+import {
+  unstable_Blocker as Blocker,
+  unstable_useBlocker as useBlocker,
+} from 'react-router';
 
-import { useBlocker } from './useBlocker';
+import usePage from './usePage';
+import { useSystemModal } from './useSystemModal';
 
-export const useCallbackPrompt = (when: boolean): [boolean, () => void, () => void] => {
-  const location = useLocation();
-  const [showPrompt, setShowPrompt] = useState(false);
-  const [blockedLocation, setBlockedLocation] = useState<Transition | null>(null);
+export const useCallbackPrompt = (when: boolean) => {
+  const { confirm } = useSystemModal();
+  const { tc } = usePage();
+  const blocker = useBlocker(when);
 
-  const cancelNavigation = useCallback(() => {
-    setShowPrompt(false);
-    setBlockedLocation(null);
-  }, []);
-
-  const blocker = useCallback(
-    (tx: Transition) => {
-      if (tx.location.pathname !== location.pathname) {
-        setBlockedLocation(tx);
-        setShowPrompt(true);
-      }
-    },
-    [location],
-  );
-
-  const confirmNavigation = useCallback(() => {
-    if (blockedLocation) {
-      blockedLocation.retry();
-      cancelNavigation(); // 클린업
+  useEffect(() => {
+    if (blocker.state === 'blocked' && when) {
+      confirmNavigation({ blocker });
     }
-  }, [blockedLocation]);
+  }, [blocker, when]);
 
-  useBlocker(blocker, when);
+  const confirmNavigation = async ({ blocker }: { blocker: Blocker }) => {
+    if (blocker.state === 'blocked') {
+      const message = createElement(
+        'span',
+        { style: { whiteSpace: 'pre-line' } },
+        tc('SAVE_CONFIRM_MESSAGE'),
+      );
+      const result = await confirm({
+        title: tc('SAVE'),
+        description: message,
+      });
 
-  return [showPrompt, confirmNavigation, cancelNavigation];
+      if (result) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  };
+
+  //useBlocker(blocker, when);
+
+  //return [showPrompt, confirmNavigation, cancelNavigation];
 };
