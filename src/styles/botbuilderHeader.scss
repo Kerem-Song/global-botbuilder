@@ -31,23 +31,84 @@
       align-items: center;
       gap: rem(8);
 
+      // 튜토리얼 테스트 시작부분
       // &[data-tutorial='true'] {
       //   pointer-events: none;
         
       //   .luna-btn {
       //     background-color: rgba(0, 0, 0, .1);
       //     border: rem(1) solid rgba(0, 0, 0, .1);
+
+      //     &.icBtnTemple span::after {
+      //       @include box-arrow(left, $grayWhite, "도구 영역에서 버튼을 드래그하여 기본 카드 말풍선을 만들어보세요!"); 
+      //       background: $grayWhite;
+      //       border-radius: rem(8);
+      //       padding: rem(20);
+
+      //       position: absolute;
+      //       content: "도구 영역에서 버튼을 드래그하여 기본 카드 말풍선을 만들어보세요!";
+      //       top: rem(100);
+      //       left: rem(50);
+            
+      //     }
       //   }
       //   .icBtnTemple {
       //     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
       //     background-color: $grayWhite;
       //     pointer-events: auto;
 
-      //     &::after{
-            
+      //     $arrow-color: #e74c3c;
+      //     $arrow-size: 1rem;
+      //     $arrow-border: 0.2rem;
+          
+      //     @-webkit-keyframes blink{
+      //       0% {opacity: 0;}
+      //       100% {opacity: 1;}
+      //     }
+          
+      //     @-moz-keyframes blink{
+      //       0% {opacity: 0;}
+      //       100% {opacity: 1;}
+      //     }
+          
+      //     @keyframes blink{
+      //       0% {opacity: 0;}
+      //       100% {opacity: 1;}
+      //     }
+          
+      //     &::after, &::before {
+      //       content: "";
+      //       display: block;
+      //       position: absolute;
+      //       transition: all 0.5s ease-in-out;
+
+      //       -webkit-animation: blink 0.5s ease-in-out infinite alternate;
+      //       -moz-animation: blink 0.5s ease-in-out infinite alternate;
+      //       animation: blink 0.5s ease-in-out infinite alternate;
+      //     }
+
+      //     &::before {
+      //       top: rem(148);
+      //       right: rem(10.5);
+      //       width: rem(12);// 화살표 왼쪽
+      //       height: rem(12); // 화살표 오른쪽
+      //       transform-origin: 50% 50%;
+      //       transform:  translate(0, -($arrow-size / 2)) rotate(135deg);
+      //       box-shadow: inset -#{$arrow-border} $arrow-border 0 0 $arrow-color;
+      //       border-radius: 0 $arrow-size*0.15 0 0;
+      //     }
+          
+      //     &::after {
+      //       top: 100%;
+      //       right: 50;
+      //       width: rem(3);
+      //       height: rem(120); //라인 길이
+      //       transform:  translate(0, -($arrow-border / 2)) rotate(180deg);
+      //       background-color: $arrow-color;
       //     }
       //   }
       // } 
+      // 튜토리얼 테스트 끝 부분
 
       .btnCategory {
         color: $gray500;

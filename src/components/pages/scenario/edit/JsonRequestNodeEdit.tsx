@@ -105,6 +105,7 @@ export const JsonRequestNodeEdit = () => {
       url: watch(`view.url`),
       headers: watch(`view.headers`),
       body: watch(`view.body`),
+      queryStrings: watch(`view.queryStrings`),
     })
       .then((res) => {
         console.log('@res in handle api validation', res);

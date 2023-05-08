@@ -140,3 +140,52 @@ $widthamounts: (100, 150, 200, 300, 500, 1000);
     min-width: #{$width}px !important;
   }
 }
+
+@mixin box-arrow($arrowDirection, $arrowColor, $content, $arrowWidth: 10px,) {
+  // position: relative;
+  z-index: 10;
+
+  &::after {
+    content: $content;
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    z-index: 10;
+    border: 0;
+
+    @if $arrowDirection == bottom or $arrowDirection == top {
+      border-left: $arrowWidth solid transparent;
+      border-right: $arrowWidth solid transparent;
+      left:50%;
+      transform:translateX(-50%);
+
+      @if $arrowDirection == bottom {
+        border-top: $arrowWidth solid $arrowColor;
+        top:100%;
+      }
+
+      @if $arrowDirection == top {
+        border-bottom: $arrowWidth solid $arrowColor;
+        bottom:100%;
+      }
+    }
+
+    @if $arrowDirection == left or $arrowDirection == right {
+      border-top: $arrowWidth solid transparent;
+      border-bottom: $arrowWidth solid transparent;
+      transform:translateY(-50%);
+      top: 50%;
+
+      @if $arrowDirection == left {
+        border-right: $arrowWidth solid $arrowColor;
+         right:100%;
+      }
+
+      @if $arrowDirection == right {
+        border-left: $arrowWidth solid $arrowColor;
+        left:100%;
+      }
+    }
+  }
+}
