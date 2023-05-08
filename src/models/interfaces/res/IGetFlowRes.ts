@@ -351,14 +351,26 @@ export interface IJsonCheckApiValidation {
 }
 
 export interface IDataCardView extends IViewBase {
-  attribute: string;
-  carousel: number;
-  print: 'order' | 'random';
+  itemsRefName: string;
+  count: number;
+  isShuffle: boolean;
+}
+
+export interface IProductCardTemplateView extends IHasButtonViewBase {
+  currencyUnit: 'USD' | 'KRW' | 'JPY';
+  description: string;
+  imageCtrl: IImageCtrl;
+  profileIconUrl: string;
+  profileName: string;
+  seq: number;
+  profileImgPath: string;
+  retailPriceParam: string;
+  salePriceParam: string;
 }
 
 export interface IDataBasicCardView extends IBasicCardView, IDataCardView {}
 
-export interface IDataProductCardView extends IProductCardView, IDataCardView {}
+export interface IDataProductCardView extends IProductCardTemplateView, IDataCardView {}
 
 export interface IDataListCardView extends IListCardView, IDataCardView {}
 export interface IGetFlowRes {

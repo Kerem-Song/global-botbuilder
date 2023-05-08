@@ -156,11 +156,11 @@ export const JsonRequestNodeEdit = () => {
           />
         </FormItem>
         <Divider style={{ margin: '28px 0' }} />
+        <div className="m-b-8">
+          <span className="subLabel">{t(`API_REQUEST_HEADER_INPUT_LABEL`)}</span>
+        </div>
         {headersField.map((header, i) => (
           <div key={header.id}>
-            <div className="m-b-8">
-              <span className="subLabel">{t(`API_REQUEST_HEADER_INPUT_LABEL`)}</span>
-            </div>
             <div className="m-b-8">
               <Row gap={4} align="center">
                 <Col span={9}>
@@ -186,13 +186,11 @@ export const JsonRequestNodeEdit = () => {
           </Button>
         </div>
         <Divider style={{ margin: '28px 0' }} />
+        <div className="m-b-8">
+          <span className="subLabel">{t(`API_REQUEST_QUERY_STRING_INPUT_LABEL`)}</span>
+        </div>
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
-            <div className="m-b-8">
-              <span className="subLabel">
-                {t(`API_REQUEST_QUERY_STRING_INPUT_LABEL`)}
-              </span>
-            </div>
             <div className="m-b-8">
               <Row gap={4} align="center">
                 <Col span={9}>

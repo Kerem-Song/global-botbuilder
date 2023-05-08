@@ -17,20 +17,20 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
       <div className="countConditionWrapper">
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            attribute: {view.attribute}
+            attribute: {view.itemsRefName}
           </MultiClamp>
         </span>
         <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            carousel: {view.carousel}
+            carousel: {view.count}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            print: {view.print}
+            print: {view.isShuffle}
           </MultiClamp>
         </span>
         <br />
@@ -72,13 +72,13 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            price: {view.retailPrice}
+            price: {view.retailPriceParam}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            discount: {view.discountPrice}
+            discount: {view.salePriceParam}
           </MultiClamp>
         </span>
 

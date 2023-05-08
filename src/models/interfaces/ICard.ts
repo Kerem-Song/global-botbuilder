@@ -78,9 +78,9 @@ export const NODE_TYPES = {
   LIST_CARD_NODE: 'ListCardNode',
   LIST_CARD_CAROUSEL_NODE: 'ListCardCarouselNode',
   RETRY_CONDITION_NODE: 'RetryConditionNode',
-  DATA_BASIC_CARD_NODE: 'DataBasicCardNode',
-  DATA_PRODUCT_CARD_NODE: 'DataProductCardNode',
-  DATA_LIST_CARD_NODE: 'DataListCardNode',
+  DATA_BASIC_CARD_NODE: 'BasicCardCarouselTemplateNode',
+  DATA_PRODUCT_CARD_NODE: 'ProductCardCarouselTemplateNode',
+  DATA_LIST_CARD_NODE: 'ListCardCarouselTemplateNode',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;

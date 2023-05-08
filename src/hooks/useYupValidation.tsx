@@ -354,7 +354,7 @@ export const useYupValidation = () => {
   });
 
   const dataBasicCardNodeEditSchema = yup.object().shape({
-    attribute: yup
+    itemsRefName: yup
       .string()
       .trim()
       .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
@@ -364,11 +364,6 @@ export const useYupValidation = () => {
   });
 
   const dataListCardNodeEditSchema = yup.object().shape({
-    attribute: yup
-      .string()
-      .trim()
-      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
-      .required(t(`VALIDATION_REQUIRED`)),
     header: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
     items: yup.array().of(
@@ -382,11 +377,6 @@ export const useYupValidation = () => {
   });
 
   const dataProductCardNodeEditSchema = yup.object().shape({
-    attribute: yup
-      .string()
-      .trim()
-      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
-      .required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: yup.object().shape({
       imageFile: yup
         .mixed()
@@ -420,38 +410,6 @@ export const useYupValidation = () => {
       .trim()
       .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
       .required(t(`VALIDATION_REQUIRED`)),
-    retailPrice: yup
-      .number()
-      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
-      // .positive()
-      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
-        if (val != undefined) {
-          return patternTwoDigisAfterComma.test(val);
-        }
-        return true;
-      })
-      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
-      .transform((value, originalValue) => {
-        return Number.isNaN(originalValue) ? '' : Number(value);
-      })
-      .required(t(`VALIDATION_REQUIRED`)),
-    discountPrice: yup
-      .number()
-      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
-      .nullable()
-      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
-        if (val != undefined) {
-          return patternTwoDigisAfterComma.test(val);
-        }
-        return true;
-      })
-      .max(
-        yup.ref('retailPrice'),
-        t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: yup.ref('retailPrice') }),
-      )
-      .transform((value, originalValue) => {
-        return Number.isNaN(originalValue) ? '' : Number(value);
-      }),
     buttons: buttonsEditSchema,
   });
   const schema = yup

@@ -18,20 +18,20 @@ export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
         <div className="dataCard">
           <span className="dataCardDesc">
             <MultiClamp clamp={1} ellipsis={'...'}>
-              attribute: {view.attribute}
+              attribute: {view.itemsRefName}
             </MultiClamp>
           </span>
           <br />
 
           <span className="dataCardDesc">
             <MultiClamp clamp={1} ellipsis={'...'}>
-              carousel: {view.carousel}
+              carousel: {view.count}
             </MultiClamp>
           </span>
 
           <span className="dataCardDesc">
             <MultiClamp clamp={1} ellipsis={'...'}>
-              print: {view.print}
+              print: {view.isShuffle}
             </MultiClamp>
           </span>
 

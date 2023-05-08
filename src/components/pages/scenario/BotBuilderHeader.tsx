@@ -246,7 +246,7 @@ export const BotBuilderHeader = () => {
   const canvas = document.querySelector('.canvasWrapper');
   const canvasRect = canvas?.getBoundingClientRect();
   const viewRect = view?.getBoundingClientRect();
-  console.log('@icbtntemple position', icBtnTemplePosition);
+  // console.log('@icbtntemple position', icBtnTemplePosition);
   return (
     <div className="botBuilderHeader">
       <span className="cardNumWrapper">

@@ -29,77 +29,46 @@ export const DataProductCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataProductCardView>>();
   const [carouselNum, setCarouselNum] = useState<number>(
-    Number(watch('view.carousel')) || 1,
+    Number(watch('view.count')) || 1,
   );
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
 
-  const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
+  const { field: carouselPrintOutField } = useController({
+    name: 'view.isShuffle',
+    control,
+  });
   const { field: currencyField } = useController({
     name: `view.currencyUnit`,
     control,
   });
 
-  const checkPriceRegex = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    price: 'retailPrice' | 'discountPrice',
-  ) => {
-    const regex = /^\d{0,8}[.]\d{0,2}$/;
-    if (regex.test(e.target.value)) {
-      return;
-    }
-    trigger(`view.${price}`);
-  };
-
-  const salePrice =
-    Number(watch(`view.retailPrice`)) -
-    (watch(`view.discountPrice`) ? Number(watch(`view.discountPrice`)) : 0);
-
-  useEffect(() => {
-    if (!watch(`view.retailPrice`)) {
-      setValue(`view.retailPrice`, 0);
-    }
-  }, [watch(`view.retailPrice`)]);
-
-  useEffect(() => {
-    setValue(`view.salePrice`, salePrice || 0);
-  }, [salePrice]);
-
-  useEffect(() => {
-    if (!watch(`view.discountPrice`)) {
-      setValue(
-        `view.discountPrice`,
-        watch(`view.retailPrice`) - watch(`view.salePrice`) || 0,
-      );
-    }
-  }, [salePrice]);
-
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);
-      setValue('view.carousel', carouselNum + 1);
+      setValue('view.count', carouselNum + 1);
     } else {
       setCarouselNum((prev) => prev - 1);
-      setValue('view.carousel', carouselNum - 1);
+      setValue('view.count', carouselNum - 1);
     }
   };
 
   console.log('values in basiccard node edit', values.view);
 
   useEffect(() => {
-    if (watch(`view.carousel`)) {
-      setCarouselNum(watch(`view.carousel`));
+    if (watch(`view.count`)) {
+      setCarouselNum(watch(`view.count`));
     }
-  }, [watch(`view.carousel`)]);
+  }, [watch(`view.count`)]);
 
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
-        <FormItem error={errors.view?.attribute}>
+        <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
-            path={`view.attribute`}
+            path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
             readOnly={isHistoryViewer}
           />
@@ -118,7 +87,7 @@ export const DataProductCardNodeEdit = () => {
             />
           </Col>
           <Col span={3}>
-            <span>{watch(`view.carousel`)}</span>
+            <span>{watch(`view.count`)}</span>
           </Col>
           <Col span={3}>
             <Button
@@ -134,9 +103,9 @@ export const DataProductCardNodeEdit = () => {
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'order'}
-                onChange={() => setValue(`view.print`, 'order')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === false}
+                onChange={() => setValue(`view.isShuffle`, false)}
                 ref={carouselPrintOutField.ref}
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_ORDER`)}</span>
@@ -144,9 +113,9 @@ export const DataProductCardNodeEdit = () => {
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'random'}
-                onChange={() => setValue(`view.print`, 'random')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === true}
+                onChange={() => setValue(`view.isShuffle`, true)}
                 ref={carouselPrintOutField.ref}
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_RANDOM`)}</span>
@@ -230,19 +199,17 @@ export const DataProductCardNodeEdit = () => {
               </FormItem>
 
               <div className="m-b-8">
-                <FormItem error={errors.view && errors.view.retailPrice}>
+                <FormItem error={errors.view && errors.view.retailPriceParam}>
                   <Row justify="space-between" gap={4}>
                     <Col span={16} className="retailPrice">
                       <InputWithTitleCounter
                         className={classNames({
-                          'luna-input-error': errors.view?.retailPrice,
+                          'luna-input-error': errors.view?.retailPriceParam,
                         })}
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
-                        {...register(`view.retailPrice`, {
+                        {...register(`view.retailPriceParam`, {
                           valueAsNumber: true,
-                          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                            checkPriceRegex(e, 'retailPrice'),
                         })}
                         maxLength={11}
                         readOnly={isHistoryViewer}
@@ -269,13 +236,11 @@ export const DataProductCardNodeEdit = () => {
                 </FormItem>
               </div>
 
-              <FormItem error={errors.view && errors.view.discountPrice}>
+              <FormItem error={errors.view && errors.view.salePriceParam}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
-                  {...register(`view.discountPrice`, {
+                  {...register(`view.salePriceParam`, {
                     valueAsNumber: true,
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                      checkPriceRegex(e, 'discountPrice'),
                   })}
                   maxLength={11}
                   readOnly={isHistoryViewer}
