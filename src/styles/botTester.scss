@@ -139,12 +139,12 @@
           }
 
           .productCardContents {
-            padding: rem(1) rem(12);
+            padding: rem(8) rem(12) rem(1) rem(12);
 
             .productCardTitle {
               display: flex;
               align-content: center;
-              height: rem(40);
+              padding-bottom: rem(8);
               border-bottom: 1px solid #d9d9d9;
 
               .title {
@@ -169,14 +169,13 @@
             }
 
             .productCardPrices {
-              border-bottom: 1px solid #d9d9d9;
-              margin-top: rem(5);
+              margin-top: rem(8);
 
               .price {
                 display: flex;
                 justify-content: space-between;
                 font-weight: 500;
-                margin-bottom: rem(8);
+                // margin-bottom: rem(8);
 
                 .currentPrice {
                   height: rem(22);
@@ -185,7 +184,6 @@
 
                 .prevPrice {
                   height: rem(19);
-                  padding-left: rem(20);
                   font-size: rem(16);
                   color: $gray300;
                   text-decoration-line: line-through;
@@ -204,7 +202,7 @@
             }
 
             .productContents {
-              margin-top: rem(1);
+              padding-top: rem(16);
 
               .productDesc {
                 display: flex;

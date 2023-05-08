@@ -90,7 +90,8 @@
     "SEND": "Send",
     "DEBUG_HEADER": "Test Information",
     "SCENARIO_NAME": "Scenario name",
-    "CHATBUBBLE_NAME": "Chatbubble name"
+    "CHATBUBBLE_NAME": "Chatbubble name",
+    "DISCOUNT": "Discount"
   },
   "utterance": {
     "TITLE": "Intent Management",

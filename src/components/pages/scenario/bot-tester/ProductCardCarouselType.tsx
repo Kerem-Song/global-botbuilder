@@ -1,4 +1,5 @@
 import { ITesterCard } from '@models';
+import { useTranslation } from 'react-i18next';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
@@ -7,6 +8,8 @@ export interface ProductCardCarouselTypeProps {
 }
 
 export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) => {
+  const { t } = useTranslation('botTest');
+
   return (
     <div className="productCard">
       <img
@@ -26,29 +29,35 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
           </div>
         </div>
         <div className="productCardPrices">
+          {item.price?.retail !== item.price?.sale ? (
+            <div className="price">
+              <p className="prevPrice">
+                {item.price?.retail
+                  ?.toFixed(0)
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                {item.price?.symbol}
+              </p>
+            </div>
+          ) : null}
+          {item.price?.discount ? (
+            <div className="discount">
+              <p className="discountPrice">
+                {item.price?.discount
+                  ?.toFixed(0)
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                {item.price?.symbol} {t('DISCOUNT')}
+              </p>
+            </div>
+          ) : null}
           <div className="price">
             <p className="currentPrice">
               {item.price?.sale
                 ?.toFixed(0)
-                ?.toString()
+                .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
               {item.price?.symbol}
-            </p>
-            <p className="prevPrice">
-              {item.price?.retail
-                ?.toFixed(0)
-                ?.toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              {item.price?.symbol}
-            </p>
-          </div>
-          <div className="discount">
-            <p className="discountPrice">
-              {item.price?.discount
-                ?.toFixed(0)
-                ?.toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              {item.price?.symbol}↓
             </p>
           </div>
         </div>
