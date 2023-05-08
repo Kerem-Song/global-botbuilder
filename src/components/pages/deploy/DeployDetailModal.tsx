@@ -31,7 +31,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     { value: 9, message: '채널을 찾을 수 없음' },
   ]);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { updateDeployHistoryComment } = useDeployClient();
+  const { updateDeployHistoryCommentAsync } = useDeployClient();
   const { handleSubmit, reset, getValues, control } =
     useForm<IUpdateDeployHistoryComment>();
   const { field } = useController({ name: 'comment', control: control });
@@ -46,7 +46,9 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       comment: getValues('comment'),
       deployHistoryId: detailInfo.id,
     };
-    const res = await updateDeployHistoryComment.mutateAsync(updateComment);
+
+    const res = await updateDeployHistoryCommentAsync(updateComment);
+
     if (res && res.isSuccess) {
       lunaToast.success();
       reset();

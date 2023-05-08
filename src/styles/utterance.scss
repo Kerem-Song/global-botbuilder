@@ -13,6 +13,17 @@
     color: $grayBlack;
     margin-bottom: 20px;
   }
+  .toSearchCard {
+    padding: rem(10) rem(5);
+    border: rem(1) solid $gray200;
+    .cardTitle {
+      font-size: rem($defaultSize);
+      font-weight: 500;
+    }
+    .selectBox {
+      min-width: rem(160);
+    }
+  }
   .utteranceListWrap {
     margin-top: rem(20);
     max-width: rem(1140);

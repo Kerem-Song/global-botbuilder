@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import usePage from '../../../hooks/usePage';
 import { ScenarioManagement } from './ScenarioManagement';
-import { VariablesManagement } from './variable/VariablesManagement';
+import { VariableComponent } from './variable/VariableComponent';
 
 export const ManagementComponent = () => {
   const { t } = usePage();
@@ -63,7 +63,7 @@ export const ManagementComponent = () => {
           setIsActivated={setIsActivated}
         />
       ) : (
-        <VariablesManagement />
+        <VariableComponent />
       )}
     </div>
   );

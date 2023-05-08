@@ -8,7 +8,7 @@ import { DefaultSettingBot } from './DefaultSettingBot';
 import { DeleteBot } from './DeleteBot';
 import { HandleBotScenario } from './HandleBotScenario';
 
-export const Setting = () => {
+export const SettingComponent = () => {
   const { t } = usePage();
   const { botId } = useParams();
   const { refetchBotInfo } = useBotClient();

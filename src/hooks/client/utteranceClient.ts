@@ -183,14 +183,14 @@ export const useUtteranceClient = () => {
   );
 
   return {
-    getIntentDetailQuery,
     getPageQuery,
-    intentMutate,
-    intentDeleteMutate,
-    intentGetMutate,
-    changePageNumberQuery,
     invalidateIntentQuery,
-    checkIntentDuplicationMutate,
-    checkUtteranceDuplicationMutate,
+    changePageNumberQuery,
+    getIntentDetailQuery,
+    intentAsync: intentMutate.mutateAsync,
+    intentDeleteAsync: intentDeleteMutate.mutateAsync,
+    intentGetAsync: intentGetMutate.mutateAsync,
+    checkIntentDuplicationAsync: checkIntentDuplicationMutate.mutateAsync,
+    checkUtteranceDuplicationAsync: checkUtteranceDuplicationMutate.mutateAsync,
   };
 };

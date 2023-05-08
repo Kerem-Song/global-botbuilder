@@ -12,6 +12,7 @@ export const useSelectedScenarioChange = () => {
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
 
   const handleChangeSelectedScenario = async (item?: IScenarioModel) => {
+    console.log('handleChangeSelectedScenario');
     if (changed) {
       const message = createElement(
         'span',

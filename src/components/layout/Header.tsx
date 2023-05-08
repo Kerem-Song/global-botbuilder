@@ -1,5 +1,5 @@
 import { Button, IPopperItem, Popper } from '@components';
-import { BotTester } from '@components/pages/scenario/bot-tester/BotTester';
+import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
 import { useModalOpen } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { FC, useEffect } from 'react';
@@ -133,7 +133,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           >
             <button className="userName">{userInfo.loginUserName}</button>
           </Popper>
-          <BotTester isOpen={isOpen} handleIsOpen={handleIsOpen} />
+          <BotTesterComponent isOpen={isOpen} handleIsOpen={handleIsOpen} />
         </div>
       </div>
     </header>

@@ -93,6 +93,17 @@ export const useBotClient = () => {
     },
   );
 
+  const botImportMutate = useMutation(async (args: IImportFlowGroup) => {
+    const formData = new FormData();
+    formData.append('file', args.file);
+    formData.append('botId', args.botId);
+    const res = await http.post('/Bot/ImportFlowGroup', formData);
+    if (res) {
+      queryClient.invalidateQueries(['bot-info', args.botId]);
+      return res;
+    }
+  });
+
   const botDeleteMutate = useMutation(async (args: { botId: string }) => {
     const res = await http.post('/bot/deletebot', args);
 
@@ -111,8 +122,8 @@ export const useBotClient = () => {
     }
   });
 
-  const botUpdateMutate = useMutation(async (args: ISaveBotReq) => {
-    const res = await http.post('/bot/updatebot', args);
+  const botUpdateNameMutate = useMutation(async (args: ISaveBotReq) => {
+    const res = await http.post('/bot/updatebotname', args);
     if (res) {
       queryClient.invalidateQueries(['bot-info', args.botId]);
       return res;
@@ -123,6 +134,7 @@ export const useBotClient = () => {
     const res = await http.post('/bot/updatebotactivate', args);
     if (res) {
       queryClient.invalidateQueries(['bot-info', args.botId]);
+      console.log(res);
       return res;
     }
   });
@@ -135,29 +147,18 @@ export const useBotClient = () => {
     }
   });
 
-  const botImportFlowGroupMutate = useMutation(async (args: IImportFlowGroup) => {
-    const formData = new FormData();
-    formData.append('file', args.file);
-    formData.append('botId', args.botId);
-    const res = await http.post('/Bot/ImportFlowGroup', formData);
-    if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
-      return res;
-    }
-  });
-
   return {
     getBotListQuery,
     getCachedBotList,
     getBotInfoQuery,
     refetchBotInfo,
     botExportAsync: botExportMutate.mutateAsync,
+    botImportAsync: botImportMutate.mutateAsync,
     botSaveAsync: botSaveMutate.mutateAsync,
     botDeleteAsync: botDeleteMutate.mutateAsync,
     botRecoverAsync: botRecoverMutate.mutateAsync,
-    botUpdateAsync: botUpdateMutate.mutateAsync,
+    botUpdateNameAsync: botUpdateNameMutate.mutateAsync,
     botActivateAsync: botActivateMutate.mutateAsync,
     botChannelActivateAsync: botChannelActivateMutate.mutateAsync,
-    botImportAsync: botImportFlowGroupMutate.mutateAsync,
   };
 };

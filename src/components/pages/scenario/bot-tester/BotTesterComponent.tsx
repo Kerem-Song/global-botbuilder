@@ -23,7 +23,7 @@ export interface IBotTesterProps {
   handleIsOpen: (value: boolean) => void;
 }
 
-export const BotTester = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
+export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
   const [text, setText] = useState<string>('');
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();

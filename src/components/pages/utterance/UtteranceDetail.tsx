@@ -1,4 +1,4 @@
-import { icDelete, icDeleteDefault, icEnter, icNoResult } from '@assets';
+import { icEnter, icNoResult } from '@assets';
 import { Card } from '@components/data-display';
 import { Checkbox, FormItem, Input } from '@components/data-entry';
 import { Button } from '@components/general';
@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
+import { usePrompt } from '@hooks/usePrompt';
 import {
   IDeleteIntent,
   IReactSelect,
@@ -33,11 +34,11 @@ export const UtteranceDetail = () => {
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const {
-    intentMutate,
+    intentAsync,
     getIntentDetailQuery,
-    intentDeleteMutate,
-    checkIntentDuplicationMutate,
-    checkUtteranceDuplicationMutate,
+    intentDeleteAsync,
+    checkIntentDuplicationAsync,
+    checkUtteranceDuplicationAsync,
   } = useUtteranceClient();
   const hasUtteranceId = getIntentDetailQuery(utteranceId);
   const language = i18n.language;
@@ -49,6 +50,8 @@ export const UtteranceDetail = () => {
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  usePrompt(isActive);
 
   const schema = yup.object({
     name: yup
@@ -93,38 +96,12 @@ export const UtteranceDetail = () => {
     x.text?.trim().toLowerCase().includes(searchWord.trim().toLowerCase()),
   );
 
-  const preventGoBack = async () => {
-    const result = await confirm({
-      title: t('SAVE'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
-    });
-    if (result) {
-      history.go(-1);
-    } else {
-      history.pushState(null, '', location.href);
-    }
-  };
-
   const handleListBtn = async () => {
     if (isActive === true) {
-      const result = await confirm({
-        title: t('SAVE'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        ),
-      });
-
-      if (result) {
-        navigate(`/${botId}/utterance`);
-      }
+      navigate(`/${botId}/utterance`);
     } else {
       navigate(`/${botId}/utterance`);
     }
-  };
-
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = '';
   };
 
   const openDeleteCheckboxModal = async () => {
@@ -161,14 +138,13 @@ export const UtteranceDetail = () => {
           sessionToken: token!,
           intentId: hasUtteranceId!.data?.result.intentId,
         };
-        intentDeleteMutate.mutate(deleteIntent, {
-          onSuccess: (submitResult) => {
-            if (submitResult && submitResult.isSuccess) {
-              lunaToast.success();
-              navigate(`/${botId}/utterance`);
-            }
-          },
-        });
+
+        const res = await intentDeleteAsync(deleteIntent);
+
+        if (res && res.isSuccess) {
+          lunaToast.success();
+          navigate(`/${botId}/utterance`);
+        }
       }
     }
   };
@@ -182,10 +158,10 @@ export const UtteranceDetail = () => {
         ?.includes(utteranceWord)
     ) {
       error({
-        title: t('DUPLICATE_INTENT'),
+        title: t('DUPLICATE_UTTERANCE'),
         description: (
           <div style={{ whiteSpace: 'pre-wrap' }}>
-            <span>{t('DUPLICATE_INTENT_MESSAGE_WITH_INFO')}</span>
+            <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
             <span style={{ color: 'red' }}>{getValues('name')}</span>
           </div>
         ),
@@ -196,12 +172,13 @@ export const UtteranceDetail = () => {
       return;
     }
 
-    checkUtteranceDuplicationMutate.mutate(
+    checkUtteranceDuplicationAsync(
       {
         text: utteranceWord,
       },
       {
         onSuccess: (result) => {
+          console.log('result', result);
           if (result.length > 0) {
             error({
               title: t('DUPLICATE_UTTERANCE'),
@@ -243,13 +220,13 @@ export const UtteranceDetail = () => {
       flowId: itemData.connectScenarioId,
     };
 
-    const res = await intentMutate.mutateAsync(saveIntent);
+    const res = await intentAsync(saveIntent);
 
     if (res?.isSuccess) {
       lunaToast.success();
       navigate(`/${botId}/utterance`);
     } else if (res?.exception.errorCode === 7612) {
-      checkIntentDuplicationMutate.mutate(
+      checkIntentDuplicationAsync(
         {
           name: getValues('name'),
           intentId: getValues('intentId'),
@@ -304,21 +281,6 @@ export const UtteranceDetail = () => {
 
     setTotalScenarioList(total);
   }, [data, language]);
-
-  useEffect(() => {
-    if (isActive) {
-      (() => {
-        history.pushState(null, '', location.href);
-        window.addEventListener('popstate', preventGoBack);
-        window.addEventListener('beforeunload', preventClose);
-      })();
-
-      return () => {
-        window.removeEventListener('popstate', preventGoBack);
-        window.removeEventListener('beforeunload', preventClose);
-      };
-    }
-  }, [isActive]);
 
   useEffect(() => {
     if (nameField.value === '' && intentNameRef.current) {

@@ -18,9 +18,9 @@ export const DeployPagination: FC<IDeployPagination> = ({
   currentPage,
   setCurrentPage,
 }) => {
+  const limit = 10;
   const [currentPagesArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPagesArray, setTotalPageArray] = useState<number[][]>([]);
-  const limit = 10;
 
   const limitedArray = (totalPages: number, limit: number) => {
     const totalPageArray = Array(totalPages)
@@ -34,7 +34,6 @@ export const DeployPagination: FC<IDeployPagination> = ({
   const handleNextBtn = () => {
     const lastPageArray = totalPagesArray[totalPagesArray.length - 1];
     const nextPage = currentPage + limit;
-
     if (nextPage >= totalPages) {
       setCurrentPage(lastPageArray[lastPageArray.length - 1]);
     } else {
@@ -93,7 +92,6 @@ export const DeployPagination: FC<IDeployPagination> = ({
           </Button>
         )}
       </div>
-
       <Button
         shape="ghost"
         className="nextBtn"
