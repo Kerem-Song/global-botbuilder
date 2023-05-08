@@ -250,7 +250,8 @@
     "SEND": "전송",
     "DEBUG_HEADER": "테스트 정보",
     "SCENARIO_NAME": "시나리오명",
-    "CHATBUBBLE_NAME": "말풍선명"
+    "CHATBUBBLE_NAME": "말풍선명",
+    "DISCOUNT": "할인"
   },
   "utterance": {
     "TITLE": "인텐트 관리",
