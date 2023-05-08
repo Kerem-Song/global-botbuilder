@@ -169,17 +169,17 @@
             }
 
             .productCardPrices {
+              border-bottom: 1px solid #d9d9d9;
               margin-top: rem(8);
 
               .price {
                 display: flex;
                 justify-content: space-between;
                 font-weight: 500;
-                // margin-bottom: rem(8);
 
                 .currentPrice {
-                  height: rem(22);
                   font-size: rem(18);
+                  margin-bottom: rem(8);
                 }
 
                 .prevPrice {
@@ -202,12 +202,11 @@
             }
 
             .productContents {
-              padding-top: rem(16);
+              padding-top: rem(8);
 
               .productDesc {
                 display: flex;
                 align-items: center;
-                padding: rem(5) 0;
 
                 .desc {
                   width: 100%;
