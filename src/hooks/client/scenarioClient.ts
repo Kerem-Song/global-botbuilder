@@ -200,10 +200,11 @@ export const useScenarioClient = () => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
       const resultNodes = nodes.map((x) => {
         const converted = nodeHelper.convertToINodeBase(x);
+        console.log('@converted', converted);
         return converted;
       });
       const result = { ...old, nodes: resultNodes };
-
+      console.log('@res converted', result);
       const res = await http.post('builder/updateflow', {
         sessionToken: token,
         flow: result,
