@@ -1,5 +1,6 @@
 import { icDeleteDefault, icPlusWhite } from '@assets';
 import { Button } from '@components/general/Button';
+import { Col, Row } from '@components/layout';
 import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import { IDeleteParameter, IVariableList } from '@models';
@@ -51,20 +52,25 @@ export const VariableComponent = () => {
     <div className="variableTabWrapper">
       <EntityComponent />
       <div className="variableWrapper">
-        <div className="variableHeader">
-          <span className="title">{t('VARIABLE_LIST')}</span>
-          <Button
-            type="primary"
-            className="addVariableBtn"
-            onClick={() => {
-              handleId();
-              handleIsOpen(true);
-            }}
-          >
-            <img className="plusBtn" src={icPlusWhite} alt="add" />
-            <span>{t('ADD_VARIABLE')}</span>
-          </Button>
-        </div>
+        <Row justify="space-between" align="center" className="m-b-10">
+          <Col>
+            <span className="title">{t('VARIABLE_LIST')}</span>
+          </Col>
+          <Col>
+            <Button
+              type="primary"
+              className="addVariableBtn"
+              onClick={() => {
+                handleId();
+                handleIsOpen(true);
+              }}
+            >
+              <img className="plusBtn" src={icPlusWhite} alt="add" />
+              <span>{t('ADD_VARIABLE')}</span>
+            </Button>
+          </Col>
+        </Row>
+
         <div className="variableListWrapper">
           <div className="variableList">
             <div className="variableListHeader">
