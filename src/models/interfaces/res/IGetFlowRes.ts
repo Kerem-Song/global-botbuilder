@@ -350,6 +350,18 @@ export interface IJsonCheckApiValidation {
   responseMapping?: IJson[];
 }
 
+export interface IDataApiTest {
+  sessionToken: string;
+  apiData: {
+    method: string;
+    url: string;
+    body: string;
+    headers: IJson[];
+    queryStrings: IJson[];
+    responseMapping: IJson[];
+  };
+}
+
 export interface IDataCardView extends IViewBase {
   itemsRefName: string;
   count: number;

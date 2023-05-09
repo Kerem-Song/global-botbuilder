@@ -1,10 +1,14 @@
-import { IJsonCheckApiValidation } from '@models/interfaces/res/IGetFlowRes';
+import { useHttp, useRootState } from '@hooks';
+import {
+  IJsonCheckApiValidation,
+  IJsonRequestView,
+} from '@models/interfaces/res/IGetFlowRes';
 import axios, { RawAxiosRequestHeaders } from 'axios';
-import { createSearchParams } from 'react-router-dom';
-
-const API_VALIDATION = 'api-validation';
 
 export const useDataApiClient = () => {
+  const http = useHttp();
+  const token = useRootState((state) => state.botInfoReducer.token);
+
   const checkApiValidation = async ({
     method,
     url,
@@ -36,7 +40,19 @@ export const useDataApiClient = () => {
     }
   };
 
+  const dataApiTest = async (data: IJsonRequestView) => {
+    const res = await http.post('/bottest/dataapitest', {
+      sessionToken: token,
+      apiData: data,
+    });
+    if (res) {
+      console.log('@checkApiValidation res: ', res);
+      return res;
+    }
+  };
+
   return {
     checkApiValidation,
+    dataApiTest,
   };
 };

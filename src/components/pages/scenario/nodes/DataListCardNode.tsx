@@ -30,7 +30,7 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            {`print: ${view.isShuffle}`}
+            {`print: ${view.isShuffle ? 'random' : 'order'}`}
           </MultiClamp>
         </span>
         <br />

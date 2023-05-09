@@ -72,13 +72,14 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             <span className="discounted">
               {view.retailPrice && view.retailPrice.toLocaleString()}
             </span>
-            <span className="discount">
+            <span className="discountedCurrency"> {view.currencyUnit}</span>
+            <p className="discount">
               {view.discountPrice
                 ? view.discountPrice.toLocaleString()
                 : (view.retailPrice - view.salePrice).toLocaleString()}
               <span className="currency">{view.currencyUnit}</span>
               {t(`PRODUCT_NODE_DISCOUNT`)}
-            </span>
+            </p>
           </div>
         )}
         <div className="prices">

@@ -8,9 +8,14 @@
   width: 100%;
   height: rem(122);
 
+  &[data-loading='true'] textarea {
+    background: rgba(255, 255, 255, 0.8);
+    color: $gray200;
+  }
+
   .apiResLoading {
     margin: auto;
-    z-index: 9998;
+    z-index: 1;
   }
 }
 

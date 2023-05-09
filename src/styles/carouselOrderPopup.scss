@@ -280,7 +280,7 @@
 
   // Commerce Card priceWrapper
   .priceWrapper {
-    padding: 0 0 rem(16) rem(4);
+    padding-left: rem(4);
 
     .currency {
       padding-left: rem(2);
@@ -315,8 +315,12 @@
     text-decoration: line-through;
   }
 
+  .discountedCurrency{
+    font-size: rem(1);
+    color: gray;
+  }
+  
   .discount {
-    padding-left: rem(5);
     font-size: rem(10);
     color: red;
   }

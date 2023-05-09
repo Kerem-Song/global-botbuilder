@@ -38,12 +38,14 @@ export const JsonRequestNodeEdit = () => {
     getValues,
     setValue,
     control,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
   const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
-  const { checkApiValidation } = useDataApiClient();
+  const { dataApiTest } = useDataApiClient();
+  const values = getValues().view!;
 
   const { field: method } = useController({ name: 'view.method', control });
 
@@ -100,19 +102,16 @@ export const JsonRequestNodeEdit = () => {
 
   const handleApiValidation = () => {
     setLoading(true);
-    return checkApiValidation({
-      method: watch(`view.method`),
-      url: watch(`view.url`),
-      headers: watch(`view.headers`),
-      body: watch(`view.body`),
-      queryStrings: watch(`view.queryStrings`),
-    })
+
+    return dataApiTest(values)
       .then((res) => {
+        resetField('view.apiRes');
         console.log('@res in handle api validation', res);
         setValue('view.apiRes', JSON.stringify(res, null, 2));
         setLoading(false);
       })
       .catch((err) => {
+        resetField('view.apiRes');
         console.log('@err in handle api validation', err);
         setValue('view.apiRes', JSON.stringify(err, null, 2));
         setLoading(false);
@@ -245,7 +244,7 @@ export const JsonRequestNodeEdit = () => {
           </Col>
         </Row>
 
-        <div className="apiResWrapper">
+        <div className="apiResWrapper" data-loading={loading}>
           {loading && (
             <ReactLoading
               type="spin"
