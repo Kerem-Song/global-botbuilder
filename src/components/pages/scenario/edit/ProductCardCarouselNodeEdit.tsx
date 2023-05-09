@@ -96,6 +96,7 @@ export const ProductCardCarouselNodeEdit = () => {
     watch,
     control,
     trigger,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardCarouselView>>();
   const values = getValues();
@@ -127,6 +128,7 @@ export const ProductCardCarouselNodeEdit = () => {
 
   useEffect(() => {
     trigger();
+    resetField(`view.childrenViews.${index}.currencyUnit`);
   }, [index]);
 
   const salePrice =
@@ -304,7 +306,6 @@ export const ProductCardCarouselNodeEdit = () => {
                               </Col>
                               <Col className="productSelectorWrapper" span={8}>
                                 <Select
-                                  className="react-selector"
                                   {...currencyField}
                                   options={currencyOptions}
                                   styles={reactSelectStyle}
