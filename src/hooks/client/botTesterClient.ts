@@ -31,5 +31,8 @@ export const useBotTesterClient = () => {
     },
   );
 
-  return { botTesterMutate, refreshBotTesterAsync: refreshBotTesterMutate.mutateAsync };
+  return {
+    botTesterMutate,
+    refreshBotTesterAsync: refreshBotTesterMutate.mutateAsync,
+  };
 };

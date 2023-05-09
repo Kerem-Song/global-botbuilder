@@ -223,24 +223,37 @@ export const BotBuilderHeader = () => {
     dispatch(appendNode(addNode));
   };
 
+  const [isTutorial, setIsTutorial] = useState<boolean>(true);
+
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('cardType', e.currentTarget.value);
 
     const data = e.currentTarget.getAttribute('data') as string;
     e.dataTransfer.setData('nodeName', data);
+
+    // if (isTutorial) {
+    //   setIsTutorial(false);
+    // }
   };
 
   useEffect(() => {
     setTempNodeNames([]);
   }, [nodes]);
-
+  const icBtnTemplePosition = document
+    .querySelector('.icBtnTemple')
+    ?.getBoundingClientRect();
+  const view = document.querySelector('.botBuilderMain');
+  const canvas = document.querySelector('.canvasWrapper');
+  const canvasRect = canvas?.getBoundingClientRect();
+  const viewRect = view?.getBoundingClientRect();
+  // console.log('@icbtntemple position', icBtnTemplePosition);
   return (
     <div className="botBuilderHeader">
       <span className="cardNumWrapper">
         {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
       </span>
       <div className="makingBtnWrapper">
-        <div className="makingBtn" data-tutorial={true}>
+        <div className="makingBtn" data-tutorial={isTutorial}>
           <span className="btnCategory">{t(`SINGLE`)}</span>
           <Col className="btnWrapper">
             {singleNodes.map((item, i) => (
@@ -259,7 +272,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn" data-tutorial={true}>
+        <div className="makingBtn" data-tutorial={isTutorial}>
           <span className="btnCategory">{t(`CAROUSEL`)}</span>
           <Col className="btnWrapper">
             {carousleNodes.map((item, i) => (
@@ -277,7 +290,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn" data-tutorial={true}>
+        <div className="makingBtn" data-tutorial={isTutorial}>
           <span className="btnCategory">{t(`FUNCTION`)}</span>
           <Col className="btnWrapper">
             {buttonNodes.map((item, i) => (
@@ -294,7 +307,7 @@ export const BotBuilderHeader = () => {
             ))}
           </Col>
         </div>
-        <div className="makingBtn" data-tutorial={true}>
+        <div className="makingBtn" data-tutorial={isTutorial}>
           <span className="btnCategory">API</span>
           <Col className="btnWrapper">
             {apiNodes.map((item, i) => (

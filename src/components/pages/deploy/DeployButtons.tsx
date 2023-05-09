@@ -15,25 +15,10 @@ export const DeployButtons = () => {
   const [channelInfos, setChannelInfos] = useState<string | undefined>('');
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const { t } = usePage();
-  const { deployingBot, isDeployingBotIsLoading } = useDeployClient();
+  const { deployingBotAsync, isDeployingBotIsLoading } = useDeployClient();
   const { confirm, error } = useSystemModal();
   const { refetchBotInfo } = useBotClient();
   const { botId } = useParams();
-
-  useEffect(() => {
-    if (botId) {
-      refetchBotInfo(botId);
-    }
-  }, [botId]);
-
-  useEffect(() => {
-    if (botInfo) {
-      setActivate(botInfo.activated);
-      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
-      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
-      setChannelInfos(botInfo.channelInfos?.find((x) => x.isLive)?.name);
-    }
-  }, [botInfo]);
 
   const handleDeployChannel = async () => {
     const result = await confirm({
@@ -51,7 +36,7 @@ export const DeployButtons = () => {
         botId: botId!,
         isLive: testLinked ? false : true,
       };
-      const res = await deployingBot.mutateAsync(deployChannel);
+      const res = await deployingBotAsync(deployChannel);
       if (res && res.isSuccess) {
         lunaToast.success('배포가 완료되었습니다.');
       } else {
@@ -70,6 +55,21 @@ export const DeployButtons = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    if (botId) {
+      refetchBotInfo(botId);
+    }
+  }, [botId]);
+
+  useEffect(() => {
+    if (botInfo) {
+      setActivate(botInfo.activated);
+      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
+      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
+      setChannelInfos(botInfo.channelInfos?.find((x) => x.isLive)?.name);
+    }
+  }, [botInfo]);
 
   return (
     <div className="deployBtns">

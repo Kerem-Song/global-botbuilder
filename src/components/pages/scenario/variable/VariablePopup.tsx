@@ -34,7 +34,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const language = i18n.language;
   const [formats, setFormats] = useState<number>();
   const [parameterInputError, setParameterInputError] = useState<string>('');
-  const { variableMutateAsync, getParameterFormatsQuery } = useVariableClient();
+  const { variableAsync, getParameterFormatsQuery } = useVariableClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
@@ -73,7 +73,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     setParameterInputError('');
   };
 
-  const handleSave = (variable: ISaveParameterData): void => {
+  const handleSave = async (variable: ISaveParameterData) => {
     const saveParameter: ISaveParameter = {
       sessionToken: token!,
       data: {
@@ -84,18 +84,15 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       },
     };
 
-    variableMutateAsync(saveParameter, {
-      onSuccess: (res) => {
-        console.log('modifyParameter', res);
-        if (res && res.isSuccess) {
-          lunaToast.success(t('MODIFY_MESSAGE'));
-          reset();
-          handleClose();
-        } else if (res?.exception?.errorCode === 7636) {
-          setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
-        }
-      },
-    });
+    const res = await variableAsync(saveParameter);
+
+    if (res && res.isSuccess) {
+      lunaToast.success();
+      reset();
+      handleClose();
+    } else if (res?.exception?.errorCode === 7636) {
+      setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
+    }
   };
 
   const handleClose = () => {

@@ -24,7 +24,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
-  const { intentDeleteMutate, changePageNumberQuery } = useUtteranceClient();
+  const { intentDeleteAsync, changePageNumberQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
@@ -38,7 +38,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     navigate(`/${botId}/utterance/detail/${intentId}`);
   };
 
-  const openModal = async (intentId: string) => {
+  const openDeleteModal = async (intentId: string) => {
     const result = await confirm({
       title: t('DELETE_INTENT'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
@@ -49,12 +49,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
         sessionToken: token!,
         intentId: intentId,
       };
-      intentDeleteMutate.mutate(deleteIntent, {
-        onSuccess: (submitResult) => {
-          console.log(submitResult);
-          lunaToast.success(tc('DELETE_MESSAGE'));
-        },
-      });
+
+      const res = await intentDeleteAsync(deleteIntent);
+
+      if (res && res.isSuccess) {
+        console.log(res);
+        lunaToast.success(tc('DELETE_MESSAGE'));
+      }
     }
   };
 
@@ -123,7 +124,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                         className="icDelete"
                         onClick={(e) => {
                           e.stopPropagation();
-                          openModal(x.intentId);
+                          openDeleteModal(x.intentId);
                         }}
                       ></button>
                     </td>

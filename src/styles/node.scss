@@ -190,7 +190,7 @@
 
         // Commerce Card priceWrapper
         .priceWrapper {
-          padding: 0 0 rem(16) rem(4);
+          padding-left: rem(4);
 
           .currency {
             padding-left: rem(2);
@@ -383,7 +383,7 @@
       flex-wrap: wrap;
       align-items: center;
       gap: rem(4);
-      padding-top: rem(12);
+      padding-top: rem(8);
 
       &.list {
         padding-top: rem(8);

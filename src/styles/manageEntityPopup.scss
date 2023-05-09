@@ -304,12 +304,13 @@
                   display: flex;
                   justify-items: center;
                   align-items: center;
-                  width: rem(63);
+                  width: rem(148);
                   height: rem(25);
                   border: 1px solid $gray200;
                   border-radius: rem(99);
                   background-color: $grayWhite;
                   input {
+                    width: auto;
                     height: rem(23);
                     border-radius: rem(10);
                     padding-left: rem(3);

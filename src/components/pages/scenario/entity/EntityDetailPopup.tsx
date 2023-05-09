@@ -2,7 +2,8 @@ import { icPopupClose, icPrev } from '@assets';
 import { Button, Input, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, usePage, useRootState, useSystemModal } from '@hooks';
-import { ISaveEntryGroup } from '@models';
+import { usePrompt } from '@hooks/usePrompt';
+import { IResponseEntity, IResponseSaveEntryGroup, ISaveEntryGroup } from '@models';
 import { ENTITY_NAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
@@ -27,7 +28,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   setEntryId,
 }) => {
   const { t, tc } = usePage();
-  const { entryGroupMutateAsync, getEntryDetailQuery } = useEntityClient();
+  const { entryGroupAsync, getEntryDetailQuery } = useEntityClient();
   const { confirm, error } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
@@ -35,6 +36,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
+
+  usePrompt(isActive);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -60,70 +63,75 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   });
 
   const { reset, control, trigger, watch, setValue, getValues } = formMethods;
-
   const { remove } = useFieldArray({ control, name: 'entries' });
 
-  const preventGoBack = async () => {
-    const result = await confirm({
-      title: t('SAVE_ENTITY'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
-    });
-    if (result) {
-      history.go(-1);
-    } else {
-      history.pushState(null, '', location.href);
-    }
+  const handleResetEntryInfo = () => {
+    reset();
+    remove();
+    setEntryId('');
+    handleIsOpen(false);
   };
 
-  const handleSave = async (entryData: ISaveEntryGroup): Promise<void> => {
+  const handleDuplicateEntryValidation = () => {
+    setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
+  };
+
+  const handleRegexValidation = () => {
+    setRegexInputError(t('VALIDATION_REQUIRED'));
+  };
+
+  const isTrue = (value: boolean) => Boolean(value);
+
+  const hasInvalidEntries = (res: IResponseEntity<IResponseSaveEntryGroup>) =>
+    isTrue(res?.exception.invalidateProperties?.includes('Entries'));
+
+  const hasInvalidRepresentativeEntry = (res: IResponseEntity<IResponseSaveEntryGroup>) =>
+    isTrue(
+      res?.exception.errorCode === 7000 &&
+        res?.exception.invalidateProperties?.includes('RepresentativeEntry'),
+    );
+
+  const handleError = (res: IResponseEntity<IResponseSaveEntryGroup>) => {
+    console.log(res);
+    const result = error({
+      title: 'error',
+      description: (
+        <span>
+          Validation failed: -- RepresentativeEntry: There are characters that are not
+          allowed in the representative entry. Severity: Error
+        </span>
+      ),
+    });
+    return result;
+  };
+
+  const handleSave = async (entryData: ISaveEntryGroup) => {
+    const { name, isRegex, entries, entryGroupid } = entryData;
     const saveEntry: ISaveEntryGroup = {
       sessionToken: token,
-      name: entryData.name,
-      isRegex: entryData.isRegex,
-      entries: entryData.entries,
-      entryGroupid: entryData.entryGroupid,
+      name: name,
+      isRegex: isRegex,
+      entries: entries,
+      entryGroupid: entryGroupid,
     };
 
-    entryGroupMutateAsync(saveEntry, {
-      onSuccess: (res) => {
-        if (res && res.isSuccess) {
-          reset();
-          remove();
-          setEntryId('');
-          handleIsOpen(false);
-          lunaToast.success(t('MODIFY_MESSAGE'));
-        } else if (res?.exception.errorCode === 7608) {
-          setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
-        } else if (
-          entryData.isRegex === true &&
-          res?.exception.invalidateProperties.includes('Entries')
-        ) {
-          setRegexInputError(t('VALIDATION_REQUIRED'));
-        } else if (
-          res?.exception.errorCode === 7000 &&
-          res?.exception.invalidateProperties.includes('RepresentativeEntry')
-        ) {
-          const result = error({
-            title: 'error',
-            description: (
-              <span>
-                Validation failed: -- RepresentativeEntry: There are characters that are
-                not allowed in the representative entry. Severity: Error
-              </span>
-            ),
-          });
-          return result;
-        }
-      },
-    });
+    const res = await entryGroupAsync(saveEntry);
+
+    if (res && res.isSuccess) {
+      handleResetEntryInfo();
+      lunaToast.success(t('MODIFY_MESSAGE'));
+    } else if (res?.exception.errorCode === 7608) {
+      handleDuplicateEntryValidation();
+    } else if (res && isRegex && hasInvalidEntries(res)) {
+      handleRegexValidation();
+    } else if (res && hasInvalidRepresentativeEntry(res)) {
+      handleError(res);
+    }
   };
 
   const handleClose = async () => {
     if (isActive === false) {
-      reset();
-      remove();
-      setEntryId('');
-      handleIsOpen(false);
+      handleResetEntryInfo();
     } else {
       const result = await confirm({
         title: t('SAVE_ENTITY'),
@@ -132,10 +140,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         ),
       });
       if (result) {
-        reset();
-        remove();
-        setEntryId('');
-        handleIsOpen(false);
+        handleResetEntryInfo();
       }
     }
   };
@@ -165,19 +170,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       subscription.unsubscribe();
     };
   }, [watch]);
-
-  useEffect(() => {
-    if (isActive === true) {
-      (() => {
-        history.pushState(null, '', location.href);
-        window.addEventListener('popstate', preventGoBack);
-      })();
-
-      return () => {
-        window.removeEventListener('popstate', preventGoBack);
-      };
-    }
-  }, [isActive]);
 
   return (
     <ReactModal

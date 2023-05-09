@@ -54,9 +54,9 @@ export const VIEW_TYPES = {
   PRODUCT_CARD_CAROUSEL_VIEW: 'ProductCardCarouselView',
   RETRY_CONDITION_VIEW: 'RetryConditionView',
   PARAMETER_SET_NODE_VIEW: 'ParameterSetView',
-  DATA_BASIC_CARD_VIEW: 'DataBasicCardView',
-  DATA_PRODUCT_CARD_VIEW: 'DataProductCardView',
-  DATA_LIST_CARD_VIEW: 'DataListCardView',
+  DATA_BASIC_CARD_VIEW: 'BasicCardCarouselTemplateView',
+  DATA_PRODUCT_CARD_VIEW: 'ProductCardCarouselTemplateView',
+  DATA_LIST_CARD_VIEW: 'ListCardCarouselTemplateView',
 };
 
 export const NODE_TYPES = {
@@ -78,9 +78,9 @@ export const NODE_TYPES = {
   LIST_CARD_NODE: 'ListCardNode',
   LIST_CARD_CAROUSEL_NODE: 'ListCardCarouselNode',
   RETRY_CONDITION_NODE: 'RetryConditionNode',
-  DATA_BASIC_CARD_NODE: 'DataBasicCardNode',
-  DATA_PRODUCT_CARD_NODE: 'DataProductCardNode',
-  DATA_LIST_CARD_NODE: 'DataListCardNode',
+  DATA_BASIC_CARD_NODE: 'BasicCardCarouselTemplateNode',
+  DATA_PRODUCT_CARD_NODE: 'ProductCardCarouselTemplateNode',
+  DATA_LIST_CARD_NODE: 'ListCardCarouselTemplateNode',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;

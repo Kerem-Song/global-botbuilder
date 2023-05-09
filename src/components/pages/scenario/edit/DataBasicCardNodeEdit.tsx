@@ -24,11 +24,14 @@ export const DataBasicCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataBasicCardView>>();
   const [carouselNum, setCarouselNum] = useState<number>(
-    Number(watch('view.carousel')) || 1,
+    Number(watch('view.count')) || 1,
   );
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
-  const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
+  const { field: carouselPrintOutField } = useController({
+    name: 'view.isShuffle',
+    control,
+  });
 
   useEffect(() => {
     if (watch(`view.imageCtrl.imageUrl`) !== '') {
@@ -39,30 +42,30 @@ export const DataBasicCardNodeEdit = () => {
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);
-      setValue('view.carousel', carouselNum + 1);
+      setValue('view.count', carouselNum + 1);
     } else {
       setCarouselNum((prev) => prev - 1);
-      setValue('view.carousel', carouselNum - 1);
+      setValue('view.count', carouselNum - 1);
     }
   };
 
   useEffect(() => {
-    if (watch(`view.carousel`)) {
-      setCarouselNum(watch(`view.carousel`));
+    if (watch(`view.count`)) {
+      setCarouselNum(watch(`view.count`));
     }
-  }, [watch(`view.carousel`)]);
+  }, [watch(`view.count`)]);
 
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
-        <FormItem error={errors.view?.attribute}>
+        <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
-            path={`view.attribute`}
+            path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
             readOnly={isHistoryViewer}
-            error={errors.view?.attribute}
+            error={errors.view?.itemsRefName}
           />
         </FormItem>
       </Collapse>
@@ -79,7 +82,7 @@ export const DataBasicCardNodeEdit = () => {
             />
           </Col>
           <Col span={3}>
-            <span>{watch(`view.carousel`)}</span>
+            <span>{watch(`view.count`)}</span>
           </Col>
           <Col span={3}>
             <Button
@@ -95,9 +98,9 @@ export const DataBasicCardNodeEdit = () => {
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'order'}
-                onChange={() => setValue(`view.print`, 'order')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === false}
+                onChange={() => setValue(`view.isShuffle`, false)}
                 ref={carouselPrintOutField.ref}
                 value="order"
               >
@@ -106,9 +109,9 @@ export const DataBasicCardNodeEdit = () => {
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'random'}
-                onChange={() => setValue(`view.print`, 'random')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === true}
+                onChange={() => setValue(`view.isShuffle`, true)}
                 ref={carouselPrintOutField.ref}
                 value="random"
               >

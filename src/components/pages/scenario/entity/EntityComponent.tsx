@@ -3,7 +3,7 @@ import { useModalOpen, usePage } from '@hooks';
 
 import { ManageEntityPopup } from './ManageEntityPopup';
 
-export const SettingEntity = () => {
+export const EntityComponent = () => {
   const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
 

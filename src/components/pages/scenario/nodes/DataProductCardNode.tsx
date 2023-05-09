@@ -17,74 +17,76 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
       <div className="countConditionWrapper">
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            attribute: {view.attribute}
+            {`attribute: ${view.itemsRefName}`}
           </MultiClamp>
         </span>
         <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            carousel: {view.carousel}
+            {`carousel: ${view.count}`}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            print: {view.print}
-          </MultiClamp>
-        </span>
-        <br />
-
-        <span className="dataCardDesc">
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            image: {view.imageCtrl?.imageUrl ? 'Y' : 'N'}
-          </MultiClamp>
-        </span>
-
-        <span className="dataCardDesc">
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            image value: {view.imageCtrl?.imageUrl}
-          </MultiClamp>
-        </span>
-
-        <span className="dataCardDesc">
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            image type:
-            {view.imageCtrl?.aspectRatio
-              ? t(`IMAGE_TYPE_SQUARE`)
-              : t(`IMAGE_TYPE_RECTANGLE`)}
+            {`print: ${view.isShuffle}`}
           </MultiClamp>
         </span>
         <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            profile image: {view.profileIconUrl}
+            {`image: ${view.imageCtrl?.imageUrl ? 'Y' : 'N'}`}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            shop name: {view.profileName}
+            {`image value: ${view.imageCtrl?.imageUrl}`}
+          </MultiClamp>
+        </span>
+
+        <span className="dataCardDesc">
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {`image type:
+            ${
+              view.imageCtrl?.aspectRatio
+                ? t(`IMAGE_TYPE_SQUARE`)
+                : t(`IMAGE_TYPE_RECTANGLE`)
+            }`}
           </MultiClamp>
         </span>
         <br />
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            price: {view.retailPrice}
+            {`profile image: ${view.profileIconUrl}`}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            discount: {view.discountPrice}
+            {`shop name: ${view.profileName}`}
+          </MultiClamp>
+        </span>
+        <br />
+
+        <span className="dataCardDesc">
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {`price: ${view.retailPriceParam}`}
           </MultiClamp>
         </span>
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            description: {view.description}
+            {`discount: ${view.salePriceParam}`}
+          </MultiClamp>
+        </span>
+
+        <span className="dataCardDesc">
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {`description: ${view.description}`}
           </MultiClamp>
         </span>
       </div>

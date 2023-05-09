@@ -23,8 +23,12 @@ export const useEntityClient = () => {
   const http = useHttp();
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const getEntityListQuery = (pageNo: number, keyword?: string, isSys?: boolean) => {
-    return http
+  const getEntityListQuery = async (
+    pageNo: number,
+    keyword?: string,
+    isSys?: boolean,
+  ) => {
+    return await http
       .post<
         ISearchEntryGroup,
         AxiosResponse<IHasResult<IPagingItems<IResponseEntryItems>>>
@@ -67,30 +71,6 @@ export const useEntityClient = () => {
     queryClient.removeQueries(['change-pageNumber']);
   };
 
-  const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
-    const result = await http.post<
-      ISaveEntryGroup,
-      AxiosResponse<IResponseEntity<IResponseSaveEntryGroup>>
-    >('Builder/SaveEntryGroup', entry);
-
-    if (result) {
-      removeQueries();
-      return result.data;
-    }
-  });
-
-  const entryGroupDeleteMutate = useMutation(async (deleteEntry: IDeleteEntryGroup) => {
-    const result = await http.post<
-      IDeleteEntryGroup,
-      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
-    >('Builder/DeleteEntryGroup', deleteEntry);
-
-    if (result) {
-      removeQueries();
-      return result.data;
-    }
-  });
-
   const getEntryDetailQuery = (entryId?: string) => {
     if (entryId) {
       return useQuery<IResponseSaveEntryGroup>(
@@ -112,11 +92,36 @@ export const useEntityClient = () => {
     return null;
   };
 
+  const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
+    const result = await http.post<
+      ISaveEntryGroup,
+      AxiosResponse<IResponseEntity<IResponseSaveEntryGroup>>
+    >('Builder/SaveEntryGroup', entry);
+
+    if (result) {
+      console.log('result', result);
+      removeQueries();
+      return result.data;
+    }
+  });
+
+  const entryGroupDeleteMutate = useMutation(async (deleteEntry: IDeleteEntryGroup) => {
+    const result = await http.post<
+      IDeleteEntryGroup,
+      AxiosResponse<IHasResult<IResponseSaveEntryGroup>>
+    >('Builder/DeleteEntryGroup', deleteEntry);
+
+    if (result) {
+      removeQueries();
+      return result.data;
+    }
+  });
+
   return {
     getEntityListQuery,
     changePageNumberQuery,
-    entryGroupMutateAsync: entryGroupMutate.mutateAsync,
-    entryGroupDeleteMutateAsync: entryGroupDeleteMutate.mutateAsync,
+    entryGroupAsync: entryGroupMutate.mutateAsync,
+    entryGroupDeleteAsync: entryGroupDeleteMutate.mutateAsync,
     getEntryDetailQuery,
     removeQueries,
   };

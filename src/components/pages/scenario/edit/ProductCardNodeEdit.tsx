@@ -95,6 +95,7 @@ export const ProductCardNodeEdit = () => {
     watch,
     setValue,
     trigger,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
@@ -133,11 +134,13 @@ export const ProductCardNodeEdit = () => {
     }
   }, [salePrice]);
 
-  useEffect(() => {
-    if (!watch(`view.retailPrice`)) {
-      setValue(`view.retailPrice`, 0);
-    }
-  }, [watch(`view.retailPrice`)]);
+  // useEffect(() => {
+  //   if (Number.isNaN(watch(`view.retailPrice`))) {
+  //     console.log('@nan', watch(`view.retailPrice`));
+  //     setValue(`view.retailPrice`, 0);
+  //     // resetField('view.retailPrice');
+  //   }
+  // }, [watch(`view.retailPrice`)]);
   return (
     <>
       <div className="node-item-wrap collapse">
@@ -224,7 +227,8 @@ export const ProductCardNodeEdit = () => {
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
                         {...register(`view.retailPrice`, {
-                          valueAsNumber: true,
+                          // valueAsNumber: true,
+                          setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
                           onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                             checkPriceRegex(e, 'retailPrice'),
                         })}

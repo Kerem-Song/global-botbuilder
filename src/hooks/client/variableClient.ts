@@ -34,6 +34,22 @@ export const useVariableClient = () => {
     );
   };
 
+  const getParameterFormatsQuery = () => {
+    return useQuery<IHasResults<IGetParameterFormats>>(
+      ['formats', token],
+      () =>
+        http
+          .post<ISearchParameter, AxiosResponse<IHasResults<IGetParameterFormats>>>(
+            'Builder/GetParameterFormats',
+            {
+              sessionToken: token,
+            },
+          )
+          .then((res) => res.data),
+      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
+    );
+  };
+
   const variableMutate = useMutation(async (variable: ISaveParameter) => {
     const result = await http.post<
       ISaveParameter,
@@ -60,26 +76,10 @@ export const useVariableClient = () => {
     }
   });
 
-  const getParameterFormatsQuery = () => {
-    return useQuery<IHasResults<IGetParameterFormats>>(
-      ['formats', token],
-      () =>
-        http
-          .post<ISearchParameter, AxiosResponse<IHasResults<IGetParameterFormats>>>(
-            'Builder/GetParameterFormats',
-            {
-              sessionToken: token,
-            },
-          )
-          .then((res) => res.data),
-      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
-    );
-  };
-
   return {
     getVariableListQuery,
-    variableMutateAsync: variableMutate.mutateAsync,
-    variableDeleteMutateAsync: variableDeleteMutate.mutateAsync,
     getParameterFormatsQuery,
+    variableAsync: variableMutate.mutateAsync,
+    variableDeleteAsync: variableDeleteMutate.mutateAsync,
   };
 };

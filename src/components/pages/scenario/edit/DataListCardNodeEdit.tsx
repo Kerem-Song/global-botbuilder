@@ -27,7 +27,7 @@ export const DataListCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataListCardView>>();
   const [carouselNum, setCarouselNum] = useState<number>(
-    Number(watch('view.carousel')) || 1,
+    Number(watch('view.count')) || 1,
   );
   const values = getValues();
   console.log('list card node edit value.view', values.view);
@@ -36,7 +36,10 @@ export const DataListCardNodeEdit = () => {
     name: `view.items`,
     control,
   });
-  const { field: carouselPrintOutField } = useController({ name: 'view.print', control });
+  const { field: carouselPrintOutField } = useController({
+    name: 'view.isShuffle',
+    control,
+  });
 
   const handleAddListButton = () => {
     console.log('handle add list btn');
@@ -53,10 +56,10 @@ export const DataListCardNodeEdit = () => {
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);
-      setValue('view.carousel', carouselNum + 1);
+      setValue('view.count', carouselNum + 1);
     } else {
       setCarouselNum((prev) => prev - 1);
-      setValue('view.carousel', carouselNum - 1);
+      setValue('view.count', carouselNum - 1);
     }
   };
 
@@ -70,10 +73,10 @@ export const DataListCardNodeEdit = () => {
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
-        <FormItem error={errors.view?.attribute}>
+        <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
-            path={`view.attribute`}
+            path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
             readOnly={isHistoryViewer}
           />
@@ -92,7 +95,7 @@ export const DataListCardNodeEdit = () => {
             />
           </Col>
           <Col span={3}>
-            <span>{watch(`view.carousel`)}</span>
+            <span>{watch(`view.count`)}</span>
           </Col>
           <Col span={3}>
             <Button
@@ -108,9 +111,9 @@ export const DataListCardNodeEdit = () => {
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'order'}
-                onChange={() => setValue(`view.print`, 'order')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === false}
+                onChange={() => setValue(`view.isShuffle`, false)}
                 ref={carouselPrintOutField.ref}
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_ORDER`)}</span>
@@ -118,9 +121,9 @@ export const DataListCardNodeEdit = () => {
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
-                name="view.print"
-                checked={watch('view.print') === 'random'}
-                onChange={() => setValue(`view.print`, 'random')}
+                name="view.isShuffle"
+                checked={watch('view.isShuffle') === true}
+                onChange={() => setValue(`view.isShuffle`, true)}
                 ref={carouselPrintOutField.ref}
               >
                 <span>{t(`DATA_CARD_NODE_CAROUSEL_PRINT_RANDOM`)}</span>
