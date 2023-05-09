@@ -88,6 +88,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           </p>
         </div>
       </div>
+      <Divider style={{ margin: '8px 0' }} />
 
       {view.description !== undefined ? (
         <div className={classNames('productName', { empty: view.description })}>
