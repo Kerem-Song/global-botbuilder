@@ -51,7 +51,7 @@ export const UtteranceDetail = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  usePrompt(isActive);
+  // usePrompt(isActive);
 
   const schema = yup.object({
     name: yup
