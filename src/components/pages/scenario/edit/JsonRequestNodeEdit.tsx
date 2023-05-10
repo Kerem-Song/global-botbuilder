@@ -100,32 +100,53 @@ export const JsonRequestNodeEdit = () => {
   const handleDeleteResMappingButton = (index: number) => {
     resMappingRemove(index);
   };
-  const { data, error, isFetching, refetch, isRefetching } = checkDataApiTest(values);
-  const handleApiValidation = () => {
-    // setLoading(true);
-    // refetch();
-    // if (error) {
-    //   setValue('view.apiRes', JSON.stringify(error, null, 2));
-    // } else {
-    //   console.log('@Data', data);
-    //   setValue('view.apiRes', JSON.stringify(data, null, 2));
-    // }
 
-    // setLoading(false);
+  const {
+    data: res,
+    error,
+    isError,
+    isFetching,
+    refetch,
+    isRefetching,
+  } = checkDataApiTest(values);
+  console.log('@out data', res);
+  const handleApiValidation = () => {
     setLoading(true);
-    return dataApiTest(values)
+    refetch()
       .then((res) => {
         resetField('view.apiRes');
-        console.log('@res in handle api validation', res);
-        setValue('view.apiRes', JSON.stringify(res, null, 2));
+        console.log('@Data', res);
+        console.log('@Error', isError, error);
+        setValue('view.apiRes', JSON.stringify(res?.data, null, 2));
+        if (res.isError) {
+          console.log('@iserror', typeof res.error);
+          resetField('view.apiRes');
+
+          setValue('view.apiRes', JSON.stringify(res.error.message, null, 2));
+        }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.log('@err', error);
         resetField('view.apiRes');
-        console.log('@err in handle api validation', err);
-        setValue('view.apiRes', JSON.stringify(err, null, 2));
+        setValue('view.apiRes', JSON.stringify(error, null, 2));
         setLoading(false);
       });
+
+    // setLoading(true);
+    // return dataApiTest(values)
+    //   .then((res) => {
+    //     resetField('view.apiRes');
+    //     console.log('@res in handle api validation', res);
+    //     setValue('view.apiRes', JSON.stringify(res, null, 2));
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     resetField('view.apiRes');
+    //     console.log('@err in handle api validation', err);
+    //     setValue('view.apiRes', JSON.stringify(err, null, 2));
+    //     setLoading(false);
+    //   });
   };
 
   return (
@@ -252,7 +273,7 @@ export const JsonRequestNodeEdit = () => {
               small
               type="primary"
               onClick={handleApiValidation}
-              // disabled={isFetching || isRefetching}
+              disabled={isFetching || isRefetching}
             >
               {t(`API_REQUEST_VALIDATION_START`)}
             </Button>
