@@ -200,7 +200,6 @@ export const useScenarioClient = () => {
       const old = queryClient.getQueryData<IGetFlowRes>(['scenario', scenarioId]);
       const resultNodes = nodes.map((x) => {
         const converted = nodeHelper.convertToINodeBase(x);
-        console.log('@converted', converted);
         return converted;
       });
       const result = { ...old, nodes: resultNodes };

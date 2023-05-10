@@ -203,9 +203,7 @@ export const DataProductCardNodeEdit = () => {
                         })}
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
-                        {...register(`view.retailPriceParam`, {
-                          valueAsNumber: true,
-                        })}
+                        {...register(`view.retailPriceParam`)}
                         isLight={true}
                         readOnly={isHistoryViewer}
                       />
@@ -234,9 +232,7 @@ export const DataProductCardNodeEdit = () => {
               <FormItem error={errors.view && errors.view.salePriceParam}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
-                  {...register(`view.salePriceParam`, {
-                    valueAsNumber: true,
-                  })}
+                  {...register(`view.salePriceParam`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
                 />

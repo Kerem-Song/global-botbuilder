@@ -15,6 +15,7 @@ import {
   useNodeEditSave,
   usePage,
 } from '@hooks';
+import { checkDataApiTest } from '@hooks/client/dataApiTestClient';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -99,10 +100,19 @@ export const JsonRequestNodeEdit = () => {
   const handleDeleteResMappingButton = (index: number) => {
     resMappingRemove(index);
   };
-
+  const { data, error, isFetching, refetch, isRefetching } = checkDataApiTest(values);
   const handleApiValidation = () => {
-    setLoading(true);
+    // setLoading(true);
+    // refetch();
+    // if (error) {
+    //   setValue('view.apiRes', JSON.stringify(error, null, 2));
+    // } else {
+    //   console.log('@Data', data);
+    //   setValue('view.apiRes', JSON.stringify(data, null, 2));
+    // }
 
+    // setLoading(false);
+    setLoading(true);
     return dataApiTest(values)
       .then((res) => {
         resetField('view.apiRes');
@@ -238,7 +248,12 @@ export const JsonRequestNodeEdit = () => {
         <Row align="center" className="apiValidationHeader">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
-            <Button small type="primary" onClick={handleApiValidation}>
+            <Button
+              small
+              type="primary"
+              onClick={handleApiValidation}
+              // disabled={isFetching || isRefetching}
+            >
               {t(`API_REQUEST_VALIDATION_START`)}
             </Button>
           </Col>
