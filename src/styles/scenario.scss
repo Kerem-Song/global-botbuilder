@@ -168,6 +168,15 @@
         color: $gray300;
         line-height: rem(16);
       }
+
+      .noScenarioResults {
+        padding-top: rem(25);
+        text-align: center;
+
+        & p {
+          padding-top: rem(10);
+        }
+      }
     }
 
     // .scenarioListWrapper::-webkit-scrollbar {

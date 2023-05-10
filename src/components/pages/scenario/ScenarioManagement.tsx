@@ -1,3 +1,4 @@
+import { icEmptyBot } from '@assets';
 import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
 import { usePage, useRootState } from '@hooks';
@@ -7,7 +8,6 @@ import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
-
 export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];
   searchKeyword: string;
@@ -60,6 +60,12 @@ export const ScenarioManagement: FC<{
     (state) => state.botBuilderReducer.selectedScenario,
   );
 
+  const filteredScenarios = scenarios?.filter(
+    (x) =>
+      (!isActivated || x.activated) &&
+      (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
+  );
+
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">
@@ -110,17 +116,21 @@ export const ScenarioManagement: FC<{
       <div className="scenarioListWrapper">
         <Space gap="small" direction="vertical">
           {scenarios ? (
-            <SortableScenarioListContainer
-              disabled={isActivated || searchKeyword.trim().length > 0}
-              scenarioList={scenarios.filter(
-                (x) =>
-                  (!isActivated || x.activated) &&
-                  (!searchKeyword ||
-                    x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
-              )}
-            />
+            !filteredScenarios?.length ? (
+              <div className="noScenarioResults">
+                <img src={icEmptyBot} alt="noScenarioResult" />
+                <p>{t(`NO_SCENARIO_RESULTS`)}</p>
+              </div>
+            ) : (
+              <SortableScenarioListContainer
+                disabled={isActivated || searchKeyword.trim().length > 0}
+                scenarioList={filteredScenarios}
+              />
+            )
           ) : (
-            <div className="noResults"></div>
+            <div className="noResults">
+              <img src={icEmptyBot} alt="noScenarioResult" />
+            </div>
           )}
         </Space>
       </div>

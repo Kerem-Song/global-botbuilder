@@ -122,7 +122,7 @@ export const JsonRequestNodeEdit = () => {
           console.log('@iserror', typeof res.error);
           resetField('view.apiRes');
 
-          setValue('view.apiRes', JSON.stringify(res.error.message, null, 2));
+          setValue('view.apiRes', JSON.stringify(res.error, null, 2));
         }
         setLoading(false);
       })
