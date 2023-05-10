@@ -80,6 +80,10 @@
             line-height: rem(25);
           }
         }
+        &:hover {
+          background-color: $grayWhite;
+          cursor: default;
+        }
       }
       .title {
         width: 78%;
