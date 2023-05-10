@@ -212,6 +212,7 @@ export const ProductCardNodeEdit = () => {
                   required={true}
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}
+                  isLight={true}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
@@ -233,6 +234,7 @@ export const ProductCardNodeEdit = () => {
                             checkPriceRegex(e, 'retailPrice'),
                         })}
                         maxLength={11}
+                        isLight={true}
                         readOnly={isHistoryViewer}
                       />
                     </Col>
@@ -266,6 +268,7 @@ export const ProductCardNodeEdit = () => {
                       checkPriceRegex(e, 'discountPrice'),
                   })}
                   maxLength={11}
+                  isLight={true}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>

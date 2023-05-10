@@ -25,7 +25,6 @@ export const DataProductCardNodeEdit = () => {
     setValue,
     control,
     watch,
-    trigger,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataProductCardView>>();
   const [carouselNum, setCarouselNum] = useState<number>(
@@ -171,10 +170,8 @@ export const DataProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
-                  showCount={true}
-                  maxLength={15}
                   {...register(`view.profileName`)}
-                  textLength={watch(`view.profileName`)?.length || 0}
+                  isLight={true}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
@@ -189,11 +186,9 @@ export const DataProductCardNodeEdit = () => {
               <FormItem error={errors.view && errors.view.description}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
-                  showCount={true}
-                  maxLength={30}
                   required={true}
                   {...register(`view.description`)}
-                  textLength={watch(`view.description`)?.length || 0}
+                  isLight={true}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
@@ -211,7 +206,7 @@ export const DataProductCardNodeEdit = () => {
                         {...register(`view.retailPriceParam`, {
                           valueAsNumber: true,
                         })}
-                        maxLength={11}
+                        isLight={true}
                         readOnly={isHistoryViewer}
                       />
                     </Col>
@@ -242,7 +237,7 @@ export const DataProductCardNodeEdit = () => {
                   {...register(`view.salePriceParam`, {
                     valueAsNumber: true,
                   })}
-                  maxLength={11}
+                  isLight={true}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
@@ -256,6 +251,7 @@ export const DataProductCardNodeEdit = () => {
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
+            isDataApi={true}
           />
         )}
       </Collapse>

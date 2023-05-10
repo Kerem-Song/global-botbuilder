@@ -27,11 +27,13 @@ export const ButtonsEdit = ({
   isCarousel,
   imageRatio,
   nodeId,
+  isDataApi,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
+  isDataApi?: boolean;
 }) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
@@ -92,8 +94,8 @@ export const ButtonsEdit = ({
               <InputWithTitleCounter
                 required
                 label={t(`BUTTON_NAME`)}
-                showCount={true}
-                maxLength={14}
+                showCount={isDataApi ? false : true}
+                maxLength={isDataApi ? undefined : 14}
                 isLight={true}
                 {...register(
                   index === undefined
@@ -101,11 +103,13 @@ export const ButtonsEdit = ({
                     : `view.childrenViews.${index}.buttons.${i}.label`,
                 )}
                 textLength={
-                  watch(
-                    index === undefined
-                      ? `view.buttons.${i}.label`
-                      : `view.childrenViews.${index}.buttons.${i}.label`,
-                  )?.length || 0
+                  isDataApi
+                    ? undefined
+                    : watch(
+                        index === undefined
+                          ? `view.buttons.${i}.label`
+                          : `view.childrenViews.${index}.buttons.${i}.label`,
+                      )?.length || 0
                 }
                 readOnly={isHistoryViewer}
               />

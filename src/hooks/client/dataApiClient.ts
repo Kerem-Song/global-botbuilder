@@ -47,7 +47,7 @@ export const useDataApiClient = () => {
     });
     if (res) {
       console.log('@checkApiValidation res: ', res);
-      return res;
+      return res.data;
     }
   };
 

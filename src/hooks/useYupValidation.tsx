@@ -400,16 +400,8 @@ export const useYupValidation = () => {
       .string()
       // .url(t(`VALIDATION_URL`))
       .required(t(`VALIDATION_REQUIRED`)),
-    profileName: yup
-      .string()
-      .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
-      .required(t(`VALIDATION_REQUIRED`)),
-    description: yup
-      .string()
-      .trim()
-      .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
-      .required(t(`VALIDATION_REQUIRED`)),
+    profileName: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     buttons: buttonsEditSchema,
   });
   const schema = yup
