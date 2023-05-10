@@ -201,8 +201,8 @@ export const ButtonsEdit = ({
                   <InputTextAreaWithTitleCounter
                     className="actValueIsUttrInput"
                     label={t(`SET_MESSAGE`)}
-                    showCount
-                    maxLength={14}
+                    showCount={isDataApi ? false : true}
+                    maxLength={isDataApi ? undefined : 14}
                     isLight={true}
                     required={true}
                     placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
@@ -212,11 +212,13 @@ export const ButtonsEdit = ({
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
                     textLength={
-                      watch(
-                        index === undefined
-                          ? `view.buttons.${i}.actionValue`
-                          : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                      )?.length || 0
+                      isDataApi
+                        ? undefined
+                        : watch(
+                            index === undefined
+                              ? `view.buttons.${i}.actionValue`
+                              : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                          )?.length || 0
                     }
                     readOnly={isHistoryViewer}
                   />

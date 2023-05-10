@@ -75,11 +75,37 @@ export const useYupValidation = () => {
             then: yup.string().required(t(`VALIDATION_REQUIRED`)),
           })
           .when('actionType', {
-            is: ACTION_TYPES.ACT_VALUE_IS_UTTR || ACTION_TYPES.LBL_IS_UTTR,
+            is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
             then: yup
               .string()
               .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
               .required(t(`VALIDATION_REQUIRED`)),
+          }),
+      }),
+    );
+
+  const dataApiButtonsEditSchema = yup
+    .array()
+    .max(3, t(`VALIDATION_BUTTON_MAX`))
+    .of(
+      yup.object().shape({
+        label: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        actionValue: yup
+          .string()
+          .when('actionType', {
+            is: ACTION_TYPES.URL,
+            then: yup
+              .string()
+              // .url(t(`VALIDATION_URL`))
+              .required(t(`VALIDATION_REQUIRED`)),
+          })
+          .when('actionType', {
+            is: ACTION_TYPES.LUNA_NODE_REDIRECT,
+            then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+          })
+          .when('actionType', {
+            is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
+            then: yup.string().required(t(`VALIDATION_REQUIRED`)),
           }),
       }),
     );
@@ -360,7 +386,7 @@ export const useYupValidation = () => {
       .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
       .required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
-    buttons: buttonsEditSchema,
+    buttons: dataApiButtonsEditSchema,
   });
 
   const dataListCardNodeEditSchema = yup.object().shape({
@@ -370,10 +396,10 @@ export const useYupValidation = () => {
       yup.object().shape({
         title: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
         imageFile: imageFileEditSchema,
-        imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
+        imageUrl: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
-    buttons: buttonsEditSchema,
+    buttons: dataApiButtonsEditSchema,
   });
 
   const dataProductCardNodeEditSchema = yup.object().shape({
@@ -391,18 +417,12 @@ export const useYupValidation = () => {
           t(`VALIDATION_FILE_TYPE`),
           (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
         ),
-      imageUrl: yup
-        .string()
-        // .url(t(`VALIDATION_URL`))
-        .required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
     }),
-    profileIconUrl: yup
-      .string()
-      // .url(t(`VALIDATION_URL`))
-      .required(t(`VALIDATION_REQUIRED`)),
+    profileIconUrl: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     profileName: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
-    buttons: buttonsEditSchema,
+    buttons: dataApiButtonsEditSchema,
   });
   const schema = yup
     .object({
