@@ -111,6 +111,7 @@ export const ButtonsEdit = ({
                           : `view.childrenViews.${index}.buttons.${i}.label`,
                       )?.length || 0
                 }
+                placeholder={t(`BUTTON_NAME_PLACEHOLDER`)}
                 readOnly={isHistoryViewer}
               />
             </FormItem>

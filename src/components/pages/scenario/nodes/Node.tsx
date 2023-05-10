@@ -261,7 +261,8 @@ export const Node: FC<INodeProps> = ({
             )}
           </div>
           <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
-          {nodekind === NodeKind.InputNode && (
+          {(nodekind === NodeKind.InputNode ||
+            node.type === NODE_TYPES.CONDITION_NODE) && (
             <Button shape="ghost" className="icNodeBottom">
               <div
                 id={`${NODE_PREFIX}bottom-${id}`}

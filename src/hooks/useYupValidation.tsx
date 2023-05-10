@@ -70,10 +70,10 @@ export const useYupValidation = () => {
               // .url(t(`VALIDATION_URL`))
               .required(t(`VALIDATION_REQUIRED`)),
           })
-          .when('actionType', {
-            is: ACTION_TYPES.LUNA_NODE_REDIRECT,
-            then: yup.string().required(t(`VALIDATION_REQUIRED`)),
-          })
+          // .when('actionType', {
+          //   is: ACTION_TYPES.LUNA_NODE_REDIRECT,
+          //   then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+          // })
           .when('actionType', {
             is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
             then: yup

@@ -113,6 +113,7 @@
     "DELETE_BUTTON": "버튼 삭제",
     "BUTTON_TYPE": "버튼타입",
     "BUTTON_NAME": "버튼명",
+    "BUTTON_NAME_PLACEHOLDER": "버튼명을 입력해 주세요.",
     "BUTTON": "버튼",
     "BUTTON_SETTING": "버튼 설정",
     "QUICK_REPLY_BUTTON_SETTING": "퀵 리플라이 버튼 설정",
