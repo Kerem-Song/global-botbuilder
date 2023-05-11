@@ -23,7 +23,7 @@ export const ImageInput = ({
 }: IImageCtrlIdPathProps) => {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t } = usePage();
-  const { setValue, register, getValues } = useFormContext();
+  const { setValue, register, watch, getValues } = useFormContext();
 
   const isHistoryViewer = useHistoryViewerMatch();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -34,13 +34,18 @@ export const ImageInput = ({
   });
 
   const handleImgOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setValue(
-      imgPath,
-      `${
-        import.meta.env.VITE_API_BASE_URL
-      }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
-    );
-    setValue(imageUrl, e.target.value.trim());
+    if (!e.target.value) {
+      setValue(imgPath, '');
+      setValue(imageUrl, '');
+    } else {
+      setValue(
+        imgPath,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
+      );
+      setValue(imageUrl, e.target.value.trim());
+    }
   };
 
   return (

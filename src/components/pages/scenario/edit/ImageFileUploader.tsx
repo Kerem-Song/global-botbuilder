@@ -129,8 +129,19 @@ export const ImageFileUploader = ({
           })}
         >
           <div className={classnames('imgUploadSkeleton')}>
-            {watch(imgPath) ? (
-              <img src={watch(imgPath)} alt="templateImage" />
+            {watch(imageUrl) ? (
+              watch(imgPath) ? (
+                <img src={watch(imgPath)} alt="templateImage" />
+              ) : (
+                <img
+                  src={`${
+                    import.meta.env.VITE_API_BASE_URL
+                  }/builderimage/forbuilder?origin=${getValues(
+                    imageUrl,
+                  )}&sessionToken=${token}`}
+                  alt="templateImage"
+                />
+              )
             ) : (
               <>
                 <img src={icImg} alt="icImg" />

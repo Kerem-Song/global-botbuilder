@@ -30,7 +30,6 @@ export class ConditionNodeFactory implements INodeFactory {
   }
 
   getNodeElement() {
-    console.log('@gasdfasdfasdfasdfasfa');
     return ConditionNode;
   }
 
