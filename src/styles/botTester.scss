@@ -116,13 +116,16 @@
         overflow: hidden;
 
         .productCard {
-          max-width: rem(264);
-          height: fit-content;
+          width: rem(264);
+          max-height: rem(430);
           margin-right: rem(10);
           background-color: $grayWhite;
           border-radius: rem(16);
+          border: 1px solid transparent;
+
           &:hover {
-            border: 1px solid $primary500;
+            // display: block;
+            // border: 1px solid $primary500;
           }
 
           .productCardImg_rectangle {
@@ -131,6 +134,7 @@
             object-fit: contain;
             border-radius: rem(16) rem(16) 0 0;
           }
+
           .productCardImg_square {
             width: 100%;
             height: rem(264);
@@ -207,6 +211,7 @@
               .productDesc {
                 display: flex;
                 align-items: center;
+                padding-bottom: rem(8);
 
                 .desc {
                   width: 100%;
@@ -281,7 +286,8 @@
 
         .cardCarousel {
           width: rem(264);
-          height: fit-content;
+          max-height: rem(420);
+          padding-bottom: rem(10);
           background-color: $grayWhite;
           margin-right: rem(8);
           border-radius: rem(16);
@@ -290,7 +296,7 @@
           align-items: center;
 
           &:hover {
-            border: 1px solid $primary500;
+            // border: 1px solid $primary500;
           }
 
           .cardCarouselImg_rectangle {
@@ -315,6 +321,7 @@
               line-height: rem(17);
             }
             .cardCarouselDesc {
+              height: rem(20);
               font-weight: 400;
               font-size: rem(14);
               line-height: rem(17);
@@ -324,7 +331,7 @@
           .luna-testerItem-cardCarouselBtn {
             width: rem(240);
             height: rem(35);
-            margin: rem(4) 0 rem(10) 0;
+            margin: rem(2) 0 rem(2) 0;
             border: none;
             border-radius: rem(8);
             cursor: pointer;
@@ -339,7 +346,7 @@
         width: rem(264);
         background-color: $grayWhite;
         border-radius: rem(16);
-        padding: rem(12) 0;
+        padding-bottom: rem(12);
 
         .cardImg_rectangle {
           width: rem(264);
@@ -389,7 +396,7 @@
           }
         }
         &:hover {
-          border: 1px solid $primary500;
+          // border: 1px solid $primary500;
         }
       }
 
@@ -400,7 +407,7 @@
         .listCard {
           width: rem(264);
           margin-right: rem(10);
-          height: fit-content;
+          max-height: rem(900);
           background-color: $grayWhite;
           border-radius: rem(16);
           padding-bottom: rem(10);
@@ -493,7 +500,7 @@
             }
           }
           &:hover {
-            border: 1px solid $primary500;
+            // border: 1px solid $primary500;
           }
         }
       }
