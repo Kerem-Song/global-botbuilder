@@ -23,7 +23,7 @@ export const ImageInput = ({
 }: IImageCtrlIdPathProps) => {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t } = usePage();
-  const { setValue, register } = useFormContext();
+  const { setValue, register, getValues } = useFormContext();
 
   const isHistoryViewer = useHistoryViewerMatch();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -33,22 +33,14 @@ export const ImageInput = ({
     listItemIndex,
   });
 
-  const handleImgUrlInput = (e: ChangeEvent<HTMLInputElement>) => {
-    clearTimeout(timer);
-
-    const newTimer = setTimeout(() => {
-      if (e.target.value.trim()) {
-        setValue(
-          imgPath,
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
-        );
-        setValue(imageUrl, e.target.value.trim());
-      }
-    }, 1000);
-
-    setTimer(newTimer);
+  const handleImgOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setValue(
+      imgPath,
+      `${
+        import.meta.env.VITE_API_BASE_URL
+      }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
+    );
+    setValue(imageUrl, e.target.value.trim());
   };
 
   return (
@@ -58,7 +50,7 @@ export const ImageInput = ({
         {...register(registerName)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
-        onChange={handleImgUrlInput}
+        onBlur={handleImgOnBlur}
       />
     </>
   );
