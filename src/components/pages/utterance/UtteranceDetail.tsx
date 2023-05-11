@@ -5,7 +5,7 @@ import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { usePrompt } from '@hooks/usePrompt';
 import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import * as yup from 'yup';
@@ -15,7 +15,17 @@ import { AddUtterance } from './AddUtterance';
 import { UtteranceDetailItems } from './UtteranceDetailItems';
 import { UtteranceGroupInfo } from './UtteranceGroupInfo';
 
-export const UtteranceDetail = () => {
+export interface IUtteranceDetailProps {
+  isOpenUtteranceDetailPopup: boolean;
+  handleIsOpenUtterancePopup: (value: boolean) => void;
+  handleIsOpenUtteranceDetailPopup: (value: boolean) => void;
+}
+
+export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
+  isOpenUtteranceDetailPopup,
+  handleIsOpenUtterancePopup,
+  handleIsOpenUtteranceDetailPopup,
+}) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, t, tc } = usePage();
   const { utteranceId, botId } = useParams();
@@ -60,6 +70,8 @@ export const UtteranceDetail = () => {
   const handleListBtn = async () => {
     if (isActive) {
       navigate(`/${botId}/utterance`);
+
+      return;
     } else {
       navigate(`/${botId}/utterance`);
     }

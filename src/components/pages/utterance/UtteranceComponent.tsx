@@ -44,6 +44,8 @@ export const UtteranceComponent = () => {
         isOpenUtterancePopup={isOpenUtterancePopup}
         handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
         handleIsOpenUtteranceDetailPopup={handleIsOpenUtteranceDetailPopup}
+        searchData={searchData}
+        setSearchData={setSearchData}
       />
       <UtteranceDetailPopup
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
