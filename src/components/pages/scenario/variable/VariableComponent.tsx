@@ -70,7 +70,6 @@ export const VariableComponent = () => {
             </Button>
           </Col>
         </Row>
-
         <div className="variableListWrapper">
           <div className="variableList">
             <div className="variableListHeader">
