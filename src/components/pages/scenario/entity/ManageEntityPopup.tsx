@@ -10,16 +10,26 @@ import { SystemEntity } from './SystemEntity';
 export interface ManageEntitiyPopupProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
+  setEntryId: (value: string) => void;
+  handleIsOpenEntityDetailPopup: (value: boolean) => void;
 }
 
 export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
   isOpen,
   handleIsOpen,
+  setEntryId,
+  handleIsOpenEntityDetailPopup,
 }) => {
   const tabArr = [
     {
       tabTitle: 'MY_ENTITY',
-      tabCont: <MyEntity />,
+      tabCont: (
+        <MyEntity
+          setEntryId={setEntryId}
+          handleIsOpenEntityDetailPopup={handleIsOpenEntityDetailPopup}
+          handleIsOpen={handleIsOpen}
+        />
+      ),
     },
     {
       tabTitle: 'SYSTEM_ENTITY',
