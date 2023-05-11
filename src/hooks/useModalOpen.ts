@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
+// import {
+//   unstable_Blocker as Blocker,
+//   unstable_useBlocker as useBlocker,
+// } from 'react-router';
 
 export const useModalOpen = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const keyEvent = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      setIsOpen(false);
-    }
-  };
+
+  // const blocker: Blocker = useBlocker(isOpen);
+  // useEffect(() => {
+  //   if (blocker.state === 'blocked' && isOpen) {
+  //     setIsOpen(false);
+  //     blocker.reset();
+  //   }
+  // }, [blocker, isOpen]);
+
   const handleIsOpen = (value: boolean) => {
     setIsOpen(value);
   };
 
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     window.addEventListener('keyup', keyEvent);
-  //   } else {
-  //     window.removeEventListener('keyup', keyEvent);
-  //   }
-  //   return () => window.removeEventListener('keyup', keyEvent);
-  // }, [isOpen]);
   return { isOpen, handleIsOpen };
 };

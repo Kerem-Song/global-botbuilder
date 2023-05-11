@@ -37,8 +37,4 @@ export const useCallbackPrompt = (when: boolean) => {
       }
     }
   };
-
-  //useBlocker(blocker, when);
-
-  //return [showPrompt, confirmNavigation, cancelNavigation];
 };
