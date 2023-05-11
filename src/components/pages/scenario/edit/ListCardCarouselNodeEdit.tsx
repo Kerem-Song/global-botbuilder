@@ -105,6 +105,7 @@ export const ListCardCarouselNodeEdit = () => {
                         `view.childrenViews.${index}.imageCtrl.aspectRatio`,
                       )}
                       nodeId={values.id}
+                      useCounter={true}
                     />
                   )}
                 </Collapse>

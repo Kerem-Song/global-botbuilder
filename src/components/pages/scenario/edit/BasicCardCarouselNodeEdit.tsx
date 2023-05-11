@@ -129,6 +129,7 @@ export const BasicCardCarousleNodeEdit = () => {
                         `view.childrenViews.${index}.imageCtrl.aspectRatio`,
                       )}
                       nodeId={values.id}
+                      useCounter={true}
                     />
                   )}
                 </Collapse>

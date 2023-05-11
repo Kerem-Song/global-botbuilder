@@ -356,6 +356,7 @@ export const ProductCardCarouselNodeEdit = () => {
                         `view.childrenViews.${index}.imageCtrl.aspectRatio`,
                       )}
                       nodeId={values.id}
+                      useCounter={true}
                     />
                   )}
                 </Collapse>

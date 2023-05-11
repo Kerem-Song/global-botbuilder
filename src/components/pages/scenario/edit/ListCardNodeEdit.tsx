@@ -171,6 +171,7 @@ export const ListCardNodeEdit = () => {
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
+            useCounter={true}
           />
         )}
       </Collapse>

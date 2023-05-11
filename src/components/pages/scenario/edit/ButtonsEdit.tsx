@@ -27,13 +27,13 @@ export const ButtonsEdit = ({
   isCarousel,
   imageRatio,
   nodeId,
-  isDataApi,
+  useCounter,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
-  isDataApi?: boolean;
+  useCounter: boolean;
 }) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
@@ -94,8 +94,8 @@ export const ButtonsEdit = ({
               <InputWithTitleCounter
                 required
                 label={t(`BUTTON_NAME`)}
-                showCount={isDataApi ? false : true}
-                maxLength={isDataApi ? undefined : 14}
+                showCount={useCounter ? true : false}
+                maxLength={useCounter ? 14 : undefined}
                 isLight={true}
                 {...register(
                   index === undefined
@@ -103,13 +103,13 @@ export const ButtonsEdit = ({
                     : `view.childrenViews.${index}.buttons.${i}.label`,
                 )}
                 textLength={
-                  isDataApi
-                    ? undefined
-                    : watch(
+                  useCounter
+                    ? watch(
                         index === undefined
                           ? `view.buttons.${i}.label`
                           : `view.childrenViews.${index}.buttons.${i}.label`,
                       )?.length || 0
+                    : undefined
                 }
                 placeholder={t(`BUTTON_NAME_PLACEHOLDER`)}
                 readOnly={isHistoryViewer}
@@ -202,8 +202,8 @@ export const ButtonsEdit = ({
                   <InputTextAreaWithTitleCounter
                     className="actValueIsUttrInput"
                     label={t(`SET_MESSAGE`)}
-                    showCount={isDataApi ? false : true}
-                    maxLength={isDataApi ? undefined : 14}
+                    showCount={useCounter ? true : false}
+                    maxLength={useCounter ? 14 : undefined}
                     isLight={true}
                     required={true}
                     placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
@@ -213,13 +213,13 @@ export const ButtonsEdit = ({
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
                     textLength={
-                      isDataApi
-                        ? undefined
-                        : watch(
+                      useCounter
+                        ? watch(
                             index === undefined
                               ? `view.buttons.${i}.actionValue`
                               : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                           )?.length || 0
+                        : undefined
                     }
                     readOnly={isHistoryViewer}
                   />

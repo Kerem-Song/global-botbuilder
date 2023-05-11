@@ -247,7 +247,7 @@ export const DataProductCardNodeEdit = () => {
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
-            isDataApi={true}
+            useCounter={false}
           />
         )}
       </Collapse>
