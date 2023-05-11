@@ -240,6 +240,7 @@ export const DataListCardNodeEdit = () => {
           <ButtonsEdit
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
+            isDataApi={true}
           />
         )}
       </Collapse>

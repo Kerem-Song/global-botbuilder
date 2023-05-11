@@ -30,7 +30,7 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            {`print: ${view.isShuffle}`}
+            {`print: ${view.isShuffle ? 'random' : 'order'}`}
           </MultiClamp>
         </span>
         <br />
@@ -49,8 +49,7 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            {`image type:
-            ${
+            {`image type: ${
               view.imageCtrl?.aspectRatio
                 ? t(`IMAGE_TYPE_SQUARE`)
                 : t(`IMAGE_TYPE_RECTANGLE`)

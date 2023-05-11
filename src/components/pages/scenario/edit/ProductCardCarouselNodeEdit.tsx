@@ -274,6 +274,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               watch(`view.childrenViews.${index}.description`)?.length ||
                               0
                             }
+                            isLight={true}
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>
@@ -301,6 +302,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                     },
                                   )}
                                   maxLength={11}
+                                  isLight={true}
                                   readOnly={isHistoryViewer}
                                 />
                               </Col>
@@ -337,6 +339,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               },
                             )}
                             maxLength={11}
+                            isLight={true}
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>

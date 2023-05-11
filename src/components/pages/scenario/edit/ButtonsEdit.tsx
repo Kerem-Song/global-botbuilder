@@ -27,11 +27,13 @@ export const ButtonsEdit = ({
   isCarousel,
   imageRatio,
   nodeId,
+  isDataApi,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
+  isDataApi?: boolean;
 }) => {
   const { t } = usePage();
   const [buttonType, setButtonType] = useState<ActionTypes>();
@@ -92,8 +94,8 @@ export const ButtonsEdit = ({
               <InputWithTitleCounter
                 required
                 label={t(`BUTTON_NAME`)}
-                showCount={true}
-                maxLength={14}
+                showCount={isDataApi ? false : true}
+                maxLength={isDataApi ? undefined : 14}
                 isLight={true}
                 {...register(
                   index === undefined
@@ -101,12 +103,15 @@ export const ButtonsEdit = ({
                     : `view.childrenViews.${index}.buttons.${i}.label`,
                 )}
                 textLength={
-                  watch(
-                    index === undefined
-                      ? `view.buttons.${i}.label`
-                      : `view.childrenViews.${index}.buttons.${i}.label`,
-                  )?.length || 0
+                  isDataApi
+                    ? undefined
+                    : watch(
+                        index === undefined
+                          ? `view.buttons.${i}.label`
+                          : `view.childrenViews.${index}.buttons.${i}.label`,
+                      )?.length || 0
                 }
+                placeholder={t(`BUTTON_NAME_PLACEHOLDER`)}
                 readOnly={isHistoryViewer}
               />
             </FormItem>
@@ -197,8 +202,8 @@ export const ButtonsEdit = ({
                   <InputTextAreaWithTitleCounter
                     className="actValueIsUttrInput"
                     label={t(`SET_MESSAGE`)}
-                    showCount
-                    maxLength={14}
+                    showCount={isDataApi ? false : true}
+                    maxLength={isDataApi ? undefined : 14}
                     isLight={true}
                     required={true}
                     placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
@@ -208,11 +213,13 @@ export const ButtonsEdit = ({
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
                     textLength={
-                      watch(
-                        index === undefined
-                          ? `view.buttons.${i}.actionValue`
-                          : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                      )?.length || 0
+                      isDataApi
+                        ? undefined
+                        : watch(
+                            index === undefined
+                              ? `view.buttons.${i}.actionValue`
+                              : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                          )?.length || 0
                     }
                     readOnly={isHistoryViewer}
                   />

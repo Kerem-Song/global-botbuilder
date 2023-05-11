@@ -286,7 +286,6 @@ export const ConditionNodeEdit = () => {
               <span className="label">else</span>
               <div>
                 <span>{t(`SET_NEXT_MESSAGE`)} </span>
-                <span className="required">*</span>
               </div>
               <FormItem error={errors.view?.falseThenNextNodeId}>
                 <SelectNode

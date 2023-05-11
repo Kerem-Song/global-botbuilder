@@ -15,6 +15,7 @@ import {
   useNodeEditSave,
   usePage,
 } from '@hooks';
+import { checkDataApiTest } from '@hooks/client/dataApiTestClient';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -38,12 +39,14 @@ export const JsonRequestNodeEdit = () => {
     getValues,
     setValue,
     control,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
   const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
-  const { checkApiValidation } = useDataApiClient();
+  const { dataApiTest } = useDataApiClient();
+  const values = getValues().view!;
 
   const { field: method } = useController({ name: 'view.method', control });
 
@@ -98,25 +101,52 @@ export const JsonRequestNodeEdit = () => {
     resMappingRemove(index);
   };
 
+  const {
+    data: res,
+    error,
+    isError,
+    isFetching,
+    refetch,
+    isRefetching,
+  } = checkDataApiTest(values);
+  console.log('@out data', res);
   const handleApiValidation = () => {
     setLoading(true);
-    return checkApiValidation({
-      method: watch(`view.method`),
-      url: watch(`view.url`),
-      headers: watch(`view.headers`),
-      body: watch(`view.body`),
-      queryStrings: watch(`view.queryStrings`),
-    })
+    refetch()
       .then((res) => {
-        console.log('@res in handle api validation', res);
-        setValue('view.apiRes', JSON.stringify(res, null, 2));
+        resetField('view.apiRes');
+        console.log('@Data', res);
+        console.log('@Error', isError, error);
+        setValue('view.apiRes', JSON.stringify(res?.data, null, 2));
+        if (res.isError) {
+          console.log('@iserror', typeof res.error);
+          resetField('view.apiRes');
+
+          setValue('view.apiRes', JSON.stringify(res.error, null, 2));
+        }
         setLoading(false);
       })
-      .catch((err) => {
-        console.log('@err in handle api validation', err);
-        setValue('view.apiRes', JSON.stringify(err, null, 2));
+      .catch((error) => {
+        console.log('@err', error);
+        resetField('view.apiRes');
+        setValue('view.apiRes', JSON.stringify(error, null, 2));
         setLoading(false);
       });
+
+    // setLoading(true);
+    // return dataApiTest(values)
+    //   .then((res) => {
+    //     resetField('view.apiRes');
+    //     console.log('@res in handle api validation', res);
+    //     setValue('view.apiRes', JSON.stringify(res, null, 2));
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     resetField('view.apiRes');
+    //     console.log('@err in handle api validation', err);
+    //     setValue('view.apiRes', JSON.stringify(err, null, 2));
+    //     setLoading(false);
+    //   });
   };
 
   return (
@@ -239,13 +269,18 @@ export const JsonRequestNodeEdit = () => {
         <Row align="center" className="apiValidationHeader">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
-            <Button small type="primary" onClick={handleApiValidation}>
+            <Button
+              small
+              type="primary"
+              onClick={handleApiValidation}
+              disabled={isFetching || isRefetching}
+            >
               {t(`API_REQUEST_VALIDATION_START`)}
             </Button>
           </Col>
         </Row>
 
-        <div className="apiResWrapper">
+        <div className="apiResWrapper" data-loading={loading}>
           {loading && (
             <ReactLoading
               type="spin"

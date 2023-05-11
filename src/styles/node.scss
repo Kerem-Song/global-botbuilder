@@ -225,8 +225,12 @@
           text-decoration: line-through;
         }
 
+        .discountedCurrency{
+          font-size: rem(1);
+          color: gray;
+        }
+
         .discount {
-          padding-left: rem(5);
           font-size: rem(10);
           color: red;
         }
