@@ -273,7 +273,7 @@ export const useYupValidation = () => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       })
       .required(t(`VALIDATION_REQUIRED`)),
-    discountPrice: yup
+    discountAmount: yup
       .number()
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .nullable()

@@ -108,7 +108,7 @@ export const ProductCardNodeEdit = () => {
 
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
-    price: 'retailPrice' | 'discountPrice',
+    price: 'retailPrice' | 'discountAmount',
   ) => {
     const regex = /^\d{0,8}[.]\d{0,2}$/;
     if (regex.test(e.target.value)) {
@@ -119,16 +119,16 @@ export const ProductCardNodeEdit = () => {
 
   const salePrice =
     Number(watch(`view.retailPrice`)) -
-    (watch(`view.discountPrice`) ? Number(watch(`view.discountPrice`)) : 0);
+    (watch(`view.discountAmount`) ? Number(watch(`view.discountAmount`)) : 0);
 
   useEffect(() => {
     setValue(`view.salePrice`, salePrice || 0);
   }, [salePrice]);
 
   useEffect(() => {
-    if (!watch(`view.discountPrice`)) {
+    if (!watch(`view.discountAmount`)) {
       setValue(
-        `view.discountPrice`,
+        `view.discountAmount`,
         watch(`view.retailPrice`) - watch(`view.salePrice`) || 0,
       );
     }
@@ -259,13 +259,13 @@ export const ProductCardNodeEdit = () => {
                 </FormItem>
               </div>
 
-              <FormItem error={errors.view && errors.view.discountPrice}>
+              <FormItem error={errors.view && errors.view.discountAmount}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
-                  {...register(`view.discountPrice`, {
+                  {...register(`view.discountAmount`, {
                     valueAsNumber: true,
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                      checkPriceRegex(e, 'discountPrice'),
+                      checkPriceRegex(e, 'discountAmount'),
                   })}
                   maxLength={11}
                   isLight={true}

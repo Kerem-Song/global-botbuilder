@@ -117,7 +117,7 @@ export const ProductCardCarouselNodeEdit = () => {
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
-    price: 'retailPrice' | 'discountPrice',
+    price: 'retailPrice' | 'discountAmount',
   ) => {
     const regex = /^\d{0,8}[.]\d{0,2}?$/;
     if (regex.test(e.target.value)) {
@@ -133,8 +133,8 @@ export const ProductCardCarouselNodeEdit = () => {
 
   const salePrice =
     Number(watch(`view.childrenViews.${index}.retailPrice`)) -
-    (watch(`view.childrenViews.${index}.discountPrice`)
-      ? Number(watch(`view.childrenViews.${index}.discountPrice`))
+    (watch(`view.childrenViews.${index}.discountAmount`)
+      ? Number(watch(`view.childrenViews.${index}.discountAmount`))
       : 0);
 
   useEffect(() => {
@@ -146,11 +146,11 @@ export const ProductCardCarouselNodeEdit = () => {
       return;
     }
     setValue(
-      `view.childrenViews.${index}.discountPrice`,
+      `view.childrenViews.${index}.discountAmount`,
       watch(`view.childrenViews.${index}.retailPrice`) -
         watch(`view.childrenViews.${index}.salePrice`) || 0,
     );
-  }, [watch(`view.childrenViews.${index}.discountPrice`)]);
+  }, [watch(`view.childrenViews.${index}.discountAmount`)]);
 
   useEffect(() => {
     if (!watch(`view.childrenViews.${index}.retailPrice`)) {
@@ -325,17 +325,17 @@ export const ProductCardCarouselNodeEdit = () => {
                         </div>
 
                         <FormItem
-                          error={errors.view?.childrenViews?.[index]?.discountPrice}
+                          error={errors.view?.childrenViews?.[index]?.discountAmount}
                         >
                           <InputWithTitleCounter
                             label={t(`PRODUCT_NODE_DISCOUNT`)}
                             {...register(
-                              `view.childrenViews.${index}.discountPrice`,
+                              `view.childrenViews.${index}.discountAmount`,
 
                               {
                                 valueAsNumber: true,
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                                  checkPriceRegex(e, index, 'discountPrice'),
+                                  checkPriceRegex(e, index, 'discountAmount'),
                               },
                             )}
                             maxLength={11}

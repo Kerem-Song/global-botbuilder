@@ -14,7 +14,7 @@ export interface ICommerceCardViewProps {
   view: IProductCardView;
 }
 export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, view }) => {
-  const discountPriceCss = classNames('discountPrice', { discounted: true });
+  const discountAmountCss = classNames('discountAmount', { discounted: true });
   const { t } = usePage();
 
   const thumbnailClass = classNames('thumbnail', {
@@ -74,8 +74,8 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             </span>
             <span className="discountedCurrency"> {view.currencyUnit}</span>
             <p className="discount">
-              {view.discountPrice
-                ? view.discountPrice.toLocaleString()
+              {view.discountAmount
+                ? view.discountAmount.toLocaleString()
                 : (view.retailPrice - view.salePrice).toLocaleString()}
               <span className="currency">{view.currencyUnit}</span>
               {t(`PRODUCT_NODE_DISCOUNT`)}

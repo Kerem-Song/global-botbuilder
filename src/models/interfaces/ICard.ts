@@ -167,7 +167,7 @@ export interface IProductCardNode {
   currency?: string;
   discount?: number;
   discountRate?: number;
-  discountPrice?: number;
+  discountAmount?: number;
   thumbnail?: IThumbnailType;
   profile?: Profile;
   buttons?: IButtonType[];

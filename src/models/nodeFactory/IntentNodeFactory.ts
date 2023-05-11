@@ -11,7 +11,7 @@ export class IntentNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.INTENT_NODE;
     this.nodeKind = NodeKind.CommandNode;
-    this.NodeContextMenuKinds = NodeContextMenuKind.None;
+    this.NodeContextMenuKinds = NodeContextMenuKind.Utterance;
   }
 
   typeName: TNodeTypes;

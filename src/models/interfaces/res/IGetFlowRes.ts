@@ -292,7 +292,7 @@ export interface IProductCardView extends IHasButtonViewBase {
   retailPrice: number;
   imageCtrl: IImageCtrl;
   salePrice: number;
-  discountPrice?: number;
+  discountAmount?: number;
   profileIconUrl: string;
   profileName: string;
   seq: number;

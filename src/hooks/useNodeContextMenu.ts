@@ -92,10 +92,21 @@ export const useNodeContextMenu = ({
         action: handleChangeCarouselOrder,
       },
     },
+    {
+      id: 'utterance',
+      name: 'Utterance',
+      type: 'icon-front',
+      icon: icEditCarousel,
+      data: {
+        kind: NodeContextMenuKind.Utterance,
+        action: handleChangeCarouselOrder,
+      },
+    },
   ];
 
   const getNodeMenu = (typeName: TNodeTypes) => {
     const menuKinds = nodeFactory.getFactory(typeName)?.NodeContextMenuKinds;
+    console.log('@getnode menu kind', typeName, menuKinds);
     if (!menuKinds) {
       return [];
     }

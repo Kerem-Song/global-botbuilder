@@ -42,7 +42,7 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
           ) : null}
           {item.price?.discount ? (
             <div className="discount">
-              <p className="discountPrice">
+              <p className="discountAmount">
                 {item.price?.discount
                   ?.toFixed(0)
                   ?.toString()
