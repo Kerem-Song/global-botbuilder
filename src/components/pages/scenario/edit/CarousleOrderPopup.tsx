@@ -105,22 +105,22 @@ export const CarouselOrderPopup: FC<{
     lunaToast.success(tc(`ACCEPTED`));
   };
 
-  const esckeyEvent = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      console.log('@esc');
+  // const esckeyEvent = (e: KeyboardEvent) => {
+  //   if (e.key === 'Escape') {
+  //     console.log('@esc');
 
-      handleClose();
-    }
-  };
+  //     handleClose();
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isOpen) {
-      window.addEventListener('keyup', esckeyEvent);
-    } else {
-      window.removeEventListener('keyup', esckeyEvent);
-    }
-    return () => window.removeEventListener('keyup', esckeyEvent);
-  }, [carouselNode, isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     window.addEventListener('keyup', esckeyEvent);
+  //   } else {
+  //     window.removeEventListener('keyup', esckeyEvent);
+  //   }
+  //   return () => window.removeEventListener('keyup', esckeyEvent);
+  // }, [carouselNode, isOpen]);
 
   return (
     <ReactModal
@@ -128,6 +128,7 @@ export const CarouselOrderPopup: FC<{
       className="carouselOrderPopupWrapper node-draggable-ignore"
       overlayClassName="carouselPopupOverlay"
       shouldCloseOnEsc={closeOnEsc}
+      onRequestClose={handleClose}
     >
       <div onWheel={(e) => e.stopPropagation()}>
         <Row justify="space-between" align="center" className="titleWrapper">

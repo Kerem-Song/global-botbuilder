@@ -43,7 +43,7 @@ export const useYupValidation = () => {
           })
           .when('actionType', {
             is: ACTION_TYPES.LUNA_NODE_REDIRECT,
-            then: yup.string().required(t(`VALIDATION_REQUIRED`)),
+            then: yup.string().nullable(),
           })
           .when('actionType', {
             is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
