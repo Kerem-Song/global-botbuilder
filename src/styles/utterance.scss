@@ -67,6 +67,7 @@
             }
           }
           .connectScenarios {
+            // width: rem(230);
             width: rem(285);
 
             &.connectScenarios-notActivated {
@@ -75,8 +76,7 @@
           }
 
           .utterance {
-            width: rem(558);
-            overflow: hidden;
+            width: rem(550);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

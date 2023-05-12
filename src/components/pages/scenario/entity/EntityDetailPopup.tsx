@@ -15,15 +15,17 @@ import { EntityRegistry } from './EntityRegistry';
 import { EntriesRegistry } from './EntriesRegistry';
 
 export interface IEntityDetailProps {
-  isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
+  isOpenEntityDetailPopup: boolean;
+  handleIsOpenEntityDetailPopup: (value: boolean) => void;
   entryId?: string;
   setEntryId: (value: string) => void;
 }
 
 export const EntityDetailPopup: FC<IEntityDetailProps> = ({
-  isOpen,
   handleIsOpen,
+  isOpenEntityDetailPopup,
+  handleIsOpenEntityDetailPopup,
   entryId,
   setEntryId,
 }) => {
@@ -69,7 +71,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     reset();
     remove();
     setEntryId('');
-    handleIsOpen(false);
+    handleIsOpenEntityDetailPopup(false);
+    handleIsOpen(true);
   };
 
   const handleDuplicateEntryValidation = () => {
@@ -173,9 +176,9 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex', background: 'transparent' } }}
+      style={{ overlay: { display: 'flex' } }}
       className="entityModal detail"
-      isOpen={isOpen}
+      isOpen={isOpenEntityDetailPopup}
     >
       <div className="detail header">
         <div className="listBtn">

@@ -1,25 +1,32 @@
 import { icPlusWhite } from '@assets';
 import { Button, Col, Input, Row, Title } from '@components';
-import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import MultiClamp from 'react-multi-clamp';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
-import { EntityDetailPopup } from './EntityDetailPopup';
 
-export const MyEntity = () => {
+export interface IMyEntityProps {
+  handleIsOpen: (value: boolean) => void;
+  setEntryId: (value: string) => void;
+  handleIsOpenEntityDetailPopup: (value: boolean) => void;
+}
+
+export const MyEntity: FC<IMyEntityProps> = ({
+  setEntryId,
+  handleIsOpenEntityDetailPopup,
+  handleIsOpen,
+}) => {
   const { t } = usePage();
-  const { isOpen, handleIsOpen } = useModalOpen();
   const { changePageNumberQuery, entryGroupDeleteAsync } = useEntityClient();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const [ref, inView] = useInView();
-  const [entryId, setEntryId] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>();
   const { data: initialData, fetchNextPage } = changePageNumberQuery(
     searchKeyword,
@@ -51,7 +58,8 @@ export const MyEntity = () => {
 
   const handleEntryDetail = (id: string) => {
     setEntryId(id);
-    handleIsOpen(true);
+    handleIsOpen(false);
+    handleIsOpenEntityDetailPopup(true);
   };
 
   const isExistInitialData = (
@@ -81,7 +89,8 @@ export const MyEntity = () => {
         <Button
           type="primary"
           onClick={() => {
-            handleIsOpen(true);
+            handleIsOpen(false);
+            handleIsOpenEntityDetailPopup(true);
           }}
         >
           <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
@@ -141,14 +150,6 @@ export const MyEntity = () => {
             <EmptyEntityCard searchKeyword={searchKeyword} />
           )}
         </Row>
-        {isOpen && (
-          <EntityDetailPopup
-            isOpen={isOpen}
-            handleIsOpen={handleIsOpen}
-            entryId={entryId}
-            setEntryId={setEntryId}
-          />
-        )}
       </div>
     </>
   );
