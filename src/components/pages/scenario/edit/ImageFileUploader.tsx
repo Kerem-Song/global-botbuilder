@@ -83,7 +83,13 @@ export const ImageFileUploader = ({
     const FILE_SIZE = 3.2 * 1000 * 1000; //3mb제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
     if (e.target.files) {
-      if (e.target.files[0].size > FILE_SIZE) {
+      if (!SUPPORTED_FORMATS.includes(e.target.files[0]?.type)) {
+        await error({
+          title: t(`VALIDATION_FILE_TYPE_TITLE`),
+          description: t(`VALIDATION_FILE_TYPE`),
+        });
+        return;
+      } else if (e.target.files[0].size > FILE_SIZE) {
         e.target.files = null;
         e.target.value = '';
         await error({
@@ -91,12 +97,6 @@ export const ImageFileUploader = ({
           description: t(`VALIDATION_FILE_SIZE`),
         });
 
-        return;
-      } else if (!SUPPORTED_FORMATS.includes(e.target.files[0]?.type)) {
-        await error({
-          title: t(`VALIDATION_FILE_TYPE_TITLE`),
-          description: t(`VALIDATION_FILE_TYPE`),
-        });
         return;
       }
       setValue(imageFilePath, e.target.files);

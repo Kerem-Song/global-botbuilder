@@ -75,7 +75,7 @@ export const BasicCardNodeEdit = () => {
               label={t(`CONTENT_INPUT`)}
               maxRows={17}
               showCount
-              maxLength={watch(`view.useImageCtrl`) || watch(`view.title`) ? 230 : 400}
+              maxLength={watch(`view.useImageCtrl`) ? 230 : 400}
               isLight={true}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
