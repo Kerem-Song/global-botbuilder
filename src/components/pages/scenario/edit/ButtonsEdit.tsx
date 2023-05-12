@@ -18,7 +18,7 @@ import { SelectNode } from './SelectNode';
 export const selectOptions = [
   { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: '메시지 연결' },
   { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: '메시지 입력' },
-  { value: ACTION_TYPES.LBL_IS_UTTR, label: 'Label is Utterance' },
+  { value: ACTION_TYPES.LBL_IS_UTTR, label: '버튼명 입력' },
   { value: ACTION_TYPES.URL, label: 'URL 연결' },
 ];
 
@@ -132,10 +132,7 @@ export const ButtonsEdit = ({
                 : `view.childrenViews.${index}.buttons.${i}.actionType`,
             ) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
               <>
-                <span className="subLabel">
-                  {t(`SELECT_NODE`)}
-                  <span className="required"> *</span>
-                </span>
+                <span className="subLabel">{t(`SELECT_NODE`)}</span>
                 <FormItem
                   error={
                     index === undefined

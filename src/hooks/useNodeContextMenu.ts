@@ -99,14 +99,14 @@ export const useNodeContextMenu = ({
       icon: icEditCarousel,
       data: {
         kind: NodeContextMenuKind.Utterance,
-        action: handleChangeCarouselOrder,
+        action: () => null,
       },
     },
   ];
 
   const getNodeMenu = (typeName: TNodeTypes) => {
     const menuKinds = nodeFactory.getFactory(typeName)?.NodeContextMenuKinds;
-    console.log('@getnode menu kind', typeName, menuKinds);
+
     if (!menuKinds) {
       return [];
     }

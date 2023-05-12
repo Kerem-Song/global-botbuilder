@@ -31,6 +31,7 @@ export const BasicCardNodeEdit = () => {
   }, [watch(`view.imageCtrl.imageUrl`)]);
 
   console.log('values in basiccard node edit', values.view);
+
   return (
     <>
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
