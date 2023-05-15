@@ -7,14 +7,14 @@ import { DeployButtons } from './DeployButtons';
 import { DeployHistoryList } from './DeployHistoryList';
 import { DeployPagination } from './DeployPagination';
 
-export const Deploy = () => {
+export const DeployComponent = () => {
+  const countPerPage = 30;
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const countPerPage = 30;
   const { t } = usePage();
   const { botId } = useParams();
   const { getDeployHistoryListQuery } = useDeployClient();
-  const { data } = getDeployHistoryListQuery({
+  const { data, isFetching } = getDeployHistoryListQuery({
     pageNo: currentPage,
     countPerPage: countPerPage,
     botId: botId!,
@@ -34,7 +34,7 @@ export const Deploy = () => {
         <DeployButtons />
       </div>
       <div className="deployHistoryListWrap">
-        <DeployHistoryList data={data} />
+        <DeployHistoryList data={data} isFetching={isFetching} />
       </div>
       <DeployPagination
         data={data}

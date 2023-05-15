@@ -6,10 +6,11 @@ import { FC } from 'react';
 import { DeployHistoryListItem } from './DeployHistoryListItem';
 
 export interface IDeployHistoryList {
-  data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
+  data?: IHasResult<IPagingItems<IResponseSearchDeployHistory>>;
+  isFetching: boolean;
 }
 
-export const DeployHistoryList: FC<IDeployHistoryList> = ({ data }) => {
+export const DeployHistoryList: FC<IDeployHistoryList> = ({ data, isFetching }) => {
   const { t } = usePage();
   return (
     <table className="deployHistoryListTable">
@@ -26,7 +27,7 @@ export const DeployHistoryList: FC<IDeployHistoryList> = ({ data }) => {
           <th className="deployHistoryList memo">{t('MEMO')}</th>
         </tr>
       </thead>
-      <DeployHistoryListItem data={data} />
+      <DeployHistoryListItem data={data} isFetching={isFetching} />
     </table>
   );
 };

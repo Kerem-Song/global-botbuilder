@@ -1,4 +1,4 @@
-import { Deploy } from '@components/pages/deploy/Deploy';
+import { DeployComponent } from '@components/pages/deploy/DeployComponent';
 import { FC } from 'react';
 
 import { TitleHelmet } from '../components/common/TitleHelmet';
@@ -8,7 +8,7 @@ export const DeploymentPage: FC = () => {
   return (
     <PageProvider pageName="deployment">
       <TitleHelmet />
-      <Deploy />
+      <DeployComponent />
     </PageProvider>
   );
 };

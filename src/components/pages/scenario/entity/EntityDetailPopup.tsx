@@ -31,7 +31,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 }) => {
   const { t, tc } = usePage();
   const { entryGroupAsync, getEntryDetailQuery } = useEntityClient();
-  const { confirm, error } = useSystemModal();
+  const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
   const [entryNameInputError, setEntryNameInputError] = useState<string>('');
@@ -64,7 +64,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     resolver: yupResolver(entitySchema),
   });
 
-  const { reset, control, trigger, watch, setValue, getValues } = formMethods;
+  const { reset, control, watch, setValue, handleSubmit } = formMethods;
   const { remove } = useFieldArray({ control, name: 'entries' });
 
   const handleResetEntryInfo = () => {
@@ -88,26 +88,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const hasInvalidEntries = (res: IResponseEntity<IResponseSaveEntryGroup>) =>
     isTrue(res?.exception.invalidateProperties?.includes('Entries'));
 
-  const hasInvalidRepresentativeEntry = (res: IResponseEntity<IResponseSaveEntryGroup>) =>
-    isTrue(
-      res?.exception.errorCode === 7000 &&
-        res?.exception.invalidateProperties?.includes('RepresentativeEntry'),
-    );
-
-  const handleError = (res: IResponseEntity<IResponseSaveEntryGroup>) => {
-    console.log(res);
-    const result = error({
-      title: 'error',
-      description: (
-        <span>
-          Validation failed: -- RepresentativeEntry: There are characters that are not
-          allowed in the representative entry. Severity: Error
-        </span>
-      ),
-    });
-    return result;
-  };
-
   const handleSave = async (entryData: ISaveEntryGroup) => {
     const { name, isRegex, entries, entryGroupid } = entryData;
     const saveEntry: ISaveEntryGroup = {
@@ -123,12 +103,17 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     if (res && res.isSuccess) {
       handleResetEntryInfo();
       lunaToast.success(t('MODIFY_MESSAGE'));
-    } else if (res?.exception.errorCode === 7608) {
+      return;
+    }
+
+    if (res?.exception.errorCode === 7608) {
       handleDuplicateEntryValidation();
-    } else if (res && isRegex && hasInvalidEntries(res)) {
+      return;
+    }
+
+    if (res && isRegex && hasInvalidEntries(res)) {
       handleRegexValidation();
-    } else if (res && hasInvalidRepresentativeEntry(res)) {
-      handleError(res);
+      return;
     }
   };
 
@@ -191,19 +176,20 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         </button>
       </div>
       <FormProvider {...formMethods}>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form
+          role="presentation"
+          onSubmit={handleSubmit(handleSave)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            }
+          }}
+        >
           <div className="entitiesContainer">
             <div className="entitiesWrapper">
               <div className="entityDetailHeader">
                 <Title level={2}>{t('ENTITY_DETAIL')}</Title>
-                <Button
-                  type="primary"
-                  large
-                  onClick={() => {
-                    trigger(['name', 'entries', 'isRegex']);
-                    handleSave(getValues());
-                  }}
-                >
+                <Button htmlType="submit" type="primary" large>
                   {t('SAVE_ENTITY')}
                 </Button>
               </div>

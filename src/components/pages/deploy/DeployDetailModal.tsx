@@ -105,9 +105,11 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           </div>
           <div className="info">
             <span className="infoTitle">{t('OPERATOR')}</span>
-            <span className="infoContent">
-              {detailInfo.actorName}({detailInfo.actorEmail})
-            </span>
+            <span className="infoContent">{detailInfo.actorName}</span>
+          </div>
+          <div className="info">
+            <span className="infoTitle">{t('ACCOUNT')}</span>
+            <span className="infoContent">{detailInfo.actorEmail}</span>
           </div>
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_STATUS')}</span>

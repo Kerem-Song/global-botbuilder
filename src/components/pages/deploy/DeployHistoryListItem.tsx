@@ -8,23 +8,33 @@ import { FC, useState } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { DeployDetailModal } from './DeployDetailModal';
+import { DeploySkeleton } from './DeploySkeleton';
 
 export interface IDeployHistoryListItem {
-  data: IHasResult<IPagingItems<IResponseSearchDeployHistory>> | undefined;
+  data?: IHasResult<IPagingItems<IResponseSearchDeployHistory>>;
+  isFetching: boolean;
 }
 
-export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
+export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
+  data,
+  isFetching,
+}) => {
   const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
   const [detailInfo, setDetailInfo] = useState({});
+
+  console.log('isF', isFetching);
+
   return (
     <tbody>
-      {data && data.result.items.length > 0 ? (
-        data?.result.items.map((x, i) => {
+      {isFetching && <DeploySkeleton />}
+      {data &&
+        data.result.items.length > 0 &&
+        data.result.items.map((x, i) => {
           return (
             <tr
-              className="list"
               key={i}
+              className="list"
               role="presentation"
               onClick={() => {
                 setDetailInfo(x);
@@ -59,8 +69,8 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({ data }) => {
               </td>
             </tr>
           );
-        })
-      ) : (
+        })}
+      {data?.result.items.length === 0 && (
         <tr className="emptyList">
           <td className="empty">
             <img src={icNoResult} alt="empty" />
