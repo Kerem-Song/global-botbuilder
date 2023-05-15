@@ -20,12 +20,8 @@ export const SystemModalContainer = () => {
   };
 
   useEffect(() => {
-    const event = () => {
-      handleClose();
-    };
-    window.addEventListener('popstate', event);
     return () => {
-      window.removeEventListener('popstate', event);
+      handleClose();
     };
   }, []);
 
