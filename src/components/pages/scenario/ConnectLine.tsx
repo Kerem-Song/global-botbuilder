@@ -30,7 +30,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   active,
   type,
   highlight,
-  strokeWidth = 1,
+  strokeWidth = 3,
   onClick,
   onDelete,
 }) => {
@@ -40,7 +40,8 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const lineMouseRef = useRef<SVGPathElement>(null);
   const deleteRef = useRef<SVGGeometryElement>(null);
 
-  const stroke = strokes[type][active || highlight ? 1 : 0];
+  //const stroke = strokes[type][active || highlight ? 1 : 0];
+  const stroke = strokes[type][active ? 1 : 0];
 
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
   useEffect(() => {
