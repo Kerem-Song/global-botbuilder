@@ -164,6 +164,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       style={{ overlay: { display: 'flex' } }}
       className="entityModal detail"
       isOpen={isOpenEntityDetailPopup}
+      onRequestClose={handleResetEntryInfo}
     >
       <div className="detail header">
         <div className="listBtn">

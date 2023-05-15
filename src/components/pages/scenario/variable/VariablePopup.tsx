@@ -128,7 +128,12 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   }, [parameterFormats, language]);
 
   return (
-    <ReactModal className="variableModal" isOpen={isOpen}>
+    <ReactModal
+      style={{ overlay: { display: 'flex' } }}
+      className="variableModal"
+      isOpen={isOpen}
+      onRequestClose={handleClose}
+    >
       <div className="header">
         <Title level={4}>
           {variableList?.id ? t('MODIFY_VARIABLE') : t('ADD_VARIABLE')}

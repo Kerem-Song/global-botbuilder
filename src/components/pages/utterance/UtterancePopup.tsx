@@ -23,12 +23,19 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   setSearchData,
 }) => {
   const { t } = usePage();
-
+  const handleClose = () => {
+    handleIsOpenUtterancePopup(false);
+  };
+  const handleDetailPopupOpen = () => {
+    handleIsOpenUtterancePopup(false);
+    handleIsOpenUtteranceDetailPopup(true);
+  };
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}
       className="entityModal detail"
       isOpen={isOpenUtterancePopup}
+      onRequestClose={handleClose}
     >
       <div className="utteranceWrap">
         <div
@@ -39,24 +46,11 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
           }}
         >
           <div className="title">{t('TITLE')}</div>
-          <Button
-            shape="ghost"
-            onClick={() => {
-              handleIsOpenUtterancePopup(false);
-            }}
-            icon={icPopupClose}
-          />
+          <Button shape="ghost" onClick={handleClose} icon={icPopupClose} />
         </div>
         <ToSearch searchData={searchData} setSearchData={setSearchData} />
       </div>
-      <Button
-        onClick={() => {
-          handleIsOpenUtterancePopup(false);
-          handleIsOpenUtteranceDetailPopup(true);
-        }}
-      >
-        add
-      </Button>
+      <Button onClick={handleDetailPopupOpen}>add</Button>
     </ReactModal>
   );
 };

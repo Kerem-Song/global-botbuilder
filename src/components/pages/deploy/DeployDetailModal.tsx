@@ -80,6 +80,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       style={{ overlay: { display: 'flex' } }}
       className="deployDetailModal"
       isOpen={isOpen}
+      onRequestClose={handleCancel}
     >
       <div className="title">
         <Title level={4}>{t('TITLE')}</Title>
