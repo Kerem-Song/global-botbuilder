@@ -300,3 +300,20 @@
     }
   }
 }
+
+.scenarioListPopupWrapper {
+   width: rem(600);
+   height: fit-content;
+   margin: auto;
+   margin-top: rem(300);
+   padding: 0;
+   background-color: $grayWhite;
+   border-radius: rem(12);
+}
+
+.scenarioListPopupOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}

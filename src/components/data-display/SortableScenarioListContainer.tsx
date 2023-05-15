@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { SortableScenarioListItem } from './SortableScenarioListItem';
 
