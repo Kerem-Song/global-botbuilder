@@ -82,7 +82,7 @@ export const DataProductCardNodeEdit = () => {
               className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
-              disabled={carouselNum <= 1}
+              disabled={carouselNum <= 1 || isHistoryViewer}
             />
           </Col>
           <Col span={3}>
@@ -93,7 +93,7 @@ export const DataProductCardNodeEdit = () => {
               className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
-              disabled={carouselNum >= 10}
+              disabled={carouselNum >= 10 || isHistoryViewer}
             />
           </Col>
         </div>

@@ -205,7 +205,12 @@ export const NodeLinkPopUpMenu = ({
   console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
   console.log('startNode Type', startNode?.type);
   const filterdBtnList = cardTypeValue
-    .filter((b) => b.nodeKind !== NodeKind.CommandNode || guideStart?.isNext)
+    .filter(
+      (b) =>
+        b.nodeKind !== NodeKind.CommandNode ||
+        b.value === NODE_TYPES.CONDITION_NODE ||
+        guideStart?.isNext,
+    )
     .filter(
       (b) =>
         startNode?.type !== NODE_TYPES.INTENT_NODE ||

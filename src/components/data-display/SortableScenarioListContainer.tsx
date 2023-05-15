@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { SortableScenarioListItem } from './SortableScenarioListItem';
 
@@ -71,8 +71,8 @@ export const SortableScenarioListContainer = ({
         <SortableContext
           items={list}
           strategy={verticalListSortingStrategy}
-          // disabled={disabled} // 데모시연을 위해서 잠시 주석처리
-          disabled={true}
+          disabled={disabled} // 데모시연을 위해서 잠시 주석처리
+          // disabled={true}
         >
           {list.map((item) => (
             <SortableScenarioListItem key={item.id} item={item} />

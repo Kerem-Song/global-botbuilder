@@ -298,10 +298,11 @@
           background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
         }
 
+        .counterBtn {
+          display: block;
+        }
 
-      }
-
-      
+      }     
     }
   }
 }

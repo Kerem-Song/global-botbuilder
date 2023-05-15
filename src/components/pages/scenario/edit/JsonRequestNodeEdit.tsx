@@ -183,6 +183,7 @@ export const JsonRequestNodeEdit = () => {
             placeholder={t(`API_REQUEST_URL_PLACEHOLDER`)}
             required={true}
             {...register('view.url')}
+            readOnly={isHistoryViewer}
           />
         </FormItem>
         <Divider style={{ margin: '28px 0' }} />
@@ -194,10 +195,18 @@ export const JsonRequestNodeEdit = () => {
             <div className="m-b-8">
               <Row gap={4} align="center">
                 <Col span={9}>
-                  <Input placeholder="Key" {...register(`view.headers.${i}.key`)} />
+                  <Input
+                    placeholder="Key"
+                    {...register(`view.headers.${i}.key`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Col>
                 <Col span={12}>
-                  <Input placeholder="Value" {...register(`view.headers.${i}.value`)} />
+                  <Input
+                    placeholder="Value"
+                    {...register(`view.headers.${i}.value`)}
+                    readOnly={isHistoryViewer}
+                  />
                 </Col>
                 <Col span={2}>
                   <Button

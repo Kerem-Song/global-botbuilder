@@ -1,41 +1,37 @@
 import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
-import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
+import {
+  useModalOpen,
+  usePage,
+  useRootState,
+  useScenarioClient,
+  useSystemModal,
+} from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { lunaToast } from '@modules/lunaToast';
+import {
+  setPopupType,
+  setScenarioListItem,
+  setScenarioPopupOpen,
+} from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 
 export interface IScenarioItemProps {
   item: IScenarioModel;
 }
 
 export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
-  const dispatch = useDispatch();
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
-  const [isEditing, setIsEditing] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const token = useRootState((state) => state.botInfoReducer.token);
-  const {
-    scenarioDeleteAsync,
-    scenarioRenameAsync,
-    scenarioActiveAsync,
-    scenarioCheckDeleteAsync,
-  } = useScenarioClient();
+  const { scenarioDeleteAsync, scenarioActiveAsync, scenarioCheckDeleteAsync } =
+    useScenarioClient();
+  const dispatch = useDispatch();
 
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
-
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-      // 혹시 나중에 전체선택으로 바꿔야 하면 넣어야 할 코드
-      //inputRef.current.select();
-    }
-  }, [isEditing]);
 
   const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await scenarioActiveAsync({
@@ -43,7 +39,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       flowId: item.id,
       activated: e.target.checked,
     });
-    //console.log('switch toggle');
   };
 
   const handleScenarioDelete = async () => {
@@ -88,33 +83,16 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       if (result) {
         const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
         if (res) {
-          lunaToast.success('삭제되었습니다.');
+          lunaToast.success(tc(`DELETE_MESSAGE`));
         }
       }
     }
   };
 
-  const handleScenarioRename = async (scenarioName?: string) => {
-    if (!scenarioName) {
-      const message = t('INPUT_SCENARIO_NAME');
-      toast(message, {
-        position: 'bottom-center',
-        theme: 'dark',
-        hideProgressBar: true,
-      });
-      return;
-    }
-    const res = await scenarioRenameAsync({
-      token: token!,
-      scenario: { ...item, alias: scenarioName },
-    });
-    if (res) {
-      setIsEditing(false);
-    }
-  };
-
   const handleScenariRename = () => {
-    setIsEditing(true);
+    dispatch(setPopupType('rename'));
+    dispatch(setScenarioListItem(item));
+    dispatch(setScenarioPopupOpen(true));
   };
 
   const scenarioMenus = [
@@ -153,52 +131,32 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       }}
       className={selectedScenario}
     >
-      {isEditing ? (
-        <Input
-          defaultValue={item.alias}
-          showCount
-          maxLength={20}
-          ref={inputRef}
-          onBlur={(e) => {
-            console.log('scenario item lost focus');
-            handleScenarioRename(e.target.value);
-          }}
-          onPressEsc={() => {
-            setIsEditing(false);
-          }}
-          onPressEnter={(value) => {
-            console.log('scenario item enter');
-            handleScenarioRename(value);
-          }}
-        />
-      ) : (
-        <Tooltip tooltip={item.alias} placement="right" disable={item.alias.length <= 14}>
-          <Row align="center" style={{ flexWrap: 'nowrap' }}>
-            <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
-              {item.alias}
-            </Col>
-            <Col className="scenarioListSwitch">
-              <Switch onChange={handleSwitch} checked={item.activated} />
-            </Col>
-            <Col>
-              <Popper
-                placement="right-start"
-                offset={[5, 10]}
-                popperItems={scenarioMenus}
-                onChange={(m) => {
-                  m.data?.action?.();
-                }}
-                popup
-                popupList
-              >
-                <Button small shape="ghost">
-                  <i className="fa-solid fa-ellipsis-vertical" />
-                </Button>
-              </Popper>
-            </Col>
-          </Row>
-        </Tooltip>
-      )}
+      <Tooltip tooltip={item.alias} placement="right" disable={item.alias.length <= 14}>
+        <Row align="center" style={{ flexWrap: 'nowrap' }}>
+          <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
+            {item.alias}
+          </Col>
+          <Col className="scenarioListSwitch">
+            <Switch onChange={handleSwitch} checked={item.activated} />
+          </Col>
+          <Col>
+            <Popper
+              placement="right-start"
+              offset={[5, 10]}
+              popperItems={scenarioMenus}
+              onChange={(m) => {
+                m.data?.action?.();
+              }}
+              popup
+              popupList
+            >
+              <Button small shape="ghost">
+                <i className="fa-solid fa-ellipsis-vertical" />
+              </Button>
+            </Popper>
+          </Col>
+        </Row>
+      </Tooltip>
     </Card>
   );
 };
