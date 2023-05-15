@@ -19,6 +19,16 @@ export const SystemModalContainer = () => {
     dispatch(systemModalClose());
   };
 
+  useEffect(() => {
+    const event = () => {
+      handleClose();
+    };
+    window.addEventListener('popstate', event);
+    return () => {
+      window.removeEventListener('popstate', event);
+    };
+  }, []);
+
   return (
     <ReactModal
       className="luna-system-modal"
