@@ -1,12 +1,12 @@
 import { icEmptyBot } from '@assets';
 import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
-import { useModalOpen, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { setPopupType, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';

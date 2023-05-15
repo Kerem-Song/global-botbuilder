@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-const manualExceptionCode = [7604, 7636, 7608, 7633, 7610, 7000, 7612, 7631];
+const manualExceptionCode = [7000, 7301, 7604, 7608, 7610, 7612, 7614, 7631, 7633, 7636];
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 

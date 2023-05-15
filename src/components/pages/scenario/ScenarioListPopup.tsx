@@ -22,8 +22,7 @@ export const ScenarioListPopup: FC<{
 }> = ({ isOpen, scenarios }) => {
   const { t, tc } = usePage();
   const dispatch = useDispatch();
-  const { scenarioCreateAsync, scenarioCreating, scenarioRenameAsync } =
-    useScenarioClient();
+  const { scenarioCreateAsync, scenarioRenameAsync } = useScenarioClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const popupType = useRootState((state) => state.scenarioListPopupReducer.popupType);
   const item = useRootState((state) => state.scenarioListPopupReducer.item);
@@ -61,9 +60,6 @@ export const ScenarioListPopup: FC<{
         (scenario) => scenario.alias === watch('scenarioName'),
       );
       console.log('@filtered', filtered);
-      if (filtered) {
-        lunaToast.error(t(`DUPLICATED_SCENARIO_NAME_MESSAGE`));
-      }
 
       let res;
       if (popupType === 'create') {
@@ -80,7 +76,7 @@ export const ScenarioListPopup: FC<{
         }
       }
 
-      if (res?.data) {
+      if (res?.data && res.data.isSuccess) {
         dispatch(setScenarioPopupOpen(false));
         lunaToast.success(
           popupType === 'create'
@@ -88,8 +84,13 @@ export const ScenarioListPopup: FC<{
             : t('CHANGING_SCENARIO_NAME_SUCCESS'),
         );
       } else {
-        const exeption = res?.data.exception as IException;
-        lunaToast.error(exeption.message || '');
+        if (filtered) {
+          lunaToast.error(t(`DUPLICATED_SCENARIO_NAME_MESSAGE`));
+        } else {
+          const exeption = res?.data.exception as IException;
+
+          lunaToast.error(exeption.message || '');
+        }
       }
     }
   };
