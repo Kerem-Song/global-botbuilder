@@ -37,15 +37,17 @@ export const DeployComponent = () => {
         <table className="deployHistoryListTable">
           <thead>
             <tr>
-              <th className="deployHistoryList deployNumber">{t('DEPLOY_NUMBER')}</th>
-              <th className="deployHistoryList channelType">{t('CHANNEL_TYPE')}</th>
-              <th className="deployHistoryList channelName">{t('CHANNEL_NAME')}</th>
-              <th className="deployHistoryList deployDateTime">
+              <th className="deployHistoryListHeader deployNumber">
+                {t('DEPLOY_NUMBER')}
+              </th>
+              <th className="deployHistoryListHeader channelType">{t('CHANNEL_TYPE')}</th>
+              <th className="deployHistoryListHeader channelName">{t('CHANNEL_NAME')}</th>
+              <th className="deployHistoryListHeader deployDateTime">
                 {t('DEPLOYMENT_DATE_AND_TIME')}
               </th>
-              <th className="deployHistoryList account">{t('OPERATOR_ACCOUNT')}</th>
-              <th className="deployHistoryList status">{t('DEPLOYMENT_STATUS')}</th>
-              <th className="deployHistoryList memo">{t('MEMO')}</th>
+              <th className="deployHistoryListHeader account">{t('OPERATOR_ACCOUNT')}</th>
+              <th className="deployHistoryListHeader status">{t('DEPLOYMENT_STATUS')}</th>
+              <th className="deployHistoryListHeader memo">{t('MEMO')}</th>
             </tr>
           </thead>
           <DeployHistoryListItem data={data} isFetching={isFetching} />

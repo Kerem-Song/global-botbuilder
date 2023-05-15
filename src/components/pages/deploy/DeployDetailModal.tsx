@@ -88,10 +88,8 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       <Divider />
       <div className="contents">
         <div className="deployNumber">
-          <Title level={2}>
-            {t('DEPLOY_NUMBER')} : {detailInfo.no} (
-            {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
-          </Title>
+          {t('DEPLOY_NUMBER')} : {detailInfo.no} (
+          {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
         </div>
         <div className="deployInfo">
           <div className="info">
