@@ -1,11 +1,13 @@
 import { icPopupClose } from '@assets';
+import { Input } from '@components';
 import { Button } from '@components/general';
 import { usePage } from '@hooks';
 import { ISearchData } from '@models';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import ReactModal from 'react-modal';
 
-import { ToSearch } from './ToSearch';
+import { UtteranceListHeader } from './UtteranceListHeader';
+import { UtteranceListItem } from './UtteranceListItem';
 
 export interface IUtterancePopupProps {
   isOpenUtterancePopup: boolean;
@@ -23,34 +25,66 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   setSearchData,
 }) => {
   const { t } = usePage();
+  const [searchWord, setSearchWord] = useState<string>('');
+
+  const handleSearch = (keyword?: string) => {
+    setSearchWord(keyword!);
+  };
+
   const handleClose = () => {
     handleIsOpenUtterancePopup(false);
   };
+
   const handleDetailPopupOpen = () => {
     handleIsOpenUtterancePopup(false);
     handleIsOpenUtteranceDetailPopup(true);
   };
+
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}
-      className="entityModal detail"
+      className="utteranceModal"
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
     >
       <div className="utteranceWrap">
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div className="title">{t('TITLE')}</div>
-          <Button shape="ghost" onClick={handleClose} icon={icPopupClose} />
+        <div className="utteranceDetail">
+          <div className="utteranceDetailTitle">{t('TITLE')}</div>
+          <Button
+            className="utteranceDetailClose"
+            shape="ghost"
+            onClick={handleClose}
+            icon={icPopupClose}
+          />
         </div>
-        <ToSearch searchData={searchData} setSearchData={setSearchData} />
+        <div className="searchUtterance">
+          <Input
+            size="small"
+            search
+            placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
+            value={searchWord}
+            onSearch={(value) => handleSearch(value)}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </div>
+        <div className="utteranceListWrap utterancePopupListWrap">
+          <table className="utteranceTable">
+            <thead>
+              <UtteranceListHeader
+                isOpenUtterancePopup={isOpenUtterancePopup}
+                handleDetailPopupOpen={handleDetailPopupOpen}
+              />
+            </thead>
+            <tbody>
+              <UtteranceListItem
+                searchData={searchData}
+                isOpenUtterancePopup={isOpenUtterancePopup}
+                handleDetailPopupOpen={handleDetailPopupOpen}
+              />
+            </tbody>
+          </table>
+        </div>
       </div>
-      <Button onClick={handleDetailPopupOpen}>add</Button>
     </ReactModal>
   );
 };

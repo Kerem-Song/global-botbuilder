@@ -11,11 +11,13 @@ import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 export interface IUtteranceGroupInfoProps {
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
+  isOpenUtteranceDetailPopup: boolean;
 }
 
 export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
   formMethods,
   setIsActive,
+  isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
   const { t } = usePage();
@@ -93,27 +95,29 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
             </FormItem>
           </Col>
         </Row>
-        <Row align="center" gap={10}>
-          <Col style={{ width: '130px' }}>
-            <span>{t('CONNECT_SCENARIOS')}</span>
-          </Col>
-          <Col flex="auto">
-            <Select
-              {...scenarioListField}
-              options={totalScenarioList}
-              value={totalScenarioList?.find(
-                (item) => item.value === scenarioListField.value,
-              )}
-              onChange={(options: any) => {
-                scenarioListField.onChange(options.value);
-                setIsActive(true);
-              }}
-              styles={reactSelectStyle}
-              isSearchable={false}
-              placeholder={t('SELECT_SCENARIO')}
-            />
-          </Col>
-        </Row>
+        {!isOpenUtteranceDetailPopup && (
+          <Row align="center" gap={10}>
+            <Col style={{ width: '130px' }}>
+              <span>{t('CONNECT_SCENARIOS')}</span>
+            </Col>
+            <Col flex="auto">
+              <Select
+                {...scenarioListField}
+                options={totalScenarioList}
+                value={totalScenarioList?.find(
+                  (item) => item.value === scenarioListField.value,
+                )}
+                onChange={(options: any) => {
+                  scenarioListField.onChange(options.value);
+                  setIsActive(true);
+                }}
+                styles={reactSelectStyle}
+                isSearchable={false}
+                placeholder={t('SELECT_SCENARIO')}
+              />
+            </Col>
+          </Row>
+        )}
       </Space>
     </Card>
   );

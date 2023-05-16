@@ -16,9 +16,15 @@ import { UtteranceSkeleton } from './UtteranceSkeleton';
 
 export interface IUtteranceListItemProps {
   searchData?: ISearchData;
+  isOpenUtterancePopup: boolean;
+  handleDetailPopupOpen?: () => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) => {
+export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
+  searchData,
+  isOpenUtterancePopup,
+  handleDetailPopupOpen,
+}) => {
   const { botId } = useParams();
   const { navigate, t, tc } = usePage();
   const [ref, inView] = useInView();
@@ -77,10 +83,12 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
     }
   }, [inView]);
 
+  console.log('isOpenUtterancePopup', isOpenUtterancePopup);
+
   return (
     <>
       {!initialData || isFetching ? (
-        <UtteranceSkeleton />
+        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
       ) : (
         <>
           {isExistInitialData(initialData) ? (
@@ -91,6 +99,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                 const connectedFlow = x.flowName !== null;
                 const notFoundFlow = foundFlow === undefined;
                 const hasInactiveFlow = connectedFlow && notFoundFlow;
+                const showScenarioList = isOpenUtterancePopup === false;
                 return (
                   <tr
                     key={i}
@@ -98,19 +107,26 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({ searchData }) =
                     ref={ref}
                     onClick={() => handleGetIntent(x.intentId)}
                   >
-                    <td role="presentation" className="utteranceList intent">
+                    <td
+                      role="presentation"
+                      className={classNames('utteranceList intent', {
+                        'hidden-scenarioList': !showScenarioList,
+                      })}
+                    >
                       {searchData?.searchWord
                         ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
                         : x.intentName}
                     </td>
-                    <td
-                      role="presentation"
-                      className={classNames('utteranceList connectScenarios', {
-                        'connectScenarios-notActivated': hasInactiveFlow,
-                      })}
-                    >
-                      {x.flowName === null ? '-' : x.flowName}
-                    </td>
+                    {showScenarioList ? (
+                      <td
+                        role="presentation"
+                        className={classNames('utteranceList connectScenarios', {
+                          'connectScenarios-notActivated': hasInactiveFlow,
+                        })}
+                      >
+                        {x.flowName === null ? '-' : x.flowName}
+                      </td>
+                    ) : null}
                     <td role="presentation" className="utteranceList utterance">
                       {searchData?.searchWord
                         ? util.replaceKeywordMark(
