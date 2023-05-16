@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-const manualExceptionCode = [7000, 7301, 7604, 7608, 7610, 7612, 7614, 7631, 7633, 7636];
+const manualExceptionCode = [7301, 7604, 7608, 7610, 7612, 7614, 7631, 7633, 7636];
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
@@ -45,7 +45,14 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
           response.data.exception &&
           !manualExceptionCode.includes(response.data.exception.errorCode)
         ) {
-          await error({ title: 'error', description: response.data.exception.message });
+          await error({
+            title: 'error',
+            description: (
+              <span style={{ whiteSpace: 'pre-line' }}>
+                {response.data.exception.message}
+              </span>
+            ),
+          });
           return Promise.reject(new Error(response.data.exception.message));
         }
       }

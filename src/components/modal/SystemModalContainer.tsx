@@ -19,6 +19,12 @@ export const SystemModalContainer = () => {
     dispatch(systemModalClose());
   };
 
+  useEffect(() => {
+    return () => {
+      handleClose();
+    };
+  }, []);
+
   return (
     <ReactModal
       className="luna-system-modal"

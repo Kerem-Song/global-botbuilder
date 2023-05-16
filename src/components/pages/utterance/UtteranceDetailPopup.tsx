@@ -15,24 +15,22 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
   handleIsOpenUtterancePopup,
   handleIsOpenUtteranceDetailPopup,
 }) => {
+  const handleClose = () => {
+    handleIsOpenUtterancePopup(true);
+    handleIsOpenUtteranceDetailPopup(false);
+  };
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}
       className="entityModal detail"
       isOpen={isOpenUtteranceDetailPopup}
+      onRequestClose={handleClose}
     >
-      <Button
-        onClick={() => {
-          handleIsOpenUtterancePopup(true);
-          handleIsOpenUtteranceDetailPopup(false);
-        }}
-      >
-        close
-      </Button>
       <UtteranceDetail
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
         handleIsOpenUtteranceDetailPopup={handleIsOpenUtteranceDetailPopup}
+        handleClose={handleClose}
       />
     </ReactModal>
   );

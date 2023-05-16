@@ -13,6 +13,7 @@ export interface IUtteranceDetailItemsProps {
   fields: FieldArrayWithId<IUtteranceModel, 'items', 'id'>[];
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
+  isOpenUtteranceDetailPopup: boolean;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -20,6 +21,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   fields,
   remove,
   setIsActive,
+  isOpenUtteranceDetailPopup,
 }) => {
   const { t } = usePage();
   const [searchWord, setSearchWord] = useState<string>('');
@@ -63,16 +65,14 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
             {filterKeyword ? filterKeyword.length : watch('items').length}
           </span>
         </span>
-        <FormItem>
-          <Input
-            size="small"
-            search
-            placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
-            value={searchWord}
-            onSearch={(value) => handleSearch(value)}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </FormItem>
+        <Input
+          size="small"
+          search
+          placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
+          value={searchWord}
+          onSearch={(value) => handleSearch(value)}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
         <Button
           shape="ghost"
           className="icDelete"

@@ -65,6 +65,9 @@ export const NewBotPopup: FC<{
           padding: 0,
         },
       }}
+      onRequestClose={() => {
+        handleClose();
+      }}
       isOpen={isOpen}
       onAfterOpen={() => {
         setFocus('botName');

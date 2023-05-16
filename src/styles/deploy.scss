@@ -44,12 +44,18 @@
           display: flex;
           align-items: center;
           color: #636364;
-          font-weight: 700;
           font-size: rem(13);
           line-height: rem(16);
+
+          .deployHistoryListHeader {
+            padding: rem(12);
+            width: fit-content;
+            font-weight: 700;
+          }
           .deployHistoryList {
             padding: rem(12);
             width: fit-content;
+            font-weight: 500;
           }
           .deployNumber {
             min-width: rem(120);
@@ -109,7 +115,10 @@
           min-height: rem(54);
           height: fit-content;
           border-bottom: 1px solid $gray150;
+          font-weight: 700;
+          font-size: rem(13);
           cursor: pointer;
+
           &:last-child {
             border-bottom: none;
           }
@@ -249,6 +258,9 @@
     padding: 0 rem(20) rem(15) rem(20);
     .deployNumber {
       margin: rem(18) rem(0);
+      font-size: rem(16);
+      font-weight: 500;
+      line-height: rem(19);
     }
     .deployInfo {
       .info {

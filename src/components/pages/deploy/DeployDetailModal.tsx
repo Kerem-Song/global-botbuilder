@@ -80,6 +80,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       style={{ overlay: { display: 'flex' } }}
       className="deployDetailModal"
       isOpen={isOpen}
+      onRequestClose={handleCancel}
     >
       <div className="title">
         <Title level={4}>{t('TITLE')}</Title>
@@ -87,10 +88,8 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
       <Divider />
       <div className="contents">
         <div className="deployNumber">
-          <Title level={2}>
-            {t('DEPLOY_NUMBER')} : {detailInfo.no} (
-            {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
-          </Title>
+          {t('DEPLOY_NUMBER')} : {detailInfo.no} (
+          {detailInfo.isLive ? t('OPERATIONAL') : t('TEST')})
         </div>
         <div className="deployInfo">
           <div className="info">
@@ -105,9 +104,11 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           </div>
           <div className="info">
             <span className="infoTitle">{t('OPERATOR')}</span>
-            <span className="infoContent">
-              {detailInfo.actorName}({detailInfo.actorEmail})
-            </span>
+            <span className="infoContent">{detailInfo.actorName}</span>
+          </div>
+          <div className="info">
+            <span className="infoTitle">{t('ACCOUNT')}</span>
+            <span className="infoContent">{detailInfo.actorEmail}</span>
           </div>
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_STATUS')}</span>

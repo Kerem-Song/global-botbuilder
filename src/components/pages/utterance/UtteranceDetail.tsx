@@ -1,3 +1,4 @@
+import { icPopupClose } from '@assets';
 import { Button } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useSystemModal } from '@hooks';
@@ -5,6 +6,7 @@ import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { usePrompt } from '@hooks/usePrompt';
 import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
+import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -19,12 +21,14 @@ export interface IUtteranceDetailProps {
   isOpenUtteranceDetailPopup: boolean;
   handleIsOpenUtterancePopup: (value: boolean) => void;
   handleIsOpenUtteranceDetailPopup: (value: boolean) => void;
+  handleClose: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
   handleIsOpenUtteranceDetailPopup,
+  handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, t, tc } = usePage();
@@ -70,10 +74,14 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const handleListBtn = async () => {
     if (isActive) {
       navigate(`/${botId}/utterance`);
-
       return;
     } else {
       navigate(`/${botId}/utterance`);
+    }
+
+    if (isOpenUtteranceDetailPopup) {
+      handleClose();
+      return;
     }
   };
 
@@ -163,7 +171,11 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   console.log('isActive', isActive);
 
   return (
-    <div className="utteranceDetailWrap">
+    <div
+      className={classNames('utteranceDetailWrap', {
+        'utterance-detailModalWrap': isOpenUtteranceDetailPopup === true,
+      })}
+    >
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="detailButtons">
           <div>
@@ -185,9 +197,21 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             >
               {t('SAVE')}
             </Button>
+            {isOpenUtteranceDetailPopup && (
+              <Button
+                className="utteranceDetailClose"
+                shape="ghost"
+                onClick={handleClose}
+                icon={icPopupClose}
+              />
+            )}
           </div>
         </div>
-        <UtteranceGroupInfo formMethods={formMethods} setIsActive={setIsActive} />
+        <UtteranceGroupInfo
+          formMethods={formMethods}
+          setIsActive={setIsActive}
+          isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+        />
       </form>
       <AddUtterance
         formMethods={formMethods}
@@ -199,6 +223,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         fields={fields}
         remove={remove}
         setIsActive={setIsActive}
+        isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
       />
     </div>
   );

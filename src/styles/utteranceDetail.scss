@@ -122,3 +122,14 @@
     }
   }
 }
+
+.utterance-detailModalWrap {
+  width: rem(1080);
+  height: rem(652);
+  overflow: hidden;
+  // overflow-y: scroll;
+  margin: 0 auto;
+  padding: rem(20);
+  border-radius: rem(12);
+  background-color: $grayWhite;
+}

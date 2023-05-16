@@ -1,10 +1,8 @@
 .utteranceWrap {
   position: relative;
-  padding: rem(20);
-  padding-top: rem(40);
+  padding: rem(40) rem(20) rem(20) rem(20);
   max-width: rem(1140);
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 
   .title {
     width: 100%;
@@ -30,6 +28,10 @@
     border: 1px solid $gray200;
     border-radius: rem(8);
 
+    .utterancePopupTable {
+      // height: rem(100);
+    }
+
     .utteranceTable {
       width: 100%;
       border-radius: rem(8);
@@ -46,10 +48,13 @@
           align-items: center;
 
           .utteranceList {
-            padding-left: rem(20);
+            padding: rem(12) rem(20);
           }
           .intent {
-            width: rem(150);
+            width: 20%;
+          }
+          .hidden-scenarioList {
+            width: 40%;
           }
           .add {
             display: flex;
@@ -67,20 +72,19 @@
             }
           }
           .connectScenarios {
-            // width: rem(230);
-            width: rem(285);
-
+            width: 30%;
             &.connectScenarios-notActivated {
               color: $gray250;
             }
           }
 
           .utterance {
-            width: rem(550);
+            width: 50%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
+
           .icon {
             display: flex;
             justify-content: center;
@@ -119,6 +123,7 @@
         background-color: $grayWhite;
         height: rem(54);
         border-bottom: 1px solid $gray150;
+
         cursor: pointer;
         &:last-child {
           border-bottom: none;
@@ -151,5 +156,10 @@
         }
       }
     }
+  }
+
+  .utterancePopupListWrap {
+    height: rem(476);
+    overflow-y: scroll;
   }
 }

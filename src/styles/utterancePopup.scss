@@ -1,0 +1,33 @@
+.utteranceModal {
+  width: rem(1080);
+  height: rem(652);
+  margin: auto;
+  padding: 0;
+  border-radius: rem(12);
+  background-color: $grayWhite;
+
+  .utteranceWrap {
+    .utteranceDetail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: rem(15) 0;
+      .utteranceDetailTitle {
+        font-size: rem(16);
+        font-weight: 500;
+      }
+      .utteranceDetailClose {
+        padding: 0;
+        height: 16px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .searchUtterance {
+      display: flex;
+      justify-content: right;
+    }
+  }
+}

@@ -32,10 +32,13 @@ export const UtteranceComponent = () => {
         <div className="utteranceListWrap">
           <table className="utteranceTable">
             <thead>
-              <UtteranceListHeader />
+              <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
             </thead>
             <tbody>
-              <UtteranceListItem searchData={searchData} />
+              <UtteranceListItem
+                searchData={searchData}
+                isOpenUtterancePopup={isOpenUtterancePopup}
+              />
             </tbody>
           </table>
         </div>

@@ -9,6 +9,7 @@ interface IConnectLineProps {
   isNextNode?: boolean;
   active?: boolean;
   highlight?: boolean;
+  strokeWidth?: number;
   type: 'blue' | 'green' | 'red' | 'yellow';
   onClick?: () => void;
   onDelete?: () => void;
@@ -29,6 +30,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   active,
   type,
   highlight,
+  strokeWidth = 3,
   onClick,
   onDelete,
 }) => {
@@ -38,6 +40,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const lineMouseRef = useRef<SVGPathElement>(null);
   const deleteRef = useRef<SVGGeometryElement>(null);
 
+  //const stroke = strokes[type][active || highlight ? 1 : 0];
   const stroke = strokes[type][active ? 1 : 0];
 
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
@@ -75,7 +78,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       ref={svgRef}
       style={{
         position: 'absolute',
-        zIndex: 0,
+        zIndex: active || highlight ? 1 : 0,
         pointerEvents: 'none',
         //background: '#FF000011',
       }}
@@ -85,7 +88,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         ref={arrowRef}
         d={isNextNode ? 'M 0 0 L 6 6 L 0 12' : 'M 0 0 L 6 6 L 12 0'}
         stroke={stroke}
-        strokeWidth="3"
+        strokeWidth={strokeWidth}
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -98,7 +101,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         }}
         ref={lineRef}
         stroke={stroke}
-        strokeWidth="3"
+        strokeWidth={strokeWidth}
         strokeDasharray={isNextNode ? undefined : '6 3'}
         fill="none"
       />
@@ -114,7 +117,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         //strokeOpacity={highlight ? 0.3 : 0}
         strokeOpacity={0}
         stroke={stroke}
-        strokeWidth="10"
+        strokeWidth={Math.max(strokeWidth + 7, 20)}
         fill="none"
       />
       <g
