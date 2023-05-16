@@ -15,9 +15,9 @@ export interface IToSearchProps {
 export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const { t } = usePage();
   const SORT = [
-    { value: '1', label: t('RECENT') },
-    { value: '2', label: t('INTENT_NAME') },
-    { value: '3', label: t('SCENARIO_NAME') },
+    { value: '1', label: t('SORT_RECENT') },
+    { value: '2', label: t('SORT_INTENT_NAME') },
+    { value: '3', label: t('SORT_SCENARIO_NAME') },
   ];
   const { i18n } = useI18n();
   const language = i18n.language;

@@ -18,10 +18,10 @@ import { UtteranceDetailItems } from './UtteranceDetailItems';
 import { UtteranceGroupInfo } from './UtteranceGroupInfo';
 
 export interface IUtteranceDetailProps {
-  isOpenUtteranceDetailPopup: boolean;
-  handleIsOpenUtterancePopup: (value: boolean) => void;
-  handleIsOpenUtteranceDetailPopup: (value: boolean) => void;
-  handleClose: () => void;
+  isOpenUtteranceDetailPopup?: boolean;
+  handleIsOpenUtterancePopup?: (value: boolean) => void;
+  handleIsOpenUtteranceDetailPopup?: (value: boolean) => void;
+  handleClose?: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
@@ -79,7 +79,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       navigate(`/${botId}/utterance`);
     }
 
-    if (isOpenUtteranceDetailPopup) {
+    if (isOpenUtteranceDetailPopup && handleClose) {
       handleClose();
       return;
     }

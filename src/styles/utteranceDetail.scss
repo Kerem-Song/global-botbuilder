@@ -127,9 +127,26 @@
   width: rem(1080);
   height: rem(652);
   overflow: hidden;
-  // overflow-y: scroll;
   margin: 0 auto;
   padding: rem(20);
   border-radius: rem(12);
   background-color: $grayWhite;
+  .utterance-detailModal {
+    height: rem(310);
+    overflow-y: scroll;
+  }
+  .utterance-detailModal::-webkit-scrollbar {
+    width: rem(8);
+    height: rem(8);
+    background-color: rgba(208, 221, 255, 0);
+  }
+  .utterance-detailModal::-webkit-scrollbar-thumb {
+    height: 30%;
+    background-color: rgba(208, 221, 255, 0);
+    border-radius: rem(18);
+    transition: background-color 2s ease-out;
+  }
+  *:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(208, 221, 255, 0.8);
+  }
 }
