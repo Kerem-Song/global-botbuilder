@@ -1,6 +1,5 @@
 import { Divider } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
-import { useTranslation } from 'react-i18next';
 
 import { CardCarouselType } from './CardCarouselType';
 import { ListCardCarouselType } from './ListCardCarouselType';
@@ -14,7 +13,6 @@ export interface TesterProps {
 }
 
 export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
-  const { t } = useTranslation('botTest');
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:
@@ -135,36 +133,18 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   </div>
                 </div>
                 <div className="productCardPrices">
-                  {item.price?.retail !== item.price?.sale ? (
-                    <div className="price">
-                      <p className="prevPrice">
-                        {item.price?.retail
-                          ?.toFixed(0)
-                          ?.toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                        {item.price?.symbol}
-                      </p>
-                    </div>
-                  ) : null}
-                  {item.price?.discount ? (
-                    <div className="discount">
-                      <p className="discountAmount">
-                        {item.price?.discount
-                          ?.toFixed(0)
-                          ?.toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        {item.price?.symbol} {t('DISCOUNT')}
-                      </p>
-                    </div>
-                  ) : null}
+                  {item.price?.isShowDiscount && (
+                    <>
+                      <div className="price">
+                        <p className="prevPrice">{item.price.retailDisplay}</p>
+                      </div>
+                      <div className="discount">
+                        <p className="discountAmount">{item.price.discountDisplay}</p>
+                      </div>
+                    </>
+                  )}
                   <div className="price">
-                    <p className="currentPrice">
-                      {item.price?.sale
-                        ?.toFixed(0)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                      {item.price?.symbol}
-                    </p>
+                    <p className="currentPrice">{item.price?.mainDisplay}</p>
                   </div>
                 </div>
                 <div className="productContents">
