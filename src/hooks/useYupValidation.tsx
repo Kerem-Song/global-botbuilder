@@ -274,6 +274,7 @@ export const useYupValidation = () => {
       .number()
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
       .nullable()
+      .min(0, t(`PRODUCT_NODE_SET_POSITIVE_SALE_PRICE`))
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
           return patternTwoDigisAfterComma.test(val);
@@ -284,6 +285,25 @@ export const useYupValidation = () => {
         yup.ref('retailPrice'),
         t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: yup.ref('retailPrice') }),
       )
+      .transform((value, originalValue) => {
+        return Number.isNaN(originalValue) ? '' : Number(value);
+      }),
+    salePrice: yup
+      .number()
+      .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
+      .nullable()
+      .min(0, t(`PRODUCT_NODE_SET_POSITIVE_SALE_PRICE`))
+      .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
+        if (val != undefined) {
+          return patternTwoDigisAfterComma.test(val);
+        }
+        return true;
+      })
+      .max(
+        yup.ref('retailPrice'),
+        t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: yup.ref('retailPrice') }),
+      )
+
       .transform((value, originalValue) => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       }),

@@ -377,6 +377,7 @@ export interface IProductCardTemplateView extends IHasButtonViewBase {
   seq: number;
   profileImgPath: string;
   retailPriceParam: string;
+  discountAmountParam: string;
   salePriceParam: string;
 }
 

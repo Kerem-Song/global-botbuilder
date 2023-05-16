@@ -108,7 +108,7 @@ export const ProductCardNodeEdit = () => {
 
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
-    price: 'retailPrice' | 'discountAmount',
+    price: 'retailPrice' | 'discountAmount' | 'salePrice',
   ) => {
     const regex = /^\d{0,8}[.]\d{0,2}$/;
     if (regex.test(e.target.value)) {
@@ -258,14 +258,27 @@ export const ProductCardNodeEdit = () => {
                   </Row>
                 </FormItem>
               </div>
-
               <FormItem error={errors.view && errors.view.discountAmount}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountAmount`, {
-                    valueAsNumber: true,
+                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                       checkPriceRegex(e, 'discountAmount'),
+                  })}
+                  maxLength={11}
+                  isLight={true}
+                  readOnly={isHistoryViewer}
+                />
+              </FormItem>
+              <FormItem error={errors.view && errors.view.salePrice}>
+                <InputWithTitleCounter
+                  label={t(`PRODUCT_NODE_SALE_PRICE`)}
+                  {...register(`view.salePrice`, {
+                    // valueAsNumber: true,
+                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                      checkPriceRegex(e, 'salePrice'),
                   })}
                   maxLength={11}
                   isLight={true}

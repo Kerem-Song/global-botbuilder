@@ -117,7 +117,7 @@ export const ProductCardCarouselNodeEdit = () => {
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
-    price: 'retailPrice' | 'discountAmount',
+    price: 'retailPrice' | 'discountAmount' | 'salePrice',
   ) => {
     const regex = /^\d{0,8}[.]\d{0,2}?$/;
     if (regex.test(e.target.value)) {
@@ -295,7 +295,9 @@ export const ProductCardCarouselNodeEdit = () => {
                                   {...register(
                                     `view.childrenViews.${index}.retailPrice`,
                                     {
-                                      valueAsNumber: true,
+                                      // valueAsNumber: true,
+                                      setValueAs: (v) =>
+                                        v === '' ? undefined : parseInt(v),
                                       onChange: (
                                         e: React.ChangeEvent<HTMLInputElement>,
                                       ) => checkPriceRegex(e, index, 'retailPrice'),
@@ -323,7 +325,6 @@ export const ProductCardCarouselNodeEdit = () => {
                             </Row>
                           </FormItem>
                         </div>
-
                         <FormItem
                           error={errors.view?.childrenViews?.[index]?.discountAmount}
                         >
@@ -333,9 +334,29 @@ export const ProductCardCarouselNodeEdit = () => {
                               `view.childrenViews.${index}.discountAmount`,
 
                               {
-                                valueAsNumber: true,
+                                // valueAsNumber: true,
+                                setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                                   checkPriceRegex(e, index, 'discountAmount'),
+                              },
+                            )}
+                            maxLength={11}
+                            isLight={true}
+                            readOnly={isHistoryViewer}
+                          />
+                        </FormItem>
+                        <FormItem
+                          error={errors.view?.childrenViews?.[index]?.discountAmount}
+                        >
+                          <InputWithTitleCounter
+                            label={t(`PRODUCT_NODE_SALE_PRICE`)}
+                            {...register(
+                              `view.childrenViews.${index}.salePrice`,
+
+                              {
+                                setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                                  checkPriceRegex(e, index, 'salePrice'),
                               },
                             )}
                             maxLength={11}
