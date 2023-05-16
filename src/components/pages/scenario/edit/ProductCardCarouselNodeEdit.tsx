@@ -1,4 +1,4 @@
-import { Col, Collapse, FormItem, Row, Space } from '@components';
+import { Col, Collapse, FormItem, Input, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
@@ -309,7 +309,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 />
                               </Col>
                               <Col className="productSelectorWrapper" span={8}>
-                                <Select
+                                {/* <Select
                                   {...currencyField}
                                   options={currencyOptions}
                                   styles={reactSelectStyle}
@@ -320,6 +320,11 @@ export const ProductCardCarouselNodeEdit = () => {
                                   onChange={(options: any) =>
                                     currencyField.onChange(options?.value)
                                   }
+                                /> */}
+                                <Input
+                                  {...register(
+                                    `view.childrenViews.${index}.currencyUnit`,
+                                  )}
                                 />
                               </Col>
                             </Row>

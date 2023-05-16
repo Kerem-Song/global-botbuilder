@@ -287,7 +287,7 @@ export interface IListCardCarouselView extends IHasButtonCarouselViewBase {
 }
 
 export interface IProductCardView extends IHasButtonViewBase {
-  currencyUnit: 'USD' | 'KRW' | 'JPY';
+  currencyUnit: 'USD' | 'KRW' | 'JPY' | string;
   description: string;
   retailPrice: number;
   imageCtrl: IImageCtrl;
@@ -369,7 +369,7 @@ export interface IDataCardView extends IViewBase {
 }
 
 export interface IProductCardTemplateView extends IHasButtonViewBase {
-  currencyUnit: 'USD' | 'KRW' | 'JPY';
+  currencyUnit: 'USD' | 'KRW' | 'JPY' | string;
   description: string;
   imageCtrl: IImageCtrl;
   profileIconUrl: string;
