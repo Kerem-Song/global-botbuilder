@@ -118,7 +118,11 @@ export const Botbuilder = () => {
   }, [selectedScenario]);
 
   const panning = (x: number, y: number) => {
-    if (!canvasRef.current) {
+    if (
+      !canvasRef.current ||
+      parseInt(canvasRef.current.style.left) + x / scale > 0 ||
+      parseInt(canvasRef.current.style.top) + y / scale > 0
+    ) {
       return;
     }
 
