@@ -30,7 +30,6 @@ export const useScenarioSelectClient = () => {
             const startScenario = scenarios.find((x) => x.isStartFlow);
             const restScenarios = scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
-              .filter((x) => x.activated)
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
             return [startScenario!, ...restScenarios];
           }),

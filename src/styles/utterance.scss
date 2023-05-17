@@ -28,10 +28,6 @@
     border: 1px solid $gray200;
     border-radius: rem(8);
 
-    .utterancePopupTable {
-      // height: rem(100);
-    }
-
     .utteranceTable {
       width: 100%;
       border-radius: rem(8);
@@ -120,9 +116,9 @@
       }
 
       .list {
-        background-color: $grayWhite;
         height: rem(54);
         border-bottom: 1px solid $gray150;
+        background-color: $grayWhite;
 
         cursor: pointer;
         &:last-child {
@@ -162,4 +158,18 @@
     height: rem(476);
     overflow-y: scroll;
   }
+  // .utterancePopupListWrap::-webkit-scrollbar {
+  //   width: rem(8);
+  //   height: rem(8);
+  //   background-color: rgba(208, 221, 255, 0);
+  // }
+  // .utterancePopupListWrap::-webkit-scrollbar-thumb {
+  //   height: 30%;
+  //   background-color: rgba(208, 221, 255, 0);
+  //   border-radius: rem(18);
+  //   transition: background-color 2s ease-out;
+  // }
+  // *:hover::-webkit-scrollbar-thumb {
+  //   background-color: rgba(208, 221, 255, 0.8);
+  // }
 }

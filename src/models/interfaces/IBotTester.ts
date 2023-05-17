@@ -71,10 +71,17 @@ export interface ITesterCard {
   contentText?: string;
   description: string;
   price?: {
-    retail?: number;
-    sale?: number;
-    symbol?: string;
-    discount?: number;
+    retail: number;
+    sale: number;
+    symbol: string;
+    discount: number;
+    priceDisplayType: number;
+    cultureInfo: string;
+    retailDisplay: string;
+    mainDisplay: string;
+    saleDiplay: string;
+    discountDisplay: string;
+    isShowDiscount: boolean;
   };
   buttons: ITesterQuickReply[];
   type?: string;
@@ -177,10 +184,17 @@ export interface IProductCard extends IHasDebugMeta {
   title: string;
   description: string;
   price?: {
-    retail?: number;
-    sale?: number;
-    symbol?: string;
-    discount?: number;
+    retail: number;
+    sale: number;
+    symbol: string;
+    discount: number;
+    priceDisplayType: number;
+    cultureInfo: string;
+    retailDisplay: string;
+    mainDisplay: string;
+    saleDiplay: string;
+    discountDisplay: string;
+    isShowDiscount: boolean;
   };
   buttons: ITesterQuickReply[];
   type: typeof TESTER_DATA_TYPES.productCard;

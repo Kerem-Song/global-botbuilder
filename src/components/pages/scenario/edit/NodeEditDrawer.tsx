@@ -1,14 +1,22 @@
 import { FormItem } from '@components';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistoryViewerMatch, usePage, useRootState, useYupValidation } from '@hooks';
+import {
+  useHistoryViewerMatch,
+  usePage,
+  useRootState,
+  useScenarioClient,
+  useSystemModal,
+  useYupValidation,
+} from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { NODE_PREFIX } from '@modules';
-import { editNode } from '@store/makingNode';
+import { NODE_PREFIX, useAppDispatch } from '@modules';
+import { lunaToast } from '@modules/lunaToast';
+import { setInvalidateNode } from '@store/botbuilderSlice';
+import editNodeAsync from '@store/editNodeAsync';
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
@@ -16,9 +24,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
   const { t } = usePage();
-  const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
-  const { schema } = useYupValidation();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
@@ -34,18 +40,10 @@ export const NodeEditDrawer = () => {
     (state) => state.botBuilderReducer.invalidateNodes,
   );
 
-  const formMethods = useForm<INodeEditModel>({
-    mode: 'onSubmit',
-    defaultValues: {
-      ...selectedNode,
-      title: undefined,
-      view: { id: undefined, typeName: undefined },
-    },
-    resolver: yupResolver(schema),
-  });
+  const formMethods = useFormContext<INodeEditModel>();
+
   const {
     register,
-    handleSubmit,
     reset,
     getValues,
     trigger,
@@ -82,10 +80,6 @@ export const NodeEditDrawer = () => {
     }
   }, [selectedNode, index]);
 
-  const onSubmit = (node: INodeEditModel) => {
-    dispatch(editNode(node));
-  };
-
   const editItem = () => {
     if (!isEditDrawerOpen) {
       return <></>;
@@ -117,31 +111,27 @@ export const NodeEditDrawer = () => {
       size={360}
     >
       <div className="wrapper">
-        <FormProvider {...formMethods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="header">
-              <span>{getValues().caption}</span>
-            </div>
+        <div className="header">
+          <span>{getValues().caption}</span>
+        </div>
 
-            <div className="node-item-wrap">
-              <FormItem error={errors.title}>
-                <InputWithTitleCounter
-                  label={t(`CHAT_BUBBLE_NAME`)}
-                  required={true}
-                  showCount={true}
-                  maxLength={20}
-                  placeholder="Input Chat Bubble name"
-                  {...register('title')}
-                  disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
-                  textLength={watch('title')?.length || 0}
-                  readOnly={isHistoryViewer}
-                />
-              </FormItem>
-            </div>
+        <div className="node-item-wrap">
+          <FormItem error={errors.title}>
+            <InputWithTitleCounter
+              label={t(`CHAT_BUBBLE_NAME`)}
+              required={true}
+              showCount={true}
+              maxLength={20}
+              placeholder="Input Chat Bubble name"
+              {...register('title')}
+              disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
+              textLength={watch('title')?.length || 0}
+              readOnly={isHistoryViewer}
+            />
+          </FormItem>
+        </div>
 
-            {editItem()}
-          </form>
-        </FormProvider>
+        {editItem()}
       </div>
     </Drawer>
   );

@@ -11,7 +11,7 @@ import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 export interface IUtteranceGroupInfoProps {
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
-  isOpenUtteranceDetailPopup: boolean;
+  isOpenUtteranceDetailPopup?: boolean;
 }
 
 export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({

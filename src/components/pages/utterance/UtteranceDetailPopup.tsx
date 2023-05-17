@@ -1,4 +1,3 @@
-import { Button } from '@components/general';
 import { FC } from 'react';
 import ReactModal from 'react-modal';
 

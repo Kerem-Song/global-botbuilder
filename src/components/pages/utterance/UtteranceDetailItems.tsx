@@ -5,6 +5,7 @@ import { Col, Row, Space } from '@components/layout';
 import { usePage, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { util } from '@modules/util';
+import classNames from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
 
@@ -13,7 +14,7 @@ export interface IUtteranceDetailItemsProps {
   fields: FieldArrayWithId<IUtteranceModel, 'items', 'id'>[];
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
-  isOpenUtteranceDetailPopup: boolean;
+  isOpenUtteranceDetailPopup?: boolean;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -57,7 +58,11 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   };
 
   return (
-    <div className="utterance list">
+    <div
+      className={classNames('utterance list', {
+        'utterance-detailModal': isOpenUtteranceDetailPopup === true,
+      })}
+    >
       <Space direction="horizontal">
         <span className="title">
           {t('UTTERANCE')}{' '}
