@@ -1,4 +1,4 @@
-import { Col, Collapse, FormItem, Row, Space } from '@components';
+import { Col, Collapse, FormItem, Input, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -101,14 +101,14 @@ export const ProductCardNodeEdit = () => {
   const values = getValues();
   console.log('value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
-  const { field: currencyField } = useController({
-    name: `view.currencyUnit`,
-    control,
-  });
+  // const { field: currencyField } = useController({
+  //   name: `view.currencyUnit`,
+  //   control,
+  // });
 
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
-    price: 'retailPrice' | 'discountAmount',
+    price: 'retailPrice' | 'discountAmount' | 'salePrice',
   ) => {
     const regex = /^\d{0,8}[.]\d{0,2}$/;
     if (regex.test(e.target.value)) {
@@ -239,7 +239,7 @@ export const ProductCardNodeEdit = () => {
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
-                      <Select
+                      {/* <Select
                         className="react-selector"
                         {...currencyField}
                         options={currencyOptions.sort((a, b) =>
@@ -253,19 +253,33 @@ export const ProductCardNodeEdit = () => {
                         onChange={(options: any) =>
                           currencyField.onChange(options?.value)
                         }
-                      />
+                      /> */}
+                      <Input {...register(`view.currencyUnit`)} />
                     </Col>
                   </Row>
                 </FormItem>
               </div>
-
               <FormItem error={errors.view && errors.view.discountAmount}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountAmount`, {
-                    valueAsNumber: true,
+                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                       checkPriceRegex(e, 'discountAmount'),
+                  })}
+                  maxLength={11}
+                  isLight={true}
+                  readOnly={isHistoryViewer}
+                />
+              </FormItem>
+              <FormItem error={errors.view && errors.view.salePrice}>
+                <InputWithTitleCounter
+                  label={t(`PRODUCT_NODE_SALE_PRICE`)}
+                  {...register(`view.salePrice`, {
+                    // valueAsNumber: true,
+                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                      checkPriceRegex(e, 'salePrice'),
                   })}
                   maxLength={11}
                   isLight={true}

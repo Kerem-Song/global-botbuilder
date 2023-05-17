@@ -23,7 +23,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
   });
 
   const token = useRootState((state) => state.botInfoReducer.token);
-
+  console.log('@view prices', view.retailPrice, view.salePrice, view.discountAmount);
   return (
     <Card onClick={() => console.log('card click')}>
       {view.useImageCtrl || view.imageCtrl?.imageUrl ? (
@@ -76,7 +76,9 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             <p className="discount">
               {view.discountAmount
                 ? view.discountAmount.toLocaleString()
-                : (view.retailPrice - view.salePrice).toLocaleString()}
+                : view.salePrice
+                ? (view.retailPrice - view.salePrice).toLocaleString()
+                : 0}
               <span className="currency">{view.currencyUnit}</span>
               {t(`PRODUCT_NODE_DISCOUNT`)}
             </p>
@@ -84,7 +86,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
         )}
         <div className="prices">
           <p>
-            {view.salePrice && view.salePrice.toLocaleString()}
+            {view.salePrice ? view.salePrice.toLocaleString() : 0}
             <span className="currency">{view.currencyUnit}</span>
           </p>
         </div>

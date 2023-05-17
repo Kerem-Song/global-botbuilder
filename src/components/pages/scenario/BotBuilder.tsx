@@ -347,6 +347,7 @@ export const Botbuilder = () => {
         onDrop={handleChatbubbleDrop}
         onDragOver={(e) => {
           e.preventDefault();
+          handleIsOpen(false);
         }}
         onContextMenu={(e) => e.preventDefault()}
         onKeyDown={handleUndoRedoKeydown}

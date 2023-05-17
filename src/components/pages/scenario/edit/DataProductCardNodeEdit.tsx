@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
+import { Button, Col, Collapse, FormItem, Input, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -209,7 +209,7 @@ export const DataProductCardNodeEdit = () => {
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
-                      <Select
+                      {/* <Select
                         className="react-selector"
                         {...currencyField}
                         options={currencyOptions.sort((a, b) =>
@@ -223,15 +223,24 @@ export const DataProductCardNodeEdit = () => {
                         onChange={(options: any) =>
                           currencyField.onChange(options?.value)
                         }
-                      />
+                      /> */}
+                      <Input {...register(`view.currencyUnit`)} />
                     </Col>
                   </Row>
                 </FormItem>
               </div>
 
-              <FormItem error={errors.view && errors.view.salePriceParam}>
+              <FormItem error={errors.view && errors.view.discountAmountParam}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
+                  {...register(`view.discountAmountParam`)}
+                  isLight={true}
+                  readOnly={isHistoryViewer}
+                />
+              </FormItem>
+              <FormItem error={errors.view && errors.view.salePriceParam}>
+                <InputWithTitleCounter
+                  label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePriceParam`)}
                   isLight={true}
                   readOnly={isHistoryViewer}

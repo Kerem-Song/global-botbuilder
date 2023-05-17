@@ -4,17 +4,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { DeployButtons } from './DeployButtons';
-import { DeployHistoryList } from './DeployHistoryList';
+import { DeployHistoryListItem } from './DeployHistoryListItem';
 import { DeployPagination } from './DeployPagination';
 
-export const Deploy = () => {
+export const DeployComponent = () => {
+  const countPerPage = 30;
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const countPerPage = 30;
   const { t } = usePage();
   const { botId } = useParams();
   const { getDeployHistoryListQuery } = useDeployClient();
-  const { data } = getDeployHistoryListQuery({
+  const { data, isFetching } = getDeployHistoryListQuery({
     pageNo: currentPage,
     countPerPage: countPerPage,
     botId: botId!,
@@ -34,7 +34,24 @@ export const Deploy = () => {
         <DeployButtons />
       </div>
       <div className="deployHistoryListWrap">
-        <DeployHistoryList data={data} />
+        <table className="deployHistoryListTable">
+          <thead>
+            <tr>
+              <th className="deployHistoryListHeader deployNumber">
+                {t('DEPLOY_NUMBER')}
+              </th>
+              <th className="deployHistoryListHeader channelType">{t('CHANNEL_TYPE')}</th>
+              <th className="deployHistoryListHeader channelName">{t('CHANNEL_NAME')}</th>
+              <th className="deployHistoryListHeader deployDateTime">
+                {t('DEPLOYMENT_DATE_AND_TIME')}
+              </th>
+              <th className="deployHistoryListHeader account">{t('OPERATOR_ACCOUNT')}</th>
+              <th className="deployHistoryListHeader status">{t('DEPLOYMENT_STATUS')}</th>
+              <th className="deployHistoryListHeader memo">{t('MEMO')}</th>
+            </tr>
+          </thead>
+          <DeployHistoryListItem data={data} isFetching={isFetching} />
+        </table>
       </div>
       <DeployPagination
         data={data}

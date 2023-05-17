@@ -5,6 +5,7 @@ import { Col, Row, Space } from '@components/layout';
 import { usePage, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { util } from '@modules/util';
+import classNames from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
 
@@ -13,6 +14,7 @@ export interface IUtteranceDetailItemsProps {
   fields: FieldArrayWithId<IUtteranceModel, 'items', 'id'>[];
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
+  isOpenUtteranceDetailPopup?: boolean;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -20,6 +22,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   fields,
   remove,
   setIsActive,
+  isOpenUtteranceDetailPopup,
 }) => {
   const { t } = usePage();
   const [searchWord, setSearchWord] = useState<string>('');
@@ -55,7 +58,11 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   };
 
   return (
-    <div className="utterance list">
+    <div
+      className={classNames('utterance list', {
+        'utterance-detailModal': isOpenUtteranceDetailPopup === true,
+      })}
+    >
       <Space direction="horizontal">
         <span className="title">
           {t('UTTERANCE')}{' '}
@@ -63,16 +70,14 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
             {filterKeyword ? filterKeyword.length : watch('items').length}
           </span>
         </span>
-        <FormItem>
-          <Input
-            size="small"
-            search
-            placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
-            value={searchWord}
-            onSearch={(value) => handleSearch(value)}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </FormItem>
+        <Input
+          size="small"
+          search
+          placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
+          value={searchWord}
+          onSearch={(value) => handleSearch(value)}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
         <Button
           shape="ghost"
           className="icDelete"

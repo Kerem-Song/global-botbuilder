@@ -54,6 +54,7 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
       style={{ overlay: { display: 'flex' } }}
       className="entityModal"
       isOpen={isOpen}
+      onRequestClose={handleClose}
     >
       <div className="header">
         <ul className="title">
