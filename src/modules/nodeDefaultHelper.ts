@@ -1,10 +1,5 @@
-import {
-  ConditionJoin,
-  ImageAspectRatio,
-  NODE_TYPES,
-  TNodeTypes,
-  VIEW_TYPES,
-} from '@models';
+import { ConditionJoin, ImageAspectRatio, TNodeTypes, VIEW_TYPES } from '@models';
+import { PriceDisplayType } from '@models/enum';
 import {
   ACTION_TYPES,
   CTRL_TYPES,
@@ -205,12 +200,13 @@ export const nodeDefaultHelper = {
       retailPrice: 0,
       salePrice: 0,
       discountAmount: 0,
+
+      currencyUnit: 'KRW',
       profileIconUrl: '',
       profileImgPath: '',
       profileName: '',
       description: '',
       seq: 0,
-      currencyUnit: 'KRW',
       useImageCtrl: true,
       imageCtrl: {
         imageUrl: '',
@@ -273,19 +269,21 @@ export const nodeDefaultHelper = {
   createDefaultDataProductCardView: () => {
     const result: IDataProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
-      typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
+      typeName: VIEW_TYPES.DATA_PRODUCT_CARD_VIEW,
       itemsRefName: '',
       count: 1,
       isShuffle: false,
       useImageCtrl: false,
+      priceDisplayType: PriceDisplayType.All,
       retailPriceParam: '',
+      discountAmountParam: '',
       salePriceParam: '',
       profileIconUrl: '',
       profileImgPath: '',
       profileName: '',
       description: '',
       seq: 0,
-      currencyUnit: 'KRW',
+      currencyUnit: '@sys.brand-currency',
       imageCtrl: {
         imageUrl: '',
         altText: '',
@@ -301,7 +299,7 @@ export const nodeDefaultHelper = {
   createDefaultDataListCardView: () => {
     const result: IDataListCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
-      typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
+      typeName: VIEW_TYPES.DATA_LIST_CARD_VIEW,
       itemsRefName: '',
       count: 1,
       isShuffle: false,

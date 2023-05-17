@@ -259,8 +259,50 @@ export const Botbuilder = () => {
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
-      console.log('@ctrl clone', clone);
-      dispatch(appendNode({ ...clone, x: points.x, y: points.y }));
+      const titleRegex = new RegExp(`${clone.title}`);
+
+      const filtered = nodes.filter((node) => {
+        console.log('@titleRegex', titleRegex);
+        console.log('@node', node.title);
+        console.log('@regex test', titleRegex.test(node.title!));
+        return titleRegex.test(node.title!);
+      });
+      console.log('@filtered', filtered);
+      let index = 1;
+
+      if (filtered || tempNodeNames) {
+        const regex = /[^0-9]/g;
+        const results =
+          filtered?.map((x) => {
+            console.log('@before replace', x.title);
+            console.log('@first replace', x.title?.replace(clone.title!, ''));
+            console.log(
+              '@second replace',
+              x.title?.replace(clone.title!, '').replace(regex, ''),
+            );
+            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
+          }) || [];
+        console.log('@results filter', results);
+        const max = Math.max(...results, ...tempNodeNames);
+
+        for (let i = 1; i <= max + 1; i++) {
+          if (!results.includes(i)) {
+            index = i;
+            break;
+          }
+        }
+      }
+
+      setTempNodeNames([...tempNodeNames, index]);
+
+      dispatch(
+        appendNode({
+          ...clone,
+          x: points.x,
+          y: points.y,
+          title: clone.title + `_(${index})`,
+        }),
+      );
       dispatch(setClipBoard(undefined));
     }
   };

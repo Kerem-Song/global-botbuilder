@@ -10,12 +10,11 @@ import {
   Row,
 } from '@components';
 import {
-  useDataApiClient,
+  dataApiTestClient,
   useHistoryViewerMatch,
   useNodeEditSave,
   usePage,
 } from '@hooks';
-import { checkDataApiTest } from '@hooks/client/dataApiTestClient';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -45,7 +44,6 @@ export const JsonRequestNodeEdit = () => {
   console.log('@json req view', getValues().view);
   const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
-  const { dataApiTest } = useDataApiClient();
   const values = getValues().view!;
 
   const { field: method } = useController({ name: 'view.method', control });
@@ -101,6 +99,7 @@ export const JsonRequestNodeEdit = () => {
     resMappingRemove(index);
   };
 
+  const { checkDataApiTest } = dataApiTestClient();
   const {
     data: res,
     error,
@@ -132,21 +131,6 @@ export const JsonRequestNodeEdit = () => {
         setValue('view.apiRes', JSON.stringify(error, null, 2));
         setLoading(false);
       });
-
-    // setLoading(true);
-    // return dataApiTest(values)
-    //   .then((res) => {
-    //     resetField('view.apiRes');
-    //     console.log('@res in handle api validation', res);
-    //     setValue('view.apiRes', JSON.stringify(res, null, 2));
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     resetField('view.apiRes');
-    //     console.log('@err in handle api validation', err);
-    //     setValue('view.apiRes', JSON.stringify(err, null, 2));
-    //     setLoading(false);
-    //   });
   };
 
   return (
