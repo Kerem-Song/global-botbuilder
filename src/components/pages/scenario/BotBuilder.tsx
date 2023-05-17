@@ -152,16 +152,16 @@ export const Botbuilder = () => {
       dirtySelect = undefined;
       return;
     }
-    if (!isEditDrawerOpen) {
-      const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
-      nodeElements.forEach((n) => {
-        n.style.zIndex = `${Math.max(1, Number(n.style.zIndex) - 1)}`;
-      });
-      const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
-      if (nodeWrap) {
-        nodeWrap.style.zIndex = `${nodeElements.length}`;
-      }
-    }
+    // if (!isEditDrawerOpen) {
+    //   const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
+    //   nodeElements.forEach((n) => {
+    //     n.style.zIndex = `${Math.max(1, Number(n.style.zIndex) - 1)}`;
+    //   });
+    //   const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
+    //   if (nodeWrap) {
+    //     nodeWrap.style.zIndex = `${nodeElements.length}`;
+    //   }
+    // }
 
     dispatch(setSelected(id));
   };
@@ -394,7 +394,7 @@ export const Botbuilder = () => {
                 className="draggableNode"
                 style={{
                   position: 'absolute',
-                  zIndex: 1,
+                  zIndex: selected === item.id ? 4 : 2,
                 }}
                 ref={(el) => (nodeRef.current[i] = el)}
                 // onContextMenu={(e) => e.preventDefault()}
