@@ -451,8 +451,6 @@ export const Botbuilder = () => {
               )}
         </div>
       </div>
-
-      <NodeEditDrawer />
     </>
   );
 };

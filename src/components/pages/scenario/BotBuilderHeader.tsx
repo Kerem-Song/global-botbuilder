@@ -1,13 +1,15 @@
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
-import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, INodeEditModel, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
+import editNodeAsync from '@store/editNodeAsync';
 import { appendNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
@@ -15,9 +17,11 @@ import {
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
 import React, { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { ID_GEN, ID_TYPES } from '../../../modules';
+import { ID_GEN, ID_TYPES, useAppDispatch } from '../../../modules';
+import { NodeEditDrawer } from './edit/NodeEditDrawer';
 
 const singleNodes = [
   { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: '텍스트' },
@@ -121,11 +125,11 @@ export const BotBuilderHeader = () => {
     });
   };
 
+  const appDispatch = useAppDispatch();
   const handleScenarioSave = async () => {
     if (isEditDrawOpen) {
-      return;
+      await appDispatch(editNodeAsync(formMethods.getValues()));
     }
-
     if (selectedScenario) {
       const results = await Promise.all(
         nodes.map(async (n) => {
@@ -230,111 +234,121 @@ export const BotBuilderHeader = () => {
 
     const data = e.currentTarget.getAttribute('data') as string;
     e.dataTransfer.setData('nodeName', data);
-
-    // if (isTutorial) {
-    //   setIsTutorial(false);
-    // }
   };
 
   useEffect(() => {
     setTempNodeNames([]);
   }, [nodes]);
-  const icBtnTemplePosition = document
-    .querySelector('.icBtnTemple')
-    ?.getBoundingClientRect();
-  const view = document.querySelector('.botBuilderMain');
-  const canvas = document.querySelector('.canvasWrapper');
-  const canvasRect = canvas?.getBoundingClientRect();
-  const viewRect = view?.getBoundingClientRect();
-  // console.log('@icbtntemple position', icBtnTemplePosition);
+
+  const selected = useRootState((state) => state.botBuilderReducer.selected);
+  const selectedNode = nodes.find((x) => x.id === selected);
+
+  const formMethods = useForm<INodeEditModel>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      ...selectedNode,
+      title: undefined,
+      view: { id: undefined, typeName: undefined },
+    },
+    resolver: yupResolver(schema),
+  });
+
   return (
-    <div className="botBuilderHeader">
-      <span className="cardNumWrapper">
-        {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
-      </span>
-      <div className="makingBtnWrapper">
-        <div className="makingBtn" data-tutorial={isTutorial}>
-          <span className="btnCategory">{t(`SINGLE`)}</span>
-          <Col className="btnWrapper">
-            {singleNodes.map((item, i) => (
-              <Tooltip tooltip={item.nodeName} key={i}>
-                <Button
-                  className={`${item.nodeName} icon ${item.className}`}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => {
-                    handleMakingChatbubbleClick(e);
-                  }}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              </Tooltip>
-            ))}
-          </Col>
+    <>
+      <div className="botBuilderHeader">
+        <span className="cardNumWrapper">
+          {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
+        </span>
+        <div className="makingBtnWrapper">
+          <div className="makingBtn" data-tutorial={isTutorial}>
+            <span className="btnCategory">{t(`SINGLE`)}</span>
+            <Col className="btnWrapper">
+              {singleNodes.map((item, i) => (
+                <Tooltip tooltip={item.nodeName} key={i}>
+                  <Button
+                    className={`${item.nodeName} icon ${item.className}`}
+                    onDragStart={(e) => handleDragStart(e)}
+                    onClick={(e) => {
+                      handleMakingChatbubbleClick(e);
+                    }}
+                    draggable={true}
+                    value={item.value}
+                    data={item.nodeName}
+                  />
+                </Tooltip>
+              ))}
+            </Col>
+          </div>
+          <div className="makingBtn" data-tutorial={isTutorial}>
+            <span className="btnCategory">{t(`CAROUSEL`)}</span>
+            <Col className="btnWrapper">
+              {carousleNodes.map((item, i) => (
+                <Tooltip tooltip={item.nodeName} key={i}>
+                  <Button
+                    key={i}
+                    className={`${item.nodeName} icon ${item.className} `}
+                    onDragStart={(e) => handleDragStart(e)}
+                    onClick={(e) => handleMakingChatbubbleClick(e)}
+                    draggable={true}
+                    value={item.value}
+                    data={item.nodeName}
+                  />
+                </Tooltip>
+              ))}
+            </Col>
+          </div>
+          <div className="makingBtn" data-tutorial={isTutorial}>
+            <span className="btnCategory">{t(`FUNCTION`)}</span>
+            <Col className="btnWrapper">
+              {buttonNodes.map((item, i) => (
+                <Tooltip tooltip={item.nodeName} key={i}>
+                  <Button
+                    className={`${item.nodeName} icon ${item.className} `}
+                    onDragStart={(e) => handleDragStart(e)}
+                    onClick={(e) => handleMakingChatbubbleClick(e)}
+                    draggable={true}
+                    value={item.value}
+                    data={item.nodeName}
+                  />
+                </Tooltip>
+              ))}
+            </Col>
+          </div>
+          <div className="makingBtn" data-tutorial={isTutorial}>
+            <span className="btnCategory">API</span>
+            <Col className="btnWrapper">
+              {apiNodes.map((item, i) => (
+                <Tooltip tooltip={item.nodeName} key={i}>
+                  <Button
+                    className={`${item.nodeName} icon ${item.className} `}
+                    onDragStart={(e) => handleDragStart(e)}
+                    onClick={(e) => handleMakingChatbubbleClick(e)}
+                    draggable={true}
+                    value={item.value}
+                    data={item.nodeName}
+                  />
+                </Tooltip>
+              ))}
+            </Col>
+          </div>
         </div>
-        <div className="makingBtn" data-tutorial={isTutorial}>
-          <span className="btnCategory">{t(`CAROUSEL`)}</span>
-          <Col className="btnWrapper">
-            {carousleNodes.map((item, i) => (
-              <Tooltip tooltip={item.nodeName} key={i}>
-                <Button
-                  key={i}
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => handleMakingChatbubbleClick(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              </Tooltip>
-            ))}
-          </Col>
-        </div>
-        <div className="makingBtn" data-tutorial={isTutorial}>
-          <span className="btnCategory">{t(`FUNCTION`)}</span>
-          <Col className="btnWrapper">
-            {buttonNodes.map((item, i) => (
-              <Tooltip tooltip={item.nodeName} key={i}>
-                <Button
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => handleMakingChatbubbleClick(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              </Tooltip>
-            ))}
-          </Col>
-        </div>
-        <div className="makingBtn" data-tutorial={isTutorial}>
-          <span className="btnCategory">API</span>
-          <Col className="btnWrapper">
-            {apiNodes.map((item, i) => (
-              <Tooltip tooltip={item.nodeName} key={i}>
-                <Button
-                  className={`${item.nodeName} icon ${item.className} `}
-                  onDragStart={(e) => handleDragStart(e)}
-                  onClick={(e) => handleMakingChatbubbleClick(e)}
-                  draggable={true}
-                  value={item.value}
-                  data={item.nodeName}
-                />
-              </Tooltip>
-            ))}
-          </Col>
+        <div className="saveBtn">
+          <Button
+            small
+            type="primary"
+            onClick={handleScenarioSave}
+            disabled={scenarioSaving || (!changed && !isEditDrawOpen)}
+          >
+            {tc(`SAVE`)}
+          </Button>
         </div>
       </div>
-      <div className="saveBtn">
-        <Button
-          small
-          type="primary"
-          onClick={handleScenarioSave}
-          disabled={!changed || scenarioSaving || isEditDrawOpen}
-        >
-          {tc(`SAVE`)}
-        </Button>
-      </div>
-    </div>
+      <FormProvider {...formMethods}>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <NodeEditDrawer />
+        </form>
+      </FormProvider>
+    </>
   );
 };

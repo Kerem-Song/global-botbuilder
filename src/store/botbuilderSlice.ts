@@ -25,7 +25,6 @@ export interface BotBuilderMaker {
   invalidateNodes: Record<string, boolean>;
   carouselIndex: Record<string, number>;
   clipBoard?: INode;
-
   // token?: string;
   // botInfo?: IBotModel;
 }

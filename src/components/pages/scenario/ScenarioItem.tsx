@@ -131,32 +131,37 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       }}
       className={selectedScenario}
     >
-      <Tooltip tooltip={item.alias} placement="right" disable={item.alias.length <= 14}>
-        <Row align="center" style={{ flexWrap: 'nowrap' }}>
+      <Row align="center" style={{ flexWrap: 'nowrap' }}>
+        <Tooltip
+          tooltip={item.alias}
+          placement="bottom-start"
+          offset={[0, 10]}
+          disable={item.alias.length <= 14}
+        >
           <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
             {item.alias}
           </Col>
-          <Col className="scenarioListSwitch">
-            <Switch onChange={handleSwitch} checked={item.activated} />
-          </Col>
-          <Col>
-            <Popper
-              placement="right-start"
-              offset={[5, 10]}
-              popperItems={scenarioMenus}
-              onChange={(m) => {
-                m.data?.action?.();
-              }}
-              popup
-              popupList
-            >
-              <Button small shape="ghost">
-                <i className="fa-solid fa-ellipsis-vertical" />
-              </Button>
-            </Popper>
-          </Col>
-        </Row>
-      </Tooltip>
+        </Tooltip>
+        <Col className="scenarioListSwitch">
+          <Switch onChange={handleSwitch} checked={item.activated} />
+        </Col>
+        <Col>
+          <Popper
+            placement="right-start"
+            offset={[5, 10]}
+            popperItems={scenarioMenus}
+            onChange={(m) => {
+              m.data?.action?.();
+            }}
+            popup
+            popupList
+          >
+            <Button small shape="ghost">
+              <i className="fa-solid fa-ellipsis-vertical" />
+            </Button>
+          </Popper>
+        </Col>
+      </Row>
     </Card>
   );
 };

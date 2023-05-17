@@ -7,8 +7,15 @@ export interface ITooltipProps extends IHasChildren {
   tooltip: string;
   placement?: Placement;
   disable?: boolean;
+  offset?: [number, number];
 }
-export const Tooltip: FC<ITooltipProps> = ({ children, tooltip, disable, placement }) => {
+export const Tooltip: FC<ITooltipProps> = ({
+  children,
+  tooltip,
+  disable,
+  placement,
+  offset,
+}) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
@@ -18,6 +25,7 @@ export const Tooltip: FC<ITooltipProps> = ({ children, tooltip, disable, placeme
     popperElement.current,
     {
       placement: placement,
+      modifiers: [{ name: 'offset', options: { offset } }],
       strategy: 'fixed',
     },
   );
