@@ -108,7 +108,6 @@ export const BotBuilderHeader = () => {
   const { scenarioSaveAsync, scenarioSaving } = useScenarioClient();
 
   const { schema } = useYupValidation();
-  console.log(selectedScenario);
 
   const { error } = useSystemModal();
 

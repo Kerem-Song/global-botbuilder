@@ -18,21 +18,19 @@ import { UtteranceDetailItems } from './UtteranceDetailItems';
 import { UtteranceGroupInfo } from './UtteranceGroupInfo';
 
 export interface IUtteranceDetailProps {
+  utteranceId?: string;
   isOpenUtteranceDetailPopup?: boolean;
-  handleIsOpenUtterancePopup?: (value: boolean) => void;
-  handleIsOpenUtteranceDetailPopup?: (value: boolean) => void;
   handleClose?: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
+  utteranceId,
   isOpenUtteranceDetailPopup,
-  handleIsOpenUtterancePopup,
-  handleIsOpenUtteranceDetailPopup,
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, t, tc } = usePage();
-  const { utteranceId, botId } = useParams();
+  const { botId } = useParams();
   const {
     intentAsync,
     getIntentDetailQuery,
@@ -43,6 +41,10 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
   const { confirm, error } = useSystemModal();
+
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
 
   // usePrompt(isActive);
 
@@ -71,17 +73,11 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
 
-  const handleListBtn = async () => {
-    if (isActive) {
-      navigate(`/${botId}/utterance`);
-      return;
-    } else {
-      navigate(`/${botId}/utterance`);
-    }
-
+  const handleListBtn = () => {
     if (isOpenUtteranceDetailPopup && handleClose) {
       handleClose();
-      return;
+    } else {
+      navigate(`/${botId}/utterance`);
     }
   };
 
@@ -93,6 +89,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
     if (result) {
       if (!hasUtteranceId?.data?.result.intentId) {
+        console.log('마설..?');
         return navigate(`/${botId}/utterance`);
       } else {
         const deleteIntent: IDeleteIntent = {
@@ -104,7 +101,14 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
         if (res && res.isSuccess) {
           lunaToast.success();
-          navigate(`/${botId}/utterance`);
+
+          if (isOpenUtteranceDetailPopup && handleClose) {
+            handleClose();
+            console.log('성공!!!');
+          } else {
+            navigate(`/${botId}/utterance`);
+            console.log('왜 요기로 가지?');
+          }
         }
       }
     }
@@ -118,37 +122,45 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       utterances: itemData.items.map((x) => {
         return x.text;
       }),
-      flowId: itemData.connectScenarioId,
+      flowId: selectedScenarios
+        ? selectedScenarios.id
+        : itemData.connectScenarioId || null,
     };
 
     const res = await intentAsync(saveIntent);
 
-    if (res?.isSuccess) {
+    const handleIntentDuplication = async () => {
+      const checkIntentDuplication = await checkIntentDuplicationAsync({
+        name: getValues('name'),
+        intentId: getValues('intentId'),
+      });
+
+      if (checkIntentDuplication.result === true) {
+        await error({
+          title: t('DUPLICATE_INTENT'),
+          description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
+        });
+
+        if (intentNameRef.current) {
+          intentNameRef.current.select();
+        }
+      }
+    };
+
+    if (res && res.isSuccess) {
       lunaToast.success();
-      navigate(`/${botId}/utterance`);
+
+      if (isOpenUtteranceDetailPopup && handleClose) {
+        handleClose();
+      } else {
+        navigate(`/${botId}/utterance`);
+      }
     } else if (res?.exception.errorCode === 7612) {
-      checkIntentDuplicationAsync(
-        {
-          name: getValues('name'),
-          intentId: getValues('intentId'),
-        },
-        {
-          onSuccess: async (result) => {
-            if (result.result === true) {
-              await error({
-                title: t('DUPLICATE_INTENT'),
-                description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
-              });
-              if (intentNameRef.current) {
-                intentNameRef.current.select();
-              }
-              return;
-            }
-          },
-        },
-      );
+      await handleIntentDuplication();
     }
   };
+
+  console.log('hasUtteranceId', hasUtteranceId);
 
   useEffect(() => {
     if (hasUtteranceId && hasUtteranceId.data) {
@@ -168,15 +180,21 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     }
   }, [hasUtteranceId?.data]);
 
-  console.log('isActive', isActive);
-
   return (
     <div
       className={classNames('utteranceDetailWrap', {
         'utterance-detailModalWrap': isOpenUtteranceDetailPopup === true,
       })}
     >
-      <form onSubmit={handleSubmit(handleSave)}>
+      <form
+        role="presentation"
+        onSubmit={handleSubmit(handleSave)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+        }}
+      >
         <div className="detailButtons">
           <div>
             <Button onClick={handleListBtn}>{t('LIST')}</Button>
@@ -224,6 +242,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         remove={remove}
         setIsActive={setIsActive}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+        handleClose={handleClose}
       />
     </div>
   );

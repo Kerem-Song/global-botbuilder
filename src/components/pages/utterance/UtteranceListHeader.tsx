@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useParams } from 'react-router';
 
 export interface IUtteranceListHeaderProps {
-  isOpenUtterancePopup: boolean;
+  isOpenUtterancePopup?: boolean;
   handleDetailPopupOpen?: () => void;
 }
 

@@ -21,6 +21,7 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
 }) => {
   const { i18n } = useI18n();
   const { t } = usePage();
+
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
@@ -43,19 +44,21 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
   });
 
   useEffect(() => {
-    const scenarioList = data
-      ?.filter((item) => !item.isFallbackFlow)
-      .map((x) => {
-        return { value: x.id, label: x.alias };
-      });
+    if (!isOpenUtteranceDetailPopup) {
+      const scenarioList = data
+        ?.filter((item) => !item.isFallbackFlow)
+        .map((x) => {
+          return { value: x.id, label: x.alias };
+        });
 
-    const total = [
-      { value: '', label: t('SELECT_SCENARIO') },
-      ...(scenarioList ? scenarioList : []),
-    ];
+      const total = [
+        { value: '', label: t('SELECT_SCENARIO') },
+        ...(scenarioList ? scenarioList : []),
+      ];
 
-    setTotalScenarioList(total);
-  }, [data, language]);
+      setTotalScenarioList(total);
+    }
+  }, [language, isOpenUtteranceDetailPopup]);
 
   useEffect(() => {
     if (nameField.value === '' && intentNameRef.current) {

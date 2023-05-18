@@ -1,4 +1,5 @@
-import { icNoResult } from '@assets';
+import { icDelete, icDeleteDefault, icNoResult } from '@assets';
+import { Button } from '@components/general';
 import { usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
@@ -15,9 +16,9 @@ import { lunaToast } from '../../../../src/modules/lunaToast';
 import { UtteranceSkeleton } from './UtteranceSkeleton';
 
 export interface IUtteranceListItemProps {
-  searchData?: ISearchData;
+  searchData: ISearchData;
   isOpenUtterancePopup: boolean;
-  handleDetailPopupOpen?: () => void;
+  handleDetailPopupOpen?: (intentId: string) => void;
 }
 
 export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
@@ -38,10 +39,14 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     data: initialData,
     fetchNextPage,
     isFetching,
-  } = changePageNumberQuery(searchData!);
+  } = changePageNumberQuery(searchData);
 
-  const handleGetIntent = (intentId: string) => {
-    navigate(`/${botId}/utterance/detail/${intentId}`);
+  const handleIntent = (intentId: string) => {
+    if (isOpenUtterancePopup && handleDetailPopupOpen) {
+      handleDetailPopupOpen(intentId);
+    } else {
+      navigate(`/${botId}/utterance/detail/${intentId}`);
+    }
   };
 
   const openDeleteModal = async (intentId: string) => {
@@ -83,12 +88,10 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     }
   }, [inView]);
 
-  console.log('isOpenUtterancePopup', isOpenUtterancePopup);
-
   return (
     <>
       {!initialData || isFetching ? (
-        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
+        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup!} />
       ) : (
         <>
           {isExistInitialData(initialData) ? (
@@ -105,7 +108,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                     key={i}
                     className="list"
                     ref={ref}
-                    onClick={() => handleGetIntent(x.intentId)}
+                    onClick={() => handleIntent(x.intentId)}
                   >
                     <td
                       role="presentation"
@@ -142,7 +145,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                           e.stopPropagation();
                           openDeleteModal(x.intentId);
                         }}
-                      ></button>
+                      />
                     </td>
                   </tr>
                 );

@@ -15,6 +15,7 @@ export interface IUtteranceDetailItemsProps {
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
+  handleClose: (() => void) | undefined;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -23,6 +24,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   remove,
   setIsActive,
   isOpenUtteranceDetailPopup,
+  handleClose,
 }) => {
   const { t } = usePage();
   const [searchWord, setSearchWord] = useState<string>('');

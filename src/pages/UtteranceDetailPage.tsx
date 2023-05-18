@@ -1,4 +1,5 @@
 import { UtteranceDetail } from '@components/pages/utterance/UtteranceDetail';
+import { UtteranceDetailComponent } from '@components/pages/utterance/UtteranceDetailComponent';
 import { FC } from 'react';
 
 import { TitleHelmet } from '../components/common/TitleHelmet';
@@ -8,7 +9,7 @@ export const UtteranceDetailPage: FC = () => {
   return (
     <PageProvider pageName="UtternaceDetailPage">
       <TitleHelmet />
-      <UtteranceDetail />
+      <UtteranceDetailComponent />
     </PageProvider>
   );
 };

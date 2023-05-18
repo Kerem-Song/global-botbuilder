@@ -1,15 +1,20 @@
 import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
+import { UtteranceDetailPopup } from '@components/pages/utterance/UtteranceDetailPopup';
+import { UtterancePopup } from '@components/pages/utterance/UtterancePopup';
 import {
   useHistoryViewerMatch,
   useModalOpen,
+  useModalOpenExtra,
   useNodeContextMenu,
   usePage,
   useRootState,
+  useScenarioClient,
   useUpdateLines,
 } from '@hooks';
-import { IArrow, INode } from '@models';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
+import { IArrow, INode, ISearchData } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -20,7 +25,7 @@ import {
 } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
@@ -28,6 +33,7 @@ import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
 import { NODE_PREFIX, nodeHelper } from '../../../../modules';
+import { IntentUtterancePopup } from '../IntentUtterancePopup';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
@@ -59,9 +65,11 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
-  const { tc } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
+
+  const { tc } = usePage();
   const dispatch = useDispatch();
+
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
@@ -80,8 +88,11 @@ export const Node: FC<INodeProps> = ({
   const bodyClass = classNames('luna-node-body');
   const isHistoryViewer = useHistoryViewerMatch();
 
+  const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
+    useModalOpen();
+
   const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
-    useNodeContextMenu({ handleIsOpen });
+    useNodeContextMenu({ handleIsOpen, handleIsOpenUtterancePopup });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -296,6 +307,12 @@ export const Node: FC<INodeProps> = ({
             node={node}
           />
         )}
+      {typeName === 'IntentNode' && (
+        <IntentUtterancePopup
+          handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
+          isOpenUtterancePopup={isOpenUtterancePopup}
+        />
+      )}
     </>
   );
 };
