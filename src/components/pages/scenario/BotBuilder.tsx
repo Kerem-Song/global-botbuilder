@@ -260,7 +260,7 @@ export const Botbuilder = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
       const titleReg = clone.title;
-      const titleRegTest = new RegExp(`\\^${titleReg}\\$`, 'g');
+      const titleRegTest = new RegExp(`\\b${titleReg}\\b`, 'g');
       const titleRegex = new RegExp(`[${clone.title}]`, 'g');
 
       const filtered = nodes.filter((node) => {
