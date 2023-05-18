@@ -1,8 +1,9 @@
-import { useModalOpen, useModalOpenExtra, useRootState } from '@hooks';
-import { UtterancePopup } from '../utterance/UtterancePopup';
-import { UtteranceDetailPopup } from '../utterance/UtteranceDetailPopup';
-import { FC, useState } from 'react';
+import { useModalOpenExtra, useRootState } from '@hooks';
 import { ISearchData } from '@models';
+import { FC, useState } from 'react';
+
+import { UtteranceDetailPopup } from '../utterance/UtteranceDetailPopup';
+import { UtterancePopup } from '../utterance/UtterancePopup';
 
 export interface IIntentUtterancePopupProps {
   isOpenUtterancePopup: boolean;

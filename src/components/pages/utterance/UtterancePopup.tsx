@@ -3,7 +3,7 @@ import { Input } from '@components';
 import { Button } from '@components/general';
 import { usePage, useRootState } from '@hooks';
 import { ISearchData } from '@models';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
 
 import { UtteranceListHeader } from './UtteranceListHeader';
@@ -28,10 +28,13 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
   const { t } = usePage();
-  const [searchWord, setSearchWord] = useState<string>('');
 
-  const handleSearch = (keyword?: string) => {
-    setSearchWord(keyword!);
+  const handleSearch = (keyword: string) => {
+    setSearchData({
+      sort: 1,
+      scenarios: selectedScenarios && selectedScenarios.id,
+      searchWord: keyword,
+    });
   };
 
   const handleClose = () => {
@@ -68,8 +71,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
             size="small"
             search
             placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
-            value={searchWord}
-            onSearch={(value) => handleSearch(value)}
+            onSearch={(value) => handleSearch(value!)}
             onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
