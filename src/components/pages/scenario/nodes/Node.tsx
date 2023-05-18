@@ -33,6 +33,7 @@ import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
 import { NODE_PREFIX, nodeHelper } from '../../../../modules';
+import { IntentUtterancePopup } from '../IntentUtterancePopup';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
@@ -64,28 +65,7 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
-  const selectedScenarios = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
   const { isOpen, handleIsOpen } = useModalOpen();
-  const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
-    useModalOpen();
-  const {
-    extra: utteranceId,
-    isOpen: isOpenUtteranceDetailPopup,
-    handleOpen: handleOpenUtteranceDetailPopup,
-    handleClose: handleCloseUtteranceDetailPopup,
-  } = useModalOpenExtra<string | undefined>();
-
-  const handleOpenDetailUtterancePopup = (utteranceId?: string) => {
-    handleOpenUtteranceDetailPopup(utteranceId);
-  };
-
-  const [searchData, setSearchData] = useState<ISearchData>({
-    sort: 1,
-    scenarios: selectedScenarios && selectedScenarios.id,
-    searchWord: undefined,
-  });
 
   const { tc } = usePage();
   const dispatch = useDispatch();
@@ -107,6 +87,9 @@ export const Node: FC<INodeProps> = ({
   const titleClass = classNames('luna-node-head');
   const bodyClass = classNames('luna-node-body');
   const isHistoryViewer = useHistoryViewerMatch();
+
+  const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
+    useModalOpen();
 
   const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
     useNodeContextMenu({ handleIsOpen, handleIsOpenUtterancePopup });
@@ -322,26 +305,10 @@ export const Node: FC<INodeProps> = ({
         />
       )}
       {typeName === 'IntentNode' && (
-        <>
-          {isOpenUtterancePopup && (
-            <UtterancePopup
-              isOpenUtterancePopup={isOpenUtterancePopup}
-              handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
-              handleIsOpenUtteranceDetailPopup={handleOpenDetailUtterancePopup}
-              searchData={searchData}
-              setSearchData={setSearchData}
-            />
-          )}
-
-          {isOpenUtteranceDetailPopup && (
-            <UtteranceDetailPopup
-              utteranceId={utteranceId}
-              isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-              handleCloseUtteranceDetailPopup={handleCloseUtteranceDetailPopup}
-              handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
-            />
-          )}
-        </>
+        <IntentUtterancePopup
+          handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
+          isOpenUtterancePopup={isOpenUtterancePopup}
+        />
       )}
     </>
   );
