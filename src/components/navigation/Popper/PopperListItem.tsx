@@ -39,11 +39,9 @@ export const PopperListItem = <T extends object>({
         );
       case 'icon-front': {
         return (
-          <div className={popperList}>
+          <div className={popperList} role="presentation" onClick={handleCheckChange}>
             <img src={item.icon} alt="icon" />
-            <div className="items-name" role="presentation" onClick={handleCheckChange}>
-              {item.name}
-            </div>
+            <div className="items-name">{item.name}</div>
           </div>
         );
       }

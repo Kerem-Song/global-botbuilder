@@ -23,12 +23,11 @@ import classNames from 'classnames';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
+import { TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
 import { NODE_PREFIX, nodeHelper } from '../../../../modules';
-import { NextNodeButton } from '../NextNodeButton';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
