@@ -1,6 +1,11 @@
 import { Button, Col, Collapse, FormItem, Input, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
-import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
+import {
+  IGNodeEditModel,
+  IMAGE_CTRL_TYPES,
+  ImageAspectRatio,
+  PriceDisplayType,
+} from '@models';
 import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -8,6 +13,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { reactSelectStyle } from './ButtonTypeSelector';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
@@ -37,10 +43,22 @@ export const DataProductCardNodeEdit = () => {
     name: 'view.isShuffle',
     control,
   });
-  const { field: currencyField } = useController({
-    name: `view.currencyUnit`,
+  const { field: priceDisplayTypeField } = useController({
+    name: `view.priceDisplayType`,
     control,
   });
+
+  const priceDisplayTypeOptions = [
+    { label: t(`DATA_PRODUCT_CARD_NODE_PRICE_DISPLAY_ALL`), value: PriceDisplayType.All },
+    {
+      label: t(`DATA_PRODUCT_CARD_NODE_PRICE_DISPLAY_RETAIL_PRICE`),
+      value: PriceDisplayType.Retail,
+    },
+    {
+      label: t(`DATA_PRODUCT_CARD_NODE_PRICE_DISPLAY_SALE_PRICE`),
+      value: PriceDisplayType.Sale,
+    },
+  ];
 
   const handleCarouselNum = (button: boolean) => {
     if (button) {
@@ -183,16 +201,22 @@ export const DataProductCardNodeEdit = () => {
         <div className="m-b-8">
           <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
             <Space direction="vertical">
-              <FormItem error={errors.view && errors.view.description}>
-                <InputWithTitleCounter
-                  label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
-                  required={true}
-                  {...register(`view.description`)}
-                  isLight={true}
-                  readOnly={isHistoryViewer}
-                />
-              </FormItem>
-
+              <span className="subLabel">
+                {t(`DATA_PRODUCT_CARD_NODE_PRICE_DISPLAY_SETTING`)}
+              </span>
+              <Select
+                className="react-selector"
+                {...priceDisplayTypeField}
+                options={priceDisplayTypeOptions}
+                styles={reactSelectStyle}
+                defaultValue={priceDisplayTypeOptions[0]}
+                value={priceDisplayTypeOptions.find(
+                  (item) => item.value === priceDisplayTypeField.value,
+                )}
+                onChange={(options: any) =>
+                  priceDisplayTypeField.onChange(options?.value)
+                }
+              />
               <div className="m-b-8">
                 <FormItem error={errors.view && errors.view.retailPriceParam}>
                   <Row justify="space-between" gap={4}>
@@ -242,6 +266,15 @@ export const DataProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePriceParam`)}
+                  isLight={true}
+                  readOnly={isHistoryViewer}
+                />
+              </FormItem>
+              <FormItem error={errors.view && errors.view.description}>
+                <InputWithTitleCounter
+                  label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                  required={true}
+                  {...register(`view.description`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
                 />

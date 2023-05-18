@@ -147,25 +147,18 @@ export const Node: FC<INodeProps> = ({
   };
 
   const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log('@ctrl key event', e);
     if (e.key === 'Delete') {
       deleteCard(node);
     } else if (e.code === 'KeyC' && e.ctrlKey) {
-      console.log('@ctrl c');
       handleDuplicationCard(node);
     } else if (e.code === 'KeyX' && e.ctrlKey) {
-      console.log('@ctrl x');
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
     }
   };
 
   const handleCtrlVCommand = (e: KeyboardEvent) => {
-    console.log('@ctrl v test 입니다');
-    console.log('@ctrl v test', e);
-
     if (e.code === 'KeyV' && e.ctrlKey) {
-      console.log('@ctrl v');
       handlePasteCard();
     }
   };

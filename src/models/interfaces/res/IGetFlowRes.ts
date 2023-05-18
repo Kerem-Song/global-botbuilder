@@ -5,7 +5,7 @@ import {
   TViewTypes,
   ValueOf,
 } from '@models';
-import { ImageAspectRatio } from '@models/enum';
+import { ImageAspectRatio, PriceDisplayType } from '@models/enum';
 import { NodeKind } from '@models/enum/NodeKind';
 
 export const ACTION_TYPES = {
@@ -285,14 +285,14 @@ export interface IListCardCarouselView extends IHasButtonCarouselViewBase {
   count: number;
   childrenViews: IListCardView[];
 }
-
 export interface IProductCardView extends IHasButtonViewBase {
   currencyUnit: 'USD' | 'KRW' | 'JPY' | string;
   description: string;
-  retailPrice: number;
   imageCtrl: IImageCtrl;
-  salePrice: number;
+  priceDisplayType?: PriceDisplayType;
+  retailPrice: number;
   discountAmount?: number;
+  salePrice: number;
   profileIconUrl: string;
   profileName: string;
   seq: number;
@@ -376,6 +376,7 @@ export interface IProductCardTemplateView extends IHasButtonViewBase {
   profileName: string;
   seq: number;
   profileImgPath: string;
+  priceDisplayType: PriceDisplayType;
   retailPriceParam: string;
   discountAmountParam: string;
   salePriceParam: string;
