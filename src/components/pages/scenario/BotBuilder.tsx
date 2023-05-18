@@ -173,7 +173,7 @@ export const Botbuilder = () => {
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
-    console.log('cardtype', cardType);
+
     if (!cardType) {
       handleIsOpen(true);
       setPopUpPosition({
@@ -259,7 +259,7 @@ export const Botbuilder = () => {
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
-      const titleRegex = new RegExp(`${clone.title}`);
+      const titleRegex = new RegExp(`[${clone.title}]`);
 
       const filtered = nodes.filter((node) => {
         console.log('@titleRegex', titleRegex);

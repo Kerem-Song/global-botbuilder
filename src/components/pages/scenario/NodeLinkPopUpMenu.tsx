@@ -146,6 +146,7 @@ export const NodeLinkPopUpMenu = ({
       };
     }[]
   >();
+  const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
   const guideStart = useRootState((state) => state.botBuilderReducer.savedGuideInfo);
 
@@ -169,10 +170,30 @@ export const NodeLinkPopUpMenu = ({
     const nodeName = e.currentTarget.dataset.nodename;
 
     const nodeView = nodeDefaultHelper.createDefaultView(nodeType);
+
+    const basicNameNodesRegex = new RegExp(`${nodeName}`);
+    const filtered = nodes.filter((node) => basicNameNodesRegex.test(node.title!));
+    let index = 1;
+
+    if (filtered || tempNodeNames) {
+      const regex = /[^0-9]/g;
+      const results = filtered?.map((x) => Number(x.title?.replace(regex, ''))) || [];
+      const max = Math.max(...results, ...tempNodeNames);
+
+      for (let i = 1; i <= max + 1; i++) {
+        if (!results.includes(i)) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    setTempNodeNames([...tempNodeNames, index]);
+
     const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: nodeType,
-      title: nodeName,
+      title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       view: nodeView,
       seq: 0,
       x: Math.round(popUpPosition.x),
