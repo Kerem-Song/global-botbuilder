@@ -21,3 +21,20 @@ export const useModalOpen = () => {
 
   return { isOpen, handleIsOpen };
 };
+
+export const useModalOpenExtra = <T>() => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [extra, setExtra] = useState<T>();
+
+  const handleOpen = (extra: T) => {
+    setIsOpen(true);
+    setExtra(extra);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setExtra(undefined);
+  };
+
+  return { isOpen, extra, handleOpen, handleClose };
+};

@@ -34,6 +34,7 @@ export const ManagementComponent = () => {
         ),
     );
   }, [searchKeyword, isActivated, data]);
+
   return (
     <div className="managementWrapper">
       <div className="scenarioName">

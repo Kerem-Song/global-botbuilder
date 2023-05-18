@@ -32,7 +32,7 @@ export interface ISaveIntent {
   intentId?: string;
   intentName: string;
   utterances: (string | undefined)[];
-  flowId?: string;
+  flowId: string | null;
 }
 
 export interface IResponseIntentData {

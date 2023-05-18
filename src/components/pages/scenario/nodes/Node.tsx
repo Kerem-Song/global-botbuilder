@@ -1,15 +1,20 @@
 import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
+import { UtteranceDetailPopup } from '@components/pages/utterance/UtteranceDetailPopup';
+import { UtterancePopup } from '@components/pages/utterance/UtterancePopup';
 import {
   useHistoryViewerMatch,
   useModalOpen,
+  useModalOpenExtra,
   useNodeContextMenu,
   usePage,
   useRootState,
+  useScenarioClient,
   useUpdateLines,
 } from '@hooks';
-import { IArrow, INode } from '@models';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
+import { IArrow, INode, ISearchData } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -20,7 +25,7 @@ import {
 } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TNodeTypes } from '../../../../models/interfaces/ICard';
@@ -59,9 +64,32 @@ export const Node: FC<INodeProps> = ({
   onClick,
   addArrow,
 }) => {
-  const { tc } = usePage();
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
   const { isOpen, handleIsOpen } = useModalOpen();
+  const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
+    useModalOpen();
+  const {
+    extra: utteranceId,
+    isOpen: isOpenUtteranceDetailPopup,
+    handleOpen: handleOpenUtteranceDetailPopup,
+    handleClose: handleCloseUtteranceDetailPopup,
+  } = useModalOpenExtra<string | undefined>();
+
+  const handleOpenDetailUtterancePopup = (utteranceId?: string) => {
+    handleOpenUtteranceDetailPopup(utteranceId);
+  };
+
+  const [searchData, setSearchData] = useState<ISearchData>({
+    sort: 1,
+    scenarios: selectedScenarios && selectedScenarios.id,
+    searchWord: undefined,
+  });
+
+  const { tc } = usePage();
   const dispatch = useDispatch();
+
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
@@ -81,7 +109,7 @@ export const Node: FC<INodeProps> = ({
   const isHistoryViewer = useHistoryViewerMatch();
 
   const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
-    useNodeContextMenu({ handleIsOpen });
+    useNodeContextMenu({ handleIsOpen, handleIsOpenUtterancePopup });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -292,6 +320,28 @@ export const Node: FC<INodeProps> = ({
           nodeId={`${NODE_PREFIX}${id}`}
           node={node}
         />
+      )}
+      {typeName === 'IntentNode' && (
+        <>
+          {isOpenUtterancePopup && (
+            <UtterancePopup
+              isOpenUtterancePopup={isOpenUtterancePopup}
+              handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
+              handleIsOpenUtteranceDetailPopup={handleOpenDetailUtterancePopup}
+              searchData={searchData}
+              setSearchData={setSearchData}
+            />
+          )}
+
+          {isOpenUtteranceDetailPopup && (
+            <UtteranceDetailPopup
+              utteranceId={utteranceId}
+              isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+              handleCloseUtteranceDetailPopup={handleCloseUtteranceDetailPopup}
+              handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
+            />
+          )}
+        </>
       )}
     </>
   );

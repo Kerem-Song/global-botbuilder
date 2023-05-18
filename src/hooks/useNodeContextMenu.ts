@@ -12,8 +12,10 @@ import usePage from './usePage';
 
 export const useNodeContextMenu = ({
   handleIsOpen,
+  handleIsOpenUtterancePopup,
 }: {
   handleIsOpen: (value: boolean) => void;
+  handleIsOpenUtterancePopup: (value: boolean) => void;
 }) => {
   const { tc } = usePage();
   const dispatch = useDispatch();
@@ -46,6 +48,12 @@ export const useNodeContextMenu = ({
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
     handleIsOpen(true);
+  };
+
+  const handleUtterancePopup = () => {
+    if (handleIsOpenUtterancePopup) {
+      handleIsOpenUtterancePopup(true);
+    }
   };
 
   const nodeMenu: IPopperItem<{
@@ -99,7 +107,7 @@ export const useNodeContextMenu = ({
       icon: icEditCarousel,
       data: {
         kind: NodeContextMenuKind.Utterance,
-        action: () => null,
+        action: handleUtterancePopup,
       },
     },
   ];
@@ -117,5 +125,12 @@ export const useNodeContextMenu = ({
     // console.log(typeName, result);
     return result;
   };
-  return { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu, nodeMenu };
+  return {
+    handleDuplicationCard,
+    handleCutCard,
+    deleteCard,
+    getNodeMenu,
+    nodeMenu,
+    handleUtterancePopup,
+  };
 };

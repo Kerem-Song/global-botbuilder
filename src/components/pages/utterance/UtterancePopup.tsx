@@ -1,7 +1,7 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
 import { Button } from '@components/general';
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { ISearchData } from '@models';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import ReactModal from 'react-modal';
@@ -12,7 +12,7 @@ import { UtteranceListItem } from './UtteranceListItem';
 export interface IUtterancePopupProps {
   isOpenUtterancePopup: boolean;
   handleIsOpenUtterancePopup: (value: boolean) => void;
-  handleIsOpenUtteranceDetailPopup: (value: boolean) => void;
+  handleIsOpenUtteranceDetailPopup: (utteranceId?: string) => void;
   searchData: ISearchData;
   setSearchData: Dispatch<SetStateAction<ISearchData>>;
 }
@@ -24,6 +24,9 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   searchData,
   setSearchData,
 }) => {
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
   const { t } = usePage();
   const [searchWord, setSearchWord] = useState<string>('');
 
@@ -35,9 +38,9 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     handleIsOpenUtterancePopup(false);
   };
 
-  const handleDetailPopupOpen = () => {
+  const handleDetailPopupOpen = (utteranceId?: string) => {
     handleIsOpenUtterancePopup(false);
-    handleIsOpenUtteranceDetailPopup(true);
+    handleIsOpenUtteranceDetailPopup(utteranceId);
   };
 
   return (
@@ -49,7 +52,10 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     >
       <div className="utteranceWrap">
         <div className="utteranceDetail">
-          <div className="utteranceDetailTitle">{t('TITLE')}</div>
+          <div className="utteranceDetailTitle">
+            {selectedScenarios?.alias}
+            {/* {t('TITLE')} */}
+          </div>
           <Button
             className="utteranceDetailClose"
             shape="ghost"
