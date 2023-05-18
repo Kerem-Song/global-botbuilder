@@ -130,7 +130,10 @@ export const CarouselOrderPopup: FC<{
       shouldCloseOnEsc={closeOnEsc}
       onRequestClose={handleClose}
     >
-      <div onWheel={(e) => e.stopPropagation()}>
+      <div
+        onWheel={(e) => e.stopPropagation()}
+        onContextMenu={(e) => e.stopPropagation()}
+      >
         <Row justify="space-between" align="center" className="titleWrapper">
           <Col>
             <p className="carouselTitle">{node.title}</p>

@@ -53,7 +53,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
     >
-      <div className="utteranceWrap">
+      <div className="utteranceWrap" onContextMenu={(e) => e.stopPropagation()}>
         <div className="utteranceDetail">
           <div className="utteranceDetailTitle">
             {selectedScenarios?.alias}
