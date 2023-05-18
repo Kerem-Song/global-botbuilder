@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { TNodeTypes } from '../../../../models/interfaces/ICard';
+import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
@@ -283,16 +283,19 @@ export const Node: FC<INodeProps> = ({
           )}
         </div>
       </Popper>
-      {node.view && (
-        <CarouselOrderPopup
-          isOpen={isOpen}
-          handleIsOpen={handleIsOpen}
-          handleSave={handleChangeCarouselOrder}
-          nodeView={node.view as IHasChildrenView}
-          nodeId={`${NODE_PREFIX}${id}`}
-          node={node}
-        />
-      )}
+      {node.view &&
+        (node.type === NODE_TYPES.BASIC_CARD_CAROUSEL_NODE ||
+          node.type === NODE_TYPES.LIST_CARD_CAROUSEL_NODE ||
+          node.type === NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE) && (
+          <CarouselOrderPopup
+            isOpen={isOpen}
+            handleIsOpen={handleIsOpen}
+            handleSave={handleChangeCarouselOrder}
+            nodeView={node.view as IHasChildrenView}
+            nodeId={`${NODE_PREFIX}${id}`}
+            node={node}
+          />
+        )}
     </>
   );
 };

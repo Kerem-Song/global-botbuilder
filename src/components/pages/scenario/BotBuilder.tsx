@@ -259,12 +259,15 @@ export const Botbuilder = () => {
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
-      const titleRegex = new RegExp(`[${clone.title}]`);
+      const titleReg = clone.title;
+      const titleRegTest = new RegExp(`\\^${titleReg}\\$`, 'g');
+      const titleRegex = new RegExp(`[${clone.title}]`, 'g');
 
       const filtered = nodes.filter((node) => {
-        console.log('@titleRegex', titleRegex);
+        console.log('@titleRegex', titleRegTest);
         console.log('@node', node.title);
-        console.log('@regex test', titleRegex.test(node.title!));
+        console.log('@regex test', titleRegTest.test(node.title!));
+        // return titleRegTest.test(node.title!);
         return titleRegex.test(node.title!);
       });
       console.log('@filtered', filtered);
