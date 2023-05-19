@@ -61,7 +61,7 @@
         }
       }
       .emptyList {
-        height: rem(207);
+        height: rem(190);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -132,7 +132,7 @@
   border-radius: rem(12);
   background-color: $grayWhite;
   .utterance-detailModal {
-    height: rem(310);
+    max-height: rem(300);
     overflow-y: scroll;
   }
   .utterance-detailModal::-webkit-scrollbar {

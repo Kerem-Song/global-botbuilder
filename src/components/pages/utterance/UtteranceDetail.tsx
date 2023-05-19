@@ -185,6 +185,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       className={classNames('utteranceDetailWrap', {
         'utterance-detailModalWrap': isOpenUtteranceDetailPopup === true,
       })}
+      onContextMenu={(e) => e.stopPropagation()}
     >
       <form
         role="presentation"
