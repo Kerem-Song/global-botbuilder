@@ -126,12 +126,25 @@ export const BotBuilderHeader = () => {
 
   const appDispatch = useAppDispatch();
   const handleScenarioSave = async () => {
+    const model = formMethods.getValues();
     if (isEditDrawOpen) {
-      await appDispatch(editNodeAsync(formMethods.getValues()));
+      const isValid = await formMethods.trigger();
+      console.log(isValid);
+      dispatch(setInvalidateNode({ id: model.id, isValid }));
+      await appDispatch(editNodeAsync(model));
+
+      if (!isValid) {
+        lunaToast.error('저장에 실패하였습니다.');
+        return;
+      }
     }
     if (selectedScenario) {
       const results = await Promise.all(
         nodes.map(async (n) => {
+          if (n.id === selected) {
+            return true;
+          }
+
           try {
             await schema.validate(n);
             dispatch(setInvalidateNode({ id: n.id, isValid: true }));
@@ -141,13 +154,12 @@ export const BotBuilderHeader = () => {
             if (n.option === 20) {
               checkFallbackStart();
             }
-
             dispatch(setInvalidateNode({ id: n.id, isValid: false }));
             return false;
           }
         }),
       );
-
+      console.log('validates', results);
       if (results.includes(false)) {
         lunaToast.error('저장에 실패하였습니다.');
         return;
