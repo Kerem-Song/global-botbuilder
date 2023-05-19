@@ -71,7 +71,7 @@ export const DefaultSettingBot = () => {
       botName: name !== botInfo.botName ? name : undefined,
     });
 
-    if (res?.data.isSuccess === true) {
+    if (res?.data.isSuccess) {
       lunaToast.success(tc('SAVE_MESSAGE'));
       setIsSaveBtnActive(false);
     }

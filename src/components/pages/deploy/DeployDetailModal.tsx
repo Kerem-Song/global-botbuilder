@@ -118,7 +118,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
                   failed: detailInfo.isSuccess === false,
                 })}
               >
-                {detailInfo.isSuccess === true ? t('SUCCESS') : t('FAILED')}
+                {detailInfo.isSuccess ? t('SUCCESS') : t('FAILED')}
               </span>
               {deployResult
                 .filter((x) => x.value !== 1)

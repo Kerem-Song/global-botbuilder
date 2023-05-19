@@ -97,7 +97,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
               </Radio>
               <Radio
                 style={{ marginLeft: '40px' }}
-                checked={isRegexField.value === true}
+                checked={isRegexField.value}
                 onChange={() => isRegexField.onChange(true)}
                 ref={isRegexField.ref}
               >
@@ -106,7 +106,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
             </>
           )}
         </Row>
-        {watch('isRegex') === true && (
+        {watch('isRegex') && (
           <Row align="center" gap={10}>
             <Col style={{ width: '140px' }}>
               <span>{t('REGULAR_EXPRESSION')}</span>
