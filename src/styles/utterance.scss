@@ -135,6 +135,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         .empty {
           display: flex;
           flex-direction: column;
@@ -149,6 +150,9 @@
             font-weight: rem(500);
             line-height: rem(25);
           }
+        }
+        &.popup {
+          height: rem(382);
         }
       }
     }

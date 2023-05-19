@@ -1,5 +1,4 @@
-import { icDelete, icDeleteDefault, icNoResult } from '@assets';
-import { Button } from '@components/general';
+import { icNoResult } from '@assets';
 import { usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
@@ -73,9 +72,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const isExistInitialData = (
     data: InfiniteData<IPagingItems<IIntentListItem>> | undefined,
   ): boolean => {
-    if (!data) {
-      return true;
-    }
     if (data?.pages && data?.pages?.reduce((acc, cur) => acc + cur.totalPage, 0) > 0) {
       return true;
     }
@@ -83,6 +79,10 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   };
 
   useEffect(() => {
+    if (!initialData) {
+      return;
+    }
+
     if (inView) {
       fetchNextPage();
     }
@@ -152,7 +152,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               });
             })
           ) : (
-            <tr className="emptyList">
+            <tr className="emptyList popup">
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
                 {searchData?.searchWord ? (

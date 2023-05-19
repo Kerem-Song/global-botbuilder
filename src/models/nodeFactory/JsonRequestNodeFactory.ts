@@ -47,4 +47,8 @@ export class JsonRequestNodeFactory implements INodeFactory {
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
     return;
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

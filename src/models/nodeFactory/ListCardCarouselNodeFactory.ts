@@ -53,4 +53,8 @@ export class ListCardCarouselNodeFactory implements INodeFactory {
       view as IHasButtonCarouselViewBase,
     );
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

@@ -41,4 +41,8 @@ export class RetryConditionNodeFactory implements INodeFactory {
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
     arrowHelper.syncTrueFalseNodeArrow(startId, endId, view);
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

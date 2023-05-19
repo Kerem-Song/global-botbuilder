@@ -47,7 +47,7 @@ export const useUtteranceClient = () => {
         'Builder/SearchIntent',
         {
           sessionToken: token,
-          countPerPage: 50,
+          countPerPage: 15,
           pageNo: pageNo,
           orderType: sort,
           flowId: scenarios,
@@ -84,7 +84,7 @@ export const useUtteranceClient = () => {
       {
         getNextPageParam: (lastpage, pages) => {
           if (lastpage.totalPage > 1) {
-            const max = Math.ceil(lastpage.total / 50);
+            const max = Math.ceil(lastpage.total / 15);
             const next = pages.length + 1;
             return next <= max ? next : undefined;
           }
