@@ -42,4 +42,8 @@ export class DataListCardNodeFactory implements INodeFactory {
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
     arrowHelper.syncHasButtonArrow(startId, endId, view);
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

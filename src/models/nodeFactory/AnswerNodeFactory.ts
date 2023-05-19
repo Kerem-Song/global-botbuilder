@@ -41,4 +41,8 @@ export class AnswerNodeFactory implements INodeFactory {
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
     arrowHelper.syncAnswerNodeArrow(startId, endId, view);
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

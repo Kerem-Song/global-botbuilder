@@ -53,4 +53,8 @@ export class BasicCardCarouselNodeFactory implements INodeFactory {
       view as IHasButtonCarouselViewBase,
     );
   }
+
+  getNodeImgIconUrl() {
+    return '';
+  }
 }

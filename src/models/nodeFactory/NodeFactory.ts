@@ -26,6 +26,7 @@ export interface INodeFactory {
   typeName: TNodeTypes;
   nodeKind: NodeKind;
   NodeContextMenuKinds: NodeContextMenuKind;
+  getNodeImgIconUrl: () => string;
   getDefaultView: () => IViewBase;
   getEditElement: () => () => JSX.Element;
   getNodeElement: () => FC<IHasNode>;
