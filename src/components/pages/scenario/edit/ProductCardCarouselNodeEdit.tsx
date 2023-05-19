@@ -127,7 +127,6 @@ export const ProductCardCarouselNodeEdit = () => {
   };
 
   useEffect(() => {
-    trigger();
     resetField(`view.childrenViews.${index}.currencyUnit`);
   }, [index]);
 

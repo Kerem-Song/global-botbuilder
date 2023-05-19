@@ -194,6 +194,7 @@ export const nodeDefaultHelper = {
     return result;
   },
   createDefaultCommerceView: () => {
+    const sysCurrencyUnit = '@sys.brand-currency';
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
@@ -201,7 +202,7 @@ export const nodeDefaultHelper = {
       salePrice: 0,
       discountAmount: 0,
 
-      currencyUnit: 'KRW',
+      currencyUnit: '@sys.brand-currency',
       profileIconUrl: '',
       profileImgPath: '',
       profileName: '',
