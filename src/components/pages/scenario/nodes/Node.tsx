@@ -155,11 +155,9 @@ export const Node: FC<INodeProps> = ({
             return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
           }) || [];
 
-        const max = Math.max(...results);
-
-        for (let i = 1; i <= max + 1; i++) {
-          if (!results.includes(i)) {
-            index = i;
+        for (const i of results) {
+          if (!results.includes(i + 1)) {
+            index = Number(i + 1);
             break;
           }
         }
