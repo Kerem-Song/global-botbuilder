@@ -12,7 +12,7 @@ import { UtteranceListItem } from './UtteranceListItem';
 export interface IUtterancePopupProps {
   isOpenUtterancePopup: boolean;
   handleIsOpenUtterancePopup: (value: boolean) => void;
-  handleIsOpenUtteranceDetailPopup: (utteranceId?: string) => void;
+  handleIsOpenUtteranceDetailPopup: (intentId?: string) => void;
   searchData: ISearchData;
   setSearchData: Dispatch<SetStateAction<ISearchData>>;
 }
@@ -41,9 +41,9 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     handleIsOpenUtterancePopup(false);
   };
 
-  const handleDetailPopupOpen = (utteranceId?: string) => {
+  const handleDetailPopupOpen = (intentId?: string) => {
     handleIsOpenUtterancePopup(false);
-    handleIsOpenUtteranceDetailPopup(utteranceId);
+    handleIsOpenUtteranceDetailPopup(intentId);
   };
 
   return (

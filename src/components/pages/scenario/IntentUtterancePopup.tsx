@@ -24,14 +24,14 @@ export const IntentUtterancePopup: FC<IIntentUtterancePopupProps> = ({
   });
 
   const {
-    extra: utteranceId,
+    extra: intentId,
     isOpen: isOpenUtteranceDetailPopup,
     handleOpen: handleOpenUtteranceDetailPopup,
     handleClose: handleCloseUtteranceDetailPopup,
   } = useModalOpenExtra<string | undefined>();
 
-  const handleOpenDetailUtterancePopup = (utteranceId?: string) => {
-    handleOpenUtteranceDetailPopup(utteranceId);
+  const handleOpenDetailUtterancePopup = (intentId?: string) => {
+    handleOpenUtteranceDetailPopup(intentId);
   };
   return (
     <>
@@ -47,7 +47,7 @@ export const IntentUtterancePopup: FC<IIntentUtterancePopupProps> = ({
 
       {isOpenUtteranceDetailPopup && (
         <UtteranceDetailPopup
-          utteranceId={utteranceId}
+          intentId={intentId}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
           handleCloseUtteranceDetailPopup={handleCloseUtteranceDetailPopup}
           handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}

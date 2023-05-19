@@ -4,14 +4,14 @@ import ReactModal from 'react-modal';
 import { UtteranceDetail } from './UtteranceDetail';
 
 export interface IUtteranceDetailPopupProps {
-  utteranceId: string | undefined;
+  intentId?: string;
   isOpenUtteranceDetailPopup: boolean;
   handleCloseUtteranceDetailPopup: () => void;
   handleIsOpenUtterancePopup: (value: boolean) => void;
 }
 
 export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
-  utteranceId,
+  intentId,
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
   handleCloseUtteranceDetailPopup,
@@ -28,7 +28,7 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
       onRequestClose={handleClose}
     >
       <UtteranceDetail
-        utteranceId={utteranceId}
+        intentId={intentId}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         handleClose={handleClose}
       />
