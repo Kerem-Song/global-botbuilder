@@ -29,7 +29,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, t, tc } = usePage();
+  const { navigate, t, tc, setNavigateUrl } = usePage();
   const { botId } = useParams();
   const {
     intentAsync,
@@ -46,7 +46,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
 
-  // usePrompt(isActive);
+  usePrompt(isActive);
 
   const schema = yup.object({
     name: yup
@@ -72,6 +72,24 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const { reset, handleSubmit, control, getValues, watch } = formMethods;
 
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
+
+  useEffect(() => {
+    if (hasIntentId && hasIntentId.data) {
+      const resetValue = {
+        name: hasIntentId.data.result.intentName,
+        intentId: hasIntentId.data.result.intentId,
+        connectScenarioId: hasIntentId.data.result.flowId,
+        connectScenarioName: hasIntentId.data.result.flowName,
+      };
+      reset(resetValue);
+
+      prepend(
+        hasIntentId.data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { text: x.text, id: x.id };
+        }) || [],
+      );
+    }
+  }, [hasIntentId?.data]);
 
   const handleListBtn = () => {
     if (isOpenUtteranceDetailPopup && handleClose) {
@@ -127,7 +145,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         intentId: getValues('intentId'),
       });
 
-      if (checkIntentDuplication.result === true) {
+      if (checkIntentDuplication.result) {
         await error({
           title: t('DUPLICATE_INTENT'),
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
@@ -145,35 +163,17 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       if (isOpenUtteranceDetailPopup && handleClose) {
         handleClose();
       } else {
-        navigate(`/${botId}/utterance`);
+        setNavigateUrl(`/${botId}/utterance`);
       }
     } else if (res?.exception.errorCode === 7612) {
       await handleIntentDuplication();
     }
   };
 
-  useEffect(() => {
-    if (hasIntentId && hasIntentId.data) {
-      const resetValue = {
-        name: hasIntentId.data.result.intentName,
-        intentId: hasIntentId.data.result.intentId,
-        connectScenarioId: hasIntentId.data.result.flowId,
-        connectScenarioName: hasIntentId.data.result.flowName,
-      };
-      reset(resetValue);
-
-      prepend(
-        hasIntentId.data.result.utterances?.map<IUtteranceItem>((x) => {
-          return { text: x.text, id: x.id };
-        }) || [],
-      );
-    }
-  }, [hasIntentId?.data]);
-
   return (
     <div
       className={classNames('utteranceDetailWrap', {
-        'utterance-detailModalWrap': isOpenUtteranceDetailPopup === true,
+        'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
       })}
       onContextMenu={(e) => e.stopPropagation()}
     >
@@ -233,7 +233,6 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         remove={remove}
         setIsActive={setIsActive}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-        handleClose={handleClose}
       />
     </div>
   );

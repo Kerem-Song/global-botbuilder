@@ -1,5 +1,5 @@
 import { icNoResult } from '@assets';
-import { Checkbox, FormItem, Input } from '@components/data-entry';
+import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { usePage, useSystemModal } from '@hooks';
@@ -15,7 +15,6 @@ export interface IUtteranceDetailItemsProps {
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
-  handleClose: (() => void) | undefined;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -24,7 +23,6 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   remove,
   setIsActive,
   isOpenUtteranceDetailPopup,
-  handleClose,
 }) => {
   const { t } = usePage();
   const [searchWord, setSearchWord] = useState<string>('');
@@ -62,7 +60,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   return (
     <div
       className={classNames('utterance list', {
-        'utterance-detailModal': isOpenUtteranceDetailPopup === true,
+        'utterance-detailModal': isOpenUtteranceDetailPopup,
       })}
     >
       <Space direction="horizontal">

@@ -41,7 +41,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
             >
               <td className="deployHistoryList deployNumber">{x.no}</td>
               <td className="deployHistoryList channelType">
-                {x.isLive === true ? t('OPERATIONAL') : t('TEST')}
+                {x.isLive ? t('OPERATIONAL') : t('TEST')}
               </td>
               <td className="deployHistoryList channelName">{x.snsChannel}</td>
               <td className="deployHistoryList deployDateTime">
@@ -55,7 +55,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
                 <span
                   className={classNames('success', { failed: x.isSuccess === false })}
                 >
-                  {x.isSuccess === true ? t('SUCCESS') : t('FAILED')}
+                  {x.isSuccess ? t('SUCCESS') : t('FAILED')}
                 </span>
               </td>
               <td
