@@ -40,7 +40,6 @@ export const ListCardCarouselNodeEdit = () => {
     if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {
       setValue(`view.useImageCtrl`, true);
     }
-    trigger();
   }, [index]);
 
   return (
