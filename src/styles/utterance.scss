@@ -152,14 +152,14 @@
           }
         }
         &.popup {
-          height: rem(382);
+          height: rem(432);
         }
       }
     }
   }
 
   .utterancePopupListWrap {
-    height: rem(476);
+    max-height: rem(476);
     overflow-y: scroll;
   }
   // .utterancePopupListWrap::-webkit-scrollbar {

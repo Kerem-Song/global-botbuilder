@@ -18,13 +18,13 @@ import { UtteranceDetailItems } from './UtteranceDetailItems';
 import { UtteranceGroupInfo } from './UtteranceGroupInfo';
 
 export interface IUtteranceDetailProps {
-  utteranceId?: string;
+  intentId?: string;
   isOpenUtteranceDetailPopup?: boolean;
   handleClose?: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
-  utteranceId,
+  intentId,
   isOpenUtteranceDetailPopup,
   handleClose,
 }) => {
@@ -37,7 +37,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     intentDeleteAsync,
     checkIntentDuplicationAsync,
   } = useUtteranceClient();
-  const hasUtteranceId = getIntentDetailQuery(utteranceId);
+  const hasIntentId = getIntentDetailQuery(intentId);
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
   const { confirm, error } = useSystemModal();
@@ -88,27 +88,19 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     });
 
     if (result) {
-      if (!hasUtteranceId?.data?.result.intentId) {
-        console.log('마설..?');
-        return navigate(`/${botId}/utterance`);
-      } else {
-        const deleteIntent: IDeleteIntent = {
-          sessionToken: token!,
-          intentId: hasUtteranceId!.data?.result.intentId,
-        };
+      const deleteIntent: IDeleteIntent = {
+        sessionToken: token!,
+        intentId: intentId,
+      };
 
-        const res = await intentDeleteAsync(deleteIntent);
+      const res = await intentDeleteAsync(deleteIntent);
 
-        if (res && res.isSuccess) {
-          lunaToast.success();
-
-          if (isOpenUtteranceDetailPopup && handleClose) {
-            handleClose();
-            console.log('성공!!!');
-          } else {
-            navigate(`/${botId}/utterance`);
-            console.log('왜 요기로 가지?');
-          }
+      if (res && res.isSuccess) {
+        lunaToast.success();
+        if (isOpenUtteranceDetailPopup && handleClose) {
+          handleClose();
+        } else {
+          navigate(`/${botId}/utterance`);
         }
       }
     }
@@ -160,25 +152,23 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     }
   };
 
-  console.log('hasUtteranceId', hasUtteranceId);
-
   useEffect(() => {
-    if (hasUtteranceId && hasUtteranceId.data) {
+    if (hasIntentId && hasIntentId.data) {
       const resetValue = {
-        name: hasUtteranceId.data.result.intentName,
-        intentId: hasUtteranceId.data.result.intentId,
-        connectScenarioId: hasUtteranceId.data.result.flowId,
-        connectScenarioName: hasUtteranceId.data.result.flowName,
+        name: hasIntentId.data.result.intentName,
+        intentId: hasIntentId.data.result.intentId,
+        connectScenarioId: hasIntentId.data.result.flowId,
+        connectScenarioName: hasIntentId.data.result.flowName,
       };
       reset(resetValue);
 
       prepend(
-        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
+        hasIntentId.data.result.utterances?.map<IUtteranceItem>((x) => {
           return { text: x.text, id: x.id };
         }) || [],
       );
     }
-  }, [hasUtteranceId?.data]);
+  }, [hasIntentId?.data]);
 
   return (
     <div

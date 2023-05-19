@@ -68,7 +68,7 @@ const finalRoutes = [
                           handle: { title: 'UTTERANCE', role: 4 },
                         },
                         {
-                          path: ':utteranceId',
+                          path: ':intentId',
                           element: <UtteranceDetailPage />,
                           handle: { title: 'UTTERANCE', role: 4 },
                         },
