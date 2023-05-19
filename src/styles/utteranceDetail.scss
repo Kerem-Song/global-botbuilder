@@ -9,6 +9,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    div {
+      .addIntent {
+        font-size: rem(16);
+        font-weight: 500;
+      }
+    }
     .deleteBtn {
       background-color: #636364;
       color: $grayWhite;
@@ -23,6 +29,21 @@
     background-color: $grayWhite;
     padding: rem(20);
     border: 1px solid $gray200;
+    div {
+      .addUtterance {
+        font-size: rem(15);
+        font-weight: 500;
+      }
+      div {
+        .addUtteranceBtnWrap {
+          margin-left: rem(8);
+          .addUtteranceBtn {
+            width: rem(64);
+            height: rem(38);
+          }
+        }
+      }
+    }
   }
   .add {
     margin-top: rem(20);

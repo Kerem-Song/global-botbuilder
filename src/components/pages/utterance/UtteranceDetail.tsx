@@ -188,7 +188,12 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       >
         <div className="detailButtons">
           <div>
-            <Button onClick={handleListBtn}>{t('LIST')}</Button>
+            {!isOpenUtteranceDetailPopup && (
+              <Button onClick={handleListBtn}>{t('LIST')}</Button>
+            )}
+            {isOpenUtteranceDetailPopup && (
+              <p className="addIntent">{selectedScenarios?.alias} 인텐트 관리_등록</p>
+            )}
           </div>
           <div>
             <Button

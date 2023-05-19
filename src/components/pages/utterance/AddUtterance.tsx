@@ -29,20 +29,24 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   const handleAddUtternace = () => {
     if (!utteranceWord || !utteranceWord.trim()) return;
 
-    if (
-      getValues('items')
-        .map((x) => x.text)
-        ?.includes(utteranceWord)
-    ) {
+    const errorModal = (items: string) => {
       error({
         title: t('DUPLICATE_UTTERANCE'),
         description: (
           <div style={{ whiteSpace: 'pre-wrap' }}>
             <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
-            <span style={{ color: 'red' }}>{getValues('name')}</span>
+            <span style={{ color: 'red' }}>{items}</span>
           </div>
         ),
       });
+    };
+
+    if (
+      getValues('items')
+        .map((x) => x.text)
+        ?.includes(utteranceWord)
+    ) {
+      errorModal(getValues('name'));
       if (utteranceRef.current) {
         utteranceRef.current.select();
       }
@@ -57,15 +61,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         onSuccess: (result) => {
           console.log('result', result);
           if (result.length > 0) {
-            error({
-              title: t('DUPLICATE_UTTERANCE'),
-              description: (
-                <div style={{ whiteSpace: 'pre-wrap' }}>
-                  <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
-                  <span style={{ color: 'red' }}>{result[0].intentName}</span>
-                </div>
-              ),
-            });
+            errorModal(result[0].intentName);
             if (utteranceRef.current) {
               utteranceRef.current.select();
             }
@@ -84,7 +80,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   return (
     <div className="utterance add">
       <Space direction="vertical">
-        <p style={{ fontSize: '16px', fontWeight: 500 }}>{t('ADD_UTTERANCE')}</p>
+        <p className="addUtterance">{t('ADD_UTTERANCE')}</p>
         <Row>
           <Col flex="auto">
             <Input
@@ -98,23 +94,16 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
               placeholder={t('ENTER_UTTERANCE')}
             />
           </Col>
-          <Col style={{ marginLeft: '8px' }}>
+          <Col className="addUtteranceBtnWrap">
             <Button
               type="primary"
-              style={{
-                width: '64px',
-                height: '33px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              className="addUtteranceBtn"
+              icon={icEnter}
               onClick={() => {
                 handleAddUtternace();
               }}
               disabled={utteranceWord && isEditing ? false : true}
-            >
-              <img src={icEnter} alt="enter" />
-            </Button>
+            ></Button>
           </Col>
         </Row>
       </Space>
