@@ -259,34 +259,21 @@ export const Botbuilder = () => {
   const handlePasteCard = () => {
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
-      const titleReg = clone.title;
-      const titleRegTest = new RegExp(`\\b${titleReg}\\b`, 'g');
-      const titleRegex = new RegExp(`[${clone.title}]`, 'g');
 
       const filtered = nodes.filter((node) => {
-        console.log('@titleRegex', titleRegTest);
-        console.log('@node', node.title);
-        console.log('@regex test', titleRegTest.test(node.title!));
-        // return titleRegTest.test(node.title!);
-        return titleRegex.test(node.title!);
+        return node.title?.includes(clone.title!);
       });
-      console.log('@filtered', filtered);
+
       let index = 1;
 
-      if (filtered || tempNodeNames) {
+      if (filtered) {
         const regex = /[^0-9]/g;
         const results =
           filtered?.map((x) => {
-            console.log('@before replace', x.title);
-            console.log('@first replace', x.title?.replace(clone.title!, ''));
-            console.log(
-              '@second replace',
-              x.title?.replace(clone.title!, '').replace(regex, ''),
-            );
             return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
           }) || [];
-        console.log('@results filter', results);
-        const max = Math.max(...results, ...tempNodeNames);
+
+        const max = Math.max(...results);
 
         for (let i = 1; i <= max + 1; i++) {
           if (!results.includes(i)) {
@@ -295,8 +282,6 @@ export const Botbuilder = () => {
           }
         }
       }
-
-      setTempNodeNames([...tempNodeNames, index]);
 
       dispatch(
         appendNode({

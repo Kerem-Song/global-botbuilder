@@ -74,6 +74,7 @@ export const Node: FC<INodeProps> = ({
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
   );
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
@@ -140,6 +141,30 @@ export const Node: FC<INodeProps> = ({
 
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
+
+      const filtered = nodes.filter((node) => {
+        return node.title?.includes(clone.title!);
+      });
+
+      let index = 1;
+
+      if (filtered) {
+        const regex = /[^0-9]/g;
+        const results =
+          filtered?.map((x) => {
+            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
+          }) || [];
+
+        const max = Math.max(...results);
+
+        for (let i = 1; i <= max + 1; i++) {
+          if (!results.includes(i)) {
+            index = i;
+            break;
+          }
+        }
+      }
+
       dispatch(
         appendNode({
           ...clone,
@@ -151,6 +176,7 @@ export const Node: FC<INodeProps> = ({
             canvasRect && viewRect
               ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
               : 0,
+          title: clone.title + `_(${index})`,
         }),
       );
       dispatch(setClipBoard(undefined));
