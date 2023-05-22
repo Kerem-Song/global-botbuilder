@@ -5,7 +5,7 @@ import { IBotModel } from '@models';
 import { FC } from 'react';
 
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
-  const { navigate, t, tc } = usePage();
+  const { navigate, t } = usePage();
   return (
     <Card
       radius="large"
