@@ -22,6 +22,7 @@ import {
   setClipBoard,
   setEditDrawerToggle,
   setGuideStartNode,
+  setIsHandleCutCard,
 } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
@@ -76,6 +77,9 @@ export const Node: FC<INodeProps> = ({
   );
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+  const isHandleCutCard = useRootState(
+    (state) => state.botBuilderReducer.isHandleCutCard,
+  );
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
@@ -174,10 +178,11 @@ export const Node: FC<INodeProps> = ({
             canvasRect && viewRect
               ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
               : 0,
-          title: clone.title + `_(${index})`,
+          title: isHandleCutCard ? clone.title : clone.title + `_(${index})`,
         }),
       );
       dispatch(setClipBoard(undefined));
+      dispatch(setIsHandleCutCard(false));
     }
   };
 

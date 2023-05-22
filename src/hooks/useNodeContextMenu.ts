@@ -4,8 +4,14 @@ import { INode, NODE_TYPES, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { lunaToast } from '@modules/lunaToast';
-import { setClipBoard, setEditDrawerToggle, setSelected } from '@store/botbuilderSlice';
+import {
+  setClipBoard,
+  setEditDrawerToggle,
+  setIsHandleCutCard,
+  setSelected,
+} from '@store/botbuilderSlice';
 import { removeItem } from '@store/makingNode';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import usePage from './usePage';
@@ -28,6 +34,8 @@ export const useNodeContextMenu = ({
     if (node.type === NODE_TYPES.INTENT_NODE) {
       return;
     }
+
+    dispatch(setIsHandleCutCard(true));
     dispatch(setClipBoard(node));
     dispatch(removeItem(node.id));
   };

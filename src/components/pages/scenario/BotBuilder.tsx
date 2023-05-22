@@ -6,7 +6,12 @@ import {
   icCardPasteDisabled,
 } from '@assets';
 import { IPopperItem } from '@components/navigation';
-import { useModalOpen, useRootState, useScenarioClient } from '@hooks';
+import {
+  useModalOpen,
+  useNodeContextMenu,
+  useRootState,
+  useScenarioClient,
+} from '@hooks';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
@@ -15,7 +20,13 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { nodeHelper } from '@modules/nodeHelper';
-import { setClipBoard, setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import {
+  setClipBoard,
+  setIsHandleCutCard,
+  setSelected,
+  zoomIn,
+  zoomOut,
+} from '@store/botbuilderSlice';
 import { addArrow, appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
@@ -27,7 +38,6 @@ import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
-import { NodeEditDrawer } from './edit/NodeEditDrawer';
 import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 import { Node } from './nodes';
@@ -60,12 +70,11 @@ export const Botbuilder = () => {
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
-  const isEditDrawerOpen = useRootState(
-    (state) => state.botBuilderReducer.isEditDrawerOpen,
-  );
 
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
-
+  const isHandleCutCard = useRootState(
+    (state) => state.botBuilderReducer.isHandleCutCard,
+  );
   const { getScenario } = useScenarioClient();
   getScenario(selectedScenario?.id);
 
@@ -156,16 +165,6 @@ export const Botbuilder = () => {
       dirtySelect = undefined;
       return;
     }
-    // if (!isEditDrawerOpen) {
-    //   const nodeElements = document.querySelectorAll<HTMLDivElement>('.draggableNode');
-    //   nodeElements.forEach((n) => {
-    //     n.style.zIndex = `${Math.max(1, Number(n.style.zIndex) - 1)}`;
-    //   });
-    //   const nodeWrap = document.querySelector(`#node-${id}`)?.parentElement;
-    //   if (nodeWrap) {
-    //     nodeWrap.style.zIndex = `${nodeElements.length}`;
-    //   }
-    // }
 
     dispatch(setSelected(id));
   };
@@ -286,10 +285,11 @@ export const Botbuilder = () => {
           ...clone,
           x: points.x,
           y: points.y,
-          title: clone.title + `_(${index})`,
+          title: isHandleCutCard ? clone.title : clone.title + `_(${index})`,
         }),
       );
       dispatch(setClipBoard(undefined));
+      dispatch(setIsHandleCutCard(false));
     }
   };
 
