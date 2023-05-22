@@ -34,7 +34,7 @@ export const useNodeEditSave = () => {
         handleSave();
       }
     };
-  }, []);
+  }, [selected]);
 
   useEffect(() => {
     return () => {
