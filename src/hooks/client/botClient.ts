@@ -9,7 +9,9 @@ import {
 } from '@models';
 import {
   IImportFlowGroup,
+  IResponseUpdateBotIcon,
   IUpdateBotActivate,
+  IUpdateBotIcon,
   IUpdateChannelActivate,
 } from '@models/interfaces/IBotSetting';
 import { setBotInfo } from '@store/botInfoSlice';
@@ -147,15 +149,19 @@ export const useBotClient = () => {
     }
   });
 
-  const botImageUploadMutate = useMutation(
-    async ({ formData }: { formData: FormData }) => {
-      const res = await http.post('/bot/updateboticon', formData);
+  const botImageUploadMutate = useMutation(async (args: IUpdateBotIcon) => {
+    const res = await http.post<IUpdateBotIcon, AxiosResponse<IResponseUpdateBotIcon>>(
+      '/bot/updateboticon',
+      args,
+    );
 
-      if (res) {
-        return res;
+    if (res) {
+      if (res.data.isSuccess) {
+        queryClient.invalidateQueries(['bot-info', args.botId]);
       }
-    },
-  );
+      return res;
+    }
+  });
 
   return {
     getBotListQuery,

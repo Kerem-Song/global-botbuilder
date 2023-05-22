@@ -5,6 +5,7 @@ export interface IBotModel {
   botName: string;
   snsKind: SnsKind;
   activated: boolean;
+  iconUrl?: string;
   lastDeployUTCTime?: string;
   updateUTC?: string;
   lastUpdateUTC?: string;

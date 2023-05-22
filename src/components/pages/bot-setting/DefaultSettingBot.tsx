@@ -1,23 +1,23 @@
-import { icCopy, icImg } from '@assets';
+import { icCopy } from '@assets';
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { imageUploadClient, useBotClient, usePage, useRootState } from '@hooks';
+import { useBotClient, usePage, useRootState } from '@hooks';
 import { usePrompt } from '@hooks/usePrompt';
 import { IBotSetting } from '@models/interfaces/IBotSetting';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { UploadBotProfile } from './UploadBotProfile';
+
 export const DefaultSettingBot = () => {
   const { t, tc } = usePage();
-  const { imageUploadAsync } = imageUploadClient();
-  const { botUpdateNameAsync, botImageUploadAsync } = useBotClient();
+  const { botUpdateNameAsync } = useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const botNameRef = useRef<HTMLInputElement | null>(null);
-  const botProfileInputRef = useRef<HTMLInputElement>(null);
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
 
   usePrompt(isSaveBtnActive);
@@ -92,13 +92,6 @@ export const DefaultSettingBot = () => {
     lunaToast.info(t('COPY_BOT_ID_MESSAGE'));
   };
 
-  const handleUpdateBotIcon = useCallback(() => {
-    if (!botProfileInputRef.current) {
-      return;
-    }
-    botProfileInputRef.current.click();
-  }, [botProfileInputRef]);
-
   return (
     <Card className="settingCardWrap" radius="normal">
       <Space direction="vertical">
@@ -156,35 +149,7 @@ export const DefaultSettingBot = () => {
             </Button>
           </Col>
         </Row>
-        <Row gap={10} align="center">
-          <Col className="botInfo">
-            <span>{t('BOT_PROFILE')}</span>
-          </Col>
-          <Col flex="auto" className="botInfo botProfileImgwrap">
-            <Space>
-              <div className="botProfileImg">
-                <img src={icImg} alt="icImg" />
-              </div>
-              <input
-                type="file"
-                className="fileInput"
-                ref={botProfileInputRef}
-                accept="image/png, image/jpeg, image/jpg"
-              />
-              <Space>
-                <div className="botProfileUploadBtnWrap">
-                  <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
-                  <Space>
-                    <Button type="lineBlue" onClick={handleUpdateBotIcon}>
-                      {t('FILE_UPLOAD')}
-                    </Button>
-                    <Button type="primary">{t('PROFILE_SAVE')}</Button>
-                  </Space>
-                </div>
-              </Space>
-            </Space>
-          </Col>
-        </Row>
+        <UploadBotProfile />
       </Space>
     </Card>
   );
