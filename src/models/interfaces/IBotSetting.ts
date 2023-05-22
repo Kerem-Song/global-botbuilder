@@ -18,3 +18,8 @@ export interface IImportFlowGroup {
   botId: string;
   file: File;
 }
+
+export interface IUpdateBotIcon {
+  iconUrl: string;
+  botId: string;
+}

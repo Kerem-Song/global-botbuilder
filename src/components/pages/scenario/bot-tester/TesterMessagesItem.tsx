@@ -1,5 +1,6 @@
 import { Divider } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
+import { useState } from 'react';
 
 import { CardCarouselType } from './CardCarouselType';
 import { ListCardCarouselType } from './ListCardCarouselType';
@@ -13,6 +14,7 @@ export interface TesterProps {
 }
 
 export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:
@@ -239,13 +241,24 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
         );
       case TESTER_DATA_TYPES.quickReplies:
         return (
-          <div className="quickReplies">
-            <TesterSlide gapSize={8} quickReplies>
-              {item.quickReplies.map((v, i) => {
-                return <TesterMessagesItemButton quickReply key={i} item={v} />;
-              })}
-            </TesterSlide>
-          </div>
+          <>
+            {isVisible && (
+              <div className="quickReplies">
+                <TesterSlide gapSize={8} quickReplies>
+                  {item.quickReplies.map((v, i) => {
+                    return (
+                      <TesterMessagesItemButton
+                        quickReply
+                        key={i}
+                        item={v}
+                        setIsVisible={setIsVisible}
+                      />
+                    );
+                  })}
+                </TesterSlide>
+              </div>
+            )}
+          </>
         );
     }
   };
