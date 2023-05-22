@@ -67,7 +67,7 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
-        setIsVisible!(false);
+        setIsVisible && setIsVisible(false);
       },
     });
   };
