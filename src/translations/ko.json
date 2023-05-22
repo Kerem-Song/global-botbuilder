@@ -331,6 +331,7 @@
     "BOT_NAME": "봇 이름",
     "BOT_ID": "봇 ID",
     "BOT_PROFILE": "챗봇 프로필",
+    "RECOMMEND_BOT_IMG_SIZE": "권장 규격 : 180*180px, 300KB 이하",
     "COPY": "복사",
     "FILE_UPLOAD": "파일 업로드",
     "PROFILE_SAVE": "프로필 저장하기",

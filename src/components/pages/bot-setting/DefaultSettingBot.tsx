@@ -1,4 +1,4 @@
-import { icCopy } from '@assets';
+import { icCopy, icImg } from '@assets';
 import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { imageUploadClient, useBotClient, usePage, useRootState } from '@hooks';
@@ -160,19 +160,28 @@ export const DefaultSettingBot = () => {
           <Col className="botInfo">
             <span>{t('BOT_PROFILE')}</span>
           </Col>
-          <Col flex="auto" className="botInfo">
-            <div></div>
-            <input
-              type="file"
-              className="fileInput"
-              ref={botProfileInputRef}
-              accept="image/png, image/jpeg, image/jpg"
-            />
+          <Col flex="auto" className="botInfo botProfileImgwrap">
             <Space>
-              <Button type="lineBlue" onClick={handleUpdateBotIcon}>
-                {t('FILE_UPLOAD')}
-              </Button>
-              <Button type="primary">{t('PROFILE_SAVE')}</Button>
+              <div className="botProfileImg">
+                <img src={icImg} alt="icImg" />
+              </div>
+              <input
+                type="file"
+                className="fileInput"
+                ref={botProfileInputRef}
+                accept="image/png, image/jpeg, image/jpg"
+              />
+              <Space>
+                <div className="botProfileUploadBtnWrap">
+                  <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
+                  <Space>
+                    <Button type="lineBlue" onClick={handleUpdateBotIcon}>
+                      {t('FILE_UPLOAD')}
+                    </Button>
+                    <Button type="primary">{t('PROFILE_SAVE')}</Button>
+                  </Space>
+                </div>
+              </Space>
             </Space>
           </Col>
         </Row>
