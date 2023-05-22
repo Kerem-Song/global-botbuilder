@@ -13,7 +13,6 @@ export const ParameterSetNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
   const {
-    register,
     control,
     getValues,
     formState: { errors },

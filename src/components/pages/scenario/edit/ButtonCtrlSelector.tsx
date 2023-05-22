@@ -1,3 +1,4 @@
+import { usePage } from '@hooks';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
@@ -77,14 +78,14 @@ interface IButtonCtrlSelectorProp {
   value: string;
 }
 
-export const selectOptions = [
-  { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: '메시지 연결' },
-  { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: '메시지 입력' },
-  { value: ACTION_TYPES.LBL_IS_UTTR, label: '버튼명 입력' },
-  { value: ACTION_TYPES.URL, label: 'URL 연결' },
-];
-
 export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => {
+  const { t } = usePage();
+  const selectOptions = [
+    { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
+    { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: t(`SET_MESSAGE`) },
+    { value: ACTION_TYPES.LBL_IS_UTTR, label: t(`SET_BUTTON_NAME`) },
+    { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
+  ];
   const { setValue, control } = useFormContext();
   const { field } = useController({
     name,

@@ -19,7 +19,6 @@ import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
-import { currencyOptions, reactSelectStyleProduct } from './ProductCardNodeEdit';
 
 export const DataProductCardNodeEdit = () => {
   useNodeEditSave();
@@ -233,21 +232,6 @@ export const DataProductCardNodeEdit = () => {
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
-                      {/* <Select
-                        className="react-selector"
-                        {...currencyField}
-                        options={currencyOptions.sort((a, b) =>
-                          b.value > a.value ? 1 : -1,
-                        )}
-                        styles={reactSelectStyleProduct}
-                        defaultValue={currencyOptions[0]}
-                        value={currencyOptions.find(
-                          (item) => item.value === currencyField.value,
-                        )}
-                        onChange={(options: any) =>
-                          currencyField.onChange(options?.value)
-                        }
-                      /> */}
                       <Input {...register(`view.currencyUnit`)} />
                     </Col>
                   </Row>

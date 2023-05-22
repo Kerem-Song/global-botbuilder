@@ -7,6 +7,7 @@ import {
   IButtonEditViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -14,13 +15,6 @@ import { ButtonTypeSelector } from './ButtonTypeSelector';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
-
-export const selectOptions = [
-  { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: '메시지 연결' },
-  { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: '메시지 입력' },
-  { value: ACTION_TYPES.LBL_IS_UTTR, label: '버튼명 입력' },
-  { value: ACTION_TYPES.URL, label: 'URL 연결' },
-];
 
 export const ButtonsEdit = ({
   index,
@@ -36,6 +30,12 @@ export const ButtonsEdit = ({
   useCounter: boolean;
 }) => {
   const { t } = usePage();
+  const selectOptions = [
+    { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
+    { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: t(`SET_MESSAGE`) },
+    { value: ACTION_TYPES.LBL_IS_UTTR, label: t(`SET_BUTTON_NAME`) },
+    { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
+  ];
   const [buttonType, setButtonType] = useState<ActionTypes>();
   const {
     register,

@@ -182,7 +182,7 @@ export const BotBuilderHeader = () => {
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
-    if (cardType === 'OtherFlowRedirectNode') {
+    if (cardType === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
       dispatch(
         setOtherFlowPopupPosition({
           x:

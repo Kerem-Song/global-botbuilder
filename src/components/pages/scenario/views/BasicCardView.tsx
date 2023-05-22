@@ -1,6 +1,6 @@
 import { Card } from '@components/data-display';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -13,7 +13,7 @@ export interface IBasicCardViewProps {
   view: IBasicCardView;
 }
 export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) => {
-  const [squareMode, setSquareMode] = useState<boolean>(false);
+  const { t } = usePage();
 
   const thumbnailClass = classNames('thumbnail', {
     square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
@@ -60,7 +60,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
         {view.title ? (
           <MultiClamp clamp={2}>{view.title}</MultiClamp>
         ) : (
-          <p>Enter Title</p>
+          <p>{t(`ENTER_TITLE`)}</p>
         )}
       </div>
 
@@ -75,7 +75,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
             <MultiClamp clamp={2}>{view.description}</MultiClamp>
           </span>
         ) : (
-          <p>Enter Content</p>
+          <p>{t(`ENTER_CONTENT`)}</p>
         )}
       </div>
 

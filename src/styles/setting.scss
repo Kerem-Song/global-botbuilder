@@ -25,6 +25,36 @@
     }
     .botInfo {
       width: rem(85);
+      .botProfileImg {
+        background-color: $grayWhite;
+        border: rem(1) dashed $gray200;
+        border-radius: rem(8);
+        width: rem(65);
+        height: rem(65);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: rem(30);
+          height: rem(30);
+          border: none;
+        }
+      }
+      .fileInput {
+        display: none;
+      }
+    }
+    .botProfileImgwrap {
+      display: flex;
+      align-items: center;
+      .botProfileUploadBtnWrap {
+        display: flex;
+        flex-direction: column;
+        .info {
+          color: $gray300;
+          margin-bottom: rem(8);
+        }
+      }
     }
     .botId {
       background-color: $gray100;

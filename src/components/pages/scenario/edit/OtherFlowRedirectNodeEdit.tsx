@@ -1,6 +1,6 @@
 import { FormItem } from '@components/data-entry';
 import { Space } from '@components/layout';
-import { useNodeEditSave } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
@@ -13,7 +13,7 @@ import { reactSelectStyle } from './ButtonTypeSelector';
 export const OtherFlowRedirectNodeEdit = () => {
   useNodeEditSave();
   const [scenarioList, setScenarioList] = useState<IReactSelect[]>([]);
-
+  const { t } = usePage();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const {
@@ -48,7 +48,7 @@ export const OtherFlowRedirectNodeEdit = () => {
       <div className="m-b-8">
         <Space direction="vertical">
           <div className="m-b-8">
-            <span className="subLabel">Other Flow Redirect 설정 </span>
+            <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE_SET`)} </span>
             <span className="required">*</span>
           </div>
           <FormItem error={errors.nextNodeId}>

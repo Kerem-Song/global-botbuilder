@@ -15,18 +15,11 @@ import {
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, NodeKind, TNodeTypes } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { nodeHelper } from '@modules/nodeHelper';
-import {
-  setClipBoard,
-  setIsHandleCutCard,
-  setSelected,
-  zoomIn,
-  zoomOut,
-} from '@store/botbuilderSlice';
+import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { addArrow, appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
@@ -72,9 +65,7 @@ export const Botbuilder = () => {
   );
 
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
-  const isHandleCutCard = useRootState(
-    (state) => state.botBuilderReducer.isHandleCutCard,
-  );
+
   const { getScenario } = useScenarioClient();
   getScenario(selectedScenario?.id);
 
@@ -134,12 +125,16 @@ export const Botbuilder = () => {
   const panning = (x: number, y: number) => {
     if (
       !canvasRef.current ||
-      parseInt(canvasRef.current.style.left) + x / scale > 0 ||
-      parseInt(canvasRef.current.style.top) + y / scale > 0
+      parseInt(canvasRef.current.style.left) + x / scale > 4000 ||
+      parseInt(canvasRef.current.style.top) + y / scale > 4000
     ) {
       return;
     }
-
+    console.log(
+      '@pixel',
+      `${parseInt(canvasRef.current.style.left) + x / scale}px`,
+      `${parseInt(canvasRef.current.style.top) + y / scale}px`,
+    );
     canvasRef.current.style.left = `${
       parseInt(canvasRef.current.style.left) + x / scale
     }px`;
@@ -187,7 +182,7 @@ export const Botbuilder = () => {
       return;
     }
 
-    if (cardType === 'OtherFlowRedirectNode') {
+    if (cardType === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
       dispatch(
         setOtherFlowPopupPosition({
           x: Math.round(e.clientX / scale) - canvasRect.left,

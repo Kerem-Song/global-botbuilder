@@ -6,9 +6,10 @@ import {
 } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
+import { t } from 'i18next';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 export interface CarouselProps {
@@ -25,6 +26,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
     transition: 'none',
   });
 
+  const { t } = usePage();
   const { updateLine } = useUpdateLines();
 
   const length = children.length + (addCarousel ? 1 : 0);
@@ -129,7 +131,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
           <div style={{ width: '166px', flex: 'none' }}>
             <div style={{ width: '190px' }}>
               <Button block onClick={addCarousel} style={{ border: 'none' }}>
-                말풍선 추가
+                {t(`ADD_CAHTBUBBLE_BTN`)}
               </Button>
             </div>
           </div>

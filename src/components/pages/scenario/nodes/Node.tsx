@@ -75,11 +75,9 @@ export const Node: FC<INodeProps> = ({
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
   );
-  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
-  const isHandleCutCard = useRootState(
-    (state) => state.botBuilderReducer.isHandleCutCard,
-  );
+
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
