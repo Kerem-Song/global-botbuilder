@@ -25,6 +25,9 @@
     }
     .botInfo {
       width: rem(85);
+      .fileInput {
+        display: none;
+      }
     }
     .botId {
       background-color: $gray100;

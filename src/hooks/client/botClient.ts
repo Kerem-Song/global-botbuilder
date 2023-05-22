@@ -147,6 +147,16 @@ export const useBotClient = () => {
     }
   });
 
+  const botImageUploadMutate = useMutation(
+    async ({ formData }: { formData: FormData }) => {
+      const res = await http.post('/bot/updateboticon', formData);
+
+      if (res) {
+        return res;
+      }
+    },
+  );
+
   return {
     getBotListQuery,
     getCachedBotList,
@@ -160,5 +170,6 @@ export const useBotClient = () => {
     botUpdateNameAsync: botUpdateNameMutate.mutateAsync,
     botActivateAsync: botActivateMutate.mutateAsync,
     botChannelActivateAsync: botChannelActivateMutate.mutateAsync,
+    botImageUploadAsync: botImageUploadMutate.mutateAsync,
   };
 };
