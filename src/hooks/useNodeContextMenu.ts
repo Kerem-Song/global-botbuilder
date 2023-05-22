@@ -1,8 +1,10 @@
 import { icCardCut, icCardDelete, icCardDuplication, icEditCarousel } from '@assets';
 import { IPopperItem } from '@components';
+import { useRootState } from '@hooks';
 import { INode, NODE_TYPES, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
+import { nodeHelper } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import {
   setClipBoard,
@@ -10,7 +12,7 @@ import {
   setIsHandleCutCard,
   setSelected,
 } from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
+import { appendNode, removeItem } from '@store/makingNode';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -25,7 +27,11 @@ export const useNodeContextMenu = ({
 }) => {
   const { tc } = usePage();
   const dispatch = useDispatch();
-
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+  const isHandleCutCard = useRootState(
+    (state) => state.botBuilderReducer.isHandleCutCard,
+  );
   const handleDuplicationCard = (node: INode) => {
     dispatch(setClipBoard(node));
   };
@@ -38,6 +44,45 @@ export const useNodeContextMenu = ({
     dispatch(setIsHandleCutCard(true));
     dispatch(setClipBoard(node));
     dispatch(removeItem(node.id));
+  };
+
+  const handlePasteCard = ({ x, y }: { x: number; y: number }) => {
+    console.log('@handle paste here');
+    if (clipBoard) {
+      const clone = nodeHelper.cloneNode(clipBoard);
+
+      const filtered = nodes.filter((node) => {
+        return node.title?.includes(clone.title!);
+      });
+
+      let index = 1;
+
+      if (filtered) {
+        const regex = /[^0-9]/g;
+        const results =
+          filtered?.map((x) => {
+            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
+          }) || [];
+
+        for (const i of results) {
+          if (!results.includes(i + 1)) {
+            index = Number(i + 1);
+            break;
+          }
+        }
+      }
+
+      dispatch(
+        appendNode({
+          ...clone,
+          x: x,
+          y: y,
+          title: isHandleCutCard ? clone.title : clone.title + `_(${index})`,
+        }),
+      );
+      dispatch(setClipBoard(undefined));
+      dispatch(setIsHandleCutCard(false));
+    }
   };
 
   const handleDeleteCard = (node: INode) => {
@@ -136,6 +181,7 @@ export const useNodeContextMenu = ({
   return {
     handleDuplicationCard,
     handleCutCard,
+    handlePasteCard,
     deleteCard,
     getNodeMenu,
     nodeMenu,
