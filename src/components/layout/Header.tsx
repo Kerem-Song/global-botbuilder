@@ -10,6 +10,7 @@ import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 
 export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
+  const { tc } = useI18n();
   const languageMenus = [
     {
       id: `ko`,
@@ -52,7 +53,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     },
     {
       id: 'logout',
-      name: '로그아웃',
+      name: tc('LOGOUT'),
       type: 'button',
       data: {
         action: () => {
