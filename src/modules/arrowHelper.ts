@@ -31,6 +31,11 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.DATA_PRODUCT_CARD_NODE,
 ];
 
+const invalidateConnectNoteType: TNodeTypes[] = [
+  NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+  NODE_TYPES.INTENT_NODE,
+];
+
 export const arrowHelper = {
   createNextArrow: (nodeId: string, nextNodeId: string): IArrow => {
     return {
@@ -323,35 +328,35 @@ export const arrowHelper = {
 
     // 연속 노드에 응답이 아닌 노드 연결 할 경우
     // 연속 노드에 다른시나리오나 시작노드 연결 할 경우
-    if (
-      !isNext &&
-      (endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE ||
-        endNode.type === NODE_TYPES.INTENT_NODE ||
-        endNode.type === NODE_TYPES.JSON_REQUEST_NODE)
-    ) {
+    if (!isNext && invalidateConnectNoteType.includes(endNode.type)) {
       return '연속노드로 응답노드만 연결 할 수 있습니다.';
     }
 
-    if (
-      !isNext &&
-      endNode.nodeKind === NodeKind.InputNode &&
-      startNode.nodeKind === NodeKind.InputNode
-    ) {
-      const parentCnt = arrowHelper.checkParent(2, startNode.id, nodes);
-      const childCnt = arrowHelper.checkChild(0, nodes, endNode.nextNodeId);
-      if (parentCnt + childCnt > 3) {
-        return '연속응답 노드는 3개까지만 가능합니다.';
-      }
+    const depth =
+      (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
+      (endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
+    const parentCnt = arrowHelper.checkParent(depth, startNode.id, nodes);
+    const childCnt = arrowHelper.checkChild(
+      0,
+      nodes,
+      nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
+    );
+
+    if (parentCnt + childCnt > 3) {
+      return '연속응답 노드는 3개까지만 가능합니다.';
     }
 
     return undefined;
   },
   checkParent: (depth: number, nodeId: string, nodes: INode[]): number => {
-    const parents = nodes.filter((x) => x.nextNodeId === nodeId);
+    const parents = nodes.filter((x) =>
+      nodeFactory.getFactory(x.type)?.getConnectId(x).includes(nodeId),
+    );
+    console.log(parents);
     if (parents.length > 0) {
       const parentDepths = parents.map((p) => {
         if (p.nodeKind !== NodeKind.InputNode) {
-          return depth;
+          return arrowHelper.checkParent(depth, p.id, nodes);
         }
         return arrowHelper.checkParent(depth + 1, p.id, nodes);
       });
@@ -360,16 +365,29 @@ export const arrowHelper = {
 
     return depth;
   },
-  checkChild: (depth: number, nodes: INode[], nextNodeId?: string): number => {
-    if (!nextNodeId) {
+  checkChild: (depth: number, nodes: INode[], nextNodeId: string[]): number => {
+    if (nextNodeId.length === 0) {
       return depth;
     }
 
-    const child = nodes.find(
-      (x) => x.id === nextNodeId && x.nodeKind === NodeKind.InputNode,
-    );
-    if (child) {
-      return arrowHelper.checkChild(depth + 1, nodes, child.nextNodeId);
+    const children = nodes.filter((x) => nextNodeId.includes(x.id));
+    if (children.length > 0) {
+      const childrenDepths = children.map((c) => {
+        if (c.nodeKind !== NodeKind.InputNode) {
+          return arrowHelper.checkChild(
+            depth,
+            nodes,
+            nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
+          );
+        }
+        return arrowHelper.checkChild(
+          depth + 1,
+          nodes,
+          nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
+        );
+      });
+
+      return Math.max(...childrenDepths);
     }
 
     return depth;

@@ -1,6 +1,6 @@
 import { BasicCardNodeEdit } from '@components/pages/scenario/edit/BasicCardNodeEdit';
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
@@ -44,5 +44,9 @@ export class BasicCardNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

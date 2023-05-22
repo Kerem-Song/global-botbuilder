@@ -1,6 +1,6 @@
 import { RetryConditionNodeEdit } from '@components/pages/scenario/edit/RetryConditionNodeEdit';
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IRetryConditionView, IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
@@ -44,5 +44,13 @@ export class RetryConditionNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    const view = node.view as IRetryConditionView;
+    return [
+      ...(view.trueThenNextNodeId ? [view.trueThenNextNodeId] : []),
+      ...(view.falseThenNextNodeId ? [view.falseThenNextNodeId] : []),
+    ];
   }
 }

@@ -3,7 +3,7 @@ import { ConditionNode } from '@components/pages/scenario/nodes';
 import { JsonRequestNode } from '@components/pages/scenario/nodes/JsonRequestNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
-import { NODE_TYPES, TNodeTypes } from '@models/interfaces';
+import { INode, NODE_TYPES, TNodeTypes } from '@models/interfaces';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -50,5 +50,9 @@ export class JsonRequestNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

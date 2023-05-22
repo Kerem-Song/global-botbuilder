@@ -1,6 +1,6 @@
 import TextNodeEdit from '@components/pages/scenario/edit/TextNodeEdit';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
@@ -48,5 +48,9 @@ export class TextNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

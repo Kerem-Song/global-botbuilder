@@ -30,6 +30,7 @@ export interface INodeFactory {
   getDefaultView: () => IViewBase;
   getEditElement: () => () => JSX.Element;
   getNodeElement: () => FC<IHasNode>;
+  getConnectId: (node: INode) => string[];
   createArrows: (nodeId: string, nextNodeId?: string, view?: IViewBase) => IArrow[];
   syncArrow: (startId: string, endId?: string, view?: IViewBase) => void;
 }
