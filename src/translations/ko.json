@@ -36,7 +36,10 @@
     "CONDITION_OPERATOR_LESSTHAN": "is/are lesser than",
     "CONDITION_OPERATOR_STARTWITH": "start with",
     "CONDITION_OPERATOR_ENDWITH": "end with",
-    "CONDITION_OPERATOR_REGEX": "regex"
+    "CONDITION_OPERATOR_REGEX": "regex",
+    "CONDITION_OPERATOR_INCLUDE": "include",
+    "CONDITION_OPERATOR_LESSTHANOREQUAL": "less than or equal",
+    "CONDITION_OPERATOR_GREATERTHANOREQUAL": "greater than or equal"
   },
   "scenario": {
     "TITLE": "시나리오",
