@@ -84,6 +84,11 @@ export const Botbuilder = () => {
 
   const isHistoryViewer = useHistoryViewerMatch();
 
+  const { handlePasteCard } = useNodeContextMenu({
+    handleIsOpen: () => null,
+    handleIsOpenUtterancePopup: () => null,
+  });
+
   const handleWheel = (e: WheelEvent) => {
     if (e.ctrlKey) {
       if (e.deltaY > 0) {
@@ -255,43 +260,7 @@ export const Botbuilder = () => {
     }
   };
 
-  const handlePasteCard = () => {
-    if (clipBoard) {
-      const clone = nodeHelper.cloneNode(clipBoard);
-
-      const filtered = nodes.filter((node) => {
-        return node.title?.includes(clone.title!);
-      });
-
-      let index = 1;
-
-      if (filtered) {
-        const regex = /[^0-9]/g;
-        const results =
-          filtered?.map((x) => {
-            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
-          }) || [];
-
-        for (const i of results) {
-          if (!results.includes(i + 1)) {
-            index = Number(i + 1);
-            break;
-          }
-        }
-      }
-
-      dispatch(
-        appendNode({
-          ...clone,
-          x: points.x,
-          y: points.y,
-          title: isHandleCutCard ? clone.title : clone.title + `_(${index})`,
-        }),
-      );
-      dispatch(setClipBoard(undefined));
-      dispatch(setIsHandleCutCard(false));
-    }
-  };
+  const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const canvasContextMenu: IPopperItem<{ action: () => void }>[] = [
     {
@@ -318,7 +287,9 @@ export const Botbuilder = () => {
       type: 'icon-front',
       icon: clipBoard ? icCardPaste : icCardPasteDisabled,
       data: {
-        action: clipBoard ? handlePasteCard : () => null,
+        action: clipBoard
+          ? () => handlePasteCard({ x: points.x, y: points.y })
+          : () => null,
       },
     },
     {
@@ -331,7 +302,6 @@ export const Botbuilder = () => {
       },
     },
   ];
-  const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setClicked(true);

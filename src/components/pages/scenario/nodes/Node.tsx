@@ -96,8 +96,13 @@ export const Node: FC<INodeProps> = ({
   const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
     useModalOpen();
 
-  const { handleDuplicationCard, handleCutCard, deleteCard, getNodeMenu } =
-    useNodeContextMenu({ handleIsOpen, handleIsOpenUtterancePopup });
+  const {
+    handleDuplicationCard,
+    handleCutCard,
+    handlePasteCard,
+    deleteCard,
+    getNodeMenu,
+  } = useNodeContextMenu({ handleIsOpen, handleIsOpenUtterancePopup });
 
   const handleChangeCarouselOrder = () => {
     dispatch(setEditDrawerToggle(false));
@@ -137,55 +142,6 @@ export const Node: FC<INodeProps> = ({
     onClick?.(e);
   };
 
-  const handlePasteCard = () => {
-    const view = document.querySelector('.botBuilderMain');
-    const canvas = document.querySelector('.canvasWrapper');
-    const canvasRect = canvas?.getBoundingClientRect();
-    const viewRect = view?.getBoundingClientRect();
-
-    if (clipBoard) {
-      const clone = nodeHelper.cloneNode(clipBoard);
-
-      const filtered = nodes.filter((node) => {
-        return node.title?.includes(clone.title!);
-      });
-
-      let index = 1;
-
-      if (filtered) {
-        const regex = /[^0-9]/g;
-        const results =
-          filtered?.map((x) => {
-            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
-          }) || [];
-
-        for (const i of results) {
-          if (!results.includes(i + 1)) {
-            index = Number(i + 1);
-            break;
-          }
-        }
-      }
-
-      dispatch(
-        appendNode({
-          ...clone,
-          x:
-            canvasRect && viewRect
-              ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
-              : 0,
-          y:
-            canvasRect && viewRect
-              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
-              : 0,
-          title: isHandleCutCard ? clone.title : clone.title + `_(${index})`,
-        }),
-      );
-      dispatch(setClipBoard(undefined));
-      dispatch(setIsHandleCutCard(false));
-    }
-  };
-
   const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Delete') {
       deleteCard(node);
@@ -198,8 +154,22 @@ export const Node: FC<INodeProps> = ({
   };
 
   const handleCtrlVCommand = (e: KeyboardEvent) => {
+    const view = document.querySelector('.botBuilderMain');
+    const canvas = document.querySelector('.canvasWrapper');
+    const canvasRect = canvas?.getBoundingClientRect();
+    const viewRect = view?.getBoundingClientRect();
+
     if (e.code === 'KeyV' && e.ctrlKey) {
-      handlePasteCard();
+      handlePasteCard({
+        x:
+          canvasRect && viewRect
+            ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+            : 0,
+        y:
+          canvasRect && viewRect
+            ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+            : 0,
+      });
     }
   };
 
