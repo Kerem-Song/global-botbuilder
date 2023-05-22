@@ -30,7 +30,7 @@ export const BotBuilderZoomBtn = () => {
     <Row className="botBuilderCanvasBtn">
       <Col className="botBuilderZoomBtn">
         <Button small shape="ghost" className="minusZoomBtn" onClick={handleZoomOut} />
-        <span>{scale * 100}</span>
+        <span>{Math.round(scale * 100)}</span>
         <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
       </Col>
       {!isHistoryViewer && (
