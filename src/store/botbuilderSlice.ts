@@ -25,6 +25,7 @@ export interface BotBuilderMaker {
   invalidateNodes: Record<string, boolean>;
   carouselIndex: Record<string, number>;
   clipBoard?: INode;
+  isHandleCutCard?: boolean;
   // token?: string;
   // botInfo?: IBotModel;
 }
@@ -122,6 +123,9 @@ export const botbuilderSlice = createSlice({
     setClipBoard: (state, action: PayloadAction<INode | undefined>) => {
       state.clipBoard = action.payload;
     },
+    setIsHandleCutCard: (state, action: PayloadAction<boolean>) => {
+      state.isHandleCutCard = action.payload;
+    },
   },
 });
 
@@ -140,5 +144,6 @@ export const {
   setInvalidateNode,
   setCarouselIndex,
   setClipBoard,
+  setIsHandleCutCard,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
