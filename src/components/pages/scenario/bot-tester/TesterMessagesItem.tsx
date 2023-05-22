@@ -18,7 +18,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
       case TESTER_DATA_TYPES.text:
         return (
           <>
-            {item.isMe === true ? (
+            {item.isMe ? (
               <div className="send">
                 <div className="sendMessage">{item.value}</div>
               </div>

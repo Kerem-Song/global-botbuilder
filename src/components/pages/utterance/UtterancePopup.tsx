@@ -1,7 +1,7 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
 import { Button } from '@components/general';
-import { usePage, useRootState } from '@hooks';
+import { useI18n, usePage, useRootState } from '@hooks';
 import { ISearchData } from '@models';
 import { Dispatch, FC, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
@@ -12,7 +12,7 @@ import { UtteranceListItem } from './UtteranceListItem';
 export interface IUtterancePopupProps {
   isOpenUtterancePopup: boolean;
   handleIsOpenUtterancePopup: (value: boolean) => void;
-  handleIsOpenUtteranceDetailPopup: (utteranceId?: string) => void;
+  handleIsOpenUtteranceDetailPopup: (intentId?: string) => void;
   searchData: ISearchData;
   setSearchData: Dispatch<SetStateAction<ISearchData>>;
 }
@@ -28,7 +28,6 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
   const { t } = usePage();
-
   const handleSearch = (keyword: string) => {
     setSearchData({
       sort: 1,
@@ -41,9 +40,9 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     handleIsOpenUtterancePopup(false);
   };
 
-  const handleDetailPopupOpen = (utteranceId?: string) => {
+  const handleDetailPopupOpen = (intentId?: string) => {
     handleIsOpenUtterancePopup(false);
-    handleIsOpenUtteranceDetailPopup(utteranceId);
+    handleIsOpenUtteranceDetailPopup(intentId);
   };
 
   return (
@@ -70,7 +69,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
           <Input
             size="small"
             search
-            placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
+            placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
             onSearch={(value) => handleSearch(value!)}
             onChange={(e) => handleSearch(e.target.value)}
           />

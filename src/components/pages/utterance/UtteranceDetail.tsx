@@ -18,18 +18,18 @@ import { UtteranceDetailItems } from './UtteranceDetailItems';
 import { UtteranceGroupInfo } from './UtteranceGroupInfo';
 
 export interface IUtteranceDetailProps {
-  utteranceId?: string;
+  intentId?: string;
   isOpenUtteranceDetailPopup?: boolean;
   handleClose?: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
-  utteranceId,
+  intentId,
   isOpenUtteranceDetailPopup,
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, t, tc } = usePage();
+  const { navigate, t, tc, setNavigateUrl } = usePage();
   const { botId } = useParams();
   const {
     intentAsync,
@@ -37,7 +37,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     intentDeleteAsync,
     checkIntentDuplicationAsync,
   } = useUtteranceClient();
-  const hasUtteranceId = getIntentDetailQuery(utteranceId);
+  const hasIntentId = getIntentDetailQuery(intentId);
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
   const { confirm, error } = useSystemModal();
@@ -46,7 +46,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
 
-  // usePrompt(isActive);
+  usePrompt(isActive);
 
   const schema = yup.object({
     name: yup
@@ -73,6 +73,24 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
 
+  useEffect(() => {
+    if (hasIntentId && hasIntentId.data) {
+      const resetValue = {
+        name: hasIntentId.data.result.intentName,
+        intentId: hasIntentId.data.result.intentId,
+        connectScenarioId: hasIntentId.data.result.flowId,
+        connectScenarioName: hasIntentId.data.result.flowName,
+      };
+      reset(resetValue);
+
+      prepend(
+        hasIntentId.data.result.utterances?.map<IUtteranceItem>((x) => {
+          return { text: x.text, id: x.id };
+        }) || [],
+      );
+    }
+  }, [hasIntentId?.data]);
+
   const handleListBtn = () => {
     if (isOpenUtteranceDetailPopup && handleClose) {
       handleClose();
@@ -88,27 +106,19 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     });
 
     if (result) {
-      if (!hasUtteranceId?.data?.result.intentId) {
-        console.log('마설..?');
-        return navigate(`/${botId}/utterance`);
-      } else {
-        const deleteIntent: IDeleteIntent = {
-          sessionToken: token!,
-          intentId: hasUtteranceId!.data?.result.intentId,
-        };
+      const deleteIntent: IDeleteIntent = {
+        sessionToken: token!,
+        intentId: intentId,
+      };
 
-        const res = await intentDeleteAsync(deleteIntent);
+      const res = await intentDeleteAsync(deleteIntent);
 
-        if (res && res.isSuccess) {
-          lunaToast.success();
-
-          if (isOpenUtteranceDetailPopup && handleClose) {
-            handleClose();
-            console.log('성공!!!');
-          } else {
-            navigate(`/${botId}/utterance`);
-            console.log('왜 요기로 가지?');
-          }
+      if (res && res.isSuccess) {
+        lunaToast.success();
+        if (isOpenUtteranceDetailPopup && handleClose) {
+          handleClose();
+        } else {
+          navigate(`/${botId}/utterance`);
         }
       }
     }
@@ -135,7 +145,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         intentId: getValues('intentId'),
       });
 
-      if (checkIntentDuplication.result === true) {
+      if (checkIntentDuplication.result) {
         await error({
           title: t('DUPLICATE_INTENT'),
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
@@ -153,37 +163,17 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       if (isOpenUtteranceDetailPopup && handleClose) {
         handleClose();
       } else {
-        navigate(`/${botId}/utterance`);
+        setNavigateUrl(`/${botId}/utterance`);
       }
     } else if (res?.exception.errorCode === 7612) {
       await handleIntentDuplication();
     }
   };
 
-  console.log('hasUtteranceId', hasUtteranceId);
-
-  useEffect(() => {
-    if (hasUtteranceId && hasUtteranceId.data) {
-      const resetValue = {
-        name: hasUtteranceId.data.result.intentName,
-        intentId: hasUtteranceId.data.result.intentId,
-        connectScenarioId: hasUtteranceId.data.result.flowId,
-        connectScenarioName: hasUtteranceId.data.result.flowName,
-      };
-      reset(resetValue);
-
-      prepend(
-        hasUtteranceId.data.result.utterances?.map<IUtteranceItem>((x) => {
-          return { text: x.text, id: x.id };
-        }) || [],
-      );
-    }
-  }, [hasUtteranceId?.data]);
-
   return (
     <div
       className={classNames('utteranceDetailWrap', {
-        'utterance-detailModalWrap': isOpenUtteranceDetailPopup === true,
+        'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
       })}
       onContextMenu={(e) => e.stopPropagation()}
     >
@@ -198,7 +188,12 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       >
         <div className="detailButtons">
           <div>
-            <Button onClick={handleListBtn}>{t('LIST')}</Button>
+            {!isOpenUtteranceDetailPopup && (
+              <Button onClick={handleListBtn}>{t('LIST')}</Button>
+            )}
+            {isOpenUtteranceDetailPopup && (
+              <p className="addIntent">{selectedScenarios?.alias} 인텐트 관리_등록</p>
+            )}
           </div>
           <div>
             <Button
@@ -243,7 +238,6 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         remove={remove}
         setIsActive={setIsActive}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-        handleClose={handleClose}
       />
     </div>
   );

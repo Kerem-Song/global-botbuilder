@@ -1,7 +1,7 @@
 import { useRootState } from '@hooks/useRootState';
 import { IHandle } from '@models/interfaces/IHandle';
 import { i18n } from 'i18next';
-import { createContext, FC } from 'react';
+import { createContext, FC, useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { Navigate, NavigateOptions, To, useMatches, useNavigate } from 'react-router';
 
@@ -16,6 +16,7 @@ export const PageContext = createContext<
       ts: TFunction<string, undefined>;
       i18n: i18n;
       navigate: (to: To, options?: NavigateOptions) => void;
+      setNavigateUrl: (value: string) => void;
     }
   | undefined
 >(undefined);
@@ -24,6 +25,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const { t } = useTranslation(pageName);
   const { t: tc, i18n } = useTranslation('common');
   const { t: ts } = useTranslation('sidebar');
+  const [navigateUrl, setNavigateUrl] = useState<string>();
   const navigate = useNavigate();
   const matches = useMatches();
   const userInfo = useRootState((state) => state.userInfoReducer);
@@ -48,9 +50,22 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   }
   return (
     <PageContext.Provider
-      value={{ t, tc, ts, i18n, pageName, isReadOnly, navigate: localeNavigate }}
+      value={{
+        t,
+        tc,
+        ts,
+        i18n,
+        pageName,
+        isReadOnly,
+        navigate: localeNavigate,
+        setNavigateUrl,
+      }}
     >
-      {children}
+      {navigateUrl ? (
+        <Navigate to={`/${i18n.language}${navigateUrl}`} />
+      ) : (
+        <>{children}</>
+      )}
     </PageContext.Provider>
   );
 };

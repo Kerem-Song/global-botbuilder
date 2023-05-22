@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { UtteranceDetail } from './UtteranceDetail';
 
 export const UtteranceDetailComponent = () => {
-  const { utteranceId } = useParams();
+  const { intentId } = useParams();
 
-  return <UtteranceDetail utteranceId={utteranceId} />;
+  return <UtteranceDetail intentId={intentId} />;
 };
