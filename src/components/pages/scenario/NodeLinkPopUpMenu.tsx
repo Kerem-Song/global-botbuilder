@@ -2,10 +2,10 @@ import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
-import { useHistoryViewerMatch, useRootState } from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
-import { INode, NODE_TYPES, NodeKind, TCardsValues, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -13,127 +13,123 @@ import { GuideInfo } from '@store/botbuilderSlice';
 import { addArrow, appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
-
-interface INodeLinkPopUpFormValue {
-  cardType: TCardsValues;
-}
 
 interface INodeLinkPopUpMenuProps {
   popUpPosition: { x: number; y: number };
   handleIsOpen: (value: boolean) => void;
 }
 
-const cardTypeValue = [
-  {
-    className: 'icText',
-    value: NODE_TYPES.TEXT_NODE,
-    nodeName: '텍스트',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icBtnTemple',
-    value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: '기본 카드',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icList',
-    value: NODE_TYPES.LIST_CARD_NODE,
-    nodeName: '리스트',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icCommerce',
-    value: NODE_TYPES.PRODUCT_CARD_NODE,
-    nodeName: '커머스',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icCaroImg',
-    value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-    nodeName: '기본 카드 캐로셀',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icCaroList',
-    value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-    nodeName: '리스트 캐로셀',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icCaroCommerce',
-    value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-    nodeName: '커머스 캐로셀',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icQuickBtn',
-    value: NODE_TYPES.ANSWER_NODE,
-    nodeName: '퀵리플라이',
-    nodeKind: NodeKind.AnswerNode,
-  },
-  {
-    className: 'icCondition',
-    value: NODE_TYPES.CONDITION_NODE,
-    nodeName: '컨디션',
-    nodeKind: NodeKind.CommandNode,
-  },
-  {
-    className: 'icCount',
-    value: NODE_TYPES.RETRY_CONDITION_NODE,
-    nodeName: '카운트',
-    nodeKind: NodeKind.CommandNode,
-  },
-  {
-    className: 'icSetParameter',
-    value: NODE_TYPES.PARAMETER_SET_NODE,
-    nodeName: '파라미터',
-    nodeKind: NodeKind.CommandNode,
-  },
-  {
-    className: 'icOtherFlowRedirect',
-    value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
-    nodeName: '시나리오',
-    nodeKind: NodeKind.CommandNode,
-  },
-  {
-    className: 'icJsonRequest',
-    value: NODE_TYPES.JSON_REQUEST_NODE,
-    nodeName: 'API Request',
-    nodeKind: NodeKind.CommandNode,
-  },
-  {
-    className: 'icDataBasic',
-    value: NODE_TYPES.DATA_BASIC_CARD_NODE,
-    nodeName: 'Data 기본 카드',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icDataList',
-    value: NODE_TYPES.DATA_LIST_CARD_NODE,
-    nodeName: 'Data 리스트',
-    nodeKind: NodeKind.InputNode,
-  },
-  {
-    className: 'icDataProduct',
-    value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
-    nodeName: 'Data 커머스',
-    nodeKind: NodeKind.InputNode,
-  },
-];
-
 export const NodeLinkPopUpMenu = ({
   popUpPosition,
   handleIsOpen,
 }: INodeLinkPopUpMenuProps) => {
-  const { botId } = useParams();
+  const { t } = usePage();
+
+  const cardTypeValue = [
+    {
+      className: 'icText',
+      value: NODE_TYPES.TEXT_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_TEXT_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icBtnTemple',
+      value: NODE_TYPES.BASIC_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_BASIC_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icList',
+      value: NODE_TYPES.LIST_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_LIST_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icCommerce',
+      value: NODE_TYPES.PRODUCT_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_PRODUCT_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icCaroImg',
+      value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_BASIC_CARD_CAROUSEL_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icCaroList',
+      value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_LIST_CARD_CAROUSEL_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icCaroCommerce',
+      value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_PRODUCT_CARD_CAROUSEL_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icQuickBtn',
+      value: NODE_TYPES.ANSWER_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_ANSWER_NODE`),
+      nodeKind: NodeKind.AnswerNode,
+    },
+    {
+      className: 'icCondition',
+      value: NODE_TYPES.CONDITION_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_CONDITION_NODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icCount',
+      value: NODE_TYPES.RETRY_CONDITION_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_RETRY_CONDITION_NODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icSetParameter',
+      value: NODE_TYPES.PARAMETER_SET_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_PARAMETER_SET_NODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icOtherFlowRedirect',
+      value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_OTHER_FLOW_REDIRECT_NODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icJsonRequest',
+      value: NODE_TYPES.JSON_REQUEST_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_JSON_REQUEST_NODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icDataBasic',
+      value: NODE_TYPES.DATA_BASIC_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_DATA_BASIC_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icDataList',
+      value: NODE_TYPES.DATA_LIST_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_DATA_LIST_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+    {
+      className: 'icDataProduct',
+      value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_DATA_PRODUCT_CARD_NODE`),
+      nodeKind: NodeKind.InputNode,
+    },
+  ];
+
   const [userInput, setUserInput] = useState<string>();
+
   const dispatch = useDispatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  //const [cardBtn, setCardBtn] = useState(cardTypeValue);
+
   const [scenarioList, setScenarioList] = useState<
     {
       id: string;
@@ -146,6 +142,7 @@ export const NodeLinkPopUpMenu = ({
       };
     }[]
   >();
+
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
   const nodeLinkPopUpMenuRef = useRef<HTMLDivElement | null>(null);
   const guideStart = useRootState((state) => state.botBuilderReducer.savedGuideInfo);
@@ -153,17 +150,6 @@ export const NodeLinkPopUpMenu = ({
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const isHistoryViewer = useHistoryViewerMatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<INodeLinkPopUpFormValue>();
-
-  // const onSubmit = () => {
-  //   if (!userInput) {
-  //     setCardBtn(cardTypeValue);
-  //   }
-  // };
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
@@ -311,7 +297,7 @@ export const NodeLinkPopUpMenu = ({
 
     handleIsOpen(false);
   };
-  console.log('filter btn list', filterdBtnList);
+
   return (
     <div
       className="nodeLinkPopUpMenuWrapper luna-node luna-node-bordered border-radious-small"
@@ -375,7 +361,7 @@ export const NodeLinkPopUpMenu = ({
             </div>
           ))
         ) : (
-          <div>No Results</div>
+          <div>{t(`NO_SCENARIO_RESULTS`)}</div>
         )}
       </div>
     </div>

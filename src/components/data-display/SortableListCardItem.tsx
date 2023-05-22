@@ -1,8 +1,10 @@
 import { Col, Row } from '@components/layout';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
+import { t } from 'i18next';
 
 export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
+  const { t } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
 
   return (
@@ -11,12 +13,12 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
         {item.title ? (
           <p className="title">{item.title}</p>
         ) : (
-          <p className="title empty">Enter Title</p>
+          <p className="title empty">{t(`ENTER_TITLE`)}</p>
         )}
         {item.description ? (
           <p className="description">{item.description}</p>
         ) : (
-          <p className="description empty">Enter Content</p>
+          <p className="description empty">{t(`ENTER_CONTENT`)}</p>
         )}
       </Col>
       <Col span={6}>

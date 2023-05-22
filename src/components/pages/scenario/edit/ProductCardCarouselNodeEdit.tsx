@@ -5,85 +5,13 @@ import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
-import Select, { StylesConfig } from 'react-select';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
-
-const currencyOptions = [
-  { value: 'USD', label: 'USD' },
-  { value: 'JPY', label: 'JPY' },
-  { value: 'KRW', label: 'KRW' },
-];
-
-const reactSelectStyle: StylesConfig = {
-  control: (provided, state) => ({
-    ...provided,
-    alignItems: 'center',
-    borderRadius: '8px',
-    border: '1px solid #DCDCDC',
-    borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
-    fontSize: '13px',
-    width: '109px',
-    ':hover': {
-      borderColor: '#e7e7e7',
-    },
-    minHeight: '40px',
-  }),
-
-  dropdownIndicator: () => ({
-    color: '#B5B4B4',
-  }),
-  indicatorsContainer: () => ({}),
-  valueContainer: (provided) => ({
-    ...provided,
-    alignItems: 'center',
-  }),
-  placeholder: (provided) => ({
-    ...provided,
-    whiteSpace: 'nowrap',
-    color: '#000',
-  }),
-  input: (provided) => ({
-    ...provided,
-    color: 'transparent',
-    textShadow: '0 0 0 black',
-  }),
-  option: (provided) => ({
-    ...provided,
-    width: '100%',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-
-    padding: '6px 10px',
-    fontSize: '13px',
-    fontWeight: 400,
-    color: '#757575',
-    lineHeight: 1.5,
-    backgroundColor: 'white',
-    ':hover': {
-      color: '#222222',
-      backgroundColor: '#ECF2FF',
-      borderRadius: '6px',
-    },
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    fontSize: '13px',
-    color: '#222222',
-    overflow: 'unset',
-    textOverflow: 'unset',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    border: '1px solid #DCDCDC',
-    borderRadius: '8px',
-  }),
-};
 
 export const ProductCardCarouselNodeEdit = () => {
   useNodeEditSave();
@@ -105,10 +33,7 @@ export const ProductCardCarouselNodeEdit = () => {
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
   const isHistoryViewer = useHistoryViewerMatch();
-  const { field: currencyField } = useController({
-    name: `view.childrenViews.${index}.currencyUnit`,
-    control,
-  });
+
   const { fields: childrenViewsField } = useFieldArray({
     name: `view.childrenViews`,
     control,
@@ -294,7 +219,6 @@ export const ProductCardCarouselNodeEdit = () => {
                                   {...register(
                                     `view.childrenViews.${index}.retailPrice`,
                                     {
-                                      // valueAsNumber: true,
                                       setValueAs: (v) =>
                                         v === '' ? undefined : parseInt(v),
                                       onChange: (
@@ -308,18 +232,6 @@ export const ProductCardCarouselNodeEdit = () => {
                                 />
                               </Col>
                               <Col className="productSelectorWrapper" span={8}>
-                                {/* <Select
-                                  {...currencyField}
-                                  options={currencyOptions}
-                                  styles={reactSelectStyle}
-                                  defaultValue={currencyOptions[0]}
-                                  value={currencyOptions.find(
-                                    (item) => item.value === currencyField.value,
-                                  )}
-                                  onChange={(options: any) =>
-                                    currencyField.onChange(options?.value)
-                                  }
-                                /> */}
                                 <Input
                                   {...register(
                                     `view.childrenViews.${index}.currencyUnit`,
@@ -338,7 +250,6 @@ export const ProductCardCarouselNodeEdit = () => {
                               `view.childrenViews.${index}.discountAmount`,
 
                               {
-                                // valueAsNumber: true,
                                 setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                                   checkPriceRegex(e, index, 'discountAmount'),

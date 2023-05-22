@@ -18,7 +18,6 @@ export const ConditionNodeEdit = () => {
   useNodeEditSave();
   const { t, tc } = usePage();
   const {
-    register,
     getValues,
     control,
     watch,
@@ -87,7 +86,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view?.items[0]?.op1}
             >
               <VariableSelector
-                placeholder="변수명을 입력해주세요"
+                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path="view.items.0.op1"
               />
@@ -102,7 +101,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view.items[0]?.op2}
             >
               <VariableSelector
-                placeholder="변수명을 입력해주세요"
+                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path="view.items.0.op2"
               />
@@ -161,7 +160,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view.items[i]?.op1}
             >
               <VariableSelector
-                placeholder="변수명을 입력해주세요"
+                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path={`view.items.${i}.op1`}
               />
@@ -178,7 +177,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view?.items[i]?.op2}
             >
               <VariableSelector
-                placeholder="변수명을 입력해주세요"
+                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path={`view.items.${i}.op2`}
               />

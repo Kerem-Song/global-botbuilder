@@ -1,4 +1,4 @@
-import { useI18n } from '@hooks';
+import { useI18n, usePage } from '@hooks';
 import { ConditionOperator, ConditionOperatorKeys } from '@models';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
@@ -71,8 +71,9 @@ const reactSelectStyle: StylesConfig = {
 
 export const OperatorSelector = ({ index }: { index: number }) => {
   const { getConditionOperatorLabel } = useI18n();
+  const { t } = usePage();
   const operatorOptions = [
-    { value: 0, label: '조건을 선택해주세요.' },
+    { value: 0, label: t(`CONDITION_NODE_SET_OPERATOR`) },
     ...Object.keys(ConditionOperator)
       .filter((o) => isNaN(Number(o)))
       .map((o) => {

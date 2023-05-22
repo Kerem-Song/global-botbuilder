@@ -1,7 +1,6 @@
 import { Input } from '@components';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
-import { ChangeEvent, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
@@ -21,9 +20,8 @@ export const ImageInput = ({
   listItemIndex,
   registerName,
 }: IImageCtrlIdPathProps) => {
-  const [timer, setTimer] = useState<NodeJS.Timeout>();
   const { t } = usePage();
-  const { setValue, register, watch, getValues } = useFormContext();
+  const { setValue, register } = useFormContext();
 
   const isHistoryViewer = useHistoryViewerMatch();
   const token = useRootState((state) => state.botInfoReducer.token);

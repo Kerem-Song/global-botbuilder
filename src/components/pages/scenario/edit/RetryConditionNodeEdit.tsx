@@ -1,5 +1,5 @@
 import { Collapse, Divider, FormItem, Space } from '@components';
-import { useNodeEditSave } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classnames from 'classnames';
@@ -24,6 +24,7 @@ const countOptions: IReactSelect[] = [
 
 export const RetryConditionNodeEdit = () => {
   useNodeEditSave();
+  const { t } = usePage();
   const {
     getValues,
     control,
@@ -40,9 +41,11 @@ export const RetryConditionNodeEdit = () => {
 
   return (
     <>
-      <Collapse label={'재질문 설정'} useSwitch={false}>
+      <Collapse label={t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION`)} useSwitch={false}>
         <div className="m-b-8">
-          <span className="subLabel">재질문 횟수 설정 </span>
+          <span className="subLabel">
+            {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_COUNT`)}{' '}
+          </span>
           <span className="required">*</span>
         </div>
         <div className={classnames('input m-b-8', {})}>
@@ -60,7 +63,9 @@ export const RetryConditionNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <div>
-              <span className="label">재질문할 메시지 연결 </span>
+              <span className="label">
+                {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_TRUE_THEN_NEXT_MESSAGE`)}{' '}
+              </span>
               <span className="required">*</span>
             </div>
             <FormItem error={errors.view?.trueThenNextNodeId}>
@@ -77,7 +82,9 @@ export const RetryConditionNodeEdit = () => {
         <div className="m-b-8">
           <Space direction="vertical">
             <div>
-              <span>횟수 초과 메시지 연결 </span>
+              <span>
+                {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_FALSE_THEN_NEXT_MESSAGE`)}
+              </span>
               <span className="required">*</span>
             </div>
             <FormItem error={errors.view?.falseThenNextNodeId}>
