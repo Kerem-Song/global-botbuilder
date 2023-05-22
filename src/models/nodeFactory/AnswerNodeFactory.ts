@@ -45,4 +45,8 @@ export class AnswerNodeFactory implements INodeFactory {
   getNodeImgIconUrl() {
     return '';
   }
+
+  getConnectId() {
+    return [];
+  }
 }

@@ -2,7 +2,7 @@ import { DataBasicCardNodeEdit } from '@components/pages/scenario/edit/DataBasic
 import { DataBasicCardNode } from '@components/pages/scenario/nodes/DataBasicCardNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
-import { IArrow, NODE_TYPES, TNodeTypes } from '@models/interfaces';
+import { IArrow, INode, NODE_TYPES, TNodeTypes } from '@models/interfaces';
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
@@ -47,5 +47,9 @@ export class DataBasicCardNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

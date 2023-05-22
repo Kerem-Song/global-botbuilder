@@ -1,6 +1,6 @@
 import { ProductCardCarouselNodeEdit } from '@components/pages/scenario/edit/ProductCardCarouselNodeEdit';
 import { CommerceCardCarouselNode } from '@components/pages/scenario/nodes/CommerceCardCarouselNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import {
   IHasButtonCarouselViewBase,
@@ -56,5 +56,9 @@ export class ProductCardCarouselNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

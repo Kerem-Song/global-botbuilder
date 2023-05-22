@@ -1,6 +1,6 @@
 import { BasicCardCarousleNodeEdit } from '@components/pages/scenario/edit/BasicCardCarouselNodeEdit';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import {
   IHasButtonCarouselViewBase,
@@ -56,5 +56,9 @@ export class BasicCardCarouselNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

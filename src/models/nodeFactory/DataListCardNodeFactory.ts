@@ -2,7 +2,7 @@ import { DataListCardNodeEdit } from '@components/pages/scenario/edit/DataListCa
 import { DataListCardNode } from '@components/pages/scenario/nodes/DataListCardNode';
 import { NodeKind } from '@models/enum';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
-import { NODE_TYPES, TNodeTypes } from '@models/interfaces';
+import { INode, NODE_TYPES, TNodeTypes } from '@models/interfaces';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -45,5 +45,9 @@ export class DataListCardNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

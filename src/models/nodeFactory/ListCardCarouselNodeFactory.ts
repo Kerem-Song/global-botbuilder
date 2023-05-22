@@ -1,6 +1,6 @@
 import { ListCardCarouselNodeEdit } from '@components/pages/scenario/edit/ListCardCarouselNodeEdit';
 import { ListCardCarouselNode } from '@components/pages/scenario/nodes/ListCardCarouselNode';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import {
   IHasButtonCarouselViewBase,
@@ -56,5 +56,9 @@ export class ListCardCarouselNodeFactory implements INodeFactory {
 
   getNodeImgIconUrl() {
     return '';
+  }
+
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

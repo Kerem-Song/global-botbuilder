@@ -45,4 +45,8 @@ export class IntentNodeFactory implements INodeFactory {
   getNodeImgIconUrl() {
     return '';
   }
+
+  getConnectId() {
+    return [];
+  }
 }

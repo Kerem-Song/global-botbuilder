@@ -44,4 +44,8 @@ export class OtherFlowRedirectNodeFactory implements INodeFactory {
   getNodeImgIconUrl() {
     return '';
   }
+
+  getConnectId() {
+    return [];
+  }
 }
