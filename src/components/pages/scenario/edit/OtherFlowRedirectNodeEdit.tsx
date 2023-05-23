@@ -4,11 +4,10 @@ import { useNodeEditSave, usePage } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
+import { getReactSelectStyle } from '@modules';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
-
-import { reactSelectStyle } from './ButtonTypeSelector';
 
 export const OtherFlowRedirectNodeEdit = () => {
   useNodeEditSave();
@@ -21,6 +20,7 @@ export const OtherFlowRedirectNodeEdit = () => {
     control,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IOtherFlowRedirectView>>();
+  const reactSelectStyle = getReactSelectStyle({});
   const { field } = useController({
     name: `nextNodeId`,
     control,

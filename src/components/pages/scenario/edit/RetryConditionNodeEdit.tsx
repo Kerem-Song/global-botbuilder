@@ -2,11 +2,11 @@ import { Collapse, Divider, FormItem, Space } from '@components';
 import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
+import { getReactSelectStyle } from '@modules';
 import classnames from 'classnames';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
-import { reactSelectStyle } from './ButtonTypeSelector';
 import { SelectNode } from './SelectNode';
 
 interface IReactSelect {
@@ -30,7 +30,7 @@ export const RetryConditionNodeEdit = () => {
     control,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IRetryConditionView>>();
-
+  const reactSelectStyle = getReactSelectStyle({});
   const { field } = useController({
     name: `view.count`,
     control,
