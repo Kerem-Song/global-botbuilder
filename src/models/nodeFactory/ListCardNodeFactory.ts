@@ -1,3 +1,4 @@
+import { icList } from '@assets';
 import { ListCardNodeEdit } from '@components/pages/scenario/edit/ListCardNodeEdit';
 import { ListCardNode } from '@components/pages/scenario/nodes/ListCardNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class ListCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.LIST_CARD_NODE;
@@ -43,7 +43,7 @@ export class ListCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_list.svg';
+    return icList;
   }
 
   getConnectId(node: INode) {

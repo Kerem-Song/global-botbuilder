@@ -1,3 +1,4 @@
+import { icApiRequest } from '@assets';
 import { JsonRequestNodeEdit } from '@components/pages/scenario/edit/JsonRequestNodeEdit';
 import { ConditionNode } from '@components/pages/scenario/nodes';
 import { JsonRequestNode } from '@components/pages/scenario/nodes/JsonRequestNode';
@@ -9,7 +10,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class JsonRequestNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.JSON_REQUEST_NODE;
@@ -49,7 +49,7 @@ export class JsonRequestNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_api_request.svg';
+    return icApiRequest;
   }
 
   getConnectId(node: INode) {

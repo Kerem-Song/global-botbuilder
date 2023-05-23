@@ -1,3 +1,4 @@
+import { icCommerce } from '@assets';
 import { ProductCardNodeEdit } from '@components/pages/scenario/edit/ProductCardNodeEdit';
 import { CommerceCardNode } from '@components/pages/scenario/nodes/CommerceCardNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class ProductCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.PRODUCT_CARD_NODE;
@@ -43,7 +43,7 @@ export class ProductCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_commerce.svg';
+    return icCommerce;
   }
 
   getConnectId(node: INode) {

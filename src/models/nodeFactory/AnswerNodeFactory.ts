@@ -1,3 +1,4 @@
+import { icQuickBtn } from '@assets';
 import { AnswerNodeEdit } from '@components/pages/scenario/edit/AnswerNodeEdit';
 import { AnswerNode } from '@components/pages/scenario/nodes/AnswerNode';
 import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class AnswerNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.ANSWER_NODE;
@@ -43,7 +43,7 @@ export class AnswerNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_quick_btn.svg';
+    return icQuickBtn;
   }
 
   getConnectId() {

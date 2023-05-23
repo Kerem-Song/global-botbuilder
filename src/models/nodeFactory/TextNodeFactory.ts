@@ -1,3 +1,4 @@
+import { icText } from '@assets';
 import TextNodeEdit from '@components/pages/scenario/edit/TextNodeEdit';
 import { TextNode } from '@components/pages/scenario/nodes/TextNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -47,7 +48,7 @@ export class TextNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_text.svg';
+    return icText;
   }
 
   getConnectId(node: INode) {

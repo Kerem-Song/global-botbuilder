@@ -1,3 +1,4 @@
+import { icCount } from '@assets';
 import { RetryConditionNodeEdit } from '@components/pages/scenario/edit/RetryConditionNodeEdit';
 import { RetryConditionNode } from '@components/pages/scenario/nodes/RetryConditionNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -43,7 +44,7 @@ export class RetryConditionNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_count.svg';
+    return icCount;
   }
 
   getConnectId(node: INode) {
