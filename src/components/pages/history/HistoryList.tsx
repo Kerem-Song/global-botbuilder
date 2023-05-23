@@ -189,7 +189,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
             </Row>
           </div>
         ))}
-      {hasPage() === false ? (
+      {hasPage() ? (
         data?.pages.map((v) => {
           const pages = v.items;
           return pages.map((item) => (
