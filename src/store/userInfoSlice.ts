@@ -27,8 +27,13 @@ export const UserInfoSlice = createSlice({
       state.staffType = staffType;
       state.role = role;
     },
+    updateRole: (state, action: PayloadAction<Pick<IUserInfo, 'role' | 'staffType'>>) => {
+      const { role, staffType } = action.payload;
+      state.staffType = staffType;
+      state.role = role;
+    },
   },
 });
 
-export const { setUserInfo } = UserInfoSlice.actions;
+export const { setUserInfo, updateRole } = UserInfoSlice.actions;
 export default UserInfoSlice.reducer;
