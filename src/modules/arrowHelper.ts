@@ -332,19 +332,19 @@ export const arrowHelper = {
       return '연속노드로 응답노드만 연결 할 수 있습니다.';
     }
 
-    const depth =
-      (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
-      (endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
-    const parentCnt = arrowHelper.checkParent(depth, startNode.id, nodes);
-    const childCnt = arrowHelper.checkChild(
-      0,
-      nodes,
-      nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
-    );
+    // const depth =
+    //   (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
+    //   (endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
+    // const parentCnt = arrowHelper.checkParent(depth, startNode.id, nodes);
+    // const childCnt = arrowHelper.checkChild(
+    //   0,
+    //   nodes,
+    //   nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
+    // );
 
-    if (parentCnt + childCnt > 3) {
-      return '연속응답 노드는 3개까지만 가능합니다.';
-    }
+    // if (parentCnt + childCnt > 3) {
+    //   return '연속응답 노드는 3개까지만 가능합니다.';
+    // }
 
     return undefined;
   },
