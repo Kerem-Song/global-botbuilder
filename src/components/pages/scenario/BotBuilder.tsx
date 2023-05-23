@@ -299,7 +299,6 @@ export const Botbuilder = () => {
   ];
 
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log('@handlecontextmenu');
     setClicked(true);
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     setPoints({
