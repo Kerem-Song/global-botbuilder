@@ -299,6 +299,7 @@ export const Botbuilder = () => {
   ];
 
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    console.log('@handlecontextmenu');
     setClicked(true);
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     setPoints({
@@ -350,7 +351,15 @@ export const Botbuilder = () => {
         onKeyDown={handleUndoRedoKeydown}
       >
         <BotBuilderZoomBtn />
-
+        {isHistoryViewer
+          ? null
+          : isOpen && (
+              <NodeLinkPopUpMenu
+                handleIsOpen={handleIsOpen}
+                popUpPosition={popUpPosition}
+              />
+            )}
+        {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
@@ -413,15 +422,7 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-          {isHistoryViewer
-            ? null
-            : isOpen && (
-                <NodeLinkPopUpMenu
-                  handleIsOpen={handleIsOpen}
-                  popUpPosition={popUpPosition}
-                />
-              )}
-          {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
+
           {isHistoryViewer
             ? null
             : clicked && (

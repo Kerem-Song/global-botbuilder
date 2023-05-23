@@ -4,7 +4,7 @@ export enum ConditionOperator {
   // StartWith = 1 << 3,
   // EndWith = 1 << 4,
   Contain = 1 << 5,
-  Include = 1 << 10,
+  Any = 1 << 10,
   //NotContain = 1 << 9,
   GreaterThan = 1 << 6,
   GreaterThanOrEqual = 1 << 12,

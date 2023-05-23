@@ -170,7 +170,7 @@ export const Node: FC<INodeProps> = ({
   }, [clipBoard]);
 
   const nodeIcon = nodeFactory.getFactory(node.type)?.getNodeImgIconUrl();
-  console.log('@nodeIcon', nodeIcon);
+
   return (
     <>
       <Popper
