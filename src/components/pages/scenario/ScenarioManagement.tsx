@@ -42,7 +42,6 @@ export const ScenarioManagement: FC<{
       (!isActivated || x.activated) &&
       (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
   );
-
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">

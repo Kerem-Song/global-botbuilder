@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { systemModalOpen } from '../store/systemModalSlice';
+import useI18n from './useI18n';
 
 export interface IInfoModal {
   title: ReactNode;
@@ -10,6 +11,7 @@ export interface IInfoModal {
 }
 
 export const useSystemModal = () => {
+  const { tc } = useI18n();
   const dispatch = useDispatch();
   const info = (args: IInfoModal) => {
     return new Promise((resolve) => {
@@ -17,7 +19,7 @@ export const useSystemModal = () => {
         systemModalOpen({
           message: args.title,
           description: args.description,
-          confirmButton: 'OK',
+          confirmButton: tc('OK'),
           callbackFunc: () => {
             resolve(true);
           },
@@ -35,7 +37,7 @@ export const useSystemModal = () => {
         systemModalOpen({
           message: args.title,
           description: args.description,
-          confirmButton: 'OK',
+          confirmButton: tc('OK'),
           callbackFunc: () => {
             resolve(true);
           },
@@ -53,8 +55,8 @@ export const useSystemModal = () => {
         systemModalOpen({
           message: args.title,
           description: args.description,
-          confirmButton: '확인',
-          cancelButton: '취소',
+          confirmButton: tc('OK'),
+          cancelButton: tc('CANCEL'),
           callbackFunc: () => {
             resolve(true);
           },

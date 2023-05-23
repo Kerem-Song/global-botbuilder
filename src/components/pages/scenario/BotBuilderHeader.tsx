@@ -23,76 +23,101 @@ import { useDispatch } from 'react-redux';
 import { ID_GEN, ID_TYPES, useAppDispatch } from '../../../modules';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 
-const singleNodes = [
-  { className: 'icText', value: NODE_TYPES.TEXT_NODE, nodeName: '텍스트' },
-  {
-    className: 'icBtnTemple',
-    value: NODE_TYPES.BASIC_CARD_NODE,
-    nodeName: '기본 카드',
-  },
-  { className: 'icList', value: NODE_TYPES.LIST_CARD_NODE, nodeName: '리스트' },
-  { className: 'icCommerce', value: NODE_TYPES.PRODUCT_CARD_NODE, nodeName: '커머스' },
-];
-
-const carousleNodes = [
-  {
-    className: 'icCaroImg',
-    value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
-    nodeName: '기본 카드 캐로셀',
-  },
-  {
-    className: 'icCaroList',
-    value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
-    nodeName: '리스트 캐로셀',
-  },
-  {
-    className: 'icCaroCommerce',
-    value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
-    nodeName: '커머스 캐로셀',
-  },
-];
-
-const buttonNodes = [
-  { className: 'icQuickBtn', value: NODE_TYPES.ANSWER_NODE, nodeName: '퀵리플라이' },
-  { className: 'icCondition', value: NODE_TYPES.CONDITION_NODE, nodeName: '컨디션' },
-  { className: 'icCount', value: NODE_TYPES.RETRY_CONDITION_NODE, nodeName: '카운트' },
-  {
-    className: 'icSetParameter',
-    value: NODE_TYPES.PARAMETER_SET_NODE,
-    nodeName: '파라미터',
-  },
-  {
-    className: 'icOtherFlowRedirect',
-    value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
-    nodeName: '시나리오',
-  },
-];
-
-const apiNodes = [
-  {
-    className: 'icJsonRequest',
-    value: NODE_TYPES.JSON_REQUEST_NODE,
-    nodeName: 'Api Request',
-  },
-  {
-    className: 'icDataBasic',
-    value: NODE_TYPES.DATA_BASIC_CARD_NODE,
-    nodeName: 'Data 기본 카드',
-  },
-  {
-    className: 'icDataList',
-    value: NODE_TYPES.DATA_LIST_CARD_NODE,
-    nodeName: 'Data 리스트',
-  },
-  {
-    className: 'icDataProduct',
-    value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
-    nodeName: 'Data 커머스',
-  },
-];
-
 export const BotBuilderHeader = () => {
   const { t, tc } = usePage();
+
+  const singleNodes = [
+    {
+      className: 'icText',
+      value: NODE_TYPES.TEXT_NODE,
+      nodeName: t('CAPTION_TEXTNODE'),
+    },
+    {
+      className: 'icBtnTemple',
+      value: NODE_TYPES.BASIC_CARD_NODE,
+      nodeName: t('CAPTION_BASICCARDCAROUSELNODE'),
+    },
+    {
+      className: 'icList',
+      value: NODE_TYPES.LIST_CARD_NODE,
+      nodeName: t('CAPTION_LISTCARDNODE'),
+    },
+    {
+      className: 'icCommerce',
+      value: NODE_TYPES.PRODUCT_CARD_NODE,
+      nodeName: t('CAPTION_PRODUCTCARDNODE'),
+    },
+  ];
+
+  const carousleNodes = [
+    {
+      className: 'icCaroImg',
+      value: NODE_TYPES.BASIC_CARD_CAROUSEL_NODE,
+      nodeName: t('CAPTION_BASICCARDCAROUSELNODE'),
+    },
+    {
+      className: 'icCaroList',
+      value: NODE_TYPES.LIST_CARD_CAROUSEL_NODE,
+      nodeName: t('CAPTION_LISTCARDCAROUSELNODE'),
+    },
+    {
+      className: 'icCaroCommerce',
+      value: NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE,
+      nodeName: t('CAPTION_PRODUCTCARDCAROUSELNODE'),
+    },
+  ];
+
+  const buttonNodes = [
+    {
+      className: 'icQuickBtn',
+      value: NODE_TYPES.ANSWER_NODE,
+      nodeName: t('CAPTION_ANSWERNODE'),
+    },
+    {
+      className: 'icCondition',
+      value: NODE_TYPES.CONDITION_NODE,
+      nodeName: t('CAPTION_CONDITIONNODE'),
+    },
+    {
+      className: 'icCount',
+      value: NODE_TYPES.RETRY_CONDITION_NODE,
+      nodeName: t('CAPTION_RETRYCONDITIONNODE'),
+    },
+    {
+      className: 'icSetParameter',
+      value: NODE_TYPES.PARAMETER_SET_NODE,
+      nodeName: t('CAPTION_PARAMETERSETNODE'),
+    },
+    {
+      className: 'icOtherFlowRedirect',
+      value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
+      nodeName: t('CAPTION_OTHERFLOWREDIRECTNODE'),
+    },
+  ];
+
+  const apiNodes = [
+    {
+      className: 'icJsonRequest',
+      value: NODE_TYPES.JSON_REQUEST_NODE,
+      nodeName: t('CAPTION_JSONREQUESTNODE'),
+    },
+    {
+      className: 'icDataBasic',
+      value: NODE_TYPES.DATA_BASIC_CARD_NODE,
+      nodeName: t('CAPTION_BASICCARDCAROUSELTEMPLATENODE'),
+    },
+    {
+      className: 'icDataList',
+      value: NODE_TYPES.DATA_LIST_CARD_NODE,
+      nodeName: t('CAPTION_LISTCARDCAROUSELTEMPLATENODE'),
+    },
+    {
+      className: 'icDataProduct',
+      value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+      nodeName: t('CAPTION_PRODUCTCARDCAROUSELTEMPLATENODE'),
+    },
+  ];
+
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
   const selectedScenario = useRootState(
@@ -134,7 +159,7 @@ export const BotBuilderHeader = () => {
       await appDispatch(editNodeAsync(model));
 
       if (!isValid) {
-        lunaToast.error('저장에 실패하였습니다.');
+        lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
         return;
       }
     }
@@ -161,7 +186,7 @@ export const BotBuilderHeader = () => {
       );
       console.log('validates', results);
       if (results.includes(false)) {
-        lunaToast.error('저장에 실패하였습니다.');
+        lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
         return;
       }
 
