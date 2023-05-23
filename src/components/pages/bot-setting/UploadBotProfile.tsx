@@ -1,5 +1,6 @@
-import { icImg } from '@assets';
+import { icHelp, icImg } from '@assets';
 import { Button, Col, Row, Space } from '@components';
+import { Tooltip } from '@components/navigation/Tooltip';
 import {
   imageUploadClient,
   useBotClient,
@@ -20,6 +21,7 @@ export const UploadBotProfile = () => {
   const { t } = usePage();
   const { imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
+  const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const token = useRootState((state) => state.botInfoReducer.token);
   const { getValues, setValue } = useForm<IUpdateBotIcon>();
@@ -121,7 +123,10 @@ export const UploadBotProfile = () => {
     <form>
       <Row gap={10} align="center">
         <Col className="botInfo">
-          <span>{t('BOT_PROFILE')}</span>
+          <p>{t('BOT_PROFILE')}</p>
+          <Tooltip tooltip={settingBotProfileInfo} placement="bottom-start">
+            <img className="icHelp" src={icHelp} alt="help" />
+          </Tooltip>
         </Col>
         <Col flex="auto" className="botInfo botProfileImgwrap">
           <Space>

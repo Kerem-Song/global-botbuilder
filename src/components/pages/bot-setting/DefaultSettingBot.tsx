@@ -107,7 +107,7 @@ export const DefaultSettingBot = () => {
         >
           <Row gap={10} align="center">
             <Col className="botInfo">
-              <span>{t('BOT_NAME')}</span>
+              <span className="botName">{t('BOT_NAME')} </span>
               <span className="required"> *</span>
             </Col>
             <Col flex="auto">

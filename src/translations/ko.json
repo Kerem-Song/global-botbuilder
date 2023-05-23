@@ -412,7 +412,8 @@
     "VALIDATION_UPLOAD_FILE_SIZE_TITLE": "파일 용량 초과",
     "VALIDATION_UPLOAD_FILE_SIZE": "파일 용량이 너무 큽니다.\n(최대 업로드 가능 용량 : 300KB)",
     "VALIDATION_UPLOAD_FILE_FORMAT_TITLE": "파일 업로드 불가",
-    "VALIDATION_UPLOAD_FILE_FORMAT": "이미지 파일은 JPEG, PNG만 업로드할 수 있습니다."
+    "VALIDATION_UPLOAD_FILE_FORMAT": "이미지 파일은 JPEG, PNG만 업로드할 수 있습니다.",
+    "TOOLTIP_SETTING_BOT_PROFILE_INFO": "설정에서 챗봇 프로필 이미지를 변경하면,\n@sys.bot-icon에 즉시 반영됩니다."
   },
   "deployment": {
     "TITLE": "배포",

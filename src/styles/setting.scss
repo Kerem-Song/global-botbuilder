@@ -24,7 +24,20 @@
       font-weight: 500;
     }
     .botInfo {
-      width: rem(85);
+      width: rem(110);
+      white-space: pre-line;
+      display: flex;
+
+      .botName {
+        padding-right: rem(3);
+      }
+
+      .icHelp {
+        margin-left: rem(4);
+        width: rem(13);
+        height: rem(13);
+      }
+
       .icImg {
         background-color: $grayWhite;
         border: rem(1) dashed $gray200;
