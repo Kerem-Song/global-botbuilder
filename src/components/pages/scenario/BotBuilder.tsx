@@ -350,15 +350,7 @@ export const Botbuilder = () => {
         onKeyDown={handleUndoRedoKeydown}
       >
         <BotBuilderZoomBtn />
-        {isHistoryViewer
-          ? null
-          : isOpen && (
-              <NodeLinkPopUpMenu
-                handleIsOpen={handleIsOpen}
-                popUpPosition={popUpPosition}
-              />
-            )}
-        {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
+
         <div
           className="canvasWrapper"
           style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
@@ -421,7 +413,15 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-
+          {isHistoryViewer
+            ? null
+            : isOpen && (
+                <NodeLinkPopUpMenu
+                  handleIsOpen={handleIsOpen}
+                  popUpPosition={popUpPosition}
+                />
+              )}
+          {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
           {isHistoryViewer
             ? null
             : clicked && (
