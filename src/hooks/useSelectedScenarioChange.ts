@@ -3,24 +3,25 @@ import { setSelectedScenario } from '@store/botbuilderSlice';
 import { createElement } from 'react';
 import { useDispatch } from 'react-redux';
 
+import usePage from './usePage';
 import { useRootState } from './useRootState';
 import { useSystemModal } from './useSystemModal';
 
 export const useSelectedScenarioChange = () => {
+  const { tc } = usePage();
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
 
   const handleChangeSelectedScenario = async (item?: IScenarioModel) => {
-    console.log('handleChangeSelectedScenario');
     if (changed) {
       const message = createElement(
         'span',
         { style: { whiteSpace: 'pre-line' } },
-        '변경사항이 저장되지 않았습니다.\n정말 나가시겠습니까?',
+        tc('SAVE_CONFIRM_MESSAGE'),
       );
       const result = await confirm({
-        title: '저장하기',
+        title: tc('SAVE_CONFIRM_TITLE'),
         description: message,
       });
 

@@ -10,7 +10,7 @@ import { supportedLngs } from './constants';
 i18next.use(LanguageDetector).init({
   interpolation: { escapeValue: false },
   debug: true,
-  fallbackLng: 'en',
+  fallbackLng: 'key',
   supportedLngs,
   detection: {
     order: ['path', 'navigator'],
