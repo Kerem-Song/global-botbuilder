@@ -19,7 +19,22 @@ export interface IImportFlowGroup {
   file: File;
 }
 
+export interface IUploadImage {
+  file: File;
+  sessionToken: string;
+  ctrlId: string;
+}
+
 export interface IUpdateBotIcon {
-  iconUrl: string;
+  iconUrl: string | null;
   botId: string;
+}
+
+export interface IResponseUpdateBotIcon {
+  exception: string;
+  isSuccess: boolean;
+  newToken: string;
+  role: number;
+  staffType: number;
+  result: boolean;
 }

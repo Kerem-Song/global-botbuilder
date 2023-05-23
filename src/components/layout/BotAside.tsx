@@ -45,6 +45,8 @@ export const BotAside = () => {
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const role = useRootState((state) => state.userInfoReducer.role);
+  const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const { getBotListQuery } = useBotClient();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
@@ -56,12 +58,15 @@ export const BotAside = () => {
     setPage(pageName);
   }, [location.pathname]);
 
+  console.log('role, staffType', role, staffType);
+
   const getMenuItem = (
     id: number,
     url: string,
     name: string,
     icon: string,
     selectedIcon: string,
+    role: number,
   ) => {
     return {
       id,
@@ -71,27 +76,36 @@ export const BotAside = () => {
       selectedIcon,
       alt: url.replace(/^./, url[0].toUpperCase()),
       desc: ts(`${name.toUpperCase()}`),
+      role,
     };
   };
 
   const menu = [
-    getMenuItem(1, `${botId}/scenario`, 'scenario', icScenario, icScenarioSelected),
-    getMenuItem(2, `${botId}/utterance`, 'utterance', icUtterance, icUtteranceSelected),
+    getMenuItem(1, `${botId}/scenario`, 'scenario', icScenario, icScenarioSelected, 2),
+    getMenuItem(
+      2,
+      `${botId}/utterance`,
+      'utterance',
+      icUtterance,
+      icUtteranceSelected,
+      2,
+    ),
     //getMenuItem(3, `${botId}/data-api`, 'data-api', icDataApi, icDataApiSelcted),
-    getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected),
-    getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected),
+    getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected, 16),
+    getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected, 32),
     getMenuItem(
       6,
       `${botId}/statistics`,
       'statistics',
       icStatistics,
       icStatisticsSelected,
+      64,
     ),
   ];
 
   const subMenu = [
-    getMenuItem(1, 'help', 'help', icHelp, icHelpSelected),
-    getMenuItem(2, `${botId}/setting`, 'setting', icSetting, icSettingSelected),
+    getMenuItem(1, 'help', 'help', icHelp, icHelpSelected, 0),
+    getMenuItem(2, `${botId}/setting`, 'setting', icSetting, icSettingSelected, 256),
   ];
 
   const botList: IPopperSelectItem<{ action: (id: string) => void }>[] = [
@@ -198,29 +212,36 @@ export const BotAside = () => {
 
         <nav className="mainNav">
           <ul>
-            {menu.map((item) => {
-              return (
-                <NavLink
-                  key={item.id}
-                  to={`${item.url}`}
-                  onClick={() => {
-                    setPage(item.name);
-                    dispatch(setSidebarClose());
-                  }}
-                >
-                  <li className={page === item.name ? 'selected' : ''}>
-                    <span className="menuImg">
-                      {page === item.name ? (
-                        <img src={item.selectedIcon} alt={item.alt} />
-                      ) : (
-                        <img src={item.icon} alt={item.alt} />
-                      )}
-                    </span>
-                    {<span className="desc">{item.desc}</span>}
-                  </li>
-                </NavLink>
-              );
-            })}
+            {menu
+              .filter(
+                (x) =>
+                  staffType === 0 ||
+                  x.role === 0 ||
+                  (role !== undefined && (x.role & role) === x.role),
+              )
+              .map((item) => {
+                return (
+                  <NavLink
+                    key={item.id}
+                    to={`${item.url}`}
+                    onClick={() => {
+                      setPage(item.name);
+                      dispatch(setSidebarClose());
+                    }}
+                  >
+                    <li className={page === item.name ? 'selected' : ''}>
+                      <span className="menuImg">
+                        {page === item.name ? (
+                          <img src={item.selectedIcon} alt={item.alt} />
+                        ) : (
+                          <img src={item.icon} alt={item.alt} />
+                        )}
+                      </span>
+                      {<span className="desc">{item.desc}</span>}
+                    </li>
+                  </NavLink>
+                );
+              })}
           </ul>
         </nav>
       </div>
@@ -228,29 +249,36 @@ export const BotAside = () => {
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
-            {subMenu.map((item) => {
-              return (
-                <NavLink
-                  key={item.id}
-                  to={`${item.url}`}
-                  onClick={() => {
-                    setPage(item.url);
-                    dispatch(setSidebarClose());
-                  }}
-                >
-                  <li className={page === item.url ? 'selected' : ''}>
-                    <span className="menuImg">
-                      {page === item.url ? (
-                        <img src={item.selectedIcon} alt={item.alt} />
-                      ) : (
-                        <img src={item.icon} alt={item.alt} />
-                      )}
-                    </span>
-                    {sidebarStatus && <span className="desc">{item.desc}</span>}
-                  </li>
-                </NavLink>
-              );
-            })}
+            {subMenu
+              .filter(
+                (x) =>
+                  staffType === 0 ||
+                  x.role === 0 ||
+                  (role !== undefined && (x.role & role) === x.role),
+              )
+              .map((item) => {
+                return (
+                  <NavLink
+                    key={item.id}
+                    to={`${item.url}`}
+                    onClick={() => {
+                      setPage(item.url);
+                      dispatch(setSidebarClose());
+                    }}
+                  >
+                    <li className={page === item.url ? 'selected' : ''}>
+                      <span className="menuImg">
+                        {page === item.url ? (
+                          <img src={item.selectedIcon} alt={item.alt} />
+                        ) : (
+                          <img src={item.icon} alt={item.alt} />
+                        )}
+                      </span>
+                      {sidebarStatus && <span className="desc">{item.desc}</span>}
+                    </li>
+                  </NavLink>
+                );
+              })}
           </ul>
         </nav>
       </div>

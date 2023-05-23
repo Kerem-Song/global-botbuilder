@@ -1,6 +1,7 @@
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
 import { setToken } from '@store/authSlice';
+import { updateRole } from '@store/userInfoSlice';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -38,7 +39,11 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   instance.interceptors.response.use(
     async function (response) {
       if (response.data.newToken) {
+        console.log('newToken', response.data);
         dispatch(setToken({ refreshToken: response.data.newToken }));
+        dispatch(
+          updateRole({ staffType: response.data.staffType, role: response.data.role }),
+        );
       }
       if (!response.data.isSuccess) {
         if (

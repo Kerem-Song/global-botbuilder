@@ -2,8 +2,9 @@ import { IArrow, IBotModel, INode, IScenarioModel } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
+  scaleFactor: 0.1,
   limitToBounds: true,
-  minScale: 0.25,
+  minScale: 0.2,
   maxScale: 2,
 };
 
@@ -76,11 +77,19 @@ export const botbuilderSlice = createSlice({
       state.carouselIndex = {};
     },
     zoomIn: (state) => {
-      const scale = Math.min(state.scale + 0.25, transformOptions.maxScale);
+      const scale = Math.min(
+        state.scale + transformOptions.scaleFactor,
+        transformOptions.maxScale,
+      );
+      console.log(scale);
       state.scale = scale;
     },
     zoomOut: (state) => {
-      const scale = Math.max(state.scale - 0.25, transformOptions.minScale);
+      const scale = Math.max(
+        state.scale - transformOptions.scaleFactor,
+        transformOptions.minScale,
+      );
+      console.log(scale);
       state.scale = scale;
     },
     setSelected: (state, action: PayloadAction<string | IArrow | undefined>) => {

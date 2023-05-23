@@ -52,12 +52,12 @@ const finalRoutes = [
                 },
                 {
                   path: 'utterance',
-                  handle: { title: 'UTTERANCE', role: 4 },
+                  handle: { title: 'UTTERANCE', role: 2 },
                   children: [
                     {
                       path: '',
                       element: <UtterancePage />,
-                      handle: { title: 'UTTERANCE', role: 4 },
+                      handle: { title: 'UTTERANCE', role: 2 },
                     },
                     {
                       path: 'detail',
@@ -65,12 +65,12 @@ const finalRoutes = [
                         {
                           path: '',
                           element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 4 },
+                          handle: { title: 'UTTERANCE', role: 2 },
                         },
                         {
                           path: ':intentId',
                           element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 4 },
+                          handle: { title: 'UTTERANCE', role: 2 },
                         },
                       ],
                     },
