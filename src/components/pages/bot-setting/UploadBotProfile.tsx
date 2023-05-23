@@ -7,29 +7,27 @@ import {
   useRootState,
   useSystemModal,
 } from '@hooks';
+import { usePrompt } from '@hooks/usePrompt';
 import { IUpdateBotIcon } from '@models/interfaces/IBotSetting';
 import { lunaToast } from '@modules/lunaToast';
+import classNames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export const UploadBotProfile = () => {
+  const [iconImage, setIconImage] = useState<File | null>();
+  const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
   const { t } = usePage();
   const { imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-
   const token = useRootState((state) => state.botInfoReducer.token);
-  const [iconImage, setIconImage] = useState<File | null>();
-
-  const {
-    getValues,
-    setValue,
-    formState: { errors },
-  } = useForm<IUpdateBotIcon>();
-
+  const { getValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
-  const { error, info } = useSystemModal();
+  const { error } = useSystemModal();
+
+  usePrompt(isProfileSaveBtnActive);
 
   const handleUpload = useCallback(() => {
     if (!botProfileInputRef.current) {
@@ -55,7 +53,6 @@ export const UploadBotProfile = () => {
           setValue('iconUrl', null);
           setIconImage(null);
 
-          //modal 띄우기?
           console.log('upload 실패', err);
         });
     } else {
@@ -64,27 +61,38 @@ export const UploadBotProfile = () => {
   };
 
   const handleChangeBotProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const FILE_SIZE = 3 * 1000 * 100; // 300KB 제한
+    const ALLOWED_FILE_SIZE = 3 * 1000 * 100; // 300KB 제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
 
-    if (e.target.files) {
-      if (!SUPPORTED_FORMATS.includes(e.target.files[0].type)) {
-        await error({
-          title: t('VALIDATION_UPLOAD_FILE_FORMAT_TITLE'),
-          description: <span>{t('VALIDATION_UPLOAD_FILE_FORMAT')}</span>,
-        });
-        return;
-      } else if (e.target.files[0].size > FILE_SIZE) {
-        e.target.files = null;
-        e.target.value = '';
-        await error({
-          title: t('VALIDATION_UPLOAD_FILE_EXCEED_TITLE'),
-          description: <span>{t('VALIDATION_UPLOAD_FILE_EXCEED')}</span>,
-        });
-        return;
-      }
-      setIconImage(e.target.files[0]);
+    const file = e.target.files && e.target.files[0];
+
+    if (!file) {
+      return;
     }
+
+    if (!SUPPORTED_FORMATS.includes(file.type)) {
+      await error({
+        title: t('VALIDATION_UPLOAD_FILE_FORMAT_TITLE'),
+        description: <span>{t('VALIDATION_UPLOAD_FILE_FORMAT')}</span>,
+      });
+      return;
+    }
+
+    if (file.size > ALLOWED_FILE_SIZE) {
+      e.target.files = null;
+      e.target.value = '';
+      await error({
+        title: t('VALIDATION_UPLOAD_FILE_SIZE_TITLE'),
+        description: (
+          <span style={{ whiteSpace: 'pre-wrap' }}>
+            {t('VALIDATION_UPLOAD_FILE_SIZE')}
+          </span>
+        ),
+      });
+      return;
+    }
+    setIconImage(file);
+    setIsProfileSaveBtnActive(true);
   };
 
   const handleSaveProfile = async () => {
@@ -98,6 +106,7 @@ export const UploadBotProfile = () => {
 
       if (res) {
         lunaToast.success();
+        setIsProfileSaveBtnActive(false);
       }
     }
   };
@@ -116,7 +125,11 @@ export const UploadBotProfile = () => {
         </Col>
         <Col flex="auto" className="botInfo botProfileImgwrap">
           <Space>
-            <div className="botProfileImg">
+            <div
+              className={classNames('icImg', {
+                'bot-profile-img': values.iconUrl ?? botInfo?.iconUrl,
+              })}
+            >
               <img src={values.iconUrl ?? botInfo?.iconUrl ?? icImg} alt="iconImg" />
             </div>
             <input
@@ -133,7 +146,11 @@ export const UploadBotProfile = () => {
                   <Button type="lineBlue" onClick={handleUpload}>
                     {t('FILE_UPLOAD')}
                   </Button>
-                  <Button type="primary" onClick={handleSaveProfile}>
+                  <Button
+                    type="primary"
+                    onClick={handleSaveProfile}
+                    disabled={isProfileSaveBtnActive ? false : true}
+                  >
                     {t('PROFILE_SAVE')}
                   </Button>
                 </Space>

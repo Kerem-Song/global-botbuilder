@@ -25,7 +25,7 @@
     }
     .botInfo {
       width: rem(85);
-      .botProfileImg {
+      .icImg {
         background-color: $grayWhite;
         border: rem(1) dashed $gray200;
         border-radius: rem(8);
@@ -35,14 +35,22 @@
         justify-content: center;
         align-items: center;
         img {
-          width: 100%;
-          height: 100%;
-          border-radius: rem(8);
-          // width: rem(30);
-          // height: rem(30);
-          border: none;
+          width: rem(30);
+          height: rem(30);
+        }
+        &.bot-profile-img {
+          border: rem(1) solid $gray200;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: $grayWhite;
+            border-radius: rem(8);
+            border: none;
+          }
         }
       }
+
       .fileInput {
         display: none;
       }
