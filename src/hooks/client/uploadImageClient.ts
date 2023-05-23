@@ -16,6 +16,7 @@ export const imageUploadClient = () => {
   });
 
   return {
+    isLoadingImageUpload: imageUploadMutate.isLoading,
     imageUploadAsync: imageUploadMutate.mutateAsync,
   };
 };

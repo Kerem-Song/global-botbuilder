@@ -38,7 +38,7 @@
         height: rem(13);
       }
 
-      .icImg {
+      .icImgWrap {
         background-color: $grayWhite;
         border: rem(1) dashed $gray200;
         border-radius: rem(8);
@@ -51,7 +51,7 @@
           width: rem(30);
           height: rem(30);
         }
-        &.bot-profile-img {
+        &.bot-profile-img-wrap {
           border: rem(1) solid $gray200;
           img {
             width: 100%;

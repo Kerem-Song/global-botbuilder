@@ -19,10 +19,10 @@ export const UploadBotProfile = () => {
   const [iconImage, setIconImage] = useState<File | null>();
   const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
   const { t } = usePage();
-  const { imageUploadAsync } = imageUploadClient();
+  const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
   const { error } = useSystemModal();
-  const { getValues, setValue } = useForm<IUpdateBotIcon>();
+  const { getValues, setValue, watch } = useForm<IUpdateBotIcon>();
   const values = getValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
@@ -120,6 +120,11 @@ export const UploadBotProfile = () => {
     }
   }, [iconImage]);
 
+  console.log('iconImage', iconImage);
+  console.log('watch botId', watch('botId'));
+  console.log('watch iconURl', watch('iconUrl'));
+  console.log('values', values);
+
   return (
     <form>
       <Row gap={10} align="center">
@@ -132,11 +137,11 @@ export const UploadBotProfile = () => {
         <Col flex="auto" className="botInfo botProfileImgwrap">
           <Space>
             <div
-              className={classNames('icImg', {
-                'bot-profile-img': iconUrl,
+              className={classNames('icImgWrap', {
+                'bot-profile-img-wrap': iconUrl,
               })}
             >
-              <img src={displayIcon} alt="iconImg" />
+              {isLoadingImageUpload ? null : <img src={displayIcon} alt="iconImg" />}
             </div>
             <input
               type="file"
