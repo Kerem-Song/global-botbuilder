@@ -38,12 +38,11 @@ export const getReactSelectStyle = <T>({
     placeholder: (provided) => ({
       ...provided,
       whiteSpace: 'nowrap',
-      color: '#000',
+      color: '#DCDCDC',
     }),
     input: (provided) => ({
       ...provided,
       color: '#000',
-      // color: 'transparent',
       textShadow: '0 0 0 black',
     }),
     option: (provided, state) => ({
@@ -73,10 +72,13 @@ export const getReactSelectStyle = <T>({
     }),
     menu: (provided) => ({
       ...provided,
-      padding: '4px 8px',
       border: '1px solid #DCDCDC',
       borderRadius: '8px',
       zIndex: 9999,
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: '4px 8px',
     }),
     menuPortal: (provided) => ({
       ...provided,
