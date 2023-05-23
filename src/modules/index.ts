@@ -1,4 +1,5 @@
 export * from './constants';
+export * from './getReactSelectStyle';
 export * from './i18next';
 export * from './idGen';
 export * from './modal';

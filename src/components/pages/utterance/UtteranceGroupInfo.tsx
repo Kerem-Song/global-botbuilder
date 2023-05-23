@@ -2,11 +2,10 @@ import { Card, Col, FormItem, Input, Row, Space } from '@components';
 import { useI18n, usePage } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, IUtteranceModel } from '@models';
+import { getReactSelectStyle } from '@modules';
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 import Select from 'react-select';
-
-import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export interface IUtteranceGroupInfoProps {
   formMethods: UseFormReturn<IUtteranceModel>;
@@ -33,6 +32,7 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
     formState: { errors },
   } = formMethods;
 
+  const reactSelectStyle = getReactSelectStyle({});
   const { field: scenarioListField } = useController({
     name: `connectScenarioId`,
     control,

@@ -1,11 +1,10 @@
 import { useRootState } from '@hooks';
-import { NODE_PREFIX } from '@modules';
+import { getReactSelectStyle, NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
-import { reactSelectStyle } from './ButtonTypeSelector';
 interface IReactSelect {
   value: string;
   label: string;
@@ -23,6 +22,7 @@ export const SelectNode = ({
   error?: FieldError;
 }) => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const reactSelectStyle = getReactSelectStyle({});
 
   const { control } = useFormContext();
   const { field } = useController({

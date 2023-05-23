@@ -7,13 +7,13 @@ import {
   PriceDisplayType,
 } from '@models';
 import { IDataProductCardView } from '@models/interfaces/res/IGetFlowRes';
+import { getReactSelectStyle } from '@modules';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
-import { reactSelectStyle } from './ButtonTypeSelector';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
@@ -37,6 +37,7 @@ export const DataProductCardNodeEdit = () => {
   );
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
+  const reactSelectStyle = getReactSelectStyle({});
 
   const { field: carouselPrintOutField } = useController({
     name: 'view.isShuffle',

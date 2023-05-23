@@ -8,15 +8,13 @@ import {
   ISaveParameterData,
   IVariableList,
 } from '@models';
-import { PARAMETER_REGEX } from '@modules';
+import { getReactSelectStyle, PARAMETER_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import * as yup from 'yup';
-
-import { reactSelectStyle } from '../edit/ButtonCtrlSelector';
 
 export interface VariablePopupProps {
   isOpen: boolean;
@@ -39,6 +37,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
   const token = useRootState((state) => state.botInfoReducer.token);
+  const reactSelectStyle = getReactSelectStyle({});
 
   const variableNameSchema = yup.object({
     name: yup

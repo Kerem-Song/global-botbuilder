@@ -1,6 +1,12 @@
 import { StylesConfig } from 'react-select';
 
-export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
+export const getReactSelectStyle = <T>({
+  hideIndicator,
+  width,
+}: {
+  hideIndicator?: boolean;
+  width?: number;
+}) => {
   const reactSelectStyle: StylesConfig<T, false> = {
     control: (provided, state) => ({
       ...provided,
@@ -9,18 +15,19 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
       border: '1px solid #DCDCDC',
       borderColor: state.isFocused ? '#6b4eff' : '#e7e7e7',
       fontSize: '13px',
-      width: '100%',
+      width: width ? `${width}px` : '100%',
       ':hover': {
         borderColor: '#e7e7e7',
       },
-      minHeight: '34px',
+      minHeight: '40px',
     }),
     clearIndicator: () => ({
       display: hideIndicator ? 'none' : 'block',
     }),
     dropdownIndicator: () => ({
       color: '#B5B4B4',
-      paddingRight: '10px',
+      paddingTop: '5px',
+      paddingRight: '5px',
       //display: hideIndicator ? 'none' : 'block',
     }),
     indicatorsContainer: () => ({}),
@@ -31,23 +38,23 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
     placeholder: (provided) => ({
       ...provided,
       whiteSpace: 'nowrap',
-      color: '#000',
+      color: '#DCDCDC',
     }),
     input: (provided) => ({
       ...provided,
       color: '#000',
       textShadow: '0 0 0 black',
     }),
-    option: (provided) => ({
+    option: (provided, state) => ({
       ...provided,
       width: '100%',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
 
-      padding: '6px 10px',
+      padding: '10px 8px',
       fontSize: '13px',
-      fontWeight: 400,
-      color: '#757575',
+      fontWeight: state.isSelected ? 700 : 400,
+      color: state.isSelected ? '#222222' : '#757575',
       lineHeight: 1.5,
       backgroundColor: 'white',
       ':hover': {
@@ -67,6 +74,15 @@ export const getReactSelectStyle = <T>(hideIndicator?: boolean) => {
       ...provided,
       border: '1px solid #DCDCDC',
       borderRadius: '8px',
+      zIndex: 9999,
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: '4px 8px',
+    }),
+    menuPortal: (provided) => ({
+      ...provided,
+      zIndex: 9999,
     }),
   };
 

@@ -2,10 +2,9 @@ import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
 import { useI18n, usePage, useUtteranceClient } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, ISearchData } from '@models';
+import { getReactSelectStyle } from '@modules';
 import { FC, useEffect, useState } from 'react';
 import Select from 'react-select';
-
-import { reactSelectStyle } from '../scenario/edit/ButtonCtrlSelector';
 
 export interface IToSearchProps {
   searchData: ISearchData;
@@ -28,6 +27,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
+  const reactSelectStyle = getReactSelectStyle({});
 
   const handleReset = () => {
     setSearchData({
