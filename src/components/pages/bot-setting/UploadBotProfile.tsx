@@ -21,13 +21,15 @@ export const UploadBotProfile = () => {
   const { t } = usePage();
   const { imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
-  const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const token = useRootState((state) => state.botInfoReducer.token);
+  const { error } = useSystemModal();
   const { getValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
-  const { error } = useSystemModal();
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const token = useRootState((state) => state.botInfoReducer.token);
+  const iconUrl = values.iconUrl || botInfo?.iconUrl;
+  const displayIcon = iconUrl ? iconUrl : icImg;
+  const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
 
   usePrompt(isProfileSaveBtnActive);
 
@@ -54,7 +56,6 @@ export const UploadBotProfile = () => {
         .catch((err) => {
           setValue('iconUrl', null);
           setIconImage(null);
-
           console.log('upload 실패', err);
         });
     } else {
@@ -132,10 +133,10 @@ export const UploadBotProfile = () => {
           <Space>
             <div
               className={classNames('icImg', {
-                'bot-profile-img': values.iconUrl ?? botInfo?.iconUrl,
+                'bot-profile-img': iconUrl,
               })}
             >
-              <img src={values.iconUrl ?? botInfo?.iconUrl ?? icImg} alt="iconImg" />
+              <img src={displayIcon} alt="iconImg" />
             </div>
             <input
               type="file"
