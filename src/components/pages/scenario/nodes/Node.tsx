@@ -230,7 +230,7 @@ export const Node: FC<INodeProps> = ({
           }}
         >
           <div className={titleClass}>
-            {nodeIcon && <img src={nodeIcon} alt="nodeIcon" />}
+            {nodeIcon && <img src={nodeIcon} alt="nodeIcon" className="nodeIcon" />}
 
             {title ? <p>{title}</p> : undefined}
             {popperMenu.length === 0 ? (

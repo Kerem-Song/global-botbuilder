@@ -49,12 +49,12 @@
       width: rem(132);
       padding-right: rem(4);
     }
-      
-    img {
-        border: rem(1) solid $gray200;
-        border-radius: rem(4);
-        width: rem(28);
-        height: rem(28);
+
+    .nodeIcon {
+      border: rem(1) solid $gray200;
+      border-radius: rem(4);
+      width: rem(28);
+      height: rem(28);    
     }
   }
 
