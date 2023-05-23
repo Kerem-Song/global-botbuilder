@@ -43,7 +43,7 @@ export class ProductCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_commerce.svg';
   }
 
   getConnectId(node: INode) {

@@ -1,39 +1,28 @@
 import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
-import { UtteranceDetailPopup } from '@components/pages/utterance/UtteranceDetailPopup';
-import { UtterancePopup } from '@components/pages/utterance/UtterancePopup';
 import {
   useHistoryViewerMatch,
   useModalOpen,
-  useModalOpenExtra,
   useNodeContextMenu,
   usePage,
   useRootState,
-  useScenarioClient,
   useUpdateLines,
 } from '@hooks';
-import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
-import { IArrow, INode, ISearchData } from '@models';
+import { IArrow, INode } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import {
-  setClipBoard,
-  setEditDrawerToggle,
-  setGuideStartNode,
-  setIsHandleCutCard,
-} from '@store/botbuilderSlice';
-import { appendNode } from '@store/makingNode';
+import { setEditDrawerToggle, setGuideStartNode } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
 import { IHasChildren } from '../../../../models/interfaces/IHasChildren';
 import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
-import { NODE_PREFIX, nodeHelper } from '../../../../modules';
+import { NODE_PREFIX } from '../../../../modules';
 import { IntentUtterancePopup } from '../IntentUtterancePopup';
 
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
@@ -180,6 +169,8 @@ export const Node: FC<INodeProps> = ({
     };
   }, [clipBoard]);
 
+  const nodeIcon = nodeFactory.getFactory(node.type)?.getNodeImgIconUrl();
+  console.log('@nodeIcon', nodeIcon);
   return (
     <>
       <Popper
@@ -239,6 +230,8 @@ export const Node: FC<INodeProps> = ({
           }}
         >
           <div className={titleClass}>
+            {nodeIcon && <img src={nodeIcon} alt="nodeIcon" />}
+
             {title ? <p>{title}</p> : undefined}
             {popperMenu.length === 0 ? (
               <></>

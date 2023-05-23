@@ -43,7 +43,7 @@ export class ListCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_list.svg';
   }
 
   getConnectId(node: INode) {
