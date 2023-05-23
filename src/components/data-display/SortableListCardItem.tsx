@@ -21,7 +21,7 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
           <p className="description empty">{t(`ENTER_CONTENT`)}</p>
         )}
       </Col>
-      <Col span={6}>
+      <Col span={6} className="listItemImgWrapper">
         {item.imageUrl ? (
           <img
             src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${

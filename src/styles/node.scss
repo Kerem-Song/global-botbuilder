@@ -75,6 +75,7 @@
             max-width: rem(192);
             border-radius: rem(8) rem(8) 0 0;
             object-fit: contain;
+            border: rem(1) solid $gray200;
           }
           &.square {
             display: flex;
@@ -83,16 +84,19 @@
             height: rem(192);
 
             img {
+              border: rem(1) solid $gray200;
               max-height: rem(192);
             }
           }
 
           &.round {
             img {
+              border: rem(1) solid $gray200;
               border-radius: rem(8);
             }
 
             .skeleton {
+              border: rem(1) solid $gray200;
               border-radius: rem(8);
             }
           }
@@ -111,6 +115,7 @@
             background-image: url('@assets/icons/ic_img.svg');
             background-repeat: no-repeat;
             background-position: center;
+            border: rem(1) solid $gray200;
             border-radius: rem(8) rem(8) 0 0;
           }
         }
@@ -272,11 +277,17 @@
             height: rem(48);
           }
 
+          .listItemImgWrapper img {
+            border-radius: rem(4);
+            border: rem(1) solid $gray200;
+          }
+
           .listItemThumbnailSkeleton {
             width: rem(48);
             height: rem(48);
             background-color: #ededf0;
             border-radius: rem(4);
+            border: rem(1) solid $gray200;
           }
 
           .listItemsContent {
