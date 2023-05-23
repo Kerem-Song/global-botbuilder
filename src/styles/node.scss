@@ -38,10 +38,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: rem(4);
     padding-bottom: rem(8);
 
     & button {
       padding: rem(9);
+    }
+
+    & p {
+      width: rem(132);
+      padding-right: rem(4);
+    }
+      
+    img {
+        border: rem(1) solid $gray200;
+        border-radius: rem(4);
+        width: rem(28);
+        height: rem(28);
     }
   }
 

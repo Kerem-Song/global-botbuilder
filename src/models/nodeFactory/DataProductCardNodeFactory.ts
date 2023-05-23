@@ -44,7 +44,7 @@ export class DataProductCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_data_commerce_card.svg';
   }
 
   getConnectId(node: INode) {

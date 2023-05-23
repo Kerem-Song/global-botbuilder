@@ -55,7 +55,7 @@ export class ProductCardCarouselNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_caro_commerce.svg';
   }
 
   getConnectId(node: INode) {

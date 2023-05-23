@@ -43,7 +43,7 @@ export class AnswerNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_quick_btn.svg';
   }
 
   getConnectId() {

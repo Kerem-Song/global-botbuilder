@@ -30,7 +30,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   active,
   type,
   highlight,
-  strokeWidth = 3,
+  strokeWidth = 2,
   onClick,
   onDelete,
 }) => {

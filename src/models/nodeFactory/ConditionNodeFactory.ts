@@ -42,7 +42,7 @@ export class ConditionNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_condition.svg';
   }
 
   getConnectId(node: INode) {

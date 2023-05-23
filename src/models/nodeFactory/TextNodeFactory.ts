@@ -47,7 +47,7 @@ export class TextNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return '/src/assets/icons/ic_text.svg';
   }
 
   getConnectId(node: INode) {
