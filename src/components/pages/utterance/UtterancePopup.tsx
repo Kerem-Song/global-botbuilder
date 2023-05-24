@@ -4,6 +4,7 @@ import { Button } from '@components/general';
 import { useI18n, usePage, useRootState } from '@hooks';
 import { ISearchData } from '@models';
 import { Dispatch, FC, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
 import { UtteranceListHeader } from './UtteranceListHeader';
@@ -27,7 +28,8 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   const selectedScenarios = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
-  const { t } = usePage();
+  const { t } = useTranslation('utterance');
+  // const { t } = usePage();
   const handleSearch = (keyword: string) => {
     setSearchData({
       sort: 1,
@@ -55,8 +57,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
       <div className="utteranceWrap" onContextMenu={(e) => e.stopPropagation()}>
         <div className="utteranceDetail">
           <div className="utteranceDetailTitle">
-            {selectedScenarios?.alias}
-            {/* {t('TITLE')} */}
+            {selectedScenarios?.alias} {t('TITLE')}
           </div>
           <Button
             className="utteranceDetailClose"

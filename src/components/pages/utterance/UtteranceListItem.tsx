@@ -8,6 +8,7 @@ import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import classNames from 'classnames';
 import { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
@@ -26,7 +27,9 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   handleDetailPopupOpen,
 }) => {
   const { botId } = useParams();
-  const { navigate, t, tc } = usePage();
+  const { navigate, tc } = usePage();
+  const { t } = useTranslation('utterance');
+
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();

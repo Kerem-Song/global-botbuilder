@@ -5,6 +5,7 @@ import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import { UseFieldArrayPrepend, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 export interface IAddUtteranceProps {
   formMethods: UseFormReturn<IUtteranceModel>;
@@ -17,7 +18,9 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   prepend,
   setIsActive,
 }) => {
-  const { t } = usePage();
+  // const { t } = usePage();
+  const { t } = useTranslation('utternaceDetailPage');
+
   const { error } = useSystemModal();
   const utteranceRef = useRef<HTMLInputElement>(null);
   const [utteranceWord, setUtteranceWord] = useState<string>('');

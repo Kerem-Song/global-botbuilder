@@ -8,6 +8,7 @@ import { util } from '@modules/util';
 import classNames from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 export interface IUtteranceDetailItemsProps {
   formMethods: UseFormReturn<IUtteranceModel>;
@@ -24,7 +25,9 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
-  const { t } = usePage();
+  // const { t } = usePage();
+  const { t } = useTranslation('utternaceDetailPage');
+
   const [searchWord, setSearchWord] = useState<string>('');
   const { confirm } = useSystemModal();
   const { register, getValues, watch } = formMethods;
