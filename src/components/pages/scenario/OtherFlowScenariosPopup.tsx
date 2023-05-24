@@ -29,6 +29,7 @@ export const OtherFlowScenariosPopup = () => {
   const isClickHeaderBtn = useRootState(
     (state) => state.otherFlowScenariosPopupStatusReducer.isClickHeaderBtn,
   );
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
   const [scenarioList, setScenarioList] = useState<
     {
       id: string;
@@ -141,6 +142,7 @@ export const OtherFlowScenariosPopup = () => {
     } else {
       otherflowPopupRef.current.style.left = `${popUpPosition.x}px`;
       otherflowPopupRef.current.style.top = `${popUpPosition.y}px`;
+      otherflowPopupRef.current.style.transform = `scale(${1 / scale})`;
     }
   }, []);
 

@@ -432,6 +432,7 @@ export const Botbuilder = () => {
                     left: points.x,
                     position: 'absolute',
                     backgroundColor: '#ffffff',
+                    transform: `scale(${1 / scale})`,
                   }}
                 >
                   {canvasContextMenu.map((item, i) => (
