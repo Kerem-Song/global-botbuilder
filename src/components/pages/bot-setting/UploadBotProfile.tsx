@@ -120,11 +120,6 @@ export const UploadBotProfile = () => {
     }
   }, [iconImage]);
 
-  console.log('iconImage', iconImage);
-  console.log('watch botId', watch('botId'));
-  console.log('watch iconURl', watch('iconUrl'));
-  console.log('values', values);
-
   return (
     <form>
       <Row gap={10} align="center">

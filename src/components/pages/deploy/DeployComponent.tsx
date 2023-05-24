@@ -27,7 +27,7 @@ export const DeployComponent = () => {
   }, [data]);
 
   return (
-    <div className="deployContainer">
+    <div className="deployWrap">
       <div className="title">{t('TITLE')}</div>
       <div className="deployInfo">
         <div className="referenceTime">{t('REFERENCE_TIME')} : UTC+09:00</div>
