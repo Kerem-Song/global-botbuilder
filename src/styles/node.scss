@@ -55,7 +55,7 @@
       border: rem(1) solid $gray200;
       border-radius: rem(4);
       width: rem(28);
-      height: rem(28);    
+      height: rem(28);
     }
   }
 
@@ -245,7 +245,7 @@
           text-decoration: line-through;
         }
 
-        .discountedCurrency{
+        .discountedCurrency {
           font-size: rem(1);
           color: gray;
         }
@@ -470,6 +470,7 @@
       padding-bottom: rem(8);
 
       .carouselBtn {
+        cursor: pointer;
         padding: rem(1);
         width: rem(26);
         height: rem(26);
@@ -523,7 +524,7 @@
 
     &.square {
       height: rem(166) !important;
-  
+
       img {
         max-height: rem(166) !important;
       }

@@ -25,12 +25,10 @@ export const UtteranceComponent = () => {
             <thead>
               <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
             </thead>
-            <tbody>
-              <UtteranceListItem
-                searchData={searchData}
-                isOpenUtterancePopup={isOpenUtterancePopup}
-              />
-            </tbody>
+            <UtteranceListItem
+              searchData={searchData}
+              isOpenUtterancePopup={isOpenUtterancePopup}
+            />
           </table>
         </div>
       </div>

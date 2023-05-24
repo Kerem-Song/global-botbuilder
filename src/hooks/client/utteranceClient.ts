@@ -98,6 +98,10 @@ export const useUtteranceClient = () => {
     );
   };
 
+  const removeUtteranceQueries = () => {
+    queryClient.removeQueries([UTTERNACE_LIST_KEY]);
+  };
+
   const getIntentDetailQuery = (intentId?: string) => {
     if (intentId) {
       return useQuery<IHasResult<IIntentListItem>>(
@@ -160,7 +164,7 @@ export const useUtteranceClient = () => {
         ICheckDuplicateIntent,
         AxiosResponse<IResponseCheckDuplication>
       >('Builder/CheckDuplicateIntent', {
-        sessionToken: token!,
+        sessionToken: token,
         ...criteria,
       });
 
@@ -174,7 +178,7 @@ export const useUtteranceClient = () => {
         ICheckUtterance,
         AxiosResponse<IResponseCheckUtteranceDuplication>
       >('Builder/CheckUtterance', {
-        sessionToken: token!,
+        sessionToken: token,
         ...criteria,
       });
 
@@ -186,6 +190,7 @@ export const useUtteranceClient = () => {
     getPageQuery,
     invalidateIntentQuery,
     changePageNumberQuery,
+    removeUtteranceQueries,
     getIntentDetailQuery,
     intentAsync: intentMutate.mutateAsync,
     intentDeleteAsync: intentDeleteMutate.mutateAsync,
