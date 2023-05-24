@@ -2,11 +2,15 @@
   width: rem(1080);
   height: rem(652);
   margin: auto;
-  padding: 0;
   border-radius: rem(12);
   background-color: $grayWhite;
 
   .utteranceWrap {
+    position: relative;
+    width: rem(1040);
+    padding: rem(32) 0;
+    margin: 0 auto;
+
     .utteranceDetail {
       display: flex;
       justify-content: space-between;
