@@ -1,4 +1,5 @@
 import icAdd from '@assets/icons/ic_add.svg';
+import icApiRequest from '@assets/icons/ic_api_request.svg';
 import icBackActive from '@assets/icons/ic_back_active.svg';
 import icBackInactive from '@assets/icons/ic_back_inactive.svg';
 import icBrandName from '@assets/icons/ic_brand_name_default.svg';
@@ -38,6 +39,9 @@ import icCount from '@assets/icons/ic_count.svg';
 import icCountHover from '@assets/icons/ic_count_hover.svg';
 import icDataApi from '@assets/icons/ic_data_api_default.svg';
 import icDataApiSelcted from '@assets/icons/ic_data_api_selected.svg';
+import icDataBasic from '@assets/icons/ic_data_basic_card.svg';
+import icDataCommerce from '@assets/icons/ic_data_commerce_card.svg';
+import icDataList from '@assets/icons/ic_data_list_card.svg';
 import icDelete from '@assets/icons/ic_delete.svg';
 import icDeleteDefault from '@assets/icons/ic_delete_default.svg';
 import icDeleteDisable from '@assets/icons/ic_delete_disable.svg';
@@ -134,9 +138,9 @@ import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
 import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
-
 export {
   icAdd,
+  icApiRequest,
   icBackActive,
   icBackInactive,
   icBrandName,
@@ -176,6 +180,9 @@ export {
   icCountHover,
   icDataApi,
   icDataApiSelcted,
+  icDataBasic,
+  icDataCommerce,
+  icDataList,
   icDelete,
   icDeleteDefault,
   icDeleteDisable,

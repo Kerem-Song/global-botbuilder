@@ -1,3 +1,4 @@
+import { icSetParameter } from '@assets';
 import { ParameterSetNodeEdit } from '@components/pages/scenario/edit/ParameterSetNodeEdit';
 import { ParameterSetNode } from '@components/pages/scenario/nodes/ParameterSetNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class ParameterSetNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.PARAMETER_SET_NODE;
@@ -47,7 +47,7 @@ export class ParameterSetNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_set_parameter.svg';
+    return icSetParameter;
   }
 
   getConnectId(node: INode) {

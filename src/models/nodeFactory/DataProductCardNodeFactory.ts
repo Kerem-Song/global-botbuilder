@@ -1,3 +1,4 @@
+import { icDataCommerce } from '@assets';
 import { DataProductCardNodeEdit } from '@components/pages/scenario/edit/DataProductCardNodeEdit';
 import { DataProductCardNode } from '@components/pages/scenario/nodes/DataProductCardNode';
 import { NodeKind } from '@models/enum';
@@ -8,7 +9,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class DataProductCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.DATA_BASIC_CARD_NODE;
@@ -44,7 +44,7 @@ export class DataProductCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_data_commerce_card.svg';
+    return icDataCommerce;
   }
 
   getConnectId(node: INode) {

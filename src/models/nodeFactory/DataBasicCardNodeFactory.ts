@@ -1,3 +1,4 @@
+import { icDataBasic } from '@assets';
 import { DataBasicCardNodeEdit } from '@components/pages/scenario/edit/DataBasicCardNodeEdit';
 import { DataBasicCardNode } from '@components/pages/scenario/nodes/DataBasicCardNode';
 import { NodeKind } from '@models/enum';
@@ -10,7 +11,6 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { FC } from 'react';
 
 import { INodeFactory } from './NodeFactory';
-
 export class DataBasicCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.DATA_BASIC_CARD_NODE;
@@ -46,7 +46,7 @@ export class DataBasicCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_data_basic_card.svg';
+    return icDataBasic;
   }
 
   getConnectId(node: INode) {

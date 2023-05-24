@@ -1,3 +1,4 @@
+import { icCondition } from '@assets';
 import { ConditionNodeEdit } from '@components/pages/scenario/edit/ConditionNodeEdit';
 import { ConditionNode } from '@components/pages/scenario/nodes/ConditionNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class ConditionNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.CONDITION_NODE;
@@ -42,7 +42,7 @@ export class ConditionNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_condition.svg';
+    return icCondition;
   }
 
   getConnectId(node: INode) {

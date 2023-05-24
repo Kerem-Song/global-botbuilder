@@ -1,3 +1,4 @@
+import { icOtherFlowRedirect } from '@assets';
 import { OtherFlowRedirectNodeEdit } from '@components/pages/scenario/edit/OtherFlowRedirectNodeEdit';
 import { OtherFlowRedirectNode } from '@components/pages/scenario/nodes/OtherFlowRedirectNode';
 import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -6,7 +7,6 @@ import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class OtherFlowRedirectNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
@@ -42,7 +42,7 @@ export class OtherFlowRedirectNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_other_flow_redirect.svg';
+    return icOtherFlowRedirect;
   }
 
   getConnectId() {

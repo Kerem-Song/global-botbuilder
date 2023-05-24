@@ -1,3 +1,4 @@
+import { icDataList } from '@assets';
 import { DataListCardNodeEdit } from '@components/pages/scenario/edit/DataListCardNodeEdit';
 import { DataListCardNode } from '@components/pages/scenario/nodes/DataListCardNode';
 import { NodeKind } from '@models/enum';
@@ -8,7 +9,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class DataListCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.DATA_BASIC_CARD_NODE;
@@ -44,7 +44,7 @@ export class DataListCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_data_list_card.svg';
+    return icDataList;
   }
 
   getConnectId(node: INode) {

@@ -1,3 +1,4 @@
+import { icBtnTemple } from '@assets';
 import { BasicCardNodeEdit } from '@components/pages/scenario/edit/BasicCardNodeEdit';
 import { BasicCardNode } from '@components/pages/scenario/nodes/BasicCardNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -7,7 +8,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class BasicCardNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.BASIC_CARD_NODE;
@@ -43,7 +43,7 @@ export class BasicCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_btn_temple.svg';
+    return icBtnTemple;
   }
 
   getConnectId(node: INode) {

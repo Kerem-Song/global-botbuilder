@@ -1,3 +1,4 @@
+import { icCaroCommerce } from '@assets';
 import { ProductCardCarouselNodeEdit } from '@components/pages/scenario/edit/ProductCardCarouselNodeEdit';
 import { CommerceCardCarouselNode } from '@components/pages/scenario/nodes/CommerceCardCarouselNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -10,7 +11,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class ProductCardCarouselNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.PRODUCT_CARD_CAROUSEL_NODE;
@@ -55,7 +55,7 @@ export class ProductCardCarouselNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_caro_commerce.svg';
+    return icCaroCommerce;
   }
 
   getConnectId(node: INode) {

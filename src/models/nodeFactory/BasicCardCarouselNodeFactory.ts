@@ -1,3 +1,4 @@
+import { icCaroImg } from '@assets';
 import { BasicCardCarousleNodeEdit } from '@components/pages/scenario/edit/BasicCardCarouselNodeEdit';
 import { BasicCardCarouselNode } from '@components/pages/scenario/nodes/BasicCardCarouselNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -10,7 +11,6 @@ import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
-
 export class BasicCardCarouselNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.BASIC_CARD_CAROUSEL_NODE;
@@ -55,7 +55,7 @@ export class BasicCardCarouselNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '/src/assets/icons/ic_caro_img.svg';
+    return icCaroImg;
   }
 
   getConnectId(node: INode) {
