@@ -116,7 +116,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       const res = await intentDeleteAsync(deleteIntent);
 
       if (res && res.isSuccess) {
-        lunaToast.success();
+        lunaToast.success('삭제되었습니다.');
         if (isOpenUtteranceDetailPopup && handleClose) {
           handleClose();
         } else {
