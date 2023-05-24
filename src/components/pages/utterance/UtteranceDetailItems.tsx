@@ -2,13 +2,12 @@ import { icNoResult } from '@assets';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 export interface IUtteranceDetailItemsProps {
   formMethods: UseFormReturn<IUtteranceModel>;
@@ -26,7 +25,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   isOpenUtteranceDetailPopup,
 }) => {
   // const { t } = usePage();
-  const { t } = useTranslation('utternaceDetailPage');
+  const { t } = useI18n('utternaceDetailPage');
 
   const [searchWord, setSearchWord] = useState<string>('');
   const { confirm } = useSystemModal();

@@ -5,7 +5,6 @@ import { IReactSelect, IUtteranceModel } from '@models';
 import { getReactSelectStyle } from '@modules';
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 
 export interface IUtteranceGroupInfoProps {
@@ -21,7 +20,7 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
 }) => {
   const { i18n } = useI18n();
   // const { t } = usePage();
-  const { t } = useTranslation('utternaceDetailPage');
+  const { t } = useI18n('utternaceDetailPage');
 
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();

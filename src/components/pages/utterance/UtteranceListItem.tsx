@@ -1,5 +1,5 @@
 import { icNoResult } from '@assets';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -8,7 +8,6 @@ import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import classNames from 'classnames';
 import { FC, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
@@ -27,8 +26,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   handleDetailPopupOpen,
 }) => {
   const { botId } = useParams();
-  const { navigate, tc } = usePage();
-  const { t } = useTranslation('utterance');
+  const { navigate } = usePage();
+  const { t, tc } = useI18n('utterance');
 
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -159,7 +158,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
                 {searchData?.searchWord ? (
-                  <span>{t('NO_SEARCH_INTENT_RESULT_FOUND')}</span>
+                  <span>{t('NO_SEARCH_RESULT_FOUND')}</span>
                 ) : (
                   <span>{t('NO_REGISTERED_INTENT')}</span>
                 )}

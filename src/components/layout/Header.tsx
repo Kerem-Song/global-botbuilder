@@ -3,7 +3,6 @@ import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTes
 import { useModalOpen } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { FC, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -67,7 +66,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const location = useLocation();
   const matches = useMatches();
   const { i18n, ts } = useI18n();
-  const { t } = useTranslation('botTest');
+  const { t } = useI18n('botTest');
   const navigate = useNavigate();
 
   const changeLanguageHandler = (lang: string) => {

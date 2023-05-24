@@ -1,11 +1,10 @@
 import { icEnter } from '@assets';
 import { Button, Col, Input, Row, Space } from '@components';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import { UseFieldArrayPrepend, UseFormReturn } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 export interface IAddUtteranceProps {
   formMethods: UseFormReturn<IUtteranceModel>;
@@ -19,7 +18,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   setIsActive,
 }) => {
   // const { t } = usePage();
-  const { t } = useTranslation('utternaceDetailPage');
+  const { t } = useI18n('utternaceDetailPage');
 
   const { error } = useSystemModal();
   const utteranceRef = useRef<HTMLInputElement>(null);

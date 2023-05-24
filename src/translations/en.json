@@ -111,7 +111,7 @@
     "CONNECT_SCENARIOS": "Connect Scenarios",
     "UTTERANCE": "Utterance",
     "NO_REGISTERED_INTENT": "No registered Utterance.",
-    "NO_SEARCH_INTENT_RESULT_FOUND": "No search results found.",
+    "NO_SEARCH_RESULT_FOUND": "No search results found.",
     "SEARCH_INTENT_PLACEHOLDER": "Please enter a search word"
   },
   "UtternaceDetailPage": {

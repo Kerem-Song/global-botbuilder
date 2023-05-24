@@ -1,5 +1,5 @@
 import { Button, Input } from '@components';
-import { useRootState } from '@hooks';
+import { useI18n, useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks';
 import {
   IQuickRepliesContent,
@@ -11,7 +11,6 @@ import {
 import { initMessages, setTesterData } from '@store/botTesterSlice';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -28,7 +27,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const { t } = useTranslation('botTest');
+  const { t } = useI18n('botTest');
   const { botId } = useParams();
   const dispatch = useDispatch();
   const token = useRootState((state) => state.botInfoReducer.token);
