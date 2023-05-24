@@ -29,8 +29,8 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, setNavigateUrl } = usePage();
-  const { t, tc } = useI18n('utternaceDetailPage');
+  const { navigate, tc, setNavigateUrl } = usePage();
+  const { t } = useI18n('utternaceDetailPage');
 
   const { botId } = useParams();
   const {
@@ -71,7 +71,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const { reset, handleSubmit, control, getValues, watch } = formMethods;
+  const { reset, handleSubmit, control, getValues } = formMethods;
 
   const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
 
@@ -101,7 +101,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     }
   };
 
-  const openDeleteIntentModal = async () => {
+  const handleDeleteIntentBtn = async () => {
     const result = await confirm({
       title: t('DELETE_INTENT'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
@@ -109,7 +109,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
     if (result) {
       const deleteIntent: IDeleteIntent = {
-        sessionToken: token!,
+        sessionToken: token,
         intentId: intentId,
       };
 
@@ -128,7 +128,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
   const handleSave = async (itemData: IUtteranceModel): Promise<void> => {
     const saveIntent: ISaveIntent = {
-      sessionToken: token!,
+      sessionToken: token,
       intentId: itemData.intentId,
       intentName: itemData.name,
       utterances: itemData.items.map((x) => {
@@ -172,6 +172,26 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     }
   };
 
+  const handleCloseDetailPopup = async () => {
+    if (!handleClose) {
+      return;
+    }
+
+    if (isActive) {
+      const res = await confirm({
+        title: tc('SAVE_CONFIRM_TITLE'),
+        description: (
+          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
+        ),
+      });
+      if (res) {
+        handleClose();
+      }
+    } else {
+      handleClose();
+    }
+  };
+
   return (
     <div
       className={classNames('utteranceDetailWrap', {
@@ -194,30 +214,28 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
               <Button onClick={handleListBtn}>{t('LIST')}</Button>
             )}
             {isOpenUtteranceDetailPopup && (
-              <p className="addIntent">{selectedScenarios?.alias} 인텐트 관리_등록</p>
+              <p className="addIntent">
+                {selectedScenarios?.alias} {t('ADD_INTENT')}
+              </p>
             )}
           </div>
           <div>
             <Button
+              type="secondary"
               className="deleteBtn"
-              onClick={openDeleteIntentModal}
-              disabled={watch('name') ? false : true}
+              onClick={handleDeleteIntentBtn}
+              disabled={!getValues('intentId')}
             >
               {t('DELETE_INTENT')}
             </Button>
-            <Button
-              large
-              type="primary"
-              htmlType="submit"
-              disabled={isActive ? false : true}
-            >
+            <Button large type="primary" htmlType="submit" disabled={!isActive}>
               {t('SAVE')}
             </Button>
             {isOpenUtteranceDetailPopup && (
               <Button
                 className="utteranceDetailClose"
                 shape="ghost"
-                onClick={handleClose}
+                onClick={handleCloseDetailPopup}
                 icon={icPopupClose}
               />
             )}

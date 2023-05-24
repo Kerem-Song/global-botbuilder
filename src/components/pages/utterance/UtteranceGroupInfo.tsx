@@ -1,5 +1,5 @@
 import { Card, Col, FormItem, Input, Row, Space } from '@components';
-import { useI18n, usePage } from '@hooks';
+import { useI18n } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, IUtteranceModel } from '@models';
 import { getReactSelectStyle } from '@modules';
@@ -19,7 +19,6 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
   isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
-  // const { t } = usePage();
   const { t } = useI18n('utternaceDetailPage');
 
   const { getScenarioList } = useScenarioSelectClient();
@@ -33,7 +32,7 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
     formState: { errors },
   } = formMethods;
 
-  const reactSelectStyle = getReactSelectStyle({});
+  const reactSelectStyle = getReactSelectStyle<IReactSelect>({});
   const { field: scenarioListField } = useController({
     name: `connectScenarioId`,
     control,
@@ -111,8 +110,8 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
                 value={totalScenarioList?.find(
                   (item) => item.value === scenarioListField.value,
                 )}
-                onChange={(options: any) => {
-                  scenarioListField.onChange(options.value);
+                onChange={(newOption) => {
+                  scenarioListField.onChange(newOption?.value);
                   setIsActive(true);
                 }}
                 styles={reactSelectStyle}

@@ -13,7 +13,7 @@ export interface IToSearchProps {
 
 export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const { t } = usePage();
-  const SORT = [
+  const SORT: IReactSelect[] = [
     { value: '1', label: t('SORT_RECENT') },
     { value: '2', label: t('SORT_INTENT_NAME') },
     { value: '3', label: t('SORT_SCENARIO_NAME') },
@@ -27,7 +27,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const { invalidateIntentQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-  const reactSelectStyle = getReactSelectStyle({});
+  const reactSelectStyle = getReactSelectStyle<IReactSelect>({});
 
   const handleReset = () => {
     setSearchData({
@@ -87,8 +87,8 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
                   options={SORT}
                   styles={reactSelectStyle}
                   value={SORT.find((x) => x.value === sort)}
-                  onChange={(e: any) => {
-                    setSort(e?.value);
+                  onChange={(newOption) => {
+                    setSort(newOption?.value);
                   }}
                 />
               </div>
@@ -103,8 +103,8 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
                   styles={reactSelectStyle}
                   placeholder={t('ALL')}
                   value={totalScenarioList?.find((x) => x.value === scenario) || null}
-                  onChange={(e: any) => {
-                    setScenario(e?.value);
+                  onChange={(newOption) => {
+                    setScenario(newOption?.value || 'all');
                   }}
                 />
               </div>
@@ -117,7 +117,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
                 <Input
                   search
                   value={searchKeyword}
-                  onSearch={(value) => handleSearch(value!)}
+                  onSearch={(value) => handleSearch(value)}
                   onChange={(e) => setSearchKeyword(e?.target.value)}
                   placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
                 />

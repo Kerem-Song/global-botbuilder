@@ -58,7 +58,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
 
     if (result) {
       const deleteIntent: IDeleteIntent = {
-        sessionToken: token!,
+        sessionToken: token,
         intentId: intentId,
       };
 
@@ -93,7 +93,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   return (
     <>
       {!initialData || isFetching ? (
-        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup!} />
+        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
       ) : (
         <>
           {isExistInitialData(initialData) ? (

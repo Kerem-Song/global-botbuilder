@@ -1,6 +1,6 @@
 import { icEnter } from '@assets';
 import { Button, Col, Input, Row, Space } from '@components';
-import { useI18n, usePage, useSystemModal } from '@hooks';
+import { useI18n, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
@@ -17,7 +17,6 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   prepend,
   setIsActive,
 }) => {
-  // const { t } = usePage();
   const { t } = useI18n('utternaceDetailPage');
 
   const { error } = useSystemModal();
@@ -104,8 +103,8 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
               onClick={() => {
                 handleAddUtternace();
               }}
-              disabled={utteranceWord && isEditing ? false : true}
-            ></Button>
+              disabled={!utteranceWord && !isEditing}
+            />
           </Col>
         </Row>
       </Space>
