@@ -78,7 +78,7 @@ export const getReactSelectStyle = <T>({
     }),
     menuList: (provided) => ({
       ...provided,
-      padding: '4px 8px',
+      padding: '8px',
     }),
     menuPortal: (provided) => ({
       ...provided,
