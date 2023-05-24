@@ -320,10 +320,10 @@
     "CONNECT_SCENARIOS": "시나리오 연결",
     "UTTERANCE": "발화",
     "NO_REGISTERED_INTENT": "등록된 인텐트가 없습니다.",
-    "NO_SEARCH_INTENT_RESULT_FOUND": "검색된 인텐트가 없습니다.",
+    "NO_SEARCH_RESULT_FOUND": "검색 결과가 없습니다.",
     "SEARCH_INTENT_PLACEHOLDER": "검색어를 입력해주세요."
   },
-  "UtternaceDetailPage": {
+  "utternaceDetailPage": {
     "TITLE": "그룹 정보",
     "LIST": "목록으로",
     "DELETE_INTENT": "인텐트 삭제하기",

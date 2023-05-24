@@ -1,4 +1,4 @@
-import { usePage } from '@hooks';
+import { useI18n, usePage } from '@hooks';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { useParams } from 'react-router';
@@ -13,7 +13,9 @@ export const UtteranceListHeader: FC<IUtteranceListHeaderProps> = ({
   handleDetailPopupOpen,
 }) => {
   const { utterancdId, botId } = useParams();
-  const { navigate, t } = usePage();
+  const { navigate } = usePage();
+  const { t } = useI18n('utterance');
+
   const showScenarioList = isOpenUtterancePopup === false;
 
   const goToDetail = () => {

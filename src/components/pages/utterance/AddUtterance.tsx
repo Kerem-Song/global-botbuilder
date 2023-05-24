@@ -1,6 +1,6 @@
 import { icEnter } from '@assets';
 import { Button, Col, Input, Row, Space } from '@components';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
@@ -17,7 +17,9 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   prepend,
   setIsActive,
 }) => {
-  const { t } = usePage();
+  // const { t } = usePage();
+  const { t } = useI18n('utternaceDetailPage');
+
   const { error } = useSystemModal();
   const utteranceRef = useRef<HTMLInputElement>(null);
   const [utteranceWord, setUtteranceWord] = useState<string>('');

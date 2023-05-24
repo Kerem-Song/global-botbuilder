@@ -1,5 +1,5 @@
 import { icNoResult } from '@assets';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { useRootState } from '@hooks/useRootState';
@@ -26,7 +26,9 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   handleDetailPopupOpen,
 }) => {
   const { botId } = useParams();
-  const { navigate, t, tc } = usePage();
+  const { navigate } = usePage();
+  const { t, tc } = useI18n('utterance');
+
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
@@ -156,7 +158,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
                 {searchData?.searchWord ? (
-                  <span>{t('NO_SEARCH_INTENT_RESULT_FOUND')}</span>
+                  <span>{t('NO_SEARCH_RESULT_FOUND')}</span>
                 ) : (
                   <span>{t('NO_REGISTERED_INTENT')}</span>
                 )}

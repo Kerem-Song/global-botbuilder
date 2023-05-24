@@ -1,7 +1,7 @@
 import { icPopupClose } from '@assets';
 import { Button } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { usePrompt } from '@hooks/usePrompt';
 import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
@@ -29,7 +29,9 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, t, tc, setNavigateUrl } = usePage();
+  const { navigate, setNavigateUrl } = usePage();
+  const { t, tc } = useI18n('utternaceDetailPage');
+
   const { botId } = useParams();
   const {
     intentAsync,

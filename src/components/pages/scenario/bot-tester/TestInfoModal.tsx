@@ -1,6 +1,6 @@
 import { Col } from '@components/layout';
+import { useI18n } from '@hooks';
 import { ITesterDebugMeta } from '@models';
-import { useTranslation } from 'react-i18next';
 
 export interface ITestInfoModalProps {
   isOpen: boolean;
@@ -13,7 +13,7 @@ export const TestInfoModal = ({
   handleClose,
   debugMeta,
 }: ITestInfoModalProps) => {
-  const { t } = useTranslation('botTest');
+  const { t } = useI18n('botTest');
   return (
     <>
       {isOpen && (

@@ -150,6 +150,7 @@ export const NodeLinkPopUpMenu = ({
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const isHistoryViewer = useHistoryViewerMatch();
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     console.log('@event');
@@ -240,6 +241,7 @@ export const NodeLinkPopUpMenu = ({
     } else {
       nodeLinkPopUpMenuRef.current.style.left = `${popUpPosition.x}px`;
       nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
+      nodeLinkPopUpMenuRef.current.style.transform = `scale(${1 / scale})`;
     }
   }, []);
 

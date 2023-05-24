@@ -19,7 +19,8 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
   isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
-  const { t } = usePage();
+  // const { t } = usePage();
+  const { t } = useI18n('utternaceDetailPage');
 
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();

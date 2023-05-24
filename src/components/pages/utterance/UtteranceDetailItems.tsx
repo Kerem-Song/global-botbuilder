@@ -2,7 +2,7 @@ import { icNoResult } from '@assets';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { usePage, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
@@ -24,7 +24,9 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
-  const { t } = usePage();
+  // const { t } = usePage();
+  const { t } = useI18n('utternaceDetailPage');
+
   const [searchWord, setSearchWord] = useState<string>('');
   const { confirm } = useSystemModal();
   const { register, getValues, watch } = formMethods;

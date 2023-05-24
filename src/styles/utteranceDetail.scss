@@ -86,6 +86,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        color: $gray500;
+
         .empty {
           display: flex;
           flex-direction: column;
