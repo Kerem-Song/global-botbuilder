@@ -15,6 +15,7 @@
 
 .botBuilderCanvasBtn {
   padding: rem(12);
+  padding-left: 0;
   position: relative;
   z-index: 200;
 }
@@ -62,6 +63,7 @@
   .luna-btn {
     width: rem(32);
     height: rem(32);
+    border-radius: rem(4);
   }
 
   .undo {

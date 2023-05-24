@@ -48,6 +48,7 @@
     & p {
       width: rem(132);
       padding-right: rem(4);
+      font-weight: 500;
     }
 
     .nodeIcon {
@@ -76,6 +77,7 @@
             border-radius: rem(8) rem(8) 0 0;
             object-fit: contain;
             border: rem(1) solid $gray200;
+            background-color: $gray150;
           }
           &.square {
             display: flex;
@@ -291,11 +293,14 @@
           }
 
           .listItemsContent {
-
             line-height: rem(15.6);
 
             p {
               padding: rem(4) 0;
+            }
+--
+            .description {
+              font-weight: 400;
             }
           }
         }
@@ -339,6 +344,7 @@
 
         // Count
         .countConditionWrapper {
+          padding: rem(8) rem(10);
           width: rem(192);
           min-height: rem(80);
           background-color: $gray100;
@@ -421,7 +427,7 @@
         display: block;
         width: rem(190);
         background-color: $gray100;
-        border: 1px solid $gray150;
+        border: 1px solid $gray200;
         border-radius: rem(4);
         color: $grayBlack;
         font-size: rem(13);
@@ -548,10 +554,5 @@
 }
 
 .dataCardJson div{
-  padding: rem(10) rem(8) 0 rem(8);
   overflow: hidden;
-}
-
-.dataCard {
-  padding: rem(10) rem(8);
 }
