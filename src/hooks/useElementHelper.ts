@@ -136,10 +136,10 @@ export const useElementHelper = (
         let directionFactor = isDirectionUp ? -1 : 1;
         const point1 = {
           x: isDirectionUp
-            ? er.bottom + minLine > snr.top
+            ? er.bottom + minLine > snr.top && !isBezierMode
               ? svgRect.width - lineOffset
               : Math.min(startPoint.x + minLine, svgRect.width - lineOffset)
-            : snr.bottom + minLine > er.top
+            : snr.bottom + minLine > er.top && !isBezierMode
             ? svgRect.width - lineOffset
             : Math.min(startPoint.x + minLine, svgRect.width - lineOffset),
           y: startPoint.y,
@@ -239,10 +239,10 @@ export const useElementHelper = (
         const point1 = {
           x: startPoint.x,
           y: isDirectionLeft
-            ? er.right + minLine > sr.left
+            ? er.right + minLine > sr.left && !isBezierMode
               ? svgRect.height - lineOffset
               : Math.min(startPoint.y + minLine, svgRect.height - lineOffset)
-            : sr.right + minLine > er.left
+            : sr.right + minLine > er.left && !isBezierMode
             ? svgRect.height - lineOffset
             : Math.min(startPoint.y + minLine, svgRect.height - lineOffset),
         };
