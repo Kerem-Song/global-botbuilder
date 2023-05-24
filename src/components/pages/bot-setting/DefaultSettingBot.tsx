@@ -113,6 +113,7 @@ export const DefaultSettingBot = () => {
             <Col flex="auto">
               <FormItem error={errors.botName}>
                 <Input
+                  size="normal"
                   value={field.value || ''}
                   ref={(e) => {
                     field.ref(e);

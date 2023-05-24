@@ -144,6 +144,7 @@
             align-items: center;
             border: rem(1) solid $gray200;
             border-radius: rem(8);
+            color: $gray500;
             .emptyEntityCard {
               display: flex;
               justify-content: center;
@@ -388,6 +389,8 @@
               display: flex;
               justify-content: center;
               align-items: center;
+              color: $gray500;
+
               .empty {
                 display: flex;
                 flex-direction: column;
