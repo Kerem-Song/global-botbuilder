@@ -35,9 +35,9 @@ export const useEntityClient = () => {
       >('Builder/SearchEntryGroup', {
         sessionToken: token,
         countPerPage: 20,
-        isSys: isSys,
         pageNo: pageNo,
         keyword: keyword,
+        isSys: isSys,
       })
       .then((res) => {
         return res.data.result;
@@ -67,7 +67,7 @@ export const useEntityClient = () => {
     );
   };
 
-  const removeQueries = () => {
+  const removeEntityQueries = () => {
     queryClient.removeQueries(['change-pageNumber']);
   };
 
@@ -100,7 +100,7 @@ export const useEntityClient = () => {
 
     if (result) {
       console.log('result', result);
-      removeQueries();
+      removeEntityQueries();
       return result.data;
     }
   });
@@ -112,7 +112,7 @@ export const useEntityClient = () => {
     >('Builder/DeleteEntryGroup', deleteEntry);
 
     if (result) {
-      removeQueries();
+      removeEntityQueries();
       return result.data;
     }
   });
@@ -123,6 +123,6 @@ export const useEntityClient = () => {
     entryGroupAsync: entryGroupMutate.mutateAsync,
     entryGroupDeleteAsync: entryGroupDeleteMutate.mutateAsync,
     getEntryDetailQuery,
-    removeQueries,
+    removeEntityQueries,
   };
 };

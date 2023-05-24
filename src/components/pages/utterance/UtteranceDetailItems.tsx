@@ -2,7 +2,7 @@ import { icNoResult } from '@assets';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { useI18n, usePage, useSystemModal } from '@hooks';
+import { useI18n, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
@@ -24,19 +24,18 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
-  // const { t } = usePage();
   const { t } = useI18n('utternaceDetailPage');
 
-  const [searchWord, setSearchWord] = useState<string>('');
+  const [searchKeyWord, setSearchKeyWord] = useState<string>('');
   const { confirm } = useSystemModal();
   const { register, getValues, watch } = formMethods;
 
   const filterKeyword = fields.filter((x) =>
-    x.text?.trim().toLowerCase().includes(searchWord.trim().toLowerCase()),
+    x.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase()),
   );
 
   const handleSearch = (keyword?: string) => {
-    setSearchWord(keyword!);
+    setSearchKeyWord(keyword!);
   };
 
   const openDeleteCheckboxModal = async () => {
@@ -76,7 +75,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           size="small"
           search
           placeholder={t('SEARCH_UTTERANCE_PLACEHOLDER')}
-          value={searchWord}
+          value={searchKeyWord}
           onSearch={(value) => handleSearch(value)}
           onChange={(e) => handleSearch(e.target.value)}
         />
@@ -87,8 +86,6 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           disabled={
             getValues('items') &&
             getValues().items.filter((x) => x.isChecked).length === 0
-              ? true
-              : false
           }
         />
       </Space>
@@ -110,7 +107,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}
                 />
-                <p className="item">{util.replaceKeywordMark(v.text!, searchWord)}</p>
+                <p className="item">{util.replaceKeywordMark(v.text!, searchKeyWord)}</p>
               </div>
             );
           })

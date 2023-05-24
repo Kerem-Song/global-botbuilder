@@ -1,7 +1,7 @@
 import { icPopupClose } from '@assets';
 import { Input } from '@components';
 import { Button } from '@components/general';
-import { useI18n, usePage, useRootState } from '@hooks';
+import { useI18n, useRootState, useUtteranceClient } from '@hooks';
 import { ISearchData } from '@models';
 import { Dispatch, FC, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
@@ -28,7 +28,8 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
   const { t } = useI18n('utterance');
-  // const { t } = usePage();
+  const { removeUtteranceQueries } = useUtteranceClient();
+
   const handleSearch = (keyword: string) => {
     setSearchData({
       sort: 1,
@@ -39,11 +40,13 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
 
   const handleClose = () => {
     handleIsOpenUtterancePopup(false);
+    removeUtteranceQueries();
   };
 
   const handleDetailPopupOpen = (intentId?: string) => {
     handleIsOpenUtterancePopup(false);
     handleIsOpenUtteranceDetailPopup(intentId);
+    removeUtteranceQueries();
   };
 
   return (
@@ -82,13 +85,11 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
                 handleDetailPopupOpen={handleDetailPopupOpen}
               />
             </thead>
-            <tbody>
-              <UtteranceListItem
-                searchData={searchData}
-                isOpenUtterancePopup={isOpenUtterancePopup}
-                handleDetailPopupOpen={handleDetailPopupOpen}
-              />
-            </tbody>
+            <UtteranceListItem
+              searchData={searchData}
+              isOpenUtterancePopup={isOpenUtterancePopup}
+              handleDetailPopupOpen={handleDetailPopupOpen}
+            />
           </table>
         </div>
       </div>

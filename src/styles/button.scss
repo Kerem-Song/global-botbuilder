@@ -94,6 +94,10 @@ a.luna-btn {
   &:disabled {
     background: $gray150;
     color: $gray200;
+    &:hover {
+      background-color: $gray150;
+      color: $gray200;
+    }
   }
 }
 

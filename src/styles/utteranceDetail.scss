@@ -16,13 +16,7 @@
       }
     }
     .deleteBtn {
-      background-color: #636364;
-      color: $grayWhite;
       margin-right: rem(8);
-      &:hover {
-        background-color: $gray300;
-        color: $gray500;
-      }
     }
   }
   .utterance {

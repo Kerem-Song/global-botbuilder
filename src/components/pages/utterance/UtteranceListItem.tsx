@@ -58,7 +58,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
 
     if (result) {
       const deleteIntent: IDeleteIntent = {
-        sessionToken: token!,
+        sessionToken: token,
         intentId: intentId,
       };
 
@@ -91,69 +91,66 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   }, [inView]);
 
   return (
-    <>
-      {!initialData || isFetching ? (
-        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup!} />
-      ) : (
-        <>
-          {isExistInitialData(initialData) ? (
-            initialData?.pages.map((v) => {
-              const pages = v.items;
-              return pages.map((x, i) => {
-                const foundFlow = data?.find((item) => item.id === x.flowId);
-                const connectedFlow = x.flowName !== null;
-                const notFoundFlow = foundFlow === undefined;
-                const hasInactiveFlow = connectedFlow && notFoundFlow;
-                const showScenarioList = isOpenUtterancePopup === false;
-                return (
-                  <tr
-                    key={i}
-                    className="list"
-                    ref={ref}
-                    onClick={() => handleIntent(x.intentId)}
+    <tbody>
+      {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
+      {isExistInitialData(initialData)
+        ? initialData?.pages.map((v) => {
+            const pages = v.items;
+            return pages.map((x, i) => {
+              const foundFlow = data?.find((item) => item.id === x.flowId);
+              const connectedFlow = x.flowName !== null;
+              const notFoundFlow = foundFlow === undefined;
+              const hasInactiveFlow = connectedFlow && notFoundFlow;
+              const showScenarioList = isOpenUtterancePopup === false;
+              return (
+                <tr
+                  key={i}
+                  ref={ref}
+                  className="list"
+                  onClick={() => handleIntent(x.intentId)}
+                >
+                  <td
+                    role="presentation"
+                    className={classNames('utteranceList intent', {
+                      'hidden-scenarioList': !showScenarioList,
+                    })}
                   >
+                    {searchData?.searchWord
+                      ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
+                      : x.intentName}
+                  </td>
+                  {showScenarioList ? (
                     <td
                       role="presentation"
-                      className={classNames('utteranceList intent', {
-                        'hidden-scenarioList': !showScenarioList,
+                      className={classNames('utteranceList connectScenarios', {
+                        'connectScenarios-notActivated': hasInactiveFlow,
                       })}
                     >
-                      {searchData?.searchWord
-                        ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
-                        : x.intentName}
+                      {x.flowName === null ? '-' : x.flowName}
                     </td>
-                    {showScenarioList ? (
-                      <td
-                        role="presentation"
-                        className={classNames('utteranceList connectScenarios', {
-                          'connectScenarios-notActivated': hasInactiveFlow,
-                        })}
-                      >
-                        {x.flowName === null ? '-' : x.flowName}
-                      </td>
-                    ) : null}
-                    <td role="presentation" className="utteranceList utterance">
-                      {searchData?.searchWord
-                        ? util.replaceKeywordMark(
-                            x.utteranceSummary,
-                            searchData?.searchWord,
-                          )
-                        : x.utteranceSummary}
-                    </td>
-                    <td className="utteranceList icon">
-                      <button
-                        className="icDelete"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openDeleteModal(x.intentId);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              });
-            })
-          ) : (
+                  ) : null}
+                  <td role="presentation" className="utteranceList utterance">
+                    {searchData?.searchWord
+                      ? util.replaceKeywordMark(
+                          x.utteranceSummary,
+                          searchData?.searchWord,
+                        )
+                      : x.utteranceSummary}
+                  </td>
+                  <td className="utteranceList icon">
+                    <button
+                      className="icDelete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openDeleteModal(x.intentId);
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
+            });
+          })
+        : !isFetching && (
             <tr className="emptyList popup">
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
@@ -165,8 +162,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               </td>
             </tr>
           )}
-        </>
-      )}
-    </>
+    </tbody>
   );
 };

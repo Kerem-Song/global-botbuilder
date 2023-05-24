@@ -37,11 +37,11 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
     },
   ];
   const { t } = usePage();
-  const { removeQueries } = useEntityClient();
+  const { removeEntityQueries } = useEntityClient();
   const [activeIndex, setAcitveIndex] = useState<number>(0);
 
   const handleClose = () => {
-    removeQueries();
+    removeEntityQueries();
     handleIsOpen(false);
   };
 
