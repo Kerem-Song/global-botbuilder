@@ -1,9 +1,11 @@
+import { Checkbox, Switch } from '@components/data-entry';
 import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { zoomIn, zoomOut } from '@store/botbuilderSlice';
+import { setIsBeziderMode, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
@@ -14,6 +16,9 @@ export const BotBuilderZoomBtn = () => {
   const past = useRootState((state) => state.makingNodeSliceReducer.past).length !== 0;
   const future =
     useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
+  const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
+  const useTextFunction =
+    useRootState((state) => state.userInfoReducer.companyName) === '비즈챗봇팀';
   const isHistoryViewer = useHistoryViewerMatch();
   const handleZoomOut = () => {
     dispatch(zoomOut());
@@ -22,6 +27,10 @@ export const BotBuilderZoomBtn = () => {
   const handleZoomIn = () => {
     dispatch(zoomIn());
   };
+
+  useEffect(() => {
+    updateLineAll();
+  }, [isBezierMode]);
 
   console.log('past', past);
   console.log('future', future);
@@ -55,6 +64,13 @@ export const BotBuilderZoomBtn = () => {
           />
         </Col>
       )}
+      {useTextFunction ? (
+        <Col className="p-l-10">
+          <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
+            {isBezierMode ? 'B' : 'L'}
+          </Button>
+        </Col>
+      ) : null}
     </Row>
   );
 };

@@ -27,6 +27,7 @@ export interface BotBuilderMaker {
   carouselIndex: Record<string, number>;
   clipBoard?: INode;
   isHandleCutCard?: boolean;
+  isBezierMode?: boolean;
   // token?: string;
   // botInfo?: IBotModel;
 }
@@ -135,6 +136,9 @@ export const botbuilderSlice = createSlice({
     setIsHandleCutCard: (state, action: PayloadAction<boolean>) => {
       state.isHandleCutCard = action.payload;
     },
+    setIsBeziderMode: (state, action: PayloadAction<boolean>) => {
+      state.isBezierMode = action.payload;
+    },
   },
 });
 
@@ -154,5 +158,6 @@ export const {
   setCarouselIndex,
   setClipBoard,
   setIsHandleCutCard,
+  setIsBeziderMode,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;

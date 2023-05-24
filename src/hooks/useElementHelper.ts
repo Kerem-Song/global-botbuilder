@@ -3,6 +3,7 @@ export const useElementHelper = (
   startId: string,
   end: HTMLDivElement | null,
   startNode: HTMLDivElement | null,
+  isBezierMode?: boolean,
 ) => {
   const isNextNode = startNode !== null;
   const start = document.querySelector<HTMLDivElement>(`#${startId}`);
@@ -122,6 +123,8 @@ export const useElementHelper = (
     let line3 = '';
     let line4 = '';
 
+    let bezier = '';
+
     const deletePoint = {
       x: startPoint.x + Math.round((endPoint.x - startPoint.x) / 2) - 8,
       y: startPoint.y + Math.round((endPoint.y - startPoint.y) / 2) - 8,
@@ -145,10 +148,10 @@ export const useElementHelper = (
         const point2 = {
           x: point1.x,
           y: isDirectionUp
-            ? er.bottom + minLine > snr.top
+            ? er.bottom + minLine > snr.top && !isBezierMode
               ? lineOffset
               : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
-            : snr.bottom + minLine > er.top
+            : snr.bottom + minLine > er.top && !isBezierMode
             ? svgRect.height - lineOffset
             : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
         };
@@ -181,6 +184,19 @@ export const useElementHelper = (
 
         deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
         deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
+
+        const bezierC = {
+          x: Math.round((point2.x + point3.x) / 2),
+          y: point3.y,
+        };
+
+        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
+          point2.x - startPoint.x
+        },${point2.y - startPoint.y} ${bezierC.x - startPoint.x},${
+          bezierC.y - startPoint.y
+        } c ${point3.x - bezierC.x},${point3.y - bezierC.y} ${point4.x - bezierC.x},${
+          point4.y - bezierC.y
+        } ${endPoint.x - bezierC.x},${endPoint.y - bezierC.y}`;
       } else if (Math.abs(startPoint.y - endPoint.y) > 10) {
         const x =
           Math.min(startPoint.x, endPoint.x) +
@@ -209,6 +225,12 @@ export const useElementHelper = (
 
         deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
         deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
+
+        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
+          point2.x - startPoint.x
+        },${point2.y - startPoint.y} ${endPoint.x - startPoint.x},${
+          endPoint.y - startPoint.y
+        }`;
       }
     } else {
       if (startPoint.y + minLine > endPoint.y) {
@@ -227,10 +249,10 @@ export const useElementHelper = (
 
         const point2 = {
           x: isDirectionLeft
-            ? er.right + minLine > sr.left
+            ? er.right + minLine > sr.left && !isBezierMode
               ? lineOffset
               : er.right + Math.round((sr.left - er.right) / 2) - offset.x
-            : sr.right + minLine > er.left
+            : sr.right + minLine > er.left && !isBezierMode
             ? svgRect.width - lineOffset
             : sr.right + Math.round((er.left - sr.right) / 2) - offset.x,
           y: point1.y,
@@ -264,6 +286,19 @@ export const useElementHelper = (
 
         deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
         deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
+
+        const bezierC = {
+          x: point3.x,
+          y: Math.round((point2.y + point3.y) / 2),
+        };
+
+        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
+          point2.x - startPoint.x
+        },${point2.y - startPoint.y} ${bezierC.x - startPoint.x},${
+          bezierC.y - startPoint.y
+        } c ${point3.x - bezierC.x},${point3.y - bezierC.y} ${point4.x - bezierC.x},${
+          point4.y - bezierC.y
+        } ${endPoint.x - bezierC.x},${endPoint.y - bezierC.y}`;
       } else if (Math.abs(startPoint.x - endPoint.x) > 10) {
         const y =
           Math.min(startPoint.y, endPoint.y) +
@@ -292,19 +327,37 @@ export const useElementHelper = (
 
         deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
         deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
+
+        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
+          point2.x - startPoint.x
+        },${point2.y - startPoint.y} ${endPoint.x - startPoint.x},${
+          endPoint.y - startPoint.y
+        }`;
       }
     }
 
     if (element) {
       element.style.opacity = '1';
-      element.setAttribute(
-        'd',
-        `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
-      );
+      if (isBezierMode && bezier !== '') {
+        element.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
+      } else {
+        element.setAttribute(
+          'd',
+          `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
+        );
+      }
     }
 
     if (mouseElement) {
       mouseElement.style.opacity = '1';
+      if (isBezierMode && bezier !== '') {
+        mouseElement.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
+      } else {
+        mouseElement.setAttribute(
+          'd',
+          `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
+        );
+      }
       mouseElement.setAttribute(
         'd',
         `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,

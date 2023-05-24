@@ -1,4 +1,4 @@
-import { useElementHelper } from '@hooks';
+import { useElementHelper, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { FC, useEffect, useRef } from 'react';
 
@@ -42,7 +42,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
 
   //const stroke = strokes[type][active || highlight ? 1 : 0];
   const stroke = strokes[type][active ? 1 : 0];
-
+  const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
   useEffect(() => {
     const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
@@ -56,6 +56,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
         startId,
         end,
         startNode,
+        isBezierMode,
       );
       setSvgStyle(svgRef.current);
       setArrowStyle(arrowRef.current);
@@ -70,6 +71,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
     lineRef.current,
     lineMouseRef.current,
     deleteRef.current,
+    isBezierMode,
   ]);
 
   return (

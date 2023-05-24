@@ -13,6 +13,8 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
 
+const OVERFLOWLINK = 99999;
+
 const editableArrowNodeTypes: string[] = [
   NODE_TYPES.INTENT_NODE,
   NODE_TYPES.ANSWER_NODE,
@@ -332,42 +334,75 @@ export const arrowHelper = {
       return '연속노드로 응답노드만 연결 할 수 있습니다.';
     }
 
-    // const depth =
-    //   (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
-    //   (endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
-    // const parentCnt = arrowHelper.checkParent(depth, startNode.id, nodes);
-    // const childCnt = arrowHelper.checkChild(
-    //   0,
-    //   nodes,
-    //   nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
-    // );
+    const isPassChild =
+      startNode.type === NODE_TYPES.ANSWER_NODE ||
+      (startNode.nodeKind === NodeKind.InputNode && isNext);
+    const depth =
+      (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
+      (!isPassChild && endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
+    const parentCnt = arrowHelper.checkParent(depth, startNode.id, endNode.id, nodes);
 
-    // if (parentCnt + childCnt > 3) {
-    //   return '연속응답 노드는 3개까지만 가능합니다.';
-    // }
+    const childCnt = isPassChild
+      ? 0
+      : arrowHelper.checkChild(
+          0,
+          startNode.id,
+          nodes,
+          nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
+        );
+
+    if (parentCnt === OVERFLOWLINK || childCnt === OVERFLOWLINK) {
+      return '응답을 순환으로 설정할 수 없습니다.';
+    }
+
+    if (parentCnt + childCnt > 3) {
+      return '연속응답 노드는 3개까지만 가능합니다.';
+    }
 
     return undefined;
   },
-  checkParent: (depth: number, nodeId: string, nodes: INode[]): number => {
+  checkParent: (depth: number, nodeId: string, endId: string, nodes: INode[]): number => {
     const parents = nodes.filter((x) =>
       nodeFactory.getFactory(x.type)?.getConnectId(x).includes(nodeId),
     );
-    console.log(parents);
+
+    if (parents.find((x) => x.id === endId)) {
+      return OVERFLOWLINK;
+    }
+
     if (parents.length > 0) {
       const parentDepths = parents.map((p) => {
-        if (p.nodeKind !== NodeKind.InputNode) {
-          return arrowHelper.checkParent(depth, p.id, nodes);
-        }
-        return arrowHelper.checkParent(depth + 1, p.id, nodes);
+        console.log(
+          '%parent%',
+          p.id,
+          p.type,
+          p.nodeKind,
+          nodeFactory.getFactory(p.type)?.getConnectId(p),
+        );
+        return arrowHelper.checkParent(
+          p.nodeKind === NodeKind.InputNode ? depth + 1 : depth,
+          p.id,
+          endId,
+          nodes,
+        );
       });
       return Math.max(...parentDepths);
     }
 
     return depth;
   },
-  checkChild: (depth: number, nodes: INode[], nextNodeId: string[]): number => {
+  checkChild: (
+    depth: number,
+    startId: string,
+    nodes: INode[],
+    nextNodeId: string[],
+  ): number => {
     if (nextNodeId.length === 0) {
       return depth;
+    }
+
+    if (nextNodeId.includes(startId)) {
+      return OVERFLOWLINK;
     }
 
     const children = nodes.filter((x) => nextNodeId.includes(x.id));
@@ -376,12 +411,14 @@ export const arrowHelper = {
         if (c.nodeKind !== NodeKind.InputNode) {
           return arrowHelper.checkChild(
             depth,
+            startId,
             nodes,
             nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
           );
         }
         return arrowHelper.checkChild(
           depth + 1,
+          startId,
           nodes,
           nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
         );
