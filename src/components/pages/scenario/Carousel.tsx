@@ -59,14 +59,18 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
     return false;
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (NextDisabled()) {
       return;
     }
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
-  const handlePrevClick = () => {
+  const handlePrevClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setCurrent(current !== 0 ? current - 1 : 0);
   };
 
