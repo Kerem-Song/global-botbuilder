@@ -55,8 +55,8 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
         setIsActive(true);
         const index = getValues().items.indexOf(item);
         remove(index);
-        lunaToast.success('삭제되었습니다.');
       });
+      lunaToast.success('삭제되었습니다.');
     }
   };
 
