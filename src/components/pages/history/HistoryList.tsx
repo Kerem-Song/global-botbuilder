@@ -94,15 +94,15 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
       // 연결/해제, 활성화/비활성화
       if (secondParam === true) {
-        if (val.changeLogType === (1006 || 1007)) {
+        if (val.changeLogType === 1006 || val.changeLogType === 1007) {
           secondParam = t(`CAPTION_CONNECTED`);
-        } else if (val.changeLogType === (1003 || 2005)) {
+        } else if (val.changeLogType === 1003 || val.changeLogType === 2005) {
           secondParam = t(`CAPTION_ACTIVATED`);
         }
       } else if (secondParam === false) {
-        if (val.changeLogType === (1006 || 1007)) {
+        if (val.changeLogType === 1006 || val.changeLogType === 1007) {
           secondParam = t(`CAPTION_DISCONNECTED`);
-        } else if (val.changeLogType === (1003 || 2005)) {
+        } else if (val.changeLogType === 1003 || val.changeLogType === 2005) {
           secondParam = t(`CAPTION_DEACTIVATED`);
         }
       }

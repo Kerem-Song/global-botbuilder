@@ -465,7 +465,7 @@
     "CAPTION_FLOWNAMEUPDATED": "시나리오 이름이 변경되었습니다.",
     "CAPTION_FLOWNAMEDELETED": "시나리오가 삭제되었습니다.",
     "CAPTION_FLOWUPDATED": "시나리오가 편집되었습니다.",
-    "CAPTION_FLOWACTIVATEUPDATED": "시나리오 활성화 되었습니다.",
+    "CAPTION_FLOWACTIVATEUPDATED": "시나리오 <strong>{{secondParam}}</strong> 되었습니다.",
     "CAPTION_PARAMETERNAMECREATED": "변수가 추가되었습니다.",
     "CAPTION_PARAMETERNAMEUPDATED": "변수명이 수정되었습니다.",
     "CAPTION_PARAMETERDEFAULTVALUEUPDATED": "변수 값이 수정되었습니다.",
