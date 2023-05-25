@@ -40,9 +40,13 @@ $primary300: #6993ff;
 $primary500: #4478ff;
 $primary700: #2659de;
 
+//red
+$red: #ff4975;
+$red200: #f398af;
+$red700: #f81f55;
+
 // Sub
 $orange: #ff8a00;
-$red: #ff4975;
 $green: #03bf4e;
 $progress-bg: #ffe4e9;
 
@@ -141,7 +145,7 @@ $widthamounts: (100, 150, 200, 300, 500, 1000);
   }
 }
 
-@mixin box-arrow($arrowDirection, $arrowColor, $content, $arrowWidth: 10px,) {
+@mixin box-arrow($arrowDirection, $arrowColor, $content, $arrowWidth: 10px) {
   // position: relative;
   z-index: 10;
 
@@ -157,34 +161,34 @@ $widthamounts: (100, 150, 200, 300, 500, 1000);
     @if $arrowDirection == bottom or $arrowDirection == top {
       border-left: $arrowWidth solid transparent;
       border-right: $arrowWidth solid transparent;
-      left:50%;
-      transform:translateX(-50%);
+      left: 50%;
+      transform: translateX(-50%);
 
       @if $arrowDirection == bottom {
         border-top: $arrowWidth solid $arrowColor;
-        top:100%;
+        top: 100%;
       }
 
       @if $arrowDirection == top {
         border-bottom: $arrowWidth solid $arrowColor;
-        bottom:100%;
+        bottom: 100%;
       }
     }
 
     @if $arrowDirection == left or $arrowDirection == right {
       border-top: $arrowWidth solid transparent;
       border-bottom: $arrowWidth solid transparent;
-      transform:translateY(-50%);
+      transform: translateY(-50%);
       top: 50%;
 
       @if $arrowDirection == left {
         border-right: $arrowWidth solid $arrowColor;
-         right:100%;
+        right: 100%;
       }
 
       @if $arrowDirection == right {
         border-left: $arrowWidth solid $arrowColor;
-        left:100%;
+        left: 100%;
       }
     }
   }

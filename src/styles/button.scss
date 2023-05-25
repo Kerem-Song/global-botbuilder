@@ -83,6 +83,20 @@ a.luna-btn {
   }
 }
 
+.luna-btn-error {
+  border: 0;
+  background: $red;
+  color: #ffffff;
+  &:hover {
+    background: $red700;
+    color: #ffffff;
+  }
+  &:disabled {
+    background: $red200;
+    color: #ffffff;
+  }
+}
+
 .luna-btn-secondary {
   border: 0;
   background: $gray500;

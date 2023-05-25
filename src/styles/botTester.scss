@@ -114,146 +114,148 @@
         position: relative;
         overflow: hidden;
 
-        .productCard {
+        .productCardWrap {
           width: rem(264);
           max-height: rem(480);
           margin-right: rem(10);
-          background-color: $grayWhite;
+
           border-radius: rem(16);
-          // border: 1px solid transparent;
-
+          border: 1px solid transparent;
           &:hover {
-            // display: block;
-            // border: 1px solid $primary500;
+            border: 1px solid $primary500;
           }
+          .productCard {
+            border-radius: rem(16);
+            background-color: $grayWhite;
 
-          .productCardImg_rectangle {
-            width: 100%;
-            height: rem(132);
-            object-fit: contain;
-            border-radius: rem(16) rem(16) 0 0;
-          }
-
-          .productCardImg_square {
-            width: 100%;
-            height: rem(264);
-            object-fit: contain;
-            border-radius: rem(16) rem(16) 0 0;
-          }
-
-          .productCardContents {
-            padding: rem(8) rem(12) rem(1) rem(12);
-
-            .productCardTitle {
-              display: flex;
-              align-content: center;
-              padding-bottom: rem(8);
-              border-bottom: 1px solid #d9d9d9;
-
-              .title {
-                display: flex;
-                align-items: center;
-
-                .icon {
-                  width: rem(24);
-                  height: rem(24);
-                  border-radius: rem(6);
-                  margin-right: rem(8);
-                }
-                .name {
-                  width: rem(200);
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
-                  font-size: rem(14);
-                  line-height: rem(17);
-                }
-              }
+            .productCardImg_rectangle {
+              width: 100%;
+              height: rem(132);
+              object-fit: contain;
+              border-radius: rem(16) rem(16) 0 0;
             }
 
-            .productCardPrices {
-              border-bottom: 1px solid #d9d9d9;
-              margin-top: rem(8);
-
-              .price {
-                display: flex;
-                justify-content: space-between;
-                font-weight: 500;
-
-                .currentPrice {
-                  font-size: rem(18);
-                  margin-bottom: rem(8);
-                }
-
-                .prevPrice {
-                  height: rem(19);
-                  font-size: rem(16);
-                  color: $gray300;
-                  text-decoration-line: line-through;
-                }
-              }
-              .discount {
-                margin-bottom: rem(5);
-
-                .discountAmount {
-                  font-size: rem(14);
-                  line-height: rem(17);
-                  font-weight: 400;
-                  color: #ff0000;
-                }
-              }
+            .productCardImg_square {
+              width: 100%;
+              height: rem(264);
+              object-fit: contain;
+              border-radius: rem(16) rem(16) 0 0;
             }
 
-            .productContents {
-              padding-top: rem(8);
+            .productCardContents {
+              padding: rem(8) rem(12) rem(1) rem(12);
 
-              .productDesc {
+              .productCardTitle {
                 display: flex;
-                align-items: center;
+                align-content: center;
                 padding-bottom: rem(8);
+                border-bottom: 1px solid #d9d9d9;
 
-                .desc {
-                  width: 100%;
-                  height: fit-content;
-                  font-size: rem(14);
-                  color: #636364;
-                }
-              }
-              .rectangleImageBtn {
-                margin-bottom: rem(10);
+                .title {
+                  display: flex;
+                  align-items: center;
 
-                button {
-                  width: rem(240);
-                  height: rem(35);
-                  margin-top: rem(4);
-                  border: none;
-                  border-radius: rem(8);
-                  cursor: pointer;
-                  &:hover {
-                    background-color: #75767a;
+                  .icon {
+                    width: rem(24);
+                    height: rem(24);
+                    border-radius: rem(6);
+                    margin-right: rem(8);
+                  }
+                  .name {
+                    width: rem(200);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: rem(14);
+                    line-height: rem(17);
                   }
                 }
               }
-              .squareImageBtn {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: rem(10);
 
-                button {
+              .productCardPrices {
+                border-bottom: 1px solid #d9d9d9;
+                margin-top: rem(8);
+
+                .price {
                   display: flex;
-                  justify-content: center;
+                  justify-content: space-between;
+                  font-weight: 500;
+
+                  .currentPrice {
+                    font-size: rem(18);
+                    margin-bottom: rem(8);
+                  }
+
+                  .prevPrice {
+                    height: rem(19);
+                    font-size: rem(16);
+                    color: $gray300;
+                    text-decoration-line: line-through;
+                  }
+                }
+                .discount {
+                  margin-bottom: rem(5);
+
+                  .discountAmount {
+                    font-size: rem(14);
+                    line-height: rem(17);
+                    font-weight: 400;
+                    color: #ff0000;
+                  }
+                }
+              }
+
+              .productContents {
+                padding-top: rem(8);
+
+                .productDesc {
+                  display: flex;
                   align-items: center;
-                  width: rem(240);
-                  height: rem(37);
-                  margin-right: rem(3);
-                  white-space: nowrap;
-                  font-size: rem(14);
-                  border: none;
-                  background-color: #dbdee5;
-                  border-radius: rem(8);
-                  &:hover {
-                    background-color: #75767a;
+                  padding-bottom: rem(8);
+
+                  .desc {
+                    width: 100%;
+                    height: fit-content;
+                    font-size: rem(14);
+                    color: #636364;
+                  }
+                }
+                .rectangleImageBtn {
+                  margin-bottom: rem(10);
+
+                  button {
+                    width: rem(240);
+                    height: rem(35);
+                    margin-top: rem(4);
+                    border: none;
+                    border-radius: rem(8);
+                    cursor: pointer;
+                    &:hover {
+                      background-color: #75767a;
+                    }
+                  }
+                }
+                .squareImageBtn {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: rem(10);
+
+                  button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: rem(240);
+                    height: rem(37);
+                    margin-right: rem(3);
+                    white-space: nowrap;
+                    font-size: rem(14);
+                    border: none;
+                    background-color: #dbdee5;
+                    border-radius: rem(8);
+                    &:hover {
+                      background-color: #75767a;
+                    }
                   }
                 }
               }
