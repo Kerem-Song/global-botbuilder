@@ -95,7 +95,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   return (
     <tbody>
       {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
-      {isExistInitialData(initialData)
+      {!isFetching && isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
             const pages = v.items;
             return pages.map((x, i) => {

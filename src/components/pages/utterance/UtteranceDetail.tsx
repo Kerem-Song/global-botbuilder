@@ -15,7 +15,7 @@ import * as yup from 'yup';
 import { lunaToast } from '../../../../src/modules/lunaToast';
 import { AddUtterance } from './AddUtterance';
 import { UtteranceDetailItems } from './UtteranceDetailItems';
-import { UtteranceGroupInfo } from './UtteranceGroupInfo';
+import { UtteranceIntentInfo } from './UtteranceIntentInfo';
 
 export interface IUtteranceDetailProps {
   intentId?: string;
@@ -148,13 +148,15 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       });
 
       if (checkIntentDuplication.result) {
-        await error({
+        const res = await error({
           title: t('DUPLICATE_INTENT'),
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
         });
 
-        if (intentNameRef.current) {
-          intentNameRef.current.select();
+        if (res) {
+          if (intentNameRef.current) {
+            intentNameRef.current.select();
+          }
         }
       }
     };
@@ -241,7 +243,8 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             )}
           </div>
         </div>
-        <UtteranceGroupInfo
+        <UtteranceIntentInfo
+          intentRef={intentNameRef}
           formMethods={formMethods}
           setIsActive={setIsActive}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}

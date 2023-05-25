@@ -4,6 +4,7 @@ import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
 import { useI18n, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
@@ -54,6 +55,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
         setIsActive(true);
         const index = getValues().items.indexOf(item);
         remove(index);
+        lunaToast.success('삭제되었습니다.');
       });
     }
   };

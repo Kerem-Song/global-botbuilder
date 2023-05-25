@@ -3,17 +3,27 @@ import { useI18n } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, IUtteranceModel } from '@models';
 import { getReactSelectStyle } from '@modules';
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 import Select from 'react-select';
 
 export interface IUtteranceGroupInfoProps {
+  intentRef: MutableRefObject<HTMLInputElement | null>;
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
 }
 
-export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
+export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
+  intentRef,
   formMethods,
   setIsActive,
   isOpenUtteranceDetailPopup,
@@ -66,6 +76,10 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
     }
   }, [nameField.value]);
 
+  const handleIntentRef = (e: HTMLInputElement | null) => {
+    nameField.ref(e);
+    intentNameRef.current = e;
+  };
   return (
     <Card
       radius="normal"
@@ -83,10 +97,7 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
             <FormItem error={errors.name}>
               <Input
                 value={nameField.value}
-                ref={(e) => {
-                  nameField.ref(e);
-                  intentNameRef.current = e;
-                }}
+                ref={handleIntentRef}
                 onChange={(e) => {
                   nameField.onChange(e);
                   setIsActive(true);
