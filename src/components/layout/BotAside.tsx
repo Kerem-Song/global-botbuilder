@@ -1,5 +1,4 @@
 import {
-  icBrandName,
   icChatbot,
   icDeploy,
   icDeploySelected,
@@ -20,6 +19,7 @@ import {
   icUtteranceSelected,
 } from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
+import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { initBotBuilder } from '@store/botbuilderSlice';
@@ -90,7 +90,6 @@ export const BotAside = () => {
       icUtteranceSelected,
       2,
     ),
-    //getMenuItem(3, `${botId}/data-api`, 'data-api', icDataApi, icDataApiSelcted),
     getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected, 16),
     getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected, 32),
     getMenuItem(
@@ -150,12 +149,6 @@ export const BotAside = () => {
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
   });
-
-  // useEffect(() => {
-  //   if (sidebarStatus) {
-  //     outsideClick;
-  //   }
-  // }, [sidebarStatus]);
 
   return (
     <aside className={css} ref={sidebarRef}>
@@ -221,25 +214,32 @@ export const BotAside = () => {
               )
               .map((item) => {
                 return (
-                  <NavLink
+                  <Tooltip
                     key={item.id}
-                    to={`${item.url}`}
-                    onClick={() => {
-                      setPage(item.name);
-                      dispatch(setSidebarClose());
-                    }}
+                    tooltip={item.name}
+                    placement="bottom-start"
+                    offset={[10, 0]}
+                    disable={sidebarStatus}
                   >
-                    <li className={page === item.name ? 'selected' : ''}>
-                      <span className="menuImg">
-                        {page === item.name ? (
-                          <img src={item.selectedIcon} alt={item.alt} />
-                        ) : (
-                          <img src={item.icon} alt={item.alt} />
-                        )}
-                      </span>
-                      {<span className="desc">{item.desc}</span>}
-                    </li>
-                  </NavLink>
+                    <NavLink
+                      to={`${item.url}`}
+                      onClick={() => {
+                        setPage(item.name);
+                        dispatch(setSidebarClose());
+                      }}
+                    >
+                      <li className={page === item.name ? 'selected' : ''}>
+                        <span className="menuImg">
+                          {page === item.name ? (
+                            <img src={item.selectedIcon} alt={item.alt} />
+                          ) : (
+                            <img src={item.icon} alt={item.alt} />
+                          )}
+                        </span>
+                        {<span className="desc">{item.desc}</span>}
+                      </li>
+                    </NavLink>
+                  </Tooltip>
                 );
               })}
           </ul>
