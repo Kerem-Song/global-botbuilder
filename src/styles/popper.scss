@@ -38,7 +38,7 @@
     }
 
     .social-icon {
-      margin-left: rem(7);
+      margin-left: rem(15);
       width: rem(14);
       height: rem(14);
     }
@@ -89,9 +89,8 @@
 }
 
 .luna-userInfo-container {
-  //width: rem(194);
   text-align: start;
-  padding: rem(12) rem(8) rem(12) rem(8);
+  padding-bottom: rem(8);
   .userInfoTitle {
     margin-bottom: rem(8);
     .username {
@@ -111,6 +110,39 @@
       font-size: rem(12);
       font-weight: 500;
       color: #626263;
+    }
+  }
+}
+
+.userInfoMenus {
+  padding: rem(20) rem(16);
+  min-width: rem(194);
+
+  .list-view-btn {
+    padding: rem(12) 0;
+    height: rem(38);
+  }
+}
+
+.lnbHeaderBotNamePopper {
+  padding: rem(12);
+  min-width: rem(188);
+
+  .list-view-btn {
+    padding: rem(12) 0;
+    height: rem(40);
+  }
+
+  .luna-popup-list {
+    padding: rem(12);
+    width: rem(164);
+    height: rem(40);
+    gap: 0;
+    
+    .items-name {
+      width: rem(94);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

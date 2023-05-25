@@ -1,3 +1,4 @@
+import { icIntentNode } from '@assets';
 import { IntentNodeEdit } from '@components/pages/scenario/edit/IntentNodeEdit';
 import { IntentNode } from '@components/pages/scenario/nodes/IntentNode';
 import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -43,7 +44,7 @@ export class IntentNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return '';
+    return icIntentNode;
   }
 
   getConnectId() {

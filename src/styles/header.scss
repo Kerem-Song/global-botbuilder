@@ -29,7 +29,7 @@ header {
       gap: rem(5);
 
       .testerBtn {
-        padding: rem(0) rem(5);
+        padding: rem(8) rem(12);
         margin-right: rem(1);
         min-width: rem(50);
         width: fit-content;
@@ -39,12 +39,13 @@ header {
       }
 
       .languageBtn {
-        padding: rem(8) rem(5.5);
+        padding: rem(9) rem(5.5);
         width: rem(32);
+        height: rem(32);
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $grayBlack;
+        background-color: $gray700;
         color: $grayWhite;
         font-size: rem(12);
         line-height: rem(14);
@@ -58,10 +59,12 @@ header {
 
       .userName {
         position: relative;
-        padding: rem(7) rem(10) rem(7) rem(25);
+        padding: rem(8) rem(12) rem(8) rem(28);
+        width: rem(110);
+        height: rem(32);
         text-align: center;
         color: $grayWhite;
-        background-color: $grayBlack;
+        background-color: $gray700;
         border: 1px solid $grayBlack;
         border-radius: rem(6);
         font-size: rem(13);
@@ -72,7 +75,7 @@ header {
           position: absolute;
           display: inline-block;
           top: 27%;
-          left: 14%;
+          left: 17%;
           content: url('@assets/icons/ic_user.svg');
         }
 
