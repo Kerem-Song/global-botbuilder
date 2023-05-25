@@ -35,6 +35,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const { intentDeleteAsync, changePageNumberQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
+  const { sort, scenarios, searchWord } = searchData;
+  const defaultSearchData = sort === 1 && scenarios === 'all' && searchWord === undefined;
 
   const {
     data: initialData,
@@ -154,7 +156,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
             <tr className="emptyList popup">
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
-                {searchData?.searchWord ? (
+                {!defaultSearchData ? (
                   <span>{t('NO_SEARCH_RESULT_FOUND')}</span>
                 ) : (
                   <span>{t('NO_REGISTERED_INTENT')}</span>
