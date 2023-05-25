@@ -35,9 +35,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const { intentDeleteAsync, changePageNumberQuery } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
   const { sort, scenarios, searchWord } = searchData;
   const defaultSearchData = sort === 1 && scenarios === 'all' && searchWord === undefined;
-
+  const hasFlowIdSearchData =
+    sort === 1 && scenarios === selectedScenarios?.id && searchWord === undefined;
   const {
     data: initialData,
     fetchNextPage,
@@ -156,10 +160,18 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
             <tr className="emptyList popup">
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
-                {!defaultSearchData ? (
-                  <span>{t('NO_SEARCH_RESULT_FOUND')}</span>
+                {selectedScenarios?.id === undefined ? (
+                  <span>
+                    {!defaultSearchData
+                      ? t('NO_SEARCH_RESULT_FOUND')
+                      : t('NO_REGISTERED_INTENT')}
+                  </span>
                 ) : (
-                  <span>{t('NO_REGISTERED_INTENT')}</span>
+                  <span>
+                    {!hasFlowIdSearchData
+                      ? t('NO_SEARCH_RESULT_FOUND')
+                      : t('NO_REGISTERED_INTENT')}
+                  </span>
                 )}
               </td>
             </tr>

@@ -34,7 +34,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     setSearchData({
       sort: 1,
       scenarios: selectedScenarios && selectedScenarios.id,
-      searchWord: keyword,
+      searchWord: keyword || undefined,
     });
   };
 
