@@ -7,7 +7,7 @@ import { IHasChildren } from '../../models/interfaces/IHasChildren';
 export type ButtonShape = 'default' | 'circle' | 'round' | 'ghost';
 
 export interface ButtonProps extends IHasChildren, IHasClassNameNStyle {
-  type?: 'default' | 'primary' | 'secondary' | 'lineBlue';
+  type?: 'default' | 'primary' | 'secondary' | 'lineBlue' | 'error';
   small?: boolean;
   large?: boolean;
   shape?: ButtonShape;
@@ -71,6 +71,7 @@ export const Button: FC<ButtonProps> = ({
       'luna-btn-primary': type === 'primary',
       'luna-btn-secondary': type === 'secondary',
       'luna-btn-lineblue': type === 'lineBlue',
+      'luna-btn-error': type === 'error',
       'luna-btn-small': small,
       'luna-btn-large': large,
       'luna-btn-ghost': shape === 'ghost',

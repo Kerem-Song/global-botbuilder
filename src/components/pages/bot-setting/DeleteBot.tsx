@@ -80,7 +80,7 @@ export const DeleteBot = () => {
                 </Button>
               ) : (
                 <Button
-                  type="primary"
+                  type="error"
                   disabled={activeDeleteBtn ? false : true}
                   onClick={handleDeleteBtn}
                 >
