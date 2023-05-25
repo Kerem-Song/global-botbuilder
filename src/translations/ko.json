@@ -324,7 +324,7 @@
     "SEARCH_INTENT_PLACEHOLDER": "검색어를 입력해주세요."
   },
   "utternaceDetailPage": {
-    "TITLE": "그룹 정보",
+    "TITLE": "인텐트 정보",
     "LIST": "목록으로",
     "DELETE_INTENT": "인텐트 삭제하기",
     "SAVE": "저장하기",

@@ -44,7 +44,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     const searchData = {
       sort: Number(sort),
       scenarios: scenario,
-      searchWord: keyword,
+      searchWord: keyword || undefined,
     };
     setSearchData(searchData);
     invalidateIntentQuery(searchData);
