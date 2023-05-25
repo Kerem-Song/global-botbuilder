@@ -17,7 +17,6 @@ import { useInView } from 'react-intersection-observer';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { boolean } from 'yup';
 
 import { HistoryValue } from './HistoryValue';
 interface IReactSelect {
