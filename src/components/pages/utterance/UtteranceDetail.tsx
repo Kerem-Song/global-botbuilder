@@ -141,7 +141,15 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
     const res = await intentAsync(saveIntent);
 
-    const handleIntentDuplication = async () => {
+    if (res && res.isSuccess) {
+      lunaToast.success();
+
+      if (isOpenUtteranceDetailPopup && handleClose) {
+        handleClose();
+      } else {
+        setNavigateUrl(`/${botId}/utterance`);
+      }
+    } else if (res?.exception.errorCode === 7612) {
       const checkIntentDuplication = await checkIntentDuplicationAsync({
         name: getValues('name'),
         intentId: getValues('intentId'),
@@ -152,25 +160,10 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
           title: t('DUPLICATE_INTENT'),
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
         });
-
-        if (res) {
-          if (intentNameRef.current) {
-            intentNameRef.current.select();
-          }
+        if (res && intentNameRef.current) {
+          intentNameRef.current.select();
         }
       }
-    };
-
-    if (res && res.isSuccess) {
-      lunaToast.success();
-
-      if (isOpenUtteranceDetailPopup && handleClose) {
-        handleClose();
-      } else {
-        setNavigateUrl(`/${botId}/utterance`);
-      }
-    } else if (res?.exception.errorCode === 7612) {
-      await handleIntentDuplication();
     }
   };
 
