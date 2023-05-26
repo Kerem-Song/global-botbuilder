@@ -4,7 +4,7 @@ import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 export interface IBasicCardViewProps {
@@ -37,12 +37,16 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
           )}
         >
           {view.imageCtrl?.imageUrl ? (
-            <img
-              src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
-                view.imageCtrl.imageUrl
-              }&sessionToken=${token}`}
-              alt="thumbnailImage"
-            />
+            <Suspense fallback={<div>loading</div>}>
+              <img
+                src={`${
+                  import.meta.env.VITE_API_BASE_URL
+                }/builderimage/forbuilder?origin=${
+                  view.imageCtrl.imageUrl
+                }&sessionToken=${token}`}
+                alt="thumbnailImage"
+              />
+            </Suspense>
           ) : (
             <div className="skeleton"></div>
           )}

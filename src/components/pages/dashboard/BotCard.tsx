@@ -15,7 +15,7 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
       title={
         <Row align="center" justify="space-between">
           <Col span={20}>
-            <Space direction="vertical">
+            <Space direction="vertical" gap={4}>
               <Row align="center">
                 <Col>
                   {model.activated && (
@@ -33,20 +33,20 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
               <div className="bot-name">{model.botName}</div>
             </Space>
           </Col>
-          <Col span={4}>
+          <Col span={4} style={{ textAlign: 'end' }}>
             <img src={imgLinebot} width={48} height={48} alt="linebot" />
           </Col>
         </Row>
       }
     >
-      <Space direction="vertical">
+      <Space direction="vertical" className="channelWrapper" gap={4}>
         <span className="channel-title">{t('PROD_CHANNEL')}</span>
         <span className="channel-name">
-          {model.channelInfos?.find((x) => x.isLive)?.name}
+          {model.channelInfos?.find((x) => x.isLive)?.name || '-'}
         </span>
         <span className="channel-title">{t('TEST_CHANNEL')}</span>
         <span className="channel-name">
-          {model.channelInfos?.find((x) => !x.isLive)?.name}
+          {model.channelInfos?.find((x) => !x.isLive)?.name || '-'}
         </span>
       </Space>
     </Card>
