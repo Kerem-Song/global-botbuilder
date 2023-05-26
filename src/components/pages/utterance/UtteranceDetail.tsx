@@ -244,7 +244,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
           </div>
         </div>
         <UtteranceIntentInfo
-          intentRef={intentNameRef}
+          intentNameRef={intentNameRef}
           formMethods={formMethods}
           setIsActive={setIsActive}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}

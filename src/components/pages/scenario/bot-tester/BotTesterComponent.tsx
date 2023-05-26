@@ -143,7 +143,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
                   <div
                     key={i}
                     className="testerDataContainer"
-                    data-container={item.type ? true : false}
+                    data-container={!item.type}
                   >
                     {item.type && (
                       <TesterMessagesItem

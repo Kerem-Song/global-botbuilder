@@ -9,33 +9,30 @@ import {
   MutableRefObject,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 import Select from 'react-select';
 
 export interface IUtteranceGroupInfoProps {
-  intentRef: MutableRefObject<HTMLInputElement | null>;
+  intentNameRef: MutableRefObject<HTMLInputElement | null>;
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
 }
 
 export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
-  intentRef,
+  intentNameRef,
   formMethods,
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
   const { t } = useI18n('utternaceDetailPage');
-
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
   const language = i18n.language;
-  const intentNameRef = useRef<HTMLInputElement | null>(null);
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const {
     control,
@@ -76,10 +73,13 @@ export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
     }
   }, [nameField.value]);
 
-  const handleIntentRef = (e: HTMLInputElement | null) => {
-    nameField.ref(e);
-    intentNameRef.current = e;
+  const handleIntentName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    nameField.onChange(e.target.value);
+    setIsActive(true);
   };
+
+  console.log(intentNameRef.current);
+
   return (
     <Card
       radius="normal"
@@ -96,12 +96,9 @@ export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
           <Col flex="auto">
             <FormItem error={errors.name}>
               <Input
+                ref={intentNameRef}
                 value={nameField.value}
-                ref={handleIntentRef}
-                onChange={(e) => {
-                  nameField.onChange(e);
-                  setIsActive(true);
-                }}
+                onChange={handleIntentName}
                 placeholder={t('INPUT_INTENT_NAME')}
                 maxLength={20}
                 showCount
