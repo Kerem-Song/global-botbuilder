@@ -5,9 +5,11 @@ import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, lazy, Suspense } from 'react';
 import MultiClamp from 'react-multi-clamp';
-
+const ImageWithToken = lazy(() =>
+  import('./ImageWithToken').then(({ ImageWithToken }) => ({ default: ImageWithToken })),
+);
 export interface ICommerceCardViewProps {
   nodeId: string;
   index?: number;
@@ -44,7 +46,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       {view.profileIconUrl ? (
         <>
           <div className="profile">
-            {view.profileIconUrl ? (
+            {/* {view.profileIconUrl ? (
               <img
                 src={`${
                   import.meta.env.VITE_API_BASE_URL
@@ -55,7 +57,10 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
               />
             ) : (
               <div className="skeleton"></div>
-            )}
+            )} */}
+            <Suspense fallback={<div>loading..</div>}>
+              <ImageWithToken view={view} />
+            </Suspense>
             {view.profileName ? (
               <span>{view.profileName}</span>
             ) : (

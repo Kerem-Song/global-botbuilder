@@ -5,8 +5,10 @@ import { useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
-
+import { FC, lazy, Suspense, useState } from 'react';
+const ImageWithToken = lazy(() =>
+  import('./ImageWithToken').then(({ ImageWithToken }) => ({ default: ImageWithToken })),
+);
 export interface IListCardViewProps {
   nodeId: string;
   index?: number;
@@ -43,6 +45,9 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
           ) : (
             <div className="skeleton"></div>
           )}
+          {/* <Suspense fallback={<div>loading..</div>}>
+            <ImageWithToken view={view} />
+          </Suspense> */}
         </div>
       ) : null}
 
