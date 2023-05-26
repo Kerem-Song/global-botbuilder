@@ -230,7 +230,13 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             >
               {t('DELETE_INTENT')}
             </Button>
-            <Button large type="primary" htmlType="submit" disabled={!isActive}>
+            <Button
+              large
+              type="primary"
+              htmlType="submit"
+              disabled={!isActive}
+              onClick={() => intentNameRef.current?.focus()}
+            >
               {t('SAVE')}
             </Button>
             {isOpenUtteranceDetailPopup && (
