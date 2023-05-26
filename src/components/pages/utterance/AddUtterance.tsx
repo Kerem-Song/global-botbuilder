@@ -27,7 +27,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
 
   const { getValues } = formMethods;
 
-  const handleAddUtternace = () => {
+  const handleAddUtternace = async () => {
     if (!utteranceWord || !utteranceWord.trim()) return;
 
     const errorModal = (items: string) => {
@@ -54,29 +54,25 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
       return;
     }
 
-    checkUtteranceDuplicationAsync(
-      {
-        text: utteranceWord,
-      },
-      {
-        onSuccess: (result) => {
-          console.log('result', result);
-          if (result.length > 0) {
-            errorModal(result[0].intentName);
-            if (utteranceRef.current) {
-              utteranceRef.current.select();
-            }
-          } else {
-            prepend({ text: utteranceWord });
-            setIsActive(true);
-            setUtteranceWord('');
-            if (utteranceRef.current) {
-              utteranceRef.current.focus();
-            }
-          }
-        },
-      },
-    );
+    const checkUtteranceDuplication = await checkUtteranceDuplicationAsync({
+      text: utteranceWord,
+    });
+
+    if (checkUtteranceDuplication) {
+      if (checkUtteranceDuplication.length > 0) {
+        errorModal(checkUtteranceDuplication[0].intentName);
+        if (utteranceRef.current) {
+          utteranceRef.current.select();
+        }
+      } else {
+        prepend({ text: utteranceWord });
+        setIsActive(true);
+        setUtteranceWord('');
+        if (utteranceRef.current) {
+          utteranceRef.current.focus();
+        }
+      }
+    }
   };
   return (
     <div className="utterance add">
