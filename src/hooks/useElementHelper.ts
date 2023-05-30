@@ -9,10 +9,11 @@ export const useElementHelper = (
   const start = document.querySelector<HTMLDivElement>(`#${startId}`);
 
   const cr = canvas?.getBoundingClientRect() || new DOMRect();
-  const sr = start?.getBoundingClientRect() || new DOMRect();
-  const er = end?.getBoundingClientRect() || new DOMRect();
   const snr = startNode?.getBoundingClientRect() || new DOMRect();
+  const sr = start?.getBoundingClientRect() || snr;
+  const er = end?.getBoundingClientRect() || new DOMRect();
 
+  const disableAlpha = '0.2';
   const lineOffset = 15;
   const minLine = 50;
   const arrowSize = isNextNode ? { width: 6, height: 12 } : { width: 12, height: 6 };
@@ -71,8 +72,12 @@ export const useElementHelper = (
 
   const setArrowStyle = (element: SVGPathElement | null) => {
     if (element) {
-      if (!start || !end) {
+      if (!end) {
         element.style.opacity = '0';
+      } else if (!start) {
+        element.style.opacity = disableAlpha;
+        const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
+        element.style.transform = translate;
       } else {
         element.style.opacity = '1';
         const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
@@ -86,24 +91,38 @@ export const useElementHelper = (
     mouseElement: SVGPathElement | null,
     deleteElement: SVGGeometryElement | null,
   ) => {
-    if (!start || !end) {
-      if (element) {
+    if (element) {
+      if (!end) {
         element.setAttribute('d', '');
-        element.style.opacity = '0';
       }
+      element.style.opacity = '0';
+    }
 
-      if (mouseElement) {
+    if (mouseElement) {
+      if (!end) {
         mouseElement.setAttribute('d', '');
-        mouseElement.style.opacity = '0';
       }
+      mouseElement.style.opacity = '0';
+    }
 
+    if (!end) {
       return;
     }
+
+    if (!start) {
+      console.log(snr);
+    }
+
     const startPoint = isNextNode
-      ? {
-          x: snr.right - offset.x + sr.width / 2,
-          y: sr.bottom - offset.y + 8,
-        }
+      ? start
+        ? {
+            x: snr.right - offset.x + sr.width / 2,
+            y: sr.bottom - offset.y + 8,
+          }
+        : {
+            x: snr.right - offset.x,
+            y: snr.top + Math.round(snr.height / 2) - offset.y,
+          }
       : {
           x: sr.x - offset.x + shw,
           y: sr.bottom - offset.y + 8,
@@ -337,7 +356,12 @@ export const useElementHelper = (
     }
 
     if (element) {
-      element.style.opacity = '1';
+      if (start) {
+        element.style.opacity = '1';
+      } else {
+        element.style.opacity = disableAlpha;
+      }
+
       if (isBezierMode && bezier !== '') {
         element.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
       } else {
@@ -349,7 +373,11 @@ export const useElementHelper = (
     }
 
     if (mouseElement) {
-      mouseElement.style.opacity = '1';
+      if (start) {
+        mouseElement.style.opacity = '1';
+      } else {
+        mouseElement.style.opacity = disableAlpha;
+      }
       if (isBezierMode && bezier !== '') {
         mouseElement.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
       } else {
