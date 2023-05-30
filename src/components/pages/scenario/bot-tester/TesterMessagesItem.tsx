@@ -1,6 +1,7 @@
 import { Divider } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 import { useState } from 'react';
+import MultiClamp from 'react-multi-clamp';
 
 import { CardCarouselType } from './CardCarouselType';
 import { ListCardCarouselType } from './ListCardCarouselType';
@@ -181,7 +182,15 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             onClick={() => onClick(item.debugMeta)}
           >
             <div className="listCard">
-              {item.header && <div className="header">{item.header}</div>}
+              {item.header && (
+                <div className="header">
+                  <span>
+                    <MultiClamp clamp={1} ellipsis={'...'}>
+                      {item.header}
+                    </MultiClamp>
+                  </span>
+                </div>
+              )}
               {item.image?.imageUrl && (
                 <img
                   className={
@@ -191,7 +200,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   }
                   src={item.image?.imageUrl}
                   alt="img"
-                ></img>
+                />
               )}
               {item.items.map((x, i) => {
                 return (

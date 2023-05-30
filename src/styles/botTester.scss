@@ -116,15 +116,14 @@
 
         .productCardWrap {
           width: rem(264);
-          max-height: rem(480);
           margin-right: rem(10);
-
           border-radius: rem(16);
           border: 1px solid transparent;
           &:hover {
             border: 1px solid $primary500;
           }
           .productCard {
+            height: rem(480);
             border-radius: rem(16);
             background-color: $grayWhite;
 
