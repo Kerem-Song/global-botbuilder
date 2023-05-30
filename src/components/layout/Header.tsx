@@ -122,6 +122,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
             <button className="languageBtn">{langSelect && langSelect.select}</button>
           </Popper>
           <Popper
+            className="userInfoMenus"
             placement="bottom-end"
             offset={[0, 5]}
             popperItems={userInfoMenus}

@@ -102,6 +102,7 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
+        setIsVisible && setIsVisible(false);
       },
     });
   };
@@ -136,6 +137,7 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
+        setIsVisible && setIsVisible(false);
       },
     });
   };

@@ -26,7 +26,8 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
   return (
     <tbody>
       {isFetching && <DeploySkeleton />}
-      {data &&
+      {!isFetching &&
+        data &&
         data.result.items.length > 0 &&
         data.result.items.map((x, i) => {
           return (

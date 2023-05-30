@@ -15,7 +15,7 @@ import * as yup from 'yup';
 import { lunaToast } from '../../../../src/modules/lunaToast';
 import { AddUtterance } from './AddUtterance';
 import { UtteranceDetailItems } from './UtteranceDetailItems';
-import { UtteranceGroupInfo } from './UtteranceGroupInfo';
+import { UtteranceIntentInfo } from './UtteranceIntentInfo';
 
 export interface IUtteranceDetailProps {
   intentId?: string;
@@ -141,24 +141,6 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
     const res = await intentAsync(saveIntent);
 
-    const handleIntentDuplication = async () => {
-      const checkIntentDuplication = await checkIntentDuplicationAsync({
-        name: getValues('name'),
-        intentId: getValues('intentId'),
-      });
-
-      if (checkIntentDuplication.result) {
-        await error({
-          title: t('DUPLICATE_INTENT'),
-          description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
-        });
-
-        if (intentNameRef.current) {
-          intentNameRef.current.select();
-        }
-      }
-    };
-
     if (res && res.isSuccess) {
       lunaToast.success();
 
@@ -168,7 +150,20 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         setNavigateUrl(`/${botId}/utterance`);
       }
     } else if (res?.exception.errorCode === 7612) {
-      await handleIntentDuplication();
+      const checkIntentDuplication = await checkIntentDuplicationAsync({
+        name: getValues('name'),
+        intentId: getValues('intentId'),
+      });
+
+      if (checkIntentDuplication.result) {
+        const res = await error({
+          title: t('DUPLICATE_INTENT'),
+          description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
+        });
+        if (res && intentNameRef.current) {
+          intentNameRef.current.select();
+        }
+      }
     }
   };
 
@@ -228,7 +223,13 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             >
               {t('DELETE_INTENT')}
             </Button>
-            <Button large type="primary" htmlType="submit" disabled={!isActive}>
+            <Button
+              large
+              type="primary"
+              htmlType="submit"
+              disabled={!isActive}
+              onClick={() => intentNameRef.current?.focus()}
+            >
               {t('SAVE')}
             </Button>
             {isOpenUtteranceDetailPopup && (
@@ -241,7 +242,8 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             )}
           </div>
         </div>
-        <UtteranceGroupInfo
+        <UtteranceIntentInfo
+          intentNameRef={intentNameRef}
           formMethods={formMethods}
           setIsActive={setIsActive}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}

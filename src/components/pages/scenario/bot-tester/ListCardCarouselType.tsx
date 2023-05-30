@@ -1,6 +1,7 @@
 import { Divider } from '@components';
 import { IListTypeCard } from '@models';
 import { FC } from 'react';
+import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
@@ -11,7 +12,15 @@ export interface IListCardCarouselTypeProps {
 export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) => {
   return (
     <div className="listCard">
-      {item.header && <div className="header">{item.header}</div>}
+      {item.header && (
+        <div className="header">
+          <span>
+            <MultiClamp clamp={1} ellipsis={'...'}>
+              {item.header}
+            </MultiClamp>
+          </span>
+        </div>
+      )}
       {item.image?.imageUrl && (
         <img
           className={

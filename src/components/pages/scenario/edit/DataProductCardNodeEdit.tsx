@@ -233,7 +233,7 @@ export const DataProductCardNodeEdit = () => {
                       />
                     </Col>
                     <Col className="productSelectorWrapper" span={8}>
-                      <Input {...register(`view.currencyUnit`)} />
+                      <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
                     </Col>
                   </Row>
                 </FormItem>

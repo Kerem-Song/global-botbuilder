@@ -1,8 +1,14 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
+import { lazy, Suspense } from 'react';
 
-import { SortableListCardItem } from './SortableListCardItem';
+// import { SortableListCardItem } from './SortableListCardItem';
+const SortableListCardItem = lazy(() =>
+  import('./SortableListCardItem').then(({ SortableListCardItem }) => ({
+    default: SortableListCardItem,
+  })),
+);
 
 export const SortableListItem = ({ item }: { item: IListCardItem }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({

@@ -1,4 +1,4 @@
-import { Input } from '@components';
+import { Input, InputTextarea } from '@components';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import { useFormContext } from 'react-hook-form';
@@ -31,7 +31,7 @@ export const ImageInput = ({
     listItemIndex,
   });
 
-  const handleImgOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleImgOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     if (!e.target.value) {
       setValue(imgPath, '');
       setValue(imageUrl, '');
@@ -49,7 +49,7 @@ export const ImageInput = ({
   return (
     <>
       <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-      <Input
+      <InputTextarea
         {...register(registerName)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}

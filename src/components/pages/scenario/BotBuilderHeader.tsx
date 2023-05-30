@@ -35,7 +35,7 @@ export const BotBuilderHeader = () => {
     {
       className: 'icBtnTemple',
       value: NODE_TYPES.BASIC_CARD_NODE,
-      nodeName: t('CAPTION_BASICCARDCAROUSELNODE'),
+      nodeName: t('CAPTION_BASICCARDNODE'),
     },
     {
       className: 'icList',

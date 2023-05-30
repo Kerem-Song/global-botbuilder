@@ -3,29 +3,36 @@ import { useI18n } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IReactSelect, IUtteranceModel } from '@models';
 import { getReactSelectStyle } from '@modules';
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 import Select from 'react-select';
 
 export interface IUtteranceGroupInfoProps {
+  intentNameRef: MutableRefObject<HTMLInputElement | null>;
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
 }
 
-export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
+export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
+  intentNameRef,
   formMethods,
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
   const { t } = useI18n('utternaceDetailPage');
-
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 
   const language = i18n.language;
-  const intentNameRef = useRef<HTMLInputElement | null>(null);
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const {
     control,
@@ -66,6 +73,13 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
     }
   }, [nameField.value]);
 
+  const handleIntentName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    nameField.onChange(e.target.value);
+    setIsActive(true);
+  };
+
+  console.log(intentNameRef.current);
+
   return (
     <Card
       radius="normal"
@@ -82,15 +96,9 @@ export const UtteranceGroupInfo: FC<IUtteranceGroupInfoProps> = ({
           <Col flex="auto">
             <FormItem error={errors.name}>
               <Input
+                ref={intentNameRef}
                 value={nameField.value}
-                ref={(e) => {
-                  nameField.ref(e);
-                  intentNameRef.current = e;
-                }}
-                onChange={(e) => {
-                  nameField.onChange(e);
-                  setIsActive(true);
-                }}
+                onChange={handleIntentName}
                 placeholder={t('INPUT_INTENT_NAME')}
                 maxLength={20}
                 showCount

@@ -33,7 +33,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     setSearchData({
       sort: 1,
       scenarios: 'all',
-      searchWord: '',
+      searchWord: undefined,
     });
     setSort('1');
     setScenario('all');
@@ -44,7 +44,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     const searchData = {
       sort: Number(sort),
       scenarios: scenario,
-      searchWord: keyword,
+      searchWord: keyword || undefined,
     };
     setSearchData(searchData);
     invalidateIntentQuery(searchData);

@@ -236,6 +236,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                   {...register(
                                     `view.childrenViews.${index}.currencyUnit`,
                                   )}
+                                  placeholder="ex.USD"
                                 />
                               </Col>
                             </Row>

@@ -181,6 +181,7 @@ export const BotAside = () => {
           </div>
         </NavLink>
         <Popper
+          className="lnbHeaderBotNamePopper"
           placement="right-start"
           offset={[10, -10]}
           showBullet

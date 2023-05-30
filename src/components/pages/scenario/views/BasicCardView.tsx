@@ -4,9 +4,12 @@ import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, lazy, Suspense } from 'react';
+import ReactLoadingSkeleton from 'react-loading-skeleton';
 import MultiClamp from 'react-multi-clamp';
-
+const ImageWithToken = lazy(() =>
+  import('./ImageWithToken').then(({ ImageWithToken }) => ({ default: ImageWithToken })),
+);
 export interface IBasicCardViewProps {
   nodeId: string;
   index?: number;
@@ -36,7 +39,18 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
             thumbnailClass,
           )}
         >
-          {view.imageCtrl?.imageUrl ? (
+          <Suspense
+            fallback={
+              <ReactLoadingSkeleton
+                width={192}
+                height={96}
+                baseColor="rgba(0,0,0,0.06)"
+              />
+            }
+          >
+            <ImageWithToken view={view} />
+          </Suspense>
+          {/* {view.imageCtrl?.imageUrl ? (
             <img
               src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
                 view.imageCtrl.imageUrl
@@ -45,7 +59,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
             />
           ) : (
             <div className="skeleton"></div>
-          )}
+          )} */}
         </div>
       ) : (
         <div className={classNames(thumbnailClass, { textCard: true })}></div>
