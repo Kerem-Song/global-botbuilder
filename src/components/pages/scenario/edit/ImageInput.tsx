@@ -31,7 +31,7 @@ export const ImageInput = ({
     listItemIndex,
   });
 
-  const handleImgOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleImgOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     if (!e.target.value) {
       setValue(imgPath, '');
       setValue(imageUrl, '');
@@ -47,16 +47,16 @@ export const ImageInput = ({
   };
 
   return (
-    <>
+    <div className="imageInput">
       <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-      <Input
+      <InputTextarea
         {...register(registerName)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
         onBlur={handleImgOnBlur}
-        // maxRows={2.125}
-        // minRows={2.125}
+        maxRows={2.125}
+        minRows={2.125}
       />
-    </>
+    </div>
   );
 };

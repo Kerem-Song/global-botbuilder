@@ -33,6 +33,13 @@
       }
     }
 
+    .imageInput {
+      padding-top: rem(8);
+      
+      & textarea {
+        margin-top: rem(8);
+      }
+    }
     
     .retailPrice {
       input {

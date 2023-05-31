@@ -121,24 +121,26 @@ export const ProductCardCarouselNodeEdit = () => {
                         <FormItem
                           error={errors.view?.childrenViews?.[index]?.profileIconUrl}
                         >
-                          <Row align="center" gap={12} style={{ margin: 0 }}>
-                            <Col span={5} className="itemProfileImg">
-                              <ImageFileUploader
-                                imageCtrl={
-                                  IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
-                                }
-                                index={index}
-                                isValid={
-                                  errors.view?.childrenViews?.[index]?.profileIconUrl
-                                    ? false
-                                    : true
-                                }
-                              />
-                            </Col>
-                            <Col span={19}>
-                              <p>{t(`RECOMMENDED_SIZE`)}</p>
-                              <p>640 x 640</p>
-                            </Col>
+                          <>
+                            <Row align="center" gap={12} style={{ margin: 0 }}>
+                              <Col span={5} className="itemProfileImg">
+                                <ImageFileUploader
+                                  imageCtrl={
+                                    IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
+                                  }
+                                  index={index}
+                                  isValid={
+                                    errors.view?.childrenViews?.[index]?.profileIconUrl
+                                      ? false
+                                      : true
+                                  }
+                                />
+                              </Col>
+                              <Col span={19}>
+                                <p>{t(`RECOMMENDED_SIZE`)}</p>
+                                <p>640 x 640</p>
+                              </Col>
+                            </Row>
                             <ImageInput
                               imageCtrl={
                                 IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL
@@ -146,7 +148,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               index={index}
                               registerName={`view.childrenViews.${index}.profileIconUrl`}
                             />
-                          </Row>
+                          </>
                         </FormItem>
                       </Space>
                     </div>

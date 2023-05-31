@@ -170,24 +170,26 @@ export const DataListCardNodeEdit = () => {
             <div className="m-b-8">
               <Space direction="vertical">
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
-                  <Row align="center" gap={12} style={{ margin: 0 }}>
-                    <Col span={5} className="itemProfileImg">
-                      <ImageFileUploader
-                        imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
-                        listItemIndex={i}
-                        isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
-                      />
-                    </Col>
-                    <Col span={19}>
-                      <p>{t(`RECOMMENDED_SIZE`)}</p>
-                      <p>400 x 400 </p>
-                    </Col>
+                  <>
+                    <Row align="center" gap={12} style={{ margin: 0 }}>
+                      <Col span={5} className="itemProfileImg">
+                        <ImageFileUploader
+                          imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
+                          listItemIndex={i}
+                          isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
+                        />
+                      </Col>
+                      <Col span={19}>
+                        <p>{t(`RECOMMENDED_SIZE`)}</p>
+                        <p>400 x 400 </p>
+                      </Col>
+                    </Row>
                     <ImageInput
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                       listItemIndex={i}
                       registerName={`view.items.${i}.imageUrl`}
                     />
-                  </Row>
+                  </>
                 </FormItem>
               </Space>
             </div>
