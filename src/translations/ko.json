@@ -395,7 +395,7 @@
     "CONNECT_CHANNEL": "채널 연결",
     "CONFIRM_CONNECT_CHANNEL_MESSAGE": "채널과 연결할까요?",
     "CONNECT_CHANNEL_SUCCESS": "채널 연결 완료",
-    "CONNECT_CHANNEL_SUCCESS_MESSAGE": "채널과 연결되었습니다.\n봇 배포를 편집한 봇을 작동시키려면 '배포' 메뉴에서 진행해주세요.",
+    "CONNECT_CHANNEL_SUCCESS_MESSAGE": "채널과 연결되었습니다.\n편집한 봇을 작동시키려면 '배포' 메뉴에서 채널 배포를 해주세요.",
     "DISCONNECT_CHANNEL": "연결 해제",
     "DISCONNECT_CHANNEL_MESSAGE": "채널 연결을 해제하면 {{channel}} 채널에서 더 이상 챗봇이 동작하지 않습니다.\n채널 연결을 해제하시겠습니까?",
     "DISCONNECT_CHANNEL_SUCCESS_MESSAGE": "채널 연결이 해제되었습니다.",
@@ -414,7 +414,11 @@
     "VALIDATION_UPLOAD_FILE_SIZE": "파일 용량이 너무 큽니다.\n(최대 업로드 가능 용량 : 300KB)",
     "VALIDATION_UPLOAD_FILE_FORMAT_TITLE": "파일 업로드 불가",
     "VALIDATION_UPLOAD_FILE_FORMAT": "이미지 파일은 JPEG, PNG만 업로드할 수 있습니다.",
-    "TOOLTIP_SETTING_BOT_PROFILE_INFO": "설정에서 챗봇 프로필 이미지를 변경하면,\n@sys.bot-icon에 즉시 반영됩니다."
+    "TOOLTIP_SETTING_BOT_PROFILE_INFO": "설정에서 챗봇 프로필 이미지를 변경하면,\n@sys.bot-icon에 즉시 반영됩니다.",
+    "VALIDATION_BOT_NAME": "중복된 이름입니다.",
+    "DISABLED_CONNECT_TEST_CHANNEL": "테스트 채널 연결 불가",
+    "DISABLED_CONNECT_TEST_CHANNEL_INFO": "파트너스 센터에 테스트 채널이 연결되지 않았습니다.",
+    "SUCCESS_ACTIVATED_BOT": "봇이 활성화 되었습니다."
   },
   "deployment": {
     "TITLE": "배포",

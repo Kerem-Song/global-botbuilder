@@ -18,6 +18,7 @@ export const DefaultSettingBot = () => {
   const { botUpdateNameAsync } = useBotClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const botNameRef = useRef<HTMLInputElement | null>(null);
+  const [botNameInputError, setBotNameInputError] = useState<string>('');
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
 
   usePrompt(isSaveBtnActive);
@@ -60,7 +61,7 @@ export const DefaultSettingBot = () => {
         botName: botInfo.botName,
       });
     }
-  }, [botInfo]);
+  }, [botInfo?.botName]);
 
   useEffect(() => {
     if (field.value === '' && botNameRef.current) {
@@ -71,6 +72,7 @@ export const DefaultSettingBot = () => {
   const handleBotName = (e: React.ChangeEvent<HTMLInputElement>) => {
     field.onChange(e);
     setIsSaveBtnActive(true);
+    setBotNameInputError('');
   };
 
   const handleSaveBotName = async () => {
@@ -84,6 +86,12 @@ export const DefaultSettingBot = () => {
     if (res?.data.isSuccess) {
       lunaToast.success(tc('SAVE_MESSAGE'));
       setIsSaveBtnActive(false);
+      return;
+    }
+
+    if (res?.data.exception.errorCode === 7654) {
+      setBotNameInputError(t('VALIDATION_BOT_NAME'));
+      return;
     }
   };
 
@@ -111,20 +119,21 @@ export const DefaultSettingBot = () => {
               <span className="required"> *</span>
             </Col>
             <Col flex="auto">
-              <FormItem error={errors.botName}>
-                <Input
-                  size="normal"
-                  value={field.value || ''}
-                  ref={(e) => {
-                    field.ref(e);
-                    botNameRef.current = e;
-                  }}
-                  onChange={handleBotName}
-                  placeholder={t('BOT_NAME_PLACEHOLDER')}
-                  maxLength={20}
-                  showCount
-                />
-              </FormItem>
+              <Input
+                size="normal"
+                value={field.value || ''}
+                ref={(e) => {
+                  field.ref(e);
+                  botNameRef.current = e;
+                }}
+                onChange={handleBotName}
+                placeholder={t('BOT_NAME_PLACEHOLDER')}
+                maxLength={20}
+                showCount
+                isError={botNameInputError || errors.botName?.message ? true : false}
+              />
+              <span className="error-message">{botNameInputError}</span>
+              <span className="error-message">{errors.botName?.message}</span>
             </Col>
             <Col>
               <Button

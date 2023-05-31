@@ -125,7 +125,10 @@ export const useBotClient = () => {
   });
 
   const botUpdateNameMutate = useMutation(async (args: ISaveBotReq) => {
-    const res = await http.post('/bot/updatebotname', args);
+    const res = await http.post<ISaveBotReq, AxiosResponse<IResponseUpdateBotIcon>>(
+      '/bot/updatebotname',
+      args,
+    );
     if (res) {
       queryClient.invalidateQueries(['bot-info', args.botId]);
       return res;
@@ -142,7 +145,10 @@ export const useBotClient = () => {
   });
 
   const botChannelActivateMutate = useMutation(async (args: IUpdateChannelActivate) => {
-    const res = await http.post('/bot/updatechannelactivate', args);
+    const res = await http.post<
+      IUpdateChannelActivate,
+      AxiosResponse<IResponseUpdateBotIcon>
+    >('/bot/updatechannelactivate', args);
     if (res) {
       queryClient.invalidateQueries(['bot-info', args.botId]);
       return res;
