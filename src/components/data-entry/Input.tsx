@@ -121,8 +121,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     <input
       className={inputClassName}
       {...inputProps}
-      onKeyUp={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
-      onKeyDown={onKeydown}
+      onKeyDown={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
+      // onKeyDown={onKeydown}
       ref={(current) => {
         if (ref) {
           if (typeof ref === 'function') {

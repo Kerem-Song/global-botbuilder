@@ -62,7 +62,7 @@
     gap: rem(10);
     height: calc(100% - rem(98));
     overflow-y: scroll;
-    background-color: #99b0d7;
+    background-color: $tester-bg;
     padding: rem(10) 0 rem(10) rem(8);
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -99,10 +99,10 @@
           height: -webkit-fit-content;
           padding: rem(8) rem(14);
           background-color: $grayWhite;
-          border: 1px solid $grayWhite;
           border-radius: rem(10);
           word-wrap: break-word;
           white-space: pre-wrap;
+          border: 1px solid $tester-bg;
           &:hover {
             border: 1px solid $primary500;
           }
@@ -114,147 +114,147 @@
         position: relative;
         overflow: hidden;
 
-        .productCardWrap {
+        .productCard {
           width: rem(264);
           margin-right: rem(10);
           border-radius: rem(16);
           border: 1px solid transparent;
+          max-height: rem(480);
+          border-radius: rem(16);
+          background-color: $grayWhite;
+          border: 1px solid $tester-bg;
+
           &:hover {
             border: 1px solid $primary500;
           }
-          .productCard {
-            height: rem(480);
-            border-radius: rem(16);
-            background-color: $grayWhite;
 
-            .productCardImg_rectangle {
-              width: 100%;
-              height: rem(132);
-              object-fit: contain;
-              border-radius: rem(16) rem(16) 0 0;
-            }
+          .productCardImg_rectangle {
+            width: 100%;
+            height: rem(131);
+            object-fit: contain;
+            border-radius: rem(16) rem(16) 0 0;
+          }
 
-            .productCardImg_square {
-              width: 100%;
-              height: rem(264);
-              object-fit: contain;
-              border-radius: rem(16) rem(16) 0 0;
-            }
+          .productCardImg_square {
+            width: 100%;
+            height: rem(264);
+            object-fit: contain;
+            border-radius: rem(16) rem(16) 0 0;
+          }
 
-            .productCardContents {
-              padding: rem(8) rem(12) rem(1) rem(12);
+          .productCardContents {
+            padding: rem(8) rem(12) rem(1) rem(12);
 
-              .productCardTitle {
+            .productCardTitle {
+              display: flex;
+              align-content: center;
+              padding-bottom: rem(8);
+              border-bottom: 1px solid #d9d9d9;
+
+              .title {
                 display: flex;
-                align-content: center;
+                align-items: center;
+
+                .icon {
+                  width: rem(24);
+                  height: rem(24);
+                  border-radius: rem(6);
+                  margin-right: rem(8);
+                }
+                .name {
+                  width: rem(200);
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-size: rem(14);
+                  line-height: rem(17);
+                }
+              }
+            }
+
+            .productCardPrices {
+              border-bottom: 1px solid #d9d9d9;
+              margin-top: rem(8);
+
+              .price {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+
+                .currentPrice {
+                  font-size: rem(18);
+                  margin-bottom: rem(8);
+                }
+
+                .prevPrice {
+                  height: rem(19);
+                  font-size: rem(16);
+                  color: $gray300;
+                  text-decoration-line: line-through;
+                }
+              }
+              .discount {
+                margin-bottom: rem(5);
+
+                .discountAmount {
+                  font-size: rem(14);
+                  line-height: rem(17);
+                  font-weight: 400;
+                  color: #ff0000;
+                }
+              }
+            }
+
+            .productContents {
+              padding-top: rem(8);
+
+              .productDesc {
+                display: flex;
+                align-items: center;
                 padding-bottom: rem(8);
-                border-bottom: 1px solid #d9d9d9;
 
-                .title {
-                  display: flex;
-                  align-items: center;
+                .desc {
+                  width: 100%;
+                  height: fit-content;
+                  font-size: rem(14);
+                  color: #636364;
+                }
+              }
+              .rectangleImageBtn {
+                margin-bottom: rem(10);
 
-                  .icon {
-                    width: rem(24);
-                    height: rem(24);
-                    border-radius: rem(6);
-                    margin-right: rem(8);
-                  }
-                  .name {
-                    width: rem(200);
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    font-size: rem(14);
-                    line-height: rem(17);
+                button {
+                  width: rem(240);
+                  height: rem(35);
+                  margin-top: rem(4);
+                  border: none;
+                  border-radius: rem(8);
+                  cursor: pointer;
+                  &:hover {
+                    background-color: #75767a;
                   }
                 }
               }
+              .squareImageBtn {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: rem(10);
 
-              .productCardPrices {
-                border-bottom: 1px solid #d9d9d9;
-                margin-top: rem(8);
-
-                .price {
+                button {
                   display: flex;
-                  justify-content: space-between;
-                  font-weight: 500;
-
-                  .currentPrice {
-                    font-size: rem(18);
-                    margin-bottom: rem(8);
-                  }
-
-                  .prevPrice {
-                    height: rem(19);
-                    font-size: rem(16);
-                    color: $gray300;
-                    text-decoration-line: line-through;
-                  }
-                }
-                .discount {
-                  margin-bottom: rem(5);
-
-                  .discountAmount {
-                    font-size: rem(14);
-                    line-height: rem(17);
-                    font-weight: 400;
-                    color: #ff0000;
-                  }
-                }
-              }
-
-              .productContents {
-                padding-top: rem(8);
-
-                .productDesc {
-                  display: flex;
+                  justify-content: center;
                   align-items: center;
-                  padding-bottom: rem(8);
-
-                  .desc {
-                    width: 100%;
-                    height: fit-content;
-                    font-size: rem(14);
-                    color: #636364;
-                  }
-                }
-                .rectangleImageBtn {
-                  margin-bottom: rem(10);
-
-                  button {
-                    width: rem(240);
-                    height: rem(35);
-                    margin-top: rem(4);
-                    border: none;
-                    border-radius: rem(8);
-                    cursor: pointer;
-                    &:hover {
-                      background-color: #75767a;
-                    }
-                  }
-                }
-                .squareImageBtn {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: rem(10);
-
-                  button {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: rem(240);
-                    height: rem(37);
-                    margin-right: rem(3);
-                    white-space: nowrap;
-                    font-size: rem(14);
-                    border: none;
-                    background-color: #dbdee5;
-                    border-radius: rem(8);
-                    &:hover {
-                      background-color: #75767a;
-                    }
+                  width: rem(240);
+                  height: rem(37);
+                  margin-right: rem(3);
+                  white-space: nowrap;
+                  font-size: rem(14);
+                  border: none;
+                  background-color: #dbdee5;
+                  border-radius: rem(8);
+                  &:hover {
+                    background-color: #75767a;
                   }
                 }
               }
@@ -294,9 +294,10 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+          border: 1px solid $tester-bg;
 
           &:hover {
-            // border: 1px solid $primary500;
+            border: 1px solid $primary500;
           }
 
           .cardCarouselImg_rectangle {
@@ -347,6 +348,7 @@
         background-color: $grayWhite;
         border-radius: rem(16);
         padding-bottom: rem(12);
+        border: 1px solid $tester-bg;
 
         .cardImg_rectangle {
           width: rem(264);
@@ -396,7 +398,7 @@
           }
         }
         &:hover {
-          // border: 1px solid $primary500;
+          border: 1px solid $primary500;
         }
       }
 
@@ -411,6 +413,7 @@
           background-color: $grayWhite;
           border-radius: rem(16);
           padding-bottom: rem(10);
+          border: 1px solid $tester-bg;
           .header {
             width: 100%;
             height: rem(46);
@@ -500,7 +503,7 @@
             }
           }
           &:hover {
-            // border: 1px solid $primary500;
+            border: 1px solid $primary500;
           }
         }
       }

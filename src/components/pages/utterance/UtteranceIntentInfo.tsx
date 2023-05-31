@@ -78,8 +78,6 @@ export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
     setIsActive(true);
   };
 
-  console.log(intentNameRef.current);
-
   return (
     <Card
       radius="normal"

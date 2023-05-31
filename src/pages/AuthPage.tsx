@@ -1,3 +1,4 @@
+import { SystemModalContainer } from '@components/modal/SystemModalContainer';
 import { useAuthClient } from '@hooks/client/authClient';
 import { useQueryParams } from '@hooks/useQueryParams';
 import { setToken } from '@store/authSlice';
@@ -6,6 +7,7 @@ import { setUserInfo } from '@store/userInfoSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router';
+import { ToastContainer } from 'react-toastify';
 
 export const AuthPage = () => {
   const dispath = useDispatch();
@@ -38,5 +40,10 @@ export const AuthPage = () => {
     handleAuth();
   }, [brandId, code]);
 
-  return <></>;
+  return (
+    <>
+      <ToastContainer />
+      <SystemModalContainer />
+    </>
+  );
 };

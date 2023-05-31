@@ -101,7 +101,8 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
           {isBotPage && (
             <Button
               type="primary"
-              className="testerBtn"
+              //className="testerBtn"
+              small
               onClick={() => handleIsOpen(true)}
             >
               {t('TITLE')}
