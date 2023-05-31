@@ -1,6 +1,7 @@
 import { Button, Col, Input, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -34,6 +35,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
+
   const {
     control,
     formState: { errors },
@@ -68,11 +70,12 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     setIsActive(true);
     setEditInputIndex(-1);
     await trigger(`entries.${index}.representativeEntry`);
-  };
 
-  useEffect(() => {
-    editInputRef.current?.focus();
-  }, []);
+    if (field.value === synonymField.value?.[0]) {
+      lunaToast.error(t('DUPLICATE_MESSAGE'));
+      setEditInputIndex(0);
+    }
+  };
 
   if (
     searchKeyword === '' ||
