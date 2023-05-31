@@ -44,8 +44,8 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
 
     if (
       getValues('items')
-        .map((x) => x.text)
-        ?.includes(utteranceWord)
+        .map((x) => x.text?.toLowerCase())
+        ?.includes(utteranceWord.toLowerCase())
     ) {
       errorModal(getValues('name'));
       if (utteranceRef.current) {

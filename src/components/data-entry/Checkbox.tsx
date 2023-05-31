@@ -9,10 +9,10 @@ export interface CheckboxProps extends IDataEntryProp, IHasClassNameNStyle {
   disabled?: boolean;
 }
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((args) => {
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((args, ref) => {
   return (
     <div className="checkboxContainer">
-      <input {...args} className="checkbox" type="checkbox" />
+      <input {...args} className="checkbox" type="checkbox" ref={ref} />
     </div>
   );
 });
