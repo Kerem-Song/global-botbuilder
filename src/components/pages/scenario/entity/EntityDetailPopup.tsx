@@ -30,7 +30,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   setEntryId,
 }) => {
   const { t, tc } = usePage();
-  const { entryGroupAsync, getEntryDetailQuery } = useEntityClient();
+  const { entryGroupAsync, getEntryDetailQuery, removeEntityQueries } = useEntityClient();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const entryDetails = getEntryDetailQuery(entryId);
@@ -109,6 +109,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const handleClose = async () => {
     if (isActive === false) {
       handleResetEntryInfo();
+      removeEntityQueries();
     } else {
       const result = await confirm({
         title: t('SAVE_ENTITY'),
@@ -118,6 +119,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       });
       if (result) {
         handleResetEntryInfo();
+        removeEntityQueries();
       }
     }
   };

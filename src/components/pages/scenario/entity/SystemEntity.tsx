@@ -4,7 +4,7 @@ import { useEntityClient } from '@hooks/client/entityClient';
 import { IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
