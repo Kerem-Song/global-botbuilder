@@ -32,15 +32,15 @@ export const SelectNode = ({
 
   const nodeList: IReactSelect[] = [...nodes]
     .filter((item) => item.id !== nodeId)
-    // .filter(
-    //   (item) =>
-    //     arrowHelper.validateArrows(
-    //       `${NODE_PREFIX}${nodeId}`,
-    //       `${NODE_PREFIX}${item.id}`,
-    //       nodes,
-    //       true,
-    //     ) === undefined,
-    // )
+    .filter(
+      (item) =>
+        arrowHelper.validateArrows(
+          `${NODE_PREFIX}${nodeId}`,
+          `${NODE_PREFIX}${item.id}`,
+          nodes,
+          true,
+        ) === undefined,
+    )
     .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
     .map((item) => ({
       value: item.id,
