@@ -1,6 +1,7 @@
 import { Button, Col, Input, Row } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { ISaveEntryGroup } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -34,15 +35,18 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
   const editInputRef = useRef<HTMLInputElement>(null);
+
   const {
     control,
     formState: { errors },
   } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
+
   const { field: synonymField } = useController({
     control,
     name: `entries.${index}.synonym`,
   });
+
   const { field } = useController({
     name: `entries.${index}.representativeEntry`,
     control,
@@ -62,15 +66,16 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     }
   };
 
-  const handleRepresentativeEntry = () => {
+  const handleRepresentativeEntry = async () => {
     setIsActive(true);
     setEditInputIndex(-1);
-    trigger(`entries.${index}.representativeEntry`);
-  };
+    await trigger(`entries.${index}.representativeEntry`);
 
-  useEffect(() => {
-    editInputRef.current?.focus();
-  }, []);
+    if (field.value === synonymField.value?.[0]) {
+      lunaToast.error(t('DUPLICATE_MESSAGE'));
+      setEditInputIndex(0);
+    }
+  };
 
   if (
     searchKeyword === '' ||
@@ -95,6 +100,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     'input-normal': !errors.entries?.[index]?.representativeEntry,
                     'input-error': errors.entries?.[index]?.representativeEntry,
                   })}
+                  value={field.value}
                   onChange={(e) => {
                     field.onChange(e.target.value);
                   }}

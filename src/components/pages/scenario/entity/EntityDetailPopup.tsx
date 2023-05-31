@@ -3,7 +3,7 @@ import { Button, Input, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEntityClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { usePrompt } from '@hooks/usePrompt';
-import { IResponseEntity, IResponseSaveEntryGroup, ISaveEntryGroup } from '@models';
+import { ISaveEntryGroup } from '@models';
 import { ENTITY_NAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
@@ -55,7 +55,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         .required(t('VALIDATION_REQUIRED'))
         .matches(ENTITY_NAME_REGEX, '특수문자는 - _만 입력 가능합니다.')
         .max(20, `20자를 초과할 수 없습니다.`),
-      entries: yup.array().min(1, t('VALIDATION_REQUIRED')),
+      entries: yup
+        .array()
+        .min(1, t('VALIDATION_REQUIRED'))
+        .of(
+          yup.object().shape({
+            representativeEntry: yup.string().required(t('VALIDATION_REQUIRED')),
+          }),
+        ),
     })
     .required();
 
@@ -74,19 +81,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     handleIsOpenEntityDetailPopup(false);
     handleIsOpen(true);
   };
-
-  const handleDuplicateEntryValidation = () => {
-    setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
-  };
-
-  const handleRegexValidation = () => {
-    setRegexInputError(t('VALIDATION_REQUIRED'));
-  };
-
-  const isTrue = (value: boolean) => Boolean(value);
-
-  const hasInvalidEntries = (res: IResponseEntity<IResponseSaveEntryGroup>) =>
-    isTrue(res?.exception.invalidateProperties?.includes('Entries'));
 
   const handleSave = async (entryData: ISaveEntryGroup) => {
     const { name, isRegex, entries, entryGroupid } = entryData;
@@ -107,12 +101,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     }
 
     if (res?.exception.errorCode === 7608) {
-      handleDuplicateEntryValidation();
-      return;
-    }
-
-    if (res && isRegex && hasInvalidEntries(res)) {
-      handleRegexValidation();
+      setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
       return;
     }
   };
