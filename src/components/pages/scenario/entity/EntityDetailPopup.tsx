@@ -200,9 +200,10 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                 regexInputError={regexInputError}
                 entryNameInputError={entryNameInputError}
                 setEntryNameInputError={setEntryNameInputError}
+                setRegexInputError={setRegexInputError}
                 setIsActive={setIsActive}
               />
-              {watch('isRegex') === false && (
+              {!watch('isRegex') && (
                 <div className="searchInput">
                   <Input
                     size="small"
@@ -213,7 +214,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                 </div>
               )}
               <div className="registerEntry">
-                {watch('isRegex') === false && (
+                {!watch('isRegex') && (
                   <EntriesRegistry
                     formMethods={formMethods}
                     searchKeyword={searchKeyword}

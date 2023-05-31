@@ -55,6 +55,18 @@ export const ConnectChannel = () => {
         } else {
           lunaToast.success(t('DISCONNECT_CHANNEL_SUCCESS_MESSAGE'));
         }
+      } else if (
+        connectChannel?.data.exception.exceptionType ===
+        'PartnersSNSChannelInfoEmptyException'
+      ) {
+        await info({
+          title: t('DISABLED_CONNECT_TEST_CHANNEL'),
+          description: (
+            <div style={{ whiteSpace: 'pre-wrap' }}>
+              <span>{t('DISABLED_CONNECT_TEST_CHANNEL_INFO')}</span>
+            </div>
+          ),
+        });
       }
     }
   };
@@ -72,7 +84,7 @@ export const ConnectChannel = () => {
       <ConnectChannelCard
         channelType="operating"
         channelName={botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -'}
-        linked={opLinked!}
+        linked={opLinked}
         disabled={!activate}
         onConnect={() => handleConnectChannel(true)}
         onDisconnect={() => handleConnectChannel(true)}
@@ -80,7 +92,7 @@ export const ConnectChannel = () => {
       <ConnectChannelCard
         channelType="test"
         channelName={botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -'}
-        linked={testLinked!}
+        linked={testLinked}
         disabled={!activate}
         onConnect={() => handleConnectChannel(false)}
         onDisconnect={() => handleConnectChannel(false)}
