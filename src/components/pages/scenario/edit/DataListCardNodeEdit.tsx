@@ -11,6 +11,7 @@ import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 
@@ -194,12 +195,22 @@ export const DataListCardNodeEdit = () => {
               <Space direction="vertical">
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
-                    <InputWithTitleCounter
+                    {/* <InputWithTitleCounter
                       label={t(`TITLE_INPUT`)}
                       required={true}
                       isLight={true}
                       {...register(`view.items.${i}.title`)}
                       readOnly={isHistoryViewer}
+                    /> */}
+                    <InputTextAreaWithTitleCounter
+                      {...register(`view.items.${i}.title`)}
+                      label={t(`TITLE_INPUT`)}
+                      required={true}
+                      placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+                      readOnly={isHistoryViewer}
+                      isLight={true}
+                      maxRows={2.125}
+                      minRows={2.125}
                     />
                   </FormItem>
                 </span>
@@ -208,11 +219,20 @@ export const DataListCardNodeEdit = () => {
             <div className="m-b-8">
               <Space direction="vertical">
                 <span className="label">
-                  <InputWithTitleCounter
+                  {/* <InputWithTitleCounter
                     label={t(`CONTENT_INPUT`)}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
                     readOnly={isHistoryViewer}
+                  /> */}
+                  <InputTextAreaWithTitleCounter
+                    {...register(`view.items.${i}.description`)}
+                    label={t(`CONTENT_INPUT`)}
+                    placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+                    isLight={true}
+                    readOnly={isHistoryViewer}
+                    maxRows={2.125}
+                    minRows={2.125}
                   />
                 </span>
               </Space>

@@ -138,23 +138,41 @@ export const DataBasicCardNodeEdit = () => {
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
         <Space direction="vertical">
           <FormItem error={errors.view && errors.view.title}>
-            <InputWithTitleCounter
+            {/* <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
               isLight={true}
               {...register('view.title')}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               readOnly={isHistoryViewer}
+            /> */}
+            <InputTextAreaWithTitleCounter
+              {...register('view.title')}
+              placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+              readOnly={isHistoryViewer}
+              isLight={true}
+              label={t(`TITLE_INPUT`)}
+              maxRows={2.125}
+              minRows={2.125}
             />
           </FormItem>
 
           <FormItem error={errors.view && errors.view.description}>
-            <InputTextAreaWithTitleCounter
+            {/* <InputTextAreaWithTitleCounter
               label={t(`CONTENT_INPUT`)}
               maxRows={17}
               isLight={true}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
               readOnly={isHistoryViewer}
+            /> */}
+            <InputTextAreaWithTitleCounter
+              {...register('view.description')}
+              placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+              readOnly={isHistoryViewer}
+              isLight={true}
+              label={t(`TITLE_INPUT`)}
+              maxRows={17}
+              minRows={2.125}
             />
           </FormItem>
         </Space>
