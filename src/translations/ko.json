@@ -278,7 +278,7 @@
     "CHATBOT_LIST": "챗봇 리스트",
     "SCENARIO": "시나리오",
     "IMAGEEDITOR": "이미지 에디터",
-    "UTTERANCE": "발화",
+    "UTTERANCE": "인텐트",
     "SKILL": "스킬",
     "DEPLOYMENT": "배포",
     "HISTORY": "히스토리",
