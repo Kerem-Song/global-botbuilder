@@ -17,6 +17,7 @@ import { ButtonsEdit } from './ButtonsEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 
@@ -163,34 +164,46 @@ export const DataProductCardNodeEdit = () => {
           <div className="m-b-8">
             <Space direction="vertical">
               <FormItem error={errors.view?.profileIconUrl}>
-                <Row align="center" gap={12} style={{ margin: 0 }}>
-                  <Col span={5} className="itemProfileImg">
-                    <ImageFileUploader
-                      imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
-                      isValid={errors.view?.profileIconUrl ? false : true}
-                    />
-                  </Col>
-                  <Col span={18}>
-                    <p>{t(`RECOMMENDED_SIZE`)}</p>
-                    <p>640 x 640</p>
-                  </Col>
+                <>
+                  <Row align="center" gap={12} style={{ margin: 0 }}>
+                    <Col span={5} className="itemProfileImg">
+                      <ImageFileUploader
+                        imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
+                        isValid={errors.view?.profileIconUrl ? false : true}
+                      />
+                    </Col>
+                    <Col span={18}>
+                      <p>{t(`RECOMMENDED_SIZE`)}</p>
+                      <p>640 x 640</p>
+                    </Col>
+                  </Row>
                   <ImageInput
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                     registerName={`view.profileIconUrl`}
                   />
-                </Row>
+                </>
               </FormItem>
             </Space>
           </div>
           <div className="m-b-8">
             <Space direction="vertical">
               <FormItem error={errors.view && errors.view.profileName}>
-                <InputWithTitleCounter
+                {/* <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
                   {...register(`view.profileName`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
+                /> */}
+                <InputTextAreaWithTitleCounter
+                  {...register('view.profileName')}
+                  label={t(`PRODUCT_NODE_BRAND_NAME`)}
+                  required={true}
+                  placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+                  isLight={true}
+                  readOnly={isHistoryViewer}
+                  maxRows={17}
+                  minRows={2.125}
                 />
               </FormItem>
             </Space>

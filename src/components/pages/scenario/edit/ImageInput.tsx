@@ -47,14 +47,16 @@ export const ImageInput = ({
   };
 
   return (
-    <>
+    <div className="imageInput">
       <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
       <InputTextarea
         {...register(registerName)}
         placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
         readOnly={isHistoryViewer}
         onBlur={handleImgOnBlur}
+        maxRows={2.125}
+        minRows={2.125}
       />
-    </>
+    </div>
   );
 };

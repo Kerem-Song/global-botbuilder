@@ -31,7 +31,10 @@ export interface IUpdateBotIcon {
 }
 
 export interface IResponseUpdateBotIcon {
-  exception: string;
+  exception: {
+    errorCode: number;
+    exceptionType: string;
+  };
   isSuccess: boolean;
   newToken: string;
   role: number;

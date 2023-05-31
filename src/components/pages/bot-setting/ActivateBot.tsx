@@ -27,7 +27,7 @@ export const ActivateBot = () => {
     const res = await botActivateAsync(botActivate);
 
     if (res?.data.isSuccess) {
-      console.log('res', res);
+      lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
     } else if (res?.data.exception.errorCode === 7631) {
       await info({
         title: t('DISABLED_BOT_ACTIVATED'),

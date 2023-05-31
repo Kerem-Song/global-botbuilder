@@ -1,7 +1,7 @@
 import { Card, Col, Input, Radio, Row, Space } from '@components';
 import { useEntityClient, usePage } from '@hooks';
 import { ISaveEntryGroup } from '@models';
-import React, { FC } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 
 export interface IEntityRegistryProps {
@@ -10,6 +10,7 @@ export interface IEntityRegistryProps {
   regexInputError: string;
   entryNameInputError: string;
   setEntryNameInputError: React.Dispatch<React.SetStateAction<string>>;
+  setRegexInputError: Dispatch<SetStateAction<string>>;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -19,6 +20,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   regexInputError,
   entryNameInputError,
   setEntryNameInputError,
+  setRegexInputError,
   setIsActive,
 }) => {
   const { t } = usePage();
@@ -45,9 +47,11 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   const handleRegexExpression = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.trim() === '') {
       field.onChange([]);
+      setRegexInputError(t('VALIDATION_REQUIRED'));
     } else {
       field.onChange([{ representativeEntry: e.target.value }]);
       setIsActive(true);
+      setRegexInputError('');
     }
   };
 
@@ -89,7 +93,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
           ) : (
             <>
               <Radio
-                checked={isRegexField.value === false}
+                checked={!isRegexField.value}
                 onChange={() => isRegexField.onChange(false)}
                 ref={isRegexField.ref}
               >
