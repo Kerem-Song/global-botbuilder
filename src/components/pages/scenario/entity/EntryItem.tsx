@@ -4,7 +4,7 @@ import { ISaveEntryGroup } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 import {
   FieldArrayWithId,
   useController,
@@ -34,7 +34,6 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
 }) => {
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
-  const editInputRef = useRef<HTMLInputElement>(null);
 
   const {
     control,
