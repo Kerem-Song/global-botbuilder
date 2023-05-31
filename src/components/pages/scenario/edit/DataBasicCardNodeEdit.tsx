@@ -170,7 +170,7 @@ export const DataBasicCardNodeEdit = () => {
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               readOnly={isHistoryViewer}
               isLight={true}
-              label={t(`TITLE_INPUT`)}
+              label={t(`CONTENT_INPUT`)}
               maxRows={17}
               minRows={2.125}
             />
