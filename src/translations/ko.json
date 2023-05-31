@@ -225,7 +225,7 @@
     "CONTENT_INPUT_PLACEHOLDER": "내용을 입력해 주세요",
     "TEXT": "텍스트",
     "BASIC_NODE_TEXT_SETTING": "텍스트 설정",
-    "VALIDATION_REQUIRED": "필수 입력 항목 입니다",
+    "VALIDATION_REQUIRED": "필수 입력 항목 입니다.",
     "VALIDATION_STRING_LIMIT": "입력 가능 글자 수를 초과했습니다.",
     "VALIDATION_TYPE_ERROR_NUMBER": "숫자만 입력하실 수 있습니다",
     "VALIDATION_URL": "http, https 형식으로 입력해 주세요",

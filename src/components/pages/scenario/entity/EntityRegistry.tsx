@@ -1,8 +1,8 @@
-import { Card, Col, Input, Radio, Row, Space } from '@components';
+import { Card, Col, FormItem, Input, Radio, Row, Space } from '@components';
 import { useEntityClient, usePage } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { useController, UseFormReturn } from 'react-hook-form';
+import { useController, useFieldArray, UseFormReturn } from 'react-hook-form';
 
 export interface IEntityRegistryProps {
   entryId?: string;
@@ -47,7 +47,6 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   const handleRegexExpression = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.trim() === '') {
       field.onChange([]);
-      setRegexInputError(t('VALIDATION_REQUIRED'));
     } else {
       field.onChange([{ representativeEntry: e.target.value }]);
       setIsActive(true);
@@ -119,19 +118,13 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
             <Col flex="auto">
               <Input
                 placeholder={t('INPUT_REGULAR_EXPRESSION')}
-                onChange={handleRegexExpression}
-                isError={
-                  regexInputError || errors.entries?.[0]?.representativeEntry
-                    ? true
-                    : false
-                }
+                isError={regexInputError || errors.entries?.message ? true : false}
                 ref={field.ref}
-                value={field.value?.[0]?.representativeEntry || ''}
+                value={field.value[0]?.representativeEntry || ''}
+                onChange={handleRegexExpression}
               />
               <span className="error-message">{regexInputError}</span>
-              <span className="error-message">
-                {errors.entries?.[0]?.representativeEntry?.message}
-              </span>
+              <span className="error-message">{errors.entries?.message || ''}</span>
             </Col>
           </Row>
         )}
