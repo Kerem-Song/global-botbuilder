@@ -1,8 +1,8 @@
-import { Card, Col, FormItem, Input, Radio, Row, Space } from '@components';
+import { Card, Col, Input, Radio, Row, Space } from '@components';
 import { useEntityClient, usePage } from '@hooks';
 import { ISaveEntryGroup } from '@models';
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { useController, useFieldArray, UseFormReturn } from 'react-hook-form';
+import { useController, UseFormReturn } from 'react-hook-form';
 
 export interface IEntityRegistryProps {
   entryId?: string;

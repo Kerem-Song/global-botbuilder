@@ -19,9 +19,8 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   formMethods,
 }) => {
   const { t } = usePage();
-  const [representativeEntryInputError, setRepresentativeEntryInputError] =
-    useState<string>('');
-  const [synonym, setSynonym] = useState<string>('');
+
+  const [representativeEntry, setRepresentativeEntry] = useState<string>('');
   const {
     control,
     trigger,
@@ -31,22 +30,20 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   } = formMethods;
   const { fields, prepend, remove } = useFieldArray({ control, name: 'entries' });
 
-  const handleRegisterEntry = () => {
-    const name = synonym.trim();
-
+  const handleRegisterEntry = async () => {
+    const name = representativeEntry.trim();
     if (name === '') {
-      trigger('entries');
-    }
-
-    if (fields.length > 0 && synonym.length > 0 && name === '') {
-      setRepresentativeEntryInputError(t('VALIDATION_REQUIRED'));
-      setIsActive(true);
-      return;
+      await trigger('entries');
     } else if (name !== '') {
       prepend({ representativeEntry: name, synonym: [] });
       setIsActive(true);
-      setSynonym('');
+      setRepresentativeEntry('');
     }
+  };
+
+  const handleRepresentativeEntry = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepresentativeEntry(e.target.value);
+    setIsActive(true);
   };
 
   return (
@@ -59,18 +56,11 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
               size="normal"
               maxLength={125}
               showCount
-              value={synonym}
+              value={representativeEntry}
               onPressEnter={handleRegisterEntry}
-              onChange={(e) => {
-                setIsActive(true);
-                setSynonym(e.target.value);
-                setRepresentativeEntryInputError('');
-              }}
-              isError={
-                representativeEntryInputError || errors.entries?.message ? true : false
-              }
+              onChange={handleRepresentativeEntry}
+              isError={errors.entries?.message ? true : false}
             />
-            <span className="error-message">{representativeEntryInputError}</span>
             <span className="error-message">{errors.entries?.message}</span>
           </Col>
           <Col>
@@ -83,7 +73,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
           {watch('entries').length === 0 ? (
             <EmptyEntry />
           ) : (
-            watch('isRegex') === false && (
+            !watch('isRegex') && (
               <>
                 {fields.map((entryGroup, i) => {
                   return (

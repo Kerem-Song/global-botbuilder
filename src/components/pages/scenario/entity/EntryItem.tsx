@@ -39,10 +39,12 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     formState: { errors },
   } = useFormContext<ISaveEntryGroup>();
   const { confirm } = useSystemModal();
+
   const { field: synonymField } = useController({
     control,
     name: `entries.${index}.synonym`,
   });
+
   const { field } = useController({
     name: `entries.${index}.representativeEntry`,
     control,
@@ -62,10 +64,10 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     }
   };
 
-  const handleRepresentativeEntry = () => {
+  const handleRepresentativeEntry = async () => {
     setIsActive(true);
     setEditInputIndex(-1);
-    trigger(`entries.${index}.representativeEntry`);
+    await trigger(`entries.${index}.representativeEntry`);
   };
 
   useEffect(() => {
@@ -95,6 +97,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     'input-normal': !errors.entries?.[index]?.representativeEntry,
                     'input-error': errors.entries?.[index]?.representativeEntry,
                   })}
+                  value={field.value}
                   onChange={(e) => {
                     field.onChange(e.target.value);
                   }}

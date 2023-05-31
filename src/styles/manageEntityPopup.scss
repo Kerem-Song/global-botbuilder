@@ -192,7 +192,7 @@
       }
       .registerEntry {
         .entityDetail {
-          height: rem(270);
+          height: rem(250);
           overflow-y: scroll;
           border: 1px solid $gray200;
         }
@@ -385,7 +385,7 @@
               }
             }
             .emptyList {
-              height: rem(185);
+              height: rem(153);
               display: flex;
               justify-content: center;
               align-items: center;
