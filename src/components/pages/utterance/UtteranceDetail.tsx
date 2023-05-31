@@ -143,26 +143,26 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
     if (res && res.isSuccess) {
       lunaToast.success();
-
       if (isOpenUtteranceDetailPopup && handleClose) {
         handleClose();
       } else {
         setNavigateUrl(`/${botId}/utterance`);
       }
-    } else if (res?.exception.errorCode === 7612) {
+      return;
+    }
+
+    if (res?.exception.errorCode === 7612) {
       const checkIntentDuplication = await checkIntentDuplicationAsync({
         name: getValues('name'),
         intentId: getValues('intentId'),
       });
 
-      if (checkIntentDuplication.result) {
-        const res = await error({
+      if (checkIntentDuplication.result && intentNameRef.current) {
+        intentNameRef.current.select();
+        await error({
           title: t('DUPLICATE_INTENT'),
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
         });
-        if (res && intentNameRef.current) {
-          intentNameRef.current.select();
-        }
       }
     }
   };
@@ -186,6 +186,12 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       handleClose();
     }
   };
+
+  useEffect(() => {
+    if (intentNameRef.current) {
+      intentNameRef.current.focus();
+    }
+  }, [intentNameRef.current]);
 
   return (
     <div
@@ -223,13 +229,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             >
               {t('DELETE_INTENT')}
             </Button>
-            <Button
-              large
-              type="primary"
-              htmlType="submit"
-              disabled={!isActive}
-              onClick={() => intentNameRef.current?.focus()}
-            >
+            <Button large type="primary" htmlType="submit" disabled={!isActive}>
               {t('SAVE')}
             </Button>
             {isOpenUtteranceDetailPopup && (
