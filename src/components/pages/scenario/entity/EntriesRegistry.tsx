@@ -94,7 +94,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
                       (x.representativeEntry &&
                         x.representativeEntry?.includes(searchKeyword)) ||
                       (x.synonym && x.synonym?.find((s) => s.includes(searchKeyword))),
-                  ).length === 0 && <EmptyEntry />}
+                  ).length === 0 && <EmptyEntry searchKeyword={searchKeyword} />}
               </>
             )
           )}
