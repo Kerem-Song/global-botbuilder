@@ -18,4 +18,4 @@ export const ENTITY_NAME_REGEX =
 export const PARAMETER_REGEX = /^\.?([a-z]|[\d]|[_])([a-z]|[\d]|[-_])*$/gu;
 export const ENTRY_REGEX = /[\p{Cc}]+/gu;
 export const CONDITION_PARAMETER_REGEX =
-  /^(?:(?=@.*)\.?([\\@0-9a-z-_.])*|(?:(?=\{.*)[\\{a-zA-Z0-9_\\}]*|(?:(?!\{.*).*)))$/gu;
+  /^(?:(?=@.*)\.?([\\@0-9a-z-_.])*|(?:(?=\{\{.*)[\\{a-zA-Z0-9_\\}]*|(?:(?!\{.*).*)))$/gu;
