@@ -31,20 +31,22 @@ export const UtteranceListHeader: FC<IUtteranceListHeaderProps> = ({
   };
 
   return (
-    <tr>
-      <th
-        className={classNames('utteranceList intent add', {
-          'hidden-scenarioList': !showScenarioList,
-        })}
-      >
-        {t('INTENT')}
-        <button className="addBtn" onClick={goToDetail} />
-      </th>
-      {showScenarioList ? (
-        <th className="utteranceList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
-      ) : null}
-      <th className="utteranceList utterance">{t('UTTERANCE')}</th>
-      <th className="utteranceList icon" />
-    </tr>
+    <thead>
+      <tr>
+        <th
+          className={classNames('utteranceList intent add', {
+            'hidden-scenarioList': !showScenarioList,
+          })}
+        >
+          {t('INTENT')}
+          <button className="addBtn" onClick={goToDetail} />
+        </th>
+        {showScenarioList ? (
+          <th className="utteranceList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
+        ) : null}
+        <th className="utteranceList utterance">{t('UTTERANCE')}</th>
+        <th className="utteranceList icon" />
+      </tr>
+    </thead>
   );
 };
