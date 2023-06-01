@@ -35,6 +35,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
 
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
+    setIsActive(true);
   };
 
   const showInput = () => {
@@ -50,6 +51,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
     if (!value || !value.trim()) {
       setInputValue('');
       setInputVisible(false);
+      setIsActive(true);
       return;
     }
 
@@ -57,17 +59,22 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
       if (representativeEntry.trim() === value.trim()) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
-        return;
+        setIsActive(false);
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
-        return;
+        setIsActive(false);
       } else {
         append([value]);
         setInputValue('');
         setInputVisible(false);
       }
     }
+  };
+
+  const handleInputEsc = () => {
+    setInputValue('');
+    setInputVisible(false);
   };
 
   useEffect(() => {
@@ -107,10 +114,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
           onBlur={() => handleInputConfirm(inputValue)}
           onClear={() => setInputVisible(false)}
           onPressEnter={() => handleInputConfirm(inputValue)}
-          onPressEsc={() => {
-            setInputVisible(false);
-            setInputValue('');
-          }}
+          onPressEsc={handleInputEsc}
           maxLength={125}
         />
       ) : (

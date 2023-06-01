@@ -94,20 +94,20 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 
     const res = await entryGroupAsync(saveEntry);
 
-    if (res && res.isSuccess) {
+    if (res && res.isSuccess && isActive) {
       handleResetEntryInfo();
-      lunaToast.success(t('MODIFY_MESSAGE'));
+      lunaToast.success(tc('SAVE_MESSAGE'));
       return;
     }
 
-    if (res?.exception.errorCode === 7608) {
+    if (res && res.exception && res.exception.errorCode === 7608) {
       setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
       return;
     }
   };
 
   const handleClose = async () => {
-    if (isActive === false) {
+    if (!isActive) {
       handleResetEntryInfo();
     } else {
       const result = await confirm({

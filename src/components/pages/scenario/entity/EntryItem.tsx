@@ -4,7 +4,7 @@ import { ISaveEntryGroup } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   FieldArrayWithId,
   useController,
@@ -34,6 +34,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
 }) => {
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
+  const entryNameRef = useRef<HTMLInputElement | null>(null);
 
   const {
     control,
@@ -66,15 +67,23 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   };
 
   const handleRepresentativeEntry = async () => {
-    setIsActive(true);
-    setEditInputIndex(-1);
-    await trigger(`entries.${index}.representativeEntry`);
-
-    if (field.value === synonymField.value?.[0]) {
+    if (synonymField.value?.find((x: string) => x.includes(field.value))) {
+      entryNameRef.current?.select();
       lunaToast.error(t('DUPLICATE_MESSAGE'));
+      setIsActive(false);
       setEditInputIndex(0);
+    } else {
+      setIsActive(true);
+      setEditInputIndex(-1);
+      await trigger(`entries.${index}.representativeEntry`);
     }
   };
+
+  useEffect(() => {
+    if (entryNameRef.current) {
+      entryNameRef.current.focus();
+    }
+  }, [entryNameRef.current]);
 
   if (
     searchKeyword === '' ||
@@ -91,7 +100,6 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
             >
               {editInputIndex === i ? (
                 <Input
-                  {...field}
                   size="normal"
                   maxLength={125}
                   showCount
@@ -99,9 +107,11 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     'input-normal': !errors.entries?.[index]?.representativeEntry,
                     'input-error': errors.entries?.[index]?.representativeEntry,
                   })}
+                  ref={entryNameRef}
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(e.target.value);
+                    setIsActive(true);
                   }}
                   onBlur={handleRepresentativeEntry}
                   onPressEnter={handleRepresentativeEntry}
