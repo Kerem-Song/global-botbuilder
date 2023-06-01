@@ -65,15 +65,16 @@ export const Botbuilder = () => {
   );
 
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const { getScenario } = useScenarioClient();
-  getScenario(selectedScenario?.id);
+  if (!isHistoryViewer) {
+    getScenario(selectedScenario?.id);
+  }
 
   const { isOpen, handleIsOpen } = useModalOpen();
 
   const { updateLineAll } = useUpdateLines();
-
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { handlePasteCard } = useNodeContextMenu({
     handleIsOpen: () => null,

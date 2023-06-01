@@ -3,10 +3,12 @@ import { useRootState, useYupValidation } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { INodeEditModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
+import { initNodes } from '@store/makingNode';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+import { ActionCreators } from 'redux-undo';
 
 import { Botbuilder } from '../scenario/BotBuilder';
 import { NodeEditDrawer } from '../scenario/edit/NodeEditDrawer';
@@ -22,6 +24,8 @@ export const HistoryViewerComponent = () => {
       return;
     }
     dispatch(setSelectedScenario(data.result));
+    dispatch(initNodes(data.result.nodes));
+    dispatch(ActionCreators.clearHistory());
   }, [data]);
 
   const { schema } = useYupValidation();
