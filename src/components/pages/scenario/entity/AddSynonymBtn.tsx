@@ -3,7 +3,7 @@ import { Button, Input } from '@components';
 import { usePage } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export interface IAddSynonymBtnProps {
@@ -12,6 +12,7 @@ export interface IAddSynonymBtnProps {
   representativeEntry?: string;
   synonym?: string[];
   setIsActive: (value: boolean) => void;
+  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
@@ -20,6 +21,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   synonym,
   representativeEntry,
   setIsActive,
+  setIsEntriesActive,
 }) => {
   const { t } = usePage();
   const { control, getValues } = useFormContext();
@@ -35,6 +37,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
 
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
+    setIsActive(true);
   };
 
   const showInput = () => {
@@ -50,6 +53,8 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
     if (!value || !value.trim()) {
       setInputValue('');
       setInputVisible(false);
+      setIsEntriesActive(false);
+      setIsActive(true);
       return;
     }
 
@@ -57,17 +62,24 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
       if (representativeEntry.trim() === value.trim()) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
-        return;
+        setIsActive(false);
+        setIsEntriesActive(true);
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
-        return;
+        setIsActive(false);
+        setIsEntriesActive(true);
       } else {
         append([value]);
         setInputValue('');
         setInputVisible(false);
       }
     }
+  };
+
+  const handleInputEsc = () => {
+    setInputValue('');
+    setInputVisible(false);
   };
 
   useEffect(() => {
@@ -105,12 +117,13 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onBlur={() => handleInputConfirm(inputValue)}
-          onClear={() => setInputVisible(false)}
-          onPressEnter={() => handleInputConfirm(inputValue)}
-          onPressEsc={() => {
+          onClear={() => {
             setInputVisible(false);
-            setInputValue('');
+            setIsEntriesActive(false);
+            setIsActive(true);
           }}
+          onPressEnter={() => handleInputConfirm(inputValue)}
+          onPressEsc={handleInputEsc}
           maxLength={125}
         />
       ) : (

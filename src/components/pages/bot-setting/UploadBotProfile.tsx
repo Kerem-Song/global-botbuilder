@@ -22,7 +22,7 @@ export const UploadBotProfile = () => {
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
   const { error } = useSystemModal();
-  const { getValues, setValue, watch } = useForm<IUpdateBotIcon>();
+  const { getValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
@@ -155,7 +155,7 @@ export const UploadBotProfile = () => {
                   <Button
                     type="primary"
                     onClick={handleSaveProfile}
-                    disabled={isProfileSaveBtnActive ? false : true}
+                    disabled={!isProfileSaveBtnActive}
                   >
                     {t('PROFILE_SAVE')}
                   </Button>

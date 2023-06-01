@@ -1,5 +1,6 @@
 import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
 
 export const DeleteBot = () => {
@@ -87,9 +88,9 @@ export const DeleteBot = () => {
                   {t('DELETE_BOT')}
                 </Button>
               )}
-              {removeCancelExpireUtc !== null ? (
+              {removeCancelExpireUtc ? (
                 <p className="cancelExpireUtc">
-                  {removeCancelExpireUtc}
+                  {util.formatDateTime(new Date(removeCancelExpireUtc))}
                   {t('CANCEL_EXPIRE_MESSAGE')}
                 </p>
               ) : null}

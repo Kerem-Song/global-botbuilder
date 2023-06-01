@@ -21,6 +21,7 @@ export interface IEntityDetailItemProps {
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
   setIsActive: (value: boolean) => void;
+  setIsEntriesActive: React.Dispatch<React.SetStateAction<boolean>>;
   trigger: UseFormTrigger<ISaveEntryGroup>;
 }
 
@@ -30,11 +31,12 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   searchKeyword,
   entryGroup,
   setIsActive,
+  setIsEntriesActive,
   trigger,
 }) => {
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
-  const editInputRef = useRef<HTMLInputElement>(null);
+  const entryNameRef = useRef<HTMLInputElement | null>(null);
 
   const {
     control,
@@ -67,15 +69,27 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   };
 
   const handleRepresentativeEntry = async () => {
-    setIsActive(true);
-    setEditInputIndex(-1);
-    await trigger(`entries.${index}.representativeEntry`);
-
-    if (field.value === synonymField.value?.[0]) {
-      lunaToast.error(t('DUPLICATE_MESSAGE'));
-      setEditInputIndex(0);
+    for (let i = 0; i < synonymField.value!.length; i++) {
+      if (synonymField.value![i] === field.value) {
+        entryNameRef.current?.select();
+        lunaToast.error(t('DUPLICATE_MESSAGE'));
+        setIsActive(false);
+        setIsEntriesActive(true);
+        setEditInputIndex(0);
+      } else {
+        setIsActive(true);
+        setEditInputIndex(-1);
+        setIsEntriesActive(false);
+        await trigger(`entries.${index}.representativeEntry`);
+      }
     }
   };
+
+  useEffect(() => {
+    if (entryNameRef.current) {
+      entryNameRef.current.focus();
+    }
+  }, [entryNameRef.current]);
 
   if (
     searchKeyword === '' ||
@@ -92,7 +106,6 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
             >
               {editInputIndex === i ? (
                 <Input
-                  {...field}
                   size="normal"
                   maxLength={125}
                   showCount
@@ -100,9 +113,11 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     'input-normal': !errors.entries?.[index]?.representativeEntry,
                     'input-error': errors.entries?.[index]?.representativeEntry,
                   })}
+                  ref={entryNameRef}
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(e.target.value);
+                    setIsActive(true);
                   }}
                   onBlur={handleRepresentativeEntry}
                   onPressEnter={handleRepresentativeEntry}
@@ -141,6 +156,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     representativeEntry={field.value}
                     synonym={synonymField.value}
                     setIsActive={setIsActive}
+                    setIsEntriesActive={setIsEntriesActive}
                   />
                 </div>
               </div>

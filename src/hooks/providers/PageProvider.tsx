@@ -1,4 +1,5 @@
 import { useRootState } from '@hooks/useRootState';
+import { useSystemModal } from '@hooks/useSystemModal';
 import { IHandle } from '@models/interfaces/IHandle';
 import { i18n } from 'i18next';
 import { createContext, FC, useState } from 'react';
@@ -26,6 +27,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const { t: tc, i18n } = useTranslation('common');
   const { t: ts } = useTranslation('sidebar');
   const [navigateUrl, setNavigateUrl] = useState<string>();
+  const { error } = useSystemModal();
   const navigate = useNavigate();
   const matches = useMatches();
   const userInfo = useRootState((state) => state.userInfoReducer);
@@ -46,7 +48,10 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
 
   console.log(userInfo.staffType, handle?.role, role);
   if (userInfo.staffType !== 0 && handle?.role && (role & handle.role) !== handle.role) {
-    return <Navigate to={`/${i18n.language}/dashboard`} />;
+    error({ title: '권한', description: '메뉴 권한이 없습니다.' }).then(() => {
+      localeNavigate('/dashboard');
+    });
+    return <></>;
   }
   return (
     <PageContext.Provider

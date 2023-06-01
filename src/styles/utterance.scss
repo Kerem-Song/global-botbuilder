@@ -29,7 +29,7 @@
     max-height: rem(700);
     border: 1px solid $gray200;
     border-radius: rem(8);
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .utteranceTable {
       width: 100%;
@@ -165,7 +165,7 @@
   .utterancePopupListWrap {
     width: rem(1040);
     max-height: rem(476);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   // .utteranceListWrap::-webkit-scrollbar {

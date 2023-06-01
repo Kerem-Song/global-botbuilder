@@ -1,5 +1,5 @@
 import { icCopy } from '@assets';
-import { Button, Card, Col, FormItem, Input, Row, Space } from '@components';
+import { Button, Card, Col, Input, Row, Space } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useBotClient, usePage, useRootState } from '@hooks';
 import { usePrompt } from '@hooks/usePrompt';

@@ -38,8 +38,13 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [isEntriesActive, setIsEntriesActive] = useState<boolean>(false);
 
   usePrompt(isActive);
+  usePrompt(isEntriesActive);
+
+  console.log('isActive', isActive);
+  console.log('isEntries', isEntriesActive);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -92,30 +97,37 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       entryGroupid: entryGroupid,
     };
 
-    const res = await entryGroupAsync(saveEntry);
+    if (isActive && !isEntriesActive) {
+      const res = await entryGroupAsync(saveEntry);
+      if (res && res.isSuccess) {
+        handleResetEntryInfo();
+        lunaToast.success(tc('SAVE_MESSAGE'));
+        return;
+      }
 
-    if (res && res.isSuccess) {
-      handleResetEntryInfo();
-      lunaToast.success(t('MODIFY_MESSAGE'));
-      return;
-    }
-
-    if (res?.exception.errorCode === 7608) {
-      setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
-      return;
+      if (res && res.exception && res.exception.errorCode === 7608) {
+        setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
+        return;
+      }
     }
   };
 
   const handleClose = async () => {
-    if (isActive === false) {
+    if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
-    } else {
-      const result = await confirm({
-        title: t('SAVE_ENTITY'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        ),
-      });
+      return;
+    }
+
+    const result = await confirm({
+      title: t('SAVE_ENTITY'),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
+    });
+
+    if (!isActive && isEntriesActive) {
+      if (result) {
+        handleResetEntryInfo();
+      }
+    } else if (isActive && !isEntriesActive) {
       if (result) {
         handleResetEntryInfo();
       }
@@ -208,6 +220,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                     formMethods={formMethods}
                     searchKeyword={searchKeyword}
                     setIsActive={setIsActive}
+                    setIsEntriesActive={setIsEntriesActive}
                   />
                 )}
               </div>

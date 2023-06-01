@@ -2,7 +2,7 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  border: 1px solid $grayWhite;
+  border: 2px solid $grayWhite;
   border-radius: rem(12);
   background-color: $grayWhite;
   max-width: rem(218);
@@ -298,7 +298,7 @@
             p {
               padding: rem(4) 0;
             }
---
+
             .description {
               font-weight: 400;
             }
@@ -554,6 +554,6 @@
   padding-bottom: rem(8);
 }
 
-.dataCardJson div{
+.dataCardJson div {
   overflow: hidden;
 }
