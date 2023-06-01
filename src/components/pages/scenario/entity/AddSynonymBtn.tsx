@@ -53,6 +53,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
     if (!value || !value.trim()) {
       setInputValue('');
       setInputVisible(false);
+      setIsEntriesActive(false);
       setIsActive(true);
       return;
     }
@@ -116,7 +117,11 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onBlur={() => handleInputConfirm(inputValue)}
-          onClear={() => setInputVisible(false)}
+          onClear={() => {
+            setInputVisible(false);
+            setIsEntriesActive(false);
+            setIsActive(true);
+          }}
           onPressEnter={() => handleInputConfirm(inputValue)}
           onPressEsc={handleInputEsc}
           maxLength={125}

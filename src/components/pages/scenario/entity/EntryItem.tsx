@@ -69,17 +69,19 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   };
 
   const handleRepresentativeEntry = async () => {
-    if (synonymField.value?.find((x: string) => x.includes(field.value))) {
-      entryNameRef.current?.select();
-      lunaToast.error(t('DUPLICATE_MESSAGE'));
-      setIsActive(false);
-      setIsEntriesActive(true);
-      setEditInputIndex(0);
-    } else {
-      setIsActive(true);
-      setEditInputIndex(-1);
-      setIsEntriesActive(true);
-      await trigger(`entries.${index}.representativeEntry`);
+    for (let i = 0; i < synonymField.value!.length; i++) {
+      if (synonymField.value![i] === field.value) {
+        entryNameRef.current?.select();
+        lunaToast.error(t('DUPLICATE_MESSAGE'));
+        setIsActive(false);
+        setIsEntriesActive(true);
+        setEditInputIndex(0);
+      } else {
+        setIsActive(true);
+        setEditInputIndex(-1);
+        setIsEntriesActive(false);
+        await trigger(`entries.${index}.representativeEntry`);
+      }
     }
   };
 

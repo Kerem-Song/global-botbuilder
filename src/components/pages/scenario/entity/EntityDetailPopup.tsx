@@ -97,30 +97,34 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       entryGroupid: entryGroupid,
     };
 
-    const res = await entryGroupAsync(saveEntry);
+    if (isActive && !isEntriesActive) {
+      const res = await entryGroupAsync(saveEntry);
+      if (res && res.isSuccess) {
+        handleResetEntryInfo();
+        lunaToast.success(tc('SAVE_MESSAGE'));
+        return;
+      }
 
-    if (res && res.isSuccess && isActive) {
-      handleResetEntryInfo();
-      lunaToast.success(tc('SAVE_MESSAGE'));
-      return;
-    }
-
-    if (res && res.exception && res.exception.errorCode === 7608) {
-      setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
-      return;
+      if (res && res.exception && res.exception.errorCode === 7608) {
+        setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
+        return;
+      }
     }
   };
 
   const handleClose = async () => {
+    const result = await confirm({
+      title: t('SAVE_ENTITY'),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
+    });
+
     if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
     } else if (!isActive && isEntriesActive) {
-      const result = await confirm({
-        title: t('SAVE_ENTITY'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
-        ),
-      });
+      if (result) {
+        handleResetEntryInfo();
+      }
+    } else if (isActive && !isEntriesActive) {
       if (result) {
         handleResetEntryInfo();
       }
