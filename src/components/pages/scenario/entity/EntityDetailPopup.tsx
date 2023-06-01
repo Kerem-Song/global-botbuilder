@@ -113,14 +113,17 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   };
 
   const handleClose = async () => {
+    if (!isActive && !isEntriesActive) {
+      handleResetEntryInfo();
+      return;
+    }
+
     const result = await confirm({
       title: t('SAVE_ENTITY'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
 
-    if (!isActive && !isEntriesActive) {
-      handleResetEntryInfo();
-    } else if (!isActive && isEntriesActive) {
+    if (!isActive && isEntriesActive) {
       if (result) {
         handleResetEntryInfo();
       }
