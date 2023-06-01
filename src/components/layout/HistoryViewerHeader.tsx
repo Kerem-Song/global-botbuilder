@@ -10,7 +10,8 @@ export const HistoryViewerHeader: FC<{ isBotPage?: boolean }> = ({ isBotPage }) 
   );
 
   const { createByBrand, actorEmail, actorName } = useParams();
-
+  const decodedActorName = decodeURIComponent(actorName!);
+  console.log('@decode', decodedActorName);
   return (
     <header className="historyViewerHeader">
       <div className="headerWapper">
@@ -21,7 +22,7 @@ export const HistoryViewerHeader: FC<{ isBotPage?: boolean }> = ({ isBotPage }) 
         <div className="rightNav">
           <span>{createByBrand}</span>
           <span>{actorEmail}</span>
-          <span>{actorName}</span>
+          <span>{decodedActorName}</span>
         </div>
       </div>
     </header>

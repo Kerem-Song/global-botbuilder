@@ -137,11 +137,10 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     window.open(
       window.location.origin +
-        encodeURIComponent(
-          `/${botId}/viewer/${id}/${util.formatDateTime(
-            new Date(item.createAtByBrand),
-          )}/${item.actorEmail}/${item.actorName}/`,
-        ),
+        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createAtByBrand))}/${
+          item.actorEmail
+        }/${encodeURIComponent(item.actorName)}`,
+
       '_blank',
       `toolbar=1,location=1,menubar=1`,
     );
