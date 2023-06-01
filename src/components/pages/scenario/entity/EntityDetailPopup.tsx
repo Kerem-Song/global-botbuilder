@@ -38,8 +38,13 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [isEntriesActive, setIsEntriesActive] = useState<boolean>(false);
 
   usePrompt(isActive);
+  usePrompt(isEntriesActive);
+
+  console.log('isActive', isActive);
+  console.log('isEntries', isEntriesActive);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -107,9 +112,9 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   };
 
   const handleClose = async () => {
-    if (!isActive) {
+    if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
-    } else {
+    } else if (!isActive && isEntriesActive) {
       const result = await confirm({
         title: t('SAVE_ENTITY'),
         description: (
@@ -208,6 +213,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                     formMethods={formMethods}
                     searchKeyword={searchKeyword}
                     setIsActive={setIsActive}
+                    setIsEntriesActive={setIsEntriesActive}
                   />
                 )}
               </div>

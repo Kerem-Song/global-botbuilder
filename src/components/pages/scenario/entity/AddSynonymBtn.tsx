@@ -3,7 +3,7 @@ import { Button, Input } from '@components';
 import { usePage } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export interface IAddSynonymBtnProps {
@@ -12,6 +12,7 @@ export interface IAddSynonymBtnProps {
   representativeEntry?: string;
   synonym?: string[];
   setIsActive: (value: boolean) => void;
+  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
@@ -20,6 +21,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   synonym,
   representativeEntry,
   setIsActive,
+  setIsEntriesActive,
 }) => {
   const { t } = usePage();
   const { control, getValues } = useFormContext();
@@ -60,10 +62,12 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         setIsActive(false);
+        setIsEntriesActive(true);
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         setIsActive(false);
+        setIsEntriesActive(true);
       } else {
         append([value]);
         setInputValue('');

@@ -1,7 +1,7 @@
 import { Button, Card, Col, Input, Row, Space } from '@components';
 import { usePage } from '@hooks';
 import { ISaveEntryGroup } from '@models';
-import React, { FC, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 
 import { EmptyEntry } from './EmptyEntry';
@@ -10,12 +10,14 @@ import { EntryItem } from './EntryItem';
 export interface IEntryRegistryProps {
   searchKeyword: string;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
   formMethods: UseFormReturn<ISaveEntryGroup>;
 }
 
 export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   searchKeyword,
   setIsActive,
+  setIsEntriesActive,
   formMethods,
 }) => {
   const { t } = usePage();
@@ -84,6 +86,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
                       entriesRemove={remove}
                       searchKeyword={searchKeyword}
                       setIsActive={setIsActive}
+                      setIsEntriesActive={setIsEntriesActive}
                       trigger={trigger}
                     />
                   );

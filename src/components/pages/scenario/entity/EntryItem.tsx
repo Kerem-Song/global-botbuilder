@@ -21,6 +21,7 @@ export interface IEntityDetailItemProps {
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
   setIsActive: (value: boolean) => void;
+  setIsEntriesActive: React.Dispatch<React.SetStateAction<boolean>>;
   trigger: UseFormTrigger<ISaveEntryGroup>;
 }
 
@@ -30,6 +31,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   searchKeyword,
   entryGroup,
   setIsActive,
+  setIsEntriesActive,
   trigger,
 }) => {
   const { t } = usePage();
@@ -71,10 +73,12 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
       entryNameRef.current?.select();
       lunaToast.error(t('DUPLICATE_MESSAGE'));
       setIsActive(false);
+      setIsEntriesActive(true);
       setEditInputIndex(0);
     } else {
       setIsActive(true);
       setEditInputIndex(-1);
+      setIsEntriesActive(true);
       await trigger(`entries.${index}.representativeEntry`);
     }
   };
@@ -150,6 +154,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     representativeEntry={field.value}
                     synonym={synonymField.value}
                     setIsActive={setIsActive}
+                    setIsEntriesActive={setIsEntriesActive}
                   />
                 </div>
               </div>
