@@ -305,6 +305,8 @@ export const arrowHelper = {
       return '노드가 존재하지 않음.';
     }
 
+    console.log('validateArrows', startId, startNode.title, endId, endNode.title);
+
     // 시작노드에 다른시나리오 연결한 경우
     if (
       isNext &&
@@ -340,13 +342,20 @@ export const arrowHelper = {
     const depth =
       (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
       (!isPassChild && endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
-    const parentCnt = arrowHelper.checkParent(depth, startNode.id, endNode.id, nodes);
+    const parentCnt = arrowHelper.checkParent(
+      depth,
+      startNode.id,
+      startNode.id,
+      endNode.id,
+      nodes,
+    );
 
     const childCnt = isPassChild
       ? 0
       : arrowHelper.checkChild(
           0,
           startNode.id,
+          endNode.id,
           nodes,
           nodeFactory.getFactory(endNode.type)?.getConnectId(endNode) || [],
         );
@@ -361,12 +370,18 @@ export const arrowHelper = {
 
     return undefined;
   },
-  checkParent: (depth: number, nodeId: string, endId: string, nodes: INode[]): number => {
+  checkParent: (
+    depth: number,
+    nodeId: string,
+    startId: string,
+    endId: string,
+    nodes: INode[],
+  ): number => {
     const parents = nodes.filter((x) =>
       nodeFactory.getFactory(x.type)?.getConnectId(x).includes(nodeId),
     );
 
-    if (parents.find((x) => x.id === endId)) {
+    if (parents.find((x) => x.id === endId || x.id === startId)) {
       return OVERFLOWLINK;
     }
 
@@ -382,6 +397,7 @@ export const arrowHelper = {
         return arrowHelper.checkParent(
           p.nodeKind === NodeKind.InputNode ? depth + 1 : depth,
           p.id,
+          startId,
           endId,
           nodes,
         );
@@ -394,6 +410,7 @@ export const arrowHelper = {
   checkChild: (
     depth: number,
     startId: string,
+    endId: string,
     nodes: INode[],
     nextNodeId: string[],
   ): number => {
@@ -401,7 +418,7 @@ export const arrowHelper = {
       return depth;
     }
 
-    if (nextNodeId.includes(startId)) {
+    if (nextNodeId.includes(startId) || nextNodeId.includes(endId)) {
       return OVERFLOWLINK;
     }
 
@@ -412,6 +429,7 @@ export const arrowHelper = {
           return arrowHelper.checkChild(
             depth,
             startId,
+            endId,
             nodes,
             nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
           );
@@ -419,6 +437,7 @@ export const arrowHelper = {
         return arrowHelper.checkChild(
           depth + 1,
           startId,
+          endId,
           nodes,
           nodeFactory.getFactory(c.type)?.getConnectId(c) || [],
         );
