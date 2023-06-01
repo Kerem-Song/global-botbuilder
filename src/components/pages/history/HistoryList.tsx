@@ -68,7 +68,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   }, [data]);
 
   const { historyValArr } = HistoryValue();
-
+  console.log('@data:', data?.pages[0].items);
   const matchCategory = (item: IResponseHistoryItem) => {
     const matched: IHistoryValueMatch[] = historyValArr.filter(
       (v) => v.changeLogType === item.changeLogType,
@@ -137,9 +137,11 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     window.open(
       window.location.origin +
-        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createAtByBrand))}/${
-          item.actorEmail
-        }/${item.actorName}`,
+        encodeURIComponent(
+          `/${botId}/viewer/${id}/${util.formatDateTime(
+            new Date(item.createAtByBrand),
+          )}/${item.actorEmail}/${item.actorName}/`,
+        ),
       '_blank',
       `toolbar=1,location=1,menubar=1`,
     );
