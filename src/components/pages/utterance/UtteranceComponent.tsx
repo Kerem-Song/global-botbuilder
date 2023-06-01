@@ -22,9 +22,7 @@ export const UtteranceComponent = () => {
         <ToSearch searchData={searchData} setSearchData={setSearchData} />
         <div className="utteranceListWrap">
           <table className="utteranceTable">
-            <thead>
-              <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
-            </thead>
+            <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
             <UtteranceListItem
               searchData={searchData}
               isOpenUtterancePopup={isOpenUtterancePopup}

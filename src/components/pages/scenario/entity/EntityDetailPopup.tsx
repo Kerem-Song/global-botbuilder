@@ -43,9 +43,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   usePrompt(isActive);
   usePrompt(isEntriesActive);
 
-  console.log('isActive', isActive);
-  console.log('isEntries', isEntriesActive);
-
   const defaultValues: ISaveEntryGroup = {
     name: '',
     isRegex: false,
