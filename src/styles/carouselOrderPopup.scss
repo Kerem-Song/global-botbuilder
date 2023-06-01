@@ -134,12 +134,14 @@
 
       .thumbnail {
         height: rem(96);
-        object-fit: contain;
         
         img {
           border-radius: rem(8) rem(8) 0 0;
           max-width: rem(190);
           max-height: 100%;
+          object-fit: contain;
+          border: rem(1) solid $gray200;
+          background-color: $gray150;
         }
 
         .skeleton {
@@ -151,6 +153,11 @@
           border: rem(1) solid $gray200;
           border-radius: rem(8) rem(8) 0 0;
         }
+      }
+
+      .listItemImgWrapper img {
+        border-radius: rem(4);
+        border: rem(1) solid $gray200;
       }
 
       .buttonWrapper {

@@ -44,7 +44,7 @@ export const ParameterSelector = <T extends object>({
       usingName: byUsingName ? value : `{{${value}}}`,
     } as IVariable;
   };
-  console.log('@err', error);
+
   return (
     <>
       <Autocomplete

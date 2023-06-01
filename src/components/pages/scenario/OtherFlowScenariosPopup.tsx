@@ -94,7 +94,6 @@ export const OtherFlowScenariosPopup = () => {
   });
 
   useEffect(() => {
-    console.log('@data, guide', data, guideStart);
     if (data) {
       setScenarioList(
         data?.map((item) => ({
@@ -114,7 +113,6 @@ export const OtherFlowScenariosPopup = () => {
   useEffect(() => {
     if (data) {
       setItems(scenarioList);
-      console.log('@scenariolist useeffect');
     }
   }, [scenarioList]);
 

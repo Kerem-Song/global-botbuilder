@@ -108,25 +108,23 @@ export const JsonRequestNodeEdit = () => {
     refetch,
     isRefetching,
   } = checkDataApiTest(values);
-  console.log('@out data', res);
+
   const handleApiValidation = () => {
     setLoading(true);
     refetch()
       .then((res) => {
         resetField('view.apiRes');
-        console.log('@Data', res);
-        console.log('@Error', isError, error);
         setValue('view.apiRes', JSON.stringify(res?.data, null, 2));
+
         if (res.isError) {
-          console.log('@iserror', typeof res.error);
           resetField('view.apiRes');
 
           setValue('view.apiRes', JSON.stringify(res.error, null, 2));
         }
+
         setLoading(false);
       })
       .catch((error) => {
-        console.log('@err', error);
         resetField('view.apiRes');
         setValue('view.apiRes', JSON.stringify(error, null, 2));
         setLoading(false);

@@ -153,7 +153,6 @@ export const NodeLinkPopUpMenu = ({
   const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log('@event');
     const nodeType = e.currentTarget.dataset.nodetype as TNodeTypes;
     const nodeName = e.currentTarget.dataset.nodename;
 

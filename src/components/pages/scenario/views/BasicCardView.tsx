@@ -39,7 +39,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
             thumbnailClass,
           )}
         >
-          {/* <Suspense
+          <Suspense
             fallback={
               <ReactLoadingSkeleton
                 width={192}
@@ -48,9 +48,9 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
               />
             }
           >
-            <ImageWithToken view={view} />
-          </Suspense> */}
-          {view.imageCtrl?.imageUrl ? (
+            <ImageWithToken origin={view.imageCtrl?.imageUrl} />
+          </Suspense>
+          {/* {view.imageCtrl?.imageUrl ? (
             <img
               src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
                 view.imageCtrl.imageUrl
@@ -59,7 +59,7 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
             />
           ) : (
             <div className="skeleton"></div>
-          )}
+          )} */}
         </div>
       ) : (
         <div className={classNames(thumbnailClass, { textCard: true })}></div>

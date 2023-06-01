@@ -47,7 +47,6 @@ export const useNodeContextMenu = ({
   };
 
   const handlePasteCard = ({ x, y }: { x: number; y: number }) => {
-    console.log('@handle paste here');
     if (clipBoard) {
       const clone = nodeHelper.cloneNode(clipBoard);
 

@@ -26,12 +26,12 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
   });
 
   const token = useRootState((state) => state.botInfoReducer.token);
-  console.log('@view prices', view.retailPrice, view.salePrice, view.discountAmount);
+
   return (
     <Card onClick={() => console.log('card click')}>
       {view.useImageCtrl || view.imageCtrl?.imageUrl ? (
         <div className={thumbnailClass}>
-          {view.imageCtrl.imageUrl ? (
+          {/* {view.imageCtrl.imageUrl ? (
             <img
               src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
                 view.imageCtrl.imageUrl
@@ -40,14 +40,25 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             />
           ) : (
             <div className="skeleton"></div>
-          )}
+          )} */}
+          <Suspense
+            fallback={
+              <ReactLoadingSkeleton
+                width={192}
+                height={96}
+                baseColor="rgba(0,0,0,0.06)"
+              />
+            }
+          >
+            <ImageWithToken origin={view.imageCtrl.imageUrl} />
+          </Suspense>
         </div>
       ) : null}
 
       {view.profileIconUrl ? (
         <>
           <div className="profile">
-            {view.profileIconUrl ? (
+            {/* {view.profileIconUrl ? (
               <img
                 src={`${
                   import.meta.env.VITE_API_BASE_URL
@@ -58,8 +69,8 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
               />
             ) : (
               <div className="skeleton"></div>
-            )}
-            {/* <Suspense
+            )} */}
+            <Suspense
               fallback={
                 <ReactLoadingSkeleton
                   width={20}
@@ -68,8 +79,8 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
                 />
               }
             >
-              <ImageWithToken view={view} />
-            </Suspense> */}
+              <ImageWithToken origin={view.profileIconUrl} />
+            </Suspense>
             {view.profileName ? (
               <span>{view.profileName}</span>
             ) : (

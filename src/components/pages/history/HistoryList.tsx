@@ -68,7 +68,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
   }, [data]);
 
   const { historyValArr } = HistoryValue();
-  console.log('@data:', data?.pages[0].items);
+
   const matchCategory = (item: IResponseHistoryItem) => {
     const matched: IHistoryValueMatch[] = historyValArr.filter(
       (v) => v.changeLogType === item.changeLogType,

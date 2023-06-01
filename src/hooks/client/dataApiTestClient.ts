@@ -17,7 +17,6 @@ export const dataApiTestClient = () => {
             apiData: data,
           })
           .then((res) => {
-            console.log('@res.data', res.data);
             return res.data;
           }),
       {

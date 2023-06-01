@@ -91,7 +91,6 @@ export const CarouselOrderPopup: FC<{
       nextNodeId: node.nextNodeId,
     };
 
-    // dispatch(updateNode(upNode));
     dispatch(editNode(editedNode));
 
     dispatch(
@@ -104,23 +103,6 @@ export const CarouselOrderPopup: FC<{
 
     lunaToast.success(tc(`ACCEPTED`));
   };
-
-  // const esckeyEvent = (e: KeyboardEvent) => {
-  //   if (e.key === 'Escape') {
-  //     console.log('@esc');
-
-  //     handleClose();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     window.addEventListener('keyup', esckeyEvent);
-  //   } else {
-  //     window.removeEventListener('keyup', esckeyEvent);
-  //   }
-  //   return () => window.removeEventListener('keyup', esckeyEvent);
-  // }, [carouselNode, isOpen]);
 
   return (
     <ReactModal

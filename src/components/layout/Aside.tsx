@@ -46,7 +46,6 @@ export const Aside = () => {
   const subMenu = [getMenuItem(1, 'help', 'help', icHelp, icHelpSelected)];
 
   useOutsideClick(sidebarRef, () => {
-    console.log('@sidebar out ');
     dispatch(setSidebarClose());
   });
 

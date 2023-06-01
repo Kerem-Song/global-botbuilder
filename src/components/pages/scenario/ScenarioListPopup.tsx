@@ -59,7 +59,6 @@ export const ScenarioListPopup: FC<{
       const filtered = scenarios?.find(
         (scenario) => scenario.alias === watch('scenarioName'),
       );
-      console.log('@filtered', filtered);
 
       let res;
       if (popupType === 'create') {

@@ -20,7 +20,6 @@ export const historyInfoSlice = createSlice({
   initialState,
   reducers: {
     setHistoryInfo: (state, action: PayloadAction<IResponseHistoryItem | undefined>) => {
-      console.log('@action', action.payload);
       state.historyInfo = action.payload;
     },
     setHistoryYearSelector: (state, action: PayloadAction<IReactSelect[]>) => {
