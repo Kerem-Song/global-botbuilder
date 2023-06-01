@@ -32,7 +32,6 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   const [inputValue, setInputValue] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const editInputRef = useRef<HTMLInputElement>(null);
 
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
@@ -76,10 +75,6 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
       inputRef.current.focus();
     }
   }, [inputVisible]);
-
-  useEffect(() => {
-    editInputRef.current?.focus();
-  }, []);
 
   return (
     <>

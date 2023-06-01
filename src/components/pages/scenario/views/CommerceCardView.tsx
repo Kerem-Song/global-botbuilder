@@ -47,7 +47,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       {view.profileIconUrl ? (
         <>
           <div className="profile">
-            {/* {view.profileIconUrl ? (
+            {view.profileIconUrl ? (
               <img
                 src={`${
                   import.meta.env.VITE_API_BASE_URL
@@ -58,18 +58,18 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
               />
             ) : (
               <div className="skeleton"></div>
-            )} */}
-            <Suspense
+            )}
+            {/* <Suspense
               fallback={
                 <ReactLoadingSkeleton
-                  width={192}
-                  height={96}
+                  width={20}
+                  height={20}
                   baseColor="rgba(0,0,0,0.06)"
                 />
               }
             >
               <ImageWithToken view={view} />
-            </Suspense>
+            </Suspense> */}
             {view.profileName ? (
               <span>{view.profileName}</span>
             ) : (

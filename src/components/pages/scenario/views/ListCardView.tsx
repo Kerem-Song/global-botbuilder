@@ -36,7 +36,7 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
       ) : null}
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div className={thumbnailClass}>
-          {/* {view.imageCtrl?.imageUrl ? (
+          {view.imageCtrl?.imageUrl ? (
             <img
               src={`${import.meta.env.VITE_API_BASE_URL}/builderimage/forbuilder?origin=${
                 view.imageCtrl.imageUrl
@@ -45,8 +45,8 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
             />
           ) : (
             <div className="skeleton"></div>
-          )} */}
-          <Suspense
+          )}
+          {/* <Suspense
             fallback={
               <ReactLoadingSkeleton
                 width={192}
@@ -56,7 +56,7 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
             }
           >
             <ImageWithToken view={view} />
-          </Suspense>
+          </Suspense> */}
         </div>
       ) : null}
 

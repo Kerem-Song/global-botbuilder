@@ -108,7 +108,7 @@ export const ImageSettings = ({
         </Col>
       </Row>
 
-      <div className="m-b-8">
+      <div>
         <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
         <span className="required">*</span>
       </div>

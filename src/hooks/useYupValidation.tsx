@@ -1,6 +1,7 @@
 import { usePage } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
+import { CONDITION_PARAMETER_REGEX } from '@modules';
 import { is } from 'immer/dist/internal';
 import * as yup from 'yup';
 
@@ -313,12 +314,22 @@ export const useYupValidation = () => {
   const conditionNodeEditSchema = yup.object().shape({
     items: yup.array().of(
       yup.object().shape({
-        op1: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
+        op1: yup
+          .string()
+          .nullable()
+          .trim()
+          .matches(CONDITION_PARAMETER_REGEX, t('VALIDATION_REGEX_MATCH'))
+          .required(t(`VALIDATION_REQUIRED`)),
         operator: yup
           .number()
           .not([0], t(`VALIDATION_REQUIRED`))
           .required(t(`VALIDATION_REQUIRED`)),
-        op2: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
+        op2: yup
+          .string()
+          .nullable()
+          .trim()
+          .matches(CONDITION_PARAMETER_REGEX, t('VALIDATION_REGEX_MATCH'))
+          .required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
     // trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
