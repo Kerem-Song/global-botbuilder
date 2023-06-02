@@ -79,12 +79,10 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
         </div>
         <div className="utteranceListWrap utterancePopupListWrap">
           <table className="utteranceTable">
-            <thead>
-              <UtteranceListHeader
-                isOpenUtterancePopup={isOpenUtterancePopup}
-                handleDetailPopupOpen={handleDetailPopupOpen}
-              />
-            </thead>
+            <UtteranceListHeader
+              isOpenUtterancePopup={isOpenUtterancePopup}
+              handleDetailPopupOpen={handleDetailPopupOpen}
+            />
             <UtteranceListItem
               searchData={searchData}
               isOpenUtterancePopup={isOpenUtterancePopup}
