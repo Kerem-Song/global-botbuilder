@@ -20,11 +20,7 @@ export const useYupValidation = () => {
   const patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
   const textNodeEditSchema = yup.object().shape({
-    text: yup
-      .string()
-      .trim()
-      .max(1000, t(`VALIDATION_STRING_LIMIT`, { maxCount: 1000 }))
-      .required(t(`VALIDATION_REQUIRED`)),
+    text: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
   });
 
   const quicksEditSchema = yup
@@ -138,11 +134,8 @@ export const useYupValidation = () => {
   });
 
   const basicCardCarouselNodeEditSchemaForScript = yup.object().shape({
-    title: yup
-      .string()
-      .nullable()
-      .trim()
-      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+    title: yup.string().nullable().trim(),
+
     description: yup
       .string()
       .nullable()
@@ -176,23 +169,22 @@ export const useYupValidation = () => {
     description: yup
       .string()
       .nullable()
-      .when('useImageCtrl', {
-        is: true,
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => useImageCtrl && title.length > 0,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       })
-      .when('useImageCtrl', {
-        is: false,
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title.length,
         then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 400 })),
       })
-      .when('title', {
-        is: (title: string) => title.length > 0,
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => useImageCtrl && !title.length,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       })
-      .when('title', {
-        is: (title: string) => !title,
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && title.length > 0,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       }),
-
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
