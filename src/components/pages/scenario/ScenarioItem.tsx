@@ -40,7 +40,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       activated: e.target.checked,
     });
   };
-  console.log('@item', item);
+
   const handleScenarioDelete = async (item: IScenarioModel) => {
     const exception = await scenarioCheckDeleteAsync({
       token: token!,

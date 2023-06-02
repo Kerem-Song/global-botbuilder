@@ -4,7 +4,11 @@ import { usePage, useRootState, useScenarioClient } from '@hooks';
 import { IException, IScenarioModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import { setScenarioListItem, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
+import {
+  setPopupType,
+  setScenarioListItem,
+  setScenarioPopupOpen,
+} from '@store/scenarioListPopupSlice';
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -41,6 +45,7 @@ export const ScenarioListPopup: FC<{
     setFocus,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<IScenarioListInput>({
     resolver: yupResolver(schema),
@@ -52,7 +57,6 @@ export const ScenarioListPopup: FC<{
 
   const onSubmit = async () => {
     await handleScenario();
-    reset();
   };
 
   const handleScenario = async () => {
@@ -85,7 +89,11 @@ export const ScenarioListPopup: FC<{
         );
       } else {
         if (filtered) {
-          lunaToast.error(t(`DUPLICATED_SCENARIO_NAME_MESSAGE`));
+          setError('scenarioName', {
+            type: 'custom',
+            message: t(`DUPLICATED_SCENARIO_NAME_MESSAGE`),
+          });
+          // lunaToast.error(t(`DUPLICATED_SCENARIO_NAME_MESSAGE`));
         } else {
           const exeption = res?.data.exception as IException;
 
@@ -97,11 +105,11 @@ export const ScenarioListPopup: FC<{
 
   useEffect(() => {
     if (popupType === 'rename' && item) {
-      console.log('@item in useeffect', item);
       setValue('scenarioName', item.alias);
-      // dispatch(setScenarioListItem(item));
+    } else if (popupType === 'create') {
+      setValue('scenarioName', '');
     }
-  }, [isOpen]);
+  }, [isOpen, popupType]);
 
   return (
     <ReactModal

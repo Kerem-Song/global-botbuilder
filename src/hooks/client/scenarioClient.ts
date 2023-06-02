@@ -133,7 +133,7 @@ export const useScenarioClient = () => {
         name: scenario.alias,
       });
 
-      if (res) {
+      if (res && res.data?.isSuccess) {
         queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
         queryClient.invalidateQueries([SCENARIO_LIST, botId]);
         return res;
