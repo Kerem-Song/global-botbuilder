@@ -8,7 +8,10 @@ import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 import useI18n from '../../hooks/useI18n';
 import { useRootState } from '../../hooks/useRootState';
 
-export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
+export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
+  isBotPage,
+  name,
+}) => {
   const { tc } = useI18n();
   const languageMenus = [
     {
@@ -78,8 +81,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   };
 
   const language = i18n.language;
-  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
-  const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
+
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
   const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
@@ -94,7 +96,7 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
     <header>
       <div className="headerWapper">
         <div className="brandPage">
-          <span className="brandName">{isBotPage ? botName : brandName}</span>
+          <span className="brandName">{name}</span>
           <span className="pageName">{pageName}</span>
         </div>
         <div className="rightNav">

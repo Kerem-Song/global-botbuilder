@@ -59,7 +59,7 @@ export const useBotClient = () => {
             dispatch(setBotInfo(res.data.result));
             return res.data.result;
           }),
-      { refetchOnWindowFocus: false, refetchOnMount: false },
+      { refetchOnWindowFocus: false, refetchOnMount: true },
     );
   };
 

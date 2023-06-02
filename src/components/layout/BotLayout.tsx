@@ -1,8 +1,8 @@
 import { SystemModalContainer } from '@components/modal/SystemModalContainer';
-import { useBotClient } from '@hooks';
+import { useBotClient, useRootState } from '@hooks';
 import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { initBotBuilder } from '@store/botbuilderSlice';
-import { setSesstionToken } from '@store/botInfoSlice';
+import { setBotInfo, setSesstionToken } from '@store/botInfoSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { Header } from './Header';
 export const BotLayout = () => {
   console.log('BotLayout');
   const { botId } = useParams();
+  const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
   const dispatch = useDispatch();
 
   const { getSessionToken } = useSessionTokenClient();
@@ -26,6 +27,7 @@ export const BotLayout = () => {
     return () => {
       dispatch(setSesstionToken());
       dispatch(initBotBuilder());
+      dispatch(setBotInfo());
     };
   }, []);
 
@@ -34,7 +36,7 @@ export const BotLayout = () => {
       <>
         <BotAside />
         <div id="layout">
-          <Header isBotPage />
+          <Header isBotPage name={botName || ''} />
           <main>
             <Outlet />
           </main>

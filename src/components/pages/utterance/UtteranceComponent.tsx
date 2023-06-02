@@ -16,20 +16,18 @@ export const UtteranceComponent = () => {
   const { isOpen: isOpenUtterancePopup } = useModalOpen();
 
   return (
-    <>
-      <div className="utteranceWrap">
-        <div className="title">{t('TITLE')}</div>
-        <ToSearch searchData={searchData} setSearchData={setSearchData} />
-        <div className="utteranceListWrap">
-          <table className="utteranceTable">
-            <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
-            <UtteranceListItem
-              searchData={searchData}
-              isOpenUtterancePopup={isOpenUtterancePopup}
-            />
-          </table>
-        </div>
+    <div className="utteranceWrap">
+      <div className="title">{t('TITLE')}</div>
+      <ToSearch searchData={searchData} setSearchData={setSearchData} />
+      <div className="utteranceListWrap">
+        <table className="utteranceTable">
+          <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
+          <UtteranceListItem
+            searchData={searchData}
+            isOpenUtterancePopup={isOpenUtterancePopup}
+          />
+        </table>
       </div>
-    </>
+    </div>
   );
 };
