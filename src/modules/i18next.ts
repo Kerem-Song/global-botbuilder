@@ -11,6 +11,9 @@ i18next.use(LanguageDetector).init({
   interpolation: { escapeValue: false },
   debug: true,
   fallbackLng: 'key',
+  parseMissingKeyHandler: (key, defaultValue) => {
+    return `☆★${key}★☆`;
+  },
   supportedLngs,
   detection: {
     order: ['path', 'navigator'],

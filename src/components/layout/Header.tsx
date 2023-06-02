@@ -99,13 +99,8 @@ export const Header: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
         </div>
         <div className="rightNav">
           {isBotPage && (
-            <Button
-              type="primary"
-              //className="testerBtn"
-              small
-              onClick={() => handleIsOpen(true)}
-            >
-              {t('TITLE')}
+            <Button type="primary" small onClick={() => handleIsOpen(true)}>
+              {t('BOT_TESTER')}
             </Button>
           )}
           <Popper
