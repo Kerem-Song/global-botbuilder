@@ -365,7 +365,7 @@ export const arrowHelper = {
     }
 
     if (parentCnt + childCnt > 3) {
-      return '연속응답 노드는 3개까지만 가능합니다.';
+      return '말풍선 세로 나열은 최대 3개까지 가능합니다.';
     }
 
     return undefined;

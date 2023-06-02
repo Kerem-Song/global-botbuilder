@@ -1,20 +1,11 @@
 import { FormItem } from '@components';
-import {
-  useHistoryViewerMatch,
-  usePage,
-  useRootState,
-  useScenarioClient,
-  useSystemModal,
-  useYupValidation,
-} from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { NODE_PREFIX, useAppDispatch } from '@modules';
-import { lunaToast } from '@modules/lunaToast';
+import { NODE_PREFIX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
-import editNodeAsync from '@store/editNodeAsync';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
@@ -24,6 +15,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
   const { t } = usePage();
+  const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const isEditDrawerOpen = useRootState(
@@ -48,6 +40,7 @@ export const NodeEditDrawer = () => {
     getValues,
     trigger,
     watch,
+    setError,
     formState: { errors, isValid },
   } = formMethods;
 
@@ -79,6 +72,18 @@ export const NodeEditDrawer = () => {
       reset({ id: '', title: '' });
     }
   }, [selectedNode, index]);
+
+  useEffect(() => {
+    if (selectedNode) {
+      const nodeNameRegex = new RegExp(`${selectedNode.title}`);
+      const filtered = nodes.filter((node) => nodeNameRegex.test(node.title!));
+
+      if (filtered.length > 1) {
+        setError('title', { type: 'custom', message: t(`DUPLICATE_NODE_NAME`) });
+        dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
+      }
+    }
+  }, [selectedNode]);
 
   const editItem = () => {
     if (!isEditDrawerOpen) {
@@ -118,15 +123,19 @@ export const NodeEditDrawer = () => {
         <div className="node-item-wrap">
           <FormItem error={errors.title}>
             <InputWithTitleCounter
-              label={t(`CHAT_BUBBLE_NAME`)}
+              label={
+                selectedNode?.type === NODE_TYPES.INTENT_NODE
+                  ? t(`CHAT_SCENARIO_NAME`)
+                  : t(`CHAT_BUBBLE_NAME`)
+              }
               required={true}
-              showCount={true}
+              showCount={selectedNode?.type === NODE_TYPES.INTENT_NODE ? false : true}
               maxLength={20}
               placeholder="Input Chat Bubble name"
               {...register('title')}
               disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
               textLength={watch('title')?.length || 0}
-              readOnly={isHistoryViewer}
+              readOnly={isHistoryViewer || selectedNode?.type === NODE_TYPES.INTENT_NODE}
             />
           </FormItem>
         </div>

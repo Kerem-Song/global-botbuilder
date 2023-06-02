@@ -1,4 +1,4 @@
-import { Button, Card, Col, Input, Popper, Row, Switch } from '@components';
+import { Button, Card, Col, Input, IPopperItem, Popper, Row, Switch } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
 import {
   useModalOpen,
@@ -40,8 +40,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       activated: e.target.checked,
     });
   };
-
-  const handleScenarioDelete = async () => {
+  console.log('@item', item);
+  const handleScenarioDelete = async (item: IScenarioModel) => {
     const exception = await scenarioCheckDeleteAsync({
       token: token!,
       scenarioId: item.id,
@@ -89,13 +89,15 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     }
   };
 
-  const handleScenariRename = () => {
+  const handleScenariRename = (item: IScenarioModel) => {
     dispatch(setPopupType('rename'));
     dispatch(setScenarioListItem(item));
     dispatch(setScenarioPopupOpen(true));
   };
 
-  const scenarioMenus = [
+  const scenarioMenus: IPopperItem<{
+    action: ((item: IScenarioModel) => void) | null;
+  }>[] = [
     {
       id: `rename`,
       name: 'Rename',
@@ -151,7 +153,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             offset={[5, 10]}
             popperItems={scenarioMenus}
             onChange={(m) => {
-              m.data?.action?.();
+              m.data?.action?.(item);
             }}
             popup
             popupList

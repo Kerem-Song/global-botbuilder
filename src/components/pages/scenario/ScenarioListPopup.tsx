@@ -4,8 +4,8 @@ import { usePage, useRootState, useScenarioClient } from '@hooks';
 import { IException, IScenarioModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import { setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
-import React, { FC } from 'react';
+import { setScenarioListItem, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
@@ -40,6 +40,7 @@ export const ScenarioListPopup: FC<{
     reset,
     setFocus,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<IScenarioListInput>({
     resolver: yupResolver(schema),
@@ -93,6 +94,14 @@ export const ScenarioListPopup: FC<{
       }
     }
   };
+
+  useEffect(() => {
+    if (popupType === 'rename' && item) {
+      console.log('@item in useeffect', item);
+      setValue('scenarioName', item.alias);
+      // dispatch(setScenarioListItem(item));
+    }
+  }, [isOpen]);
 
   return (
     <ReactModal
