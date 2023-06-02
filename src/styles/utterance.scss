@@ -23,13 +23,13 @@
       min-width: rem(160);
     }
   }
+
   .utteranceListWrap {
     margin-top: rem(20);
     width: rem(1120);
-    max-height: rem(700);
     border: 1px solid $gray200;
     border-radius: rem(8);
-    overflow-y: auto;
+    border-collapse: collapse;
 
     .utteranceTable {
       width: 100%;
@@ -37,98 +37,124 @@
       overflow: hidden;
       border-collapse: collapse;
 
-      thead,
-      tbody {
-        tr {
+      .utteranceThead {
+        .utteranceTheadTr {
           text-align: left;
           height: rem(40);
           background-color: $gray150;
           display: flex;
           align-items: center;
-
-          .utteranceList {
-            padding: rem(12) rem(20);
-          }
-          .intent {
-            width: 20%;
-          }
-          .hidden-scenarioList {
-            width: 40%;
-          }
-          .add {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            .addBtn {
-              margin-left: rem(10);
-              width: rem(16);
-              height: rem(16);
-              border: none;
-              background-image: url('@assets/icons/ic_utterance_add.svg');
-              cursor: pointer;
-              background-position: center;
-              background-repeat: no-repeat;
-            }
-          }
-          .connectScenarios {
-            width: 30%;
-            &.connectScenarios-notActivated {
-              color: $gray250;
-            }
-          }
-
-          .utterance {
-            width: 50%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-
-          .icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: rem(100);
-
-            .icDelete {
-              width: rem(38);
-              height: rem(38);
-              margin-left: 15px;
-              padding: rem(8);
-              background-color: $grayWhite;
-              border: 1px solid $gray200;
-              border-radius: rem(8);
-              cursor: pointer;
-              background-image: url('@assets/icons/ic_delete_default.svg');
-              background-position: center;
-              background-repeat: no-repeat;
-              &:hover {
-                background-color: $primary100;
-              }
-              &:disabled {
-                background-image: url('@assets/icons/ic_delete_disable.svg');
-                background-position: center;
-                background-repeat: no-repeat;
-                &:hover {
-                  background-color: $grayWhite;
-                }
-              }
-            }
-          }
         }
       }
 
-      .list {
-        height: rem(54);
-        border-bottom: 1px solid $gray150;
+      .utteranceTbody {
+        display: block;
+        max-height: calc(100vh - 450px);
+        overflow-y: auto;
+        border-collapse: collapse;
         background-color: $grayWhite;
-
-        cursor: pointer;
-        &:last-child {
-          border-bottom: none;
+        .utteranceTbodyTr {
+          height: rem(54);
+          border-bottom: 1px solid $gray150;
+          background-color: $grayWhite;
+          cursor: pointer;
+          &:last-child {
+            border-bottom: none;
+          }
+          &:hover {
+            background-color: $primary100;
+          }
+          text-align: left;
+          display: flex;
+          align-items: center;
         }
-        &:hover {
-          background-color: $primary100;
+      }
+      .utteranceTbody::-webkit-scrollbar {
+        width: rem(8);
+        height: rem(8);
+        background-color: rgba(208, 221, 255, 0);
+      }
+      .utteranceTbody::-webkit-scrollbar-thumb {
+        height: 30%;
+        background-color: rgba(208, 221, 255, 0);
+        border-radius: rem(18);
+        transition: background-color 2s ease-out;
+      }
+      *:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(208, 221, 255, 0.8);
+      }
+
+      thead,
+      tbody,
+      tr {
+        .utteranceList {
+          padding: rem(12) rem(20);
+        }
+        .intent {
+          width: 20%;
+        }
+        .hidden-scenarioList {
+          width: 40%;
+        }
+        .add {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          .addBtn {
+            margin-left: rem(10);
+            width: rem(16);
+            height: rem(16);
+            border: none;
+            background-image: url('@assets/icons/ic_utterance_add.svg');
+            cursor: pointer;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+        }
+        .connectScenarios {
+          width: 30%;
+          &.connectScenarios-notActivated {
+            color: $gray250;
+          }
+        }
+
+        .utterance {
+          width: 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: rem(100);
+
+          .icDelete {
+            width: rem(38);
+            height: rem(38);
+            margin-left: 15px;
+            padding: rem(8);
+            background-color: $grayWhite;
+            border: 1px solid $gray200;
+            border-radius: rem(8);
+            cursor: pointer;
+            background-image: url('@assets/icons/ic_delete_default.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            &:hover {
+              background-color: $primary100;
+            }
+            &:disabled {
+              background-image: url('@assets/icons/ic_delete_disable.svg');
+              background-position: center;
+              background-repeat: no-repeat;
+              &:hover {
+                background-color: $grayWhite;
+              }
+            }
+          }
         }
       }
 
@@ -139,6 +165,7 @@
         justify-content: center;
         align-items: center;
         color: $gray500;
+        overflow: hidden;
 
         .empty {
           display: flex;
@@ -167,19 +194,4 @@
     max-height: rem(476);
     overflow-y: auto;
   }
-
-  // .utteranceListWrap::-webkit-scrollbar {
-  //   width: rem(8);
-  //   height: rem(8);
-  //   background-color: rgba(208, 221, 255, 0);
-  // }
-  // .utteranceListWrap::-webkit-scrollbar-thumb {
-  //   height: 30%;
-  //   background-color: rgba(208, 221, 255, 0);
-  //   border-radius: rem(18);
-  //   transition: background-color 2s ease-out;
-  // }
-  // *:hover::-webkit-scrollbar-thumb {
-  //   background-color: rgba(208, 221, 255, 0.8);
-  // }
 }

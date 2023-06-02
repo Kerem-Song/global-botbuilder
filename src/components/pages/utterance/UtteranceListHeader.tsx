@@ -31,8 +31,8 @@ export const UtteranceListHeader: FC<IUtteranceListHeaderProps> = ({
   };
 
   return (
-    <thead>
-      <tr>
+    <thead className="utteranceThead">
+      <tr className="utteranceTheadTr">
         <th
           className={classNames('utteranceList intent add', {
             'hidden-scenarioList': !showScenarioList,

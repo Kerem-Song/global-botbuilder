@@ -84,7 +84,7 @@
     "TITLE": "Image Edit"
   },
   "botTest": {
-    "TITLE": "Test",
+    "BOT_TESTER": "Test",
     "HEADER": "Testing the Bot",
     "ENTER_TEXT": "Please enter text.",
     "SEND": "Send",

@@ -97,7 +97,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   }, [inView]);
 
   return (
-    <tbody>
+    <tbody className="utteranceTbody">
       {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
       {!isFetching && isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
@@ -112,7 +112,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                 <tr
                   key={i}
                   ref={ref}
-                  className="list"
+                  className="utteranceTbodyTr"
                   onClick={() => handleIntent(x.intentId)}
                 >
                   <td
@@ -156,7 +156,8 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               );
             });
           })
-        : !isFetching && (
+        : !isFetching &&
+          initialData?.pages[0].items.length === 0 && (
             <tr className="emptyList popup">
               <td className="empty">
                 <img src={icNoResult} alt="empty" />
