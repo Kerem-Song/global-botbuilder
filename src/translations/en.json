@@ -3,7 +3,17 @@
     "HELLO": "hello.",
     "WELCOME": "Nice to meet you, {{who}}",
     "TITLE": "Home Page",
-    "YES": "yes."
+    "YES": "yes.",
+    "SEARCH_PLACEHOLDER": "Input Bot Name",
+    "MY_CHATBOT": "My Chatbot",
+    "NEW_BOT_TITLE": "Create a New bot",
+    "NEW_BOT_OK_MESSAGE": "You have created a new chatbot.",
+    "BOT_NAME_PLACEHOLDER": "Input Title",
+    "BOT_NAME_LABEL": "Bot Name",
+    "PROD_CHANNEL": "Operating Channel",
+    "TEST_CHANNEL": "Test Channel",
+    "EMPTY_DESCRIPTION": "No search results found.",
+    "BOT_STATUS_ACTIVE": "Active"
   },
   "common": {
     "SAVE": "save"
@@ -63,7 +73,13 @@
     "INPUT_REPRESENTATIVE_ENTRY": "Input representative entry",
     "INPUT_REGULAR_EXPRESSION": "Input regular expression",
     "ADD_ENTRY": "Add",
-    "DELETE_ENTITY": "Delete Entity"
+    "DELETE_ENTITY": "Delete Entity",
+    "DUPLICATION": "Duplication",
+    "CUT": "Cut",
+    "TO_PASTE": "To Paste",
+    "DELETE": "Delete",
+    "UTTERANCE": "Utterance",
+    "RENAME": "Rename"
   },
   "test": {
     "TITLE": "test page"
@@ -74,7 +90,7 @@
     "IMAGEEDITOR": "Image Editor",
     "UTTERANCE": "Intent",
     "SKILL": "Skill",
-    "DEPLOYMENT": "Deployment",
+    "DEPLOY": "Deployment",
     "HISTORY": "History",
     "STATISTICS": "Statistics",
     "HELP": "Help",
@@ -170,6 +186,7 @@
     "CHANNEL_NAME": "Channel Name",
     "DEPLOYMENT_DATE_AND_TIME": "Date and Time",
     "OPERATOR": "Operator",
+    "ACCOUNT": "Account",
     "OPERATOR_ACCOUNT": "Operator(Account)",
     "DEPLOYMENT_STATUS": "Deployment Status",
     "MEMO": "Memo",

@@ -10,7 +10,7 @@
     "BOT_NAME_LABEL": "봇 이름",
     "PROD_CHANNEL": "운영채널",
     "TEST_CHANNEL": "테스트채널",
-    "EMPTY_DESCRIPTION": "No search results found.",
+    "EMPTY_DESCRIPTION": "검색 결과가 없습니다.",
     "BOT_STATUS_ACTIVE": "Active"
   },
   "common": {
@@ -24,7 +24,7 @@
     "REQUIRE_MESSAGE": "필수 입력 항목입니다.",
     "MIN_LENGTH_MESSAGE": "최소 {{val}}자 이상 입력해주세요.",
     "BOTNAME_REGEX_MESSAGE": "특수문자는 ~.,?_ - ! # $ % ^ & * ( ) = [ ] ( ) + < > 만 사용 가능합니다.",
-    "DELETE_MESSAGE": "삭제되었습니다",
+    "DELETE_MESSAGE": "삭제되었습니다.",
     "SAVE_MESSAGE": "저장되었습니다.",
     "SAVE_FAIL_MESSAGE": "저장에 실패하였습니다.",
     "SAVE_CONFIRM_TITLE": "저장하기",
@@ -272,7 +272,13 @@
     "NODE_LINK_POPUP_MENU_JSON_REQUEST_NODE": "API Request",
     "NODE_LINK_POPUP_MENU_DATA_BASIC_CARD_NODE": "Data 기본 카드",
     "NODE_LINK_POPUP_MENU_DATA_LIST_CARD_NODE": "Data 리스트",
-    "NODE_LINK_POPUP_MENU_DATA_PRODUCT_CARD_NODE": "Data 커머스"
+    "NODE_LINK_POPUP_MENU_DATA_PRODUCT_CARD_NODE": "Data 커머스",
+    "DUPLICATION": "복사",
+    "CUT": "잘라내기",
+    "TO_PASTE": "붙여넣기",
+    "DELETE": "삭제",
+    "UTTERANCE": "발화",
+    "RENAME": "이름 바꾸기"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",
@@ -282,7 +288,7 @@
     "IMAGEEDITOR": "이미지 에디터",
     "UTTERANCE": "인텐트",
     "SKILL": "스킬",
-    "DEPLOYMENT": "배포",
+    "DEPLOY": "배포",
     "HISTORY": "히스토리",
     "STATISTICS": "통계",
     "HELP": "도움말",
@@ -443,6 +449,7 @@
     "DEPLOYING_FAILED": "배포 실패",
     "DEPLOYING_FAILED_MESSAGE": "배포에 실패했습니다. 다시 시도해주세요.\n계속해서 오류가 발생하는 경우 관리자에게 문의해주세요.",
     "DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE": "배포에 실패했습니다.\n파트너스 센터에서 채널 연결을 확인해주세요.",
+    "DEPLOYING_CONFIRM_MESSAGE": "채널에\n모든 변경사항을 배포하시겠습니까?",
     "SUCCESS": "성공",
     "FAILED": "실패",
     "OPERATIONAL": "운영 채널",

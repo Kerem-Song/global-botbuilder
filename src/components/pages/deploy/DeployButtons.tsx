@@ -25,9 +25,11 @@ export const DeployButtons = () => {
       title: testLinked ? t('DEPLOY_TEST_CHANNEL') : t('DEPLOY_OPERATIONAL_CHANNEL'),
       description: (
         <span>
-          <span style={{ color: 'blue' }}>{channelInfos}</span> 채널에
-          <br />
-          모든 변경사항을 배포하시겠습니까?
+          <span style={{ color: 'blue' }}>{channelInfos}</span>
+          <span style={{ whiteSpace: 'pre-wrap' }}>
+            {' '}
+            {t('DEPLOYING_CONFIRM_MESSAGE')}
+          </span>
         </span>
       ),
     });
@@ -38,7 +40,7 @@ export const DeployButtons = () => {
       };
       const res = await deployingBotAsync(deployChannel);
       if (res && res.isSuccess) {
-        lunaToast.success('배포가 완료되었습니다.');
+        lunaToast.success(t('DEPLOYING_SUCCESS'));
       } else {
         error({
           title: t('DEPLOYING_FAILED'),

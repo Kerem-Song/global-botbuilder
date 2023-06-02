@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 export const UploadBotProfile = () => {
   const [iconImage, setIconImage] = useState<File | null>();
   const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
   const { error } = useSystemModal();
@@ -108,7 +108,8 @@ export const UploadBotProfile = () => {
       const res = await botImageUploadAsync(send);
 
       if (res) {
-        lunaToast.success();
+        console.log('res', res);
+        lunaToast.success(tc('SAVE_MESSAGE'));
         setIsProfileSaveBtnActive(false);
       }
     }

@@ -7,8 +7,10 @@ import {
 } from '@assets';
 import { IPopperItem } from '@components/navigation';
 import {
+  useI18n,
   useModalOpen,
   useNodeContextMenu,
+  usePage,
   useRootState,
   useScenarioClient,
 } from '@hooks';
@@ -40,6 +42,7 @@ let dirtySelect: string | undefined;
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
+  const { t } = usePage();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -261,7 +264,7 @@ export const Botbuilder = () => {
   const canvasContextMenu: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'duplication',
-      name: 'Duplication',
+      name: t('DUPLICATION'),
       type: 'icon-front',
       icon: icCardDuplicationDisabled,
       data: {
@@ -270,7 +273,7 @@ export const Botbuilder = () => {
     },
     {
       id: 'cut',
-      name: 'Cut',
+      name: t('CUT'),
       type: 'icon-front',
       icon: icCardCutDisabled,
       data: {
@@ -279,7 +282,7 @@ export const Botbuilder = () => {
     },
     {
       id: 'paste',
-      name: 'To Paste',
+      name: t('TO_PASTE'),
       type: 'icon-front',
       icon: clipBoard ? icCardPaste : icCardPasteDisabled,
       data: {
@@ -290,7 +293,7 @@ export const Botbuilder = () => {
     },
     {
       id: 'delete',
-      name: 'Delete',
+      name: t('DELETE'),
       type: 'icon-front',
       icon: icCardDeleteDisabled,
       data: {

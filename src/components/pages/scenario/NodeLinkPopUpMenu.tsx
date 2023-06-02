@@ -308,7 +308,7 @@ export const NodeLinkPopUpMenu = ({
       onWheel={(e) => e.stopPropagation()}
     >
       <Input
-        placeholder="Input search text"
+        placeholder={t('INPUT_SEARCH_WORD')}
         search
         value={userInput}
         onSearch={(v) => onSearch(v)}

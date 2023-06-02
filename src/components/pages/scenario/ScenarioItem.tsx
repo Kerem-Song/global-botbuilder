@@ -100,14 +100,14 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   }>[] = [
     {
       id: `rename`,
-      name: 'Rename',
+      name: t('RENAME'),
       data: {
         action: handleScenariRename,
       },
     },
     {
       id: `delete`,
-      name: 'Delete',
+      name: t('DELETE'),
       data: {
         action: handleScenarioDelete,
       },
