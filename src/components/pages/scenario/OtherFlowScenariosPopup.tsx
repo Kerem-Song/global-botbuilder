@@ -1,5 +1,5 @@
 import { Col, Input, ItemType, Row } from '@components';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { INode, NODE_TYPES, NodeKind } from '@models';
@@ -20,6 +20,8 @@ export const OtherFlowScenariosPopup = () => {
   const otherflowPopupRef = useRef<HTMLDivElement | null>(null);
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
+  const { t } = usePage();
+
   const popUpPosition = useRootState(
     (state) => state.otherFlowScenariosPopupStatusReducer.popupPosition,
   );
@@ -153,7 +155,7 @@ export const OtherFlowScenariosPopup = () => {
     >
       <>
         <Input
-          placeholder="Input search text"
+          placeholder={t('INPUT_SEARCH_WORD')}
           search
           onSearch={(data) => onSearch(data as string)}
           onChange={(e) => setUserInput(e.currentTarget.value)}

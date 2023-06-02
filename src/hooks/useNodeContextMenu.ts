@@ -1,6 +1,6 @@
 import { icCardCut, icCardDelete, icCardDuplication, icEditCarousel } from '@assets';
 import { IPopperItem } from '@components';
-import { useRootState } from '@hooks';
+import { useI18n, useRootState } from '@hooks';
 import { INode, NODE_TYPES, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -13,7 +13,6 @@ import {
   setSelected,
 } from '@store/botbuilderSlice';
 import { appendNode, removeItem } from '@store/makingNode';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import usePage from './usePage';
@@ -25,7 +24,7 @@ export const useNodeContextMenu = ({
   handleIsOpen: (value: boolean) => void;
   handleIsOpenUtterancePopup: (value: boolean) => void;
 }) => {
-  const { tc } = usePage();
+  const { t, tc } = usePage();
   const dispatch = useDispatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
@@ -114,7 +113,7 @@ export const useNodeContextMenu = ({
   }>[] = [
     {
       id: 'duplication',
-      name: 'Duplication',
+      name: t('DUPLICATION'),
       type: 'icon-front',
       icon: icCardDuplication,
       data: {
@@ -124,7 +123,7 @@ export const useNodeContextMenu = ({
     },
     {
       id: 'cut',
-      name: 'Cut',
+      name: t('CUT'),
       type: 'icon-front',
       icon: icCardCut,
       data: {
@@ -134,7 +133,7 @@ export const useNodeContextMenu = ({
     },
     {
       id: 'delete',
-      name: 'Delete',
+      name: t('DELETE'),
       type: 'icon-front',
       icon: icCardDelete,
       data: {
@@ -144,7 +143,7 @@ export const useNodeContextMenu = ({
     },
     {
       id: 'carousel',
-      name: 'Carousel',
+      name: t('CAROUSEL'),
       type: 'icon-front',
       icon: icEditCarousel,
       data: {
@@ -154,7 +153,7 @@ export const useNodeContextMenu = ({
     },
     {
       id: 'utterance',
-      name: 'Utterance',
+      name: t('UTTERANCE'),
       type: 'icon-front',
       icon: icEditCarousel,
       data: {

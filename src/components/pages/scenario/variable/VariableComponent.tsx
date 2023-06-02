@@ -12,7 +12,7 @@ import { VariablePopup } from './VariablePopup';
 
 export const VariableComponent = () => {
   const [isVariableList, setIsVariableList] = useState<IVariableList>();
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const { getVariableListQuery, variableDeleteAsync } = useVariableClient();
   const { data: variableList } = getVariableListQuery();
   const { confirm } = useSystemModal();
@@ -35,7 +35,7 @@ export const VariableComponent = () => {
 
       const res = await variableDeleteAsync(deleteVariable);
       if (res && res.isSuccess) {
-        lunaToast.success('삭제되었습니다.');
+        lunaToast.success(tc('DELETE_MESSAGE'));
       }
     }
   };

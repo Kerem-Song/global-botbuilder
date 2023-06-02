@@ -86,7 +86,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     const res = await variableAsync(saveParameter);
 
     if (res && res.isSuccess) {
-      lunaToast.success();
+      lunaToast.success(tc('SAVE_MESSAGE'));
       reset();
       handleClose();
     } else if (res?.exception?.errorCode === 7636) {

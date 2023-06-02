@@ -116,7 +116,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       const res = await intentDeleteAsync(deleteIntent);
 
       if (res && res.isSuccess) {
-        lunaToast.success('삭제되었습니다.');
+        lunaToast.success(tc('DELETE_MESSAGE'));
         if (isOpenUtteranceDetailPopup && handleClose) {
           handleClose();
         } else {
@@ -142,7 +142,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
     const res = await intentAsync(saveIntent);
 
     if (res && res.isSuccess) {
-      lunaToast.success();
+      lunaToast.success(tc('SAVE_MESSAGE'));
       if (isOpenUtteranceDetailPopup && handleClose) {
         handleClose();
       } else {

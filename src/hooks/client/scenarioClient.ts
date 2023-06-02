@@ -1,3 +1,4 @@
+import { usePage } from '@hooks';
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
@@ -22,6 +23,8 @@ import { SCENARIO_LIST_SELECT_QUERY_KEY } from './scenarioSelectClient';
 const SCENARIO_LIST = 'scenario-list';
 
 export const useScenarioClient = () => {
+  const { tc } = usePage();
+
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const http = useHttp();
@@ -210,7 +213,7 @@ export const useScenarioClient = () => {
       });
 
       if (res) {
-        lunaToast.success();
+        lunaToast.success(tc('SAVE_MESSAGE'));
         queryClient.invalidateQueries(['scenario', scenarioId]);
         queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);

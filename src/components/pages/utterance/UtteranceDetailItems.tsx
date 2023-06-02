@@ -2,7 +2,7 @@ import { icNoResult } from '@assets';
 import { Checkbox, Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row, Space } from '@components/layout';
-import { useI18n, useSystemModal } from '@hooks';
+import { useI18n, usePage, useSystemModal } from '@hooks';
 import { IUtteranceModel } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
@@ -25,6 +25,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
+  const { tc } = usePage();
   const { t } = useI18n('utternaceDetailPage');
 
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
@@ -56,7 +57,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
         const index = getValues().items.indexOf(item);
         remove(index);
       });
-      lunaToast.success('삭제되었습니다.');
+      lunaToast.success(tc('DELETE_MESSAGE'));
     }
   };
 
