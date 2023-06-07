@@ -62,12 +62,33 @@ export const ImageSettings = ({
       if (ratio === ImageAspectRatio.Rectangle) {
         setImageRatio(ImageAspectRatio.Rectangle);
 
-        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
+        if (imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) {
+          const childrenViewsLength = watch(`view.childrenViews`);
+
+          for (const i in childrenViewsLength) {
+            setValue(
+              `view.childrenViews.${i}.imageCtrl.aspectRatio`,
+              ImageAspectRatio.Rectangle,
+            );
+          }
+        } else {
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
+        }
       }
       if (ratio === ImageAspectRatio.Square) {
         setImageRatio(ImageAspectRatio.Square);
-
-        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
+        if (imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) {
+          const childrenViewsLength = watch(`view.childrenViews`);
+          console.log('@childrenViewsLength', childrenViewsLength);
+          for (const i in childrenViewsLength) {
+            setValue(
+              `view.childrenViews.${i}.imageCtrl.aspectRatio`,
+              ImageAspectRatio.Square,
+            );
+          }
+        } else {
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
+        }
       }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
@@ -81,7 +102,7 @@ export const ImageSettings = ({
   };
 
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
-
+  console.log('@field', watch(`view.childrenViews`));
   return (
     <Space direction="vertical">
       <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
