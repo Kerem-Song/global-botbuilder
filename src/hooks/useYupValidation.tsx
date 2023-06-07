@@ -75,7 +75,7 @@ export const useYupValidation = () => {
             is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
             then: yup
               .string()
-              .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
+              // .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
               .required(t(`VALIDATION_REQUIRED`)),
           }),
       }),
