@@ -13,9 +13,9 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
   const { t } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
+    { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
     { value: ACTION_TYPES.ACT_VALUE_IS_UTTR, label: t(`SET_MESSAGE`) },
     { value: ACTION_TYPES.LBL_IS_UTTR, label: t(`SET_BUTTON_NAME`) },
-    { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
   ];
   const { setValue, control } = useFormContext();
   const reactSelectStyle = getReactSelectStyle({});

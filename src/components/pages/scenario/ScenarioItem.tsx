@@ -41,23 +41,62 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       flowId: item.id,
       activated: e.target.checked,
     });
-    console.log('@test', test);
-    const exception = await scenarioCheckDeleteAsync({
-      token: token!,
-      scenarioId: item.id,
-    });
+
+    // const exception = await scenarioCheckDeleteAsync({
+    //   token: token!,
+    //   scenarioId: item.id,
+    // })
+    //   .then(async (res) => {
+    //     if (!res) {
+    //       console.log('@err 없음');
+    //       await scenarioActiveAsync({
+    //         token: token!,
+    //         flowId: item.id,
+    //         activated: e.target.checked,
+    //       });
+    //     } else {
+    //       console.log('@err 있음');
+    //       const result = await confirm({
+    //         title: t('SCENARIO_OFF_TITLE'),
+    //         description: (
+    //           <>
+    //             <span>{t('SCENARIO_OFF_LINK_MESSAGE', { scenario: item.alias })}</span>
+    //             <br />
+    //             <span style={{ color: '#ff4975', fontWeight: 500 }}>
+    //               : {res.linkInfos.map((l) => l.currentFlowAlias).join(',')}
+    //             </span>
+    //             <br />
+    //             <span>{tc('OFF_CONFIRM')}</span>
+    //           </>
+    //         ),
+    //       });
+    //       if (result) {
+    //         const res = await scenarioActiveAsync({
+    //           token: token!,
+    //           flowId: item.id,
+    //           activated: e.target.checked,
+    //         });
+    //         if (res) {
+    //           lunaToast.success(tc(`SAVE_MESSAGE`));
+    //         }
+    //       }
+    //     }
+    //   })
+    //   .catch((err) => console.log('@err', err));
+    // console.log('@exception', exception);
 
     // if (!exception) {
-    //   const res = await scenarioActiveAsync({
+    //   await scenarioActiveAsync({
     //     token: token!,
     //     flowId: item.id,
     //     activated: e.target.checked,
-    //   });
-    //   if (res) {
-    //     console.log('@resultresult', res);
-    //     lunaToast.success(tc('SAVE_MESSAGE'));
-    //   }
-    // } else if (exception) {
+    // });
+    // if (res) {
+    //   console.log('@resultresult', res);
+    //   lunaToast.success(tc('SAVE_MESSAGE'));
+    // }
+    // }
+    // else if (exception) {
     //   const result = await confirm({
     //     title: t('SCENARIO_OFF_TITLE'),
     //     description: (
