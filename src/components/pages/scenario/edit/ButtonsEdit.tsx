@@ -29,7 +29,7 @@ export const ButtonsEdit = ({
   nodeId?: string;
   useCounter: boolean;
 }) => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
     { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
@@ -52,10 +52,25 @@ export const ButtonsEdit = ({
   });
 
   const handleAddButton = () => {
-    console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 3) {
-      append(nodeDefaultHelper.createDefaultButtonCtrl(fields.length));
+      const buttonNameRegex = new RegExp(t(`BUTTON`));
+      const filtered = fields.filter((button) => buttonNameRegex.test(button.label));
+      let index = 1;
+
+      if (filtered) {
+        const regex = /[^0-9]/g;
+        const results = filtered?.map((x) => Number(x.label?.replace(regex, ''))) || [];
+        const max = Math.max(...results);
+
+        for (let i = 1; i <= max + 1; i++) {
+          if (!results.includes(i)) {
+            index = i;
+            break;
+          }
+        }
+      }
+      append(nodeDefaultHelper.createDefaultButtonCtrl(index - 1));
     } else {
       //modal alert
       console.log('3개까지 가능');
