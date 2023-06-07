@@ -55,19 +55,21 @@ export const ListCardNodeEdit = () => {
 
   return (
     <>
-      <div className="node-item-wrap">
+      <Collapse label={t(`LIST_NODE_HEAD_TITLE_SETTING`)} useSwitch={false}>
         <FormItem error={errors.view?.header}>
           <InputWithTitleCounter
-            label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+            label={t(`LIST_NODE_HEAD_TITLE_INPUT`)}
             required={true}
             showCount={true}
             maxLength={15}
+            isLight={true}
             {...register('view.header')}
             textLength={watch('view.header')?.length || 0}
+            placeholder={t(`LIST_NODE_HEAD_TITLE_INPUT_PLACEHOLDER`)}
             readOnly={isHistoryViewer}
           />
         </FormItem>
-      </div>
+      </Collapse>
       <Collapse
         label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}
         useSwitch={true}
@@ -84,7 +86,7 @@ export const ListCardNodeEdit = () => {
           </FormItem>
         )}
       </Collapse>
-      <Collapse label={t(`LIST`)} useSwitch={false}>
+      <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
@@ -112,6 +114,7 @@ export const ListCardNodeEdit = () => {
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                       listItemIndex={i}
                       registerName={`view.items.${i}.imageUrl`}
+                      placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                     />
                   </>
                 </FormItem>
@@ -122,13 +125,14 @@ export const ListCardNodeEdit = () => {
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
                     <InputWithTitleCounter
-                      label={t(`TITLE_INPUT`)}
+                      label={t(`ENTER_TITLE`)}
                       showCount={true}
                       maxLength={36}
                       required={true}
                       isLight={true}
                       {...register(`view.items.${i}.title`)}
                       textLength={watch(`view.items.${i}.title`)?.length || 0}
+                      placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                       readOnly={isHistoryViewer}
                     />
                   </FormItem>
@@ -139,18 +143,19 @@ export const ListCardNodeEdit = () => {
               <Space direction="vertical">
                 <span className="label">
                   <InputWithTitleCounter
-                    label={t(`CONTENT_INPUT`)}
+                    label={t(`ENTER_CONTENT`)}
                     showCount
                     maxLength={16}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
                     textLength={watch(`view.items.${i}.description`)?.length || 0}
+                    placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
                     readOnly={isHistoryViewer}
                   />
                 </span>
               </Space>
             </div>
-            {i > 0 && (
+            {i > 1 && (
               <div className="deleteBtn">
                 <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
                   {t(`DELETE_A_LIST`)}

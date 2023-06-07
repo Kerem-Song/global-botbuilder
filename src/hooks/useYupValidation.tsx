@@ -141,19 +141,22 @@ export const useYupValidation = () => {
       .nullable()
       .when(['useImageCtrl', 'title'], {
         is: (useImageCtrl: boolean, title: string) => useImageCtrl && title.length > 0,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       })
       .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title.length,
-        then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
+        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title,
+        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
       })
       .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => useImageCtrl && !title.length,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+        is: (useImageCtrl: boolean, title: string) => {
+          console.log('@useimg ctrl', useImageCtrl, 'title:', title);
+          return useImageCtrl && !title;
+        },
+        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       })
       .when(['useImageCtrl', 'title'], {
         is: (useImageCtrl: boolean, title: string) => !useImageCtrl && title.length > 0,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       }),
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
@@ -245,7 +248,7 @@ export const useYupValidation = () => {
         }
         return true;
       })
-      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAX_LIMIT`, { max: 99999999 }))
+      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAXIMUM`, { max: 99999999 }))
       .transform((value, originalValue) => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       })

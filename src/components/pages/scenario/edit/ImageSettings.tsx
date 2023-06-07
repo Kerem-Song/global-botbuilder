@@ -14,6 +14,7 @@ export const ImageSettings = ({
   index,
   listItemIndex,
   isValid,
+  isDataCard,
 }: IImageSetting) => {
   const { t } = usePage();
   const { confirm } = useSystemModal();
@@ -153,6 +154,11 @@ export const ImageSettings = ({
         index={index}
         listItemIndex={listItemIndex}
         registerName={imageUrl}
+        placeholder={
+          isDataCard
+            ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
+            : t(`IMAGE_INPUT_PLACEHOLDER`)
+        }
       />
     </Space>
   );

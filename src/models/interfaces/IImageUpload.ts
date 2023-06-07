@@ -8,6 +8,7 @@ export interface IImageSetting {
   index?: number;
   listItemIndex?: number;
   isValid?: boolean;
+  isDataCard?: boolean;
 }
 
 export interface IImageCtrlIdPathProps {

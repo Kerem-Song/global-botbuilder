@@ -130,6 +130,7 @@ export const DataBasicCardNodeEdit = () => {
               setImageRatio={setImageRatio}
               imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
               isValid={errors.view?.imageCtrl?.imageUrl ? false : true}
+              isDataCard={true}
             />
           </FormItem>
         )}
@@ -150,7 +151,7 @@ export const DataBasicCardNodeEdit = () => {
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               readOnly={isHistoryViewer}
               isLight={true}
-              label={t(`TITLE_INPUT`)}
+              label={t(`ENTER_TITLE`)}
               maxRows={2.125}
               minRows={2.125}
             />
@@ -170,7 +171,7 @@ export const DataBasicCardNodeEdit = () => {
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               readOnly={isHistoryViewer}
               isLight={true}
-              label={t(`CONTENT_INPUT`)}
+              label={t(`ENTER_CONTENT`)}
               maxRows={17}
               minRows={2.125}
             />

@@ -151,6 +151,7 @@ export const DataProductCardNodeEdit = () => {
               setImageRatio={setImageRatio}
               imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
               isValid={errors.view?.imageCtrl?.imageUrl ? false : true}
+              isDataCard={true}
             />
           </FormItem>
         </Collapse>
@@ -180,6 +181,7 @@ export const DataProductCardNodeEdit = () => {
                   <ImageInput
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                     registerName={`view.profileIconUrl`}
+                    placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                   />
                 </>
               </FormItem>
@@ -270,11 +272,12 @@ export const DataProductCardNodeEdit = () => {
               </FormItem>
               <FormItem error={errors.view && errors.view.description}>
                 <InputWithTitleCounter
-                  label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                  label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
                   required={true}
                   {...register(`view.description`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
+                  placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                 />
               </FormItem>
             </Space>

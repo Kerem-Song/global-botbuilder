@@ -47,7 +47,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
   };
 
   return (
-    <Collapse label={t(`LIST`)} useSwitch={false}>
+    <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
       {fields.map((item, j) => (
         <div key={item.id}>
           <div className="m-b-8">
@@ -83,6 +83,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                     index={nestedIndex}
                     listItemIndex={j}
                     registerName={`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`}
+                    placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                   />
                 </>
               </FormItem>
@@ -95,7 +96,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                   error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
                 >
                   <InputWithTitleCounter
-                    label={t(`TITLE_INPUT`)}
+                    label={t(`ENTER_TITLE`)}
                     showCount={true}
                     maxLength={36}
                     required={true}
@@ -105,6 +106,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                       watch(`view.childrenViews.${nestedIndex}.items.${j}.title`)
                         ?.length || 0
                     }
+                    placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
                     readOnly={isHistoryViewer}
                   />
                 </FormItem>
@@ -115,7 +117,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
             <Space direction="vertical">
               <span className="label">
                 <InputWithTitleCounter
-                  label={t(`CONTENT_INPUT`)}
+                  label={t(`ENTER_CONTENT`)}
                   showCount
                   maxLength={16}
                   isLight={true}
@@ -126,12 +128,13 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                     watch(`view.childrenViews.${nestedIndex}.items.${j}.description`)
                       ?.length || 0
                   }
+                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
                   readOnly={isHistoryViewer}
                 />
               </span>
             </Space>
           </div>
-          {j > 0 && (
+          {j > 1 && (
             <div className="deleteBtn">
               <Button shape="ghost" onClick={() => handleDeleteListButton(j)}>
                 {t(`DELETE_A_LIST`)}

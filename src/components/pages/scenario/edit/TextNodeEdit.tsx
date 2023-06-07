@@ -2,6 +2,7 @@ import { FormItem } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
+import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
@@ -23,7 +24,7 @@ export const TextNodeEdit = () => {
       <div className="node-item-wrap">
         <FormItem error={errors.view && errors.view?.text}>
           <InputTextAreaWithTitleCounter
-            className="textNodeTextArea"
+            className={classNames('textNodeTextArea', { invalid: errors.view?.text })}
             maxRows={17}
             label={t(`TEXT`)}
             required={true}

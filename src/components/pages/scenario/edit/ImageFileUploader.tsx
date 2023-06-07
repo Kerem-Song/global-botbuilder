@@ -28,6 +28,8 @@ export const ImageFileUploader = ({
   const { error, info } = useSystemModal();
 
   const token = useRootState((state) => state.botInfoReducer.token);
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botImg = botInfo?.iconUrl;
 
   const {
     imageCtrl: imgCtrl,
@@ -109,6 +111,7 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
+  console.log('@botImg', botImg);
   return (
     <>
       <label
@@ -134,11 +137,18 @@ export const ImageFileUploader = ({
                 <img src={watch(imgPath)} alt="templateImage" />
               ) : (
                 <img
-                  src={`${
-                    import.meta.env.VITE_API_BASE_URL
-                  }/builderimage/forbuilder?origin=${getValues(
-                    imageUrl,
-                  )}&sessionToken=${token}`}
+                  src={
+                    (botInfo &&
+                      imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL) ||
+                    (botInfo &&
+                      imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL)
+                      ? botImg
+                      : `${
+                          import.meta.env.VITE_API_BASE_URL
+                        }/builderimage/forbuilder?origin=${getValues(
+                          imageUrl,
+                        )}&sessionToken=${token}`
+                  }
                   alt="templateImage"
                 />
               )

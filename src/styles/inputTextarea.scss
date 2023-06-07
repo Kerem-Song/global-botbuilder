@@ -5,6 +5,10 @@
   border: 1px solid $gray200;
   font-family: 'Pretendard';
   border-radius: rem(8);
+
+  &.invalid {
+    border: rem(1) solid $red;
+  }
 }
 
 // .textInput::-webkit-scrollbar {
@@ -62,6 +66,11 @@
   //max-height: rem(320);
   overflow-y: auto;
   resize: none;
+  
+  &.invalid {
+    border: 1px solid $red;
+    border-radius: rem(8);
+  }
 
   &.jsonResOverlay {
     position: absolute;

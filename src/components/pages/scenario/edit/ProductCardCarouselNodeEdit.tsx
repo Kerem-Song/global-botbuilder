@@ -76,11 +76,11 @@ export const ProductCardCarouselNodeEdit = () => {
     );
   }, [watch(`view.childrenViews.${index}.discountAmount`)]);
 
-  useEffect(() => {
-    if (!watch(`view.childrenViews.${index}.retailPrice`)) {
-      setValue(`view.childrenViews.${index}.retailPrice`, 0);
-    }
-  }, [watch(`view.childrenViews.${index}.retailPrice`)]);
+  // useEffect(() => {
+  //   if (!watch(`view.childrenViews.${index}.retailPrice`)) {
+  //     setValue(`view.childrenViews.${index}.retailPrice`, 0);
+  //   }
+  // }, [watch(`view.childrenViews.${index}.retailPrice`)]);
 
   return (
     <>
@@ -147,6 +147,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               }
                               index={index}
                               registerName={`view.childrenViews.${index}.profileIconUrl`}
+                              placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                             />
                           </>
                         </FormItem>
@@ -191,7 +192,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           }
                         >
                           <InputWithTitleCounter
-                            label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                            label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
                             showCount={true}
                             maxLength={30}
                             required={true}
@@ -202,6 +203,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             }
                             isLight={true}
                             readOnly={isHistoryViewer}
+                            placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                           />
                         </FormItem>
 
@@ -221,8 +223,10 @@ export const ProductCardCarouselNodeEdit = () => {
                                   {...register(
                                     `view.childrenViews.${index}.retailPrice`,
                                     {
-                                      setValueAs: (v) =>
-                                        v === '' ? undefined : parseInt(v),
+                                      setValueAs: (v) => {
+                                        console.log('@v', v);
+                                        return v === '' ? undefined : parseFloat(v);
+                                      },
                                       onChange: (
                                         e: React.ChangeEvent<HTMLInputElement>,
                                       ) => checkPriceRegex(e, index, 'retailPrice'),
@@ -253,7 +257,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               `view.childrenViews.${index}.discountAmount`,
 
                               {
-                                setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                                setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                                   checkPriceRegex(e, index, 'discountAmount'),
                               },
@@ -272,7 +276,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               `view.childrenViews.${index}.salePrice`,
 
                               {
-                                setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                                setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                                   checkPriceRegex(e, index, 'salePrice'),
                               },

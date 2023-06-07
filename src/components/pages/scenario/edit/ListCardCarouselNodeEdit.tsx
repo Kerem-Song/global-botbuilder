@@ -49,21 +49,23 @@ export const ListCardCarouselNodeEdit = () => {
           (childrenView, i) =>
             index === i && (
               <div key={childrenView.id}>
-                <div className="node-item-wrap">
+                <Collapse label={t(`LIST_NODE_HEAD_TITLE_SETTING`)} useSwitch={false}>
                   <FormItem error={errors.view?.childrenViews?.[index]?.header}>
                     <InputWithTitleCounter
-                      label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
+                      label={t(`LIST_NODE_HEAD_TITLE_INPUT`)}
                       required={true}
                       showCount={true}
                       maxLength={15}
+                      isLight={true}
                       {...register(`view.childrenViews.${index}.header`)}
                       textLength={
                         watch(`view.childrenViews.${index}.header`)?.length || 0
                       }
+                      placeholder={t(`LIST_NODE_HEAD_TITLE_INPUT_PLACEHOLDER`)}
                       readOnly={isHistoryViewer}
                     />
                   </FormItem>
-                </div>
+                </Collapse>
 
                 <Collapse
                   label={t(`LIST_NODE_HEAD_IMAGE_SETTING`)}

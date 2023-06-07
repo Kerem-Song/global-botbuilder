@@ -26,6 +26,8 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
   });
 
   const token = useRootState((state) => state.botInfoReducer.token);
+  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botImg = botInfo?.iconUrl;
 
   return (
     <Card onClick={() => console.log('card click')}>
@@ -79,7 +81,11 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
                 />
               }
             >
-              <ImageWithToken origin={view.profileIconUrl} />
+              {botInfo ? (
+                <img src={botImg} alt="profileImage" />
+              ) : (
+                <ImageWithToken origin={view.profileIconUrl} />
+              )}
             </Suspense>
             {view.profileName ? (
               <span>{view.profileName}</span>

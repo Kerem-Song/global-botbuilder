@@ -156,11 +156,12 @@ export const DataListCardNodeEdit = () => {
               setImageRatio={setImageRatio}
               imageCtrl={IMAGE_CTRL_TYPES.IMAGE_CTRL}
               isValid={errors.view?.imageCtrl?.imageUrl ? false : true}
+              isDataCard={true}
             />
           </FormItem>
         )}
       </Collapse>
-      <Collapse label={t(`LIST`)} useSwitch={false}>
+      <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
@@ -188,6 +189,7 @@ export const DataListCardNodeEdit = () => {
                       imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
                       listItemIndex={i}
                       registerName={`view.items.${i}.imageUrl`}
+                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                     />
                   </>
                 </FormItem>
@@ -206,7 +208,7 @@ export const DataListCardNodeEdit = () => {
                     /> */}
                     <InputTextAreaWithTitleCounter
                       {...register(`view.items.${i}.title`)}
-                      label={t(`TITLE_INPUT`)}
+                      label={t(`ENTER_TITLE`)}
                       required={true}
                       placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                       readOnly={isHistoryViewer}
@@ -229,7 +231,7 @@ export const DataListCardNodeEdit = () => {
                   /> */}
                   <InputTextAreaWithTitleCounter
                     {...register(`view.items.${i}.description`)}
-                    label={t(`CONTENT_INPUT`)}
+                    label={t(`ENTER_CONTENT`)}
                     placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                     isLight={true}
                     readOnly={isHistoryViewer}
@@ -239,7 +241,7 @@ export const DataListCardNodeEdit = () => {
                 </span>
               </Space>
             </div>
-            {i > 0 && (
+            {i > 1 && (
               <div className="deleteBtn">
                 <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
                   {t(`DELETE_A_LIST`)}

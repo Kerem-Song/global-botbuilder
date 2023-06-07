@@ -1,3 +1,4 @@
+import { useRootState } from '@hooks';
 import { ConditionJoin, ImageAspectRatio, TNodeTypes, VIEW_TYPES } from '@models';
 import { PriceDisplayType } from '@models/enum';
 import {

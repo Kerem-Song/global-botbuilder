@@ -97,6 +97,7 @@ export const ProductCardNodeEdit = () => {
                   <ImageInput
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                     registerName={`view.profileIconUrl`}
+                    placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                   />
                 </>
               </FormItem>
@@ -125,7 +126,7 @@ export const ProductCardNodeEdit = () => {
             <Space direction="vertical">
               <FormItem error={errors.view && errors.view.description}>
                 <InputWithTitleCounter
-                  label={t(`PRODUCT_NODE_PRODUCT_NAME`)}
+                  label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
                   showCount={true}
                   maxLength={30}
                   required={true}
@@ -133,6 +134,7 @@ export const ProductCardNodeEdit = () => {
                   textLength={watch(`view.description`)?.length || 0}
                   isLight={true}
                   readOnly={isHistoryViewer}
+                  placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                 />
               </FormItem>
 
@@ -147,7 +149,7 @@ export const ProductCardNodeEdit = () => {
                         label={t(`PRODUCT_NODE_PRICE`)}
                         required={true}
                         {...register(`view.retailPrice`, {
-                          setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                          setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
                           onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                             checkPriceRegex(e, 'retailPrice'),
                         })}
@@ -166,7 +168,7 @@ export const ProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountAmount`, {
-                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                    setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                       checkPriceRegex(e, 'discountAmount'),
                   })}
@@ -179,7 +181,7 @@ export const ProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePrice`, {
-                    setValueAs: (v) => (v === '' ? undefined : parseInt(v)),
+                    setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                       checkPriceRegex(e, 'salePrice'),
                   })}

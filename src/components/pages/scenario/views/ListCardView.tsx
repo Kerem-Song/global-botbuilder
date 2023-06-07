@@ -1,7 +1,7 @@
 import { Card } from '@components/data-display';
 import { SortableListContainer } from '@components/data-display/SortableListContainer';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -16,6 +16,7 @@ export interface IListCardViewProps {
   view: IListCardView;
 }
 export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) => {
+  const { t } = usePage();
   const [squareMode, setSquareMode] = useState<boolean>(false);
   const thumbnailClass = classNames('thumbnail', {
     square: view.imageCtrl?.aspectRatio === ImageAspectRatio.Square,
@@ -25,15 +26,14 @@ export const ListCardView: FC<IListCardViewProps> = ({ nodeId, index, view }) =>
 
   return (
     <Card onClick={() => console.log('card click')}>
-      {view.header ? (
-        <div
-          className={classNames('title list', {
-            empty: !view.header,
-          })}
-        >
-          {view.header ? <p>{view.header}</p> : <p>Enter Head Title</p>}
-        </div>
-      ) : null}
+      <div
+        className={classNames('title list', {
+          empty: !view.header,
+        })}
+      >
+        {view.header ? <p>{view.header}</p> : <p>{t(`LIST_NODE_HEAD_TITLE_INPUT`)}</p>}
+      </div>
+
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (
         <div className={thumbnailClass}>
           {/* {view.imageCtrl?.imageUrl ? (
