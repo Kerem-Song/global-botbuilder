@@ -161,29 +161,17 @@ export const useYupValidation = () => {
   });
 
   const basicCardNodeEditSchema = yup.object().shape({
-    title: yup
-      .string()
-      .nullable()
-      .trim()
-      .max(20, t(`VALIDATION_STRING_LIMIT`, { maxCount: 20 })),
+    title: yup.string().nullable().trim(),
     description: yup
       .string()
       .nullable()
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => useImageCtrl && title.length > 0,
+      .when('useImageCtrl', {
+        is: (useImageCtrl: boolean) => useImageCtrl,
         then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title.length,
+      .when('useImageCtrl', {
+        is: (useImageCtrl: boolean) => !useImageCtrl,
         then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 400 })),
-      })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => useImageCtrl && !title.length,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
-      })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && title.length > 0,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
       }),
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
