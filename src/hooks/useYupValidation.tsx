@@ -46,7 +46,7 @@ export const useYupValidation = () => {
             is: ACTION_TYPES.ACT_VALUE_IS_UTTR,
             then: yup
               .string()
-              .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
+              // .max(14, t(`VALIDATION_STRING_LIMIT`, { maxCount: 14 }))
               .required(t(`VALIDATION_REQUIRED`)),
           }),
       }),
@@ -139,23 +139,22 @@ export const useYupValidation = () => {
     description: yup
       .string()
       .nullable()
-      .when('useImageCtrl', {
-        is: true,
-        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => useImageCtrl && title.length > 0,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       })
-      .when('useImageCtrl', {
-        is: false,
-        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title.length,
+        then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
       })
-      .when('title', {
-        is: (title: string) => title?.length > 0,
-        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => useImageCtrl && !title.length,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       })
-      .when('title', {
-        is: (title: string) => !title,
-        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
+      .when(['useImageCtrl', 'title'], {
+        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && title.length > 0,
+        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
       }),
-
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
@@ -181,7 +180,7 @@ export const useYupValidation = () => {
     header: yup
       .string()
       .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
+      // .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
       .required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
     items: yup.array().of(
@@ -189,9 +188,9 @@ export const useYupValidation = () => {
         title: yup
           .string()
           .trim()
-          .max(36, t(`VALIDATION_STRING_LIMIT`, { maxCount: 36 }))
+          // .max(36, t(`VALIDATION_STRING_LIMIT`, { maxCount: 36 }))
           .required(t(`VALIDATION_REQUIRED`)),
-        description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT`, { maxCount: 16 })),
+        // description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT`, { maxCount: 16 })),
         imageFile: imageFileEditSchema,
         imageUrl: yup
           .string()
@@ -229,12 +228,12 @@ export const useYupValidation = () => {
     profileName: yup
       .string()
       .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
+      // .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
       .required(t(`VALIDATION_REQUIRED`)),
     description: yup
       .string()
       .trim()
-      .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
+      // .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
       .required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
       .number()
@@ -376,10 +375,8 @@ export const useYupValidation = () => {
   });
 
   const productCardCarouselNodeEditSchema = yup.object().shape({
-    header: yup
-      .string()
-      .trim()
-      .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 })),
+    header: yup.string().trim(),
+    // .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 })),
     childrenViews: yup.array().of(productCardNodeEditSchema),
   });
 
