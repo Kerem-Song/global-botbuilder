@@ -23,8 +23,6 @@ export const BasicCardView: FC<IBasicCardViewProps> = ({ nodeId, index, view }) 
     textCard: false,
   });
 
-  const token = useRootState((state) => state.botInfoReducer.token);
-
   return (
     <Card>
       {view.imageCtrl?.imageUrl || view.useImageCtrl ? (

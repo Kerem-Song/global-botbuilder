@@ -54,14 +54,17 @@ export const Collapse: FC<CollapseProps> = ({
       });
       console.log('result', result);
       if (result) {
+        const childrenViews = watch('view.childrenViews');
         setIsCollapsed(false);
         setValue(`view.useImageCtrl`, false);
-        setValue(
-          index !== undefined
-            ? `view.childrenViews.${index}.imageCtrl.imageUrl`
-            : `view.imageCtrl.imageUrl`,
-          '',
-        );
+
+        if (index !== undefined && childrenViews) {
+          for (const i in childrenViews) {
+            setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
+          }
+        } else {
+          setValue(`view.imageCtrl.imageUrl`, '');
+        }
       } else {
         setValue(`view.useImageCtrl`, true);
       }

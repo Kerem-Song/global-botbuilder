@@ -143,7 +143,7 @@ export const useNodeContextMenu = ({
     },
     {
       id: 'carousel',
-      name: t('CAROUSEL'),
+      name: t('CAROUSEL_SETTING'),
       type: 'icon-front',
       icon: icEditCarousel,
       data: {

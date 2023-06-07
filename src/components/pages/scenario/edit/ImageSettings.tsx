@@ -102,7 +102,7 @@ export const ImageSettings = ({
   };
 
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
-  console.log('@field', watch(`view.childrenViews`));
+
   return (
     <Space direction="vertical">
       <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>

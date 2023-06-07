@@ -281,7 +281,8 @@
     "TO_PASTE": "붙여넣기",
     "DELETE": "삭제",
     "UTTERANCE": "발화",
-    "RENAME": "이름 바꾸기"
+    "RENAME": "이름 바꾸기",
+    "CAROUSEL_SETTING": "캐로셀 편집"
   },
   "sidebar": {
     "PARTNERS_CENTER": "파트너스 센터",
