@@ -2,10 +2,13 @@ import { imgLinebot } from '@assets';
 import { Card, Col, Row, Space } from '@components';
 import { usePage } from '@hooks';
 import { IBotModel } from '@models';
+import classNames from 'classnames';
 import { FC } from 'react';
 
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
   const { navigate, t } = usePage();
+  const operatingChannelName = model.channelInfos?.find((x) => x.isLive)?.name;
+  const testChannelName = model.channelInfos?.find((x) => !x.isLive)?.name;
   return (
     <Card
       radius="large"
@@ -41,12 +44,20 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
     >
       <Space direction="vertical" className="channelWrapper" gap={4}>
         <span className="channel-title">{t('PROD_CHANNEL')}</span>
-        <span className="channel-name">
-          {model.channelInfos?.find((x) => x.isLive)?.name || '-'}
+        <span
+          className={classNames('channel-name', {
+            'empty-channel-name': operatingChannelName === null,
+          })}
+        >
+          {operatingChannelName || '-'}
         </span>
         <span className="channel-title">{t('TEST_CHANNEL')}</span>
-        <span className="channel-name">
-          {model.channelInfos?.find((x) => !x.isLive)?.name || '-'}
+        <span
+          className={classNames('channel-name', {
+            'empty-channel-name': testChannelName === null,
+          })}
+        >
+          {testChannelName || '-'}
         </span>
       </Space>
     </Card>

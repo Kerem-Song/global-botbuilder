@@ -59,9 +59,8 @@ header {
 
       .userName {
         position: relative;
-        padding: rem(8) rem(12) rem(8) rem(28);
-        width: rem(110);
         height: rem(32);
+        padding: rem(8) rem(12) rem(8) rem(12);
         text-align: center;
         color: $grayWhite;
         background-color: $gray700;
@@ -70,14 +69,6 @@ header {
         font-size: rem(13);
         line-height: rem(16);
         cursor: pointer;
-
-        &::before {
-          position: absolute;
-          display: inline-block;
-          top: 27%;
-          left: 17%;
-          content: url('@assets/icons/ic_user.svg');
-        }
 
         &:hover {
           color: $gray300;

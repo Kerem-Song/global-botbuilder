@@ -10,7 +10,7 @@ import {
 } from '@models';
 import { setTesterData } from '@store/botTesterSlice';
 import classNames from 'classnames';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 
 export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
@@ -155,7 +155,11 @@ export const TesterMessagesItemButton = ({
         className={itemButton}
         onClick={(e) => {
           e.stopPropagation();
-          window.open(webLinkUrl);
+          if (webLinkUrl?.startsWith('http')) {
+            window.open(webLinkUrl);
+          } else {
+            window.open(`https://${webLinkUrl}`);
+          }
         }}
       >
         {item.label}
