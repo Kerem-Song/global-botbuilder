@@ -1,3 +1,4 @@
+import { icUser } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
 import { useModalOpen } from '@hooks';
@@ -130,7 +131,9 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
               }
             }}
           >
-            <button className="userName">{userInfo.loginUserName}</button>
+            <Button shape="ghost" icon={icUser} className="userName">
+              {userInfo.loginUserName}
+            </Button>
           </Popper>
           <BotTesterComponent isOpen={isOpen} handleIsOpen={handleIsOpen} />
         </div>

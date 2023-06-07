@@ -1,4 +1,4 @@
-import { icSuccess } from '@assets';
+import { icError, icSuccess } from '@assets';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -19,7 +19,7 @@ export const lunaToast = {
   error: (message: string) => {
     toast.error(message, {
       position: 'bottom-center',
-      //icon: () => React.createElement('img', { src: icSuccess, alt: 'success' }),
+      icon: () => React.createElement('img', { src: icError, alt: 'success' }),
       theme: 'dark',
       hideProgressBar: true,
       className: 'luna-toast',
@@ -30,6 +30,7 @@ export const lunaToast = {
   info: (message: string) => {
     toast.info(message, {
       position: 'bottom-center',
+      icon: false,
       //icon: () => React.createElement('img', { src: icSuccess, alt: 'success' }),
       theme: 'dark',
       hideProgressBar: true,

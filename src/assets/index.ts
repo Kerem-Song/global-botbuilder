@@ -52,6 +52,7 @@ import icDuplication from '@assets/icons/ic_duplication.svg';
 import icEditCarousel from '@assets/icons/ic_edit_carousel.svg';
 import icEmptyBot from '@assets/icons/ic_empty_bot.svg';
 import icEnter from '@assets/icons/ic_enter.svg';
+import icError from '@assets/icons/ic_error.svg';
 import icHelp from '@assets/icons/ic_help_default.svg';
 import icHelpSelected from '@assets/icons/ic_help_select.svg';
 import icHide from '@assets/icons/ic_hide.svg';
@@ -195,6 +196,7 @@ export {
   icEditCarousel,
   icEmptyBot,
   icEnter,
+  icError,
   icHelp,
   icHelpSelected,
   icHide,
