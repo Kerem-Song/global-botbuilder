@@ -51,8 +51,8 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
 
   return (
     <ReactModal
-      overlayClassName="utterancePopupOverlay"
-      className="utteranceModal node-draggable-ignore"
+      overlayClassName="utterancePopupOverlay node-draggable-ignore"
+      className="utteranceModal"
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
     >
