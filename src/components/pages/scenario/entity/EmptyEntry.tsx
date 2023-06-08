@@ -14,7 +14,7 @@ export const EmptyEntry: FC<IEmptyEntryProps> = ({ searchKeyword }) => {
       <div className="empty">
         <img src={icNoResult} alt="empty" />
         <span>
-          {searchKeyword ? t('NO_SEARCH_ENTRIES_RESULT_FOUND') : t('NO_ENTRY_REGISTERED')}
+          {searchKeyword ? t('NO_SEARCH_ENTRY_RESULT_FOUND') : t('NO_ENTRY_REGISTERED')}
         </span>
       </div>
     </div>
