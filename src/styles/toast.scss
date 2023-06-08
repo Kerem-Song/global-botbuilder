@@ -10,3 +10,14 @@
   color: $grayWhite;
   line-height: rem(18);
 }
+
+.luna-toast-closeBtn {
+  padding: 0;
+  height: auto;
+  .icon {
+    img {
+      width: rem(16);
+      height: rem(16);
+    }
+  }
+}

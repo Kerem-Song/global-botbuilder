@@ -130,6 +130,7 @@ import icTesterPrevActive from '@assets/icons/ic_tester_prev_active.svg';
 import icTesterPrevInactive from '@assets/icons/ic_tester_prev_inactive.svg';
 import icText from '@assets/icons/ic_text.svg';
 import icTextHover from '@assets/icons/ic_text_hover.svg';
+import icToastClosed from '@assets/icons/ic_toast_closed.svg';
 import icUser from '@assets/icons/ic_user.svg';
 import icUtteranceAdd from '@assets/icons/ic_utterance_add.svg';
 import icUtterance from '@assets/icons/ic_utterance_default.svg';
@@ -276,6 +277,7 @@ export {
   icTesterPrevInactive,
   icText,
   icTextHover,
+  icToastClosed,
   icUser,
   icUtterance,
   icUtteranceAdd,
