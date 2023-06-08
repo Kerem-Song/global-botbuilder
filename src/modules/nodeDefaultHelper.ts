@@ -177,7 +177,7 @@ export const nodeDefaultHelper = {
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
       },
-      buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
+      buttons: [],
     };
 
     return result;

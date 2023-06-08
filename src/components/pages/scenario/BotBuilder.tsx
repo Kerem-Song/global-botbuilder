@@ -312,6 +312,7 @@ export const Botbuilder = () => {
   };
 
   const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log('@e.code', e.code);
     if (e.code === 'KeyZ' && e.ctrlKey) {
       updateLineAll();
       dispatch(ActionCreators.undo());

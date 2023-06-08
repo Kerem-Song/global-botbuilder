@@ -93,6 +93,8 @@ export const ButtonsEdit = ({
     );
   }, [nodeId]);
 
+  console.log('@fields', fields);
+
   return (
     <>
       {fields.map((item, i) => (
@@ -194,6 +196,7 @@ export const ButtonsEdit = ({
                         ? `view.buttons.${i}.actionValue`
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
+                    placeholder={t(`SET_URL_PLACEHOLDER`)}
                   />
                 </FormItem>
               </>
