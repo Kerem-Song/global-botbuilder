@@ -248,19 +248,19 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
           setIsActive={setIsActive}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         />
+        <AddUtterance
+          formMethods={formMethods}
+          prepend={prepend}
+          setIsActive={setIsActive}
+        />
+        <UtteranceDetailItems
+          formMethods={formMethods}
+          fields={fields}
+          remove={remove}
+          setIsActive={setIsActive}
+          isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+        />
       </form>
-      <AddUtterance
-        formMethods={formMethods}
-        prepend={prepend}
-        setIsActive={setIsActive}
-      />
-      <UtteranceDetailItems
-        formMethods={formMethods}
-        fields={fields}
-        remove={remove}
-        setIsActive={setIsActive}
-        isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-      />
     </div>
   );
 };

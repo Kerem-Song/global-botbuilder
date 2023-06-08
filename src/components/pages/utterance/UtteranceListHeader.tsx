@@ -44,7 +44,13 @@ export const UtteranceListHeader: FC<IUtteranceListHeaderProps> = ({
         {showScenarioList ? (
           <th className="utteranceList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
         ) : null}
-        <th className="utteranceList utterance">{t('UTTERANCE')}</th>
+        <th
+          className={classNames('utteranceList utterance', {
+            'hidden-scenarioList-utterance': !showScenarioList,
+          })}
+        >
+          {t('UTTERANCE')}
+        </th>
         <th className="utteranceList icon" />
       </tr>
     </thead>
