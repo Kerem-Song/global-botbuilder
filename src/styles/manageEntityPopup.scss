@@ -223,7 +223,6 @@
                   height: 100%;
                 }
                 .input-error {
-                  min-height: rem(38);
                 }
               }
               .representativeEntry {
@@ -240,6 +239,7 @@
                 padding: 4px 11px;
                 color: $grayBlack;
                 font-size: rem(13);
+
                 line-height: 1.5715;
                 background-color: #fff;
                 background-image: none;
@@ -252,6 +252,7 @@
                 }
                 &.error {
                   border: 1px solid $red;
+                  height: rem(38);
                   &:focus-within {
                     border-color: $red;
                     box-shadow: 0 0 0 2px setAlpha($red, 0.2);
@@ -357,7 +358,7 @@
                   }
                 }
                 &.error {
-                  height: rem(38);
+                  // height: rem(38);
                 }
               }
               .icDelete {

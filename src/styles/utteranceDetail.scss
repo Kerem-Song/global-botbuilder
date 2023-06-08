@@ -53,7 +53,8 @@
     overflow: hidden;
 
     .utteranceItems {
-      max-height: rem(390);
+      // max-height: rem(390);
+      max-height: calc(100vh - 550px);
       overflow-y: auto;
     }
     .utteranceItems::-webkit-scrollbar {
