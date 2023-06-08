@@ -116,7 +116,7 @@ export const DataProductCardNodeEdit = () => {
             />
           </Col>
         </div>
-        <p>{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
           <Row justify="space-between" className="m-b-8">
             <Col span={12} className="radioContainer">
@@ -232,27 +232,26 @@ export const DataProductCardNodeEdit = () => {
                   priceDisplayTypeField.onChange(options?.value)
                 }
               />
-              <div className="m-b-8">
-                <FormItem error={errors.view && errors.view.retailPriceParam}>
-                  <Row justify="space-between" gap={4}>
-                    <Col span={16} className="retailPrice">
-                      <InputWithTitleCounter
-                        className={classNames({
-                          'luna-input-error': errors.view?.retailPriceParam,
-                        })}
-                        label={t(`PRODUCT_NODE_PRICE`)}
-                        required={true}
-                        {...register(`view.retailPriceParam`)}
-                        isLight={true}
-                        readOnly={isHistoryViewer}
-                      />
-                    </Col>
-                    <Col className="productSelectorWrapper" span={8}>
-                      <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
-                    </Col>
-                  </Row>
-                </FormItem>
-              </div>
+
+              <FormItem error={errors.view && errors.view.retailPriceParam}>
+                <Row justify="space-between" gap={4}>
+                  <Col span={16} className="retailPrice">
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.retailPriceParam,
+                      })}
+                      label={t(`PRODUCT_NODE_PRICE`)}
+                      required={true}
+                      {...register(`view.retailPriceParam`)}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                    />
+                  </Col>
+                  <Col className="productSelectorWrapper" span={8}>
+                    <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
+                  </Col>
+                </Row>
+              </FormItem>
 
               <FormItem error={errors.view && errors.view.discountAmountParam}>
                 <InputWithTitleCounter

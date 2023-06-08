@@ -33,9 +33,7 @@ export const ImageInput = ({
 
   const isHistoryViewer = useHistoryViewerMatch();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const botImg = botInfo?.iconUrl;
-  console.log('@botimg', botImg);
+
   const { imageUrl, imgPath } = handleImageCtrlIdPath({
     imageCtrl,
     index,
@@ -44,8 +42,8 @@ export const ImageInput = ({
 
   const handleImgOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     if (!e.target.value) {
-      setValue(imgPath, botInfo ? botImg : '');
-      setValue(imageUrl, botInfo ? botImg : '');
+      setValue(imgPath, '');
+      setValue(imageUrl, '');
     } else {
       setValue(
         imgPath,
@@ -53,11 +51,10 @@ export const ImageInput = ({
           import.meta.env.VITE_API_BASE_URL
         }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
       );
-      setValue(imageUrl, botInfo ? botImg : e.target.value.trim());
+      setValue(imageUrl, e.target.value.trim());
     }
   };
 
-  console.log('@err', errors);
   return (
     <div className="imageInput">
       <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>

@@ -111,7 +111,18 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
-  console.log('@botImg', botImg);
+  useEffect(() => {
+    if (
+      !watch(imageUrl) &&
+      botInfo &&
+      (imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL ||
+        imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL) &&
+      values.view.id
+    ) {
+      setValue(imageCtrlPath, botImg);
+    }
+  }, [values]);
+
   return (
     <>
       <label
@@ -137,18 +148,11 @@ export const ImageFileUploader = ({
                 <img src={watch(imgPath)} alt="templateImage" />
               ) : (
                 <img
-                  src={
-                    (botInfo &&
-                      imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL) ||
-                    (botInfo &&
-                      imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL)
-                      ? botImg
-                      : `${
-                          import.meta.env.VITE_API_BASE_URL
-                        }/builderimage/forbuilder?origin=${getValues(
-                          imageUrl,
-                        )}&sessionToken=${token}`
-                  }
+                  src={`${
+                    import.meta.env.VITE_API_BASE_URL
+                  }/builderimage/forbuilder?origin=${getValues(
+                    imageUrl,
+                  )}&sessionToken=${token}`}
                   alt="templateImage"
                 />
               )

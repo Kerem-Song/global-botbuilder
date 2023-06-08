@@ -111,6 +111,7 @@ export const ProductCardNodeEdit = () => {
                   required={true}
                   showCount={true}
                   maxLength={15}
+                  isLight={true}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
                   readOnly={isHistoryViewer}
@@ -138,32 +139,31 @@ export const ProductCardNodeEdit = () => {
                 />
               </FormItem>
 
-              <div className="m-b-8">
-                <FormItem error={errors.view && errors.view.retailPrice}>
-                  <Row justify="space-between" gap={4}>
-                    <Col span={16} className="retailPrice">
-                      <InputWithTitleCounter
-                        className={classNames({
-                          'luna-input-error': errors.view?.retailPrice,
-                        })}
-                        label={t(`PRODUCT_NODE_PRICE`)}
-                        required={true}
-                        {...register(`view.retailPrice`, {
-                          setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
-                          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                            checkPriceRegex(e, 'retailPrice'),
-                        })}
-                        maxLength={11}
-                        isLight={true}
-                        readOnly={isHistoryViewer}
-                      />
-                    </Col>
-                    <Col className="productSelectorWrapper" span={8}>
-                      <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
-                    </Col>
-                  </Row>
-                </FormItem>
-              </div>
+              <FormItem error={errors.view && errors.view.retailPrice}>
+                <Row justify="space-between" gap={4}>
+                  <Col span={16} className="retailPrice">
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.retailPrice,
+                      })}
+                      label={t(`PRODUCT_NODE_PRICE`)}
+                      required={true}
+                      {...register(`view.retailPrice`, {
+                        setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                          checkPriceRegex(e, 'retailPrice'),
+                      })}
+                      maxLength={11}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                    />
+                  </Col>
+                  <Col className="productSelectorWrapper" span={8}>
+                    <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
+                  </Col>
+                </Row>
+              </FormItem>
+
               <FormItem error={errors.view && errors.view.discountAmount}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}

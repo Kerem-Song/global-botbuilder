@@ -106,7 +106,7 @@ export const SoratbleCarouselCtrlContainer = ({
       setIsDisable(false);
     }
   }, [carouselNode, isDisable]);
-
+  console.log('@carouselNode.length', carouselNode, isDisable);
   return (
     <DndContext
       onDragEnd={(e) => handleDragEnd(e)}
@@ -127,9 +127,14 @@ export const SoratbleCarouselCtrlContainer = ({
                 popperItems={contextMenu}
                 onChange={(m) => {
                   if (isDisable && m.data?.action?.name.match('handleDuplicationCard')) {
+                    console.log('@onchange dis');
+                    console.log('m.data?.action?.name', m.data?.action?.name);
                     return;
+                  } else {
+                    console.log('@onchange possible');
+                    console.log('m.data?.action?.name', m.data?.action?.name);
+                    m.data?.action?.(item.id, carouselNode);
                   }
-                  m.data?.action?.(item.id, carouselNode);
                 }}
                 key={i}
                 disabled={isHistoryViewer}

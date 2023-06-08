@@ -56,11 +56,8 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           </Suspense>
         </div>
       ) : null}
-
-      {view.profileIconUrl ? (
-        <>
-          <div className="profile">
-            {/* {view.profileIconUrl ? (
+      <div className="profile">
+        {/* {view.profileIconUrl ? (
               <img
                 src={`${
                   import.meta.env.VITE_API_BASE_URL
@@ -72,31 +69,24 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             ) : (
               <div className="skeleton"></div>
             )} */}
-            <Suspense
-              fallback={
-                <ReactLoadingSkeleton
-                  width={20}
-                  height={20}
-                  baseColor="rgba(0,0,0,0.06)"
-                />
-              }
-            >
-              {botInfo ? (
-                <img src={botImg} alt="profileImage" />
-              ) : (
-                <ImageWithToken origin={view.profileIconUrl} />
-              )}
-            </Suspense>
-            {view.profileName ? (
-              <span>{view.profileName}</span>
-            ) : (
-              <span className="empty">{t(`PRODUCT_NODE_SET_BRAND_NAME`)}</span>
-            )}
-          </div>
-          <Divider className="commerceDivider" />
-        </>
-      ) : null}
-
+        {view.profileIconUrl ? (
+          <Suspense
+            fallback={
+              <ReactLoadingSkeleton width={20} height={20} baseColor="rgba(0,0,0,0.06)" />
+            }
+          >
+            <ImageWithToken origin={view.profileIconUrl} />
+          </Suspense>
+        ) : (
+          <img src={botImg} alt="profileIcon" />
+        )}
+        {view.profileName ? (
+          <span>{view.profileName}</span>
+        ) : (
+          <span className="empty">{t(`PRODUCT_NODE_SET_BRAND_NAME`)}</span>
+        )}
+      </div>
+      <Divider className="commerceDivider" />
       <div className="priceWrapper">
         {view.retailPrice !== view.salePrice && (
           <div>
@@ -123,7 +113,6 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
         </div>
       </div>
       <Divider style={{ margin: '8px 0' }} />
-
       {view.description !== undefined ? (
         <div className={classNames('productName', { empty: view.description })}>
           {view.description ? (
@@ -135,7 +124,6 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           )}
         </div>
       ) : null}
-
       <div className="buttonWrapper node-draggable-ignore">
         {view.buttons && (
           <SortableButtonCtrlContainer
