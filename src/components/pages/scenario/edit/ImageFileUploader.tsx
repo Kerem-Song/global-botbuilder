@@ -1,4 +1,4 @@
-import { icImg } from '@assets';
+import { icImg, icImgNotFound } from '@assets';
 import { imageUploadClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { ID_TYPES } from '@modules';
@@ -43,6 +43,11 @@ export const ImageFileUploader = ({
     index,
     listItemIndex,
   });
+
+  const builderImageSrc = `${
+    import.meta.env.VITE_API_BASE_URL
+  }/builderimage/forbuilder?origin=${getValues(imageUrl)}&sessionToken=${token}`;
+
   const handleImageCtrlId = () => {
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
@@ -148,12 +153,13 @@ export const ImageFileUploader = ({
                 <img src={watch(imgPath)} alt="templateImage" />
               ) : (
                 <img
-                  src={`${
-                    import.meta.env.VITE_API_BASE_URL
-                  }/builderimage/forbuilder?origin=${getValues(
-                    imageUrl,
-                  )}&sessionToken=${token}`}
+                  src={builderImageSrc}
                   alt="templateImage"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = icImgNotFound;
+                    e.currentTarget.className = 'imgNotFound';
+                  }}
                 />
               )
             ) : (

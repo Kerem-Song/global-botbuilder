@@ -62,6 +62,7 @@ import icHistoryViewer from '@assets/icons/ic_history_viewer.svg';
 import icImg from '@assets/icons/ic_img.svg';
 import icImgAddHover from '@assets/icons/ic_img_add_hover.svg';
 import icImgHover from '@assets/icons/ic_img_hover.svg';
+import icImgNotFound from '@assets/icons/ic_img_notfound.svg';
 import icIntentNode from '@assets/icons/ic_intent_node.svg';
 import icList from '@assets/icons/ic_list.svg';
 import icListHover from '@assets/icons/ic_list_hover.svg';
@@ -140,7 +141,6 @@ import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
 import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
-
 export {
   icAdd,
   icApiRequest,
@@ -206,6 +206,7 @@ export {
   icImg,
   icImgAddHover,
   icImgHover,
+  icImgNotFound,
   icInsta,
   icIntentNode,
   icLine,
