@@ -159,8 +159,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
-      className="entityModal detail"
+      overlayClassName="entityPopupOverlay"
+      className="entityModal detail node-draggable-ignore"
       isOpen={isOpenEntityDetailPopup}
       onRequestClose={handleResetEntryInfo}
     >

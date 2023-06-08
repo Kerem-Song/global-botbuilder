@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import ReactModal from 'react-modal';
 
 import { UtteranceDetail } from './UtteranceDetail';
@@ -20,10 +20,11 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
     handleIsOpenUtterancePopup(true);
     handleCloseUtteranceDetailPopup();
   };
+
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
-      className="entityModal detail"
+      overlayClassName="utterancePopupOverlay"
+      className="utteranceModal detail node-draggable-ignore"
       isOpen={isOpenUtteranceDetailPopup}
       onRequestClose={handleClose}
     >

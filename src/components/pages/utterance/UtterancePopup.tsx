@@ -51,10 +51,8 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
 
   return (
     <ReactModal
-      style={{
-        overlay: { display: 'flex' },
-      }}
-      className="utteranceModal"
+      overlayClassName="utterancePopupOverlay"
+      className="utteranceModal node-draggable-ignore"
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
     >
