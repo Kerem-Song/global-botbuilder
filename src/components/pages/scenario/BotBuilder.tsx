@@ -312,15 +312,12 @@ export const Botbuilder = () => {
   };
 
   const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log('@e.code', e.code);
-    if (e.code === 'KeyZ' && e.ctrlKey) {
+    if (e.shiftKey && e.code === 'KeyZ' && e.ctrlKey) {
+      updateLineAll();
+      dispatch(ActionCreators.redo());
+    } else if (!e.shiftKey && e.code === 'KeyZ' && e.ctrlKey) {
       updateLineAll();
       dispatch(ActionCreators.undo());
-
-      if (e.shiftKey) {
-        updateLineAll();
-        dispatch(ActionCreators.redo());
-      }
     }
   };
 
@@ -352,7 +349,7 @@ export const Botbuilder = () => {
           handleIsOpen(false);
         }}
         onContextMenu={(e) => e.preventDefault()}
-        onKeyDown={handleUndoRedoKeydown}
+        onKeyDown={(e) => handleUndoRedoKeydown(e)}
       >
         <BotBuilderZoomBtn />
 
