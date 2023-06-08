@@ -2,6 +2,8 @@ import { icError, icSuccess } from '@assets';
 import React from 'react';
 import { toast } from 'react-toastify';
 
+import { ToastCloseButton } from './ToastCloseButton';
+
 export const lunaToast = {
   success: (message?: string) => {
     if (message) {
@@ -13,6 +15,7 @@ export const lunaToast = {
         className: 'luna-toast',
         bodyClassName: 'luna-toast-body',
         autoClose: 1000,
+        closeButton: ToastCloseButton,
       });
     }
   },
@@ -25,6 +28,7 @@ export const lunaToast = {
       className: 'luna-toast',
       bodyClassName: 'luna-toast-body',
       autoClose: 1000,
+      closeButton: ToastCloseButton,
     });
   },
   info: (message: string) => {
@@ -37,6 +41,7 @@ export const lunaToast = {
       className: 'luna-toast',
       bodyClassName: 'luna-toast-body',
       autoClose: 1000,
+      closeButton: ToastCloseButton,
     });
   },
 };

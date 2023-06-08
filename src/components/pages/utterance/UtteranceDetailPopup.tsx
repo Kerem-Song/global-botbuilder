@@ -20,10 +20,11 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
     handleIsOpenUtterancePopup(true);
     handleCloseUtteranceDetailPopup();
   };
+
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
-      className="entityModal detail"
+      overlayClassName="utterancePopupOverlay node-draggable-ignore"
+      className="utteranceModal detail"
       isOpen={isOpenUtteranceDetailPopup}
       onRequestClose={handleClose}
     >
