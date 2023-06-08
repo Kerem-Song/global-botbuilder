@@ -50,8 +50,26 @@
   .list {
     border-bottom-left-radius: rem(8);
     border-bottom-right-radius: rem(8);
-    max-height: rem(580);
-    overflow-y: scroll;
+    overflow: hidden;
+
+    .utteranceItems {
+      max-height: rem(390);
+      overflow-y: auto;
+    }
+    .utteranceItems::-webkit-scrollbar {
+      width: rem(8);
+      height: rem(8);
+      background-color: rgba(208, 221, 255, 0);
+    }
+    .utteranceItems::-webkit-scrollbar-thumb {
+      height: 30%;
+      background-color: rgba(208, 221, 255, 0);
+      border-radius: rem(18);
+      transition: background-color 2s ease-out;
+    }
+    *:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(208, 221, 255, 0.8);
+    }
 
     div {
       display: flex;
@@ -66,12 +84,15 @@
         margin-bottom: rem(4);
 
         .item {
-          width: 93%;
+          width: rem(990);
           margin-left: rem(12);
           font-size: rem(13);
           line-height: rem(16);
           word-wrap: break-word;
           padding: 10px 0;
+          &.utterance-detailModal-item {
+            width: rem(920);
+          }
         }
         &:hover {
           background-color: $primary100;
@@ -141,20 +162,6 @@
       }
     }
   }
-  .list::-webkit-scrollbar {
-    width: rem(8);
-    height: rem(8);
-    background-color: rgba(208, 221, 255, 0);
-  }
-  .list::-webkit-scrollbar-thumb {
-    height: 30%;
-    background-color: rgba(208, 221, 255, 0);
-    border-radius: rem(18);
-    transition: background-color 2s ease-out;
-  }
-  *:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(208, 221, 255, 0.8);
-  }
 }
 
 .utterance-detailModalWrap {
@@ -167,21 +174,23 @@
   background-color: $grayWhite;
 
   .utterance-detailModal {
-    max-height: rem(300);
-    overflow-y: scroll;
-  }
-  .utterance-detailModal::-webkit-scrollbar {
-    width: rem(8);
-    height: rem(8);
-    background-color: rgba(208, 221, 255, 0);
-  }
-  .utterance-detailModal::-webkit-scrollbar-thumb {
-    height: 30%;
-    background-color: rgba(208, 221, 255, 0);
-    border-radius: rem(18);
-    transition: background-color 2s ease-out;
-  }
-  *:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(208, 221, 255, 0.8);
+    .utterance-detailModal-items {
+      max-height: rem(207);
+      overflow-y: auto;
+    }
+    .utterance-detailModal-items::-webkit-scrollbar {
+      width: rem(8);
+      height: rem(8);
+      background-color: rgba(208, 221, 255, 0);
+    }
+    .utterance-detailModal-items::-webkit-scrollbar-thumb {
+      height: 30%;
+      background-color: rgba(208, 221, 255, 0);
+      border-radius: rem(18);
+      transition: background-color 2s ease-out;
+    }
+    *:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(208, 221, 255, 0.8);
+    }
   }
 }

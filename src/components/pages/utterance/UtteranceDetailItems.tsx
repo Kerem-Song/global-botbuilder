@@ -92,7 +92,12 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           }
         />
       </Space>
-      <Row style={{ marginTop: '12px' }}>
+      <Row
+        className={classNames('utteranceItems', {
+          'utterance-detailModal-items': isOpenUtteranceDetailPopup,
+        })}
+        style={{ marginTop: '12px' }}
+      >
         {watch('items').length === 0 ? (
           <Row style={{ width: '100%', marginTop: '12px' }}>
             <Col className="emptyList utteranceItem">
@@ -110,7 +115,13 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}
                 />
-                <p className="item">{util.replaceKeywordMark(v.text!, searchKeyWord)}</p>
+                <p
+                  className={classNames('item', {
+                    'utterance-detailModal-item': isOpenUtteranceDetailPopup,
+                  })}
+                >
+                  {util.replaceKeywordMark(v.text!, searchKeyWord)}
+                </p>
               </div>
             );
           })

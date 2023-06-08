@@ -135,7 +135,12 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                       {x.flowName === null ? '-' : x.flowName}
                     </td>
                   ) : null}
-                  <td role="presentation" className="utteranceList utterance">
+                  <td
+                    role="presentation"
+                    className={classNames('utteranceList utterance', {
+                      'hidden-scenarioList-utterance': !showScenarioList,
+                    })}
+                  >
                     {searchData?.searchWord
                       ? util.replaceKeywordMark(
                           x.utteranceSummary,
