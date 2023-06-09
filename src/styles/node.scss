@@ -557,3 +557,30 @@
 .dataCardJson div {
   overflow: hidden;
 }
+
+
+.otherFlowRedirectPopup {
+  padding: rem(12) !important;
+
+  .otherFlowRedirectPopupLabelWrapper {
+    padding-bottom: rem(8);
+  
+    .otherFlowRedirectPopupImg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        border: rem(1) solid $gray200;
+        border-radius: rem(4);
+      }
+    }
+    
+    .otherFlowRedirectPopupLabel {
+      padding-left: rem(4);
+      font-size: rem(14);
+      font-weight: 500;
+    }
+  }
+}
+
+

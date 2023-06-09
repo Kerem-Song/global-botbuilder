@@ -1,3 +1,4 @@
+import { icOtherFlowRedirect } from '@assets';
 import { Col, Input, ItemType, Row } from '@components';
 import { usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
@@ -14,7 +15,6 @@ import {
 } from '@store/otherFlowScenarioPopupSlice';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 export const OtherFlowScenariosPopup = () => {
   const dispatch = useDispatch();
   const otherflowPopupRef = useRef<HTMLDivElement | null>(null);
@@ -148,11 +148,19 @@ export const OtherFlowScenariosPopup = () => {
 
   return (
     <div
-      className="luna-node luna-node-bordered border-radious-small luna-popup-container"
+      className="luna-node luna-node-bordered border-radious-small luna-popup-container otherFlowRedirectPopup"
       ref={otherflowPopupRef}
       role="presentation"
       onWheel={(e) => e.stopPropagation()}
     >
+      <Row justify="center" align="center" className="otherFlowRedirectPopupLabelWrapper">
+        <Col className="otherFlowRedirectPopupImg" span={4}>
+          <img src={icOtherFlowRedirect} alt="otherFlowScenarioPopupIcon" />
+        </Col>
+        <Col className="otherFlowRedirectPopupLabel" span={20}>
+          {t(`OTHER_FLOW_REDIRECT_NODE_POPUP_LABEL`)}
+        </Col>
+      </Row>
       <>
         <Input
           placeholder={t('INPUT_SEARCH_WORD')}
