@@ -221,6 +221,7 @@
               .representativeEntryInput {
                 .input-normal {
                   height: 100%;
+                  font-size: rem(13);
                 }
                 .input-error {
                 }
@@ -239,7 +240,6 @@
                 padding: 4px 11px;
                 color: $grayBlack;
                 font-size: rem(13);
-
                 line-height: 1.5715;
                 background-color: #fff;
                 background-image: none;
