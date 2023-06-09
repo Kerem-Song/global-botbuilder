@@ -1,6 +1,7 @@
 import { Col, Input, ItemType, Row } from '@components';
 import { usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
+import { useAddArrow } from '@hooks/useAddArrow';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { INode, NODE_TYPES, NodeKind } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -17,6 +18,7 @@ import { useDispatch } from 'react-redux';
 
 export const OtherFlowScenariosPopup = () => {
   const dispatch = useDispatch();
+  const { addArrowHandler } = useAddArrow();
   const otherflowPopupRef = useRef<HTMLDivElement | null>(null);
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
@@ -72,15 +74,13 @@ export const OtherFlowScenariosPopup = () => {
     dispatch(appendNode(addNode));
 
     if (guide) {
-      dispatch(
-        addArrow({
-          start: guide.startId,
-          end: `${NODE_PREFIX}${addNode.id}`,
-          isNextNode: guide.isNext,
-          updateKey: guide.nodeId,
-          type: guide.type,
-        }),
-      );
+      addArrowHandler({
+        start: guide.startId,
+        end: `${NODE_PREFIX}${addNode.id}`,
+        isNextNode: guide.isNext,
+        updateKey: guide.nodeId,
+        type: guide.type,
+      });
     }
 
     dispatch(otherFlowScenariosPopupStatus(false));

@@ -42,7 +42,8 @@
     "CONDITION_OPERATOR_REGEX": "regex",
     "CONDITION_OPERATOR_ANY": "any",
     "CONDITION_OPERATOR_LESSTHANOREQUAL": "less than or equal",
-    "CONDITION_OPERATOR_GREATERTHANOREQUAL": "greater than or equal"
+    "CONDITION_OPERATOR_GREATERTHANOREQUAL": "greater than or equal",
+    "INVALIDATE_ARROW": "잘못된 연결입니다."
   },
   "scenario": {
     "TITLE": "시나리오",
