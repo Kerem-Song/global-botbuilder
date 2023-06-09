@@ -149,7 +149,6 @@ export const useYupValidation = () => {
       })
       .when(['useImageCtrl', 'title'], {
         is: (useImageCtrl: boolean, title: string) => {
-          console.log('@useimg ctrl', useImageCtrl, 'title:', title);
           return useImageCtrl && !title;
         },
         then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),

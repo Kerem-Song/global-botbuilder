@@ -93,8 +93,6 @@ export const ButtonsEdit = ({
     );
   }, [nodeId]);
 
-  console.log('@fields', fields);
-
   return (
     <>
       {fields.map((item, i) => (
