@@ -4,6 +4,7 @@ import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
+import { useAddArrow } from '@hooks/useAddArrow';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -128,6 +129,7 @@ export const NodeLinkPopUpMenu = ({
   const [userInput, setUserInput] = useState<string>();
 
   const dispatch = useDispatch();
+  const { addArrowHandler } = useAddArrow();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
   const [scenarioList, setScenarioList] = useState<
@@ -191,15 +193,13 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (guideStart) {
-      dispatch(
-        addArrow({
-          start: guideStart.startId,
-          end: `${NODE_PREFIX}${addNode.id}`,
-          isNextNode: guideStart.isNext,
-          updateKey: guideStart.nodeId,
-          type: guideStart.type,
-        }),
-      );
+      addArrowHandler({
+        start: guideStart.startId,
+        end: `${NODE_PREFIX}${addNode.id}`,
+        isNextNode: guideStart.isNext,
+        updateKey: guideStart.nodeId,
+        type: guideStart.type,
+      });
     }
 
     handleIsOpen(false);
@@ -286,15 +286,13 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (guide) {
-      dispatch(
-        addArrow({
-          start: guide.startId,
-          end: `${NODE_PREFIX}${addNode.id}`,
-          isNextNode: guide.isNext,
-          updateKey: guide.nodeId,
-          type: guide.type,
-        }),
-      );
+      addArrowHandler({
+        start: guide.startId,
+        end: `${NODE_PREFIX}${addNode.id}`,
+        isNextNode: guide.isNext,
+        updateKey: guide.nodeId,
+        type: guide.type,
+      });
     }
 
     handleIsOpen(false);

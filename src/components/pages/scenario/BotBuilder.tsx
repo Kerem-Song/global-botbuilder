@@ -7,13 +7,13 @@ import {
 } from '@assets';
 import { IPopperItem } from '@components/navigation';
 import {
-  useI18n,
   useModalOpen,
   useNodeContextMenu,
   usePage,
   useRootState,
   useScenarioClient,
 } from '@hooks';
+import { useAddArrow } from '@hooks/useAddArrow';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
@@ -22,7 +22,7 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
-import { addArrow, appendNode, updateNode } from '@store/makingNode';
+import { appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
@@ -42,6 +42,7 @@ let dirtySelect: string | undefined;
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
+  const { addArrowHandler } = useAddArrow();
   const { t } = usePage();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
@@ -108,7 +109,7 @@ export const Botbuilder = () => {
   }, []);
 
   const handleAddArrows = (arrow: IArrow) => {
-    dispatch(addArrow(arrow));
+    addArrowHandler(arrow);
   };
 
   const handleZoomOut = useCallback(() => {

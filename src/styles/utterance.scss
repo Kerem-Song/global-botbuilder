@@ -68,6 +68,9 @@
           display: flex;
           align-items: center;
         }
+        &.utterance-popup-tbody {
+          min-height: rem(249);
+        }
       }
       .utteranceTbody::-webkit-scrollbar {
         width: rem(8);
@@ -186,15 +189,9 @@
           }
         }
         &.popup {
-          height: rem(432);
+          height: rem(249);
         }
       }
     }
-  }
-
-  .utterancePopupListWrap {
-    width: rem(1040);
-    max-height: rem(476);
-    overflow-y: auto;
   }
 }

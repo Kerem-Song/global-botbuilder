@@ -97,7 +97,11 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   }, [inView]);
 
   return (
-    <tbody className="utteranceTbody">
+    <tbody
+      className={classNames('utteranceTbody', {
+        'utterance-popup-tbody': isOpenUtterancePopup,
+      })}
+    >
       {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
       {!isFetching && isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
