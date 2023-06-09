@@ -367,8 +367,8 @@
           display: flex;
           justify-content: center;
           position: relative;
-          width: rem(218);
-          height: rem(218);
+          width: rem(168);
+          height: rem(168);
 
           .imgUploadSkeleton {
             position: absolute;
@@ -379,13 +379,13 @@
             text-align: center;
 
             img {
-              width: rem(218);
-              height: rem(218);
+              width: 100%;
+              height: rem(168);
               border: rem(1) solid $gray200;
               border-radius: rem(8);
               object-fit: contain;
               background-color: $gray150;
-            }
+            } 
           }
 
           &.small {
@@ -406,12 +406,12 @@
 
         .rectangle {
           width: 100%;
-          height: rem(218);
+          height: rem(168);
           
           img {
             border: rem(1) solid $gray200;
             border-radius: rem(8);
-            max-height: rem(118);
+            max-height: rem(168);
           }
         }
       }
