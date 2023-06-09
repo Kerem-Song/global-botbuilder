@@ -14,17 +14,18 @@ interface IReactSelect {
   label: string;
 }
 
-const countOptions: IReactSelect[] = [
-  { value: 1, label: '1' },
-  { value: 2, label: '2' },
-  { value: 3, label: '3' },
-  { value: 4, label: '4' },
-  { value: 5, label: '5' },
-];
-
 export const RetryConditionNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
+
+  const countOptions: IReactSelect[] = [
+    { value: 1, label: '1' + t(`RETRY_CONDITION_NODE_COUNT_TIME`) },
+    { value: 2, label: '2' + t(`RETRY_CONDITION_NODE_COUNT_TIME`) },
+    { value: 3, label: '3' + t(`RETRY_CONDITION_NODE_COUNT_TIME`) },
+    { value: 4, label: '4' + t(`RETRY_CONDITION_NODE_COUNT_TIME`) },
+    { value: 5, label: '5' + t(`RETRY_CONDITION_NODE_COUNT_TIME`) },
+  ];
+
   const {
     getValues,
     control,
