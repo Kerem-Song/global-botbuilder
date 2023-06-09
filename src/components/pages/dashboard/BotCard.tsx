@@ -1,7 +1,9 @@
 import { imgLinebot } from '@assets';
 import { Card, Col, Row, Space } from '@components';
+import { DisplayDate } from '@components/data-display/DisplayDate';
 import { usePage } from '@hooks';
 import { IBotModel } from '@models';
+import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC } from 'react';
 
@@ -27,9 +29,11 @@ export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
                 </Col>
                 <Col>
                   <span className="created">
-                    {model.lastUpdateUTC
-                      ? new Date(model.lastUpdateUTC).toLocaleDateString()
-                      : ''}
+                    {model.lastUpdateUTC ? (
+                      <DisplayDate date={new Date(model.lastUpdateUTC)} />
+                    ) : (
+                      ''
+                    )}
                   </span>
                 </Col>
               </Row>
