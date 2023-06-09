@@ -129,8 +129,8 @@ export const NodeLinkPopUpMenu = ({
   const [userInput, setUserInput] = useState<string>();
 
   const dispatch = useDispatch();
-  const { addArrowHandler } = useAddArrow();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const { addArrowHandler } = useAddArrow();
 
   const [scenarioList, setScenarioList] = useState<
     {
@@ -193,7 +193,7 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (guideStart) {
-      addArrowHandler({
+      addArrowHandler(nodes, {
         start: guideStart.startId,
         end: `${NODE_PREFIX}${addNode.id}`,
         isNextNode: guideStart.isNext,
@@ -261,7 +261,7 @@ export const NodeLinkPopUpMenu = ({
     }
   }, [data, guideStart]);
 
-  const handleMakingOtherFlow = (
+  const handleMakingOtherFlow = async (
     name: string,
     firstNodeId: string,
     guide?: GuideInfo,
@@ -286,7 +286,7 @@ export const NodeLinkPopUpMenu = ({
     dispatch(appendNode(addNode));
 
     if (guide) {
-      addArrowHandler({
+      addArrowHandler(nodes, {
         start: guide.startId,
         end: `${NODE_PREFIX}${addNode.id}`,
         isNextNode: guide.isNext,

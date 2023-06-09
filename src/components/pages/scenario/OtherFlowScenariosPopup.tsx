@@ -18,12 +18,14 @@ import { useDispatch } from 'react-redux';
 
 export const OtherFlowScenariosPopup = () => {
   const dispatch = useDispatch();
-  const { addArrowHandler } = useAddArrow();
+
   const otherflowPopupRef = useRef<HTMLDivElement | null>(null);
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const { t } = usePage();
 
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const { addArrowHandler } = useAddArrow();
   const popUpPosition = useRootState(
     (state) => state.otherFlowScenariosPopupStatusReducer.popupPosition,
   );
@@ -74,7 +76,7 @@ export const OtherFlowScenariosPopup = () => {
     dispatch(appendNode(addNode));
 
     if (guide) {
-      addArrowHandler({
+      addArrowHandler(nodes, {
         start: guide.startId,
         end: `${NODE_PREFIX}${addNode.id}`,
         isNextNode: guide.isNext,
