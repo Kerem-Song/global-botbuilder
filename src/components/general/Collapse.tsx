@@ -87,6 +87,7 @@ export const Collapse: FC<CollapseProps> = ({
   }, [watch(`view.useImageCtrl`)]);
 
   useEffect(() => {
+    console.log('@@@', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
     if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
       setValue(`view.useImageCtrl`, false);
     }

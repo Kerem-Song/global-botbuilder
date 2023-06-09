@@ -117,6 +117,10 @@ export const ImageFileUploader = ({
   }, [watch(imageFilePath)]);
 
   useEffect(() => {
+    if (!botImg) {
+      return;
+    }
+
     if (
       !watch(imageUrl) &&
       botInfo &&

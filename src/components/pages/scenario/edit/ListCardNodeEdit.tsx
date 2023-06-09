@@ -47,12 +47,6 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
-  useEffect(() => {
-    if (watch(`view.imageCtrl.imageUrl`) !== '') {
-      setValue(`view.useImageCtrl`, true);
-    }
-  }, [watch(`view.imageCtrl.imageUrl`)]);
-
   return (
     <>
       <Collapse label={t(`LIST_NODE_HEAD_TITLE_SETTING`)} useSwitch={false}>

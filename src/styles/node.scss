@@ -182,14 +182,19 @@
           justify-content: start;
           align-items: center;
           overflow: hidden;
-          padding: rem(8) 0 0 rem(4);
+          padding-top: rem(8);
+
           .skeleton {
-            width: rem(24);
-            height: rem(24);
+            width: rem(20);
+            height: rem(20);
             background-color: #ededf0;
+            border: rem(1) solid $gray200;
+            border-radius: rem(2);
           }
           & img {
-            width: rem(15);
+            width: rem(20);
+            border: rem(1) solid $gray200;
+            border-radius: rem(2);
           }
 
           & span {

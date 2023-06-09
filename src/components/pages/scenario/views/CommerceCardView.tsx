@@ -1,3 +1,4 @@
+import { icImgNotFound } from '@assets';
 import { Card } from '@components/data-display';
 import { Divider } from '@components/layout';
 import { SortableButtonCtrlContainer } from '@components/pages/scenario/SortableButtonCtrlContainer';
@@ -77,8 +78,18 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           >
             <ImageWithToken origin={view.profileIconUrl} />
           </Suspense>
+        ) : botImg ? (
+          <img
+            src={botImg}
+            alt="profileIcon"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = icImgNotFound;
+              e.currentTarget.className = 'imgNotFound';
+            }}
+          />
         ) : (
-          <img src={botImg} alt="profileIcon" />
+          <div className="skeleton" />
         )}
         {view.profileName ? (
           <span>{view.profileName}</span>

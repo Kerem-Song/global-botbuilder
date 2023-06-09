@@ -33,12 +33,6 @@ export const DataBasicCardNodeEdit = () => {
     control,
   });
 
-  useEffect(() => {
-    if (watch(`view.imageCtrl.imageUrl`) !== '') {
-      setValue(`view.useImageCtrl`, true);
-    }
-  }, [watch(`view.imageCtrl.imageUrl`)]);
-
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);

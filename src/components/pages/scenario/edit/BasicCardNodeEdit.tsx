@@ -24,11 +24,6 @@ export const BasicCardNodeEdit = () => {
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
-  useEffect(() => {
-    if (watch(`view.imageCtrl.imageUrl`) !== '') {
-      setValue(`view.useImageCtrl`, true);
-    }
-  }, [watch(`view.imageCtrl.imageUrl`)]);
 
   console.log('values in basiccard node edit', values.view);
 
