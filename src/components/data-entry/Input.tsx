@@ -64,6 +64,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     if (e.nativeEvent.isComposing) {
       return;
     }
+
+    onKeydown?.(e);
+
     switch (e.key) {
       case 'Enter':
         onPressEnter?.(inputRef.current?.value);
@@ -121,8 +124,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
     <input
       className={inputClassName}
       {...inputProps}
-      onKeyUp={args.onPressEnter || args.onSearch ? handleKeyUp : undefined}
-      onKeyDown={onKeydown}
+      onKeyDown={
+        args.onPressEnter || args.onSearch || onKeydown ? handleKeyUp : undefined
+      }
       ref={(current) => {
         if (ref) {
           if (typeof ref === 'function') {
