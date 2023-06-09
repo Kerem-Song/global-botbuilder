@@ -18,9 +18,10 @@ export const BasicCardCarouselNode: FC<IHasNode> = ({ node }) => {
   const view = node.view as IBasicCardCarouselView;
 
   const HandleAddCarousel = () => {
+    const useImageCtrl = view.useImageCtrl;
     const childrenViews: IBasicCardView[] = [
       ...view.childrenViews,
-      nodeDefaultHelper.createDefaultBasicCardView(),
+      nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl),
     ];
 
     const upNode = {

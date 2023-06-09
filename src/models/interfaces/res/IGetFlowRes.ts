@@ -131,6 +131,7 @@ export interface IHasUtteranceViewBase extends IViewBase {
 
 export interface IHasChildrenView extends IViewBase {
   childrenViews: IChildrenViewEnum;
+  useImageCtrl?: boolean;
 }
 
 export interface IIntentNode extends INodeBase {
