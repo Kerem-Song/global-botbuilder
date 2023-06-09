@@ -69,11 +69,6 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   };
 
   const handleRepresentativeEntry = async () => {
-    setIsActive(true);
-    setEditInputIndex(-1);
-    setIsEntriesActive(false);
-    await trigger(`entries.${index}.representativeEntry`);
-
     for (let i = 0; i < synonymField.value!.length; i++) {
       if (synonymField.value![i] === field.value) {
         entryNameRef.current?.select();
@@ -84,6 +79,11 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
         return;
       }
     }
+
+    setIsActive(true);
+    setEditInputIndex(-1);
+    setIsEntriesActive(false);
+    await trigger(`entries.${index}.representativeEntry`);
   };
 
   useEffect(() => {
