@@ -1,5 +1,5 @@
 import { icPopupClose } from '@assets';
-import { Input } from '@components';
+import { Divider, Input } from '@components';
 import { Button } from '@components/general';
 import { useI18n, useRootState, useUtteranceClient } from '@hooks';
 import { ISearchData } from '@models';
@@ -68,9 +68,9 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
             icon={icPopupClose}
           />
         </div>
+        <Divider />
         <div className="searchUtterance">
           <Input
-            size="small"
             search
             placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
             onSearch={(value) => handleSearch(value!)}

@@ -1,21 +1,22 @@
 .utteranceModal {
   width: rem(1080);
-  height: rem(652);
+  max-height: rem(652);
   margin: auto;
   border-radius: rem(12);
   background-color: $grayWhite;
 
   .utteranceWrap {
     position: relative;
-    width: rem(1040);
-    padding: rem(32) 0;
+    width: rem(1080);
+    padding: 0;
     margin: 0 auto;
 
     .utteranceDetail {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: rem(15) 0;
+      // padding: rem(15) 0;
+      padding: 20px 20px 10px 20px;
       .utteranceDetailTitle {
         font-size: rem(16);
         font-weight: 500;
@@ -30,8 +31,15 @@
       }
     }
     .searchUtterance {
+      padding: 10px 20px 20px 20px;
       display: flex;
       justify-content: right;
+    }
+    .utterancePopupListWrap {
+      width: rem(1040);
+      margin: 0 20px 20px 20px;
+      max-height: rem(476);
+      overflow-y: auto;
     }
   }
 }
