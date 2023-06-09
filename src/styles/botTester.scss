@@ -61,6 +61,7 @@
     flex-direction: column;
     gap: rem(10);
     height: calc(100% - rem(98));
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: $tester-bg;
     padding: rem(10) 0 rem(10) rem(8);

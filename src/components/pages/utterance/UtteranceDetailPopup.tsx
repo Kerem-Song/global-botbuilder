@@ -17,7 +17,6 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
   handleCloseUtteranceDetailPopup,
 }) => {
   const handleClose = () => {
-    handleIsOpenUtterancePopup(true);
     handleCloseUtteranceDetailPopup();
   };
 
@@ -31,6 +30,7 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
       <UtteranceDetail
         intentId={intentId}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+        handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
         handleClose={handleClose}
       />
     </ReactModal>
