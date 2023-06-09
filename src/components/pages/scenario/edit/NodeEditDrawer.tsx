@@ -75,8 +75,7 @@ export const NodeEditDrawer = () => {
 
   useEffect(() => {
     if (selectedNode) {
-      const nodeNameRegex = new RegExp(`${selectedNode.title}`);
-      const filtered = nodes.filter((node) => nodeNameRegex.test(node.title!));
+      const filtered = nodes.filter((node) => node.title === selectedNode.title);
 
       if (filtered.length > 1) {
         setError('title', { type: 'custom', message: t(`DUPLICATE_NODE_NAME`) });
