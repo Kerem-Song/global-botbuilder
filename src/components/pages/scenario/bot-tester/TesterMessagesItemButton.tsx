@@ -11,6 +11,7 @@ import {
 import { setTesterData } from '@store/botTesterSlice';
 import classNames from 'classnames';
 import { Dispatch, SetStateAction } from 'react';
+import MultiClamp from 'react-multi-clamp';
 import { useDispatch } from 'react-redux';
 
 export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
@@ -162,7 +163,7 @@ export const TesterMessagesItemButton = ({
           }
         }}
       >
-        {item.label}
+        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
       </button>
     );
   } else if (actionType === 'actValueIsUttr') {
@@ -174,7 +175,7 @@ export const TesterMessagesItemButton = ({
           handleActValueIsUttr();
         }}
       >
-        {item.label}
+        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
       </button>
     );
   } else if (actionType === 'lblIsUttr') {
@@ -186,7 +187,7 @@ export const TesterMessagesItemButton = ({
           handlelblIsUttr();
         }}
       >
-        {item.label}
+        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
       </button>
     );
   } else {
@@ -198,7 +199,7 @@ export const TesterMessagesItemButton = ({
           handleNodeUrl();
         }}
       >
-        {item.label}
+        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
       </button>
     );
   }

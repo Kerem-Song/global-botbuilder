@@ -61,6 +61,7 @@
     flex-direction: column;
     gap: rem(10);
     height: calc(100% - rem(98));
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: $tester-bg;
     padding: rem(10) 0 rem(10) rem(8);
@@ -119,7 +120,7 @@
           margin-right: rem(10);
           border-radius: rem(16);
           border: 1px solid transparent;
-          max-height: rem(480);
+          max-height: rem(512);
           border-radius: rem(16);
           background-color: $grayWhite;
           border: 1px solid $tester-bg;
@@ -226,6 +227,7 @@
                 button {
                   width: rem(240);
                   height: rem(35);
+                  padding: rem(9) rem(12);
                   margin-top: rem(4);
                   border: none;
                   border-radius: rem(8);
@@ -245,10 +247,10 @@
                   display: flex;
                   justify-content: center;
                   align-items: center;
-                  width: rem(240);
+                  max-width: rem(240);
+                  margin-right: rem(6);
+                  padding: rem(9) rem(12);
                   height: rem(37);
-                  margin-right: rem(3);
-                  white-space: nowrap;
                   font-size: rem(14);
                   border: none;
                   background-color: #dbdee5;
@@ -450,7 +452,6 @@
               max-width: rem(180);
 
               .infoTitle {
-                word-break: break-all;
                 font-weight: 500;
                 font-size: rem(16);
                 line-height: rem(19);
@@ -490,9 +491,10 @@
               align-items: center;
               width: rem(240);
               height: rem(37);
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+              padding: rem(9) rem(12);
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // white-space: nowrap;
               font-size: rem(14);
               border: none;
               background-color: #dbdee5;
