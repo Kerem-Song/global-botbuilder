@@ -37,8 +37,16 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
           <div key={i}>
             <div className="cardList">
               <div className="listInfo">
-                <div className="infoTitle">{x.title}</div>
-                <div className="infoDesc">{x.description}</div>
+                <div className="infoTitle">
+                  <MultiClamp clamp={2} ellipsis={'...'}>
+                    {x.title}
+                  </MultiClamp>
+                </div>
+                <div className="infoDesc">
+                  <MultiClamp clamp={2} ellipsis={'...'}>
+                    {x.description}
+                  </MultiClamp>
+                </div>
               </div>
               <div className="listImg">
                 <img src={x.image?.imageUrl} alt="img"></img>

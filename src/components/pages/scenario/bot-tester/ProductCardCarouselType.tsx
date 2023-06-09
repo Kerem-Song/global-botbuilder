@@ -1,4 +1,5 @@
 import { ITesterCard } from '@models';
+import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
@@ -42,7 +43,11 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
         </div>
         <div className="productContents">
           <div className="productDesc">
-            <p className="desc">{item.description}</p>
+            <p className="desc">
+              <MultiClamp clamp={3} ellipsis={'...'}>
+                {item.description}
+              </MultiClamp>
+            </p>
           </div>
           {item.buttons.length > 0 ? (
             <div

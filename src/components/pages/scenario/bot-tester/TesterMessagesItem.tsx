@@ -152,7 +152,11 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 </div>
                 <div className="productContents">
                   <div className="productDesc">
-                    <p className="desc">{item.description}</p>
+                    <p className="desc">
+                      <MultiClamp clamp={3} ellipsis={'...'}>
+                        {item.description}
+                      </MultiClamp>
+                    </p>
                   </div>
                   {item.buttons.length > 0 ? (
                     <div
@@ -205,11 +209,15 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   <div key={i}>
                     <div className="cardList">
                       <div className="listInfo">
-                        <div className="infoTitle">{x.title}</div>
-                        <div className="infoDesc">{x.description}</div>
+                        <div className="infoTitle">
+                          <MultiClamp clamp={2}>{x.title}</MultiClamp>
+                        </div>
+                        <div className="infoDesc">
+                          <MultiClamp clamp={2}>{x.description}</MultiClamp>
+                        </div>
                       </div>
                       <div className="listImg">
-                        <img src={x.image?.imageUrl} alt="img"></img>
+                        <img src={x.image?.imageUrl} alt="img" />
                       </div>
                     </div>
                     {item.items.length - 1 === i ? (
@@ -225,7 +233,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
               {item.buttons.length > 0 ? (
                 <div className="listCardBtns">
                   {item.buttons?.map((v, i) => {
-                    return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+                    return <TesterMessagesItemButton key={i} item={v} />;
                   })}
                 </div>
               ) : null}
