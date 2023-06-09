@@ -109,9 +109,32 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     }
   };
 
+  const handleListBtn = async () => {
+    if (!isActive && !isEntriesActive) {
+      handleResetEntryInfo();
+      return;
+    }
+
+    const result = await confirm({
+      title: t('SAVE_ENTITY'),
+      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
+    });
+
+    if (!isActive && isEntriesActive) {
+      if (result) {
+        handleResetEntryInfo();
+      }
+    } else if (isActive && !isEntriesActive) {
+      if (result) {
+        handleResetEntryInfo();
+      }
+    }
+  };
+
   const handleClose = async () => {
     if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
+      handleIsOpen(false);
       return;
     }
 
@@ -166,7 +189,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     >
       <div className="detail header">
         <div className="listBtn">
-          <Button icon={icPrev} onClick={handleClose}>
+          <Button icon={icPrev} onClick={handleListBtn}>
             {t('ENTITY_LIST')}
           </Button>
         </div>
