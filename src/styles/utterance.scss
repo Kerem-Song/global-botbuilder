@@ -115,7 +115,7 @@
         .connectScenarios {
           width: rem(300);
 
-          &.connectScenarios-notActivated {
+          &.connectScenarios-inactivated {
             color: $gray250;
           }
         }
