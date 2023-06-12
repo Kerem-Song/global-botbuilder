@@ -342,13 +342,9 @@ export const arrowHelper = {
     const depth =
       (startNode.nodeKind === NodeKind.InputNode && !isNext ? 1 : 0) +
       (!isPassChild && endNode.nodeKind === NodeKind.InputNode ? 1 : 0);
-    const parentCnt = arrowHelper.checkParent(
-      depth,
-      startNode.id,
-      startNode.id,
-      endNode.id,
-      nodes,
-    );
+    const parentCnt = isPassChild
+      ? 0
+      : arrowHelper.checkParent(depth, startNode.id, startNode.id, endNode.id, nodes);
 
     const childCnt = isPassChild
       ? 0

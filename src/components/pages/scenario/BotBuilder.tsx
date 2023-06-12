@@ -42,7 +42,7 @@ let dirtySelect: string | undefined;
 export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
-  const { addArrowHandler } = useAddArrow();
+
   const { t } = usePage();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
@@ -69,6 +69,7 @@ export const Botbuilder = () => {
   );
 
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+  const { addArrowHandler } = useAddArrow();
   const isHistoryViewer = useHistoryViewerMatch();
 
   const { getScenario } = useScenarioClient();
@@ -109,7 +110,7 @@ export const Botbuilder = () => {
   }, []);
 
   const handleAddArrows = (arrow: IArrow) => {
-    addArrowHandler(arrow);
+    addArrowHandler(nodes, arrow);
   };
 
   const handleZoomOut = useCallback(() => {

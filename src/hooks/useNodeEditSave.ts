@@ -16,7 +16,12 @@ export const useNodeEditSave = () => {
   console.log(carouselIndexObj);
 
   const selectedNode = nodes.find((x) => x.id === selected);
-  const { getValues, trigger, reset } = useFormContext<INodeEditModel>();
+  const {
+    getValues,
+    trigger,
+    reset,
+    formState: { isDirty },
+  } = useFormContext<INodeEditModel>();
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
 
   const handleSave = () => {
@@ -30,17 +35,17 @@ export const useNodeEditSave = () => {
 
   useEffect(() => {
     return () => {
-      if (selectedNode && index === undefined) {
+      if (isDirty && selectedNode && index === undefined) {
         handleSave();
       }
     };
-  }, [selected]);
+  }, [selected, isDirty]);
 
   useEffect(() => {
     return () => {
-      if (index !== undefined) {
+      if (isDirty && index !== undefined) {
         handleSave();
       }
     };
-  }, [index]);
+  }, [index, isDirty]);
 };

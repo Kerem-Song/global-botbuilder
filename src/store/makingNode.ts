@@ -141,16 +141,17 @@ export const makingNodeSlice = createSlice({
       }
       state.changed = true;
     },
-    addArrow: (state, action: PayloadAction<IArrow>) => {
-      const arrow = action.payload;
+    addArrow: (state, action: PayloadAction<{ arrow: IArrow; errorMessage: string }>) => {
+      const { arrow, errorMessage } = action.payload;
 
-      const errorMessage = arrowHelper.validateArrows(
+      const error = arrowHelper.validateArrows(
         arrow.updateKey || arrow.start,
         arrow.end,
         state.nodes,
         arrow.isNextNode,
       );
-      if (errorMessage) {
+      if (error) {
+        console.log(error);
         lunaToast.error(errorMessage);
         return;
       }
