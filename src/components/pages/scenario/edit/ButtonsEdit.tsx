@@ -45,7 +45,9 @@ export const ButtonsEdit = ({
     reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
+
   const isHistoryViewer = useHistoryViewerMatch();
+
   const { fields, append, remove } = useFieldArray({
     name: index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
     control,

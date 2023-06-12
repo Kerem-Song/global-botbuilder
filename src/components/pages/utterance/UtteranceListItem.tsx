@@ -108,9 +108,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
             const pages = v.items;
             return pages.map((x, i) => {
               const foundFlow = data?.find((item) => item.id === x.flowId);
-              const connectedFlow = x.flowName !== null;
-              const notFoundFlow = foundFlow === undefined;
-              const hasInactiveFlow = connectedFlow && notFoundFlow;
+              const inactivatedFlow = foundFlow && foundFlow.activated === false;
               const showScenarioList = isOpenUtterancePopup === false;
               return (
                 <tr
@@ -133,7 +131,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                     <td
                       role="presentation"
                       className={classNames('utteranceList connectScenarios', {
-                        'connectScenarios-notActivated': hasInactiveFlow,
+                        'connectScenarios-inactivated': inactivatedFlow,
                       })}
                     >
                       {x.flowName === null ? '-' : x.flowName}
@@ -152,7 +150,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                         )
                       : x.utteranceSummary}
                   </td>
-                  <td className="utteranceList icon">
+                  <td className="icon">
                     <button
                       className="icDelete"
                       onClick={(e) => {

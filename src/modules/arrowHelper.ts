@@ -229,9 +229,10 @@ export const arrowHelper = {
       NODE_TYPES.PARAMETER_SET_NODE,
       NODE_TYPES.JSON_REQUEST_NODE,
     ];
+
     if (
       start.startsWith(NODE_PREFIX) ||
-      (syncNextNodeType.includes(node.type) && start.substring(5).startsWith(NODE_PREFIX))
+      (syncNextNodeType.includes(node.type) && start.substring(5).startsWith('node'))
     ) {
       node.nextNodeId = endId;
     }
