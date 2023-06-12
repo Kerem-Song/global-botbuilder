@@ -19,6 +19,7 @@ export const ParameterSetNode: FC<IHasNode> = ({ node }) => {
       <NextNodeButton
         ctrlId={`${node.id}`}
         nodeId={`${NODE_PREFIX}${node.id}`}
+        offset={70}
         type="blue"
       />
     </Card>
