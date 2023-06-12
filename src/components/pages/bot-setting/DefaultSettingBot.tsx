@@ -28,7 +28,6 @@ export const DefaultSettingBot = () => {
       .string()
       .trim()
       .required(tc('REQUIRE_MESSAGE'))
-      .min(2, tc('MIN_LENGTH_MESSAGE', { val: 2 }))
       .matches(BOTNAME_REGEX, {
         message: tc('BOTNAME_REGEX_MESSAGE'),
       }),
@@ -84,7 +83,7 @@ export const DefaultSettingBot = () => {
     const res = await botUpdateNameAsync(saveBotName);
 
     if (res?.data.isSuccess) {
-      lunaToast.success(tc('SAVE_MESSAGE'));
+      lunaToast.success(t('SAVE_BOT_MESSAGE'));
       setIsSaveBtnActive(false);
       return;
     }

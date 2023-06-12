@@ -109,7 +109,7 @@ export const UploadBotProfile = () => {
 
       if (res) {
         console.log('res', res);
-        lunaToast.success(tc('SAVE_MESSAGE'));
+        lunaToast.success(t('SAVE_BOT_PROFILE_MESSAGE'));
         setIsProfileSaveBtnActive(false);
       }
     }
