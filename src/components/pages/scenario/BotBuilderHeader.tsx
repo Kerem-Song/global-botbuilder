@@ -189,7 +189,17 @@ export const BotBuilderHeader = () => {
 
       if (results.includes(false)) {
         if (!isFallback) {
-          lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
+          await error({
+            title: t(`VALIDATION_CHECK_FALLBACK_START_TITLE`),
+            description: (
+              <>
+                <span style={{ whiteSpace: 'pre-line' }}>
+                  {t(`VALIDATION_CHECK_NODE_DESC`)}
+                </span>
+              </>
+            ),
+          });
+          //lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
         }
 
         return;
