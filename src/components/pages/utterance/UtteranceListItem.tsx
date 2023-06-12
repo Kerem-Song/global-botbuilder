@@ -110,7 +110,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
               const foundFlow = data?.find((item) => item.id === x.flowId);
               const inactivatedFlow = foundFlow && foundFlow.activated === false;
               const showScenarioList = isOpenUtterancePopup === false;
-
               return (
                 <tr
                   key={i}
@@ -151,7 +150,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                         )
                       : x.utteranceSummary}
                   </td>
-                  <td className="utteranceList icon">
+                  <td className="icon">
                     <button
                       className="icDelete"
                       onClick={(e) => {
