@@ -49,13 +49,13 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultBasicCardView: () => {
+  createDefaultBasicCardView: (useImageCtrl = true) => {
     const result: IBasicCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
       title: '',
       description: '',
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       imageCtrl: {
         imageUrl: '',
         altText: '',
@@ -78,12 +78,12 @@ export const nodeDefaultHelper = {
       actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
     };
   },
-  createDefaultBasicCardCarouselView: () => {
+  createDefaultBasicCardCarouselView: (useImageCtrl = true) => {
     const result: IBasicCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultBasicCardView()],
-      useImageCtrl: true,
+      childrenViews: [nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl)],
+      useImageCtrl: useImageCtrl,
       isSuffle: false,
       count: 10,
     };
@@ -158,7 +158,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultListCardView: () => {
+  createDefaultListCardView: (useImageCtrl = true) => {
     const result: IListCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_VIEW,
@@ -168,7 +168,7 @@ export const nodeDefaultHelper = {
         nodeDefaultHelper.createDefaultListCardItem(),
         nodeDefaultHelper.createDefaultListCardItem(1),
       ],
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       imageCtrl: {
         imageUrl: '',
         altText: '',
@@ -182,19 +182,19 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultListCardCarouselView: () => {
+  createDefaultListCardCarouselView: (useImageCtrl = true) => {
     const result: IListCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultListCardView()],
-      useImageCtrl: true,
+      childrenViews: [nodeDefaultHelper.createDefaultListCardView(useImageCtrl)],
+      useImageCtrl: useImageCtrl,
       isSuffle: false,
       count: 10,
     };
 
     return result;
   },
-  createDefaultCommerceView: () => {
+  createDefaultCommerceView: (useImageCtrl = true) => {
     const sysCurrencyUnit = '@sys.brand-currency';
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
@@ -209,7 +209,7 @@ export const nodeDefaultHelper = {
       profileName: '',
       description: '',
       seq: 0,
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       imageCtrl: {
         imageUrl: '',
         altText: '',
@@ -223,12 +223,13 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultCommerceCarouselView: () => {
+  createDefaultCommerceCarouselView: (useImageCtrl = true) => {
     const result: IProductCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultCommerceView()],
+      childrenViews: [nodeDefaultHelper.createDefaultCommerceView(useImageCtrl)],
       isSuffle: false,
+      useImageCtrl: useImageCtrl,
       count: 10,
     };
     return result;

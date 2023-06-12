@@ -56,15 +56,16 @@ export const CarouselOrderPopup: FC<{
   };
 
   const defaultView = (type: string) => {
+    const useImageCtrl = nodeView.useImageCtrl;
     switch (type) {
       case 'BasicCardCarouselView':
-        return nodeDefaultHelper.createDefaultBasicCardView();
+        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl);
       case 'ListCardCarouselView':
-        return nodeDefaultHelper.createDefaultListCardView();
+        return nodeDefaultHelper.createDefaultListCardView(useImageCtrl);
       case 'ProductCardCarouselView':
-        return nodeDefaultHelper.createDefaultCommerceView();
+        return nodeDefaultHelper.createDefaultCommerceView(useImageCtrl);
       default:
-        return nodeDefaultHelper.createDefaultBasicCardView();
+        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl);
     }
   };
 

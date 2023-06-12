@@ -182,14 +182,20 @@
           justify-content: start;
           align-items: center;
           overflow: hidden;
-          padding: rem(8) 0 0 rem(4);
+          padding-top: rem(8);
+
           .skeleton {
-            width: rem(24);
-            height: rem(24);
+            width: rem(20);
+            height: rem(20);
             background-color: #ededf0;
+            border: rem(1) solid $gray200;
+            border-radius: rem(2);
           }
           & img {
-            width: rem(15);
+            width: rem(20);
+            height: rem(20);
+            border: rem(1) solid $gray200;
+            border-radius: rem(2);
           }
 
           & span {
@@ -557,3 +563,30 @@
 .dataCardJson div {
   overflow: hidden;
 }
+
+
+.otherFlowRedirectPopup {
+  padding: rem(12) !important;
+
+  .otherFlowRedirectPopupLabelWrapper {
+    padding-bottom: rem(8);
+  
+    .otherFlowRedirectPopupImg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        border: rem(1) solid $gray200;
+        border-radius: rem(4);
+      }
+    }
+    
+    .otherFlowRedirectPopupLabel {
+      padding-left: rem(4);
+      font-size: rem(14);
+      font-weight: 500;
+    }
+  }
+}
+
+

@@ -64,12 +64,6 @@ export const DataListCardNodeEdit = () => {
     }
   };
 
-  useEffect(() => {
-    if (watch(`view.imageCtrl.imageUrl`) !== '') {
-      setValue(`view.useImageCtrl`, true);
-    }
-  }, [watch(`view.imageCtrl.imageUrl`)]);
-
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>

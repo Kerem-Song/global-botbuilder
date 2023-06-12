@@ -37,11 +37,11 @@ export const BasicCardCarousleNodeEdit = () => {
     control,
   });
 
-  useEffect(() => {
-    if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {
-      setValue(`view.useImageCtrl`, true);
-    }
-  }, [index]);
+  // useEffect(() => {
+  //   if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {
+  //     setValue(`view.useImageCtrl`, true);
+  //   }
+  // }, [index]);
 
   return (
     <>

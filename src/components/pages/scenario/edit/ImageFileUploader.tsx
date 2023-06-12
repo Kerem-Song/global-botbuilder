@@ -117,6 +117,10 @@ export const ImageFileUploader = ({
   }, [watch(imageFilePath)]);
 
   useEffect(() => {
+    if (!botImg) {
+      return;
+    }
+
     if (
       !watch(imageUrl) &&
       botInfo &&
@@ -150,7 +154,15 @@ export const ImageFileUploader = ({
           <div className={classnames('imgUploadSkeleton')}>
             {watch(imageUrl) ? (
               watch(imgPath) ? (
-                <img src={watch(imgPath)} alt="templateImage" />
+                <img
+                  src={watch(imgPath)}
+                  alt="templateImage"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = icImgNotFound;
+                    e.currentTarget.className = 'imgNotFound';
+                  }}
+                />
               ) : (
                 <img
                   src={builderImageSrc}

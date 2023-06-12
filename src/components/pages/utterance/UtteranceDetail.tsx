@@ -20,12 +20,14 @@ import { UtteranceIntentInfo } from './UtteranceIntentInfo';
 export interface IUtteranceDetailProps {
   intentId?: string;
   isOpenUtteranceDetailPopup?: boolean;
+  handleIsOpenUtterancePopup: (value: boolean) => void;
   handleClose?: () => void;
 }
 
 export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   intentId,
   isOpenUtteranceDetailPopup,
+  handleIsOpenUtterancePopup,
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -145,6 +147,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       lunaToast.success(tc('SAVE_MESSAGE'));
       if (isOpenUtteranceDetailPopup && handleClose) {
         handleClose();
+        handleIsOpenUtterancePopup(true);
       } else {
         setNavigateUrl(`/${botId}/utterance`);
       }
@@ -181,9 +184,11 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       });
       if (res) {
         handleClose();
+        handleIsOpenUtterancePopup(true);
       }
     } else {
       handleClose();
+      handleIsOpenUtterancePopup(false);
     }
   };
 

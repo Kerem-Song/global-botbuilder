@@ -1,4 +1,4 @@
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
@@ -6,7 +6,7 @@ import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
 interface IReactSelect {
-  value: string;
+  value: string | null;
   label: string;
 }
 
@@ -21,6 +21,7 @@ export const SelectNode = ({
   nodeId?: string;
   error?: FieldError;
 }) => {
+  const { t } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const reactSelectStyle = getReactSelectStyle({});
 
@@ -46,6 +47,7 @@ export const SelectNode = ({
       value: item.id,
       label: item.title || '',
     }));
+  const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
 
   return (
     <Select
@@ -53,7 +55,7 @@ export const SelectNode = ({
         'luna-input-error': error,
       })}
       {...field}
-      options={nodeList}
+      options={selectorOptions}
       styles={reactSelectStyle}
       defaultValue={nodeList.find((item) => item.value === defaultValue)}
       value={nodeList.find((item) => item.value === field.value)}

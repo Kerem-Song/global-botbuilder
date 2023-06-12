@@ -48,6 +48,12 @@
     &:hover {
       opacity: 1;
     }
+    &:disabled {
+      &:hover {
+        background-color: $grayWhite;
+        opacity: 0.6;
+      }
+    }
   }
 }
 
@@ -70,6 +76,12 @@
     border: 1px solid $gray200;
     &:hover {
       opacity: 1;
+    }
+    &:disabled {
+      &:hover {
+        background-color: $grayWhite;
+        opacity: 0.6;
+      }
     }
   }
 }
