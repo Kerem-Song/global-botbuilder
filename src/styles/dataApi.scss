@@ -17,6 +17,20 @@
     margin: auto;
     z-index: 1;
   }
+
+  textarea::-webkit-scrollbar {
+    display: block;
+    width: rem(8);
+    height: rem(8);
+    background: transparent;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
+    border-radius: rem(18);
+    transition: background-color 2s ease-out;
+  }
 }
 
 .dataCardCrouselSlideBtns {
