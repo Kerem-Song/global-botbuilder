@@ -23,15 +23,25 @@ export const CardCarouselType = ({ item }: CardCarouselTypeProps) => {
       )}
       {item.title || item.contentText ? (
         <div className="cardCarouselContents">
-          <div className="cardCarouselTitle">{item.title}</div>
+          <div className="cardCarouselTitle">
+            <MultiClamp clamp={2} ellipsis={'...'}>
+              {item.title.substring(0, 39)}
+            </MultiClamp>
+          </div>
           <div className="cardCarouselDesc">
-            <MultiClamp clamp={2}>{item.contentText}</MultiClamp>
+            <MultiClamp clamp={8}>{item.contentText?.substring(0, 229)}</MultiClamp>
+          </div>
+          <div
+            className={
+              item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
+            }
+          >
+            {item.buttons.map((v, i) => {
+              return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+            })}
           </div>
         </div>
       ) : null}
-      {item.buttons.map((v, i) => {
-        return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
-      })}
     </div>
   );
 };

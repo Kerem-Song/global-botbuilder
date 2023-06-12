@@ -157,7 +157,7 @@ export const TesterMessagesItemButton = ({
           }
         }}
       >
-        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
+        <MultiClamp clamp={1}>{item.label.substring(0, 49)}</MultiClamp>
       </button>
     );
   } else if (actionType === 'actValueIsUttr') {
@@ -169,7 +169,7 @@ export const TesterMessagesItemButton = ({
           handleActValueIsUttr();
         }}
       >
-        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
+        <MultiClamp clamp={1}>{item.label.substring(0, 49)}</MultiClamp>
       </button>
     );
   } else if (actionType === 'lblIsUttr') {
@@ -181,7 +181,7 @@ export const TesterMessagesItemButton = ({
           handlelblIsUttr();
         }}
       >
-        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
+        <MultiClamp clamp={1}>{item.label.substring(0, 49)}</MultiClamp>
       </button>
     );
   } else {
@@ -193,7 +193,7 @@ export const TesterMessagesItemButton = ({
           handleNodeUrl();
         }}
       >
-        <MultiClamp clamp={1}>{item.label.substring(0, 50)}</MultiClamp>
+        <MultiClamp clamp={1}>{item.label.substring(0, 49)}</MultiClamp>
       </button>
     );
   }

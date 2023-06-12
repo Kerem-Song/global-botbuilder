@@ -1,4 +1,4 @@
-import { Divider } from '@components/layout';
+import { Divider, Space } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
 import MultiClamp from 'react-multi-clamp';
 
@@ -89,19 +89,35 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   )}
                   {item.title || item.contentText ? (
                     <div className="cardText">
-                      {item.title && <div className="cardTitle">{item.title}</div>}
+                      {item.title && (
+                        <div className="cardTitle">
+                          <MultiClamp clamp={2} ellipsis={'...'}>
+                            {item.title.substring(0, 39)}
+                          </MultiClamp>
+                        </div>
+                      )}
                       {item.contentText && (
-                        <div className="cardContentText">{item.contentText}</div>
+                        <div className="cardContentText">
+                          <MultiClamp clamp={8} ellipsis={'...'}>
+                            {item.contentText.substring(0, 229)}
+                          </MultiClamp>
+                        </div>
+                      )}
+                      {item.buttons.length > 0 && (
+                        <div
+                          className={
+                            item.image?.imageAspectRatio === 0
+                              ? 'rectangleImageBtn'
+                              : 'squareImageBtn'
+                          }
+                        >
+                          {item.buttons.map((v, i) => (
+                            <TesterMessagesItemButton key={i} item={v} />
+                          ))}
+                        </div>
                       )}
                     </div>
                   ) : null}
-                  {item.buttons.length > 0 && (
-                    <div className="cardBtnList">
-                      {item.buttons.map((v, i) => (
-                        <TesterMessagesItemButton key={i} item={v} card />
-                      ))}
-                    </div>
-                  )}
                 </div>
               </>
             ) : (
@@ -130,7 +146,9 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 <div className="productCardTitle">
                   <div className="title">
                     <img className="icon" src={item.icon.url} alt="iconImg" />
-                    <p className="name">{item.title}</p>
+                    <p className="name">
+                      <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
+                    </p>
                   </div>
                 </div>
                 <div className="productCardPrices">
@@ -151,8 +169,8 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 <div className="productContents">
                   <div className="productDesc">
                     <p className="desc">
-                      <MultiClamp clamp={3} ellipsis={'...'}>
-                        {item.description}
+                      <MultiClamp clamp={2} ellipsis={'...'}>
+                        {item.description.substring(0, 39)}
                       </MultiClamp>
                     </p>
                   </div>
@@ -186,7 +204,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 <div className="header">
                   <span>
                     <MultiClamp clamp={1} ellipsis={'...'}>
-                      {item.header}
+                      {item.header.substring(0, 39)}
                     </MultiClamp>
                   </span>
                 </div>
@@ -202,39 +220,45 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   alt="img"
                 />
               )}
-              {item.items.map((x, i) => {
-                return (
-                  <div key={i}>
-                    <div className="cardList">
-                      <div className="listInfo">
-                        <div className="infoTitle">
-                          <MultiClamp clamp={2}>{x.title}</MultiClamp>
+              <div className="listCardContents">
+                {item.items.map((x, i) => {
+                  return (
+                    <div key={i}>
+                      <div className="cardList">
+                        <div className="listInfo">
+                          <div className="infoTitle">
+                            <MultiClamp clamp={2} ellipsis={'...'}>
+                              {x.title.substring(0, 59)}
+                            </MultiClamp>
+                          </div>
+                          <div className="infoDesc">
+                            <MultiClamp clamp={1} ellipsis={'...'}>
+                              {x.description.substring(0, 39)}
+                            </MultiClamp>
+                          </div>
                         </div>
-                        <div className="infoDesc">
-                          <MultiClamp clamp={2}>{x.description}</MultiClamp>
+                        <div className="listImg">
+                          <img src={x.image?.imageUrl} alt="img" />
                         </div>
                       </div>
-                      <div className="listImg">
-                        <img src={x.image?.imageUrl} alt="img" />
-                      </div>
+                      {item.items.length - 1 === i ? <Space /> : <Divider />}
                     </div>
-                    {item.items.length - 1 === i ? (
-                      <></>
-                    ) : (
-                      <div className="dividerWrap">
-                        <Divider />
-                      </div>
-                    )}
+                  );
+                })}
+                {item.buttons.length > 0 ? (
+                  <div
+                    className={
+                      item.image?.imageAspectRatio === 0
+                        ? 'rectangleImageBtn'
+                        : 'squareImageBtn'
+                    }
+                  >
+                    {item.buttons?.map((v, i) => {
+                      return <TesterMessagesItemButton key={i} item={v} />;
+                    })}
                   </div>
-                );
-              })}
-              {item.buttons.length > 0 ? (
-                <div className="listCardBtns">
-                  {item.buttons?.map((v, i) => {
-                    return <TesterMessagesItemButton key={i} item={v} />;
-                  })}
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
           </div>
         );
