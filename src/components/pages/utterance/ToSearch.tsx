@@ -115,9 +115,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
             <Col flex="auto">
               <FormItem>
                 <Input
-                  search
                   value={searchKeyword}
-                  onSearch={(value) => handleSearch(value)}
                   onChange={(e) => setSearchKeyword(e?.target.value)}
                   placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
                 />
