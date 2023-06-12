@@ -49,6 +49,7 @@ export const AnswerNodeEdit = () => {
       if (name === 'view.useUtteranceParam' && type === 'change') {
         if (!value.view?.useUtteranceParam) {
           setValue('view.utteranceParam', undefined);
+          setValue('nextNodeId', undefined);
           if (value.view?.quicks?.length === 0) {
             setValue('view.quicks', [nodeDefaultHelper.createDefaultAnswerQickItem(0)]);
           }
