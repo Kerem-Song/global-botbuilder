@@ -164,6 +164,7 @@ export const BotBuilderHeader = () => {
       }
     }
     if (selectedScenario) {
+      let isFallback = false;
       const results = await Promise.all(
         nodes.map(async (n) => {
           if (n.id === selected) {
@@ -177,6 +178,7 @@ export const BotBuilderHeader = () => {
           } catch (e) {
             // 챗봇 도움말일 경우 얼럿
             if (n.option === 20) {
+              isFallback = true;
               checkFallbackStart();
             }
             dispatch(setInvalidateNode({ id: n.id, isValid: false }));
@@ -184,9 +186,12 @@ export const BotBuilderHeader = () => {
           }
         }),
       );
-      console.log('validates', results);
+
       if (results.includes(false)) {
-        lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
+        if (!isFallback) {
+          lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
+        }
+
         return;
       }
 
