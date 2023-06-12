@@ -90,6 +90,7 @@ export const ButtonsEdit = ({
   useEffect(() => {
     resetField(
       index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
+      { keepDirty: true },
     );
   }, [nodeId]);
 

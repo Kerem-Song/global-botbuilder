@@ -401,6 +401,7 @@
 
           &.invalid {
             border: rem(1) solid $red;
+            border-radius: rem(8);
           }
         }
 

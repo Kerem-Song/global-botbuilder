@@ -52,7 +52,7 @@ export const ProductCardCarouselNodeEdit = () => {
   };
 
   useEffect(() => {
-    resetField(`view.childrenViews.${index}.currencyUnit`);
+    resetField(`view.childrenViews.${index}.currencyUnit`, { keepDirty: true });
   }, [index]);
 
   const salePrice =

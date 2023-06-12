@@ -1,9 +1,15 @@
 import { icImg, icImgNotFound } from '@assets';
-import { imageUploadClient, usePage, useRootState, useSystemModal } from '@hooks';
+import {
+  imageUploadClient,
+  useHttp,
+  usePage,
+  useRootState,
+  useSystemModal,
+} from '@hooks';
 import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
-import { useEffect } from 'react';
+import { SyntheticEvent, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
@@ -20,6 +26,7 @@ export const ImageFileUploader = ({
     getValues,
     setValue,
     watch,
+    setError,
     formState: { errors },
   } = useFormContext();
   const values = getValues();
@@ -110,6 +117,13 @@ export const ImageFileUploader = ({
     }
   };
 
+  const handleImgOnError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = icImgNotFound;
+    e.currentTarget.className = 'imgNotFound';
+    setError(imageUrl, { type: 'custom', message: t(`IMAGE_NOT_FOUND`) });
+  };
+
   useEffect(() => {
     if (token && !!getValues(imageFilePath)) {
       handleUploadImage();
@@ -158,9 +172,7 @@ export const ImageFileUploader = ({
                   src={watch(imgPath)}
                   alt="templateImage"
                   onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = icImgNotFound;
-                    e.currentTarget.className = 'imgNotFound';
+                    handleImgOnError(e);
                   }}
                 />
               ) : (
@@ -168,9 +180,7 @@ export const ImageFileUploader = ({
                   src={builderImageSrc}
                   alt="templateImage"
                   onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = icImgNotFound;
-                    e.currentTarget.className = 'imgNotFound';
+                    handleImgOnError(e);
                   }}
                 />
               )

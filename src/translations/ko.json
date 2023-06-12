@@ -173,6 +173,7 @@
     "IMAGE_SETTING_TYPE_CAROUSEL_RECTANGLE_WARNING": "이미지 타입을 변경하면 캐로셀 내 모든 말풍선의\n이미지 타입이 변경됩니다.\n변경하시겠습니까?",
     "IMAGE_SETTING_TYPE_CAROUSEL_SQUARE_WARNING": "이미지 타입을 정사각형으로 변경하면\n캐로셀 내 모든 말풍선의 이미지 타입이 변경되며,\n버튼 최대 개수가 2개로 제한됩니다.\n변경하시겠습니까?",
     "IMAGE_INPUT_PLACEHOLDER": "이미지 URL/변수/엔티티를 입력해주세요",
+    "IMAGE_NOT_FOUND": "이미지를 찾을 수 없습니다.",
     "PROFILE": "프로필 설정",
     "PROFILE_IMAGE_UPLOAD": "프로필 이미지 업로드",
     "RECOMMENDED_SIZE": "권장 이미지 사이즈",
