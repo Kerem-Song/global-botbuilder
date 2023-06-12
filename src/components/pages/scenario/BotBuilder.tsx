@@ -307,6 +307,7 @@ export const Botbuilder = () => {
   const handleContenxtMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setClicked(true);
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
+
     setPoints({
       x: Math.round(e.clientX / scale) - canvasRect.left,
       y: Math.round(e.clientY / scale) - canvasRect.top,
@@ -350,19 +351,22 @@ export const Botbuilder = () => {
           e.preventDefault();
           handleIsOpen(false);
         }}
-        onContextMenu={(e) => e.preventDefault()}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          handleContenxtMenu(e);
+        }}
         onKeyDown={(e) => handleUndoRedoKeydown(e)}
       >
         <BotBuilderZoomBtn />
 
         <div
           className="canvasWrapper"
-          style={{ left: 0, top: 0, zoom: `${scale * 100}%` }}
+          style={{ left: 4000, top: 4000, zoom: `${scale * 100}%` }}
           ref={canvasRef}
           role="presentation"
           onContextMenu={(e) => {
             e.preventDefault();
-            handleContenxtMenu(e);
+            // handleContenxtMenu(e);
           }}
         >
           {nodes.map((item, i) => (
