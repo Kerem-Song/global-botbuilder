@@ -10,7 +10,6 @@ import {
 } from '@models';
 import { setTesterData } from '@store/botTesterSlice';
 import classNames from 'classnames';
-import { Dispatch, SetStateAction } from 'react';
 import MultiClamp from 'react-multi-clamp';
 import { useDispatch } from 'react-redux';
 
@@ -20,7 +19,6 @@ export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
   cardCarousel?: boolean;
   productCardCarousel?: boolean;
   quickReply?: boolean;
-  setIsVisible?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TesterMessagesItemButton = ({
@@ -30,7 +28,6 @@ export const TesterMessagesItemButton = ({
   productCardCarousel,
   quickReply,
   className,
-  setIsVisible,
 }: TesterMessagesItemButtonProps) => {
   const { botTesterMutate } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -68,7 +65,6 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
-        setIsVisible && setIsVisible(false);
       },
     });
   };
@@ -103,7 +99,6 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
-        setIsVisible && setIsVisible(false);
       },
     });
   };
@@ -138,7 +133,6 @@ export const TesterMessagesItemButton = ({
           updateTesterData.push(quickpRepliesContent);
         }
         dispatch(setTesterData(updateTesterData));
-        setIsVisible && setIsVisible(false);
       },
     });
   };
