@@ -40,8 +40,8 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const lineMouseRef = useRef<SVGPathElement>(null);
   const deleteRef = useRef<SVGGeometryElement>(null);
 
-  //const stroke = strokes[type][active || highlight ? 1 : 0];
-  const stroke = strokes[type][active ? 1 : 0];
+  const stroke = strokes[type][active || highlight ? 1 : 0];
+  //const stroke = strokes[type][active ? 1 : 0];
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
   useEffect(() => {
