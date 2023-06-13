@@ -56,7 +56,7 @@ export const BasicCardNodeEdit = () => {
             <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
               showCount={true}
-              maxLength={20}
+              maxLength={40}
               isLight={true}
               {...register('view.title')}
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
@@ -70,7 +70,7 @@ export const BasicCardNodeEdit = () => {
               label={t(`CONTENT_INPUT`)}
               maxRows={17}
               showCount
-              maxLength={watch(`view.useImageCtrl`) ? 230 : 400}
+              maxLength={230}
               isLight={true}
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}

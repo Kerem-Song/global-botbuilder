@@ -55,7 +55,7 @@ export const ListCardNodeEdit = () => {
             label={t(`LIST_NODE_HEAD_TITLE_INPUT`)}
             required={true}
             showCount={true}
-            maxLength={15}
+            maxLength={40}
             isLight={true}
             {...register('view.header')}
             textLength={watch('view.header')?.length || 0}
@@ -121,7 +121,7 @@ export const ListCardNodeEdit = () => {
                     <InputWithTitleCounter
                       label={t(`ENTER_TITLE`)}
                       showCount={true}
-                      maxLength={36}
+                      maxLength={60}
                       required={true}
                       isLight={true}
                       {...register(`view.items.${i}.title`)}
@@ -139,7 +139,7 @@ export const ListCardNodeEdit = () => {
                   <InputWithTitleCounter
                     label={t(`ENTER_CONTENT`)}
                     showCount
-                    maxLength={16}
+                    maxLength={40}
                     isLight={true}
                     {...register(`view.items.${i}.description`)}
                     textLength={watch(`view.items.${i}.description`)?.length || 0}

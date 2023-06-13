@@ -133,65 +133,22 @@ export const useYupValidation = () => {
     }),
   });
 
-  const basicCardCarouselNodeEditSchemaForScript = yup.object().shape({
-    title: yup.string().nullable().trim(),
-
-    description: yup
-      .string()
-      .nullable()
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => useImageCtrl && title.length > 0,
-        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
-      })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && !title,
-        then: yup.string().max(120, t(`VALIDATION_STRING_LIMIT`, { maxCount: 120 })),
-      })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => {
-          return useImageCtrl && !title;
-        },
-        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
-      })
-      .when(['useImageCtrl', 'title'], {
-        is: (useImageCtrl: boolean, title: string) => !useImageCtrl && title.length > 0,
-        then: yup.string().max(60, t(`VALIDATION_STRING_LIMIT`, { maxCount: 60 })),
-      }),
-    imageCtrl: imageCtrlEditSchema,
-    buttons: buttonsEditSchema,
-  });
-
   const basicCardNodeEditSchema = yup.object().shape({
     title: yup.string().nullable().trim(),
     description: yup
       .string()
       .nullable()
-      .when('useImageCtrl', {
-        is: (useImageCtrl: boolean) => useImageCtrl,
-        then: yup.string().max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
-      })
-      .when('useImageCtrl', {
-        is: (useImageCtrl: boolean) => !useImageCtrl,
-        then: yup.string().max(400, t(`VALIDATION_STRING_LIMIT`, { maxCount: 400 })),
-      }),
+      .max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });
 
   const listCardNodeEditSchema = yup.object().shape({
-    header: yup
-      .string()
-      .trim()
-      // .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
-      .required(t(`VALIDATION_REQUIRED`)),
+    header: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
     items: yup.array().of(
       yup.object().shape({
-        title: yup
-          .string()
-          .trim()
-          // .max(36, t(`VALIDATION_STRING_LIMIT`, { maxCount: 36 }))
-          .required(t(`VALIDATION_REQUIRED`)),
+        title: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
         // description: yup.string().max(16, t(`VALIDATION_STRING_LIMIT`, { maxCount: 16 })),
         imageFile: imageFileEditSchema,
         imageUrl: yup
@@ -218,29 +175,14 @@ export const useYupValidation = () => {
           t(`VALIDATION_FILE_TYPE`),
           (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0]?.type)),
         ),
-      imageUrl: yup
-        .string()
-        // .url(t(`VALIDATION_URL`))
-        .required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
     }),
-    profileIconUrl: yup
-      .string()
-      // .url(t(`VALIDATION_URL`))
-      .required(t(`VALIDATION_REQUIRED`)),
-    profileName: yup
-      .string()
-      .trim()
-      // .max(15, t(`VALIDATION_STRING_LIMIT`, { maxCount: 15 }))
-      .required(t(`VALIDATION_REQUIRED`)),
-    description: yup
-      .string()
-      .trim()
-      // .max(30, t(`VALIDATION_STRING_LIMIT`, { maxCount: 30 }))
-      .required(t(`VALIDATION_REQUIRED`)),
+    profileIconUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    profileName: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     retailPrice: yup
       .number()
       .typeError(t(`VALIDATION_TYPE_ERROR_NUMBER`))
-      // .positive()
       .test('is-decimal', t(`PRODUCT_NODE_SET_PRICE_DECIMAL`), (val: any) => {
         if (val != undefined) {
           return patternTwoDigisAfterComma.test(val);
@@ -369,7 +311,7 @@ export const useYupValidation = () => {
   const intentNodeEditSchema = yup.string().nullable().required(t(`VALIDATION_REQUIRED`));
 
   const basicCardCarouselNodeEditSchema = yup.object().shape({
-    childrenViews: yup.array().of(basicCardCarouselNodeEditSchemaForScript),
+    childrenViews: yup.array().of(basicCardNodeEditSchema),
   });
 
   const listCardCarouselNodeEditSchema = yup.object().shape({

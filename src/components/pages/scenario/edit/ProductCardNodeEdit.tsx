@@ -110,7 +110,7 @@ export const ProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
                   required={true}
                   showCount={true}
-                  maxLength={15}
+                  maxLength={40}
                   isLight={true}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
@@ -129,7 +129,7 @@ export const ProductCardNodeEdit = () => {
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
                   showCount={true}
-                  maxLength={30}
+                  maxLength={40}
                   required={true}
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}

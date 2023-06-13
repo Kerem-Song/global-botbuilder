@@ -98,7 +98,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                   <InputWithTitleCounter
                     label={t(`ENTER_TITLE`)}
                     showCount={true}
-                    maxLength={36}
+                    maxLength={40}
                     required={true}
                     isLight={true}
                     {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}
@@ -119,7 +119,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                 <InputWithTitleCounter
                   label={t(`ENTER_CONTENT`)}
                   showCount
-                  maxLength={16}
+                  maxLength={40}
                   isLight={true}
                   {...register(
                     `view.childrenViews.${nestedIndex}.items.${j}.description`,
