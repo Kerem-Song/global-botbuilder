@@ -55,7 +55,7 @@ export const ListCardCarouselNodeEdit = () => {
                       label={t(`LIST_NODE_HEAD_TITLE_INPUT`)}
                       required={true}
                       showCount={true}
-                      maxLength={15}
+                      maxLength={40}
                       isLight={true}
                       {...register(`view.childrenViews.${index}.header`)}
                       textLength={
