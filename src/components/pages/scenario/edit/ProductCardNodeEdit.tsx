@@ -179,7 +179,7 @@ export const ProductCardNodeEdit = () => {
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
-              <FormItem error={errors.view && errors.view.salePrice}>
+              {/* <FormItem error={errors.view && errors.view.salePrice}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePrice`, {
@@ -191,7 +191,15 @@ export const ProductCardNodeEdit = () => {
                   isLight={true}
                   readOnly={isHistoryViewer}
                 />
-              </FormItem>
+              </FormItem> */}
+              <input
+                type="hidden"
+                {...register(`view.salePrice`, {
+                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                    checkPriceRegex(e, 'salePrice'),
+                })}
+              />
             </Space>
           </Collapse>
         </div>

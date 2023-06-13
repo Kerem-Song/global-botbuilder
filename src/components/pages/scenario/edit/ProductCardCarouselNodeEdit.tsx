@@ -266,7 +266,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>
-                        <FormItem
+                        {/* <FormItem
                           error={errors.view?.childrenViews?.[index]?.discountAmount}
                         >
                           <InputWithTitleCounter
@@ -284,7 +284,19 @@ export const ProductCardCarouselNodeEdit = () => {
                             isLight={true}
                             readOnly={isHistoryViewer}
                           />
-                        </FormItem>
+                        </FormItem> */}
+                        <input
+                          type="hidden"
+                          {...register(
+                            `view.childrenViews.${index}.salePrice`,
+
+                            {
+                              setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                              onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                                checkPriceRegex(e, index, 'salePrice'),
+                            },
+                          )}
+                        />
                       </Space>
                     </Collapse>
                   </div>

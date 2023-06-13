@@ -366,6 +366,7 @@
             p {
               max-height: rem(50);
               overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }
