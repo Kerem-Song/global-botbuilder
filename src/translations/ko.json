@@ -444,7 +444,9 @@
     "VALIDATION_BOT_NAME": "중복된 이름입니다.",
     "DISABLED_CONNECT_TEST_CHANNEL": "테스트 채널 연결 불가",
     "DISABLED_CONNECT_TEST_CHANNEL_INFO": "파트너스 센터에 테스트 채널이 연결되지 않았습니다.",
-    "SUCCESS_ACTIVATED_BOT": "봇이 활성화 되었습니다."
+    "SUCCESS_ACTIVATED_BOT": "봇이 활성화 되었습니다.",
+    "SAVE_BOT_MESSAGE": "봇 이름이 저장되었습니다.",
+    "SAVE_BOT_PROFILE_MESSAGE": "챗봇 프로필이 저장되었습니다."
   },
   "deployment": {
     "TITLE": "배포",
