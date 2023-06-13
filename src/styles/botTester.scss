@@ -79,6 +79,7 @@
         width: 100%;
 
         .sendMessage {
+          word-break: break-all;
           max-width: rem(244);
           height: -webkit-fit-content;
           padding: rem(8) rem(14);
@@ -155,17 +156,13 @@
               .title {
                 display: flex;
                 align-items: center;
+                gap: rem(8);
+                word-break: break-all;
 
                 .icon {
                   width: rem(24);
                   height: rem(24);
                   border-radius: rem(6);
-                  margin-right: rem(8);
-                }
-                .name {
-                  width: rem(200);
-                  font-size: rem(14);
-                  line-height: rem(17);
                 }
               }
             }
@@ -210,13 +207,7 @@
                 display: flex;
                 align-items: center;
                 padding-bottom: rem(8);
-
-                .desc {
-                  width: 100%;
-                  height: fit-content;
-                  font-size: rem(14);
-                  color: #636364;
-                }
+                word-break: break-all;
               }
             }
           }
@@ -246,7 +237,7 @@
 
         .cardCarousel {
           width: rem(264);
-          max-height: rem(420);
+          max-height: rem(465);
           background-color: $grayWhite;
           margin-right: rem(8);
           border-radius: rem(16);
@@ -366,6 +357,7 @@
             font-size: rem(18);
             font-weight: 500;
             line-height: rem(22);
+            word-break: break-all;
           }
           .listCardImg_rectangle {
             width: 100%;
@@ -386,22 +378,30 @@
               height: fit-content;
               display: flex;
               justify-content: space-between;
+              align-items: center;
 
               .listInfo {
+                display: flex;
+                flex-direction: column;
+                gap: rem(2);
                 max-width: rem(180);
 
                 .infoTitle {
+                  height: rem(38);
+                  display: flex;
+                  align-items: center;
+                  word-break: break-all;
                   font-weight: 500;
                   font-size: rem(16);
                   line-height: rem(19);
                   color: $grayBlack;
-                  margin-bottom: rem(4);
                 }
                 .infoDesc {
                   font-weight: 400;
                   font-size: 14px;
                   line-height: 16px;
                   color: $gray500;
+                  word-break: break-all;
                 }
               }
               .listImg {
@@ -561,6 +561,7 @@ div {
           display: flex;
           justify-content: center;
           align-items: center;
+          word-break: break-all;
           max-width: rem(240);
           padding: rem(9) rem(12);
           height: rem(37);
