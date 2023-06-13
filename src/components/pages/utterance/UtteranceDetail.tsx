@@ -1,5 +1,5 @@
 import { icPopupClose } from '@assets';
-import { Button } from '@components';
+import { Button, Divider } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
@@ -199,73 +199,75 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   }, [intentNameRef.current]);
 
   return (
-    <div
-      className={classNames('utteranceDetailWrap', {
-        'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
-      })}
-      onContextMenu={(e) => e.stopPropagation()}
-    >
-      <form
-        role="presentation"
-        onSubmit={handleSubmit(handleSave)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-          }
-        }}
+    <>
+      {isOpenUtteranceDetailPopup ? (
+        <div className="detailPopupHeaderWrap" onContextMenu={(e) => e.stopPropagation()}>
+          <span className="headerTitle">
+            {selectedScenarios?.alias} {t('INTENT')}
+          </span>
+          <Button
+            className="utteranceDetailClose"
+            shape="ghost"
+            onClick={handleCloseDetailPopup}
+            icon={icPopupClose}
+          />
+        </div>
+      ) : null}
+      <Divider />
+      <div
+        className={classNames('utteranceDetailWrap', {
+          'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
+        })}
+        onContextMenu={(e) => e.stopPropagation()}
       >
-        <div className="detailButtons">
-          <div>
+        <form
+          role="presentation"
+          onSubmit={handleSubmit(handleSave)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            }
+          }}
+        >
+          <div className="detailButtons">
             {!isOpenUtteranceDetailPopup && (
               <Button onClick={handleListBtn}>{t('LIST')}</Button>
             )}
-            {isOpenUtteranceDetailPopup && (
-              <p className="addIntent">
-                {selectedScenarios?.alias} {t('ADD_INTENT')}
-              </p>
-            )}
-          </div>
-          <div>
-            <Button
-              type="secondary"
-              className="deleteBtn"
-              onClick={handleDeleteIntentBtn}
-              disabled={!getValues('intentId')}
-            >
-              {t('DELETE_INTENT')}
-            </Button>
-            <Button large type="primary" htmlType="submit" disabled={!isActive}>
-              {t('SAVE')}
-            </Button>
-            {isOpenUtteranceDetailPopup && (
+            {isOpenUtteranceDetailPopup && <p className="addIntent">{t('ADD_INTENT')}</p>}
+            <div>
               <Button
-                className="utteranceDetailClose"
-                shape="ghost"
-                onClick={handleCloseDetailPopup}
-                icon={icPopupClose}
-              />
-            )}
+                type="secondary"
+                className="deleteBtn"
+                onClick={handleDeleteIntentBtn}
+                disabled={!getValues('intentId')}
+              >
+                {t('DELETE_INTENT')}
+              </Button>
+              <Button large type="primary" htmlType="submit" disabled={!isActive}>
+                {t('SAVE')}
+              </Button>
+            </div>
           </div>
-        </div>
-        <UtteranceIntentInfo
-          intentNameRef={intentNameRef}
-          formMethods={formMethods}
-          setIsActive={setIsActive}
-          isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-        />
-        <AddUtterance
-          formMethods={formMethods}
-          prepend={prepend}
-          setIsActive={setIsActive}
-        />
-        <UtteranceDetailItems
-          formMethods={formMethods}
-          fields={fields}
-          remove={remove}
-          setIsActive={setIsActive}
-          isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
-        />
-      </form>
-    </div>
+          <UtteranceIntentInfo
+            intentNameRef={intentNameRef}
+            formMethods={formMethods}
+            setIsActive={setIsActive}
+            isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+          />
+          <AddUtterance
+            formMethods={formMethods}
+            prepend={prepend}
+            setIsActive={setIsActive}
+          />
+          <UtteranceDetailItems
+            formMethods={formMethods}
+            fields={fields}
+            remove={remove}
+            setIsActive={setIsActive}
+            isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
+          />
+        </form>
+      </div>
+    </>
   );
 };
