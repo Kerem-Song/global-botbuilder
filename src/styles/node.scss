@@ -532,6 +532,13 @@
   border: rem(2) solid rgba(255, 73, 117);
 }
 
+
+.luna-node:has(.command-node.inactive) {
+  color: $gray250;
+  background-color: $gray100;
+  border: rem(1) solid $gray200;
+}
+
 .carouselComponent {
   .thumbnail {
     height: rem(84) !important;
