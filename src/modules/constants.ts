@@ -5,6 +5,8 @@ export const TRUE_SUFFIX = '-true';
 export const FALSE_SUFFIX = '-false';
 export const NODE_DRAG_FACTOR = 10;
 export const QUICK_MAX_COUNT = 10;
+export const SYS_BOT_ICON = '@sys.bot-icon';
+export const SYS_BRAND_CURRENCY = '@sys.brand-currency';
 export const EMOJI_REGEX =
   /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
 // eslint-disable-next-line no-useless-escape

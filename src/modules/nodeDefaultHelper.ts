@@ -24,6 +24,7 @@ import {
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
+import { SYS_BRAND_CURRENCY } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
 
 export const nodeDefaultHelper = {
@@ -195,7 +196,6 @@ export const nodeDefaultHelper = {
     return result;
   },
   createDefaultCommerceView: (useImageCtrl = true) => {
-    const sysCurrencyUnit = '@sys.brand-currency';
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
@@ -203,7 +203,7 @@ export const nodeDefaultHelper = {
       salePrice: 0,
       discountAmount: 0,
 
-      currencyUnit: '@sys.brand-currency',
+      currencyUnit: SYS_BRAND_CURRENCY,
       profileIconUrl: '',
       profileImgPath: '',
       profileName: '',
@@ -254,7 +254,7 @@ export const nodeDefaultHelper = {
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: false,
+      useImageCtrl: true,
       title: '',
       description: '',
       imageCtrl: {
@@ -276,7 +276,7 @@ export const nodeDefaultHelper = {
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: false,
+      useImageCtrl: true,
       priceDisplayType: PriceDisplayType.All,
       retailPriceParam: '',
       discountAmountParam: '',
@@ -306,7 +306,7 @@ export const nodeDefaultHelper = {
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: false,
+      useImageCtrl: true,
       header: '',
       seq: 0,
       items: [
@@ -321,7 +321,7 @@ export const nodeDefaultHelper = {
         typeName: CTRL_TYPES.IMAGE_CTRL,
         aspectRatio: ImageAspectRatio.Rectangle,
       },
-      buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
+      buttons: [],
     };
     return result;
   },

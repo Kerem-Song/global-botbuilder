@@ -84,6 +84,11 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                     listItemIndex={j}
                     registerName={`view.childrenViews.${nestedIndex}.items.${j}.imageUrl`}
                     placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                    isValid={
+                      errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl
+                        ? false
+                        : true
+                    }
                   />
                 </>
               </FormItem>

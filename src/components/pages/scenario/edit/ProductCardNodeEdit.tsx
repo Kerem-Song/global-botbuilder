@@ -98,6 +98,7 @@ export const ProductCardNodeEdit = () => {
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                    isValid={errors.view?.profileIconUrl ? false : true}
                   />
                 </>
               </FormItem>
@@ -114,6 +115,7 @@ export const ProductCardNodeEdit = () => {
                   isLight={true}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
+                  placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>

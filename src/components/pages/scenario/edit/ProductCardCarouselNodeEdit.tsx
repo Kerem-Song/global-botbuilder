@@ -148,6 +148,11 @@ export const ProductCardCarouselNodeEdit = () => {
                               index={index}
                               registerName={`view.childrenViews.${index}.profileIconUrl`}
                               placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                              isValid={
+                                errors.view?.childrenViews?.[index]?.profileIconUrl
+                                  ? false
+                                  : true
+                              }
                             />
                           </>
                         </FormItem>
@@ -173,6 +178,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               watch(`view.childrenViews.${index}.profileName`)?.length ||
                               0
                             }
+                            placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>

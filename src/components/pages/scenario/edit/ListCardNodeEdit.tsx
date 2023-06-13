@@ -109,6 +109,7 @@ export const ListCardNodeEdit = () => {
                       listItemIndex={i}
                       registerName={`view.items.${i}.imageUrl`}
                       placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                      isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                     />
                   </>
                 </FormItem>

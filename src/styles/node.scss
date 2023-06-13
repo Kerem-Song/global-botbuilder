@@ -361,6 +361,13 @@
             white-space: pre-line;
             word-break: break-all;
           }
+
+          &.parameterSetNode {
+            p {
+              max-height: rem(50);
+              overflow: hidden;
+            }
+          }
         }
 
         .nextNodeDrag {
