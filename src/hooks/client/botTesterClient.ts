@@ -17,7 +17,7 @@ export const useBotTesterClient = () => {
       sendMessage,
     );
 
-    return result.data.result;
+    return result.data;
   });
 
   const refreshBotTesterMutate = useMutation(
@@ -32,7 +32,7 @@ export const useBotTesterClient = () => {
   );
 
   return {
-    botTesterMutate,
+    botTesterMutateAsync: botTesterMutate.mutateAsync,
     refreshBotTesterAsync: refreshBotTesterMutate.mutateAsync,
   };
 };

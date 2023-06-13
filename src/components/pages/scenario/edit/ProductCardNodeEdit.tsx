@@ -98,6 +98,7 @@ export const ProductCardNodeEdit = () => {
                     imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                    isValid={errors.view?.profileIconUrl ? false : true}
                   />
                 </>
               </FormItem>
@@ -114,6 +115,7 @@ export const ProductCardNodeEdit = () => {
                   isLight={true}
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
+                  placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
@@ -177,7 +179,7 @@ export const ProductCardNodeEdit = () => {
                   readOnly={isHistoryViewer}
                 />
               </FormItem>
-              <FormItem error={errors.view && errors.view.salePrice}>
+              {/* <FormItem error={errors.view && errors.view.salePrice}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePrice`, {
@@ -189,7 +191,15 @@ export const ProductCardNodeEdit = () => {
                   isLight={true}
                   readOnly={isHistoryViewer}
                 />
-              </FormItem>
+              </FormItem> */}
+              <input
+                type="hidden"
+                {...register(`view.salePrice`, {
+                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                    checkPriceRegex(e, 'salePrice'),
+                })}
+              />
             </Space>
           </Collapse>
         </div>

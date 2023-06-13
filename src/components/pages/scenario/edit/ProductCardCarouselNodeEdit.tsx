@@ -148,6 +148,11 @@ export const ProductCardCarouselNodeEdit = () => {
                               index={index}
                               registerName={`view.childrenViews.${index}.profileIconUrl`}
                               placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
+                              isValid={
+                                errors.view?.childrenViews?.[index]?.profileIconUrl
+                                  ? false
+                                  : true
+                              }
                             />
                           </>
                         </FormItem>
@@ -173,6 +178,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               watch(`view.childrenViews.${index}.profileName`)?.length ||
                               0
                             }
+                            placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>
@@ -260,7 +266,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             readOnly={isHistoryViewer}
                           />
                         </FormItem>
-                        <FormItem
+                        {/* <FormItem
                           error={errors.view?.childrenViews?.[index]?.discountAmount}
                         >
                           <InputWithTitleCounter
@@ -278,7 +284,19 @@ export const ProductCardCarouselNodeEdit = () => {
                             isLight={true}
                             readOnly={isHistoryViewer}
                           />
-                        </FormItem>
+                        </FormItem> */}
+                        <input
+                          type="hidden"
+                          {...register(
+                            `view.childrenViews.${index}.salePrice`,
+
+                            {
+                              setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                              onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                                checkPriceRegex(e, index, 'salePrice'),
+                            },
+                          )}
+                        />
                       </Space>
                     </Collapse>
                   </div>

@@ -361,6 +361,14 @@
             white-space: pre-line;
             word-break: break-all;
           }
+
+          &.parameterSetNode {
+            p {
+              max-height: rem(50);
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
         }
 
         .nextNodeDrag {
@@ -522,6 +530,13 @@
 
 .luna-node-active.luna-node-invalidate {
   border: rem(2) solid rgba(255, 73, 117);
+}
+
+
+.luna-node:has(.command-node.inactive) {
+  color: $gray250;
+  background-color: $gray100;
+  border: rem(1) solid $gray200;
 }
 
 .carouselComponent {

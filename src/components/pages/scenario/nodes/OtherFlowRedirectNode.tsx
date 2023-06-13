@@ -1,6 +1,7 @@
 import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
+import classNames from 'classnames';
 import { FC } from 'react';
 
 export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
@@ -11,10 +12,15 @@ export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
   );
 
   return (
-    <div className="command-node">
+    <>
       {scenario.map((item) => (
-        <div key={item.id}>{item.alias}</div>
+        <div
+          className={classNames('command-node', { inactive: !item.activated })}
+          key={item.id}
+        >
+          <div>{item.alias}</div>
+        </div>
       ))}
-    </div>
+    </>
   );
 };

@@ -184,6 +184,7 @@ export const DataListCardNodeEdit = () => {
                       listItemIndex={i}
                       registerName={`view.items.${i}.imageUrl`}
                       placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
+                      isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
                     />
                   </>
                 </FormItem>

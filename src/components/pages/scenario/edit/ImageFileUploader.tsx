@@ -7,7 +7,7 @@ import {
   useSystemModal,
 } from '@hooks';
 import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
-import { ID_TYPES } from '@modules';
+import { ID_TYPES, SYS_BOT_ICON } from '@modules';
 import classnames from 'classnames';
 import { SyntheticEvent, useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
@@ -143,7 +143,7 @@ export const ImageFileUploader = ({
         imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL) &&
       values.view.id
     ) {
-      setValue(imageCtrlPath, botImg);
+      setValue(imageCtrlPath, SYS_BOT_ICON);
     }
   }, [values]);
 
