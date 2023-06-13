@@ -8,16 +8,37 @@ import {
   useRootState,
   useSystemModal,
 } from '@hooks';
-import { usePrompt } from '@hooks/usePrompt';
 import { IUpdateBotIcon } from '@models/interfaces/IBotSetting';
 import { lunaToast } from '@modules/lunaToast';
 import classNames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 
-export const UploadBotProfile = () => {
+export interface IUploadBotProfileProps {
+  isProfileSaveBtnActive: boolean;
+  setIsProfileSaveBtnActive: Dispatch<SetStateAction<boolean>>;
+  setIsSaveBtnsActive: Dispatch<
+    SetStateAction<{
+      isSaveBtnActive: boolean;
+      isProfileSaveBtnActive: boolean;
+    }>
+  >;
+}
+
+export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
+  isProfileSaveBtnActive,
+  setIsProfileSaveBtnActive,
+  setIsSaveBtnsActive,
+}) => {
   const [iconImage, setIconImage] = useState<File | null>();
-  const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
   const { t } = usePage();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
@@ -30,8 +51,6 @@ export const UploadBotProfile = () => {
   const iconUrl = values.iconUrl || botInfo?.iconUrl;
   const displayIcon = iconUrl ? iconUrl : icImg;
   const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
-
-  usePrompt(isProfileSaveBtnActive);
 
   const handleUpload = useCallback(() => {
     if (!botProfileInputRef.current) {
@@ -96,6 +115,7 @@ export const UploadBotProfile = () => {
     }
     setIconImage(file);
     setIsProfileSaveBtnActive(true);
+    setIsSaveBtnsActive((prev) => ({ ...prev, isProfileSaveBtnActive: true }));
   };
 
   const handleSaveProfile = async () => {
@@ -111,6 +131,10 @@ export const UploadBotProfile = () => {
         console.log('res', res);
         lunaToast.success(t('SAVE_BOT_PROFILE_MESSAGE'));
         setIsProfileSaveBtnActive(false);
+        setIsSaveBtnsActive((prev) => ({
+          ...prev,
+          isProfileSaveBtnActive: false,
+        }));
       }
     }
   };
