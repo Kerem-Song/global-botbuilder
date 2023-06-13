@@ -10,7 +10,7 @@ import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@mode
 import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
 import { SyntheticEvent, useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
@@ -29,6 +29,7 @@ export const ImageFileUploader = ({
     setError,
     formState: { errors },
   } = useFormContext();
+
   const values = getValues();
 
   const { imageUploadAsync } = imageUploadClient();

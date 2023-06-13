@@ -36,6 +36,7 @@ export const useNodeEditSave = () => {
   };
 
   useEffect(() => {
+    console.log('isDirty', isDirty);
     if (isDirty) {
       setIsChanged(true);
     }
@@ -43,7 +44,7 @@ export const useNodeEditSave = () => {
 
   useEffect(() => {
     return () => {
-      if (isChanged && selectedNode && index === undefined) {
+      if (/*isChanged &&*/ selectedNode && index === undefined) {
         handleSave();
       }
     };
@@ -51,7 +52,7 @@ export const useNodeEditSave = () => {
 
   useEffect(() => {
     return () => {
-      if (isChanged && selectedNode && index !== undefined) {
+      if (/*isChanged &&*/ selectedNode && index !== undefined) {
         handleSave();
       }
     };
