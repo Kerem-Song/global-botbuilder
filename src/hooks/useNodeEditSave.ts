@@ -43,12 +43,14 @@ export const useNodeEditSave = () => {
   }, [isDirty]);
 
   useEffect(() => {
+    console.log('@@@@useEffect');
     return () => {
+      console.log('@@@@useEffect callback');
       if (/*isChanged &&*/ selectedNode && index === undefined) {
         handleSave();
       }
     };
-  }, [selected, isChanged]);
+  }, [selected /*, isChanged*/]);
 
   useEffect(() => {
     return () => {
@@ -56,5 +58,5 @@ export const useNodeEditSave = () => {
         handleSave();
       }
     };
-  }, [selected, index, isChanged]);
+  }, [selected, index /*, isChanged*/]);
 };
