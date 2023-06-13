@@ -12,7 +12,7 @@ export const DeployButtons = () => {
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();
-  const [channelInfos, setChannelInfos] = useState<string | undefined>('');
+  const [isOp, setIsOp] = useState<boolean>(false);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const { t } = usePage();
   const { deployingBotAsync, isDeployingBotIsLoading } = useDeployClient();
@@ -20,12 +20,15 @@ export const DeployButtons = () => {
   const { refetchBotInfo } = useBotClient();
   const { botId } = useParams();
 
-  const handleDeployChannel = async () => {
+  const handleDeployChannel = async (isOpChannel: boolean) => {
+    setIsOp(isOpChannel);
+    const isLive = botInfo?.channelInfos?.find((x) => x.isLive)?.name;
+    const isTest = botInfo?.channelInfos?.find((x) => !x.isLive)?.name;
     const result = await confirm({
-      title: testLinked ? t('DEPLOY_TEST_CHANNEL') : t('DEPLOY_OPERATIONAL_CHANNEL'),
+      title: isOpChannel ? t('DEPLOY_OPERATIONAL_CHANNEL') : t('DEPLOY_TEST_CHANNEL'),
       description: (
         <span>
-          <span style={{ color: 'blue' }}>{channelInfos}</span>
+          <span style={{ color: 'blue' }}>{isOpChannel ? isLive : isTest}</span>
           <span style={{ whiteSpace: 'pre-wrap' }}>
             {' '}
             {t('DEPLOYING_CONFIRM_MESSAGE')}
@@ -36,7 +39,7 @@ export const DeployButtons = () => {
     if (result) {
       const deployChannel: IDeploy = {
         botId: botId!,
-        isLive: testLinked ? false : true,
+        isLive: isOpChannel,
       };
       const res = await deployingBotAsync(deployChannel);
       if (res && res.isSuccess) {
@@ -69,7 +72,6 @@ export const DeployButtons = () => {
       setActivate(botInfo.activated);
       setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
       setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
-      setChannelInfos(botInfo.channelInfos?.find((x) => x.isLive)?.name);
     }
   }, [botInfo]);
 
@@ -79,21 +81,18 @@ export const DeployButtons = () => {
         style={{ marginRight: '8px' }}
         type="lineBlue"
         disabled={activate && testLinked ? false : true}
-        onClick={handleDeployChannel}
+        onClick={() => handleDeployChannel(false)}
       >
         {t('DEPLOY_TEST_CHANNEL')}
       </Button>
       <Button
         type="primary"
         disabled={activate && opLinked ? false : true}
-        onClick={handleDeployChannel}
+        onClick={() => handleDeployChannel(true)}
       >
         {t('DEPLOY_OPERATIONAL_CHANNEL')}
       </Button>
-      <DeployingModal
-        isOpenDeployingModal={isDeployingBotIsLoading}
-        testLinked={testLinked}
-      />
+      <DeployingModal isOpenDeployingModal={isDeployingBotIsLoading} isOp={isOp} />
     </div>
   );
 };
