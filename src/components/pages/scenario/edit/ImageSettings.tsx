@@ -112,13 +112,14 @@ export const ImageSettings = ({
           <Radio
             name="aspectRatio"
             checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle}
-            onChange={() => {
+            onChange={(e) => {
               if (imageCtrl !== IMAGE_CTRL_TYPES.IMAGE_CTRL) {
                 setImageAspectRatioModal(ImageAspectRatio.Rectangle);
               } else {
                 setImageRatio(ImageAspectRatio.Rectangle);
                 setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
               }
+              aspectRatio.onChange(e);
             }}
             ref={aspectRatio.ref}
           >
@@ -129,7 +130,10 @@ export const ImageSettings = ({
           <Radio
             name="aspectRatio"
             checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
-            onChange={() => setImageAspectRatioModal(ImageAspectRatio.Square)}
+            onChange={(e) => {
+              setImageAspectRatioModal(ImageAspectRatio.Square);
+              aspectRatio.onChange(e);
+            }}
             ref={aspectRatio.ref}
           >
             <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
