@@ -159,6 +159,7 @@ export const ImageSettings = ({
             ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
             : t(`IMAGE_INPUT_PLACEHOLDER`)
         }
+        isValid={isValid}
       />
     </Space>
   );

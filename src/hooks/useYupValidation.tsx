@@ -384,6 +384,14 @@ export const useYupValidation = () => {
 
   const jsonRequestNodeEdtiSchema = yup.object().shape({
     url: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
+    responseMapping: yup.array().of(
+      yup.object().shape({
+        value: yup
+          .string()
+          .trim()
+          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`)),
+      }),
+    ),
   });
 
   const dataBasicCardNodeEditSchema = yup.object().shape({

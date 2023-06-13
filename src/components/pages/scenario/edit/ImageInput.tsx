@@ -23,6 +23,7 @@ export const ImageInput = ({
   listItemIndex,
   registerName,
   placeholder,
+  isValid,
 }: IImageCtrlIdPathProps) => {
   const { t } = usePage();
   const {
@@ -66,6 +67,7 @@ export const ImageInput = ({
         onBlur={handleImgOnBlur}
         maxRows={2.125}
         minRows={2.125}
+        className={classNames({ invalid: !isValid })}
       />
     </div>
   );

@@ -142,8 +142,9 @@ export const JsonRequestNodeEdit = () => {
             <Col span={12} className="radioContainer">
               <Radio
                 checked={watch('view.method') === 'POST'}
-                onChange={() => setValue(`view.method`, 'POST')}
+                onChange={method.onChange}
                 ref={method.ref}
+                value={'POST'}
               >
                 <span>POST</span>
               </Radio>
@@ -151,8 +152,9 @@ export const JsonRequestNodeEdit = () => {
             <Col span={12} className="radioContainer">
               <Radio
                 checked={watch('view.method') === 'GET'}
-                onChange={() => setValue(`view.method`, 'GET')}
+                onChange={method.onChange}
                 ref={method.ref}
+                value={'GET'}
               >
                 <span>GET</span>
               </Radio>
