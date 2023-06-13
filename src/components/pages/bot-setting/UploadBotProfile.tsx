@@ -18,12 +18,12 @@ import { useForm } from 'react-hook-form';
 export const UploadBotProfile = () => {
   const [iconImage, setIconImage] = useState<File | null>();
   const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
   const { error } = useSystemModal();
-  const { getValues, setValue } = useForm<IUpdateBotIcon>();
-  const values = getValues();
+  const { getValues: getBotIconValues, setValue } = useForm<IUpdateBotIcon>();
+  const values = getBotIconValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -122,50 +122,48 @@ export const UploadBotProfile = () => {
   }, [iconImage]);
 
   return (
-    <form>
-      <Row gap={10} align="center">
-        <Col className="botInfo">
-          <p>{t('BOT_PROFILE')}</p>
-          <Tooltip tooltip={settingBotProfileInfo} placement="bottom-start">
-            <img className="icHelp" src={icHelp} alt="help" />
-          </Tooltip>
-        </Col>
-        <Col flex="auto" className="botInfo botProfileImgwrap">
+    <Row gap={10} align="center">
+      <Col className="botInfo">
+        <p>{t('BOT_PROFILE')}</p>
+        <Tooltip tooltip={settingBotProfileInfo} placement="bottom-start">
+          <img className="icHelp" src={icHelp} alt="help" />
+        </Tooltip>
+      </Col>
+      <Col flex="auto" className="botInfo botProfileImgwrap">
+        <Space>
+          <div
+            className={classNames('icImgWrap', {
+              'bot-profile-img-wrap': iconUrl,
+            })}
+          >
+            {isLoadingImageUpload ? null : <img src={displayIcon} alt="iconImg" />}
+          </div>
+          <input
+            type="file"
+            className="fileInput"
+            ref={botProfileInputRef}
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={handleChangeBotProfile}
+          />
           <Space>
-            <div
-              className={classNames('icImgWrap', {
-                'bot-profile-img-wrap': iconUrl,
-              })}
-            >
-              {isLoadingImageUpload ? null : <img src={displayIcon} alt="iconImg" />}
+            <div className="botProfileUploadBtnWrap">
+              <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
+              <Space>
+                <Button type="lineBlue" onClick={handleUpload}>
+                  {t('FILE_UPLOAD')}
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={handleSaveProfile}
+                  disabled={!isProfileSaveBtnActive}
+                >
+                  {t('PROFILE_SAVE')}
+                </Button>
+              </Space>
             </div>
-            <input
-              type="file"
-              className="fileInput"
-              ref={botProfileInputRef}
-              accept="image/png, image/jpeg, image/jpg"
-              onChange={handleChangeBotProfile}
-            />
-            <Space>
-              <div className="botProfileUploadBtnWrap">
-                <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
-                <Space>
-                  <Button type="lineBlue" onClick={handleUpload}>
-                    {t('FILE_UPLOAD')}
-                  </Button>
-                  <Button
-                    type="primary"
-                    onClick={handleSaveProfile}
-                    disabled={!isProfileSaveBtnActive}
-                  >
-                    {t('PROFILE_SAVE')}
-                  </Button>
-                </Space>
-              </div>
-            </Space>
           </Space>
-        </Col>
-      </Row>
-    </form>
+        </Space>
+      </Col>
+    </Row>
   );
 };

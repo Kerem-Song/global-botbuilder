@@ -33,7 +33,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { botTesterMutate, refreshBotTesterAsync } = useBotTesterClient();
+  const { botTesterMutateAsync, refreshBotTesterAsync } = useBotTesterClient();
 
   const handleRefresh = async () => {
     const sendToken = {
@@ -59,7 +59,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     setText(e.target.value);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!text || !text.trim()) return;
 
     const newMessage: ITesterDataType = {
@@ -80,20 +80,20 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
 
     dispatch(setTesterData([newMessage]));
 
-    botTesterMutate.mutate(sendMessage, {
-      onSuccess: (res) => {
-        const updateTesterData = res?.messages || [];
-        if (res?.quickReplies) {
-          const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: res?.quickReplies,
-            type: TESTER_DATA_TYPES.quickReplies,
-          };
-          updateTesterData.push(quickpRepliesContent);
-          setText('');
-        }
-        dispatch(setTesterData(updateTesterData));
-      },
-    });
+    const res = await botTesterMutateAsync(sendMessage);
+
+    if (res.isSuccess) {
+      const updateTesterData = res.result?.messages || [];
+      if (res.result?.quickReplies) {
+        const quickpRepliesContent: IQuickRepliesContent = {
+          quickReplies: res.result?.quickReplies,
+          type: TESTER_DATA_TYPES.quickReplies,
+        };
+        updateTesterData.push(quickpRepliesContent);
+        setText('');
+      }
+      dispatch(setTesterData(updateTesterData));
+    }
     setText('');
   };
 

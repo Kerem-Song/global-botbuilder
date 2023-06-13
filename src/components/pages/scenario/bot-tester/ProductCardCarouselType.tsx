@@ -23,9 +23,7 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
         <div className="productCardTitle">
           <div className="title">
             <img className="icon" src={item.icon.url} alt="iconImg" />
-            <p className="name">
-              <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
-            </p>
+            <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
           </div>
         </div>
         <div className="productCardPrices">
@@ -45,11 +43,9 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
         </div>
         <div className="productContents">
           <div className="productDesc">
-            <p className="desc">
-              <MultiClamp clamp={2} ellipsis={'...'}>
-                {item.description.substring(0, 39)}
-              </MultiClamp>
-            </p>
+            <MultiClamp clamp={2} ellipsis={'...'}>
+              {item.description.substring(0, 59)}
+            </MultiClamp>
           </div>
           {item.buttons.length > 0 ? (
             <div

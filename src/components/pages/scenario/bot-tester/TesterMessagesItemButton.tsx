@@ -29,14 +29,14 @@ export const TesterMessagesItemButton = ({
   quickReply,
   className,
 }: TesterMessagesItemButtonProps) => {
-  const { botTesterMutate } = useBotTesterClient();
+  const { botTesterMutateAsync } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const actionType = item.actionType;
   const lunaNodeLink = item.postback?.lunaNodeLink;
   const webLinkUrl = item.postback?.webLinkUrl;
   const dispatch = useDispatch();
 
-  const handleNodeUrl = () => {
+  const handleNodeUrl = async () => {
     const replyNodeLink: ITesterDataType = {
       value: item.label!,
       isMe: true,
@@ -54,22 +54,22 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    botTesterMutate.mutate(sendLunaNodeLink, {
-      onSuccess: (res) => {
-        const updateTesterData = res?.messages || [];
-        if (res?.quickReplies) {
-          const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: res.quickReplies,
-            type: TESTER_DATA_TYPES.quickReplies,
-          };
-          updateTesterData.push(quickpRepliesContent);
-        }
-        dispatch(setTesterData(updateTesterData));
-      },
-    });
+    const res = await botTesterMutateAsync(sendLunaNodeLink);
+
+    if (res.isSuccess) {
+      const updateTesterData = res.result?.messages || [];
+      if (res.result?.quickReplies) {
+        const quickpRepliesContent: IQuickRepliesContent = {
+          quickReplies: res.result?.quickReplies,
+          type: TESTER_DATA_TYPES.quickReplies,
+        };
+        updateTesterData.push(quickpRepliesContent);
+      }
+      dispatch(setTesterData(updateTesterData));
+    }
   };
 
-  const handleActValueIsUttr = () => {
+  const handleActValueIsUttr = async () => {
     const actValueIsUttr: ITesterDataType = {
       value: item.postback.actValueIsUttr!,
       isMe: true,
@@ -87,23 +87,22 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    botTesterMutate.mutate(sendActValueIsUttr, {
-      onSuccess: (res) => {
-        console.log('결과', res);
-        const updateTesterData = res?.messages || [];
-        if (res?.quickReplies) {
-          const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: res.quickReplies,
-            type: TESTER_DATA_TYPES.quickReplies,
-          };
-          updateTesterData.push(quickpRepliesContent);
-        }
-        dispatch(setTesterData(updateTesterData));
-      },
-    });
+    const res = await botTesterMutateAsync(sendActValueIsUttr);
+
+    if (res.isSuccess) {
+      const updateTesterData = res.result?.messages || [];
+      if (res.result?.quickReplies) {
+        const quickpRepliesContent: IQuickRepliesContent = {
+          quickReplies: res.result?.quickReplies,
+          type: TESTER_DATA_TYPES.quickReplies,
+        };
+        updateTesterData.push(quickpRepliesContent);
+      }
+      dispatch(setTesterData(updateTesterData));
+    }
   };
 
-  const handlelblIsUttr = () => {
+  const handlelblIsUttr = async () => {
     const lblIsUttr: ITesterDataType = {
       value: item.label!,
       isMe: true,
@@ -121,20 +120,19 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    botTesterMutate.mutate(sendlblIsUttr, {
-      onSuccess: (res) => {
-        console.log('결과', res);
-        const updateTesterData = res?.messages || [];
-        if (res?.quickReplies) {
-          const quickpRepliesContent: IQuickRepliesContent = {
-            quickReplies: res.quickReplies,
-            type: TESTER_DATA_TYPES.quickReplies,
-          };
-          updateTesterData.push(quickpRepliesContent);
-        }
-        dispatch(setTesterData(updateTesterData));
-      },
-    });
+    const res = await botTesterMutateAsync(sendlblIsUttr);
+
+    if (res.isSuccess) {
+      const updateTesterData = res.result?.messages || [];
+      if (res.result?.quickReplies) {
+        const quickpRepliesContent: IQuickRepliesContent = {
+          quickReplies: res.result?.quickReplies,
+          type: TESTER_DATA_TYPES.quickReplies,
+        };
+        updateTesterData.push(quickpRepliesContent);
+      }
+      dispatch(setTesterData(updateTesterData));
+    }
   };
 
   const itemButton = classNames(className, 'luna-testerItem-btn', {
