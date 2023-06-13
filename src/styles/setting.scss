@@ -22,23 +22,22 @@
       font-weight: 500;
     }
     .botInfo {
+      display: flex;
       width: rem(110);
       white-space: pre-line;
-      display: flex;
 
       .botName {
         padding-right: rem(3);
       }
 
-      .icHelp {
-        margin-left: rem(4);
+      .icTooltipIcon {
         width: rem(13);
         height: rem(13);
       }
 
       .icImgWrap {
-        background-color: $grayWhite;
-        border: rem(1) dashed $gray200;
+        background-color: $gray100;
+        border: rem(1) solid $gray200;
         border-radius: rem(8);
         width: rem(65);
         height: rem(65);
@@ -66,12 +65,16 @@
         display: none;
       }
     }
+    .botProfileTooltip {
+      flex-direction: column;
+      gap: rem(5);
+    }
     .botProfileImgwrap {
-      display: flex;
       align-items: center;
       .botProfileUploadBtnWrap {
         display: flex;
         flex-direction: column;
+        gap: rem(8);
         .info {
           color: $gray300;
           margin-bottom: rem(8);
@@ -141,6 +144,8 @@
   }
 
   .handleScenariosWrap {
+    justify-content: space-between;
+    align-items: center;
     div {
       .handleScenarioInfo {
         border-bottom: 1px solid $gray200;
@@ -168,9 +173,6 @@
       .deleteBot {
         display: flex;
         align-items: center;
-        .deleteBotTitle {
-          margin-right: rem(30);
-        }
         .cancelExpireUtc {
           margin-left: rem(30);
           color: red;

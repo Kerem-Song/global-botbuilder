@@ -1,4 +1,4 @@
-import { icHelp, icImg } from '@assets';
+import { icEmptyBotIcon, icHelp, icImg, icTooltipIcon } from '@assets';
 import { Button, Col, Row, Space } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
 import {
@@ -49,7 +49,7 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const token = useRootState((state) => state.botInfoReducer.token);
   const iconUrl = values.iconUrl || botInfo?.iconUrl;
-  const displayIcon = iconUrl ? iconUrl : icImg;
+  const displayIcon = iconUrl ? iconUrl : icEmptyBotIcon;
   const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
 
   const handleUpload = useCallback(() => {
@@ -147,10 +147,10 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
 
   return (
     <Row gap={10} align="center">
-      <Col className="botInfo">
+      <Col className="botInfo botProfileTooltip">
         <p>{t('BOT_PROFILE')}</p>
         <Tooltip tooltip={settingBotProfileInfo} placement="bottom-start">
-          <img className="icHelp" src={icHelp} alt="help" />
+          <img className="icTooltipIcon" src={icTooltipIcon} alt="help" />
         </Tooltip>
       </Col>
       <Col flex="auto" className="botInfo botProfileImgwrap">
@@ -171,7 +171,6 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
           />
           <Space>
             <div className="botProfileUploadBtnWrap">
-              <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
               <Space>
                 <Button type="lineBlue" onClick={handleUpload}>
                   {t('FILE_UPLOAD')}
@@ -184,6 +183,7 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
                   {t('PROFILE_SAVE')}
                 </Button>
               </Space>
+              <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
             </div>
           </Space>
         </Space>
