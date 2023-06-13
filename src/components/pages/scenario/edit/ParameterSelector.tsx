@@ -2,6 +2,7 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
+import { ChangeEvent } from 'react';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IParameterSelectorProps<T extends object> {
@@ -66,9 +67,10 @@ export const ParameterSelector = <T extends object>({
         defaultValue={
           parameters.find((x) => x.name === field.value) || handleCreate(field.value)
         }
-        onChange={(value) => {
+        onChangeValue={(value) => {
           setValue<string>(path, value?.name || '');
         }}
+        onChange={field.onChange}
         create={handleCreate}
         error={error}
       />

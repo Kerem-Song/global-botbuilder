@@ -13,7 +13,7 @@ export const useElementHelper = (
   const sr = start?.getBoundingClientRect() || snr;
   const er = end?.getBoundingClientRect() || new DOMRect();
 
-  const disableAlpha = '0.2';
+  const disableAlpha = '0.4';
   const lineOffset = 15;
   const minLine = 50;
   const arrowSize = isNextNode ? { width: 6, height: 12 } : { width: 12, height: 6 };

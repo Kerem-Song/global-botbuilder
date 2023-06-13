@@ -1,6 +1,13 @@
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { usePopper } from 'react-popper';
 
 import { Input } from './Input';
@@ -16,7 +23,8 @@ export interface AutocompleteProps<T extends object> {
   prefix?: ReactNode;
   sufix?: ReactNode;
   create?: (value: string | undefined) => T | undefined;
-  onChange?: (value: T | undefined) => void;
+  onChangeValue?: (value: T | undefined) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: any;
 }
 
@@ -24,6 +32,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
   const [showPopper, setShowPopper] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
   const referenceElement = useRef<HTMLInputElement | null>(null);
+  const inputElement = useRef<HTMLInputElement | null>(null);
   const popperElement = useRef<HTMLDivElement>(null);
   const [focusedItem, setFocusedItem] = useState<T>();
 
@@ -64,7 +73,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
     handleShowPopper();
     setFocusedItem(undefined);
     setSearch(value);
-    args.onChange?.(
+    args.onChangeValue?.(
       items?.find((x) => (displayName ? x[displayName] : `${x}`) === value) ||
         args.create?.(value),
     );
@@ -116,6 +125,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
           readOnly={args.readOnly}
           disabled={args.isDisabled}
           placeholder={args.placeholder}
+          ref={inputElement}
           onPressEnter={() => {
             if (showPopper) {
               if (focusedItem) {
@@ -123,6 +133,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
                   ? `${focusedItem[displayName]}`
                   : `${focusedItem}`;
                 handleSearchChange(value);
+                util.TriggerInputOnChange(inputElement.current, value);
               }
               handleHidePopper();
             } else {
@@ -130,7 +141,10 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
             }
           }}
           value={search}
-          onChange={(e) => handleSearchChange(e.target.value)}
+          onChange={(e) => {
+            args.onChange?.(e);
+            handleSearchChange(e.target.value);
+          }}
         />
       </div>
       <div
@@ -163,6 +177,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
                 if (referenceElement.current) {
                   const value = displayName ? `${item[displayName]}` : `${item}`;
                   handleSearchChange(value);
+                  util.TriggerInputOnChange(inputElement.current, value);
                 }
               }}
             >
