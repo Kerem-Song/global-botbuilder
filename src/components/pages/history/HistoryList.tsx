@@ -77,7 +77,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     const categoryValue = matched.map((val) => val.categoryValue);
 
-    const categoryChangeLotType = matched.map((val) => val.changeLogType);
+    const categoryChangeLogType = matched.map((val) => val.changeLogType);
 
     const property = matched.map(
       (val) => Object.values(val.property)[0],
@@ -120,7 +120,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     return {
       categoryLabel,
       categoryValue,
-      categoryChangeLotType,
+      categoryChangeLogType,
       property,
       secondProperty,
       description,
@@ -210,7 +210,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                       ? t(`CAPTION_FLOWGROUPIMPORT_TITLE`)
                       : item[matchCategory(item).property]}
                     {/* {item[matchCategory(item).property]} */}
-                    {matchCategory(item).categoryChangeLotType.includes(2004) ? (
+                    {item.changeLogType === 2004 ? (
                       <Button
                         shape="ghost"
                         className="viewerBtn"
