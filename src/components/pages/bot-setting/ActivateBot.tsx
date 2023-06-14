@@ -11,15 +11,15 @@ export const ActivateBot = () => {
   const { confirm, info } = useSystemModal();
   const { botActivateAsync, getBotSettingInfoQuery } = useBotClient();
   const { botId } = useParams();
-  const { data } = getBotSettingInfoQuery(botId!);
+  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
   const [activate, setActivate] = useState<boolean>();
 
   const handleActivateBot = async () => {
-    if (!data) {
+    if (!botSettingInfo) {
       return;
     }
 
-    const { id } = data;
+    const { id } = botSettingInfo;
 
     const botActivate = {
       botId: id,
@@ -30,7 +30,7 @@ export const ActivateBot = () => {
 
     if (res?.data.isSuccess) {
       lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
-      console.log('data', data);
+      console.log('data', botSettingInfo);
     } else if (res?.data.exception.errorCode === 7631) {
       await info({
         title: t('DISABLED_BOT_ACTIVATED'),
@@ -42,12 +42,12 @@ export const ActivateBot = () => {
   };
 
   const handleDisableBot = async () => {
-    if (!data) {
+    if (!botSettingInfo) {
       return;
     }
 
     const botInactivate = {
-      botId: data.id,
+      botId: botSettingInfo.id,
       isActivate: false,
     };
 
@@ -65,10 +65,10 @@ export const ActivateBot = () => {
   };
 
   useEffect(() => {
-    if (data) {
-      setActivate(data.activated);
+    if (botSettingInfo) {
+      setActivate(botSettingInfo.activated);
     }
-  }, [data]);
+  }, [botSettingInfo]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
@@ -86,7 +86,9 @@ export const ActivateBot = () => {
               ) : (
                 <Button
                   type="primary"
-                  disabled={data?.alreadyActivatedBotName === null ? false : true}
+                  disabled={
+                    botSettingInfo?.alreadyActivatedBotName === null ? false : true
+                  }
                   onClick={handleActivateBot}
                 >
                   {t('ACTIVATE')}

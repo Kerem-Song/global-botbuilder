@@ -21,6 +21,7 @@ import {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router';
 
 export interface IUploadBotProfileProps {
   isProfileSaveBtnActive: boolean;
@@ -40,15 +41,14 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
 }) => {
   const [iconImage, setIconImage] = useState<File | null>();
   const { t } = usePage();
+  const { botId } = useParams();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
-  const { botImageUploadAsync } = useBotClient();
+  const { botImageUploadAsync, getBotSettingInfoQuery } = useBotClient();
+  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
   const { error } = useSystemModal();
   const { getValues: getBotIconValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getBotIconValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
-  const botSettingInfo = useRootState(
-    (state) => state.botSettingInfoReducer.botSettingInfo,
-  );
   const token = useRootState((state) => state.botInfoReducer.token);
   const iconUrl = values.iconUrl || botSettingInfo?.iconUrl;
   const displayIcon = iconUrl ? iconUrl : icEmptyBotIcon;
