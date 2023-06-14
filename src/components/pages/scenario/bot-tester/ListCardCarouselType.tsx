@@ -57,7 +57,7 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
             </div>
           );
         })}
-        {item.buttons.length > 0 ? (
+        {item.image?.imageUrl && item.buttons.length > 0 ? (
           <div
             className={
               item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
@@ -67,7 +67,13 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
               return <TesterMessagesItemButton key={i} item={v} />;
             })}
           </div>
-        ) : null}
+        ) : (
+          <div className="rectangleImageBtn">
+            {item.buttons?.map((v, i) => {
+              return <TesterMessagesItemButton key={i} item={v} />;
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

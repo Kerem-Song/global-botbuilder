@@ -11,11 +11,11 @@ import { HandleBotScenario } from './HandleBotScenario';
 export const SettingComponent = () => {
   const { t } = usePage();
   const { botId } = useParams();
-  const { refetchBotInfo } = useBotClient();
+  const { refetchBotSettingInfo } = useBotClient();
 
   useEffect(() => {
     if (botId) {
-      refetchBotInfo(botId);
+      refetchBotSettingInfo(botId);
     }
   }, [botId]);
 

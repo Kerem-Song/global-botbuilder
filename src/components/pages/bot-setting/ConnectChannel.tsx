@@ -1,26 +1,45 @@
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ConnectChannelCard } from './ConnectChannelCard';
 
-export interface IConnectChannelProps {
-  opChannelName?: string;
-}
-
-export const ConnectChannel: FC<IConnectChannelProps> = ({ opChannelName }) => {
+export const ConnectChannel = () => {
   const { t } = usePage();
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const { botChannelActivateAsync } = useBotClient();
   const { confirm, info } = useSystemModal();
+
+  const testChannelName =
+    (botSettingInfo && botSettingInfo.channelInfos?.[0].name) || '@ -';
+  const opChannelName =
+    (botSettingInfo && botSettingInfo.channelInfos?.[1].name) || '@ -';
 
   const handleConnectChannel = async (isOpChannel: boolean) => {
     const linkedState = isOpChannel ? opLinked : testLinked;
     const setLinkedState = isOpChannel ? setOpLinked : setTestLinked;
-    const testChannelName = botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -';
+
+    if (
+      !isOpChannel &&
+      botSettingInfo?.channelInfos?.find(
+        (x) => x.linkable === false && x.isLive === false && x.isLinked === false,
+      )
+    ) {
+      await info({
+        title: t('DISABLED_CONNECT_TEST_CHANNEL'),
+        description: (
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <span>{t('DISABLED_CONNECT_TEST_CHANNEL_INFO')}</span>
+          </div>
+        ),
+      });
+      return;
+    }
 
     const res = await confirm({
       title: linkedState ? t('DISCONNECT_CHANNEL') : t('CONNECT_CHANNEL'),
@@ -44,7 +63,7 @@ export const ConnectChannel: FC<IConnectChannelProps> = ({ opChannelName }) => {
       const connectChannel = await botChannelActivateAsync({
         isActivate: !linkedState,
         isLive: isOpChannel,
-        botId: botInfo!.id,
+        botId: botSettingInfo!.id,
       });
 
       if (connectChannel?.data.isSuccess) {
@@ -65,35 +84,23 @@ export const ConnectChannel: FC<IConnectChannelProps> = ({ opChannelName }) => {
         } else {
           lunaToast.success(t('DISCONNECT_CHANNEL_SUCCESS_MESSAGE'));
         }
-      } else if (
-        connectChannel?.data.exception.exceptionType ===
-        'PartnersSNSChannelInfoEmptyException'
-      ) {
-        await info({
-          title: t('DISABLED_CONNECT_TEST_CHANNEL'),
-          description: (
-            <div style={{ whiteSpace: 'pre-wrap' }}>
-              <span>{t('DISABLED_CONNECT_TEST_CHANNEL_INFO')}</span>
-            </div>
-          ),
-        });
       }
     }
   };
 
   useEffect(() => {
-    if (botInfo) {
-      setActivate(botInfo.activated);
-      setOpLinked(botInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
-      setTestLinked(botInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
+    if (botSettingInfo) {
+      setActivate(botSettingInfo.activated);
+      setOpLinked(botSettingInfo.channelInfos?.find((x) => x.isLive)?.isLinked);
+      setTestLinked(botSettingInfo.channelInfos?.find((x) => !x.isLive)?.isLinked);
     }
-  }, [botInfo]);
+  }, [botSettingInfo]);
 
   return (
     <div className="connectChannelCardContainer">
       <ConnectChannelCard
         channelType="operating"
-        channelName={opChannelName!}
+        channelName={opChannelName}
         linked={opLinked}
         disabled={!activate}
         onConnect={() => handleConnectChannel(true)}
@@ -101,7 +108,7 @@ export const ConnectChannel: FC<IConnectChannelProps> = ({ opChannelName }) => {
       />
       <ConnectChannelCard
         channelType="test"
-        channelName={botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -'}
+        channelName={testChannelName}
         linked={testLinked}
         disabled={!activate}
         onConnect={() => handleConnectChannel(false)}

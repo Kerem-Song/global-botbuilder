@@ -26,3 +26,33 @@ export interface IBotInput {
   botName: string;
   snsKind: SnsKind;
 }
+
+export interface IBotSettingModel {
+  channelInfos: [
+    {
+      isLinked: boolean;
+      name: string;
+      isLive: boolean;
+      id: string;
+      linkable: boolean;
+    },
+    {
+      isLinked: boolean;
+      name: string;
+      isLive: boolean;
+      id: string;
+      linkable: boolean;
+    },
+  ];
+  botName: string;
+  snsKind: number;
+  activated: boolean;
+  iconUrl?: string;
+  updateUtc?: string;
+  lastUpdateUTC?: string;
+  isBotChannelActivatable: boolean;
+  alreadyActivatedBotName: string;
+  removeCancelExpire?: string;
+  removeCancelExpireUtc?: string;
+  id: string;
+}

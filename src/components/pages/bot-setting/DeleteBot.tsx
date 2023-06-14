@@ -7,25 +7,27 @@ export const DeleteBot = () => {
   const { t } = usePage();
   const { confirm } = useSystemModal();
   const { botDeleteAsync, botRecoverAsync } = useBotClient();
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const isManager = staffType === 2;
-  const removeCancelExpireUtc = botInfo && botInfo.removeCancelExpireUtc;
+  const removeCancelExpireUtc = botSettingInfo && botSettingInfo.removeCancelExpireUtc;
   const [activeDeleteBtn, setActiveDeleteBtn] = useState<boolean>(false);
   const [activeRecoverBtn, setActiveRecoverBtn] = useState<boolean>(false);
 
   const checkActivatedBot = async (isManager: number) => {
-    if (botInfo && !isManager) {
-      const title = botInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
-      const message = botInfo.activated
+    if (botSettingInfo && !isManager) {
+      const title = botSettingInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
+      const message = botSettingInfo.activated
         ? t('DISABLED_DELETE_BOT_MESSAGE')
         : t('DELETE_BOT_CONFIRM_MESSAGE');
       const result = await confirm({
         title,
         description: <p style={{ whiteSpace: 'pre-wrap' }}>{message}</p>,
       });
-      if (result && !botInfo.activated) {
-        await botDeleteAsync({ botId: botInfo.id }).then((res) => {
+      if (result && !botSettingInfo.activated) {
+        await botDeleteAsync({ botId: botSettingInfo.id }).then((res) => {
           console.log(res?.data);
           setActiveRecoverBtn(true);
         });
@@ -48,25 +50,25 @@ export const DeleteBot = () => {
         description: <p>{t('RECOVER_BOT_MESSAGE')}</p>,
       });
       if (recoverConfirm) {
-        await botRecoverAsync({ botId: botInfo!.id });
+        await botRecoverAsync({ botId: botSettingInfo!.id });
         setActiveRecoverBtn(false);
       }
     }
   };
 
   useEffect(() => {
-    if (botInfo && !isManager) {
+    if (botSettingInfo && !isManager) {
       if (removeCancelExpireUtc === null) {
         setActiveDeleteBtn(true);
       } else if (removeCancelExpireUtc !== null) {
         setActiveRecoverBtn(true);
       }
     }
-  }, [botInfo && botInfo.id, removeCancelExpireUtc, isManager]);
+  }, [botSettingInfo && botSettingInfo.id, removeCancelExpireUtc, isManager]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
-      {botInfo && (
+      {botSettingInfo && (
         <Row className="handleScenariosWrap">
           <Space direction="vertical" gap={10}>
             <Col className="deleteBot">
