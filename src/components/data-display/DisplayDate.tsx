@@ -1,5 +1,6 @@
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useI18n } from '@hooks';
+import { util } from '@modules/util';
 import { FC } from 'react';
 
 export interface DisplayDateProps {
@@ -16,7 +17,7 @@ export const DisplayDate: FC<DisplayDateProps> = ({ date }) => {
   ) {
     return (
       <>
-        <Tooltip tooltip={date.toLocaleDateString()}>{tc('LBL_TODAY')}</Tooltip>
+        <Tooltip tooltip={util.toLocaleDateTimeString(date)}>{tc('LBL_TODAY')}</Tooltip>
       </>
     );
   }
