@@ -31,13 +31,6 @@ export const ActivateBot = () => {
     if (res?.data.isSuccess) {
       lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
       console.log('data', botSettingInfo);
-    } else if (res?.data.exception.errorCode === 7631) {
-      await info({
-        title: t('DISABLED_BOT_ACTIVATED'),
-        description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{t('DISABLED_BOT_ACTIVATED_MESSAGE')}</p>
-        ),
-      });
     }
   };
 
