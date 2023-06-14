@@ -213,6 +213,7 @@ export const ImageFileUploader = ({
           </div>
         </div>
       </label>
+      {!isValid && <p className="error-message">{t(`IMAGE_NOT_FOUND`)}</p>}
     </>
   );
 };

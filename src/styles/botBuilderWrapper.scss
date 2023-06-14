@@ -316,24 +316,30 @@
       .imgUploadLabel {
         display: flex;
         justify-content: center;
-        &.skeleton {
-          // display: flex;
-          // justify-content: center;
+        align-items: center;
+        height: rem(170);
 
+        &.skeleton {
           .imgUploadWrapper {
             background: $grayWhite;
             border: rem(1) dashed $gray200;
             border-radius: rem(8);
 
             &:hover {
+              height: 100%;
               box-sizing: border-box;
               -moz-box-sizing: border-box;
               -webkit-box-sizing: border-box;
               border: rem(1) dashed $primary300;
-              border-radius: rem(8);
+              border-radius: rem(8);             
             }
           
             .imgUploadSkeleton {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-flow: column;
+
               img {
                 width: rem(30);
                 height: rem(30);
@@ -345,12 +351,6 @@
         }
 
         &.skeleton:hover {
-          // box-sizing: border-box;
-          // -moz-box-sizing: border-box;
-          // -webkit-box-sizing: border-box;
-          // border: rem(1) dashed $primary300;
-          // border-radius: rem(8);
-
           .imgUploadSkeleton {
             display: none;
           }
@@ -364,19 +364,12 @@
         }
 
         .imgUploadWrapper {
-          display: flex;
-          justify-content: center;
-          position: relative;
           width: rem(168);
-          height: rem(168);
-
+          height: 100%;
+          
           .imgUploadSkeleton {
-            position: absolute;
-            bottom: 50%;
-            right: 50%;
-            transform: translate((50%, 50%));
             width: 100%;
-            text-align: center;
+            height: rem(168);
 
             img {
               width: 100%;
@@ -386,7 +379,28 @@
               object-fit: contain;
               background-color: $gray150;
             } 
+
+            .imgNotFound {
+              width: rem(30);
+              height: rem(30);
+            }
           }
+
+          .imgUploadSkeleton:has(.imgNotFound) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $grayWhite;
+            border-radius: rem(8);
+
+            .imgNotFound {
+              border: none;
+              background-color: $grayWhite;
+              width: rem(30);
+              height: rem(30);
+            }
+          }
+          
 
           &.small {
             width: rem(64);
@@ -407,7 +421,6 @@
 
         .rectangle {
           width: 100%;
-          height: rem(168);
           
           img {
             border: rem(1) solid $gray200;
