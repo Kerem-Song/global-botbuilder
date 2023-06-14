@@ -18,8 +18,7 @@ export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
-  const { i18n } = useI18n();
-  const { tc } = usePage();
+  const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
   const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
