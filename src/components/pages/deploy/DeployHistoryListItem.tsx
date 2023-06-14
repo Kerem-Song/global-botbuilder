@@ -46,7 +46,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
               </td>
               <td className="deployHistoryList channelName">{x.snsChannel}</td>
               <td className="deployHistoryList deployDateTime">
-                {util.formatDateTime(new Date(x.createAt))}
+                {util.toLocaleDateTimeString(new Date(x.createAt))}
               </td>
               <td className="deployHistoryList accountInfo">
                 <MultiClamp clamp={1}>{x.actorName}</MultiClamp>

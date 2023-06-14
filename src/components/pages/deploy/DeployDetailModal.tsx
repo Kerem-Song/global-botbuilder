@@ -99,7 +99,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>
             <span className="infoContent">
-              {util.formatDateTime(new Date(detailInfo.createAt))}
+              {util.toLocaleDateTimeString(new Date(detailInfo.createAt))}
             </span>
           </div>
           <div className="info">

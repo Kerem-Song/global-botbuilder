@@ -137,9 +137,9 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     window.open(
       window.location.origin +
-        `/${botId}/viewer/${id}/${util.formatDateTime(new Date(item.createAtByBrand))}/${
-          item.actorEmail
-        }/${item.actorName}/`,
+        `/${botId}/viewer/${id}/${util.toLocaleDateTimeString(
+          new Date(item.createAtByBrand),
+        )}/${item.actorEmail}/${item.actorName}/`,
 
       '_blank',
       `toolbar=1,location=1,menubar=1`,
@@ -224,7 +224,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   </div>
                 </Col>
                 <Col className="historyDateActorWrapper">
-                  <p>{util.formatDateTime(new Date(item.createAtByBrand))}</p>
+                  <p>{util.toLocaleDateTimeString(new Date(item.createAtByBrand))}</p>
 
                   <p>
                     {item.actorEmail}({item.actorName})

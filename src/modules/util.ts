@@ -28,21 +28,44 @@ export const util = {
   pad: (n: number) => {
     return n < 10 ? `0${n.toString()}` : n.toString();
   },
-  formatDateTime: (d: Date) => {
-    return (
-      d.getFullYear() +
-      '.' +
-      util.pad(d.getMonth() + 1) +
-      '.' +
-      util.pad(d.getDate()) +
-      ' ' +
-      util.pad(d.getHours()) +
-      ':' +
-      util.pad(d.getMinutes()) +
-      ':' +
-      util.pad(d.getSeconds())
-    );
+  // toLocaleDateTimeStringFromUtc: (date: Date) => {
+  //   const newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+  //   const offset = date.getTimezoneOffset() / 60;
+  //   const hours = date.getHours();
+  //   newDate.setHours(hours - offset);
+
+  //   return newDate.toLocaleString();
+  // },
+  toLocaleDateTimeString: (date: Date) => {
+    return date.toLocaleString();
   },
+  // toLocaleDateStringFromUtc: (date: Date) => {
+  //   console.log('date', date);
+  //   const newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+  //   const offset = date.getTimezoneOffset() / 60;
+  //   const hours = date.getHours();
+  //   newDate.setHours(hours - offset);
+  //   console.log('newDate', newDate);
+  //   return newDate.toLocaleDateString();
+  // },
+  toLocaleDateString: (date: Date) => {
+    return date.toLocaleDateString();
+  },
+  // formatDateTime: (d: Date) => {
+  //   return (
+  //     d.getFullYear() +
+  //     '.' +
+  //     util.pad(d.getMonth() + 1) +
+  //     '.' +
+  //     util.pad(d.getDate()) +
+  //     ' ' +
+  //     util.pad(d.getHours()) +
+  //     ':' +
+  //     util.pad(d.getMinutes()) +
+  //     ':' +
+  //     util.pad(d.getSeconds())
+  //   );
+  // },
   TriggerInputOnChange: (input: HTMLInputElement | null, value: string) => {
     if (!input) {
       return;
