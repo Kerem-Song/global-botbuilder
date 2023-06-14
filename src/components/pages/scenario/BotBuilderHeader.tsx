@@ -126,6 +126,7 @@ export const BotBuilderHeader = () => {
   const isEditDrawOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const cardNum = nodes.length;
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
@@ -227,11 +228,13 @@ export const BotBuilderHeader = () => {
         setOtherFlowPopupPosition({
           x:
             canvasRect && viewRect
-              ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+              ? Math.round(viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x))
               : 0,
           y:
             canvasRect && viewRect
-              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+              ? Math.round(
+                  viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y),
+                )
               : 0,
         }),
       );
@@ -268,11 +271,11 @@ export const BotBuilderHeader = () => {
       seq: 0,
       x:
         canvasRect && viewRect
-          ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+          ? Math.round(viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x))
           : 0,
       y:
         canvasRect && viewRect
-          ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+          ? Math.round(viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y))
           : 0,
     };
     dispatch(appendNode(addNode));
