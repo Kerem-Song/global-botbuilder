@@ -1,11 +1,12 @@
 import { setSesstionToken } from '@store/botInfoSlice';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import useHttp from '../useHttp';
 
 export const useSessionTokenClient = () => {
+  const queryClient = useQueryClient();
   const http = useHttp();
   const { botId } = useParams();
   const dispatch = useDispatch();
@@ -27,7 +28,12 @@ export const useSessionTokenClient = () => {
     );
   };
 
+  const refetchSessionToken = (botId: string) => {
+    queryClient.invalidateQueries(['session-token', botId]);
+  };
+
   return {
     getSessionToken,
+    refetchSessionToken,
   };
 };
