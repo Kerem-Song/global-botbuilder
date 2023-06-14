@@ -204,13 +204,13 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   </div>
 
                   <p className="historyListTitle">
-                    {item.changeLogType === 1008
+                    {matchCategory(item).categoryChangeLogType.includes(1008)
                       ? t(`CAPTION_FLOWGROUPEXPORT_TITLE`)
-                      : item.changeLogType === 1009
+                      : matchCategory(item).categoryChangeLogType.includes(1009)
                       ? t(`CAPTION_FLOWGROUPIMPORT_TITLE`)
                       : item[matchCategory(item).property]}
                     {/* {item[matchCategory(item).property]} */}
-                    {item.changeLogType === 2004 ? (
+                    {matchCategory(item).categoryChangeLogType.includes(2004) ? (
                       <Button
                         shape="ghost"
                         className="viewerBtn"
