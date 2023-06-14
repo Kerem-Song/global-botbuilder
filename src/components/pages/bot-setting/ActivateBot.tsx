@@ -2,25 +2,24 @@ import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import { ConnectChannel } from './ConnectChannel';
 
 export const ActivateBot = () => {
   const { t, navigate } = usePage();
   const { confirm, info } = useSystemModal();
-  const botSettingInfo = useRootState(
-    (state) => state.botSettingInfoReducer.botSettingInfo,
-  );
-  const { botActivateAsync } = useBotClient();
-
+  const { botActivateAsync, getBotSettingInfoQuery } = useBotClient();
+  const { botId } = useParams();
+  const { data } = getBotSettingInfoQuery(botId!);
   const [activate, setActivate] = useState<boolean>();
 
   const handleActivateBot = async () => {
-    if (!botSettingInfo) {
+    if (!data) {
       return;
     }
 
-    const { id } = botSettingInfo;
+    const { id } = data;
 
     const botActivate = {
       botId: id,
@@ -31,7 +30,7 @@ export const ActivateBot = () => {
 
     if (res?.data.isSuccess) {
       lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
-      console.log('data', botSettingInfo);
+      console.log('data', data);
     } else if (res?.data.exception.errorCode === 7631) {
       await info({
         title: t('DISABLED_BOT_ACTIVATED'),
@@ -43,12 +42,12 @@ export const ActivateBot = () => {
   };
 
   const handleDisableBot = async () => {
-    if (!botSettingInfo) {
+    if (!data) {
       return;
     }
 
     const botInactivate = {
-      botId: botSettingInfo.id,
+      botId: data.id,
       isActivate: false,
     };
 
@@ -66,10 +65,10 @@ export const ActivateBot = () => {
   };
 
   useEffect(() => {
-    if (botSettingInfo) {
-      setActivate(botSettingInfo.activated);
+    if (data) {
+      setActivate(data.activated);
     }
-  }, [botSettingInfo]);
+  }, [data]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
@@ -87,9 +86,7 @@ export const ActivateBot = () => {
               ) : (
                 <Button
                   type="primary"
-                  disabled={
-                    botSettingInfo?.alreadyActivatedBotName === null ? false : true
-                  }
+                  disabled={data?.alreadyActivatedBotName === null ? false : true}
                   onClick={handleActivateBot}
                 >
                   {t('ACTIVATE')}
