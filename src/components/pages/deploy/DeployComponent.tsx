@@ -1,5 +1,6 @@
 import { usePage } from '@hooks';
 import { useDeployClient } from '@hooks/client/deployClient';
+import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -19,6 +20,7 @@ export const DeployComponent = () => {
     countPerPage: countPerPage,
     botId: botId!,
   });
+  const offset = new Date().getTimezoneOffset() * -1;
 
   useEffect(() => {
     if (data) {
@@ -30,7 +32,9 @@ export const DeployComponent = () => {
     <div className="deployWrap">
       <div className="title">{t('TITLE')}</div>
       <div className="deployInfo">
-        <div className="referenceTime">{t('REFERENCE_TIME')} : UTC+09:00</div>
+        <div className="referenceTime">
+          {t('REFERENCE_TIME')} : UTC{util.toOffsetString(offset)}
+        </div>
         <DeployButtons />
       </div>
       <div className="deployHistoryListWrap">
