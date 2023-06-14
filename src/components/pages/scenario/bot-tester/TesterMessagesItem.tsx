@@ -68,62 +68,64 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
         );
       case TESTER_DATA_TYPES.card:
         return (
-          <>
-            {item.image || item.title || item.contentText || item.buttons.length > 0 ? (
-              <>
-                <div
-                  className="basicCardContainer"
-                  role="presentation"
-                  onClick={() => onClick(item.debugMeta)}
-                >
-                  {item.image && (
-                    <img
-                      className={
-                        item.image.imageAspectRatio === 0
-                          ? 'cardImg_rectangle'
-                          : 'cardImg_square'
-                      }
-                      src={item.image.imageUrl}
-                      alt="cardImg"
-                    />
-                  )}
-                  {item.title || item.contentText ? (
-                    <div className="cardText">
-                      {item.title && (
-                        <div className="cardTitle">
-                          <MultiClamp clamp={2} ellipsis={'...'}>
-                            {item.title.substring(0, 39)}
-                          </MultiClamp>
-                        </div>
-                      )}
-                      {item.contentText && (
-                        <div className="cardContentText">
-                          <MultiClamp clamp={8} ellipsis={'...'}>
-                            {item.contentText.substring(0, 229)}
-                          </MultiClamp>
-                        </div>
-                      )}
-                      {item.buttons.length > 0 && (
-                        <div
-                          className={
-                            item.image?.imageAspectRatio === 0
-                              ? 'rectangleImageBtn'
-                              : 'squareImageBtn'
-                          }
-                        >
-                          {item.buttons.map((v, i) => (
-                            <TesterMessagesItemButton key={i} item={v} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              </>
+          <div
+            className="basicCardContainer"
+            role="presentation"
+            onClick={() => onClick(item.debugMeta)}
+          >
+            {item.image ? (
+              <img
+                className={
+                  item.image.imageAspectRatio === 0
+                    ? 'cardImg_rectangle'
+                    : 'cardImg_square'
+                }
+                src={item.image.imageUrl}
+                alt="cardImg"
+              />
             ) : (
               <></>
             )}
-          </>
+            {item.title || item.contentText ? (
+              <div className="cardText">
+                {item.title && (
+                  <div className="cardTitle">
+                    <MultiClamp clamp={2} ellipsis={'...'}>
+                      {item.title.substring(0, 39)}
+                    </MultiClamp>
+                  </div>
+                )}
+                {item.contentText && (
+                  <div className="cardContentText">
+                    <MultiClamp clamp={8} ellipsis={'...'}>
+                      {item.contentText.substring(0, 229)}
+                    </MultiClamp>
+                  </div>
+                )}
+                {item.buttons.length > 0 && (
+                  <div
+                    className={
+                      item.image?.imageAspectRatio === 0
+                        ? 'rectangleImageBtn'
+                        : 'squareImageBtn'
+                    }
+                  >
+                    {item.buttons.map((v, i) => (
+                      <TesterMessagesItemButton key={i} item={v} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="cardText">
+                <div className="rectangleImageBtn">
+                  {item.buttons.map((v, i) => (
+                    <TesterMessagesItemButton key={i} item={v} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         );
       case TESTER_DATA_TYPES.productCard:
         return (
@@ -239,7 +241,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                     </div>
                   );
                 })}
-                {item.buttons.length > 0 ? (
+                {item.image?.imageUrl && item.buttons.length > 0 ? (
                   <div
                     className={
                       item.image?.imageAspectRatio === 0
@@ -251,7 +253,13 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                       return <TesterMessagesItemButton key={i} item={v} />;
                     })}
                   </div>
-                ) : null}
+                ) : (
+                  <div className="rectangleImageBtn">
+                    {item.buttons?.map((v, i) => {
+                      return <TesterMessagesItemButton key={i} item={v} />;
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </div>

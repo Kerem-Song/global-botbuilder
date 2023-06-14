@@ -41,7 +41,15 @@ export const CardCarouselType = ({ item }: CardCarouselTypeProps) => {
             })}
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div className="cardCarouselContents">
+          <div className="rectangleImageBtn">
+            {item.buttons.map((v, i) => (
+              <TesterMessagesItemButton key={i} item={v} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
