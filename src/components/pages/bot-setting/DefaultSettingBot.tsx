@@ -20,8 +20,13 @@ export const DefaultSettingBot = () => {
   const botNameRef = useRef<HTMLInputElement | null>(null);
   const [botNameInputError, setBotNameInputError] = useState<string>('');
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
+  const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
+  const [isSaveBtnsActive, setIsSaveBtnsActive] = useState({
+    isSaveBtnActive: false,
+    isProfileSaveBtnActive: false,
+  });
 
-  usePrompt(isSaveBtnActive);
+  usePrompt(isSaveBtnsActive.isSaveBtnActive || isSaveBtnsActive.isProfileSaveBtnActive);
 
   const botNameSchema = yup.object({
     botName: yup
@@ -71,6 +76,7 @@ export const DefaultSettingBot = () => {
   const handleBotName = (e: React.ChangeEvent<HTMLInputElement>) => {
     field.onChange(e);
     setIsSaveBtnActive(true);
+    setIsSaveBtnsActive((prev) => ({ ...prev, isSaveBtnActive: true }));
     setBotNameInputError('');
   };
 
@@ -85,6 +91,8 @@ export const DefaultSettingBot = () => {
     if (res?.data.isSuccess) {
       lunaToast.success(t('SAVE_BOT_MESSAGE'));
       setIsSaveBtnActive(false);
+      setIsSaveBtnsActive((prev) => ({ ...prev, isSaveBtnActive: false }));
+
       return;
     }
 
@@ -158,7 +166,11 @@ export const DefaultSettingBot = () => {
             </Button>
           </Col>
         </Row>
-        <UploadBotProfile />
+        <UploadBotProfile
+          isProfileSaveBtnActive={isProfileSaveBtnActive}
+          setIsProfileSaveBtnActive={setIsProfileSaveBtnActive}
+          setIsSaveBtnsActive={setIsSaveBtnsActive}
+        />
       </Space>
     </Card>
   );

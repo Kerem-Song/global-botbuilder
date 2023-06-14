@@ -1,4 +1,4 @@
-import { icHelp, icImg } from '@assets';
+import { icEmptyBotIcon, icHelp, icImg, icTooltipIcon } from '@assets';
 import { Button, Col, Row, Space } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
 import {
@@ -8,16 +8,37 @@ import {
   useRootState,
   useSystemModal,
 } from '@hooks';
-import { usePrompt } from '@hooks/usePrompt';
 import { IUpdateBotIcon } from '@models/interfaces/IBotSetting';
 import { lunaToast } from '@modules/lunaToast';
 import classNames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 
-export const UploadBotProfile = () => {
+export interface IUploadBotProfileProps {
+  isProfileSaveBtnActive: boolean;
+  setIsProfileSaveBtnActive: Dispatch<SetStateAction<boolean>>;
+  setIsSaveBtnsActive: Dispatch<
+    SetStateAction<{
+      isSaveBtnActive: boolean;
+      isProfileSaveBtnActive: boolean;
+    }>
+  >;
+}
+
+export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
+  isProfileSaveBtnActive,
+  setIsProfileSaveBtnActive,
+  setIsSaveBtnsActive,
+}) => {
   const [iconImage, setIconImage] = useState<File | null>();
-  const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
   const { t } = usePage();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
   const { botImageUploadAsync } = useBotClient();
@@ -28,10 +49,8 @@ export const UploadBotProfile = () => {
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const token = useRootState((state) => state.botInfoReducer.token);
   const iconUrl = values.iconUrl || botInfo?.iconUrl;
-  const displayIcon = iconUrl ? iconUrl : icImg;
+  const displayIcon = iconUrl ? iconUrl : icEmptyBotIcon;
   const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
-
-  usePrompt(isProfileSaveBtnActive);
 
   const handleUpload = useCallback(() => {
     if (!botProfileInputRef.current) {
@@ -96,6 +115,7 @@ export const UploadBotProfile = () => {
     }
     setIconImage(file);
     setIsProfileSaveBtnActive(true);
+    setIsSaveBtnsActive((prev) => ({ ...prev, isProfileSaveBtnActive: true }));
   };
 
   const handleSaveProfile = async () => {
@@ -111,6 +131,10 @@ export const UploadBotProfile = () => {
         console.log('res', res);
         lunaToast.success(t('SAVE_BOT_PROFILE_MESSAGE'));
         setIsProfileSaveBtnActive(false);
+        setIsSaveBtnsActive((prev) => ({
+          ...prev,
+          isProfileSaveBtnActive: false,
+        }));
       }
     }
   };
@@ -123,10 +147,10 @@ export const UploadBotProfile = () => {
 
   return (
     <Row gap={10} align="center">
-      <Col className="botInfo">
+      <Col className="botInfo botProfileTooltip">
         <p>{t('BOT_PROFILE')}</p>
         <Tooltip tooltip={settingBotProfileInfo} placement="bottom-start">
-          <img className="icHelp" src={icHelp} alt="help" />
+          <img className="icTooltipIcon" src={icTooltipIcon} alt="help" />
         </Tooltip>
       </Col>
       <Col flex="auto" className="botInfo botProfileImgwrap">
@@ -147,7 +171,6 @@ export const UploadBotProfile = () => {
           />
           <Space>
             <div className="botProfileUploadBtnWrap">
-              <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
               <Space>
                 <Button type="lineBlue" onClick={handleUpload}>
                   {t('FILE_UPLOAD')}
@@ -160,6 +183,7 @@ export const UploadBotProfile = () => {
                   {t('PROFILE_SAVE')}
                 </Button>
               </Space>
+              <span className="info">{t('RECOMMEND_BOT_IMG_SIZE')}</span>
             </div>
           </Space>
         </Space>

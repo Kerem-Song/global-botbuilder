@@ -44,7 +44,11 @@
     "CONDITION_OPERATOR_ANY": "any",
     "CONDITION_OPERATOR_LESSTHANOREQUAL": "less than or equal",
     "CONDITION_OPERATOR_GREATERTHANOREQUAL": "greater than or equal",
-    "INVALIDATE_ARROW": "잘못된 연결입니다."
+    "INVALIDATE_ARROW": "잘못된 연결입니다.",
+    "HTTP_PROVIDER_NO_BOT_ERROR_TITLE": "Error",
+    "HTTP_PROVIDER_NO_BOT_ERROR_DESC": "봇이 존재하지 않습니다.",
+    "PAGE_PROVIDER_AUTH_ERROR_TITLE": "권한",
+    "PAGE_PROVIDER_AUTH_ERROR_DESC": "메뉴 권한이 없습니다."
   },
   "scenario": {
     "TITLE": "시나리오",
@@ -357,6 +361,7 @@
     "SAVE": "저장하기",
     "SAVE_MESSAGE": "변경사항이 저장되지 않았습니다.\n정말 나가시겠습니까?",
     "DELETE_INTENT_MESSAGE": "인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.\n삭제하시겠습니까?",
+    "INTENT": "인텐트",
     "INTENT_NAME": "인텐트명",
     "DUPLICATE_INTENT": "중복 인텐트명",
     "DUPLICATE_INTENT_MESSAGE_WITH_INFO": "이미 있는 인텐트명입니다.\n등록위치: ",
@@ -375,7 +380,7 @@
     "ENTER_UTTERANCE": "엔터를 눌러 발화 키워드를 입력해주세요.",
     "SEARCH_UTTERANCE_PLACEHOLDER": "검색어를 입력해주세요.",
     "VALIDATION_REQUIRED": "필수 입력 항목 입니다.",
-    "ADD_INTENT": "인텐트 관리_등록"
+    "ADD_INTENT": "인텐트 등록"
   },
   "setting": {
     "TITLE": "챗봇 설정",
@@ -475,7 +480,8 @@
     "FAILED": "실패",
     "OPERATIONAL": "운영 채널",
     "TEST": "테스트 채널",
-    "NO_DEPLOYMENT_HISTORY": "아직 배포 이력이 없습니다."
+    "NO_DEPLOYMENT_HISTORY": "아직 배포 이력이 없습니다.",
+    "SAVE_MEMO": "메모가 저장되었습니다."
   },
   "history": {
     "TITLE": "히스토리",

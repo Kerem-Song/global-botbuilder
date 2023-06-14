@@ -1,4 +1,5 @@
 import useI18n from '@hooks/useI18n';
+import usePage from '@hooks/usePage';
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
 import { setToken } from '@store/authSlice';
@@ -17,7 +18,7 @@ export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
 export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
-  const { i18n } = useI18n();
+  const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
   const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
@@ -74,8 +75,8 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
 
       if (err.response.data.exception && err.response.data.exception.errorCode === 7656) {
         error({
-          title: 'error',
-          description: '봇이 존재하지 않습니다.',
+          title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+          description: tc(`HTTP_PROVIDER_NO_BOT_ERROR_DESC`),
         }).then(() => {
           document.location.href = `/${i18n.language}/dashboard`;
         });

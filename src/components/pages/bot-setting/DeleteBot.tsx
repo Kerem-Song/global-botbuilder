@@ -70,24 +70,7 @@ export const DeleteBot = () => {
         <Row className="handleScenariosWrap">
           <Space direction="vertical" gap={10}>
             <Col className="deleteBot">
-              <p className="settingCardTitle deleteBotTitle">{t('DELETE_BOT_TITLE')}</p>
-              {activeRecoverBtn ? (
-                <Button
-                  type="lineBlue"
-                  disabled={activeRecoverBtn ? false : true}
-                  onClick={handleRecoverBtn}
-                >
-                  {t('RECOVER_BOT')}
-                </Button>
-              ) : (
-                <Button
-                  type="error"
-                  disabled={activeDeleteBtn ? false : true}
-                  onClick={handleDeleteBtn}
-                >
-                  {t('DELETE_BOT')}
-                </Button>
-              )}
+              <p className="settingCardTitle">{t('DELETE_BOT_TITLE')}</p>
               {removeCancelExpireUtc ? (
                 <p className="cancelExpireUtc">
                   {util.toLocaleDateTimeString(new Date(removeCancelExpireUtc))}
@@ -99,6 +82,25 @@ export const DeleteBot = () => {
               <p className="deleteBotDesc">{t('DELETE_BOT_DESC')}</p>
             </Col>
           </Space>
+          <Col>
+            {activeRecoverBtn ? (
+              <Button
+                type="default"
+                disabled={activeRecoverBtn ? false : true}
+                onClick={handleRecoverBtn}
+              >
+                {t('RECOVER_BOT')}
+              </Button>
+            ) : (
+              <Button
+                type="secondary"
+                disabled={activeDeleteBtn ? false : true}
+                onClick={handleDeleteBtn}
+              >
+                {t('DELETE_BOT')}
+              </Button>
+            )}
+          </Col>
         </Row>
       )}
     </Card>

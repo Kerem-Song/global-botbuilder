@@ -48,7 +48,10 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
 
   console.log(userInfo.staffType, handle?.role, role);
   if (userInfo.staffType !== 0 && handle?.role && (role & handle.role) !== handle.role) {
-    error({ title: '권한', description: '메뉴 권한이 없습니다.' }).then(() => {
+    error({
+      title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
+      description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
+    }).then(() => {
       localeNavigate('/dashboard');
     });
     return <></>;

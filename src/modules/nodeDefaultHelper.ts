@@ -286,7 +286,7 @@ export const nodeDefaultHelper = {
       profileName: '',
       description: '',
       seq: 0,
-      currencyUnit: '@sys.brand-currency',
+      currencyUnit: SYS_BRAND_CURRENCY,
       imageCtrl: {
         imageUrl: '',
         altText: '',
