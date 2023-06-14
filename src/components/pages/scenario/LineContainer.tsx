@@ -51,6 +51,7 @@ export const LineContainer: FC = () => {
             l.end === `${NODE_PREFIX}${selectedLine}` ||
             l.updateKey === `${NODE_PREFIX}${selectedLine}`
           }
+          isSelected={selectedLine !== undefined}
           active={selectedLine === l}
           onDelete={() => handleLineDelete(l)}
         />
