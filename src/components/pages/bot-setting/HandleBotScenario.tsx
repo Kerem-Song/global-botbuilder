@@ -11,7 +11,9 @@ export const HandleBotScenario = () => {
   const { botId } = useParams();
   const { botExportAsync, botImportAsync } = useBotClient();
   const { refetchSessionToken } = useSessionTokenClient();
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -21,10 +23,10 @@ export const HandleBotScenario = () => {
   }, [botId]);
 
   const handleExport = async () => {
-    if (!botInfo) {
+    if (!botSettingInfo) {
       return;
     }
-    await botExportAsync({ botId: botInfo.id, botName: botInfo.botName });
+    await botExportAsync({ botId: botSettingInfo.id, botName: botSettingInfo.botName });
   };
 
   const handleImportBotScenario = useCallback(
@@ -42,7 +44,7 @@ export const HandleBotScenario = () => {
           ),
         });
         if (res) {
-          botImportAsync({ file: uploadFile, botId: botInfo!.id })
+          botImportAsync({ file: uploadFile, botId: botSettingInfo!.id })
             .then((res) => {
               console.log('botImportAsync data', res?.data);
               lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
@@ -63,7 +65,7 @@ export const HandleBotScenario = () => {
         });
       }
     },
-    [botInfo],
+    [botSettingInfo],
   );
 
   const handleImportBtnClick = useCallback(() => {

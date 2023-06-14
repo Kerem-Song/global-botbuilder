@@ -16,7 +16,9 @@ import { UploadBotProfile } from './UploadBotProfile';
 export const DefaultSettingBot = () => {
   const { t, tc } = usePage();
   const { botUpdateNameAsync } = useBotClient();
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const botNameRef = useRef<HTMLInputElement | null>(null);
   const [botNameInputError, setBotNameInputError] = useState<string>('');
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
@@ -59,13 +61,13 @@ export const DefaultSettingBot = () => {
   const { field } = useController({ name: 'botName', control });
 
   useEffect(() => {
-    if (botInfo) {
+    if (botSettingInfo) {
       reset({
-        botId: botInfo.id,
-        botName: botInfo.botName,
+        botId: botSettingInfo.id,
+        botName: botSettingInfo.botName,
       });
     }
-  }, [botInfo?.botName]);
+  }, [botSettingInfo?.botName]);
 
   useEffect(() => {
     if (field.value === '' && botNameRef.current) {
@@ -103,7 +105,7 @@ export const DefaultSettingBot = () => {
   };
 
   const handleCopyBotId = async () => {
-    await util.copyClipboard(botInfo?.id);
+    await util.copyClipboard(botSettingInfo?.id);
     lunaToast.info(t('COPY_BOT_ID_MESSAGE'));
   };
 
@@ -158,7 +160,7 @@ export const DefaultSettingBot = () => {
             <span>{t('BOT_ID')}</span>
           </Col>
           <Col flex="auto">
-            <Input className="botId" value={botInfo?.id || ''} disabled />
+            <Input className="botId" value={botSettingInfo?.id || ''} disabled />
           </Col>
           <Col>
             <Button onClick={handleCopyBotId} icon={icCopy}>

@@ -2,26 +2,25 @@ import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
 import { ConnectChannel } from './ConnectChannel';
 
 export const ActivateBot = () => {
   const { t, navigate } = usePage();
   const { confirm, info } = useSystemModal();
-  const { botActivateAsync, getBotInfoBySettingQuery } = useBotClient();
-  const { botId } = useParams();
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
+  const { botActivateAsync } = useBotClient();
+
   const [activate, setActivate] = useState<boolean>();
-  const { data } = getBotInfoBySettingQuery(botId!);
-  const opChannelName = data && data.channelInfos?.[1].name;
 
   const handleActivateBot = async () => {
-    if (!botInfo) {
+    if (!botSettingInfo) {
       return;
     }
 
-    const { id } = botInfo;
+    const { id } = botSettingInfo;
 
     const botActivate = {
       botId: id,
@@ -32,6 +31,7 @@ export const ActivateBot = () => {
 
     if (res?.data.isSuccess) {
       lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
+      console.log('data', botSettingInfo);
     } else if (res?.data.exception.errorCode === 7631) {
       await info({
         title: t('DISABLED_BOT_ACTIVATED'),
@@ -43,12 +43,12 @@ export const ActivateBot = () => {
   };
 
   const handleDisableBot = async () => {
-    if (!botInfo) {
+    if (!botSettingInfo) {
       return;
     }
 
     const botInactivate = {
-      botId: botInfo.id,
+      botId: botSettingInfo.id,
       isActivate: false,
     };
 
@@ -66,10 +66,10 @@ export const ActivateBot = () => {
   };
 
   useEffect(() => {
-    if (botInfo) {
-      setActivate(botInfo.activated);
+    if (botSettingInfo) {
+      setActivate(botSettingInfo.activated);
     }
-  }, [botInfo]);
+  }, [botSettingInfo]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
@@ -85,14 +85,20 @@ export const ActivateBot = () => {
                   {t('DEACTIVATE')}
                 </Button>
               ) : (
-                <Button type="primary" onClick={handleActivateBot}>
+                <Button
+                  type="primary"
+                  disabled={
+                    botSettingInfo?.alreadyActivatedBotName === null ? false : true
+                  }
+                  onClick={handleActivateBot}
+                >
                   {t('ACTIVATE')}
                 </Button>
               )}
               <Button onClick={() => navigate('/dashboard')}>{t('BOT_LIST')}</Button>
             </Space>
           </Row>
-          <ConnectChannel opChannelName={opChannelName} />
+          <ConnectChannel />
         </Space>
       </div>
     </Card>

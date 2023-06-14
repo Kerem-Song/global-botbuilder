@@ -15,12 +15,17 @@ import {
   IUpdateChannelActivate,
 } from '@models/interfaces/IBotSetting';
 import { setBotInfo } from '@store/botInfoSlice';
+import { setBotSettingInfo } from '@store/botSettingInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
 
-import { IBotInput, IBotModel } from '../../models/interfaces/IBotModel';
+import {
+  IBotInput,
+  IBotModel,
+  IBotSettingModel,
+} from '../../models/interfaces/IBotModel';
 import useHttp from '../useHttp';
 
 export const useBotClient = () => {
@@ -63,17 +68,19 @@ export const useBotClient = () => {
     );
   };
 
-  const getBotInfoBySettingQuery = (botId: string) => {
-    return useQuery<IBotModel>(
-      ['bot-info-by-setting', botId],
+  const getBotSettingInfoQuery = (botId: string) => {
+    return useQuery<IBotSettingModel>(
+      ['bot-setting-info', botId],
       () =>
         http
-          .post<IGetBotReq, AxiosResponse<IHasResult<IBotModel>>>('/bot/getbotinfo', {
-            botId,
-            bySetting: true,
-          })
+          .post<IGetBotReq, AxiosResponse<IHasResult<IBotSettingModel>>>(
+            '/bot/getbotsettingInfo',
+            {
+              botId,
+            },
+          )
           .then((res) => {
-            dispatch(setBotInfo(res.data.result));
+            dispatch(setBotSettingInfo(res.data.result));
             return res.data.result;
           }),
       { refetchOnWindowFocus: false, refetchOnMount: true },
@@ -82,6 +89,10 @@ export const useBotClient = () => {
 
   const refetchBotInfo = (botId: string) => {
     queryClient.invalidateQueries(['bot-info', botId]);
+  };
+
+  const refetchBotSettingInfo = (botId: string) => {
+    queryClient.invalidateQueries(['bot-setting-info', botId]);
   };
 
   const botSaveMutate = useMutation(async (botInput: IBotInput) => {
@@ -118,7 +129,7 @@ export const useBotClient = () => {
     formData.append('botId', args.botId);
     const res = await http.post('/Bot/ImportFlowGroup', formData);
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
@@ -127,7 +138,7 @@ export const useBotClient = () => {
     const res = await http.post('/bot/deletebot', args);
 
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
@@ -136,7 +147,7 @@ export const useBotClient = () => {
     const res = await http.post('/bot/recoverbot', args);
 
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
@@ -147,7 +158,7 @@ export const useBotClient = () => {
       args,
     );
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
@@ -155,7 +166,7 @@ export const useBotClient = () => {
   const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
     const res = await http.post('/bot/updatebotactivate', args);
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       console.log(res);
       return res;
     }
@@ -167,7 +178,7 @@ export const useBotClient = () => {
       AxiosResponse<IResponseUpdateBotIcon>
     >('/bot/updatechannelactivate', args);
     if (res) {
-      queryClient.invalidateQueries(['bot-info', args.botId]);
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
@@ -180,7 +191,7 @@ export const useBotClient = () => {
 
     if (res) {
       if (res.data.isSuccess) {
-        queryClient.invalidateQueries(['bot-info', args.botId]);
+        queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       }
       return res;
     }
@@ -190,8 +201,9 @@ export const useBotClient = () => {
     getBotListQuery,
     getCachedBotList,
     getBotInfoQuery,
-    getBotInfoBySettingQuery,
+    getBotSettingInfoQuery,
     refetchBotInfo,
+    refetchBotSettingInfo,
     botExportAsync: botExportMutate.mutateAsync,
     botImportAsync: botImportMutate.mutateAsync,
     botSaveAsync: botSaveMutate.mutateAsync,

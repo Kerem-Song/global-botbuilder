@@ -1,4 +1,4 @@
-import { icEmptyBotIcon, icHelp, icImg, icTooltipIcon } from '@assets';
+import { icEmptyBotIcon, icTooltipIcon } from '@assets';
 import { Button, Col, Row, Space } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
 import {
@@ -46,9 +46,11 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
   const { getValues: getBotIconValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getBotIconValues();
   const botProfileInputRef = useRef<HTMLInputElement>(null);
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const token = useRootState((state) => state.botInfoReducer.token);
-  const iconUrl = values.iconUrl || botInfo?.iconUrl;
+  const iconUrl = values.iconUrl || botSettingInfo?.iconUrl;
   const displayIcon = iconUrl ? iconUrl : icEmptyBotIcon;
   const settingBotProfileInfo = t('TOOLTIP_SETTING_BOT_PROFILE_INFO');
 
@@ -119,10 +121,10 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
   };
 
   const handleSaveProfile = async () => {
-    if (botInfo) {
+    if (botSettingInfo) {
       const send = {
         iconUrl: values.iconUrl,
-        botId: botInfo.id,
+        botId: botSettingInfo.id,
       };
 
       const res = await botImageUploadAsync(send);

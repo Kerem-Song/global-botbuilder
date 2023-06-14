@@ -7,6 +7,7 @@ import undoable from 'redux-undo';
 import authReducer from './authSlice';
 import botBuilderReducer from './botbuilderSlice';
 import botInfoReducer from './botInfoSlice';
+import botSettingInfoReducer from './botSettingInfoSlice';
 import botTesterReducer from './botTesterSlice';
 import brandInfoReducer from './brandInfoSlice';
 import historyInfoReducer from './historyInfoSlice';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   brandInfoReducer,
   botBuilderReducer,
   botInfoReducer,
+  botSettingInfoReducer,
   botTesterReducer,
   intentReducer,
   intentListReducer,
