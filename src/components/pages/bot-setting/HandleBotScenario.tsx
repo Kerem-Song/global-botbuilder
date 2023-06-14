@@ -1,14 +1,24 @@
 import { Button, Card, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { lunaToast } from '@modules/lunaToast';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useParams } from 'react-router';
 
 export const HandleBotScenario = () => {
   const { t } = usePage();
   const { confirm, info } = useSystemModal();
+  const { botId } = useParams();
   const { botExportAsync, botImportAsync } = useBotClient();
+  const { refetchSessionToken } = useSessionTokenClient();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (botId) {
+      refetchSessionToken(botId);
+    }
+  }, [botId]);
 
   const handleExport = async () => {
     if (!botInfo) {
@@ -36,6 +46,7 @@ export const HandleBotScenario = () => {
             .then((res) => {
               console.log('botImportAsync data', res?.data);
               lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
+              refetchSessionToken(botId!);
             })
             .catch((err) => {
               console.log('botImportAsync error', err);
