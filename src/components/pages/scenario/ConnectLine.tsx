@@ -7,6 +7,7 @@ interface IConnectLineProps {
   endId: string;
   updateKey?: string;
   isNextNode?: boolean;
+  isSelected?: boolean;
   active?: boolean;
   highlight?: boolean;
   strokeWidth?: number;
@@ -30,6 +31,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   active,
   type,
   highlight,
+  isSelected,
   strokeWidth = 2,
   onClick,
   onDelete,
@@ -40,8 +42,8 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const lineMouseRef = useRef<SVGPathElement>(null);
   const deleteRef = useRef<SVGGeometryElement>(null);
 
-  const stroke = strokes[type][active || highlight ? 1 : 0];
-  //const stroke = strokes[type][active ? 1 : 0];
+  //const stroke = strokes[type][active || highlight ? 1 : 0];
+  const stroke = strokes[type][active ? 1 : 0];
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
   useEffect(() => {
@@ -78,6 +80,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
     <svg
       id={`line-${startId}-${endId}`}
       ref={svgRef}
+      strokeOpacity={isSelected && !active && !highlight ? 0.2 : 1}
       style={{
         position: 'absolute',
         zIndex: active || highlight ? 1 : 0,

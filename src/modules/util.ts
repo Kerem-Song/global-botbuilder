@@ -66,6 +66,11 @@ export const util = {
   //     util.pad(d.getSeconds())
   //   );
   // },
+  toOffsetString: (minute: number) => {
+    const h = minute / 60;
+    const m = minute % 60;
+    return `${minute > 0 ? '+' : ''}${util.pad(h)}:${util.pad(m)}`;
+  },
   TriggerInputOnChange: (input: HTMLInputElement | null, value: string) => {
     if (!input) {
       return;

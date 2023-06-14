@@ -2,15 +2,19 @@ import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import { ConnectChannel } from './ConnectChannel';
 
 export const ActivateBot = () => {
   const { t, navigate } = usePage();
   const { confirm, info } = useSystemModal();
-  const { botActivateAsync } = useBotClient();
+  const { botActivateAsync, getBotInfoBySettingQuery } = useBotClient();
+  const { botId } = useParams();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const [activate, setActivate] = useState<boolean>();
+  const { data } = getBotInfoBySettingQuery(botId!);
+  const opChannelName = data && data.channelInfos?.[1].name;
 
   const handleActivateBot = async () => {
     if (!botInfo) {
@@ -88,7 +92,7 @@ export const ActivateBot = () => {
               <Button onClick={() => navigate('/dashboard')}>{t('BOT_LIST')}</Button>
             </Space>
           </Row>
-          <ConnectChannel />
+          <ConnectChannel opChannelName={opChannelName} />
         </Space>
       </div>
     </Card>

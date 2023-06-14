@@ -63,6 +63,23 @@ export const useBotClient = () => {
     );
   };
 
+  const getBotInfoBySettingQuery = (botId: string) => {
+    return useQuery<IBotModel>(
+      ['bot-info-by-setting', botId],
+      () =>
+        http
+          .post<IGetBotReq, AxiosResponse<IHasResult<IBotModel>>>('/bot/getbotinfo', {
+            botId,
+            bySetting: true,
+          })
+          .then((res) => {
+            dispatch(setBotInfo(res.data.result));
+            return res.data.result;
+          }),
+      { refetchOnWindowFocus: false, refetchOnMount: true },
+    );
+  };
+
   const refetchBotInfo = (botId: string) => {
     queryClient.invalidateQueries(['bot-info', botId]);
   };
@@ -173,6 +190,7 @@ export const useBotClient = () => {
     getBotListQuery,
     getCachedBotList,
     getBotInfoQuery,
+    getBotInfoBySettingQuery,
     refetchBotInfo,
     botExportAsync: botExportMutate.mutateAsync,
     botImportAsync: botImportMutate.mutateAsync,

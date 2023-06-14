@@ -1,10 +1,14 @@
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { ConnectChannelCard } from './ConnectChannelCard';
 
-export const ConnectChannel = () => {
+export interface IConnectChannelProps {
+  opChannelName?: string;
+}
+
+export const ConnectChannel: FC<IConnectChannelProps> = ({ opChannelName }) => {
   const { t } = usePage();
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
   const [activate, setActivate] = useState<boolean>();
@@ -16,7 +20,6 @@ export const ConnectChannel = () => {
   const handleConnectChannel = async (isOpChannel: boolean) => {
     const linkedState = isOpChannel ? opLinked : testLinked;
     const setLinkedState = isOpChannel ? setOpLinked : setTestLinked;
-    const opChannelName = botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -';
     const testChannelName = botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -';
 
     const res = await confirm({
@@ -90,7 +93,7 @@ export const ConnectChannel = () => {
     <div className="connectChannelCardContainer">
       <ConnectChannelCard
         channelType="operating"
-        channelName={botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -'}
+        channelName={opChannelName!}
         linked={opLinked}
         disabled={!activate}
         onConnect={() => handleConnectChannel(true)}
