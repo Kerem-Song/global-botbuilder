@@ -38,12 +38,13 @@
       border-collapse: collapse;
 
       .utteranceThead {
+        display: block;
         .utteranceTheadTr {
-          text-align: left;
-          height: rem(40);
-          background-color: $gray150;
           display: flex;
           align-items: center;
+          height: rem(40);
+          text-align: left;
+          background-color: $gray150;
         }
       }
 
@@ -51,21 +52,22 @@
         display: block;
         max-height: calc(100vh - 400px);
         overflow-y: auto;
-        border-collapse: collapse;
         .utteranceTbodyTr {
           height: rem(54);
           border-bottom: 1px solid $gray150;
           background-color: $grayWhite;
           cursor: pointer;
+          text-align: left;
+          align-items: center;
           &:last-child {
             border-bottom: none;
           }
           &:hover {
             background-color: $primary100;
           }
-          text-align: left;
+        }
+        .utteranceTbodyTrSkeleton {
           display: flex;
-          align-items: center;
         }
         &.utterance-popup-tbody {
           min-height: rem(249);

@@ -15,8 +15,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // padding: rem(15) 0;
-      padding: 20px 20px 10px 20px;
+      padding: rem(20) rem(20) rem(10) rem(20);
       .utteranceDetailTitle {
         font-size: rem(16);
         font-weight: 500;
@@ -31,13 +30,13 @@
       }
     }
     .searchUtterance {
-      padding: 10px 20px 20px 20px;
+      padding: rem(10) rem(20) rem(20) rem(20);
       display: flex;
       justify-content: right;
     }
     .utterancePopupListWrap {
       width: rem(1040);
-      margin: 0 20px 20px 20px;
+      margin: 0 rem(20) rem(20) rem(20);
       max-height: rem(476);
       overflow-y: auto;
     }

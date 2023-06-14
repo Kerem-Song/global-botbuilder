@@ -51,6 +51,7 @@ import icDeploySelectHistory from '@assets/icons/ic_deploy_select_history.svg';
 import icDuplication from '@assets/icons/ic_duplication.svg';
 import icEditCarousel from '@assets/icons/ic_edit_carousel.svg';
 import icEmptyBot from '@assets/icons/ic_empty_bot.svg';
+import icEmptyBotIcon from '@assets/icons/ic_empty_botIcon.svg';
 import icEnter from '@assets/icons/ic_enter.svg';
 import icError from '@assets/icons/ic_error.svg';
 import icHelp from '@assets/icons/ic_help_default.svg';
@@ -132,6 +133,7 @@ import icTesterPrevInactive from '@assets/icons/ic_tester_prev_inactive.svg';
 import icText from '@assets/icons/ic_text.svg';
 import icTextHover from '@assets/icons/ic_text_hover.svg';
 import icToastClosed from '@assets/icons/ic_toast_closed.svg';
+import icTooltipIcon from '@assets/icons/ic_tooltip_icon.svg';
 import icUser from '@assets/icons/ic_user.svg';
 import icUtteranceAdd from '@assets/icons/ic_utterance_add.svg';
 import icUtterance from '@assets/icons/ic_utterance_default.svg';
@@ -196,6 +198,7 @@ export {
   icDuplication,
   icEditCarousel,
   icEmptyBot,
+  icEmptyBotIcon,
   icEnter,
   icError,
   icHelp,
@@ -279,6 +282,7 @@ export {
   icText,
   icTextHover,
   icToastClosed,
+  icTooltipIcon,
   icUser,
   icUtterance,
   icUtteranceAdd,

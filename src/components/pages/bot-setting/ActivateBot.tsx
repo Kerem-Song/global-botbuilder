@@ -43,14 +43,8 @@ export const ActivateBot = () => {
       return;
     }
 
-    const { id, activated } = botInfo;
-
-    if (!activated) {
-      return;
-    }
-
     const botInactivate = {
-      botId: id,
+      botId: botInfo.id,
       isActivate: false,
     };
 

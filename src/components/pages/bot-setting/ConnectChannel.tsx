@@ -16,16 +16,21 @@ export const ConnectChannel = () => {
   const handleConnectChannel = async (isOpChannel: boolean) => {
     const linkedState = isOpChannel ? opLinked : testLinked;
     const setLinkedState = isOpChannel ? setOpLinked : setTestLinked;
-    const channelName = botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -';
+    const opChannelName = botInfo?.channelInfos?.find((x) => x.isLive)?.name || '@ -';
+    const testChannelName = botInfo?.channelInfos?.find((x) => !x.isLive)?.name || '@ -';
 
     const res = await confirm({
       title: linkedState ? t('DISCONNECT_CHANNEL') : t('CONNECT_CHANNEL'),
       description: (
         <>
-          {linkedState ? null : <span className="connectChannel">{channelName} </span>}
+          <span className="connectChannel">
+            {isOpChannel ? opChannelName : testChannelName}
+          </span>
           <span style={{ whiteSpace: 'pre-wrap' }}>
             {linkedState
-              ? t('DISCONNECT_CHANNEL_MESSAGE', { channel: channelName })
+              ? t('DISCONNECT_CHANNEL_MESSAGE', {
+                  channel: isOpChannel ? opChannelName : testChannelName,
+                })
               : t('CONFIRM_CONNECT_CHANNEL_MESSAGE')}
           </span>
         </>
@@ -47,7 +52,9 @@ export const ConnectChannel = () => {
             title: t('CONNECT_CHANNEL_SUCCESS'),
             description: (
               <div style={{ whiteSpace: 'pre-wrap' }}>
-                <span className="connectChannel">{channelName} </span>
+                <span className="connectChannel">
+                  {isOpChannel ? opChannelName : testChannelName}
+                </span>
                 <span>{t('CONNECT_CHANNEL_SUCCESS_MESSAGE')}</span>
               </div>
             ),

@@ -50,7 +50,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     const res = await updateDeployHistoryCommentAsync(updateComment);
 
     if (res && res.isSuccess) {
-      lunaToast.success(tc('SAVE_MESSAGE'));
+      lunaToast.success(t('SAVE_MEMO'));
       reset();
       handleCancel();
     }

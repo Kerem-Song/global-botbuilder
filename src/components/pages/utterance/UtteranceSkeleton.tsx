@@ -15,7 +15,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
   return (
     <>
       {util.range(5).map((n) => (
-        <tr className="utteranceTbodyTr" key={n}>
+        <tr className="utteranceTbodyTr utteranceTbodyTrSkeleton " key={n}>
           <td
             role="presentation"
             className={classNames('utteranceList intent', {
