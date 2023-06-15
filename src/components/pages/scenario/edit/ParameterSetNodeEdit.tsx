@@ -3,6 +3,7 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
@@ -36,6 +37,7 @@ export const ParameterSetNodeEdit = () => {
   };
 
   const handleDeleteButton = (index: number) => {
+    console.log('@index', index);
     remove(index);
   };
 
@@ -43,7 +45,7 @@ export const ParameterSetNodeEdit = () => {
     <>
       <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
         {fields.map((item, i) => (
-          <div key={i}>
+          <div key={item.id}>
             <div className="m-b-8">
               <span className="subLabel">{t(`PARAMETER_SET_VARIABLE`)} </span>
               <span className="required">*</span>
