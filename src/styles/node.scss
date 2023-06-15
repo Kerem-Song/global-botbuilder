@@ -363,6 +363,10 @@
           }
 
           &.parameterSetNode {
+            display: flex;
+            flex-flow: column;
+            gap: rem(10);
+            
             p {
               max-height: rem(50);
               overflow: hidden;
