@@ -111,7 +111,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
                 : view.salePrice
                 ? (view.retailPrice - view.salePrice).toLocaleString()
                 : 0}
-              <span className="currency">{view.currencyUnit}</span>
+              <span className="currency">{view.currencyUnit} </span>
               {t(`PRODUCT_NODE_DISCOUNT`)}
             </p>
           </div>
@@ -125,7 +125,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
       </div>
       <Divider style={{ margin: '8px 0' }} />
       {view.description !== undefined ? (
-        <div className={classNames('productName', { empty: view.description })}>
+        <div className={classNames('productName', { empty: !view.description })}>
           {view.description ? (
             <span style={{ whiteSpace: 'pre-line' }}>
               <MultiClamp clamp={2}>{view.description}</MultiClamp>

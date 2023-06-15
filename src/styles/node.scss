@@ -49,6 +49,8 @@
       width: rem(132);
       padding-right: rem(4);
       font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .nodeIcon {
@@ -182,7 +184,7 @@
           justify-content: start;
           align-items: center;
           overflow: hidden;
-          padding-top: rem(8);
+          padding-top: rem(4);
 
           .skeleton {
             width: rem(20);
@@ -246,18 +248,19 @@
 
         // Commerce Card discount
         .discounted {
-          font-size: rem(1);
+          font-size: rem(12);
           color: gray;
           text-decoration: line-through;
         }
 
         .discountedCurrency {
-          font-size: rem(1);
+          font-size: rem(12);
           color: gray;
         }
 
         .discount {
-          font-size: rem(10);
+          font-size: rem(11);
+          font-weight: 700;
           color: red;
         }
 
@@ -366,7 +369,7 @@
             display: flex;
             flex-flow: column;
             gap: rem(10);
-            
+
             p {
               max-height: rem(50);
               overflow: hidden;
