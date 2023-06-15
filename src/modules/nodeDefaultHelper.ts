@@ -28,6 +28,9 @@ import { SYS_BRAND_CURRENCY } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
 
 export const nodeDefaultHelper = {
+  tc: (key: string) => {
+    console.log(`tc is not set(key:${key})`);
+  },
   createDefaultView: (nodeType: TNodeTypes) => {
     return nodeFactory.getFactory(nodeType)?.getDefaultView();
   },
@@ -73,7 +76,7 @@ export const nodeDefaultHelper = {
   createDefaultButtonCtrl: (index = 0) => {
     return {
       id: ID_GEN.generate(ID_TYPES.CTRL),
-      label: `버튼 ${index + 1}`,
+      label: `${nodeDefaultHelper.tc('DEFAULT_LBL_BUTTON')} ${index + 1}`,
       seq: index,
       typeName: CTRL_TYPES.BUTTON_CTRL,
       actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
@@ -113,7 +116,7 @@ export const nodeDefaultHelper = {
   createDefaultAnswerQickItem: (index: number) => {
     const result = {
       id: ID_GEN.generate(ID_TYPES.CTRL),
-      label: `퀵 리플라이 ${index + 1}`,
+      label: `${nodeDefaultHelper.tc('DEFAULT_LBL_QUICKREPLY')} ${index + 1}`,
       seq: index,
       typeName: CTRL_TYPES.QUICK_CTRL,
       actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
