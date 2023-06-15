@@ -5,9 +5,10 @@ import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import MultiClamp from 'react-multi-clamp';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
 
@@ -33,9 +34,9 @@ export const MyEntity: FC<IMyEntityProps> = ({
     false,
   );
 
-  const handleSearch = (keyword?: string) => {
+  const handleSearch = useDebouncedCallback((keyword?: string) => {
     setSearchKeyword(keyword);
-  };
+  }, 500);
 
   const openDeleteEntryModal = async (id: string) => {
     const result = await confirm({
