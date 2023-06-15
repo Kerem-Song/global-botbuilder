@@ -12,8 +12,8 @@ export const ParameterSetNode: FC<IHasNode> = ({ node }) => {
   return (
     <Card>
       <div className="countConditionWrapper parameterSetNode">
-        {view.parameters?.map((item) => (
-          <p key={item.name}>{`{{${item.name}}} = ${item.value}`}</p>
+        {view.parameters?.map((item, index) => (
+          <p key={index}>{`{{${item.name}}} = ${item.value}`}</p>
         ))}
       </div>
       <NextNodeButton
