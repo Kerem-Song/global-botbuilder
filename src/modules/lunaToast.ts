@@ -2,7 +2,7 @@ import { icError, icSuccess } from '@assets';
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { ToastCloseButton } from './ToastCloseButton';
+import { ToastCloseButton } from '../components/common/ToastCloseButton';
 
 export const lunaToast = {
   success: (message?: string) => {

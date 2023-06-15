@@ -7,7 +7,6 @@ import {
   IHasChildrenView,
   IListCardItem,
   INodeBase,
-  IOtherFlowRedirectView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { lunaToast } from '@modules/lunaToast';
@@ -69,10 +68,7 @@ export const makingNodeSlice = createSlice({
       const matched = state.nodes.find((x) => x.id === node.id);
       if (matched) {
         const nodes = [...state.nodes];
-        // if (node.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
-        //   const view = node.view as IOtherFlowRedirectView;
-        //   node.nextNodeId = view.otherNodeId;
-        // }
+
         const index = nodes.indexOf(matched);
         const old = nodes[index];
         const arrows = [...state.arrows];

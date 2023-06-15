@@ -1,4 +1,4 @@
-import { IArrow, IBotModel, INode, IScenarioModel } from '@models';
+import { IArrow, INode, IScenarioModel } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
@@ -28,8 +28,6 @@ export interface BotBuilderMaker {
   clipBoard?: INode;
   isHandleCutCard?: boolean;
   isBezierMode?: boolean;
-  // token?: string;
-  // botInfo?: IBotModel;
 }
 
 const initialState: BotBuilderMaker = {
@@ -152,8 +150,6 @@ export const {
   setEditDrawerToggle,
   setGuideStartNode,
   initSelectedScenario,
-  //setSesstionToken,
-  //setBotInfo,
   setInvalidateNode,
   setCarouselIndex,
   setClipBoard,
