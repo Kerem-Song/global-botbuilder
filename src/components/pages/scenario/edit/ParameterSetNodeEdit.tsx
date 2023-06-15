@@ -41,10 +41,6 @@ export const ParameterSetNodeEdit = () => {
     remove(index);
   };
 
-  useEffect(() => {
-    console.log('@@@@@', fields);
-  }, [fields]);
-
   return (
     <>
       <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
