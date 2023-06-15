@@ -1,11 +1,10 @@
-import { SystemModalContainer } from '@components/modal/SystemModalContainer';
+import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-
-import { Aside } from './Aside';
 
 export const Layout = () => {
-  console.log('DefaultLayout');
+  const { t } = useTranslation('common');
+  nodeDefaultHelper.tc = t;
 
   return (
     <>
