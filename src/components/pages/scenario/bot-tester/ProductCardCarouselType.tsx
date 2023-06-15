@@ -41,7 +41,7 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
             <p className="currentPrice">{item.price?.mainDisplay}</p>
           </div>
         </div>
-        <div className="productContents">
+        <div className="productContents productCarouselContents">
           <div className="productDesc">
             <MultiClamp clamp={2} ellipsis={'...'}>
               {item.description.substring(0, 59)}
