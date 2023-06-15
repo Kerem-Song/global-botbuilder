@@ -21,21 +21,21 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
   handleIsOpen,
   detailInfo,
 }) => {
+  const { t, tc } = usePage();
   const [deployResult, setDeployResult] = useState<IDeployResult[]>([
-    { value: 0, message: '알 수 없는 오류' },
-    { value: 1, message: '성공' },
-    { value: 2, message: '사용 중인 채널' },
-    { value: 3, message: '서버 연결 실패' },
-    { value: 6, message: '비활성화된 채널' },
-    { value: 8, message: '시나리오 오류' },
-    { value: 9, message: '채널을 찾을 수 없음' },
+    { value: 0, message: t('UNKNOWN_ERROR') },
+    { value: 1, message: t('SUCCESS') },
+    { value: 2, message: t('CHANNEL_IN_USE') },
+    { value: 3, message: t('SERVER_CONNECTION_FAILURE') },
+    { value: 6, message: t('DISABLED_CHANNEL') },
+    { value: 8, message: t('SCENARIO_ERROR') },
+    { value: 9, message: t('CHANNEL_NOT_FOUND') },
   ]);
   const [isActive, setIsActive] = useState<boolean>(false);
   const { updateDeployHistoryCommentAsync } = useDeployClient();
   const { handleSubmit, reset, getValues, control } =
     useForm<IUpdateDeployHistoryComment>();
   const { field } = useController({ name: 'comment', control: control });
-  const { t, tc } = usePage();
 
   const handleCancel = () => {
     handleIsOpen(false);

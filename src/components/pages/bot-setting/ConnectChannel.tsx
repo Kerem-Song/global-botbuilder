@@ -1,6 +1,7 @@
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import { ConnectChannelCard } from './ConnectChannelCard';
 
@@ -9,10 +10,9 @@ export const ConnectChannel = () => {
   const [activate, setActivate] = useState<boolean>();
   const [opLinked, setOpLinked] = useState<boolean>();
   const [testLinked, setTestLinked] = useState<boolean>();
-  const botSettingInfo = useRootState(
-    (state) => state.botSettingInfoReducer.botSettingInfo,
-  );
-  const { botChannelActivateAsync } = useBotClient();
+  const { botId } = useParams();
+  const { botChannelActivateAsync, getBotSettingInfoQuery } = useBotClient();
+  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
   const { confirm, info } = useSystemModal();
 
   const testChannelName =
