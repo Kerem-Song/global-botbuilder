@@ -146,9 +146,6 @@
 
           .productCardContents {
             padding: rem(12);
-            &.productCarouselContents {
-              height: rem(225);
-            }
 
             .productCardTitle {
               display: flex;
@@ -168,6 +165,12 @@
                   border-radius: rem(6);
                 }
               }
+            }
+
+            .productCardCarouselWrap {
+              display: flex;
+              flex-direction: column;
+              height: rem(168);
             }
 
             .productCardPrices {
@@ -205,19 +208,20 @@
 
             .productContents {
               padding-top: rem(8);
+              &.productCarouselContents {
+                height: 130px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
 
               .productDesc {
-                max-height: rem(87);
                 display: flex;
                 padding-bottom: rem(8);
                 word-break: break-all;
               }
             }
           }
-
-          // .productCarouselContents {
-          //   height: rem(225);
-          // }
         }
 
         .productCardBtn {

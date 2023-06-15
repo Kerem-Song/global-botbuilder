@@ -26,40 +26,42 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
             <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
           </div>
         </div>
-        <div className="productCardPrices">
-          {item.price?.isShowDiscount && (
-            <>
-              <div className="price">
-                <p className="prevPrice">{item.price.retailDisplay}</p>
-              </div>
-              <div className="discount">
-                <p className="discountAmount">{item.price.discountDisplay}</p>
-              </div>
-            </>
-          )}
-          <div className="price">
-            <p className="currentPrice">{item.price?.mainDisplay}</p>
-          </div>
-        </div>
-        <div className="productContents productCarouselContents">
-          <div className="productDesc">
-            <MultiClamp clamp={2} ellipsis={'...'}>
-              {item.description.substring(0, 59)}
-            </MultiClamp>
-          </div>
-          {item.buttons.length > 0 ? (
-            <div
-              className={
-                item.image?.imageAspectRatio === 0
-                  ? 'rectangleImageBtn'
-                  : 'squareImageBtn'
-              }
-            >
-              {item.buttons?.map((v, i) => {
-                return <TesterMessagesItemButton key={i} item={v} />;
-              })}
+        <div className="productCardCarouselWrap">
+          <div className="productCardPrices">
+            {item.price?.isShowDiscount && (
+              <>
+                <div className="price">
+                  <p className="prevPrice">{item.price.retailDisplay}</p>
+                </div>
+                <div className="discount">
+                  <p className="discountAmount">{item.price.discountDisplay}</p>
+                </div>
+              </>
+            )}
+            <div className="price">
+              <p className="currentPrice">{item.price?.mainDisplay}</p>
             </div>
-          ) : null}
+          </div>
+          <div className="productContents productCarouselContents">
+            <div className="productDesc">
+              <MultiClamp clamp={2} ellipsis={'...'}>
+                {item.description.substring(0, 59)}
+              </MultiClamp>
+            </div>
+            {item.buttons.length > 0 ? (
+              <div
+                className={
+                  item.image?.imageAspectRatio === 0
+                    ? 'rectangleImageBtn'
+                    : 'squareImageBtn'
+                }
+              >
+                {item.buttons?.map((v, i) => {
+                  return <TesterMessagesItemButton key={i} item={v} />;
+                })}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
