@@ -146,6 +146,9 @@
 
           .productCardContents {
             padding: rem(12);
+            &.productCarouselContents {
+              height: rem(225);
+            }
 
             .productCardTitle {
               display: flex;
@@ -204,13 +207,17 @@
               padding-top: rem(8);
 
               .productDesc {
+                max-height: rem(87);
                 display: flex;
-                align-items: center;
                 padding-bottom: rem(8);
                 word-break: break-all;
               }
             }
           }
+
+          // .productCarouselContents {
+          //   height: rem(225);
+          // }
         }
 
         .productCardBtn {

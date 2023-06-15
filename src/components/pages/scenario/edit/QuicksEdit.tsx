@@ -104,7 +104,7 @@ export const QuicksEdit = () => {
                   className="actValueIsUttrInput"
                   label={t(`SET_MESSAGE`)}
                   showCount
-                  maxLength={14}
+                  maxLength={300}
                   isLight={true}
                   required={true}
                   placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
