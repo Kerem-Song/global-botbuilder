@@ -31,6 +31,7 @@ export const LineContainer: FC = () => {
 
   const handleLineDelete = useCallback((l: IArrow) => {
     dispatch(removeItem(l));
+    dispatch(setSelected());
   }, []);
 
   return (
