@@ -121,7 +121,7 @@ export const ImageFileUploader = ({
   const handleImgOnError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.onerror = null;
     e.currentTarget.src = icImgNotFound;
-    e.currentTarget.className = 'imgNotFound';
+    // e.currentTarget.className = 'imgNotFound';
     setError(imageUrl, { type: 'custom', message: t(`IMAGE_NOT_FOUND`) });
   };
 

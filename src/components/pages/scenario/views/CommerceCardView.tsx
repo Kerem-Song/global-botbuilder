@@ -85,7 +85,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = icImgNotFound;
-              e.currentTarget.className = 'imgNotFound';
+              // e.currentTarget.className = 'imgNotFound';
             }}
           />
         ) : (

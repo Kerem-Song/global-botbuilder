@@ -1,8 +1,7 @@
-import { FormItem, Input, InputTextarea } from '@components';
+import { InputTextarea } from '@components';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import classNames from 'classnames';
-import { error } from 'console';
 import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
