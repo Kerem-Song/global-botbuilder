@@ -171,6 +171,9 @@
               display: flex;
               flex-direction: column;
               height: rem(168);
+              &.productCarouselRectangleImageWrap {
+                height: rem(248);
+              }
             }
 
             .productCardPrices {
@@ -209,7 +212,13 @@
             .productContents {
               padding-top: rem(8);
               &.productCarouselContents {
-                height: 130px;
+                height: rem(130);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              &.productCarouselRectangleImageContents {
+                height: rem(210);
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;

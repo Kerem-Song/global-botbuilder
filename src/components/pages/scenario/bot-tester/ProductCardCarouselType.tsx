@@ -1,4 +1,5 @@
 import { ITesterCard } from '@models';
+import classNames from 'classnames';
 import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
@@ -26,7 +27,11 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
             <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
           </div>
         </div>
-        <div className="productCardCarouselWrap">
+        <div
+          className={classNames('productCardCarouselWrap', {
+            productCarouselRectangleImageWrap: item.image?.imageAspectRatio === 0,
+          })}
+        >
           <div className="productCardPrices">
             {item.price?.isShowDiscount && (
               <>
@@ -42,7 +47,12 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
               <p className="currentPrice">{item.price?.mainDisplay}</p>
             </div>
           </div>
-          <div className="productContents productCarouselContents">
+          <div
+            className={classNames('productContents', {
+              productCarouselContents: item.image?.imageAspectRatio != 0,
+              productCarouselRectangleImageContents: item.image?.imageAspectRatio === 0,
+            })}
+          >
             <div className="productDesc">
               <MultiClamp clamp={2} ellipsis={'...'}>
                 {item.description.substring(0, 59)}
