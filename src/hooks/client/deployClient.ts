@@ -41,8 +41,6 @@ export const useDeployClient = () => {
           })
           .then((res) => res.data),
       {
-        // staleTime: 2000,
-        // keepPreviousData: true,
         refetchOnWindowFocus: false,
         refetchOnMount: true,
         refetchOnReconnect: true,

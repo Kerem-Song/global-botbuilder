@@ -41,10 +41,11 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
 }) => {
   const [iconImage, setIconImage] = useState<File | null>();
   const { t } = usePage();
-  const { botId } = useParams();
   const { isLoadingImageUpload, imageUploadAsync } = imageUploadClient();
-  const { botImageUploadAsync, getBotSettingInfoQuery } = useBotClient();
-  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
+  const { botImageUploadAsync } = useBotClient();
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const { error } = useSystemModal();
   const { getValues: getBotIconValues, setValue } = useForm<IUpdateBotIcon>();
   const values = getBotIconValues();

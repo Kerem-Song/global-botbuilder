@@ -2,17 +2,19 @@ import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
 import { ConnectChannel } from './ConnectChannel';
 
 export const ActivateBot = () => {
   const { t, navigate } = usePage();
-  const { confirm, info } = useSystemModal();
-  const { botActivateAsync, getBotSettingInfoQuery } = useBotClient();
-  const { botId } = useParams();
-  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
+  const { confirm } = useSystemModal();
+  const { botActivateAsync } = useBotClient();
   const [activate, setActivate] = useState<boolean>();
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
+
+  console.log('botSettingInfo', botSettingInfo);
 
   const handleActivateBot = async () => {
     if (!botSettingInfo) {
