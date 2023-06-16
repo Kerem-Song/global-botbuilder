@@ -9,6 +9,7 @@ import { InfiniteData } from '@tanstack/react-query';
 import classNames from 'classnames';
 import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import MultiClamp from 'react-multi-clamp';
 import { useParams } from 'react-router';
 
 import { lunaToast } from '../../../../src/modules/lunaToast';
@@ -143,12 +144,14 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
                       'hidden-scenarioList-utterance': !showScenarioList,
                     })}
                   >
-                    {searchData?.searchWord
-                      ? util.replaceKeywordMark(
-                          x.utteranceSummary,
-                          searchData?.searchWord,
-                        )
-                      : x.utteranceSummary}
+                    <MultiClamp clamp={1} ellipsis={'...'}>
+                      {searchData?.searchWord
+                        ? util.replaceKeywordMark(
+                            x.utteranceSummary,
+                            searchData?.searchWord,
+                          )
+                        : x.utteranceSummary}
+                    </MultiClamp>
                   </td>
                   <td className="icon">
                     <button
