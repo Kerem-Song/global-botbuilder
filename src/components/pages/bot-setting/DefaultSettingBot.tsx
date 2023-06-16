@@ -9,16 +9,13 @@ import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import { useEffect, useRef, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
 import * as yup from 'yup';
 
 import { UploadBotProfile } from './UploadBotProfile';
 
 export const DefaultSettingBot = () => {
   const { t, tc } = usePage();
-  const { botId } = useParams();
-  const { botUpdateNameAsync, getBotSettingInfoQuery } = useBotClient();
-  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
+  const { botUpdateNameAsync } = useBotClient();
   const botNameRef = useRef<HTMLInputElement | null>(null);
   const [botNameInputError, setBotNameInputError] = useState<string>('');
   const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
@@ -27,6 +24,9 @@ export const DefaultSettingBot = () => {
     isSaveBtnActive: false,
     isProfileSaveBtnActive: false,
   });
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
 
   usePrompt(isSaveBtnsActive.isSaveBtnActive || isSaveBtnsActive.isProfileSaveBtnActive);
 

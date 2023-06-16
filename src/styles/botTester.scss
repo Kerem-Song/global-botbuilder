@@ -146,9 +146,6 @@
 
           .productCardContents {
             padding: rem(12);
-            &.productCarouselContents {
-              height: rem(225);
-            }
 
             .productCardTitle {
               display: flex;
@@ -167,6 +164,15 @@
                   height: rem(24);
                   border-radius: rem(6);
                 }
+              }
+            }
+
+            .productCardCarouselWrap {
+              display: flex;
+              flex-direction: column;
+              height: rem(168);
+              &.productCarouselRectangleImageWrap {
+                height: rem(248);
               }
             }
 
@@ -205,19 +211,26 @@
 
             .productContents {
               padding-top: rem(8);
+              &.productCarouselContents {
+                height: rem(130);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              &.productCarouselRectangleImageContents {
+                height: rem(210);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
 
               .productDesc {
-                max-height: rem(87);
                 display: flex;
                 padding-bottom: rem(8);
                 word-break: break-all;
               }
             }
           }
-
-          // .productCarouselContents {
-          //   height: rem(225);
-          // }
         }
 
         .productCardBtn {

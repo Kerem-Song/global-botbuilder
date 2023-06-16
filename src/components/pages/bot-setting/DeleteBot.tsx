@@ -2,14 +2,14 @@ import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
 export const DeleteBot = () => {
   const { t } = usePage();
-  const { botId } = useParams();
   const { confirm } = useSystemModal();
-  const { botDeleteAsync, botRecoverAsync, getBotSettingInfoQuery } = useBotClient();
-  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
+  const { botDeleteAsync, botRecoverAsync } = useBotClient();
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const isManager = staffType === 2;
   const removeCancelExpireUtc = botSettingInfo && botSettingInfo.removeCancelExpireUtc;

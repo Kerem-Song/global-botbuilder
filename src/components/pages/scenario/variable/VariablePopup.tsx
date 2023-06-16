@@ -45,10 +45,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       .lowercase()
       .trim()
       .required(t('VALIDATION_REQUIRED'))
-      .matches(
-        PARAMETER_REGEX,
-        `영어 소문자, 숫자, 특수문자 _,-,. 만 입력 가능합니다.\n(.은 변수명 앞머리에만 가능합니다.)`,
-      ),
+      .matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
   });
 
   const {

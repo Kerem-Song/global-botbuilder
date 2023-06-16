@@ -9,9 +9,11 @@ export const HandleBotScenario = () => {
   const { t } = usePage();
   const { confirm, info } = useSystemModal();
   const { botId } = useParams();
-  const { botExportAsync, botImportAsync, getBotSettingInfoQuery } = useBotClient();
+  const { botExportAsync, botImportAsync } = useBotClient();
   const { refetchSessionToken } = useSessionTokenClient();
-  const { data: botSettingInfo } = getBotSettingInfoQuery(botId!);
+  const botSettingInfo = useRootState(
+    (state) => state.botSettingInfoReducer.botSettingInfo,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
