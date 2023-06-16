@@ -216,50 +216,52 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                   alt="img"
                 />
               )}
-              <div className="listCardContents">
-                {item.items.map((x, i) => {
-                  return (
-                    <div key={i}>
-                      <div className="cardList">
-                        <div className="listInfo">
-                          <div className="infoTitle">
-                            <MultiClamp clamp={2} ellipsis={'...'}>
-                              {x.title.substring(0, 59)}
-                            </MultiClamp>
+              <div className="listCardContentsWrap">
+                <div className="listCardContents">
+                  {item.items.map((x, i) => {
+                    return (
+                      <div key={i} className="listCardContent">
+                        <div className="cardList">
+                          <div className="listInfo">
+                            <div className="infoTitle">
+                              <MultiClamp clamp={2} ellipsis={'...'}>
+                                {x.title.substring(0, 59)}
+                              </MultiClamp>
+                            </div>
+                            <div className="infoDesc">
+                              <MultiClamp clamp={1} ellipsis={'...'}>
+                                {x.description.substring(0, 39)}
+                              </MultiClamp>
+                            </div>
                           </div>
-                          <div className="infoDesc">
-                            <MultiClamp clamp={1} ellipsis={'...'}>
-                              {x.description.substring(0, 39)}
-                            </MultiClamp>
+                          <div className="listImg">
+                            <img src={x.image?.imageUrl} alt="img" />
                           </div>
                         </div>
-                        <div className="listImg">
-                          <img src={x.image?.imageUrl} alt="img" />
-                        </div>
+                        {item.items.length - 1 === i ? <Space /> : <Divider />}
                       </div>
-                      {item.items.length - 1 === i ? <Space /> : <Divider />}
+                    );
+                  })}
+                  {item.image?.imageUrl && item.buttons.length > 0 ? (
+                    <div
+                      className={
+                        item.image?.imageAspectRatio === 0
+                          ? 'rectangleImageBtn'
+                          : 'squareImageBtn'
+                      }
+                    >
+                      {item.buttons?.map((v, i) => {
+                        return <TesterMessagesItemButton key={i} item={v} />;
+                      })}
                     </div>
-                  );
-                })}
-                {item.image?.imageUrl && item.buttons.length > 0 ? (
-                  <div
-                    className={
-                      item.image?.imageAspectRatio === 0
-                        ? 'rectangleImageBtn'
-                        : 'squareImageBtn'
-                    }
-                  >
-                    {item.buttons?.map((v, i) => {
-                      return <TesterMessagesItemButton key={i} item={v} />;
-                    })}
-                  </div>
-                ) : (
-                  <div className="rectangleImageBtn">
-                    {item.buttons?.map((v, i) => {
-                      return <TesterMessagesItemButton key={i} item={v} />;
-                    })}
-                  </div>
-                )}
+                  ) : (
+                    <div className="rectangleImageBtn">
+                      {item.buttons?.map((v, i) => {
+                        return <TesterMessagesItemButton key={i} item={v} />;
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
