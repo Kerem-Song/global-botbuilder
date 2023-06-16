@@ -71,7 +71,7 @@
           align-items: center;
           justify-content: center;
           height: rem(96);
-
+          
           img {
             width: 100%;
             height: 100%;
@@ -123,6 +123,26 @@
             border-radius: rem(8) rem(8) 0 0;
           }
         }
+
+        .thumbnail:has(.imgNotFound) {
+          flex-flow: column;
+          border-radius: rem(8) rem(8) 0 0;
+          background-color: $gray150;
+
+          .imgNotFound {
+            border: none;
+            background-color: $gray150;
+            width: rem(30);
+            height: rem(30);
+
+            .imgNotFoundText {
+              font-weight: 500; 
+              font-size: rem(11);
+              color: black;
+            }
+          }
+        }
+        
         .title {
           padding-top: rem(12);
           color: $grayBlack;
