@@ -11,6 +11,14 @@
   
   .collapseWrapper {
     padding: rem(12);
+
+    .listFieldsWrapper {
+      padding-bottom: rem(32);
+    }
+
+    .listFieldsWrapper:has(.deleteBtn) {
+      padding-bottom: rem(7);
+    }
   
     &[data-collapsed='true'] {
       display: block;
@@ -30,14 +38,6 @@
 
       &.bold {
         color: $grayBlack;
-      }
-    }
-
-    .imageInput {
-      padding-top: rem(8);
-      
-      & textarea {
-        margin-top: rem(8);
       }
     }
     

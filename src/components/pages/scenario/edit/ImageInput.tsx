@@ -58,8 +58,6 @@ export const ImageInput = ({
 
   return (
     <div className="imageInput">
-      <span className="subLabel">{t(`IMAGE_DIRECT_INPUT`)}</span>
-
       <InputTextarea
         {...register(registerName)}
         placeholder={placeholder}

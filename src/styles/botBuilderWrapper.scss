@@ -297,7 +297,7 @@
       .deleteBtn {
         display: flex;
         justify-content: center;
-        margin-bottom: rem(25);
+        padding-bottom: rem(25);
 
         button {
           color: $gray300;
@@ -405,6 +405,7 @@
           &.small {
             width: rem(64);
             height: rem(64);
+            margin-bottom: rem(8);
 
             .imgUploadSkeleton {
               height: rem(64);

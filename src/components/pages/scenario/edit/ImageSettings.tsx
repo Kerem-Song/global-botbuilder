@@ -142,8 +142,10 @@ export const ImageSettings = ({
       </Row>
 
       <div>
-        <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
-        <span className="required">*</span>
+        <span className="subLabel">
+          {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
+        </span>
+        <span className="required"> *</span>
       </div>
 
       <ImageFileUploader

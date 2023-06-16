@@ -82,10 +82,12 @@ export const ListCardNodeEdit = () => {
       </Collapse>
       <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
         {fields.map((item, i) => (
-          <div key={item.id}>
+          <div key={item.id} className="listFieldsWrapper">
             <div className="m-b-8">
-              <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
-              <span className="required">*</span>
+              <span className="subLabel">
+                {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
+              </span>
+              <span className="required"> *</span>
             </div>
             <div className="m-b-8">
               <Space direction="vertical">
