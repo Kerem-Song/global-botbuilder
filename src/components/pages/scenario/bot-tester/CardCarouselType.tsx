@@ -1,13 +1,18 @@
 import { ITesterCard } from '@models';
+import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
-export interface CardCarouselTypeProps {
+export interface ICardCarouselTypeProps {
   item: ITesterCard;
+  handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
-export const CardCarouselType = ({ item }: CardCarouselTypeProps) => {
+export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
+  item,
+  handleImgOnError,
+}) => {
   return (
     <div className="cardCarousel">
       {item.image && (
@@ -19,6 +24,9 @@ export const CardCarouselType = ({ item }: CardCarouselTypeProps) => {
           }
           src={item.image?.imageUrl}
           alt="cardCarouselImg"
+          onError={(e) => {
+            handleImgOnError(e);
+          }}
         />
       )}
       {item.title || item.contentText ? (

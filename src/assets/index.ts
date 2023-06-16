@@ -144,6 +144,7 @@ import imgInstabot from '@assets/images/img_instabot.svg';
 import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
 import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
+import imgNotFoundImg from '@assets/images/img_not_found_img.svg';
 export {
   icAdd,
   icApiRequest,
@@ -291,4 +292,5 @@ export {
   imgInstabot,
   imgLinebot,
   imgLinebotInactivate,
+  imgNotFoundImg,
 };

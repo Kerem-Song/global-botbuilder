@@ -1,14 +1,19 @@
 import { ITesterCard } from '@models';
 import classNames from 'classnames';
+import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
-export interface ProductCardCarouselTypeProps {
+export interface IProductCardCarouselTypeProps {
   item: ITesterCard;
+  handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
-export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) => {
+export const ProductCardCarouselType: FC<IProductCardCarouselTypeProps> = ({
+  item,
+  handleImgOnError,
+}) => {
   return (
     <div className="productCard">
       <img
@@ -19,11 +24,21 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
         }
         src={item.image?.imageUrl}
         alt="productCardCarouselImg"
+        onError={(e) => {
+          handleImgOnError(e);
+        }}
       />
       <div className="productCardContents">
         <div className="productCardTitle">
           <div className="title">
-            <img className="icon" src={item.icon.url} alt="iconImg" />
+            <img
+              className="icon"
+              src={item.icon.url}
+              alt="iconImg"
+              onError={(e) => {
+                handleImgOnError(e);
+              }}
+            />
             <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
           </div>
         </div>
@@ -51,6 +66,9 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
             className={classNames('productContents', {
               productCarouselContents: item.image?.imageAspectRatio != 0,
               productCarouselRectangleImageContents: item.image?.imageAspectRatio === 0,
+              productCarouselNoBtnContents: item.buttons.length <= 0,
+              productCarouselRectangleImageNoBtnContents:
+                item.image?.imageAspectRatio === 0 && item.buttons.length <= 0,
             })}
           >
             <div className="productDesc">
@@ -70,7 +88,13 @@ export const ProductCardCarouselType = ({ item }: ProductCardCarouselTypeProps) 
                   return <TesterMessagesItemButton key={i} item={v} />;
                 })}
               </div>
-            ) : null}
+            ) : (
+              <div className="rectangleImageBtn">
+                {item.buttons?.map((v, i) => {
+                  return <TesterMessagesItemButton key={i} item={v} />;
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

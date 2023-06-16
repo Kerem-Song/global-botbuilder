@@ -170,9 +170,9 @@
             .productCardCarouselWrap {
               display: flex;
               flex-direction: column;
-              height: rem(168);
+              max-height: rem(168);
               &.productCarouselRectangleImageWrap {
-                height: rem(248);
+                max-height: rem(248);
               }
             }
 
@@ -218,10 +218,22 @@
                 justify-content: space-between;
               }
               &.productCarouselRectangleImageContents {
-                height: rem(210);
+                height: rem(220);
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+              }
+              &.productCarouselNoBtnContents {
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              &.productCarouselRectangleImageNoBtnContents {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: fit-content;
               }
 
               .productDesc {
@@ -581,6 +593,7 @@ div {
           margin-top: rem(4);
           border: none;
           border-radius: rem(8);
+          background-color: #dbdee5;
           cursor: pointer;
           &:hover {
             background-color: #75767a;
@@ -598,7 +611,7 @@ div {
           justify-content: center;
           align-items: center;
           word-break: break-all;
-          max-width: rem(240);
+          width: rem(240);
           padding: rem(9) rem(12);
           height: rem(37);
           font-size: rem(14);

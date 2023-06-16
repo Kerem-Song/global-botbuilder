@@ -1,16 +1,20 @@
 import { Divider, Space } from '@components';
 import { IListTypeCard } from '@models';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
 export interface IListCardCarouselTypeProps {
   item: IListTypeCard;
+  handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
-export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) => {
+export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
+  item,
+  handleImgOnError,
+}) => {
   return (
     <div className="listCard">
       {item.header && (
@@ -22,7 +26,7 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
           </span>
         </div>
       )}
-      {item.image?.imageUrl && (
+      {item.image ? (
         <img
           className={
             item.image.imageAspectRatio === 0
@@ -31,7 +35,12 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
           }
           src={item.image?.imageUrl}
           alt="img"
+          onError={(e) => {
+            handleImgOnError(e);
+          }}
         />
+      ) : (
+        <></>
       )}
       <div className="listCardContentsWrap">
         <div
@@ -58,7 +67,13 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({ item }) =
                       </div>
                     </div>
                     <div className="listImg">
-                      <img src={x.image?.imageUrl} alt="img" />
+                      <img
+                        src={x.image?.imageUrl}
+                        alt="img"
+                        onError={(e) => {
+                          handleImgOnError(e);
+                        }}
+                      />
                     </div>
                   </div>
                   {item.items.length - 1 === i ? <Space /> : <Divider />}
