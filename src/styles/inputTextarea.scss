@@ -15,17 +15,17 @@
 //   display: none;
 // }
 .textInput::-webkit-scrollbar {
-  // width: rem(8);
-  // height: rem(8);
-  // background: transparent; /*스크롤바 뒷 배경 색상*/
-  display: none;
+  width: rem(8);
+  height: rem(8);
+  background: transparent; /*스크롤바 뒷 배경 색상*/
+  // display: none;
 }
 
 .textInput::-webkit-scrollbar-thumb {
-  // height: 30%; /* 스크롤바의 길이 */
-  // background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
-  // border-radius: rem(18);
-  // transition: background-color 2s ease-out;
+  height: 30%; /* 스크롤바의 길이 */
+  background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
+  border-radius: rem(18);
+  transition: background-color 2s ease-out;
 }
 
 .textareaWrapper {
