@@ -1,6 +1,8 @@
 import { Col, Row } from '@components';
 import { useBotClient, usePage } from '@hooks';
+import { setBotSettingInfo } from '@store/botSettingInfoSlice';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { ActivateBot } from './ActivateBot';
@@ -11,13 +13,15 @@ import { HandleBotScenario } from './HandleBotScenario';
 export const SettingComponent = () => {
   const { t } = usePage();
   const { botId } = useParams();
-  const { refetchBotSettingInfo } = useBotClient();
+  const dispatch = useDispatch();
+  const { getBotSettingInfoQuery } = useBotClient();
+  getBotSettingInfoQuery(botId!);
 
   useEffect(() => {
-    if (botId) {
-      refetchBotSettingInfo(botId);
-    }
-  }, [botId]);
+    return () => {
+      dispatch(setBotSettingInfo());
+    };
+  }, []);
 
   return (
     <div className="settingWrap">
