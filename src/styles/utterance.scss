@@ -125,6 +125,7 @@
         .utterance {
           width: rem(540);
           overflow: hidden;
+          word-break: break-all;
         }
 
         .icon {
