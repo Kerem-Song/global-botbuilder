@@ -73,17 +73,6 @@ export const NodeEditDrawer = () => {
     }
   }, [selectedNode, index]);
 
-  useEffect(() => {
-    if (selectedNode) {
-      const filtered = nodes.filter((node) => node.title === selectedNode.title);
-
-      if (filtered.length > 1) {
-        setError('title', { type: 'custom', message: t(`DUPLICATE_NODE_NAME`) });
-        dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
-      }
-    }
-  }, [selectedNode]);
-
   const editItem = () => {
     if (!isEditDrawerOpen) {
       return <></>;

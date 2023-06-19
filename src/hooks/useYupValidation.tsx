@@ -1,8 +1,10 @@
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import { CONDITION_PARAMETER_REGEX } from '@modules';
+import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 const checkNextNodeIdTypes: string[] = [
@@ -12,6 +14,11 @@ const checkNextNodeIdTypes: string[] = [
 
 export const useYupValidation = () => {
   const { t } = usePage();
+  const dispatch = useDispatch();
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const selected = useRootState((state) => state.botBuilderReducer.selected);
+  const selectedNode = nodes.find((x) => x.id === selected);
+  const filtered = nodes.filter((node) => node.title === selectedNode?.title);
 
   const FILE_SIZE = 3 * 1024 * 1024; //3mb제한
 
@@ -383,7 +390,18 @@ export const useYupValidation = () => {
   });
   const schema = yup
     .object({
-      title: yup.string().required(t(`VALIDATION_REQUIRED`)),
+      title: yup
+        .string()
+        .test('is-duplicated', t(`DUPLICATE_NODE_NAME`), (val: any) => {
+          console.log('@val', val);
+
+          if (selectedNode && filtered.length > 1) {
+            dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
+            return false;
+          }
+          return true;
+        })
+        .required(t(`VALIDATION_REQUIRED`)),
       view: yup
         .object()
         .when('type', {
