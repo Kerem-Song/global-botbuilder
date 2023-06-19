@@ -5,6 +5,7 @@ import { useI18n, useRootState, useUtteranceClient } from '@hooks';
 import { ISearchData } from '@models';
 import { Dispatch, FC, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { UtteranceListHeader } from './UtteranceListHeader';
 import { UtteranceListItem } from './UtteranceListItem';
@@ -30,13 +31,13 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   const { t } = useI18n('utterance');
   const { removeUtteranceQueries } = useUtteranceClient();
 
-  const handleSearch = (keyword: string) => {
+  const handleSearch = useDebouncedCallback((keyword: string) => {
     setSearchData({
       sort: 1,
       scenarios: selectedScenarios && selectedScenarios.id,
       searchWord: keyword || undefined,
     });
-  };
+  }, 500);
 
   const handleClose = () => {
     handleIsOpenUtterancePopup(false);

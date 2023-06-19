@@ -53,7 +53,6 @@
         max-height: calc(100vh - 400px);
         overflow-y: auto;
         .utteranceTbodyTr {
-          display: flex;
           height: rem(54);
           border-bottom: 1px solid $gray150;
           background-color: $grayWhite;
