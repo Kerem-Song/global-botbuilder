@@ -37,7 +37,7 @@ export const util = {
   //   return newDate.toLocaleString();
   // },
   toLocaleDateTimeString: (date: Date) => {
-    return date.toLocaleString();
+    return date.toLocaleString(Intl.Locale.name, { hour12: false });
   },
   // toLocaleDateStringFromUtc: (date: Date) => {
   //   console.log('date', date);

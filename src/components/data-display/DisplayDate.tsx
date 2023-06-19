@@ -17,7 +17,7 @@ export const DisplayDate: FC<DisplayDateProps> = ({ date }) => {
   ) {
     return (
       <>
-        <Tooltip tooltip={util.toLocaleDateTimeString(date)}>{tc('LBL_TODAY')}</Tooltip>
+        <Tooltip tooltip={util.toLocaleDateString(date)}>{tc('LBL_TODAY')}</Tooltip>
       </>
     );
   }
