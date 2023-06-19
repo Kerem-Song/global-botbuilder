@@ -127,7 +127,7 @@
     "SCENARIO_NAME": "시나리오 이름",
     "SEARCH_SCEANRIO_INPUT_PLACEHOLDER": "시나리오명을 입력해주세요.",
     "MAKING_NEW_SCENARIO_IS_SUCCESS": "새 시나리오를 만들었습니다.",
-    "DUPLICATED_SCENARIO_NAME_MESSAGE": "이미 있는 시나리오명 입니다.",
+    "DUPLICATED_SCENARIO_NAME_MESSAGE": "이미 있는 시나리오명입니다.",
     "CHANGING_SCENARIO_NAME_SUCCESS": "시나리오 이름을 저장했습니다.",
     "NO_SCENARIO_RESULTS": "검색 결과가 없습니다.",
     "ADD_A_NEW_BUTTON": "버튼 추가",
