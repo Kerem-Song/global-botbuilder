@@ -36,6 +36,8 @@ const editableArrowNodeTypes: string[] = [
 const invalidateConnectNoteType: TNodeTypes[] = [
   NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
   NODE_TYPES.INTENT_NODE,
+  NODE_TYPES.RETRY_CONDITION_NODE,
+  NODE_TYPES.PARAMETER_SET_NODE,
 ];
 
 export const arrowHelper = {
