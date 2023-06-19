@@ -118,6 +118,7 @@ export const ScenarioListPopup: FC<{
       overlayClassName="scenarioListPopupOverlay"
       onRequestClose={handleScenarioPopupClose}
       onAfterOpen={() => setFocus('scenarioName')}
+      shouldCloseOnOverlayClick={false}
     >
       {' '}
       <div style={{ padding: '14px 20px 2px 20px' }}>
