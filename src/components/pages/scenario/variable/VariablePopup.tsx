@@ -42,7 +42,6 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const variableNameSchema = yup.object({
     name: yup
       .string()
-      .lowercase()
       .trim()
       .required(t('VALIDATION_REQUIRED'))
       .matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
@@ -145,7 +144,6 @@ export const VariablePopup: FC<VariablePopupProps> = ({
           <Col span={18}>
             <Input
               placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
-              style={{ textTransform: 'lowercase' }}
               ref={field.ref}
               value={field.value || ''}
               onChange={handleParameterName}
