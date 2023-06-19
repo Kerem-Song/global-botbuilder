@@ -350,7 +350,7 @@
     "SEARCH_WORD": "검색어",
     "RESET": "초기화",
     "SEARCH": "검색",
-    "INTENT": "인텐트 명",
+    "INTENT": "인텐트명",
     "CONNECT_SCENARIOS": "시나리오 연결",
     "UTTERANCE": "발화",
     "NO_REGISTERED_INTENT": "등록된 인텐트가 없습니다.",
