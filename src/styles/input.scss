@@ -28,6 +28,10 @@
     border-right-width: 1px;
     outline: 0;
   }
+
+  &:disabled {
+    background-color: $gray150;
+  }
 }
 
 .luna-input-wrap {
