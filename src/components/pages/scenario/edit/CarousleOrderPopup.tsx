@@ -49,6 +49,7 @@ export const CarouselOrderPopup: FC<{
         setCloseOnEsc(true);
       } else {
         handleIsOpen(true);
+        setCloseOnEsc(true);
       }
     } else {
       handleIsOpen(false);
