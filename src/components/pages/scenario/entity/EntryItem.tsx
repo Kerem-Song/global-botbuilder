@@ -90,7 +90,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     if (entryNameRef.current) {
       entryNameRef.current.focus();
     }
-  }, [entryNameRef.current]);
+  }, [entryNameRef.current, editInputIndex]);
 
   if (
     searchKeyword === '' ||
@@ -105,7 +105,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
               span={5}
               className={classNames({ representativeEntryInput: editInputIndex === i })}
             >
-              {editInputIndex === i ? (
+              {editInputIndex === index ? (
                 <Input
                   size="normal"
                   maxLength={125}
@@ -134,7 +134,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                   })}
                   onDoubleClick={(e) => {
                     e.preventDefault();
-                    setEditInputIndex(i);
+                    setEditInputIndex(index);
                   }}
                 >
                   <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>

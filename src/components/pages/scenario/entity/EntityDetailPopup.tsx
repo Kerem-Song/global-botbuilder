@@ -186,6 +186,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       className="entityModal detail node-draggable-ignore"
       isOpen={isOpenEntityDetailPopup}
       onRequestClose={handleResetEntryInfo}
+      shouldCloseOnOverlayClick={false}
     >
       <div className="detail header">
         <div className="listBtn">

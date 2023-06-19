@@ -221,7 +221,9 @@
               .representativeEntryInput {
                 .input-normal {
                   height: 100%;
-                  font-size: rem(13);
+                  input {
+                    font-size: rem(13);
+                  }
                 }
                 .input-error {
                 }
@@ -249,6 +251,7 @@
                 span {
                   width: 100%;
                   word-wrap: break-word;
+                  font-size: rem(13);
                 }
                 &.error {
                   border: 1px solid $red;
