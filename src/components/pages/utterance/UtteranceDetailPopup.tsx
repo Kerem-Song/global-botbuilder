@@ -26,6 +26,7 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
       className="utteranceModal detail"
       isOpen={isOpenUtteranceDetailPopup}
       onRequestClose={handleClose}
+      shouldCloseOnOverlayClick={false}
     >
       <UtteranceDetail
         intentId={intentId}

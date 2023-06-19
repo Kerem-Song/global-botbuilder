@@ -56,6 +56,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
       className="utteranceModal"
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
+      shouldCloseOnOverlayClick={false}
     >
       <div className="utteranceWrap" onContextMenu={(e) => e.stopPropagation()}>
         <div className="utteranceDetail">
