@@ -131,22 +131,6 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
-  useEffect(() => {
-    if (!botImg) {
-      return;
-    }
-
-    if (
-      !watch(imageUrl) &&
-      botInfo &&
-      (imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL ||
-        imageCtrl === IMAGE_CTRL_TYPES.PRODUCT_CAROUSEL_PROFILE_ICON_URL) &&
-      values.view.id
-    ) {
-      setValue(imageCtrlPath, SYS_BOT_ICON);
-    }
-  }, [values]);
-
   return (
     <>
       <label

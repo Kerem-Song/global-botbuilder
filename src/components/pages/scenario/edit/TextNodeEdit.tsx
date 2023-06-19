@@ -25,7 +25,7 @@ export const TextNodeEdit = () => {
         <FormItem error={errors.view && errors.view?.text}>
           <InputTextAreaWithTitleCounter
             className={classNames('textNodeTextArea', { invalid: errors.view?.text })}
-            maxRows={17}
+            maxRows={18}
             label={t(`TEXT`)}
             required={true}
             showCount

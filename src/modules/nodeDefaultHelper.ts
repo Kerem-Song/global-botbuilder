@@ -24,7 +24,7 @@ import {
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
-import { SYS_BRAND_CURRENCY } from './constants';
+import { SYS_BOT_ICON, SYS_BRAND_CURRENCY } from './constants';
 import { ID_GEN, ID_TYPES } from './idGen';
 
 export const nodeDefaultHelper = {
@@ -207,7 +207,7 @@ export const nodeDefaultHelper = {
       discountAmount: 0,
 
       currencyUnit: SYS_BRAND_CURRENCY,
-      profileIconUrl: '',
+      profileIconUrl: SYS_BOT_ICON,
       profileImgPath: '',
       profileName: '',
       description: '',

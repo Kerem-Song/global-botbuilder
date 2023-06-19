@@ -7,7 +7,7 @@ export const util = {
     }
 
     return parse(
-      text.replace(new RegExp(`${isStart ? '^' : ''}${keyword}`, 'gi'), (match) => {
+      text.replace(new RegExp(`${isStart ? '\\s|^' : ''}${keyword}`, 'gi'), (match) => {
         if (match) {
           return `<mark>${match}</mark>`;
         } else {
