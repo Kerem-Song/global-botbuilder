@@ -17,7 +17,7 @@ export const BOTNAME_REGEX =
   /^([\p{L}]|\d| |[~!#$%^&*()_+-=\[\]|,.\/:<>\\?]|[\u0a80-\u0aff]|[\u0900-\u097F]|[\u0780-\u07BF]|[\u0E80-\u0EFF]|[\u0D00-\u0D7F]|[\u1000-\u109F]|[\u0980-\u09FF]|[\u0D80-\u0DFF]|[\u0600-\u06FF]|[\u0B00-\u0B7F]|[\u0C80-\u0CFF]|[\u1780-\u17FF]|[\u0B80-\u0BFF]|[\u0E00-\u0E7F]|[\u0C00-\u0C7F]|[\u0A00-\u0A7F]|[\u0590-\u05ff])+$/gu;
 export const ENTITY_NAME_REGEX =
   /^([\p{L}]|[\d]|[_-]|[\u0a80-\u0aff]|[\u0900-\u097F]|[\u0780-\u07BF]|[\u0E80-\u0EFF]|[\u0D00-\u0D7F]|[\u1000-\u109F]|[\u0980-\u09FF]|[\u0D80-\u0DFF]|[\u0600-\u06FF]|[\u0B00-\u0B7F]|[\u0C80-\u0CFF]|[\u1780-\u17FF]|[\u0B80-\u0BFF]|[\u0E00-\u0E7F]|[\u0C00-\u0C7F]|[\u0A00-\u0A7F]|[\u0590-\u05ff])+$/gu;
-export const PARAMETER_REGEX = /^\.?([a-z]|[_])([a-z]|[\d]|[-_])*$/gu;
+export const PARAMETER_REGEX = /^\.?([a-zA-Z]|[_])([a-zA-Z\d]|[-_])*$/gu;
 export const ENTRY_REGEX = /[\p{Cc}]+/gu;
 export const CONDITION_PARAMETER_REGEX =
   /^(?:(?=@.*)\.?([\\@0-9a-z-_.])*|(?:(?=\{\{.*)[\\{a-zA-Z0-9_\-\\}]*|(?:(?!\{.*).*)))$/gu;

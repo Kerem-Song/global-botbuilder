@@ -55,6 +55,7 @@ export const ManageEntityPopup: FC<ManageEntitiyPopupProps> = ({
       className="entityModal node-draggable-ignore"
       isOpen={isOpen}
       onRequestClose={handleClose}
+      shouldCloseOnOverlayClick={false}
     >
       <div className="header">
         <ul className="title">

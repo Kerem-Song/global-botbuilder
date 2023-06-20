@@ -39,9 +39,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isEntriesActive, setIsEntriesActive] = useState<boolean>(false);
+  const [isSaveBtnActive, setIsSaveBtnActive] = useState({
+    isActive: false,
+    isEntriesActive: false,
+  });
 
-  usePrompt(isActive);
-  usePrompt(isEntriesActive);
+  console.log('isSaveBtnActive', isSaveBtnActive);
+
+  usePrompt(isSaveBtnActive.isActive || isSaveBtnActive.isEntriesActive);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -101,7 +106,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         lunaToast.success(tc('SAVE_MESSAGE'));
         return;
       }
-
       if (res && res.exception && res.exception.errorCode === 7608) {
         setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
         return;
@@ -186,6 +190,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       className="entityModal detail node-draggable-ignore"
       isOpen={isOpenEntityDetailPopup}
       onRequestClose={handleResetEntryInfo}
+      shouldCloseOnOverlayClick={false}
     >
       <div className="detail header">
         <div className="listBtn">
@@ -223,6 +228,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                 setEntryNameInputError={setEntryNameInputError}
                 setRegexInputError={setRegexInputError}
                 setIsActive={setIsActive}
+                setIsSaveBtnActive={setIsSaveBtnActive}
               />
               {!watch('isRegex') && (
                 <div className="searchInput">
@@ -241,6 +247,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                     searchKeyword={searchKeyword}
                     setIsActive={setIsActive}
                     setIsEntriesActive={setIsEntriesActive}
+                    setIsSaveBtnActive={setIsSaveBtnActive}
                   />
                 )}
               </div>

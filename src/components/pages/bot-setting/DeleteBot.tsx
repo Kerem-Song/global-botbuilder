@@ -76,6 +76,7 @@ export const DeleteBot = () => {
               {removeCancelExpireUtc ? (
                 <p className="cancelExpireUtc">
                   {util.toLocaleDateTimeString(new Date(removeCancelExpireUtc))}
+
                   {t('CANCEL_EXPIRE_MESSAGE')}
                 </p>
               ) : null}

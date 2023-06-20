@@ -4,7 +4,7 @@ import { ISaveEntryGroup } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import {
   FieldArrayWithId,
   useController,
@@ -17,22 +17,29 @@ import { AddSynonymBtn } from './AddSynonymBtn';
 
 export interface IEntityDetailItemProps {
   index: number;
+  trigger: UseFormTrigger<ISaveEntryGroup>;
   entriesRemove: UseFieldArrayRemove;
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
   setIsActive: (value: boolean) => void;
-  setIsEntriesActive: React.Dispatch<React.SetStateAction<boolean>>;
-  trigger: UseFormTrigger<ISaveEntryGroup>;
+  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
+  setIsSaveBtnActive: Dispatch<
+    SetStateAction<{
+      isActive: boolean;
+      isEntriesActive: boolean;
+    }>
+  >;
 }
 
 export const EntryItem: FC<IEntityDetailItemProps> = ({
   index,
+  trigger,
   entriesRemove,
   searchKeyword,
   entryGroup,
   setIsActive,
   setIsEntriesActive,
-  trigger,
+  setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
   const [editInputIndex, setEditInputIndex] = useState<number>(-1);
@@ -65,6 +72,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     if (result) {
       entriesRemove(index);
       setIsActive(true);
+      setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
     }
   };
 
@@ -75,6 +83,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         setIsActive(false);
         setIsEntriesActive(true);
+        setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
         setEditInputIndex(0);
         return;
       }
@@ -83,6 +92,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     setIsActive(true);
     setEditInputIndex(-1);
     setIsEntriesActive(false);
+    setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
     await trigger(`entries.${index}.representativeEntry`);
   };
 
@@ -90,7 +100,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     if (entryNameRef.current) {
       entryNameRef.current.focus();
     }
-  }, [entryNameRef.current]);
+  }, [entryNameRef.current, editInputIndex]);
 
   if (
     searchKeyword === '' ||
@@ -105,7 +115,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
               span={5}
               className={classNames({ representativeEntryInput: editInputIndex === i })}
             >
-              {editInputIndex === i ? (
+              {editInputIndex === index ? (
                 <Input
                   size="normal"
                   maxLength={125}
@@ -134,7 +144,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                   })}
                   onDoubleClick={(e) => {
                     e.preventDefault();
-                    setEditInputIndex(i);
+                    setEditInputIndex(index);
                   }}
                 >
                   <span>{util.replaceKeywordMark(field.value, searchKeyword)}</span>
@@ -158,6 +168,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     synonym={synonymField.value}
                     setIsActive={setIsActive}
                     setIsEntriesActive={setIsEntriesActive}
+                    setIsSaveBtnActive={setIsSaveBtnActive}
                   />
                 </div>
               </div>

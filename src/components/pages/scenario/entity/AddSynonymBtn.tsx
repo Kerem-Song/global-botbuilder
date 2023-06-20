@@ -13,6 +13,12 @@ export interface IAddSynonymBtnProps {
   synonym?: string[];
   setIsActive: (value: boolean) => void;
   setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
+  setIsSaveBtnActive: Dispatch<
+    SetStateAction<{
+      isActive: boolean;
+      isEntriesActive: boolean;
+    }>
+  >;
 }
 
 export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
@@ -22,6 +28,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   representativeEntry,
   setIsActive,
   setIsEntriesActive,
+  setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
   const { control, getValues } = useFormContext();
@@ -38,6 +45,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   const handleDelete = (removeTag: number) => {
     remove(removeTag);
     setIsActive(true);
+    setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
   };
 
   const showInput = () => {
@@ -47,6 +55,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setIsActive(true);
+    setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
   };
 
   const handleInputConfirm = (value: string) => {
@@ -55,6 +64,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
       setInputVisible(false);
       setIsEntriesActive(false);
       setIsActive(true);
+      setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
       return;
     }
 
@@ -64,11 +74,13 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
         inputRef.current?.select();
         setIsActive(false);
         setIsEntriesActive(true);
+        setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         setIsActive(false);
         setIsEntriesActive(true);
+        setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
       } else {
         append([value]);
         setInputValue('');

@@ -12,6 +12,12 @@ export interface IEntityRegistryProps {
   setEntryNameInputError: React.Dispatch<React.SetStateAction<string>>;
   setRegexInputError: Dispatch<SetStateAction<string>>;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSaveBtnActive: Dispatch<
+    SetStateAction<{
+      isActive: boolean;
+      isEntriesActive: boolean;
+    }>
+  >;
 }
 
 export const EntityRegistry: FC<IEntityRegistryProps> = ({
@@ -22,6 +28,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   setEntryNameInputError,
   setRegexInputError,
   setIsActive,
+  setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
   const { getEntryDetailQuery } = useEntityClient();
@@ -41,6 +48,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
     }
     nameField.onChange(e);
     setIsActive(true);
+    setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
     setEntryNameInputError('');
   };
 
@@ -50,6 +58,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
     } else {
       field.onChange([{ representativeEntry: e.target.value }]);
       setIsActive(true);
+      setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
       setRegexInputError('');
     }
   };
