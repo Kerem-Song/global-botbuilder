@@ -243,18 +243,20 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             onClick={() => onClick(item.debugMeta)}
           >
             <div className="productCard">
-              <img
-                className={
-                  item.image?.imageAspectRatio === 0
-                    ? 'productCardImg_rectangle'
-                    : 'productCardImg_square'
-                }
-                src={item.image?.imageUrl}
-                alt="productCardImg"
-                onError={(e) => {
-                  handleImgOnError(e);
-                }}
-              />
+              <div>
+                <img
+                  className={
+                    item.image?.imageAspectRatio === 0
+                      ? 'productCardImg_rectangle'
+                      : 'productCardImg_square'
+                  }
+                  src={item.image?.imageUrl}
+                  alt="productCardImg"
+                  onError={(e) => {
+                    handleImgOnError(e);
+                  }}
+                />
+              </div>
               <div className="productCardContents">
                 <div className="productCardTitle">
                   <div className="title">
@@ -302,13 +304,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                         return <TesterMessagesItemButton key={i} item={v} />;
                       })}
                     </div>
-                  ) : (
-                    <div className="rectangleImageBtn">
-                      {item.buttons?.map((v, i) => {
-                        return <TesterMessagesItemButton key={i} item={v} />;
-                      })}
-                    </div>
-                  )}
+                  ) : null}
                 </div>
               </div>
             </div>
