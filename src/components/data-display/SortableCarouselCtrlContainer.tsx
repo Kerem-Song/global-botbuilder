@@ -126,6 +126,9 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
+                  console.log('@onchange disable?', isDisable);
+                  console.log('@m.data', m.data);
+                  console.log('@m.data.action:', m.data?.action?.name);
                   if (isDisable && m.data?.action?.name.match('handleDuplicationCard')) {
                     console.log('@onchange dis');
                     console.log('m.data?.action?.name', m.data?.action?.name);
