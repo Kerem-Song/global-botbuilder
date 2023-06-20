@@ -1,7 +1,7 @@
 import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import { CONDITION_PARAMETER_REGEX } from '@modules';
+import { BOTNAME_REGEX, CONDITION_PARAMETER_REGEX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
 import { useDispatch } from 'react-redux';
@@ -398,6 +398,7 @@ export const useYupValidation = () => {
           }
           return true;
         })
+        .matches(BOTNAME_REGEX, t('BOTNAME_REGEX_MESSAGE'))
         .required(t(`VALIDATION_REQUIRED`)),
       view: yup
         .object()
