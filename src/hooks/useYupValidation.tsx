@@ -13,7 +13,7 @@ const checkNextNodeIdTypes: string[] = [
 ];
 
 export const useYupValidation = () => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const dispatch = useDispatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
@@ -398,7 +398,7 @@ export const useYupValidation = () => {
           }
           return true;
         })
-        .matches(BOTNAME_REGEX, t('BOTNAME_REGEX_MESSAGE'))
+        .matches(BOTNAME_REGEX, tc(`BOTNAME_REGEX_MESSAGE`))
         .required(t(`VALIDATION_REQUIRED`)),
       view: yup
         .object()
