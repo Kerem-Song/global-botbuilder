@@ -19,9 +19,10 @@ export const BasicCardCarouselNode: FC<IHasNode> = ({ node }) => {
 
   const HandleAddCarousel = () => {
     const useImageCtrl = view.useImageCtrl;
+    const aspectRatio = view.childrenViews[0].imageCtrl?.aspectRatio;
     const childrenViews: IBasicCardView[] = [
       ...view.childrenViews,
-      nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl),
+      nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl, aspectRatio),
     ];
 
     const upNode = {

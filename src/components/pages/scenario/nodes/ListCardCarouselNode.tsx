@@ -16,9 +16,10 @@ export const ListCardCarouselNode: FC<IHasNode> = ({ node }) => {
 
   const HandleAddCarousel = () => {
     const useImageCtrl = view.useImageCtrl;
+    const aspectRatio = view.childrenViews[0].imageCtrl?.aspectRatio;
     const childrenViews: IListCardView[] = [
       ...view.childrenViews,
-      nodeDefaultHelper.createDefaultListCardView(useImageCtrl),
+      nodeDefaultHelper.createDefaultListCardView(useImageCtrl, aspectRatio),
     ];
     const upNode = {
       ...node,

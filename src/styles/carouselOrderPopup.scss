@@ -1,16 +1,17 @@
 .carouselOrderPopupWrapper {
-  width: fit-content;
-  min-height: rem(745);
-  min-width: rem(1152);
-  height: fit-content;
+  // width: fit-content;
+  height: rem(745);
+  width: rem(1152);
+  // height: fit-content;
   margin: auto;
-  position: absolute;
-  inset: rem(40);
+  // position: absolute;
+  // inset: rem(40);
+  padding: 0;
   background: #ffffff;
-  overflow: auto;
+  // overflow: auto;
   border-radius: rem(12);
-  outline: none;
-  box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
+  // outline: none;
+  // box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
 
   .titleWrapper {
     padding: rem(4) 0 rem(3) rem(20);
@@ -119,7 +120,7 @@
   }
 
   .carouselWrapper:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(208, 221, 255, .8); /* 스크롤바의 색상 */
+    background-color: rgba(0 , 0, 0, 0.15); /* 스크롤바의 색상 */
   }
 
   .luna-card {
@@ -355,6 +356,7 @@
 }
 
 .carouselPopupOverlay {
+  display: flex;
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);

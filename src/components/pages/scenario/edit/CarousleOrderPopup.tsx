@@ -58,15 +58,16 @@ export const CarouselOrderPopup: FC<{
 
   const defaultView = (type: string) => {
     const useImageCtrl = nodeView.useImageCtrl;
+    const aspectRatio = nodeView.childrenViews[0].imageCtrl?.aspectRatio;
     switch (type) {
       case 'BasicCardCarouselView':
-        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl);
+        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl, aspectRatio);
       case 'ListCardCarouselView':
-        return nodeDefaultHelper.createDefaultListCardView(useImageCtrl);
+        return nodeDefaultHelper.createDefaultListCardView(useImageCtrl, aspectRatio);
       case 'ProductCardCarouselView':
-        return nodeDefaultHelper.createDefaultCommerceView(useImageCtrl);
+        return nodeDefaultHelper.createDefaultCommerceView(useImageCtrl, aspectRatio);
       default:
-        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl);
+        return nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl, aspectRatio);
     }
   };
 
@@ -113,6 +114,7 @@ export const CarouselOrderPopup: FC<{
       overlayClassName="carouselPopupOverlay"
       shouldCloseOnEsc={closeOnEsc}
       onRequestClose={handleClose}
+      shouldCloseOnOverlayClick={false}
     >
       <div
         onWheel={(e) => e.stopPropagation()}

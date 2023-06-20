@@ -53,7 +53,10 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultBasicCardView: (useImageCtrl = true) => {
+  createDefaultBasicCardView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IBasicCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
@@ -66,7 +69,7 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
@@ -82,11 +85,16 @@ export const nodeDefaultHelper = {
       actionType: ACTION_TYPES.LUNA_NODE_REDIRECT,
     };
   },
-  createDefaultBasicCardCarouselView: (useImageCtrl = true) => {
+  createDefaultBasicCardCarouselView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IBasicCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.BASIC_CARD_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl)],
+      childrenViews: [
+        nodeDefaultHelper.createDefaultBasicCardView(useImageCtrl, aspectRatio),
+      ],
       useImageCtrl: useImageCtrl,
       isSuffle: false,
       count: 10,
@@ -162,7 +170,10 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultListCardView: (useImageCtrl = true) => {
+  createDefaultListCardView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IListCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_VIEW,
@@ -179,18 +190,23 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [],
     };
 
     return result;
   },
-  createDefaultListCardCarouselView: (useImageCtrl = true) => {
+  createDefaultListCardCarouselView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IListCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.LIST_CARD_CAROUSEL_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultListCardView(useImageCtrl)],
+      childrenViews: [
+        nodeDefaultHelper.createDefaultListCardView(useImageCtrl, aspectRatio),
+      ],
       useImageCtrl: useImageCtrl,
       isSuffle: false,
       count: 10,
@@ -198,7 +214,10 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultCommerceView: (useImageCtrl = true) => {
+  createDefaultCommerceView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_VIEW,
@@ -219,18 +238,23 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
 
     return result;
   },
-  createDefaultCommerceCarouselView: (useImageCtrl = true) => {
+  createDefaultCommerceCarouselView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IProductCardCarouselView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.PRODUCT_CARD_CAROUSEL_VIEW,
-      childrenViews: [nodeDefaultHelper.createDefaultCommerceView(useImageCtrl)],
+      childrenViews: [
+        nodeDefaultHelper.createDefaultCommerceView(useImageCtrl, aspectRatio),
+      ],
       isSuffle: false,
       useImageCtrl: useImageCtrl,
       count: 10,
@@ -250,14 +274,17 @@ export const nodeDefaultHelper = {
     };
     return result;
   },
-  createDefaultDataBasicCardView: () => {
+  createDefaultDataBasicCardView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IDataBasicCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.DATA_BASIC_CARD_VIEW,
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       title: '',
       description: '',
       imageCtrl: {
@@ -266,20 +293,23 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
     return result;
   },
-  createDefaultDataProductCardView: () => {
+  createDefaultDataProductCardView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IDataProductCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.DATA_PRODUCT_CARD_VIEW,
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       priceDisplayType: PriceDisplayType.All,
       retailPriceParam: '',
       discountAmountParam: '',
@@ -296,20 +326,23 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [nodeDefaultHelper.createDefaultButtonCtrl()],
     };
     return result;
   },
-  createDefaultDataListCardView: () => {
+  createDefaultDataListCardView: (
+    useImageCtrl = true,
+    aspectRatio = ImageAspectRatio.Rectangle,
+  ) => {
     const result: IDataListCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.DATA_LIST_CARD_VIEW,
       itemsRefName: '',
       count: 1,
       isShuffle: false,
-      useImageCtrl: true,
+      useImageCtrl: useImageCtrl,
       header: '',
       seq: 0,
       items: [
@@ -322,7 +355,7 @@ export const nodeDefaultHelper = {
         imgPath: '',
         id: ID_GEN.generate(ID_TYPES.CTRL),
         typeName: CTRL_TYPES.IMAGE_CTRL,
-        aspectRatio: ImageAspectRatio.Rectangle,
+        aspectRatio: aspectRatio,
       },
       buttons: [],
     };
