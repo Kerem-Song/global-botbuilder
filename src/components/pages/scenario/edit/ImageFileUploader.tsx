@@ -121,7 +121,7 @@ export const ImageFileUploader = ({
   const handleImgOnError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.onerror = null;
     e.currentTarget.src = icImgNotFound;
-    // e.currentTarget.className = 'imgNotFound';
+    e.currentTarget.className = 'imgNotFound';
     setError(imageUrl, { type: 'custom', message: t(`IMAGE_NOT_FOUND`) });
   };
 
@@ -159,16 +159,16 @@ export const ImageFileUploader = ({
                   onError={(e) => {
                     handleImgOnError(e);
                   }}
-                  // onLoad={(e) => {
-                  //   console.log('@errors1', errors);
-                  //   console.log('@onload1 ', isValid, e.currentTarget.className);
-                  //   if (
-                  //     !Object.keys(errors).length &&
-                  //     e.currentTarget.className === 'imgNotFound'
-                  //   ) {
-                  //     e.currentTarget.className = '';
-                  //   }
-                  // }}
+                  onLoad={(e) => {
+                    console.log('@errors1', errors);
+                    console.log('@onload1 ', isValid, e.currentTarget.className);
+                    if (
+                      !Object.keys(errors).length &&
+                      e.currentTarget.className === 'imgNotFound'
+                    ) {
+                      e.currentTarget.className = '';
+                    }
+                  }}
                 />
               ) : (
                 <img
@@ -177,16 +177,16 @@ export const ImageFileUploader = ({
                   onError={(e) => {
                     handleImgOnError(e);
                   }}
-                  // onLoad={(e) => {
-                  //   console.log('@errors2', errors);
-                  //   console.log('@isvalid2 ', isValid, e.currentTarget.className);
-                  //   if (
-                  //     !Object.keys(errors).length &&
-                  //     e.currentTarget.className === 'imgNotFound'
-                  //   ) {
-                  //     e.currentTarget.className = '';
-                  //   }
-                  // }}
+                  onLoad={(e) => {
+                    console.log('@errors2', errors);
+                    console.log('@isvalid2 ', isValid, e.currentTarget.className);
+                    if (
+                      !Object.keys(errors).length &&
+                      e.currentTarget.className === 'imgNotFound'
+                    ) {
+                      e.currentTarget.className = '';
+                    }
+                  }}
                 />
               )
             ) : (

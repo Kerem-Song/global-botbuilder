@@ -191,13 +191,6 @@ export const DataProductCardNodeEdit = () => {
           <div className="m-b-8">
             <Space direction="vertical">
               <FormItem error={errors.view && errors.view.profileName}>
-                {/* <InputWithTitleCounter
-                  label={t(`PRODUCT_NODE_BRAND_NAME`)}
-                  required={true}
-                  {...register(`view.profileName`)}
-                  isLight={true}
-                  readOnly={isHistoryViewer}
-                /> */}
                 <InputTextAreaWithTitleCounter
                   {...register('view.profileName')}
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
@@ -207,6 +200,7 @@ export const DataProductCardNodeEdit = () => {
                   readOnly={isHistoryViewer}
                   maxRows={17}
                   minRows={2.125}
+                  isError={errors.view?.profileName ? true : false}
                 />
               </FormItem>
             </Space>

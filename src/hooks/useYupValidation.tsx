@@ -142,10 +142,7 @@ export const useYupValidation = () => {
 
   const basicCardNodeEditSchema = yup.object().shape({
     title: yup.string().nullable().trim(),
-    description: yup
-      .string()
-      .nullable()
-      .max(230, t(`VALIDATION_STRING_LIMIT`, { maxCount: 230 })),
+    description: yup.string().nullable(),
     imageCtrl: imageCtrlEditSchema,
     buttons: buttonsEditSchema,
   });

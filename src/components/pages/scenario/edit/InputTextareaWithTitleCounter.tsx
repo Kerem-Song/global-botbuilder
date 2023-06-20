@@ -12,8 +12,16 @@ export const InputTextAreaWithTitleCounter = forwardRef<
   HTMLTextAreaElement,
   InputWithTitleCounterProps
 >((args, ref) => {
-  const { label, isLight, textLength, showCount, required, readOnly, ...inputProps } =
-    args;
+  const {
+    label,
+    isLight,
+    textLength,
+    showCount,
+    required,
+    readOnly,
+    isError,
+    ...inputProps
+  } = args;
 
   return (
     <>
@@ -29,7 +37,13 @@ export const InputTextAreaWithTitleCounter = forwardRef<
           </span>
         ) : undefined}
       </div>
-      <InputTextarea {...inputProps} required={required} ref={ref} readOnly={readOnly} />
+      <InputTextarea
+        {...inputProps}
+        className={classNames({ invalid: isError })}
+        required={required}
+        ref={ref}
+        readOnly={readOnly}
+      />
     </>
   );
 });
