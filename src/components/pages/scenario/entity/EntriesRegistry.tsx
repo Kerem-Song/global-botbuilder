@@ -9,16 +9,23 @@ import { EntryItem } from './EntryItem';
 
 export interface IEntryRegistryProps {
   searchKeyword: string;
+  formMethods: UseFormReturn<ISaveEntryGroup>;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
   setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
-  formMethods: UseFormReturn<ISaveEntryGroup>;
+  setIsSaveBtnActive: Dispatch<
+    SetStateAction<{
+      isActive: boolean;
+      isEntriesActive: boolean;
+    }>
+  >;
 }
 
 export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   searchKeyword,
+  formMethods,
   setIsActive,
   setIsEntriesActive,
-  formMethods,
+  setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
 
@@ -39,6 +46,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
     } else if (name !== '') {
       prepend({ representativeEntry: name, synonym: [] });
       setIsActive(true);
+      setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
       setRepresentativeEntry('');
     }
   };
@@ -46,6 +54,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   const handleRepresentativeEntry = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRepresentativeEntry(e.target.value);
     setIsActive(true);
+    setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
   };
 
   return (
@@ -87,6 +96,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
                       searchKeyword={searchKeyword}
                       setIsActive={setIsActive}
                       setIsEntriesActive={setIsEntriesActive}
+                      setIsSaveBtnActive={setIsSaveBtnActive}
                       trigger={trigger}
                     />
                   );
