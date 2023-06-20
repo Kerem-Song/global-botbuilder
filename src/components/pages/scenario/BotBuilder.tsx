@@ -331,13 +331,14 @@ export const Botbuilder = () => {
   return (
     <>
       <div
+        tabIndex={0}
         className="botBuilderMain"
         //onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}
         onMouseMoveCapture={outterMouseMoveHandler}
         //onMouseUpCapture={handleCanvasClick}
         ref={botbuilderRef}
-        role="presentation"
+        role="tab"
         onDragStart={(e) => {
           const from = e.dataTransfer.getData('id');
           if (from) {
@@ -355,7 +356,7 @@ export const Botbuilder = () => {
           e.preventDefault();
           handleContenxtMenu(e);
         }}
-        onKeyDown={(e) => handleUndoRedoKeydown(e)}
+        onKeyDown={handleUndoRedoKeydown}
       >
         <BotBuilderZoomBtn />
 

@@ -65,12 +65,9 @@ export const SoratbleCarouselCtrlContainer = ({
 
   const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
     const target = node.find((item) => item.id === id);
-
     if (target && !isDisable) {
       const duplicated = nodeHelper.cloneView(target);
       setCarouselNode([...node, duplicated]);
-    } else {
-      lunaToast.error(t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`));
     }
   };
 
@@ -138,6 +135,9 @@ export const SoratbleCarouselCtrlContainer = ({
                   if (isDisable && m.data?.action?.name.match('')) {
                     console.log('@onchange dis');
                     console.log('m.data?.action?.name', m.data?.action?.name);
+                    lunaToast.error(
+                      t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
+                    );
                     return;
                   } else {
                     console.log('@onchange possible');

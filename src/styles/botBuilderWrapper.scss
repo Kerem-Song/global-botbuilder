@@ -101,6 +101,14 @@
 
   overflow: hidden;
 
+  &:focus {
+    outline: none !important;
+  }
+
+  &:focus-within {
+    outline: none !important;
+  }
+
   &.react-draggable {
     overflow: hidden;
   }
@@ -114,6 +122,7 @@
     position: relative;
   }
 }
+
 
 .botBuilderDrawer {
   //  height: calc(100vh - rem(97));
