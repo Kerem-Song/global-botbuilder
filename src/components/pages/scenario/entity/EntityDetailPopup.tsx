@@ -44,8 +44,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     isEntriesActive: false,
   });
 
-  console.log('isSaveBtnActive', isSaveBtnActive);
-
   usePrompt(isSaveBtnActive.isActive || isSaveBtnActive.isEntriesActive);
 
   const defaultValues: ISaveEntryGroup = {
@@ -86,7 +84,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     remove();
     setEntryId('');
     handleIsOpenEntityDetailPopup(false);
-    handleIsOpen(true);
   };
 
   const handleSave = async (entryData: ISaveEntryGroup) => {
@@ -116,6 +113,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const handleListBtn = async () => {
     if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
+      handleIsOpen(true);
       return;
     }
 
@@ -124,21 +122,15 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
 
-    if (!isActive && isEntriesActive) {
-      if (result) {
-        handleResetEntryInfo();
-      }
-    } else if (isActive && !isEntriesActive) {
-      if (result) {
-        handleResetEntryInfo();
-      }
+    if (result) {
+      handleResetEntryInfo();
+      handleIsOpen(true);
     }
   };
 
   const handleClose = async () => {
     if (!isActive && !isEntriesActive) {
       handleResetEntryInfo();
-      handleIsOpen(false);
       return;
     }
 
