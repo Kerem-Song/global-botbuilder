@@ -252,7 +252,6 @@
             width: rem(30);
             height: rem(30);
             background-color: $grayWhite;
-            background-color: yellow;
             opacity: 0.3;
             border: rem(1) solid $gray200;
             box-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.15);
@@ -376,10 +375,24 @@
         .listCard {
           width: rem(264);
           margin-right: rem(10);
-          max-height: rem(900);
+          max-height: rem(1000);
           background-color: $grayWhite;
           border-radius: rem(16);
           border: 1px solid $tester-bg;
+
+          &.listCardCarouselRectangleImageCard {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-height: 100%;
+          }
+
+          &.listCardCarouselSquareImageCard {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+
           .header {
             width: 100%;
             height: rem(46);
@@ -404,6 +417,7 @@
             display: flex;
             flex-direction: column;
             padding: rem(10);
+            height: 100%;
             .listCardContents {
               .listCardContent {
                 .cardList {
@@ -455,13 +469,13 @@
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-              max-height: rem(513);
+              height: 100%;
             }
             .listCardCarouselSqureImageContents {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-              max-height: rem(453);
+              height: 100%;
             }
           }
           &:hover {

@@ -16,7 +16,12 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
   handleImgOnError,
 }) => {
   return (
-    <div className="listCard">
+    <div
+      className={classNames('listCard', {
+        listCardCarouselRectangleImageCard: item.image?.imageAspectRatio === 0,
+        listCardCarouselSquareImageCard: item.image?.imageAspectRatio != 0,
+      })}
+    >
       {item.header && (
         <div className="header">
           <span>
@@ -81,25 +86,27 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
               );
             })}
           </div>
-          {item.image?.imageUrl && item.buttons.length > 0 ? (
-            <div
-              className={
-                item.image?.imageAspectRatio === 0
-                  ? 'rectangleImageBtn'
-                  : 'squareImageBtn'
-              }
-            >
-              {item.buttons?.map((v, i) => {
-                return <TesterMessagesItemButton key={i} item={v} />;
-              })}
-            </div>
-          ) : (
-            <div className="rectangleImageBtn">
-              {item.buttons?.map((v, i) => {
-                return <TesterMessagesItemButton key={i} item={v} />;
-              })}
-            </div>
-          )}
+          <div>
+            {item.image?.imageUrl && item.buttons.length > 0 ? (
+              <div
+                className={
+                  item.image?.imageAspectRatio === 0
+                    ? 'rectangleImageBtn'
+                    : 'squareImageBtn'
+                }
+              >
+                {item.buttons?.map((v, i) => {
+                  return <TesterMessagesItemButton key={i} item={v} />;
+                })}
+              </div>
+            ) : (
+              <div className="rectangleImageBtn">
+                {item.buttons?.map((v, i) => {
+                  return <TesterMessagesItemButton key={i} item={v} />;
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
