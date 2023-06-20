@@ -121,10 +121,22 @@
           margin-right: rem(10);
           border-radius: rem(16);
           border: 1px solid transparent;
-          max-height: rem(512);
+          max-height: rem(490);
           border-radius: rem(16);
           background-color: $grayWhite;
           border: 1px solid $tester-bg;
+          &.productCarouselSquareImageCard {
+            max-height: rem(490);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          &.productCarouselRectangleImageCard {
+            max-height: rem(434);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
 
           &:hover {
             border: 1px solid $primary500;
@@ -146,6 +158,12 @@
 
           .productCardContents {
             padding: rem(12);
+            display: flex;
+            flex-direction: column;
+            &.productCardCarouselContents {
+              height: 100%;
+              justify-content: space-between;
+            }
 
             .productCardTitle {
               display: flex;
@@ -170,10 +188,6 @@
             .productCardCarouselWrap {
               display: flex;
               flex-direction: column;
-              max-height: rem(168);
-              &.productCarouselRectangleImageWrap {
-                max-height: rem(248);
-              }
             }
 
             .productCardPrices {
@@ -212,30 +226,15 @@
             .productContents {
               padding-top: rem(8);
               &.productCarouselContents {
-                height: rem(130);
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
               }
               &.productCarouselRectangleImageContents {
-                height: rem(220);
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
               }
-              &.productCarouselNoBtnContents {
-                height: fit-content;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-              }
-              &.productCarouselRectangleImageNoBtnContents {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                height: fit-content;
-              }
-
               .productDesc {
                 display: flex;
                 padding-bottom: rem(8);
