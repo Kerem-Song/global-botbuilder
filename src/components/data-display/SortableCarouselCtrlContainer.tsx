@@ -34,6 +34,7 @@ export const SoratbleCarouselCtrlContainer = ({
   setCarouselNode,
 }: ISortableContainer) => {
   const [isDisable, setIsDisable] = useState<boolean>(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -85,7 +86,7 @@ export const SoratbleCarouselCtrlContainer = ({
       type: 'icon-front',
       icon: !isDisable ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: !isDisable ? handleDuplicationCard : null,
+        action: handleDuplicationCard,
       },
     },
     {
