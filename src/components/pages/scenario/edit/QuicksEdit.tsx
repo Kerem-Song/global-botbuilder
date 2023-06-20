@@ -15,7 +15,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
 export const QuicksEdit = () => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const {
     register,
     getValues,
@@ -34,7 +34,24 @@ export const QuicksEdit = () => {
     console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < QUICK_MAX_COUNT) {
-      append(nodeDefaultHelper.createDefaultAnswerQickItem(fields.length));
+      const buttonNameRegex = new RegExp(tc(`DEFAULT_LBL_QUICKREPLY`));
+      const filtered = fields.filter((button) => buttonNameRegex.test(button.label));
+      let index = 1;
+
+      if (filtered) {
+        const regex = /[^0-9]/g;
+        const results = filtered?.map((x) => Number(x.label?.replace(regex, ''))) || [];
+        const max = Math.max(...results);
+
+        for (let i = 1; i <= max + 1; i++) {
+          if (!results.includes(i)) {
+            index = i;
+            break;
+          }
+        }
+      }
+
+      append(nodeDefaultHelper.createDefaultAnswerQickItem(index - 1));
     } else {
       //modal alert
       console.log('10개까지 가능');
