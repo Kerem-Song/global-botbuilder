@@ -14,9 +14,11 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
+import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
+import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
@@ -33,6 +35,7 @@ export const SoratbleCarouselCtrlContainer = ({
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
+  const { t } = usePage();
   const [isDisable, setIsDisable] = useState<boolean>(false);
 
   const sensors = useSensors(
@@ -66,6 +69,8 @@ export const SoratbleCarouselCtrlContainer = ({
     if (target && !isDisable) {
       const duplicated = nodeHelper.cloneView(target);
       setCarouselNode([...node, duplicated]);
+    } else {
+      lunaToast.error(t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`));
     }
   };
 

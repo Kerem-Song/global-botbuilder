@@ -3,6 +3,7 @@ import { usePage, useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 import { Suspense } from 'react';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
+import MultiClamp from 'react-multi-clamp';
 
 export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
   const { t } = usePage();
@@ -14,12 +15,20 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
     <Row justify="flex-start" align="center" key={item.id}>
       <Col span={18} className="listItemsContent">
         {item.title ? (
-          <p className="title">{item.title}</p>
+          <div className="listTitle">
+            <MultiClamp clamp={2} ellipsis={'...'}>
+              {item.title}
+            </MultiClamp>
+          </div>
         ) : (
           <p className="title empty">{t(`ENTER_TITLE`)}</p>
         )}
         {item.description ? (
-          <p className="description">{item.description}</p>
+          <div className="listDescription">
+            <MultiClamp clamp={1} ellipsis={'...'}>
+              {item.description}
+            </MultiClamp>
+          </div>
         ) : (
           <p className="description empty">{t(`ENTER_CONTENT`)}</p>
         )}

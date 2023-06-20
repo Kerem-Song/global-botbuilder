@@ -105,7 +105,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                   <InputWithTitleCounter
                     label={t(`ENTER_TITLE`)}
                     showCount={true}
-                    maxLength={40}
+                    maxLength={60}
                     required={true}
                     isLight={true}
                     {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}

@@ -326,12 +326,19 @@
           .listItemsContent {
             line-height: rem(15.6);
             padding-left: rem(4) !important;
+            word-break: break-all;
 
-            p {
+            .listTitle {
               padding: rem(4) 0;
+              color: $gray700;
+              font-size: rem(13);
+              font-weight: 500;
             }
 
-            .description {
+            .listDescription {
+              padding: rem(4) 0;
+              color: $gray500;
+              font-size: rem(12);
               font-weight: 400;
             }
           }

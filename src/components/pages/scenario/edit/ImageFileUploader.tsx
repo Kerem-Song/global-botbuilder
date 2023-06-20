@@ -95,7 +95,7 @@ export const ImageFileUploader = ({
   };
 
   const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const FILE_SIZE = 3.2 * 1000 * 1000; //3mb제한
+    const FILE_SIZE = 3 * 1024 * 1024; //3mb제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
     if (e.target.files) {
       if (!SUPPORTED_FORMATS.includes(e.target.files[0]?.type)) {
