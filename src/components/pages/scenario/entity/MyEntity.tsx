@@ -5,12 +5,13 @@ import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import MultiClamp from 'react-multi-clamp';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
+import { EntitySkeleton } from './EntitySkeleton';
 
 export interface IMyEntityProps {
   handleIsOpen: (value: boolean) => void;
@@ -29,10 +30,11 @@ export const MyEntity: FC<IMyEntityProps> = ({
   const token = useRootState((state) => state.botInfoReducer.token);
   const [ref, inView] = useInView();
   const [searchKeyword, setSearchKeyword] = useState<string>();
-  const { data: initialData, fetchNextPage } = changePageNumberQuery(
-    searchKeyword,
-    false,
-  );
+  const {
+    data: initialData,
+    fetchNextPage,
+    isFetching,
+  } = changePageNumberQuery(searchKeyword, false);
 
   const handleSearch = useDebouncedCallback((keyword?: string) => {
     setSearchKeyword(keyword);
@@ -111,45 +113,50 @@ export const MyEntity: FC<IMyEntityProps> = ({
       </div>
       <div className="entityWrapper">
         <Row gap={12}>
-          {isExistInitialData(initialData) ? (
-            initialData?.pages.map((v) => {
-              const pages = v.items;
-              return pages.map((x, i) => {
-                return (
-                  <Col key={i} span={6}>
-                    <div
-                      ref={ref}
-                      className="entityCard"
-                      role="presentation"
-                      onClick={() => handleEntryDetail(x.id)}
-                    >
-                      <div className="cardHeader">
-                        <span className="title">
-                          {util.replaceKeywordMark(x.usingName, searchKeyword)}
-                        </span>
-                        <button
-                          className="icDelete"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openDeleteEntryModal(x.id);
-                          }}
-                        />
+          {isFetching && <EntitySkeleton />}
+          {!isFetching && isExistInitialData(initialData)
+            ? initialData?.pages.map((v) => {
+                const pages = v.items;
+                return pages.map((x, i) => {
+                  return (
+                    <Col key={i} span={6}>
+                      <div
+                        ref={ref}
+                        className="entityCard"
+                        role="presentation"
+                        onClick={() => handleEntryDetail(x.id)}
+                      >
+                        <div className="cardHeader">
+                          <span className="title">
+                            {util.replaceKeywordMark(x.usingName, searchKeyword)}
+                          </span>
+                          <button
+                            className="icDelete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openDeleteEntryModal(x.id);
+                            }}
+                          />
+                        </div>
+                        <div className="entries">
+                          <span className="entry">
+                            <MultiClamp clamp={4}>
+                              {util.replaceKeywordMark(
+                                x.entries.join(', '),
+                                searchKeyword,
+                              )}
+                            </MultiClamp>
+                          </span>
+                        </div>
                       </div>
-                      <div className="entries">
-                        <span className="entry">
-                          <MultiClamp clamp={4}>
-                            {util.replaceKeywordMark(x.entries.join(', '), searchKeyword)}
-                          </MultiClamp>
-                        </span>
-                      </div>
-                    </div>
-                  </Col>
-                );
-              });
-            })
-          ) : (
-            <EmptyEntityCard searchKeyword={searchKeyword} />
-          )}
+                    </Col>
+                  );
+                });
+              })
+            : !isFetching &&
+              initialData?.pages[0].items.length === 0 && (
+                <EmptyEntityCard searchKeyword={searchKeyword} />
+              )}
         </Row>
       </div>
     </>

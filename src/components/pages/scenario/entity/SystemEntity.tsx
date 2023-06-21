@@ -8,13 +8,18 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
+import { EntitySkeleton } from './EntitySkeleton';
 
 export const SystemEntity = () => {
   const { t } = usePage();
   const { changePageNumberQuery } = useEntityClient();
   const [ref, inView] = useInView();
   const [searchKeyword, setSearchKeyword] = useState<string>();
-  const { data: initialData, fetchNextPage } = changePageNumberQuery(searchKeyword, true);
+  const {
+    data: initialData,
+    fetchNextPage,
+    isFetching,
+  } = changePageNumberQuery(searchKeyword, true);
 
   const isExistInitialData = (
     data: InfiniteData<IPagingItems<IResponseEntryItems>> | undefined,
@@ -48,33 +53,38 @@ export const SystemEntity = () => {
       </div>
       <div className="entityWrapper">
         <Row gap={12}>
-          {isExistInitialData(initialData) ? (
-            initialData?.pages.map((v) => {
-              const pages = v.items;
-              return pages.map((x, i) => {
-                return (
-                  <Col key={i} span={6}>
-                    <div className="entityCard" role="presentation" ref={ref}>
-                      <div className="cardHeader">
-                        <span className="title">
-                          {util.replaceKeywordMark(x.usingName, searchKeyword)}
-                        </span>
-                      </div>
-                      <div className="entries">
-                        <div>
-                          <span className="entry">
-                            {util.replaceKeywordMark(x.entries.join(' '), searchKeyword)}
+          {isFetching && <EntitySkeleton />}
+          {!isFetching && isExistInitialData(initialData)
+            ? initialData?.pages.map((v) => {
+                const pages = v.items;
+                return pages.map((x, i) => {
+                  return (
+                    <Col key={i} span={6}>
+                      <div className="entityCard" role="presentation" ref={ref}>
+                        <div className="cardHeader">
+                          <span className="title">
+                            {util.replaceKeywordMark(x.usingName, searchKeyword)}
                           </span>
                         </div>
+                        <div className="entries">
+                          <div>
+                            <span className="entry">
+                              {util.replaceKeywordMark(
+                                x.entries.join(' '),
+                                searchKeyword,
+                              )}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                );
-              });
-            })
-          ) : (
-            <EmptyEntityCard searchKeyword={searchKeyword} />
-          )}
+                    </Col>
+                  );
+                });
+              })
+            : !isFetching &&
+              initialData?.pages[0].items.length === 0 && (
+                <EmptyEntityCard searchKeyword={searchKeyword} />
+              )}
         </Row>
       </div>
     </>
