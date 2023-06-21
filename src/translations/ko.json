@@ -50,7 +50,7 @@
     "PAGE_PROVIDER_AUTH_ERROR_TITLE": "권한",
     "PAGE_PROVIDER_AUTH_ERROR_DESC": "메뉴 권한이 없습니다.",
     "DEFAULT_LBL_BUTTON": "버튼",
-    "DEFAULT_LBL_QUICKREPLY": "퀵 리플라이"
+    "DEFAULT_LBL_QUICKREPLY": "Quick Reply"
   },
   "scenario": {
     "TITLE": "시나리오",

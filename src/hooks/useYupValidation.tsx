@@ -1,7 +1,11 @@
 import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES, NodeOption } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import { BOTNAME_REGEX, CONDITION_PARAMETER_REGEX } from '@modules';
+import {
+  BOTNAME_REGEX,
+  CONDITION_PARAMETER_REGEX,
+  ENG_NUM_UNDERSCORE_REGEX,
+} from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
 import { useState } from 'react';
@@ -276,7 +280,7 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
         value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
@@ -292,7 +296,7 @@ export const useYupValidation = () => {
         then: yup
           .string()
           .trim()
-          .matches(/^[\\{a-z0-9_\\}]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .matches(/^[\\{a-zA-Z0-9_\\}]*$/, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
     quicks: quicksEditSchema,
@@ -337,7 +341,7 @@ export const useYupValidation = () => {
         value: yup
           .string()
           .trim()
-          .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`)),
+          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`)),
       }),
     ),
   });
@@ -346,7 +350,7 @@ export const useYupValidation = () => {
     itemsRefName: yup
       .string()
       .trim()
-      .matches(/^[a-z0-9_]*$/, t(`VALIDATION_REGEX_MATCH`))
+      .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
       .required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
     buttons: dataApiButtonsEditSchema,
