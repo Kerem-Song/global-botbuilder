@@ -109,7 +109,7 @@ export const SoratbleCarouselCtrlContainer = ({
       setIsDisable(false);
     }
   }, [carouselNode, isDisable]);
-  console.log('@carouselNode.length', carouselNode, isDisable);
+
   return (
     <DndContext
       onDragEnd={(e) => handleDragEnd(e)}
@@ -129,19 +129,12 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
-                  console.log('@onchange disable?', isDisable);
-                  console.log('@m.data', m.data);
-                  console.log('@m.data.action:', m.data?.action?.name);
                   if (isDisable && m.data?.action?.name.match('')) {
-                    console.log('@onchange dis');
-                    console.log('m.data?.action?.name', m.data?.action?.name);
                     lunaToast.error(
                       t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
                     );
                     return;
                   } else {
-                    console.log('@onchange possible');
-                    console.log('m.data?.action?.name', m.data?.action?.name);
                     m.data?.action?.(item.id, carouselNode);
                   }
                 }}

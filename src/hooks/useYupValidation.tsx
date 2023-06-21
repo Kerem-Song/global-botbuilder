@@ -392,22 +392,14 @@ export const useYupValidation = () => {
       title: yup
         .string()
         .test('is-duplicated', t(`DUPLICATE_NODE_NAME`), (val: any) => {
-          console.log('@val', val);
-
-          console.log('@filtered', filtered);
-
           if (filtered.length > 1) {
             setIsDuplicated(true);
-            console.log('@is duplicated', isDuplicated);
             return false;
           } else if (!filtered.length && isDuplicated) {
             setIsDuplicated(true);
-            console.log('@is duplicated', isDuplicated);
             return false;
           } else {
-            setIsDuplicated(false);
-            console.log('@if out');
-            console.log('@is duplicated', isDuplicated);
+            setIsDuplicated(true);
             return true;
           }
         })

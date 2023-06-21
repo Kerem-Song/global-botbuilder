@@ -37,7 +37,6 @@ export const ParameterSetNodeEdit = () => {
   };
 
   const handleDeleteButton = (index: number) => {
-    console.log('@index', index);
     remove(index);
   };
 

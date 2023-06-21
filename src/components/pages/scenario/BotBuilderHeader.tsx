@@ -242,7 +242,7 @@ export const BotBuilderHeader = () => {
       dispatch(setIsClickHeaderBtn(true));
       return;
     }
-    console.log('@nodename', nodeName);
+
     const basicNameNodesRegex = new RegExp(`${nodeName}`);
     const filtered = nodes.filter((node) => basicNameNodesRegex.test(node.title!));
     let index = 1;

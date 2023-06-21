@@ -48,7 +48,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
         activated: activated,
       });
       if (res) {
-        console.log('@resultresult', res);
         lunaToast.success(tc('SAVE_MESSAGE'));
       }
     } else if (exception) {
