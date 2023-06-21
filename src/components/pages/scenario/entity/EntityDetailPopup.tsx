@@ -139,14 +139,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
 
-    if (!isActive && isEntriesActive) {
-      if (result) {
-        handleResetEntryInfo();
-      }
-    } else if (isActive && !isEntriesActive) {
-      if (result) {
-        handleResetEntryInfo();
-      }
+    if (result) {
+      handleResetEntryInfo();
     }
   };
 
