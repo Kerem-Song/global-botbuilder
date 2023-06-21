@@ -4,7 +4,8 @@ import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import {
   BOTNAME_REGEX,
   CONDITION_PARAMETER_REGEX,
-  ENG_NUM_UNDERSCORE_REGEX,
+  PARAMETER_REGEX,
+  PARAMETER_REGEX,
 } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
@@ -280,12 +281,12 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
+          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
         value: yup
           .string()
           .trim()
-          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
+          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
@@ -342,10 +343,7 @@ export const useYupValidation = () => {
     url: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
     responseMapping: yup.array().of(
       yup.object().shape({
-        value: yup
-          .string()
-          .trim()
-          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`)),
+        value: yup.string().trim().matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`)),
       }),
     ),
   });
@@ -354,7 +352,7 @@ export const useYupValidation = () => {
     itemsRefName: yup
       .string()
       .trim()
-      .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
+      .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
       .required(t(`VALIDATION_REQUIRED`)),
     imageCtrl: imageCtrlEditSchema,
     buttons: dataApiButtonsEditSchema,
