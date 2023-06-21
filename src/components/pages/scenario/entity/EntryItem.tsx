@@ -90,7 +90,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     }
 
     setIsActive(true);
-    setEditInputIndex(0);
+    setEditInputIndex(-1);
     setIsEntriesActive(false);
     setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
     await trigger(`entries.${index}.representativeEntry`);
