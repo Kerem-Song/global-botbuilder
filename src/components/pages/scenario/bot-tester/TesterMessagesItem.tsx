@@ -338,7 +338,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
           <div className="quickReplies">
             <TesterSlide gapSize={8} quickReplies>
               {item.quickReplies.map((v, i) => {
-                return <TesterMessagesItemButton quickReply key={i} item={v} />;
+                return <TesterMessagesItemButton key={i} item={v} quickReply />;
               })}
             </TesterSlide>
           </div>

@@ -489,13 +489,15 @@
         width: 100%;
         margin-top: rem(10);
         padding-left: rem(40);
-
         .luna-testerItem-quickReplyBtn {
           display: flex;
+          justify-content: center;
           align-items: center;
+          word-break: break-all;
           padding: rem(8) rem(14);
           margin-right: rem(8);
           min-width: fit-content;
+          max-width: rem(333);
           border: 1px solid #3b4661;
           background-color: #3b4661;
           border-radius: rem(16);

@@ -42,6 +42,19 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
       });
     };
 
+    const checkUtteranceDuplication = await checkUtteranceDuplicationAsync({
+      text: utteranceWord,
+    });
+
+    if (checkUtteranceDuplication.length > 0) {
+      errorModal(checkUtteranceDuplication[0].intentName);
+      if (utteranceRef.current) {
+        utteranceRef.current.select();
+      }
+      setIsEditing(false);
+      return;
+    }
+
     if (
       getValues('items')
         .map((x) => x.text?.toLowerCase())
@@ -51,29 +64,19 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
       if (utteranceRef.current) {
         utteranceRef.current.select();
       }
+      setIsEditing(false);
       return;
-    }
-
-    const checkUtteranceDuplication = await checkUtteranceDuplicationAsync({
-      text: utteranceWord,
-    });
-
-    if (checkUtteranceDuplication) {
-      if (checkUtteranceDuplication.length > 0) {
-        errorModal(checkUtteranceDuplication[0].intentName);
-        if (utteranceRef.current) {
-          utteranceRef.current.select();
-        }
-      } else {
-        prepend({ text: utteranceWord });
-        setIsActive(true);
-        setUtteranceWord('');
-        if (utteranceRef.current) {
-          utteranceRef.current.focus();
-        }
+    } else {
+      prepend({ text: utteranceWord });
+      setIsActive(true);
+      setIsEditing(false);
+      setUtteranceWord('');
+      if (utteranceRef.current) {
+        utteranceRef.current.focus();
       }
     }
   };
+
   return (
     <div className="utterance add">
       <Space direction="vertical">
@@ -85,6 +88,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
               value={utteranceWord}
               onChange={(e) => {
                 setUtteranceWord(e.target.value);
+                setIsActive(true);
                 setIsEditing(true);
               }}
               onPressEnter={handleAddUtternace}
@@ -96,10 +100,8 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
               type="primary"
               className="addUtteranceBtn"
               icon={icEnter}
-              onClick={() => {
-                handleAddUtternace();
-              }}
-              disabled={!utteranceWord && !isEditing}
+              onClick={handleAddUtternace}
+              disabled={!utteranceWord || !isEditing}
             />
           </Col>
         </Row>
