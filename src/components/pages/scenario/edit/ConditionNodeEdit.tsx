@@ -171,7 +171,7 @@ export const ConditionNodeEdit = () => {
           </Space>
         )}
         {fields.map((item, i) => (
-          <Space direction="vertical" key={i}>
+          <Space direction="vertical" key={item.id}>
             <FormItem
               error={errors.view && errors.view.items && errors.view.items[i]?.op1}
             >
