@@ -282,7 +282,11 @@ export const useYupValidation = () => {
           .trim()
           .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
-        value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+        value: yup
+          .string()
+          .trim()
+          .matches(ENG_NUM_UNDERSCORE_REGEX, t(`VALIDATION_REGEX_MATCH`))
+          .required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
   });

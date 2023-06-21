@@ -21,4 +21,4 @@ export const PARAMETER_REGEX = /^\.?([a-zA-Z]|[_])([a-zA-Z\d]|[-_])*$/gu;
 export const ENTRY_REGEX = /[\p{Cc}]+/gu;
 export const CONDITION_PARAMETER_REGEX =
   /^(?:(?=@.*)\.?([\\@0-9a-zA-Z-_.])*|(?:(?=\{\{.*)[\\{a-zA-Z0-9_\-\\}]*|(?:(?!\{.*).*)))$/gu;
-export const ENG_NUM_UNDERSCORE_REGEX = /^[a-zA-Z0-9_]*$/;
+export const ENG_NUM_UNDERSCORE_REGEX = /^\.?\w*\d*$/gu;
