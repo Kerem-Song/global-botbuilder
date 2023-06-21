@@ -9,7 +9,7 @@ import {
   useRootState,
   useUpdateLines,
 } from '@hooks';
-import { IArrow, INode } from '@models';
+import { IArrow, INode, NodeOption } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -183,7 +183,7 @@ export const Node: FC<INodeProps> = ({
         onChange={(m) => {
           m.data?.action?.(node);
         }}
-        disabled={isHistoryViewer}
+        disabled={isHistoryViewer || node.option === NodeOption.Fallback}
       >
         <div
           tabIndex={0}
@@ -233,8 +233,8 @@ export const Node: FC<INodeProps> = ({
             {nodeIcon && <img src={nodeIcon} alt="nodeIcon" className="nodeIcon" />}
 
             {title ? <p>{title}</p> : undefined}
-            {popperMenu.length === 0 ? (
-              <></>
+            {popperMenu.length === 0 || node.option === NodeOption.Fallback ? (
+              <div></div>
             ) : (
               <Popper
                 placement="right-start"
