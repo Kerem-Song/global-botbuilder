@@ -68,44 +68,42 @@ export const DeleteBot = () => {
 
   return (
     <Card className="settingCardWrap" radius="normal">
-      {botSettingInfo && (
-        <Row className="handleScenariosWrap">
-          <Space direction="vertical" gap={10}>
-            <Col className="deleteBot">
-              <p className="settingCardTitle">{t('DELETE_BOT_TITLE')}</p>
-              {removeCancelExpireUtc ? (
-                <p className="cancelExpireUtc">
-                  {util.toLocaleDateTimeString(new Date(removeCancelExpireUtc))}
+      <Row className="handleScenariosWrap">
+        <Space direction="vertical" gap={10}>
+          <Col className="deleteBot">
+            <p className="settingCardTitle">{t('DELETE_BOT_TITLE')}</p>
+            {removeCancelExpireUtc ? (
+              <p className="cancelExpireUtc">
+                {util.toLocaleDateTimeString(new Date(removeCancelExpireUtc))}
 
-                  {t('CANCEL_EXPIRE_MESSAGE')}
-                </p>
-              ) : null}
-            </Col>
-            <Col>
-              <p className="deleteBotDesc">{t('DELETE_BOT_DESC')}</p>
-            </Col>
-          </Space>
-          <Col>
-            {activeRecoverBtn ? (
-              <Button
-                type="default"
-                disabled={activeRecoverBtn ? false : true}
-                onClick={handleRecoverBtn}
-              >
-                {t('RECOVER_BOT')}
-              </Button>
-            ) : (
-              <Button
-                type="secondary"
-                disabled={activeDeleteBtn ? false : true}
-                onClick={handleDeleteBtn}
-              >
-                {t('DELETE_BOT')}
-              </Button>
-            )}
+                {t('CANCEL_EXPIRE_MESSAGE')}
+              </p>
+            ) : null}
           </Col>
-        </Row>
-      )}
+          <Col>
+            <p className="deleteBotDesc">{t('DELETE_BOT_DESC')}</p>
+          </Col>
+        </Space>
+        <Col>
+          {activeRecoverBtn ? (
+            <Button
+              type="default"
+              disabled={activeRecoverBtn ? false : true}
+              onClick={handleRecoverBtn}
+            >
+              {t('RECOVER_BOT')}
+            </Button>
+          ) : (
+            <Button
+              type="secondary"
+              disabled={activeDeleteBtn ? false : true}
+              onClick={handleDeleteBtn}
+            >
+              {t('DELETE_BOT')}
+            </Button>
+          )}
+        </Col>
+      </Row>
     </Card>
   );
 };

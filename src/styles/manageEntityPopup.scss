@@ -234,6 +234,7 @@
                 font-variant: tabular-nums;
                 list-style: none;
                 font-feature-settings: 'tnum';
+                font-family: 'Pretendard';
                 position: relative;
                 display: flex;
                 align-items: center;
@@ -252,6 +253,7 @@
                   width: 100%;
                   word-wrap: break-word;
                   font-size: rem(13);
+                  font-family: 'Pretendard';
                 }
                 &.error {
                   border: 1px solid $red;
