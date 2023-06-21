@@ -109,9 +109,9 @@ export const CarouselOrderPopup: FC<{
 
   return (
     <ReactModal
-      isOpen={isOpen}
-      className="carouselOrderPopupWrapper node-draggable-ignore"
       overlayClassName="carouselPopupOverlay"
+      className="carouselOrderPopupWrapper node-draggable-ignore"
+      isOpen={isOpen}
       shouldCloseOnEsc={closeOnEsc}
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}

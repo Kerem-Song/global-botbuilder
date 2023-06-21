@@ -78,7 +78,7 @@ export const CommerceCardView: FC<ICommerceCardViewProps> = ({ nodeId, index, vi
           >
             <ImageWithToken origin={view.profileIconUrl} />
           </Suspense>
-        ) : botImg ? (
+        ) : view.profileIconUrl !== '' && botImg ? (
           <img
             src={botImg}
             alt="profileIcon"
