@@ -1,12 +1,7 @@
 import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES, NodeOption } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import {
-  BOTNAME_REGEX,
-  CONDITION_PARAMETER_REGEX,
-  PARAMETER_REGEX,
-  PARAMETER_REGEX,
-} from '@modules';
+import { BOTNAME_REGEX, CONDITION_PARAMETER_REGEX, PARAMETER_REGEX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
 import { useState } from 'react';
