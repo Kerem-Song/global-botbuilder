@@ -87,12 +87,29 @@ export const Collapse: FC<CollapseProps> = ({
   }, [watch(`view.useImageCtrl`)]);
 
   useEffect(() => {
-    if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-      setValue(`view.useImageCtrl`, false);
+    const childrenViewArr = watch(`view.childrenViews`);
+
+    if (index !== undefined && childrenViewArr) {
+      if (
+        watch(`view.useImageCtrl`) === false &&
+        !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
+      ) {
+        console.log('@11');
+        setValue(`view.useImageCtrl`, false);
+      } else {
+        console.log('@22');
+        setValue(`view.useImageCtrl`, true);
+      }
     } else {
-      setValue(`view.useImageCtrl`, true);
+      if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
+        console.log('@33');
+        setValue(`view.useImageCtrl`, false);
+      } else {
+        console.log('@44');
+        setValue(`view.useImageCtrl`, true);
+      }
     }
-  }, [watch(`view.imageCtrl.imageUrl`)]);
+  }, [watch(`view.imageCtrl`)]);
 
   return (
     <div className="node-item-wrap collapse">

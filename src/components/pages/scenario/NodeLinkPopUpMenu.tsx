@@ -213,6 +213,15 @@ export const NodeLinkPopUpMenu = ({
   console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
   console.log('startNode Type', startNode?.type);
   const filterdBtnList = cardTypeValue
+    .filter((b) => {
+      if (startNode?.type === NODE_TYPES.INTENT_NODE) {
+        return (
+          b.value !== NODE_TYPES.ANSWER_NODE &&
+          b.value !== NODE_TYPES.RETRY_CONDITION_NODE
+        );
+      }
+      return b;
+    })
     .filter(
       (b) =>
         b.nodeKind !== NodeKind.CommandNode ||
@@ -224,6 +233,7 @@ export const NodeLinkPopUpMenu = ({
         startNode?.type !== NODE_TYPES.INTENT_NODE ||
         b.value !== NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
     )
+
     .filter((b) => (userInput ? b.nodeName.toLowerCase().includes(userInput) : true));
 
   const cardBtnResult = classNames('btnWrapper', {
