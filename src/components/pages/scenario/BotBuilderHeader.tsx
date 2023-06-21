@@ -4,7 +4,14 @@ import { Tooltip } from '@components/navigation/Tooltip';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useYupValidation } from '@hooks/useYupValidation';
-import { INode, INodeEditModel, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import {
+  INode,
+  INodeEditModel,
+  NODE_TYPES,
+  NodeKind,
+  NodeOption,
+  TNodeTypes,
+} from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -178,7 +185,7 @@ export const BotBuilderHeader = () => {
             return true;
           } catch (e) {
             // 챗봇 도움말일 경우 얼럿
-            if (n.option === 20) {
+            if (n.option === NodeOption.Fallback) {
               isFallback = true;
               checkFallbackStart();
             }
