@@ -399,7 +399,7 @@ export const useYupValidation = () => {
             setIsDuplicated(true);
             return false;
           } else {
-            setIsDuplicated(true);
+            setIsDuplicated(false);
             return true;
           }
         })
