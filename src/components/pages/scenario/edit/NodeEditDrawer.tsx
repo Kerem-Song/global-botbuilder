@@ -65,7 +65,14 @@ export const NodeEditDrawer = () => {
       }
 
       reset(model);
+      const filtered = nodes.filter((node) => node.title === selectedNode.title);
+
       if (invalidateNodes[selectedNode.id]) {
+        trigger();
+      }
+
+      if (filtered.length > 1) {
+        dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
         trigger();
       }
     } else {

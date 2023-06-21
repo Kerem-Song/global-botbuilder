@@ -4,6 +4,7 @@ import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import { BOTNAME_REGEX, CONDITION_PARAMETER_REGEX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
@@ -15,6 +16,7 @@ const checkNextNodeIdTypes: string[] = [
 export const useYupValidation = () => {
   const { t, tc } = usePage();
   const dispatch = useDispatch();
+  const [isDuplicated, setIsDuplicated] = useState(false);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedNode = nodes.find((x) => x.id === selected);
@@ -392,11 +394,22 @@ export const useYupValidation = () => {
         .test('is-duplicated', t(`DUPLICATE_NODE_NAME`), (val: any) => {
           console.log('@val', val);
 
-          if (selectedNode && filtered.length > 1) {
-            dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
+          console.log('@filtered', filtered);
+
+          if (filtered.length > 1) {
+            setIsDuplicated(true);
+            console.log('@is duplicated', isDuplicated);
             return false;
+          } else if (!filtered.length && isDuplicated) {
+            setIsDuplicated(true);
+            console.log('@is duplicated', isDuplicated);
+            return false;
+          } else {
+            setIsDuplicated(false);
+            console.log('@if out');
+            console.log('@is duplicated', isDuplicated);
+            return true;
           }
-          return true;
         })
         .matches(BOTNAME_REGEX, tc(`BOTNAME_REGEX_MESSAGE`))
         .required(t(`VALIDATION_REQUIRED`)),

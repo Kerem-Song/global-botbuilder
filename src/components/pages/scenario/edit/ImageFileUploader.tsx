@@ -160,7 +160,7 @@ export const ImageFileUploader = ({
                     handleImgOnError(e);
                   }}
                   onLoad={(e) => {
-                    console.log('@errors1', errors);
+                    console.log('@errors1', errors.view);
                     console.log('@onload1 ', isValid, e.currentTarget.className);
                     if (
                       !Object.keys(errors).length &&
@@ -178,7 +178,7 @@ export const ImageFileUploader = ({
                     handleImgOnError(e);
                   }}
                   onLoad={(e) => {
-                    console.log('@errors2', errors);
+                    console.log('@errors2', errors.view);
                     console.log('@isvalid2 ', isValid, e.currentTarget.className);
                     if (
                       !Object.keys(errors).length &&
