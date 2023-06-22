@@ -243,22 +243,12 @@ export const useYupValidation = () => {
   const conditionNodeEditSchema = yup.object().shape({
     items: yup.array().of(
       yup.object().shape({
-        op1: yup
-          .string()
-          .nullable()
-          .trim()
-          .matches(CONDITION_PARAMETER_REGEX, t('VALIDATION_REGEX_MATCH'))
-          .required(t(`VALIDATION_REQUIRED`)),
+        op1: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
         operator: yup
           .number()
           .not([0], t(`VALIDATION_REQUIRED`))
           .required(t(`VALIDATION_REQUIRED`)),
-        op2: yup
-          .string()
-          .nullable()
-          .trim()
-          .matches(CONDITION_PARAMETER_REGEX, t('VALIDATION_REGEX_MATCH'))
-          .required(t(`VALIDATION_REQUIRED`)),
+        op2: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
     // trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
@@ -284,6 +274,38 @@ export const useYupValidation = () => {
           .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
+      // .when('name', {
+      //   is: (name: string) => {
+      //     const regex = /^\d+|^[^.]\W/gu;
+
+      //     console.log('@11', regex.test(name), PARAMETER_REGEX.test(name));
+      //     if (!regex.test(name)) {
+      //       return true;
+      //     }
+      //     return false;
+      //   },
+      //   then: yup.object().shape({
+      //     name: yup
+      //       .string()
+      //       .matches(PARAMETER_REGEX, t(`변수명 첫글자에 영문/특문 _ . 외 넣는 경우`)),
+      //   }),
+      // })
+      // .when('name', {
+      //   is: (name: string) => {
+      //     const nameStart = /^\.{1}\W+|^\.{1}\d+/gu;
+      //     console.log('@22', nameStart.test(name), PARAMETER_REGEX.test(name));
+      //     if (!nameStart.test(name)) {
+      //       return true;
+      //     }
+      //     return false;
+      //   },
+      //   then: yup.object().shape({
+      //     name: yup
+      //       .string()
+      //       .trim()
+      //       .matches(PARAMETER_REGEX, t(`dot 다음에 영문이나 특문 _ 외 넣는 경우`)),
+      //   }),
+      // }),
     ),
   });
 
@@ -296,7 +318,7 @@ export const useYupValidation = () => {
         then: yup
           .string()
           .trim()
-          .matches(/^[\\{a-zA-Z0-9_\\}]*$/, t(`VALIDATION_REGEX_MATCH`))
+          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
       }),
     quicks: quicksEditSchema,
