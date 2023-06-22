@@ -75,7 +75,9 @@ export const ProductCardNodeEdit = () => {
       <div className="node-item-wrap collapse">
         <Collapse label={t(`PROFILE`)} useSwitch={false}>
           <div className="m-b-8">
-            <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
+            <span className="subLabel">
+              {t(`PROFILE_IMAGE_UPLOAD`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
+            </span>
             <span className="required">*</span>
           </div>
           <div className="m-b-8">
