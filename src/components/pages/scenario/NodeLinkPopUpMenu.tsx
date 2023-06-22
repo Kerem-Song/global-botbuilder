@@ -278,13 +278,32 @@ export const NodeLinkPopUpMenu = ({
   ) => {
     console.log(firstNodeId);
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
-    const nodeName = name;
+    const nodeName = t(`CAPTION_OTHERFLOWREDIRECTNODE`);
+
+    const basicNameNodesRegex = new RegExp(`${nodeName}`);
+    const filtered = nodes.filter((node) => basicNameNodesRegex.test(node.title!));
+    let index = 1;
+
+    if (filtered || tempNodeNames) {
+      const regex = /[^0-9]/g;
+      const results = filtered?.map((x) => Number(x.title?.replace(regex, ''))) || [];
+      const max = Math.max(...results, ...tempNodeNames);
+
+      for (let i = 1; i <= max + 1; i++) {
+        if (!results.includes(i)) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    setTempNodeNames([...tempNodeNames, index]);
 
     const view = nodeDefaultHelper.createDefaultOtherFlowRedirectView();
     const addNode: INode = {
       id: ID_GEN.generate(ID_TYPES.NODE),
       type: nodeType,
-      title: nodeName,
+      title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       x: popUpPosition.x,
       y: popUpPosition.y,
       seq: 0,
