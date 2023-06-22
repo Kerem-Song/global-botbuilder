@@ -3,14 +3,11 @@ import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import {
-  initSelectedScenario,
-  setBasicScenarios,
-  setSelectedScenario,
-} from '@store/botbuilderSlice';
+import { initSelectedScenario, setBasicScenarios } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import * as base64 from 'base-64';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
@@ -31,9 +28,8 @@ export const useScenarioClient = () => {
   const { botId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const token = useRootState((state) => state.botInfoReducer.token);
-  const selectedScenario = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
+
+  const decodedToken = base64.decode(token || '').split('\t');
 
   const invalidateScenario = (scenarioId: string) => {
     queryClient.invalidateQueries(['scenario', scenarioId]);
@@ -42,8 +38,8 @@ export const useScenarioClient = () => {
   const getScenarioList = () => {
     return useQuery<IScenarioModel[]>(
       [SCENARIO_LIST, botId],
-      () =>
-        http
+      () => {
+        return http
           .post<string, AxiosResponse<IHasResults<IScenarioModel>>>(
             '/builder/getflowInfos',
             {
@@ -71,8 +67,17 @@ export const useScenarioClient = () => {
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
               .sort((a, b) => (a.seq > b.seq ? 1 : -1));
             return [...basicScenarios, ...restScenarios];
-          }),
-      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
+          });
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: true,
+        enabled:
+          token !== undefined &&
+          decodedToken &&
+          decodedToken.length > 2 &&
+          decodedToken[2] === botId,
+      },
     );
   };
 
