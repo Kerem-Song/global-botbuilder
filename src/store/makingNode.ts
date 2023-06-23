@@ -193,6 +193,7 @@ export const makingNodeSlice = createSlice({
 
           const removeArrows = state.arrows.filter(
             (x) =>
+              x.updateKey === `${NODE_PREFIX}${nodeId}` ||
               x.start === `${NODE_PREFIX}${nodeId}` ||
               x.end === `${NODE_PREFIX}${nodeId}`,
           );
