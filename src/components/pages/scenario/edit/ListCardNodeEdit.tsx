@@ -22,6 +22,7 @@ export const ListCardNodeEdit = () => {
     setValue,
     control,
     watch,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardView>>();
   const values = getValues();
@@ -46,6 +47,10 @@ export const ListCardNodeEdit = () => {
   const handleDeleteListButton = (index: number) => {
     remove(index);
   };
+
+  useEffect(() => {
+    resetField('view.items', { keepDirty: false, keepError: true });
+  }, [watch('id')]);
 
   return (
     <>

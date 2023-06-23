@@ -4,6 +4,7 @@ import { useHistoryViewerMatch, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
+import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ImageFileUploader } from './ImageFileUploader';
@@ -17,6 +18,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
     register,
     watch,
     control,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardCarouselView>>();
 
@@ -45,6 +47,13 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
   const handleDeleteListButton = (index: number) => {
     remove(index);
   };
+
+  useEffect(() => {
+    resetField(`view.childrenViews.${nestedIndex}.items`, {
+      keepDirty: false,
+      keepError: true,
+    });
+  }, [watch('id')]);
 
   return (
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
