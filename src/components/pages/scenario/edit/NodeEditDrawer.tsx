@@ -123,6 +123,8 @@ export const NodeEditDrawer = () => {
                   ? t(`CHAT_SCENARIO_NAME`)
                   : t(`CHAT_BUBBLE_NAME`)
               }
+              showCount
+              maxLength={20}
               required={true}
               placeholder="Input Chat Bubble name"
               {...register('title')}

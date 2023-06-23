@@ -34,9 +34,16 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
   const referenceElement = useRef<HTMLInputElement | null>(null);
   const inputElement = useRef<HTMLInputElement | null>(null);
   const popperElement = useRef<HTMLDivElement>(null);
+  const focusedElement = useRef<HTMLDivElement>(null);
   const [focusedItem, setFocusedItem] = useState<T>();
 
   const { items, displayName } = args;
+
+  useEffect(() => {
+    if (focusedElement.current) {
+      focusedElement.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [focusedItem]);
 
   useEffect(() => {
     if (args.defaultValue) {
@@ -170,6 +177,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
             <div
               role="presentation"
               key={index}
+              ref={focused ? focusedElement : undefined}
               className={itemClassName}
               style={{ width: '100%' }}
               onMouseDown={(e) => {

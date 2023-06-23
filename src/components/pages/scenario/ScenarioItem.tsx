@@ -58,7 +58,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             <span>{t('SCENARIO_OFF_LINK_MESSAGE', { scenario: item.alias })}</span>
             <br />
             <span style={{ color: '#ff4975', fontWeight: 500 }}>
-              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
+              :{' '}
+              {[...new Set(exception.linkInfos.map((l) => l.currentFlowAlias))].join(',')}
             </span>
             <br />
             <span>{tc('OFF_CONFIRM')}</span>
@@ -109,7 +110,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             <span>{t('SCENARIO_DELETE_LINK_MESSAGE', { scenario: item.alias })}</span>
             <br />
             <span style={{ color: '#ff4975', fontWeight: 500 }}>
-              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
+              :{' '}
+              {[...new Set(exception.linkInfos.map((l) => l.currentFlowAlias))].join(',')}
             </span>
             <br />
             <span>{tc('DELETE_CONFIRM')}</span>

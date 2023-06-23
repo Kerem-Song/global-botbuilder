@@ -1,3 +1,4 @@
+import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
@@ -5,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 export const Layout = () => {
   const { t } = useTranslation('common');
   nodeDefaultHelper.tc = t;
-
+  arrowHelper.tc = t;
   return (
     <>
       <Outlet />

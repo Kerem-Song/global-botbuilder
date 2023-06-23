@@ -137,8 +137,8 @@ export const makingNodeSlice = createSlice({
       }
       state.changed = true;
     },
-    addArrow: (state, action: PayloadAction<{ arrow: IArrow; errorMessage: string }>) => {
-      const { arrow, errorMessage } = action.payload;
+    addArrow: (state, action: PayloadAction<{ arrow: IArrow }>) => {
+      const { arrow } = action.payload;
 
       const error = arrowHelper.validateArrows(
         arrow.updateKey || arrow.start,
@@ -147,8 +147,7 @@ export const makingNodeSlice = createSlice({
         arrow.isNextNode,
       );
       if (error) {
-        console.log(error);
-        lunaToast.error(errorMessage);
+        lunaToast.error(error);
         return;
       }
 
