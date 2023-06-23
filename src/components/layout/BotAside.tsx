@@ -90,7 +90,7 @@ export const BotAside = () => {
       icUtteranceSelected,
       2,
     ),
-    getMenuItem(4, `${botId}/deployment`, 'deploy', icDeploy, icDeploySelected, 16),
+    getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected, 16),
     getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected, 32),
     getMenuItem(
       6,
