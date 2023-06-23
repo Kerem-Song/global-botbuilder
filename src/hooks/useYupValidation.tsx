@@ -268,11 +268,7 @@ export const useYupValidation = () => {
           .trim()
           .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
           .required(t(`VALIDATION_REQUIRED`)),
-        value: yup
-          .string()
-          .trim()
-          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
-          .required(t(`VALIDATION_REQUIRED`)),
+        value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
       // .when('name', {
       //   is: (name: string) => {
