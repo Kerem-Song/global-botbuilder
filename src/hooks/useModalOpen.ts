@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 // import {
 //   unstable_Blocker as Blocker,
 //   unstable_useBlocker as useBlocker,
@@ -14,6 +15,14 @@ export const useModalOpen = () => {
   //     blocker.reset();
   //   }
   // }, [blocker, isOpen]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    return () => {
+      setIsOpen(false);
+    };
+  }, [pathname]);
 
   const handleIsOpen = (value: boolean) => {
     setIsOpen(value);

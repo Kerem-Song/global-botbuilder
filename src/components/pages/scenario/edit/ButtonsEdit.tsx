@@ -1,5 +1,5 @@
 import { Button, FormItem, Input, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
@@ -89,10 +89,14 @@ export const ButtonsEdit = ({
     }
   }, [imageRatio]);
 
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const selected = useRootState((state) => state.botBuilderReducer.selected);
+  const selectedNode = nodes.find((x) => x.id === selected);
+
   useEffect(() => {
     resetField(
       index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
-      { keepDirty: true },
+      { keepDirty: false, keepError: true },
     );
   }, [nodeId]);
 
