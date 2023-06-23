@@ -128,6 +128,7 @@ export const Botbuilder = () => {
     }
   }, [selectedScenario]);
 
+  const factor = { x: 0, y: 0 };
   const panning = (x: number, y: number) => {
     if (
       !canvasRef.current ||
@@ -136,17 +137,29 @@ export const Botbuilder = () => {
     ) {
       return;
     }
-    console.log(
-      '@pixel',
-      `${parseInt(canvasRef.current.style.left) + x / scale}px`,
-      `${parseInt(canvasRef.current.style.top) + y / scale}px`,
-    );
-    canvasRef.current.style.left = `${
-      parseInt(canvasRef.current.style.left) + x / scale
-    }px`;
-    canvasRef.current.style.top = `${
-      parseInt(canvasRef.current.style.top) + y / scale
-    }px`;
+    // console.log(
+    //   '@pixel',
+    //   `${parseInt(canvasRef.current.style.left) + x / scale}px`,
+    //   `${parseInt(canvasRef.current.style.top) + y / scale}px`,
+    // );
+    factor.x += x / scale;
+    factor.y += y / scale;
+
+    const distance = Math.sqrt(Math.pow(factor.x, 2) + Math.pow(factor.y, 2));
+
+    if (distance > 20) {
+      canvasRef.current.style.left = `${
+        parseInt(canvasRef.current.style.left) + factor.x
+      }px`;
+
+      factor.x = 0;
+
+      canvasRef.current.style.top = `${
+        parseInt(canvasRef.current.style.top) + factor.y
+      }px`;
+
+      factor.y = 0;
+    }
   };
 
   const outterMouseMoveHandler = (e: React.MouseEvent): void => {
