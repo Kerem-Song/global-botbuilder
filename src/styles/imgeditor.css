@@ -1,0 +1,40 @@
+.imageEditor {
+  max-width: 30%;
+  max-height: 30%;
+}
+.imageEditor .imageEditorWrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.imageEditor .imageEditorWrapper .cropcontrols {
+  grid-template-rows: auto;
+}
+.imageEditor .imgWrapper {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imageEditor .imgWrapper .ReactCrop {
+  width: 80%;
+  height: 80%;
+}
+.imageEditor .aspectBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: rem(30);
+}
+.imageEditor .result canvas {
+  border: none;
+}
+.imageEditor .range {
+  width: 100%;
+}
+.imageEditor .ratioBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}/*# sourceMappingURL=imgeditor.css.map */

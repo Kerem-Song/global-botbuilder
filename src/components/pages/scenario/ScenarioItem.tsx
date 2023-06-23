@@ -35,13 +35,13 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
 
   const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const activated = e.target.checked;
-
+    console.log('@checked', activated);
     const exception = await scenarioCheckDeleteAsync({
       token: token!,
       scenarioId: item.id,
     });
 
-    if (!exception) {
+    if (!exception || activated) {
       const res = await scenarioActiveAsync({
         token: token!,
         flowId: item.id,
