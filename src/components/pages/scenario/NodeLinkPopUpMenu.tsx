@@ -71,12 +71,6 @@ export const NodeLinkPopUpMenu = ({
       nodeKind: NodeKind.InputNode,
     },
     {
-      className: 'icQuickBtn',
-      value: NODE_TYPES.ANSWER_NODE,
-      nodeName: t(`NODE_LINK_POPUP_MENU_ANSWER_NODE`),
-      nodeKind: NodeKind.AnswerNode,
-    },
-    {
       className: 'icCondition',
       value: NODE_TYPES.CONDITION_NODE,
       nodeName: t(`NODE_LINK_POPUP_MENU_CONDITION_NODE`),
@@ -215,10 +209,7 @@ export const NodeLinkPopUpMenu = ({
   const filterdBtnList = cardTypeValue
     .filter((b) => {
       if (startNode?.type === NODE_TYPES.INTENT_NODE) {
-        return (
-          b.value !== NODE_TYPES.ANSWER_NODE &&
-          b.value !== NODE_TYPES.RETRY_CONDITION_NODE
-        );
+        return b.value !== NODE_TYPES.RETRY_CONDITION_NODE;
       }
       return b;
     })

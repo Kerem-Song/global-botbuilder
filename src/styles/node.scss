@@ -45,12 +45,9 @@
       padding: rem(9);
     }
 
-    & p {
+    .nodeHeadTitle {
       width: rem(132);
-      padding-right: rem(4);
       font-weight: 500;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .nodeIcon {

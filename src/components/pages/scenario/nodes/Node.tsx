@@ -16,6 +16,7 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { setEditDrawerToggle, setGuideStartNode } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { FC, useEffect } from 'react';
+import MultiClamp from 'react-multi-clamp';
 import { useDispatch } from 'react-redux';
 
 import { NODE_TYPES, TNodeTypes } from '../../../../models/interfaces/ICard';
@@ -24,7 +25,6 @@ import { IHasClassNameNStyle } from '../../../../models/interfaces/IHasStyle';
 import { SizeType } from '../../../../models/types/SizeType';
 import { NODE_PREFIX } from '../../../../modules';
 import { IntentUtterancePopup } from '../IntentUtterancePopup';
-
 export interface INodeProps extends IHasChildren, IHasClassNameNStyle {
   id?: string;
   typeName: TNodeTypes;
@@ -232,7 +232,13 @@ export const Node: FC<INodeProps> = ({
           <div className={titleClass}>
             {nodeIcon && <img src={nodeIcon} alt="nodeIcon" className="nodeIcon" />}
 
-            {title ? <p>{title}</p> : undefined}
+            {title ? (
+              <div className="nodeHeadTitle">
+                <MultiClamp clamp={2} ellipsis={'...'}>
+                  {title}
+                </MultiClamp>
+              </div>
+            ) : undefined}
             {popperMenu.length === 0 || node.option === NodeOption.Fallback ? (
               <div></div>
             ) : (
