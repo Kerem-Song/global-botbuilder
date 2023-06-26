@@ -429,6 +429,7 @@ export const useYupValidation = () => {
     .object({
       title: yup
         .string()
+        .required(t(`VALIDATION_REQUIRED`))
         .test('is-duplicated', t(`DUPLICATE_NODE_NAME`), (val: any) => {
           if (filtered.length > 1) {
             setIsDuplicated(true);
@@ -441,8 +442,8 @@ export const useYupValidation = () => {
             return true;
           }
         })
-        .matches(BOTNAME_REGEX, tc(`BOTNAME_REGEX_MESSAGE`))
-        .required(t(`VALIDATION_REQUIRED`)),
+        .matches(BOTNAME_REGEX, tc(`BOTNAME_REGEX_MESSAGE`)),
+
       view: yup
         .object()
         .when('type', {

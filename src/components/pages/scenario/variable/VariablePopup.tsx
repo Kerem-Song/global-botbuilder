@@ -50,14 +50,14 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       .trim()
       .required(t('VALIDATION_REQUIRED'))
       .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
-      .when('.', {
+      .when({
         is: (name: string) => name && !name.startsWith('.'),
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
           .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
       })
-      .when('.', {
+      .when({
         is: (name: string) => name && name.startsWith('.'),
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
       }),
