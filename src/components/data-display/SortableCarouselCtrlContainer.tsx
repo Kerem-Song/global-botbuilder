@@ -137,8 +137,8 @@ export const SoratbleCarouselCtrlContainer = ({
                 onChange={(m) => {
                   console.log('@m.data?.action outside: ', m.data?.action);
                   console.log('@m.data?.action?.name outside:', m.data?.action?.name);
-                  if (isDisable && m.data?.action?.name.match('')) {
-                    console.log('@m.data?.action1', m.data?.action, m.data.action.name);
+                  if (isDisable && !m.data?.action?.name) {
+                    console.log('@m.data?.action1', m.data?.action, m.data?.action);
                     console.log('@m.data?.action?.name1', m.data?.action?.name);
                     lunaToast.error(
                       t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),

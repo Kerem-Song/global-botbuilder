@@ -204,6 +204,7 @@
           align-items: center;
           overflow: hidden;
           padding-top: rem(4);
+        
 
           .skeleton {
             width: rem(20);
@@ -221,6 +222,8 @@
 
           & span {
             padding-left: rem(5);
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             &.empty {
               color: $gray300;

@@ -280,6 +280,9 @@
 
     & span {
       padding-left: rem(5);
+      overflow: hidden;
+      text-overflow: ellipsis;
+
 
       &.empty {
         color: $gray300;
