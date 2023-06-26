@@ -150,15 +150,7 @@ export const useScenarioClient = () => {
   );
 
   const scenarioActivateMutate = useMutation(
-    async ({
-      token,
-      flowId,
-      activated,
-    }: {
-      token: string;
-      flowId: string;
-      activated: boolean;
-    }) => {
+    async ({ flowId, activated }: { flowId: string; activated: boolean }) => {
       const res = await http.post('/builder/activateflow', {
         sessionToken: token,
         flowId,
@@ -174,7 +166,7 @@ export const useScenarioClient = () => {
   );
 
   const scenarioCheckDeleteMutate = useMutation(
-    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+    async ({ scenarioId }: { scenarioId: string }) => {
       const res = await http.post('builder/deletecheckflow', {
         sessionToken: token,
         flowId: scenarioId,
@@ -188,7 +180,7 @@ export const useScenarioClient = () => {
   );
 
   const scenarioDeleteMutate = useMutation(
-    async ({ token, scenarioId }: { token: string; scenarioId: string }) => {
+    async ({ scenarioId }: { scenarioId: string }) => {
       const res = await http.post('builder/deleteflow', {
         sessionToken: token,
         flowId: scenarioId,

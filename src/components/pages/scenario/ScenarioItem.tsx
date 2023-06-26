@@ -35,15 +35,13 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
 
   const handleSwitch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const activated = e.target.checked;
-    console.log('@checked', activated);
+
     const exception = await scenarioCheckDeleteAsync({
-      token: token!,
       scenarioId: item.id,
     });
 
-    if (!exception || activated) {
+    if (!exception) {
       const res = await scenarioActiveAsync({
-        token: token!,
         flowId: item.id,
         activated: activated,
       });
@@ -58,8 +56,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             <span>{t('SCENARIO_OFF_LINK_MESSAGE', { scenario: item.alias })}</span>
             <br />
             <span style={{ color: '#ff4975', fontWeight: 500 }}>
-              :{' '}
-              {[...new Set(exception.linkInfos.map((l) => l.currentFlowAlias))].join(',')}
+              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
             </span>
             <br />
             <span>{tc('OFF_CONFIRM')}</span>
@@ -68,7 +65,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
       if (result) {
         const res = await scenarioActiveAsync({
-          token: token!,
           flowId: item.id,
           activated: activated,
         });
@@ -81,7 +77,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
 
   const handleScenarioDelete = async (item: IScenarioModel) => {
     const exception = await scenarioCheckDeleteAsync({
-      token: token!,
       scenarioId: item.id,
     });
     if (!exception) {
@@ -97,7 +92,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
 
       if (result) {
-        const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        const res = await scenarioDeleteAsync({ scenarioId: item.id });
         if (res) {
           lunaToast.success(tc('DELETE_MESSAGE'));
         }
@@ -110,8 +105,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             <span>{t('SCENARIO_DELETE_LINK_MESSAGE', { scenario: item.alias })}</span>
             <br />
             <span style={{ color: '#ff4975', fontWeight: 500 }}>
-              :{' '}
-              {[...new Set(exception.linkInfos.map((l) => l.currentFlowAlias))].join(',')}
+              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
             </span>
             <br />
             <span>{tc('DELETE_CONFIRM')}</span>
@@ -120,7 +114,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       });
 
       if (result) {
-        const res = await scenarioDeleteAsync({ token: token!, scenarioId: item.id });
+        const res = await scenarioDeleteAsync({ scenarioId: item.id });
         if (res) {
           lunaToast.success(tc(`DELETE_MESSAGE`));
         }
