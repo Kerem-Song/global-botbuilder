@@ -8,7 +8,12 @@ import {
   ISaveParameterData,
   IVariableList,
 } from '@models';
-import { getReactSelectStyle, PARAMETER_REGEX } from '@modules';
+import {
+  getReactSelectStyle,
+  PARAMETER_REGEX,
+  PARAMETER_REGEX_FIRST_LETTER,
+  PARAMETER_REGEX_NEXT_LETTER,
+} from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
@@ -44,7 +49,18 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       .string()
       .trim()
       .required(t('VALIDATION_REQUIRED'))
-      .matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+      .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+      .when('.', {
+        is: (name: string) => name && !name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+        otherwise: yup
+          .string()
+          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+      })
+      .when('.', {
+        is: (name: string) => name && name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+      }),
   });
 
   const {
