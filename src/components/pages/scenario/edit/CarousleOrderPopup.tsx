@@ -14,7 +14,7 @@ import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { editNode } from '@store/makingNode';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
@@ -31,7 +31,7 @@ export const CarouselOrderPopup: FC<{
   const { t, tc } = usePage();
   const dispatch = useDispatch();
   const { confirm } = useSystemModal();
-
+  const caroPopupRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setCarouselNode(nodeView.childrenViews || []);
   }, [nodeView.childrenViews]);
@@ -106,6 +106,7 @@ export const CarouselOrderPopup: FC<{
 
     lunaToast.success(tc(`ACCEPTED`));
   };
+  console.log('@focus', document.activeElement);
 
   return (
     <ReactModal
@@ -119,6 +120,15 @@ export const CarouselOrderPopup: FC<{
       <div
         onWheel={(e) => e.stopPropagation()}
         onContextMenu={(e) => e.stopPropagation()}
+        onMouseUp={() => {
+          if (caroPopupRef.current) {
+            console.log('@caro ref', caroPopupRef.current);
+            caroPopupRef.current.focus();
+          }
+        }}
+        role="tab"
+        tabIndex={0}
+        ref={caroPopupRef}
       >
         <Row justify="space-between" align="center" className="titleWrapper">
           <Col>

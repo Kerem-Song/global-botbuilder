@@ -1,7 +1,13 @@
 import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES, NodeOption } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import { BOTNAME_REGEX, CONDITION_PARAMETER_REGEX, PARAMETER_REGEX } from '@modules';
+import {
+  BOTNAME_REGEX,
+  CONDITION_PARAMETER_REGEX,
+  PARAMETER_REGEX,
+  PARAMETER_REGEX_FIRST_LETTER,
+  PARAMETER_REGEX_NEXT_LETTER,
+} from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
 import { useState } from 'react';
@@ -266,42 +272,24 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
-          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
+          .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+          .when('.', {
+            is: (name: string) => name && !name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+            otherwise: yup
+              .string()
+              .matches(
+                PARAMETER_REGEX_NEXT_LETTER,
+                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+              ),
+          })
+          .when('.', {
+            is: (name: string) => name && name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+          })
           .required(t(`VALIDATION_REQUIRED`)),
         value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
-      // .when('name', {
-      //   is: (name: string) => {
-      //     const regex = /^\d+|^[^.]\W/gu;
-
-      //     console.log('@11', regex.test(name), PARAMETER_REGEX.test(name));
-      //     if (!regex.test(name)) {
-      //       return true;
-      //     }
-      //     return false;
-      //   },
-      //   then: yup.object().shape({
-      //     name: yup
-      //       .string()
-      //       .matches(PARAMETER_REGEX, t(`변수명 첫글자에 영문/특문 _ . 외 넣는 경우`)),
-      //   }),
-      // })
-      // .when('name', {
-      //   is: (name: string) => {
-      //     const nameStart = /^\.{1}\W+|^\.{1}\d+/gu;
-      //     console.log('@22', nameStart.test(name), PARAMETER_REGEX.test(name));
-      //     if (!nameStart.test(name)) {
-      //       return true;
-      //     }
-      //     return false;
-      //   },
-      //   then: yup.object().shape({
-      //     name: yup
-      //       .string()
-      //       .trim()
-      //       .matches(PARAMETER_REGEX, t(`dot 다음에 영문이나 특문 _ 외 넣는 경우`)),
-      //   }),
-      // }),
     ),
   });
 
@@ -314,7 +302,21 @@ export const useYupValidation = () => {
         then: yup
           .string()
           .trim()
-          .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
+          .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+          .when('.', {
+            is: (name: string) => name && !name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+            otherwise: yup
+              .string()
+              .matches(
+                PARAMETER_REGEX_NEXT_LETTER,
+                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+              ),
+          })
+          .when('.', {
+            is: (name: string) => name && name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+          })
           .required(t(`VALIDATION_REQUIRED`)),
       }),
     quicks: quicksEditSchema,
@@ -356,7 +358,24 @@ export const useYupValidation = () => {
     url: yup.string().url(t(`VALIDATION_URL`)).required(t(`VALIDATION_REQUIRED`)),
     responseMapping: yup.array().of(
       yup.object().shape({
-        value: yup.string().trim().matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`)),
+        value: yup
+          .string()
+          .trim()
+          .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+          .when('.', {
+            is: (name: string) => name && !name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+            otherwise: yup
+              .string()
+              .matches(
+                PARAMETER_REGEX_NEXT_LETTER,
+                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+              ),
+          })
+          .when('.', {
+            is: (name: string) => name && name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+          }),
       }),
     ),
   });

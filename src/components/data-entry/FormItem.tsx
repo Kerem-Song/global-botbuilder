@@ -10,7 +10,14 @@ export interface IFormItemProps {
 export const FormItem: FC<IFormItemProps> = ({ children, error, inline }) => {
   const clone = React.cloneElement(children, { isError: error !== undefined });
   return (
-    <div style={{ display: inline ? 'flex' : 'block', flex: 1, height: '100%' }}>
+    <div
+      style={{
+        display: inline ? 'flex' : 'block',
+        flex: 1,
+        height: '100%',
+        whiteSpace: 'pre-line',
+      }}
+    >
       {clone}
       <div className="error-message">{error?.message}</div>
     </div>

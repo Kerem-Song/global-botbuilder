@@ -19,7 +19,7 @@ import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';
@@ -60,7 +60,10 @@ export const SoratbleCarouselCtrlContainer = ({
       const newIndex = carouselNode.findIndex((item) => item.id === over.id);
       const sortedCarousel = arrayMove(carouselNode, oldIndex, newIndex);
       setCarouselNode(sortedCarousel);
+
+      // (document.activeElement as HTMLElement).blur();
     }
+    // (document.activeElement as HTMLElement).blur();
   };
 
   const handleDuplicationCard = (id: string, node: IChildrenViewEnum) => {
@@ -115,6 +118,9 @@ export const SoratbleCarouselCtrlContainer = ({
       onDragEnd={(e) => handleDragEnd(e)}
       sensors={sensors}
       collisionDetection={closestCenter}
+      onDragOver={(e) => {
+        // (document.activeElement as HTMLElement).blur();
+      }}
       // modifiers={[restrictToParentElement]}
     >
       {carouselNode && (
