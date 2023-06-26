@@ -50,11 +50,6 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
     invalidateIntentQuery(searchData);
   };
 
-  const handleSearch = (keyword?: string) => {
-    setSearchKeyword(keyword!);
-    handleSearchBtn(keyword);
-  };
-
   useEffect(() => {
     const scenarioList = data
       ?.filter((item) => !item.isFallbackFlow)
@@ -73,67 +68,63 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
 
   return (
     <Card className="toSearchCard" radius="normal">
-      <form>
-        <Space direction="vertical">
-          <p className="cardTitle">{t('TO_SEARCH')}</p>
-          <Row align="center" gap={10}>
-            <Col>
-              <span>{t('SORT')}</span>
-            </Col>
-            <Col>
-              <div className="selectBox">
-                <Select
-                  isSearchable={false}
-                  options={SORT}
-                  styles={reactSelectStyle}
-                  value={SORT.find((x) => x.value === sort)}
-                  onChange={(newOption) => {
-                    setSort(newOption?.value);
-                  }}
-                />
-              </div>
-            </Col>
-            <Col>
-              <span>{t('SCENARIOS')}</span>
-            </Col>
-            <Col>
-              <div className="selectBox">
-                <Select
-                  options={totalScenarioList}
-                  styles={reactSelectStyle}
-                  placeholder={t('ALL')}
-                  value={totalScenarioList?.find((x) => x.value === scenario) || null}
-                  onChange={(newOption) => {
-                    setScenario(newOption?.value || 'all');
-                  }}
-                />
-              </div>
-            </Col>
-            <Col>
-              <span>{t('SEARCH_WORD')}</span>
-            </Col>
-            <Col flex="auto">
-              <FormItem>
-                <Input
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e?.target.value)}
-                  placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
-                />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row justify="flex-end">
-            <Col>
-              <Space>
-                <Button onClick={handleReset}>{t('RESET')}</Button>
-                <Button type="primary" onClick={() => handleSearchBtn(searchKeyword)}>
-                  {t('SEARCH')}
-                </Button>
-              </Space>
-            </Col>
-          </Row>
-        </Space>
-      </form>
+      <Space direction="vertical">
+        <p className="cardTitle">{t('TO_SEARCH')}</p>
+        <Row align="center" gap={10}>
+          <Col>
+            <span>{t('SORT')}</span>
+          </Col>
+          <Col>
+            <div className="selectBox">
+              <Select
+                isSearchable={false}
+                options={SORT}
+                styles={reactSelectStyle}
+                value={SORT.find((x) => x.value === sort)}
+                onChange={(newOption) => {
+                  setSort(newOption?.value);
+                }}
+              />
+            </div>
+          </Col>
+          <Col>
+            <span>{t('SCENARIOS')}</span>
+          </Col>
+          <Col>
+            <div className="selectBox">
+              <Select
+                options={totalScenarioList}
+                styles={reactSelectStyle}
+                placeholder={t('ALL')}
+                value={totalScenarioList?.find((x) => x.value === scenario) || null}
+                onChange={(newOption) => {
+                  setScenario(newOption?.value || 'all');
+                }}
+              />
+            </div>
+          </Col>
+          <Col>
+            <span>{t('SEARCH_WORD')}</span>
+          </Col>
+          <Col flex="auto">
+            <Input
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e?.target.value)}
+              placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
+            />
+          </Col>
+        </Row>
+        <Row justify="flex-end">
+          <Col>
+            <Space>
+              <Button onClick={handleReset}>{t('RESET')}</Button>
+              <Button type="primary" onClick={() => handleSearchBtn(searchKeyword)}>
+                {t('SEARCH')}
+              </Button>
+            </Space>
+          </Col>
+        </Row>
+      </Space>
     </Card>
   );
 };
