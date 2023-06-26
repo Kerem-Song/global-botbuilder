@@ -91,7 +91,7 @@ export const SoratbleCarouselCtrlContainer = ({
       type: 'icon-front',
       icon: !isDisable ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: handleDuplicationCard,
+        action: !isDisable ? handleDuplicationCard : null,
       },
     },
     {
