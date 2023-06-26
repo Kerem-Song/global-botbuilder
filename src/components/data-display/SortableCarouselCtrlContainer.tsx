@@ -91,7 +91,7 @@ export const SoratbleCarouselCtrlContainer = ({
       type: 'icon-front',
       icon: !isDisable ? icCardDuplication : icCardDuplicationDisabled,
       data: {
-        action: !isDisable ? handleDuplicationCard : null,
+        action: handleDuplicationCard,
       },
     },
     {
@@ -135,11 +135,25 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
+                  console.log('@m.data?.action outside', m.data?.action);
+                  console.log('@m.data?.action?.name outside', m.data?.action?.name);
                   if (isDisable && m.data?.action?.name.match('')) {
+                    console.log('@m.data?.action.', m.data?.action, m.data.action.name);
+                    console.log('@m.data?.action?.name.', m.data?.action?.name);
                     lunaToast.error(
                       t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
                     );
                     return;
+                  } else if (
+                    isDisable &&
+                    m.data?.action?.name.match('handleDuplicationCard')
+                  ) {
+                    lunaToast.error(
+                      t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
+                    );
+                    return;
+                  } else if (m.data?.action?.name.match('handleDeleteCard')) {
+                    m.data?.action?.(item.id, carouselNode);
                   } else {
                     m.data?.action?.(item.id, carouselNode);
                   }

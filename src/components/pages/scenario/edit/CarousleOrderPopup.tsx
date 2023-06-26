@@ -106,7 +106,6 @@ export const CarouselOrderPopup: FC<{
 
     lunaToast.success(tc(`ACCEPTED`));
   };
-  console.log('@focus', document.activeElement);
 
   return (
     <ReactModal
@@ -122,7 +121,6 @@ export const CarouselOrderPopup: FC<{
         onContextMenu={(e) => e.stopPropagation()}
         onMouseUp={() => {
           if (caroPopupRef.current) {
-            console.log('@caro ref', caroPopupRef.current);
             caroPopupRef.current.focus();
           }
         }}
