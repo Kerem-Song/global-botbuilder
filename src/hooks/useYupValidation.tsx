@@ -384,14 +384,41 @@ export const useYupValidation = () => {
     itemsRefName: yup
       .string()
       .trim()
-      .matches(PARAMETER_REGEX, t(`VALIDATION_REGEX_MATCH`))
-      .required(t(`VALIDATION_REQUIRED`)),
+      .required(t(`VALIDATION_REQUIRED`))
+      .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+      .when('.', {
+        is: (name: string) => name && !name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+        otherwise: yup
+          .string()
+          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+      })
+      .when('.', {
+        is: (name: string) => name && name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+      }),
     imageCtrl: imageCtrlEditSchema,
     buttons: dataApiButtonsEditSchema,
   });
 
   const dataListCardNodeEditSchema = yup.object().shape({
     header: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    itemsRefName: yup
+      .string()
+      .trim()
+      .required(t(`VALIDATION_REQUIRED`))
+      .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+      .when('.', {
+        is: (name: string) => name && !name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+        otherwise: yup
+          .string()
+          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+      })
+      .when('.', {
+        is: (name: string) => name && name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+      }),
     imageCtrl: imageCtrlEditSchema,
     items: yup.array().of(
       yup.object().shape({
@@ -404,6 +431,22 @@ export const useYupValidation = () => {
   });
 
   const dataProductCardNodeEditSchema = yup.object().shape({
+    itemsRefName: yup
+      .string()
+      .trim()
+      .required(t(`VALIDATION_REQUIRED`))
+      .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+      .when('.', {
+        is: (name: string) => name && !name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+        otherwise: yup
+          .string()
+          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+      })
+      .when('.', {
+        is: (name: string) => name && name.startsWith('.'),
+        then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+      }),
     imageCtrl: yup.object().shape({
       imageFile: yup
         .mixed()

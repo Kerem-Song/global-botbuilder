@@ -135,11 +135,11 @@ export const SoratbleCarouselCtrlContainer = ({
                 popupList
                 popperItems={contextMenu}
                 onChange={(m) => {
-                  console.log('@m.data?.action outside', m.data?.action);
-                  console.log('@m.data?.action?.name outside', m.data?.action?.name);
+                  console.log('@m.data?.action outside: ', m.data?.action);
+                  console.log('@m.data?.action?.name outside:', m.data?.action?.name);
                   if (isDisable && m.data?.action?.name.match('')) {
-                    console.log('@m.data?.action.', m.data?.action, m.data.action.name);
-                    console.log('@m.data?.action?.name.', m.data?.action?.name);
+                    console.log('@m.data?.action1', m.data?.action, m.data.action.name);
+                    console.log('@m.data?.action?.name1', m.data?.action?.name);
                     lunaToast.error(
                       t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
                     );
@@ -148,13 +148,23 @@ export const SoratbleCarouselCtrlContainer = ({
                     isDisable &&
                     m.data?.action?.name.match('handleDuplicationCard')
                   ) {
+                    console.log('@m.data?.action2', m.data?.action, m.data.action.name);
+                    console.log('@m.data?.action?.name2', m.data?.action?.name);
                     lunaToast.error(
                       t(`CAROUSEL_POPUP_SAVE_SYSTEM_ALERT_CHATBUBBLE_LIMIT`),
                     );
                     return;
                   } else if (m.data?.action?.name.match('handleDeleteCard')) {
+                    console.log('@m.data?.action3', m.data?.action, m.data.action.name);
+                    console.log('@m.data?.action?.name3', m.data?.action?.name);
                     m.data?.action?.(item.id, carouselNode);
                   } else {
+                    console.log(
+                      '@m.data?.action4 ',
+                      m.data?.action,
+                      m.data?.action?.name,
+                    );
+                    console.log('@m.data?.action?.name4', m.data?.action?.name);
                     m.data?.action?.(item.id, carouselNode);
                   }
                 }}
