@@ -10,19 +10,7 @@ export const useAddArrow = () => {
   const dispatch = useDispatch();
   const { tc } = useI18n();
   const addArrowHandler = (nodes: INode[], arrow: IArrow) => {
-    // const errorMessage = arrowHelper.validateArrows(
-    //   arrow.updateKey || arrow.start,
-    //   arrow.end,
-    //   nodes,
-    //   arrow.isNextNode,
-    // );
-    // if (errorMessage) {
-    //   console.log(errorMessage);
-    //   lunaToast.error(tc('INVALIDATE_ARROW'));
-    //   return;
-    // }
-
-    dispatch(addArrow({ arrow, errorMessage: tc('INVALIDATE_ARROW') }));
+    dispatch(addArrow({ arrow }));
   };
   return { addArrowHandler };
 };

@@ -92,9 +92,14 @@
                 align-items: center;
                 margin-bottom: rem(16);
                 .title {
+                  word-break: break-all;
+                  width: rem(165);
                   font-size: rem(16);
                   font-weight: 500;
                   line-height: rem(19);
+                  &.systemEntityTitle {
+                    width: 100%;
+                  }
                 }
                 .icDelete {
                   width: rem(38);

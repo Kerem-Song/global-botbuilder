@@ -12,6 +12,7 @@ import {
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
 import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
+import { lunaToast } from './lunaToast';
 
 const OVERFLOWLINK = 99999;
 
@@ -41,6 +42,10 @@ const invalidateConnectNoteType: TNodeTypes[] = [
 ];
 
 export const arrowHelper = {
+  tc: (key: string) => {
+    console.log(`tc is not set(key:${key})`);
+    return '';
+  },
   createNextArrow: (nodeId: string, nextNodeId: string): IArrow => {
     return {
       start: `${NEXT_BUTTON_PREFIX}${nodeId}`,
@@ -300,7 +305,8 @@ export const arrowHelper = {
     // console.log(startId, endId);
     // 자기 자신으로 연결한 경우
     if (startId === endId) {
-      return '잘못된 연결입니다.';
+      console.log('잘못된 연결입니다.');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     const startNode = nodes.find((x) => x.id === startId.substring(5));
@@ -308,7 +314,8 @@ export const arrowHelper = {
 
     // 노드가 없는경우
     if (!startNode || !endNode) {
-      return '노드가 존재하지 않음.';
+      console.log('노드가 존재하지 않음.');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     console.log('validateArrows', startId, startNode.title, endId, endNode.title);
@@ -319,12 +326,14 @@ export const arrowHelper = {
       startNode.type === NODE_TYPES.INTENT_NODE &&
       endNode.type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE
     ) {
-      return '시작노드에서 다른시나리오로 연결 할 수 없습니다.';
+      console.log('시작노드에서 다른시나리오로 연결 할 수 없습니다.');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     // Answer노드 앞에 응답이 없는경우
     if (isNext && endNode.type === NODE_TYPES.ANSWER_NODE) {
-      return 'Answer노드는 다음노드로 지정할 수 없음';
+      console.log('Answer노드는 다음노드로 지정할 수 없음');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     // 시작노드에서 Count노드 제외
@@ -333,13 +342,15 @@ export const arrowHelper = {
       startNode.type === NODE_TYPES.INTENT_NODE &&
       endNode.type === NODE_TYPES.RETRY_CONDITION_NODE
     ) {
-      return 'Count노드는 다음 노드로 지정할 수 없음';
+      console.log('Count노드는 다음 노드로 지정할 수 없음');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     // 연속 노드에 응답이 아닌 노드 연결 할 경우
     // 연속 노드에 다른시나리오나 시작노드 연결 할 경우
     if (!isNext && invalidateConnectNoteType.includes(endNode.type)) {
-      return '연속노드로 응답노드만 연결 할 수 있습니다.';
+      console.log('연속노드로 응답노드만 연결 할 수 있습니다.');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     const isPassChild =
@@ -363,11 +374,13 @@ export const arrowHelper = {
         );
 
     if (parentCnt === OVERFLOWLINK || childCnt === OVERFLOWLINK) {
-      return '응답을 순환으로 설정할 수 없습니다.';
+      console.log('응답을 순환으로 설정할 수 없습니다.');
+      return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
     if (parentCnt + childCnt > 3) {
-      return '말풍선 세로 나열은 최대 3개까지 가능합니다.';
+      console.log('말풍선 세로 나열은 최대 3개까지 가능합니다.');
+      return arrowHelper.tc('INVALIDATE_MAX_3_INPUT_NODE');
     }
 
     return undefined;

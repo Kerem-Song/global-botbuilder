@@ -45,6 +45,7 @@
     "CONDITION_OPERATOR_LESSTHANOREQUAL": "less than or equal",
     "CONDITION_OPERATOR_GREATERTHANOREQUAL": "greater than or equal",
     "INVALIDATE_ARROW": "잘못된 연결입니다.",
+    "INVALIDATE_MAX_3_INPUT_NODE": "말풍선 세로 나열은 최대 3개까지 가능합니다.",
     "HTTP_PROVIDER_NO_BOT_ERROR_TITLE": "Error",
     "HTTP_PROVIDER_NO_BOT_ERROR_DESC": "봇이 존재하지 않습니다.",
     "PAGE_PROVIDER_AUTH_ERROR_TITLE": "권한",

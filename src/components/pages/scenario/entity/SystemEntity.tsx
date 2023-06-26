@@ -62,7 +62,7 @@ export const SystemEntity = () => {
                     <Col key={i} span={6}>
                       <div className="entityCard" role="presentation" ref={ref}>
                         <div className="cardHeader">
-                          <span className="title">
+                          <span className="title systemEntityTitle">
                             {util.replaceKeywordMark(x.usingName, searchKeyword)}
                           </span>
                         </div>
