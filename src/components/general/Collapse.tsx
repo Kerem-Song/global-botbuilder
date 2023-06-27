@@ -52,7 +52,7 @@ export const Collapse: FC<CollapseProps> = ({
           </>
         ),
       });
-      console.log('result', result);
+
       if (result) {
         const childrenViews = watch('view.childrenViews');
         setIsCollapsed(false);
@@ -126,15 +126,18 @@ export const Collapse: FC<CollapseProps> = ({
                   {
                     onChange: (e) => {
                       if (!e.target.checked) {
-                        setValue(
-                          index !== undefined
-                            ? `view.childrenViews.${index}.imageCtrl.imageUrl`
-                            : `view.imageCtrl.imageUrl`,
-                          '',
-                        );
+                        // setValue(
+                        //   index !== undefined
+                        //     ? `view.childrenViews.${index}.imageCtrl.imageUrl`
+                        //     : `view.imageCtrl.imageUrl`,
+                        //   '',
+                        // );
+                        setValue(`view.imageCtrl.imageUrl`, '');
                         e.target.files = null;
                         e.target.value = '';
                         isCollapsedModalForImage();
+                      } else {
+                        setIsCollapsed(true);
                       }
                     },
                   },
