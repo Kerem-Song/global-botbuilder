@@ -6,7 +6,7 @@ export const util = {
       return text;
     }
 
-    const escapeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/gi, '\\$&');
 
     return parse(
       text.replace(

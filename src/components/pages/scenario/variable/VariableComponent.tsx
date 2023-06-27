@@ -9,12 +9,13 @@ import { useState } from 'react';
 
 import { EntityComponent } from '../entity/EntityComponent';
 import { VariablePopup } from './VariablePopup';
+import { VariableSkeleton } from './VariableSkeleton';
 
 export const VariableComponent = () => {
   const [isVariableList, setIsVariableList] = useState<IVariableList>();
   const { t, tc } = usePage();
   const { getVariableListQuery, variableDeleteAsync } = useVariableClient();
-  const { data: variableList } = getVariableListQuery();
+  const { data: variableList, isFetching } = getVariableListQuery();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { isOpen, handleIsOpen } = useModalOpen();
@@ -76,39 +77,41 @@ export const VariableComponent = () => {
               <span className="variableName">{t('NAME')}</span>
               <span className="varibleType">{t('VARIABLE_VALUE')}</span>
             </div>
-            {variableList && variableList.result.length > 0 ? (
-              variableList?.result.map((item, i) => (
-                <div
-                  role="presentation"
-                  className="variableItemList"
-                  key={i}
-                  onDoubleClick={() => {
-                    handleId(item);
-                    handleIsOpen(true);
-                  }}
-                >
-                  <span className="variableInfo">{item.name}</span>
-                  <span className="variableInfo">
-                    {item.defaultValue === null || item.defaultValue === ''
-                      ? '-'
-                      : item.defaultValue}
-                  </span>
-                  <button
-                    className="deleteBtn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openDeleteVariableModal(item.id);
+            {isFetching && <VariableSkeleton />}
+            {!isFetching && variableList && variableList.result.length > 0
+              ? variableList?.result.map((item, i) => (
+                  <div
+                    role="presentation"
+                    className="variableItemList"
+                    key={i}
+                    onDoubleClick={() => {
+                      handleId(item);
+                      handleIsOpen(true);
                     }}
                   >
-                    <img src={icDeleteDefault} alt="delete" />
-                  </button>
-                </div>
-              ))
-            ) : (
-              <div className="emptyVariableList">
-                <span className="emptyVariable">{t('NO_REGISTERED_VARIABLE')}</span>
-              </div>
-            )}
+                    <span className="variableInfo">{item.name}</span>
+                    <span className="variableInfo">
+                      {item.defaultValue === null || item.defaultValue === ''
+                        ? '-'
+                        : item.defaultValue}
+                    </span>
+                    <button
+                      className="deleteBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openDeleteVariableModal(item.id);
+                      }}
+                    >
+                      <img src={icDeleteDefault} alt="delete" />
+                    </button>
+                  </div>
+                ))
+              : !isFetching &&
+                variableList!.result.length === 0 && (
+                  <div className="emptyVariableList">
+                    <span className="emptyVariable">{t('NO_REGISTERED_VARIABLE')}</span>
+                  </div>
+                )}
           </div>
         </div>
         <VariablePopup
