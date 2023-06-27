@@ -1,15 +1,13 @@
 import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
-import { setSelected } from '@store/botbuilderSlice';
-import { removeItem } from '@store/makingNode';
-import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
+import { useParams } from 'react-router';
 
 export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
-  const dispatch = useDispatch();
-  const { getScenarioList } = useScenarioClient();
-  const { data } = getScenarioList();
+  const { botId } = useParams();
+  const { getCachedScenarioList } = useScenarioClient();
+  const data = getCachedScenarioList(botId);
   const scenario: IScenarioModel[] | undefined = data?.filter(
     (item) => item.firstNodeId === node.nextNodeId,
   );
