@@ -69,7 +69,7 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
             </tr>
           );
         })}
-      {data?.result.items.length === 0 && (
+      {!isFetching && data?.result.items.length === 0 && (
         <tr className="emptyList">
           <td className="empty">
             <img src={icNoResult} alt="empty" />

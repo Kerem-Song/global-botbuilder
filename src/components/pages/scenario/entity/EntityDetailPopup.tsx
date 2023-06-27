@@ -58,8 +58,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         .string()
         .trim()
         .required(t('VALIDATION_REQUIRED'))
-        .matches(ENTITY_NAME_REGEX, '특수문자는 - _만 입력 가능합니다.')
-        .max(20, `20자를 초과할 수 없습니다.`),
+        .matches(ENTITY_NAME_REGEX, t('ENTITY_NAME_REGEX'))
+        .max(20, t('VALIDATION_STRING_LIMIT')),
       entries: yup
         .array()
         .min(1, t('VALIDATION_REQUIRED'))
