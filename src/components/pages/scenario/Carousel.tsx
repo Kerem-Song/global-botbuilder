@@ -121,7 +121,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
         }}
         className="carouselComponent"
       >
-        <div style={{ display: 'flex', ...style }}>
+        <div style={{ display: 'flex', maxWidth: '190px', overflow: 'hidden', ...style }}>
           {children.map((c, i) => {
             return (
               <div
