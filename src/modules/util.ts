@@ -6,14 +6,19 @@ export const util = {
       return text;
     }
 
+    const escapeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
     return parse(
-      text.replace(new RegExp(`${isStart ? '\\s|^' : ''}${keyword}`, 'gi'), (match) => {
-        if (match) {
-          return `<mark>${match}</mark>`;
-        } else {
-          return '';
-        }
-      }),
+      text.replace(
+        new RegExp(`${isStart ? '\\s|^' : ''}${escapeKeyword}`, 'gi'),
+        (match) => {
+          if (match) {
+            return `<mark>${match}</mark>`;
+          } else {
+            return '';
+          }
+        },
+      ),
     );
   },
   range: (length: number) => {
