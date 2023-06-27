@@ -177,7 +177,7 @@ export const Popper = <T extends object>({
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}
         onMouseDown={(e) => {
-          e.preventDefault();
+          // e.preventDefault();
           e.stopPropagation();
         }}
         {...attributes.popper}
@@ -187,8 +187,12 @@ export const Popper = <T extends object>({
             <Input
               placeholder="Input search text"
               search
-              onSearch={(data) => onSearch(data as string)}
-              onChange={(e) => setUserInput(e.currentTarget.value)}
+              onSearch={(data) => {
+                onSearch(data as string);
+              }}
+              onChange={(e) => {
+                setUserInput(e.currentTarget.value);
+              }}
               value={userInput || ''}
             />
           </>

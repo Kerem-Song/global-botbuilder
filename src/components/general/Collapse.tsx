@@ -94,18 +94,14 @@ export const Collapse: FC<CollapseProps> = ({
         watch(`view.useImageCtrl`) === false &&
         !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
       ) {
-        console.log('@11');
         setValue(`view.useImageCtrl`, false);
       } else {
-        console.log('@22');
         setValue(`view.useImageCtrl`, true);
       }
     } else {
       if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-        console.log('@33');
         setValue(`view.useImageCtrl`, false);
       } else {
-        console.log('@44');
         setValue(`view.useImageCtrl`, true);
       }
     }

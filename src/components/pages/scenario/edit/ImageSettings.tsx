@@ -80,7 +80,7 @@ export const ImageSettings = ({
         setImageRatio(ImageAspectRatio.Square);
         if (imageCtrl === IMAGE_CTRL_TYPES.CAROUSEL_IMAGE_CTRL) {
           const childrenViewsLength = watch(`view.childrenViews`);
-          console.log('@childrenViewsLength', childrenViewsLength);
+
           for (const i in childrenViewsLength) {
             setValue(
               `view.childrenViews.${i}.imageCtrl.aspectRatio`,

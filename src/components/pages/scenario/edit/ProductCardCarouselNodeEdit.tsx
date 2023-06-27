@@ -229,7 +229,6 @@ export const ProductCardCarouselNodeEdit = () => {
                                 required={true}
                                 {...register(`view.childrenViews.${index}.retailPrice`, {
                                   setValueAs: (v) => {
-                                    console.log('@v', v);
                                     return v === '' ? undefined : parseFloat(v);
                                   },
                                   onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
