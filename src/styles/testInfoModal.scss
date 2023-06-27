@@ -1,7 +1,6 @@
 .testInfoModal {
   position: absolute;
   width: rem(300);
-  height: rem(172);
   background-color: $grayWhite;
   top: 0;
   left: rem(-310);
@@ -41,17 +40,16 @@
 
   .testInfoContents {
     width: rem(300);
-    padding: rem(17) rem(15);
+    padding: rem(20);
 
     .testInfo {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       font-size: rem(13);
+      gap: rem(20);
 
       .info {
-        margin-bottom: rem(15);
-
         .infoName {
           width: 100%;
           color: $gray500;
