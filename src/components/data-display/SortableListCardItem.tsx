@@ -1,4 +1,6 @@
+import { icImgNotFound } from '@assets';
 import { Col, Row } from '@components/layout';
+import { ImageWithToken } from '@components/pages/scenario/views/ImageWithToken';
 import { usePage, useRootState } from '@hooks';
 import { IListCardItem } from '@models/interfaces/res/IGetFlowRes';
 import { Suspense } from 'react';
@@ -40,7 +42,15 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
           }
         >
           {item.imageUrl && listItemImgSrc ? (
-            <img src={listItemImgSrc} alt="itemThumbnail" />
+            <img
+              src={listItemImgSrc}
+              alt="itemThumbnail"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = icImgNotFound;
+                // e.currentTarget.className = 'imgNotFound';
+              }}
+            />
           ) : (
             <div className="listItemThumbnailSkeleton"></div>
           )}
