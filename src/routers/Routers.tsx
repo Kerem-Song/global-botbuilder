@@ -84,7 +84,7 @@ const finalRoutes = [
                 {
                   path: 'deployment',
                   element: <DeploymentPage />,
-                  handle: { title: 'DEPLOY', role: 16 },
+                  handle: { title: 'DEPLOYMENT', role: 16 },
                 },
                 {
                   path: 'history',
