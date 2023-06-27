@@ -53,12 +53,10 @@
         max-height: calc(100vh - 400px);
         overflow-y: auto;
         .utteranceTbodyTr {
-          height: rem(54);
           border-bottom: 1px solid $gray150;
           background-color: $grayWhite;
           cursor: pointer;
           text-align: left;
-          align-items: center;
           &:last-child {
             border-bottom: none;
           }
@@ -128,9 +126,6 @@
         }
 
         .icon {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           padding: rem(8) rem(20);
 
           .icDelete {
