@@ -131,6 +131,9 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
+  // useEffect(() => {
+  //   console.log('@@');
+  // }, [watch(imageUrl)]);
   return (
     <>
       <label
@@ -164,6 +167,7 @@ export const ImageFileUploader = ({
                       !Object.keys(errors).length &&
                       e.currentTarget.className === 'imgNotFound'
                     ) {
+                      console.log('@onload error1');
                       e.currentTarget.className = '';
                     }
                   }}
@@ -180,6 +184,7 @@ export const ImageFileUploader = ({
                       !Object.keys(errors).length &&
                       e.currentTarget.className === 'imgNotFound'
                     ) {
+                      console.log('@onload error2');
                       e.currentTarget.className = '';
                     }
                   }}
