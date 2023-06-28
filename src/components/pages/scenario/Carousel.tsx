@@ -56,7 +56,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
     if (current + 1 > Math.min(current + 1, length - 1, 9)) {
       return true;
     }
-    console.log('@next disabled', current, children.length);
+
     if (isHistoryViewer && current >= Math.min(current + 1, children.length - 1, 9)) {
       return true;
     }

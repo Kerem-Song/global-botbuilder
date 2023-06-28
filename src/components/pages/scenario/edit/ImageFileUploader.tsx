@@ -76,7 +76,7 @@ export const ImageFileUploader = ({
       formData.append('SessionToken', token);
       formData.append('CtrlId', handleImageCtrlId());
 
-      imageUploadAsync({ formData })
+      await imageUploadAsync({ formData })
         .then((res) => {
           console.log('res.data image', res?.data);
           setValue(imageUrl, res?.data.result, { shouldDirty: true });
@@ -131,9 +131,10 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
-  // useEffect(() => {
-  //   console.log('@@');
-  // }, [watch(imageUrl)]);
+  useEffect(() => {
+    console.log('@@@@imageurl', watch(imageUrl));
+  }, [watch(imageUrl)]);
+
   return (
     <>
       <label
@@ -160,6 +161,7 @@ export const ImageFileUploader = ({
                   src={watch(imgPath)}
                   alt="templateImage"
                   onError={(e) => {
+                    console.log('@on error1');
                     handleImgOnError(e);
                   }}
                   onLoad={(e) => {
@@ -177,6 +179,7 @@ export const ImageFileUploader = ({
                   src={builderImageSrc}
                   alt="templateImage"
                   onError={(e) => {
+                    console.log('@on error2');
                     handleImgOnError(e);
                   }}
                   onLoad={(e) => {
