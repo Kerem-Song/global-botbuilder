@@ -6,7 +6,7 @@ import {
 } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { t } from 'i18next';
@@ -36,6 +36,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
   );
   const result = { ...storeCarouselIndex };
   const storeIndex = result[nodeId];
+  const isHistoryViewer = useHistoryViewerMatch();
 
   useEffect(() => {
     if (!storeIndex) {
@@ -53,6 +54,10 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
 
   const NextDisabled = () => {
     if (current + 1 > Math.min(current + 1, length - 1, 9)) {
+      return true;
+    }
+    console.log('@next disabled', current, children.length);
+    if (isHistoryViewer && current >= Math.min(current + 1, children.length - 1, 9)) {
       return true;
     }
 
@@ -121,24 +126,28 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
         }}
         className="carouselComponent"
       >
-        <div style={{ display: 'flex', ...style }}>
+        <div style={{ display: 'flex', overflow: 'hidden', ...style }}>
           {children.map((c, i) => {
             return (
               <div
                 style={{ width: '190px', flex: 'none', padding: '12px' }}
                 key={`card-wrap-${i}`}
               >
-                {i === current ? c : <div style={{ width: '190px' }}></div>}
+                {i === current
+                  ? c
+                  : !isHistoryViewer && <div style={{ width: '190px' }}></div>}
               </div>
             );
           })}
-          <div style={{ width: '166px', flex: 'none' }}>
-            <div style={{ width: '190px' }}>
-              <Button block onClick={addCarousel} style={{ border: 'none' }}>
-                {t(`ADD_CAHTBUBBLE_BTN`)}
-              </Button>
+          {!isHistoryViewer && (
+            <div style={{ width: '166px', flex: 'none' }}>
+              <div style={{ width: '190px' }}>
+                <Button block onClick={addCarousel} style={{ border: 'none' }}>
+                  {t(`ADD_CAHTBUBBLE_BTN`)}
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>

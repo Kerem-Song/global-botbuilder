@@ -1,3 +1,4 @@
+import { useHistoryViewerMatch } from '@hooks';
 import { INodeEditModel } from '@models';
 import { NODE_PREFIX } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
@@ -14,6 +15,7 @@ export const useNodeEditSave = () => {
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
+  const isHistoryViewer = useHistoryViewerMatch();
   console.log(carouselIndexObj);
 
   const selectedNode = nodes.find((x) => x.id === selected);
@@ -46,7 +48,7 @@ export const useNodeEditSave = () => {
     console.log('@@@@useEffect');
     return () => {
       console.log('@@@@useEffect callback');
-      if (/*isChanged &&*/ selectedNode && index === undefined) {
+      if (/*isChanged &&*/ selectedNode && index === undefined && !isHistoryViewer) {
         handleSave();
       }
     };
@@ -54,7 +56,7 @@ export const useNodeEditSave = () => {
 
   useEffect(() => {
     return () => {
-      if (/*isChanged &&*/ selectedNode && index !== undefined) {
+      if (/*isChanged &&*/ selectedNode && index !== undefined && !isHistoryViewer) {
         handleSave();
       }
     };

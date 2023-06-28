@@ -146,6 +146,20 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     );
   };
 
+  const handleHistoryListTitle = (item: IResponseHistoryItem) => {
+    if (matchCategory(item).categoryChangeLogType.includes(1008)) {
+      return t(`CAPTION_FLOWGROUPEXPORT_TITLE`);
+    } else if (matchCategory(item).categoryChangeLogType.includes(1009)) {
+      return t(`CAPTION_FLOWGROUPIMPORT_TITLE`);
+    } else if (matchCategory(item).categoryChangeLogType.includes(4001)) {
+      return t(`CAPTION_LIVE_DEPLOYMENT_CATEGORY_LABEL`);
+    } else if (matchCategory(item).categoryChangeLogType.includes(4002)) {
+      return t(`CAPTION_TEST_DEPLOYMENT_CATEGORY_LABEL`);
+    } else {
+      return item[matchCategory(item).property];
+    }
+  };
+
   return (
     <div className="historyListContainter">
       {isFetching &&
@@ -204,12 +218,12 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                   </div>
 
                   <p className="historyListTitle">
-                    {matchCategory(item).categoryChangeLogType.includes(1008)
+                    {/* {matchCategory(item).categoryChangeLogType.includes(1008)
                       ? t(`CAPTION_FLOWGROUPEXPORT_TITLE`)
                       : matchCategory(item).categoryChangeLogType.includes(1009)
                       ? t(`CAPTION_FLOWGROUPIMPORT_TITLE`)
-                      : item[matchCategory(item).property]}
-                    {/* {item[matchCategory(item).property]} */}
+                      : item[matchCategory(item).property]} */}
+                    {handleHistoryListTitle(item)}
                     {matchCategory(item).categoryChangeLogType.includes(2004) ? (
                       <Button
                         shape="ghost"
