@@ -1,4 +1,5 @@
 import { ITesterCard } from '@models';
+import classNames from 'classnames';
 import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
@@ -52,9 +53,9 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
       ) : (
         <div className="cardCarouselContents">
           <div
-            className={
-              item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
-            }
+            className={classNames('rectangleImageBtn', {
+              squareImageBtn: item.image?.imageAspectRatio === 1,
+            })}
           >
             {item.buttons.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
