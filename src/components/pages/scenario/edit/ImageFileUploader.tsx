@@ -81,11 +81,12 @@ export const ImageFileUploader = ({
           console.log('res.data image', res?.data);
           setValue(imageUrl, res?.data.result, { shouldDirty: true });
           setValue(imageFilePath, null, { shouldDirty: true });
+          setValue(imgPath, null, { shouldDirty: true });
         })
         .catch((err) => {
           setValue(imageUrl, null, { shouldDirty: true });
           setValue(imageFilePath, null, { shouldDirty: true });
-
+          setValue(imgPath, null, { shouldDirty: true });
           //modal 띄우기?
           console.log('upload 실패', err);
         });
@@ -157,41 +158,47 @@ export const ImageFileUploader = ({
           <div className={classnames('imgUploadSkeleton')}>
             {watch(imageUrl) ? (
               watch(imgPath) ? (
-                <img
-                  src={watch(imgPath)}
-                  alt="templateImage"
-                  onError={(e) => {
-                    console.log('@on error1');
-                    handleImgOnError(e);
-                  }}
-                  onLoad={(e) => {
-                    if (
-                      !Object.keys(errors).length &&
-                      e.currentTarget.className === 'imgNotFound'
-                    ) {
-                      console.log('@onload error1');
-                      e.currentTarget.className = '';
-                    }
-                  }}
-                />
+                <>
+                  {console.log('@img side1')}
+                  <img
+                    src={watch(imgPath)}
+                    alt="templateImage"
+                    onError={(e) => {
+                      console.log('@on error1');
+                      handleImgOnError(e);
+                    }}
+                    onLoad={(e) => {
+                      if (
+                        !Object.keys(errors).length &&
+                        e.currentTarget.className === 'imgNotFound'
+                      ) {
+                        console.log('@onload error1');
+                        e.currentTarget.className = '';
+                      }
+                    }}
+                  />
+                </>
               ) : (
-                <img
-                  src={builderImageSrc}
-                  alt="templateImage"
-                  onError={(e) => {
-                    console.log('@on error2');
-                    handleImgOnError(e);
-                  }}
-                  onLoad={(e) => {
-                    if (
-                      !Object.keys(errors).length &&
-                      e.currentTarget.className === 'imgNotFound'
-                    ) {
-                      console.log('@onload error2');
-                      e.currentTarget.className = '';
-                    }
-                  }}
-                />
+                <>
+                  {console.log('@img side2')}
+                  <img
+                    src={builderImageSrc}
+                    alt="templateImage"
+                    onError={(e) => {
+                      console.log('@on error2');
+                      handleImgOnError(e);
+                    }}
+                    onLoad={(e) => {
+                      if (
+                        !Object.keys(errors).length &&
+                        e.currentTarget.className === 'imgNotFound'
+                      ) {
+                        console.log('@onload error2');
+                        e.currentTarget.className = '';
+                      }
+                    }}
+                  />
+                </>
               )
             ) : (
               <>
