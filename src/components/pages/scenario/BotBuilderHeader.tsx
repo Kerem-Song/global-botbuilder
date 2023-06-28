@@ -167,7 +167,16 @@ export const BotBuilderHeader = () => {
       await appDispatch(editNodeAsync(model));
 
       if (!isValid) {
-        lunaToast.error(tc('SAVE_FAIL_MESSAGE'));
+        await error({
+          title: t(`VALIDATION_CHECK_FALLBACK_START_TITLE`),
+          description: (
+            <>
+              <span style={{ whiteSpace: 'pre-line' }}>
+                {t(`VALIDATION_CHECK_NODE_DESC`)}
+              </span>
+            </>
+          ),
+        });
         return;
       }
     }
