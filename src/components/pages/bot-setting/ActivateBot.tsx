@@ -14,8 +14,6 @@ export const ActivateBot = () => {
     (state) => state.botSettingInfoReducer.botSettingInfo,
   );
 
-  console.log('botSettingInfo', botSettingInfo);
-
   const handleActivateBot = async () => {
     if (!botSettingInfo) {
       return;

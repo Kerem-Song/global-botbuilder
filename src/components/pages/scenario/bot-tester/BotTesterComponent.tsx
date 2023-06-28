@@ -9,6 +9,7 @@ import {
   TESTER_DATA_TYPES,
 } from '@models';
 import { initMessages, setTesterData } from '@store/botTesterSlice';
+import classNames from 'classnames';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
@@ -164,18 +165,14 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
                 onPressEnter={handleSend}
               />
               <Button
-                style={{
-                  height: '33px',
-                  lineHeight: '1px',
-                  color: 'white',
-                  border: 'none',
-                  backgroundColor: text ? '#4478FF' : '#A1BBFF',
-                }}
+                className={classNames('sendBtn', {
+                  disabledBtn: !text,
+                })}
                 onClick={(e) => {
                   e.preventDefault();
                   handleSend();
                 }}
-                disabled={text ? false : true}
+                disabled={!text}
               >
                 {t('SEND')}
               </Button>

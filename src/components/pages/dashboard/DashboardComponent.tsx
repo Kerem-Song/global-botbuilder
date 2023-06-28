@@ -19,17 +19,6 @@ export const DashboardComponent = () => {
   const { getBotListQuery, botSaveAsync } = useBotClient();
   const { data, isFetching } = getBotListQuery();
 
-  const handleSave = async (model: IBotInput) => {
-    const result = await botSaveAsync(model);
-    if (result?.data.isSuccess) {
-      handleIsOpen(false);
-      lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
-    } else {
-      const exception = result?.data.exception as IException;
-      lunaToast.error(exception?.message || '');
-    }
-  };
-
   const filteredList = data?.filter((x) =>
     x.botName?.toLowerCase().includes(searchKeyword.toLowerCase()),
   );
@@ -102,7 +91,7 @@ export const DashboardComponent = () => {
           </>
         )}
       </Row>
-      <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} handleSave={handleSave} />
+      <NewBotPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
     </div>
   );
 };

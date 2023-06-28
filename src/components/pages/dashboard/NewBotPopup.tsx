@@ -1,8 +1,9 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePage, useRootState } from '@hooks';
+import { useBotClient, usePage, useRootState } from '@hooks';
 import { IBotInput, SnsKind } from '@models';
 import { BOTNAME_REGEX } from '@modules';
+import { lunaToast } from '@modules/lunaToast';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -11,11 +12,10 @@ import * as yup from 'yup';
 export const NewBotPopup: FC<{
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
-  handleSave: (model: IBotInput) => Promise<void>;
-}> = ({ isOpen, handleIsOpen, handleSave }) => {
+}> = ({ isOpen, handleIsOpen }) => {
   const { t, tc } = usePage();
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
-
+  const { botSaveAsync } = useBotClient();
   const defaultValues: IBotInput = {
     brandId,
     botName: '',
@@ -40,15 +40,29 @@ export const NewBotPopup: FC<{
     handleSubmit,
     reset,
     setFocus,
+    setError,
     formState: { errors },
   } = useForm<IBotInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });
 
+  const handleSave = async (model: IBotInput) => {
+    const result = await botSaveAsync({ ...model, customErrorCode: [7654] });
+    if (result === 7654) {
+      setError('botName', {
+        type: 'custom',
+        message: t(`MSG_DUPLICATED_BOT_NAME`),
+      });
+    } else {
+      handleIsOpen(false);
+      lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
+    }
+  };
+
   const onSubmit = async (data: IBotInput) => {
     await handleSave(data);
-    reset(defaultValues);
+    //reset(defaultValues);
   };
 
   const handleClose = () => {
