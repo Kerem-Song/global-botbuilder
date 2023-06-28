@@ -51,6 +51,18 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
         );
       }
       if (!response.data.isSuccess) {
+        if (response.data.exception) {
+          const requestData = response.config.data;
+          if (requestData) {
+            const requestObj = JSON.parse(requestData);
+            if (
+              requestObj?.customErrorCode?.includes(response.data.exception.errorCode)
+            ) {
+              return response;
+            }
+          }
+        }
+
         if (
           response.data.exception &&
           !manualExceptionCode.includes(response.data.exception.errorCode)

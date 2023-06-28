@@ -1,5 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
 import {
+  IException,
   IGetBotReq,
   IHasResult,
   IHasResults,
@@ -14,6 +15,7 @@ import {
   IUpdateBotIcon,
   IUpdateChannelActivate,
 } from '@models/interfaces/IBotSetting';
+import { ICreateBotReq } from '@models/interfaces/req/ICreateBotReq';
 import { setBotInfo } from '@store/botInfoSlice';
 import { setBotSettingInfo } from '@store/botSettingInfoSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -21,11 +23,7 @@ import { AxiosResponse } from 'axios';
 import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
 
-import {
-  IBotInput,
-  IBotModel,
-  IBotSettingModel,
-} from '../../models/interfaces/IBotModel';
+import { IBotModel, IBotSettingModel } from '../../models/interfaces/IBotModel';
 import useHttp from '../useHttp';
 
 export const useBotClient = () => {
@@ -95,18 +93,22 @@ export const useBotClient = () => {
     queryClient.invalidateQueries(['bot-setting-info', botId]);
   };
 
-  const botSaveMutate = useMutation(async (botInput: IBotInput) => {
-    const res = await http.post<IBotInput, AxiosResponse<IResponse>>(
+  const botSaveMutate = useMutation(async (botInput: ICreateBotReq) => {
+    const res = await http.post<ICreateBotReq, AxiosResponse<IResponse>>(
       '/bot/createbot',
       botInput,
     );
 
-    if (res) {
-      if (res.data.isSuccess) {
-        queryClient.invalidateQueries(['bot-list']);
-      }
-      return res;
+    const excepton = res.data?.exception as IException;
+    if (excepton) {
+      return excepton.errorCode;
     }
+
+    if (res?.data?.isSuccess) {
+      queryClient.invalidateQueries(['bot-list']);
+    }
+
+    return '';
   });
 
   const botExportMutate = useMutation(

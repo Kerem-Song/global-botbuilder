@@ -11,7 +11,8 @@
     "PROD_CHANNEL": "운영채널",
     "TEST_CHANNEL": "테스트채널",
     "EMPTY_DESCRIPTION": "검색 결과가 없습니다.",
-    "BOT_STATUS_ACTIVE": "Active"
+    "BOT_STATUS_ACTIVE": "Active",
+    "MSG_DUPLICATED_BOT_NAME": "중복된 이름입니다."
   },
   "common": {
     "intlDateTime": "{{val, datetime}}",
