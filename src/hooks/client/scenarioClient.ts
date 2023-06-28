@@ -1,4 +1,4 @@
-import { usePage } from '@hooks';
+import { useHistoryViewerMatch, usePage } from '@hooks';
 import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
@@ -21,7 +21,7 @@ const SCENARIO_LIST = 'scenario-list';
 
 export const useScenarioClient = () => {
   const { tc } = usePage();
-
+  const isHistoryViewer = useHistoryViewerMatch();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const http = useHttp();
@@ -107,7 +107,11 @@ export const useScenarioClient = () => {
           return res.data.result;
         }
       },
-      { refetchOnWindowFocus: false, refetchOnMount: true, enabled: token !== undefined },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: true,
+        enabled: token !== undefined && !isHistoryViewer,
+      },
     );
   };
 
