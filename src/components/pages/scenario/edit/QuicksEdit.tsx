@@ -90,27 +90,38 @@ export const QuicksEdit = () => {
               value={`view.quicks.${i}.actionValue`}
             />
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <FormItem error={errors.view?.quicks?.[i]?.actionValue}>
-                <SelectNode
-                  fieldName={`view.quicks.${i}.actionValue`}
-                  defaultValue={values.view?.quicks?.[i].actionValue}
-                  nodeId={getValues().id}
-                  error={errors.view?.quicks?.[i]?.actionValue}
-                />
-              </FormItem>
+              <>
+                <span className="subLabel">{t(`SELECT_NODE`)}</span>
+                <FormItem error={errors.view?.quicks?.[i]?.actionValue}>
+                  <SelectNode
+                    fieldName={`view.quicks.${i}.actionValue`}
+                    defaultValue={values.view?.quicks?.[i].actionValue}
+                    nodeId={getValues().id}
+                    error={errors.view?.quicks?.[i]?.actionValue}
+                  />
+                </FormItem>
+              </>
             )}
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.URL && (
-              <FormItem
-                error={
-                  errors.view && errors.view.quicks && errors.view.quicks[i]?.actionValue
-                }
-              >
-                <Input
-                  {...register(`view.quicks.${i}.actionValue`)}
-                  readOnly={isHistoryViewer}
-                  placeholder={t(`SET_URL_PLACEHOLDER`)}
-                />
-              </FormItem>
+              <>
+                <span className="subLabel">
+                  {t(`SET_URL`)}
+                  <span className="required"> *</span>
+                </span>
+                <FormItem
+                  error={
+                    errors.view &&
+                    errors.view.quicks &&
+                    errors.view.quicks[i]?.actionValue
+                  }
+                >
+                  <Input
+                    {...register(`view.quicks.${i}.actionValue`)}
+                    readOnly={isHistoryViewer}
+                    placeholder={t(`SET_URL_PLACEHOLDER`)}
+                  />
+                </FormItem>
+              </>
             )}
             {watch(`view.quicks.${i}.actionType`) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (
               <FormItem
