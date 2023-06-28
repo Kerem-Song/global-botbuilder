@@ -318,7 +318,7 @@ export const arrowHelper = {
       return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
-    console.log('validateArrows', startId, startNode.title, endId, endNode.title);
+    //console.log('validateArrows', startId, startNode.title, endId, endNode.title);
 
     // 시작노드에 다른시나리오 연결한 경우
     if (
@@ -402,13 +402,13 @@ export const arrowHelper = {
 
     if (parents.length > 0) {
       const parentDepths = parents.map((p) => {
-        console.log(
-          '%parent%',
-          p.id,
-          p.type,
-          p.nodeKind,
-          nodeFactory.getFactory(p.type)?.getConnectId(p),
-        );
+        // console.log(
+        //   '%parent%',
+        //   p.id,
+        //   p.type,
+        //   p.nodeKind,
+        //   nodeFactory.getFactory(p.type)?.getConnectId(p),
+        // );
         return arrowHelper.checkParent(
           p.nodeKind === NodeKind.InputNode ? depth + 1 : depth,
           p.id,

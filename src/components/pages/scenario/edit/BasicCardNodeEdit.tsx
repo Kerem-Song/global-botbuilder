@@ -20,12 +20,12 @@ export const BasicCardNodeEdit = () => {
     setValue,
     control,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty, dirtyFields },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
 
-  console.log('values in basiccard node edit', values.view);
+  console.log('values in basiccard node edit', values.view, isDirty, dirtyFields);
 
   return (
     <>
