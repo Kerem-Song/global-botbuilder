@@ -62,7 +62,9 @@ export const ProductCardCarouselNodeEdit = () => {
       : 0);
 
   useEffect(() => {
-    setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0);
+    setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
+      shouldDirty: true,
+    });
   }, [salePrice]);
 
   useEffect(() => {
@@ -73,6 +75,7 @@ export const ProductCardCarouselNodeEdit = () => {
       `view.childrenViews.${index}.discountAmount`,
       watch(`view.childrenViews.${index}.retailPrice`) -
         watch(`view.childrenViews.${index}.salePrice`) || 0,
+      { shouldDirty: true },
     );
   }, [watch(`view.childrenViews.${index}.discountAmount`)]);
 

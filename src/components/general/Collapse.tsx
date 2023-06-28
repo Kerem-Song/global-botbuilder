@@ -56,17 +56,19 @@ export const Collapse: FC<CollapseProps> = ({
       if (result) {
         const childrenViews = watch('view.childrenViews');
         setIsCollapsed(false);
-        setValue(`view.useImageCtrl`, false);
+        setValue(`view.useImageCtrl`, false, { shouldDirty: true });
 
         if (index !== undefined && childrenViews) {
           for (const i in childrenViews) {
-            setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
+            setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '', {
+              shouldDirty: true,
+            });
           }
         } else {
-          setValue(`view.imageCtrl.imageUrl`, '');
+          setValue(`view.imageCtrl.imageUrl`, '', { shouldDirty: true });
         }
       } else {
-        setValue(`view.useImageCtrl`, true);
+        setValue(`view.useImageCtrl`, true, { shouldDirty: true });
       }
     }
   };
@@ -76,12 +78,16 @@ export const Collapse: FC<CollapseProps> = ({
 
     if (watch(`view.useImageCtrl`) === false && childrenViewArr) {
       for (const i in childrenViewArr) {
-        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false);
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false, {
+          shouldDirty: true,
+        });
         // setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
       }
     } else {
       for (const i in childrenViewArr) {
-        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, true);
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, true, {
+          shouldDirty: true,
+        });
       }
     }
   }, [watch(`view.useImageCtrl`)]);
@@ -94,15 +100,15 @@ export const Collapse: FC<CollapseProps> = ({
         watch(`view.useImageCtrl`) === false &&
         !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
       ) {
-        setValue(`view.useImageCtrl`, false);
+        setValue(`view.useImageCtrl`, false, { shouldDirty: true });
       } else {
-        setValue(`view.useImageCtrl`, true);
+        setValue(`view.useImageCtrl`, true, { shouldDirty: true });
       }
     } else {
       if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-        setValue(`view.useImageCtrl`, false);
+        setValue(`view.useImageCtrl`, false, { shouldDirty: true });
       } else {
-        setValue(`view.useImageCtrl`, true);
+        setValue(`view.useImageCtrl`, true, { shouldDirty: true });
       }
     }
   }, [watch(`view.imageCtrl`)]);
@@ -132,7 +138,7 @@ export const Collapse: FC<CollapseProps> = ({
                         //     : `view.imageCtrl.imageUrl`,
                         //   '',
                         // );
-                        setValue(`view.imageCtrl.imageUrl`, '');
+                        setValue(`view.imageCtrl.imageUrl`, '', { shouldDirty: true });
                         e.target.files = null;
                         e.target.value = '';
                         isCollapsedModalForImage();

@@ -114,7 +114,7 @@ export const ConditionNodeEdit = () => {
                 className={classNames(`join`)}
                 role="presentation"
                 onClick={(e) => {
-                  setValue('view.join', ConditionJoin.And);
+                  setValue('view.join', ConditionJoin.And, { shouldDirty: true });
                   handleAddConditionButton(e);
                 }}
               >
@@ -142,7 +142,7 @@ export const ConditionNodeEdit = () => {
                 className={classNames(`join`)}
                 role="presentation"
                 onClick={(e) => {
-                  setValue('view.join', ConditionJoin.Or);
+                  setValue('view.join', ConditionJoin.Or, { shouldDirty: true });
                   handleAddConditionButton(e);
                 }}
               >
@@ -205,7 +205,7 @@ export const ConditionNodeEdit = () => {
                   className={classNames(`join`)}
                   role="presentation"
                   onClick={(e) => {
-                    setValue('view.join', ConditionJoin.And);
+                    setValue('view.join', ConditionJoin.And, { shouldDirty: true });
                     handleAddConditionButton(e);
                   }}
                 >
@@ -232,7 +232,7 @@ export const ConditionNodeEdit = () => {
                   className={classNames(`join`)}
                   role="presentation"
                   onClick={(e) => {
-                    setValue('view.join', ConditionJoin.Or);
+                    setValue('view.join', ConditionJoin.Or, { shouldDirty: true });
                     handleAddConditionButton(e);
                   }}
                 >

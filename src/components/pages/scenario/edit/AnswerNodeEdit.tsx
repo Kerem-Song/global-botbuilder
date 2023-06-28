@@ -48,10 +48,12 @@ export const AnswerNodeEdit = () => {
     const subscription = watch((value, { name, type }) => {
       if (name === 'view.useUtteranceParam' && type === 'change') {
         if (!value.view?.useUtteranceParam) {
-          setValue('view.utteranceParam', undefined);
-          setValue('nextNodeId', undefined);
+          setValue('view.utteranceParam', undefined, { shouldDirty: true });
+          setValue('nextNodeId', undefined, { shouldDirty: true });
           if (value.view?.quicks?.length === 0) {
-            setValue('view.quicks', [nodeDefaultHelper.createDefaultAnswerQickItem(0)]);
+            setValue('view.quicks', [nodeDefaultHelper.createDefaultAnswerQickItem(0)], {
+              shouldDirty: true,
+            });
           }
         }
       }

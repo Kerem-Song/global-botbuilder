@@ -114,19 +114,23 @@ export const JsonRequestNodeEdit = () => {
     refetch()
       .then((res) => {
         resetField('view.apiRes');
-        setValue('view.apiRes', JSON.stringify(res?.data, null, 2));
+        setValue('view.apiRes', JSON.stringify(res?.data, null, 2), {
+          shouldDirty: true,
+        });
 
         if (res.isError) {
           resetField('view.apiRes');
 
-          setValue('view.apiRes', JSON.stringify(res.error, null, 2));
+          setValue('view.apiRes', JSON.stringify(res.error, null, 2), {
+            shouldDirty: true,
+          });
         }
 
         setLoading(false);
       })
       .catch((error) => {
         resetField('view.apiRes');
-        setValue('view.apiRes', JSON.stringify(error, null, 2));
+        setValue('view.apiRes', JSON.stringify(error, null, 2), { shouldDirty: true });
         setLoading(false);
       });
   };

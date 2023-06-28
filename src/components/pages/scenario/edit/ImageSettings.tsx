@@ -70,10 +70,13 @@ export const ImageSettings = ({
             setValue(
               `view.childrenViews.${i}.imageCtrl.aspectRatio`,
               ImageAspectRatio.Rectangle,
+              { shouldDirty: true },
             );
           }
         } else {
-          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+            shouldDirty: true,
+          });
         }
       }
       if (ratio === ImageAspectRatio.Square) {
@@ -85,18 +88,25 @@ export const ImageSettings = ({
             setValue(
               `view.childrenViews.${i}.imageCtrl.aspectRatio`,
               ImageAspectRatio.Square,
+              { shouldDirty: true },
             );
           }
         } else {
-          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square, {
+            shouldDirty: true,
+          });
         }
       }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
-        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square);
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square, {
+          shouldDirty: true,
+        });
         setImageRatio(ImageAspectRatio.Rectangle);
       } else {
-        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+          shouldDirty: true,
+        });
         setImageRatio(ImageAspectRatio.Square);
       }
     }
@@ -117,7 +127,9 @@ export const ImageSettings = ({
                 setImageAspectRatioModal(ImageAspectRatio.Rectangle);
               } else {
                 setImageRatio(ImageAspectRatio.Rectangle);
-                setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle);
+                setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+                  shouldDirty: true,
+                });
               }
               aspectRatio.onChange(e);
             }}

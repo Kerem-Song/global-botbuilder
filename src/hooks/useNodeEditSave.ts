@@ -48,17 +48,17 @@ export const useNodeEditSave = () => {
     console.log('@@@@useEffect');
     return () => {
       console.log('@@@@useEffect callback');
-      if (/*isChanged &&*/ selectedNode && index === undefined && !isHistoryViewer) {
+      if (isChanged && selectedNode && index === undefined && !isHistoryViewer) {
         handleSave();
       }
     };
-  }, [selected /*, isChanged*/]);
+  }, [selected, isChanged]);
 
   useEffect(() => {
     return () => {
-      if (/*isChanged &&*/ selectedNode && index !== undefined && !isHistoryViewer) {
+      if (isChanged && selectedNode && index !== undefined && !isHistoryViewer) {
         handleSave();
       }
     };
-  }, [selected, index /*, isChanged*/]);
+  }, [selected, index, isChanged]);
 };

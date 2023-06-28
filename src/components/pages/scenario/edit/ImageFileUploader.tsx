@@ -79,12 +79,12 @@ export const ImageFileUploader = ({
       imageUploadAsync({ formData })
         .then((res) => {
           console.log('res.data image', res?.data);
-          setValue(imageUrl, res?.data.result);
-          setValue(imageFilePath, null);
+          setValue(imageUrl, res?.data.result, { shouldDirty: true });
+          setValue(imageFilePath, null, { shouldDirty: true });
         })
         .catch((err) => {
-          setValue(imageUrl, null);
-          setValue(imageFilePath, null);
+          setValue(imageUrl, null, { shouldDirty: true });
+          setValue(imageFilePath, null, { shouldDirty: true });
 
           //modal 띄우기?
           console.log('upload 실패', err);
@@ -114,7 +114,7 @@ export const ImageFileUploader = ({
 
         return;
       }
-      setValue(imageFilePath, e.target.files);
+      setValue(imageFilePath, e.target.files, { shouldDirty: true });
     }
   };
 

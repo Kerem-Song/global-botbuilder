@@ -36,10 +36,10 @@ export const DataBasicCardNodeEdit = () => {
   const handleCarouselNum = (button: boolean) => {
     if (button) {
       setCarouselNum((prev) => prev + 1);
-      setValue('view.count', carouselNum + 1);
+      setValue('view.count', carouselNum + 1, { shouldDirty: true });
     } else {
       setCarouselNum((prev) => prev - 1);
-      setValue('view.count', carouselNum - 1);
+      setValue('view.count', carouselNum - 1, { shouldDirty: true });
     }
   };
 
@@ -94,7 +94,7 @@ export const DataBasicCardNodeEdit = () => {
               <Radio
                 name="view.isShuffle"
                 checked={watch('view.isShuffle') === false}
-                onChange={() => setValue(`view.isShuffle`, false)}
+                onChange={() => setValue(`view.isShuffle`, false, { shouldDirty: true })}
                 ref={carouselPrintOutField.ref}
                 value="order"
               >
@@ -105,7 +105,7 @@ export const DataBasicCardNodeEdit = () => {
               <Radio
                 name="view.isShuffle"
                 checked={watch('view.isShuffle') === true}
-                onChange={() => setValue(`view.isShuffle`, true)}
+                onChange={() => setValue(`view.isShuffle`, true, { shouldDirty: true })}
                 ref={carouselPrintOutField.ref}
                 value="random"
               >
