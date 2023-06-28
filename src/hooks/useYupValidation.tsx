@@ -6,7 +6,7 @@ import {
   CONDITION_PARAMETER_REGEX,
   PARAMETER_REGEX,
   PARAMETER_REGEX_FIRST_LETTER,
-  PARAMETER_REGEX_NEXT_LETTER,
+  PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
@@ -279,8 +279,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -309,8 +309,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -368,8 +368,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -391,7 +391,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),
@@ -413,7 +416,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),
@@ -441,7 +447,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),

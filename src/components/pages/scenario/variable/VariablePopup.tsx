@@ -12,7 +12,7 @@ import {
   getReactSelectStyle,
   PARAMETER_REGEX,
   PARAMETER_REGEX_FIRST_LETTER,
-  PARAMETER_REGEX_NEXT_LETTER,
+  PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { FC, useEffect, useState } from 'react';
@@ -55,7 +55,10 @@ export const VariablePopup: FC<VariablePopupProps> = ({
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when({
         is: (name: string) => name && name.startsWith('.'),

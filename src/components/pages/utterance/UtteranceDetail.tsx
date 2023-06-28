@@ -213,7 +213,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
           />
         </div>
       ) : null}
-      <Divider />
+      {isOpenUtteranceDetailPopup ? <Divider /> : null}
       <div
         className={classNames('utteranceDetailWrap', {
           'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
