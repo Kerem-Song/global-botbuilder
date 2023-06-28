@@ -23,9 +23,6 @@ export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
 
 export const TesterMessagesItemButton = ({
   item,
-  card,
-  cardCarousel,
-  productCardCarousel,
   quickReply,
   className,
 }: TesterMessagesItemButtonProps) => {
