@@ -74,7 +74,7 @@ export const QuicksEdit = () => {
                 label={t(`QUICK_REPLY_BUTTON_NAME`)}
                 required={true}
                 showCount={true}
-                maxLength={14}
+                maxLength={13}
                 isLight={true}
                 {...register(`view.quicks.${i}.label`)}
                 textLength={watch(`view.quicks.${i}.label`)?.length || 0}
