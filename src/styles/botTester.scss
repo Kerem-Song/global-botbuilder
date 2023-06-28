@@ -311,18 +311,6 @@
               line-height: rem(17);
             }
           }
-
-          .luna-testerItem-cardCarouselBtn {
-            width: rem(240);
-            height: rem(35);
-            margin: rem(2) 0 rem(2) 0;
-            border: none;
-            border-radius: rem(8);
-            cursor: pointer;
-            &:hover {
-              background-color: #75767a;
-            }
-          }
         }
       }
 
@@ -581,15 +569,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: rem(2);
       width: rem(49);
-      height: rem(30);
-      border: 1px solid $primary500;
+      height: rem(33);
       background-color: $primary500;
+      border: 1px solid $primary500;
       border-radius: rem(8);
       padding: rem(8) rem(10);
       color: $grayWhite;
-
+      &.disabledBtn {
+        background-color: $primary200;
+        border: 1px solid $primary200;
+        &:hover {
+          background-color: $primary200;
+          border: 1px solid $primary200;
+        }
+      }
       &:hover {
         background-color: $primary700;
       }

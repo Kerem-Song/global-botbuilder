@@ -45,13 +45,17 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
             }
           >
             {item.buttons.map((v, i) => {
-              return <TesterMessagesItemButton cardCarousel key={i} item={v} />;
+              return <TesterMessagesItemButton key={i} item={v} />;
             })}
           </div>
         </div>
       ) : (
         <div className="cardCarouselContents">
-          <div className="rectangleImageBtn">
+          <div
+            className={
+              item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
+            }
+          >
             {item.buttons.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
             ))}

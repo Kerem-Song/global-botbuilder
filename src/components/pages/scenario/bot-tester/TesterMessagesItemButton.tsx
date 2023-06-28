@@ -136,9 +136,6 @@ export const TesterMessagesItemButton = ({
   };
 
   const itemButton = classNames(className, 'luna-testerItem-btn', {
-    'luna-testerItem-cardBtn': card,
-    'luna-testerItem-cardCarouselBtn': cardCarousel,
-    'luna-testerItem-productCardCarouselBtn': productCardCarousel,
     'luna-testerItem-quickReplyBtn': quickReply,
   });
 
