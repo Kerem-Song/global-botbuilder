@@ -1,6 +1,7 @@
 import { Button, Col, Divider, FormItem, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useBotClient, usePage, useRootState } from '@hooks';
+import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { useCallbackPrompt } from '@hooks/useCallbackPrompt';
 import { IBotInput, SnsKind } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
@@ -14,6 +15,7 @@ export const NewBotPopup: FC<{
   handleIsOpen: (value: boolean) => void;
 }> = ({ isOpen, handleIsOpen }) => {
   const { t, tc } = usePage();
+  const { confirm } = useSystemModal();
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
   const { botSaveAsync } = useBotClient();
   const defaultValues: IBotInput = {
@@ -41,11 +43,13 @@ export const NewBotPopup: FC<{
     reset,
     setFocus,
     setError,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<IBotInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });
+
+  useCallbackPrompt(isOpen && isDirty);
 
   const handleSave = async (model: IBotInput) => {
     const result = await botSaveAsync({ ...model, customErrorCode: [7654] });
@@ -65,9 +69,21 @@ export const NewBotPopup: FC<{
     //reset(defaultValues);
   };
 
-  const handleClose = () => {
-    reset(defaultValues);
-    handleIsOpen(false);
+  const handleClose = async () => {
+    let result: boolean | undefined = true;
+    if (isDirty) {
+      result = await confirm({
+        title: tc('SAVE'),
+        description: (
+          <span style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</span>
+        ),
+      });
+    }
+
+    if (result) {
+      reset(defaultValues);
+      handleIsOpen(false);
+    }
   };
 
   return (
@@ -84,6 +100,7 @@ export const NewBotPopup: FC<{
       onRequestClose={() => {
         handleClose();
       }}
+      shouldCloseOnOverlayClick={false}
       isOpen={isOpen}
       onAfterOpen={() => {
         setFocus('botName');

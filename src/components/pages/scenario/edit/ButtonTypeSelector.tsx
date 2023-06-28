@@ -46,6 +46,7 @@ export const ButtonTypeSelector = ({
             ? `view.childrenViews.${carouselIndex}.buttons.${index}.actionValue`
             : `view.buttons.${index}.actionValue`,
           '',
+          { shouldDirty: true },
         );
       }}
       minMenuHeight={500}

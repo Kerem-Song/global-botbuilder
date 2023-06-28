@@ -42,16 +42,17 @@ export const ImageInput = ({
 
   const handleImgOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     if (!e.target.value) {
-      setValue(imgPath, '');
-      setValue(imageUrl, '');
+      setValue(imgPath, '', { shouldDirty: true });
+      setValue(imageUrl, '', { shouldDirty: true });
     } else {
       setValue(
         imgPath,
         `${
           import.meta.env.VITE_API_BASE_URL
         }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
+        { shouldDirty: true },
       );
-      setValue(imageUrl, e.target.value.trim());
+      setValue(imageUrl, e.target.value.trim(), { shouldDirty: true });
     }
   };
 

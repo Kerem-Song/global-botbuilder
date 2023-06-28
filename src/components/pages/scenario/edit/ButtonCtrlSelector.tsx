@@ -33,7 +33,7 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
       value={selectOptions.find((item) => item.value === field.value)}
       onChange={(options: any) => {
         field.onChange(options?.value);
-        setValue(value, '');
+        setValue(value, '', { shouldDirty: true });
       }}
     />
   );

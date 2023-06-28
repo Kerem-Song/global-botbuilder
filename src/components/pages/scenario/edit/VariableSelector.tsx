@@ -49,7 +49,7 @@ export const VariableSelector = <T extends object>({
         variables.find((x) => x.usingName === field.value) || handleCreate(field.value)
       }
       onChangeValue={(value) => {
-        setValue<string>(path, value?.usingName || '');
+        setValue<string>(path, value?.usingName || '', { shouldDirty: true });
       }}
       onChange={field.onChange}
       create={handleCreate}

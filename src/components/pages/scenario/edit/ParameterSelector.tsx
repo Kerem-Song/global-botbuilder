@@ -68,7 +68,7 @@ export const ParameterSelector = <T extends object>({
           parameters.find((x) => x.name === field.value) || handleCreate(field.value)
         }
         onChangeValue={(value) => {
-          setValue<string>(path, value?.name || '');
+          setValue<string>(path, value?.name || '', { shouldDirty: true });
         }}
         onChange={field.onChange}
         create={handleCreate}
