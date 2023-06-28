@@ -126,6 +126,13 @@
       }
     }
 
+    .icQuickBtn {
+      background-image: url('@assets/icons/ic_quick_btn.svg');
+      &:hover {
+        background-image: url('@assets/icons/ic_quick_btn_hover.svg');
+      }
+    }
+    
     .icCondition {
       background-image: url('@assets/icons/ic_condition.svg');
       &:hover {
