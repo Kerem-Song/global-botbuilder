@@ -270,11 +270,12 @@ export const ConditionNodeEdit = () => {
                       on: watch(`view.join`) !== undefined,
                     })}
                     onClick={(e) => {
-                      if (i < 4) {
+                      if (i < 4 && fields.length === i + 1) {
                         handleAddConditionButton(e);
                       }
                     }}
                   >
+                    {fields.length === i + 1 ? '+ Add' : ''}{' '}
                     {Number(watch(`view.join`)) === ConditionJoin.And ? 'And' : 'Or'}
                   </Button>
                 </div>
