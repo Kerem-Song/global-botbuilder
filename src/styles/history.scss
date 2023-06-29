@@ -293,7 +293,7 @@
         }
 
         .wrapper {
-          height: calc(100vh);
+          height: calc(100vh - rem(49));
         }
 
         .wrapper::-webkit-scrollbar {
