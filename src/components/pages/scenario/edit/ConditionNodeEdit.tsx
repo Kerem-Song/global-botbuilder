@@ -88,7 +88,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view?.items[0]?.op1}
             >
               <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
+                placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
                 control={control}
                 path="view.items.0.op1"
               />
@@ -103,7 +103,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view.items[0]?.op2}
             >
               <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
+                placeholder={t(`INPUT_VARIABLE_THIRD_CONDITION_PLACEHOLDER`)}
                 control={control}
                 path="view.items.0.op2"
               />
@@ -176,7 +176,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view.items[i]?.op1}
             >
               <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
+                placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
                 control={control}
                 path={`view.items.${i}.op1`}
               />
@@ -193,7 +193,7 @@ export const ConditionNodeEdit = () => {
               error={errors.view && errors.view.items && errors.view?.items[i]?.op2}
             >
               <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
+                placeholder={t(`INPUT_VARIABLE_THIRD_CONDITION_PLACEHOLDER`)}
                 control={control}
                 path={`view.items.${i}.op2`}
               />
