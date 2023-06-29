@@ -30,7 +30,6 @@ export const NewBotPopup: FC<{
         .string()
         .trim()
         .required(tc('REQUIRE_MESSAGE'))
-        .min(2, tc('MIN_LENGTH_MESSAGE', { val: 2 }))
         .matches(BOTNAME_REGEX, {
           message: tc('BOTNAME_REGEX_MESSAGE'),
         }),

@@ -57,11 +57,12 @@ export const DeleteBot = () => {
   };
 
   useEffect(() => {
-    if (botSettingInfo && !isManager) {
+    if (botSettingInfo) {
       if (removeCancelExpireUtc === null) {
         setActiveDeleteBtn(true);
       } else if (removeCancelExpireUtc !== null) {
         setActiveRecoverBtn(true);
+        setActiveDeleteBtn(false);
       }
     }
   }, [botSettingInfo && botSettingInfo.id, removeCancelExpireUtc, isManager]);
@@ -85,21 +86,21 @@ export const DeleteBot = () => {
           </Col>
         </Space>
         <Col>
-          {activeRecoverBtn ? (
-            <Button
-              type="default"
-              disabled={activeRecoverBtn ? false : true}
-              onClick={handleRecoverBtn}
-            >
-              {t('RECOVER_BOT')}
-            </Button>
-          ) : (
+          {activeDeleteBtn ? (
             <Button
               type="secondary"
-              disabled={activeDeleteBtn ? false : true}
+              disabled={isManager || !activeDeleteBtn}
               onClick={handleDeleteBtn}
             >
               {t('DELETE_BOT')}
+            </Button>
+          ) : (
+            <Button
+              type="default"
+              disabled={isManager || !activeRecoverBtn}
+              onClick={handleRecoverBtn}
+            >
+              {t('RECOVER_BOT')}
             </Button>
           )}
         </Col>
