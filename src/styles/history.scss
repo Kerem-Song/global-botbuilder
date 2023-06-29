@@ -226,6 +226,9 @@
 .historyViewerMain {
   padding-left: 0;
 
+  input {
+    pointer-events: none;
+  }
   .scenarioWrapper {
 
     .botBuilderWrapper {
