@@ -32,7 +32,7 @@ export const OperatorSelector = ({ index }: { index: number }) => {
       {...operatorField}
       placeholder={t(`SET_OPTION_NULL`)}
       options={operatorOptions}
-      placeholder={t(`SET_OPTION_NULL`)}
+      placeholder={t(`INPUT_VARIABLE_SECOND_CONDITION_PLACEHOLDER`)}
       styles={reactSelectStyle}
       value={operatorOptions.find((item) => item.value === operatorField.value)}
       onChange={(options: any) => operatorField.onChange(options?.value)}
