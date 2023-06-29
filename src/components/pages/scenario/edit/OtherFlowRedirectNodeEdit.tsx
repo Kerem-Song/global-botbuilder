@@ -56,6 +56,7 @@ export const OtherFlowRedirectNodeEdit = () => {
               className="react-selector"
               {...field}
               options={scenarioList}
+              placeholder={t(`SET_OPTION_NULL`)}
               styles={reactSelectStyle}
               defaultValue={scenarioList.find((item) => item.value === values.nextNodeId)}
               value={scenarioList.find((item) => item.value === field.value)}

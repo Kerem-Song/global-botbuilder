@@ -29,6 +29,7 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
       className="react-selector"
       {...field}
       options={selectOptions}
+      placeholder={t(`SET_OPTION_NULL`)}
       styles={reactSelectStyle}
       value={selectOptions.find((item) => item.value === field.value)}
       onChange={(options: any) => {

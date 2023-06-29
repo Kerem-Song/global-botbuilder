@@ -218,6 +218,7 @@ export const DataProductCardNodeEdit = () => {
                 className="react-selector"
                 {...priceDisplayTypeField}
                 options={priceDisplayTypeOptions}
+                placeholder={t(`SET_OPTION_NULL`)}
                 styles={reactSelectStyle}
                 defaultValue={priceDisplayTypeOptions[0]}
                 value={priceDisplayTypeOptions.find(

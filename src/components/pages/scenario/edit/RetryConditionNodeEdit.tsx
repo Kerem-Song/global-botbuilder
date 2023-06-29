@@ -54,6 +54,7 @@ export const RetryConditionNodeEdit = () => {
             className="react-selector"
             {...field}
             options={countOptions}
+            placeholder={t(`SET_OPTION_NULL`)}
             styles={reactSelectStyle}
             defaultValue={countOptions[0]}
             value={countOptions.find((item) => item.value === field.value)}
