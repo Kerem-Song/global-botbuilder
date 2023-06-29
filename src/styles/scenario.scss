@@ -118,11 +118,12 @@
 
     .scenarioListWrapper {
       flex: auto;
-      padding: rem(8) rem(10) 0 rem(10);
+      margin-top: rem(8);
       overflow-y: auto;
-
       -ms-overflow-style: none;
       scrollbar-width: none;
+      padding: rem(0) rem(10);
+
       //max-height: 100px;
       .luna-card-bordered {
         border: rem(1) solid $gray200;
