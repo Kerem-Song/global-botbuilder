@@ -1,6 +1,7 @@
 import { imgNotFoundImg } from '@assets';
 import { Divider, Space } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
+import classNames from 'classnames';
 import { SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
@@ -96,11 +97,9 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             ) : (
               <div className="cardText">
                 <div
-                  className={
-                    item.image?.imageAspectRatio === 0
-                      ? 'rectangleImageBtn'
-                      : 'squareImageBtn'
-                  }
+                  className={classNames('rectangleImageBtn', {
+                    squareImageBtn: item.image?.imageAspectRatio === 1,
+                  })}
                 >
                   {item.buttons.map((v, i) => (
                     <TesterMessagesItemButton key={i} item={v} />

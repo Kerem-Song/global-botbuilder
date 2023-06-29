@@ -70,11 +70,6 @@ export const NodeEditDrawer = () => {
       if (invalidateNodes[selectedNode.id]) {
         trigger();
       }
-
-      if (filtered.length > 1) {
-        dispatch(setInvalidateNode({ id: selectedNode.id, isValid: false }));
-        trigger();
-      }
     } else {
       reset({ id: '', title: '' });
     }

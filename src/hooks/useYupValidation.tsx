@@ -6,7 +6,7 @@ import {
   CONDITION_PARAMETER_REGEX,
   PARAMETER_REGEX,
   PARAMETER_REGEX_FIRST_LETTER,
-  PARAMETER_REGEX_NEXT_LETTER,
+  PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import { is } from 'immer/dist/internal';
@@ -24,9 +24,6 @@ export const useYupValidation = () => {
   const dispatch = useDispatch();
   const [isDuplicated, setIsDuplicated] = useState(false);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
-  const selected = useRootState((state) => state.botBuilderReducer.selected);
-  const selectedNode = nodes.find((x) => x.id === selected);
-  const filtered = nodes.filter((node) => node.title === selectedNode?.title);
 
   const FILE_SIZE = 3 * 1024 * 1024; //3mb제한
 
@@ -279,8 +276,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -309,8 +306,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -368,8 +365,8 @@ export const useYupValidation = () => {
             otherwise: yup
               .string()
               .matches(
-                PARAMETER_REGEX_NEXT_LETTER,
-                t('PARAMETER_VALIDATION_NEXT_LETTER'),
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
               ),
           })
           .when('.', {
@@ -391,7 +388,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),
@@ -413,7 +413,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),
@@ -441,7 +444,10 @@ export const useYupValidation = () => {
         then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
         otherwise: yup
           .string()
-          .matches(PARAMETER_REGEX_NEXT_LETTER, t('PARAMETER_VALIDATION_NEXT_LETTER')),
+          .matches(
+            PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+            t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+          ),
       })
       .when('.', {
         is: (name: string) => name && name.startsWith('.'),
@@ -474,6 +480,8 @@ export const useYupValidation = () => {
         .string()
         .required(t(`VALIDATION_REQUIRED`))
         .test('is-duplicated', t(`DUPLICATE_NODE_NAME`), (val: any) => {
+          const filtered = nodes.filter((item) => item.title === val);
+
           if (filtered.length > 1) {
             setIsDuplicated(true);
             return false;
