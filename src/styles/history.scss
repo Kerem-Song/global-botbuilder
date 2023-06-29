@@ -248,6 +248,14 @@
         }
       }
 
+      .buttonWrapper {
+        pointer-events: none;
+      }
+
+      .listItems {
+        pointer-events: none;
+      }
+
       .botBuilderDrawer {
         margin-top: rem(46);
         cursor: text;
