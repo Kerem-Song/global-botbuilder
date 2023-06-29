@@ -112,6 +112,16 @@ export const nodeDefaultHelper = {
 
     return result;
   },
+  createDefaultConditionSwitchView: () => {
+    const result: IConditionView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.CONDITION_VIEW,
+      items: [{ op1: '', operator: undefined, op2: '', nextNodeId: '' }],
+      join: ConditionJoin.And,
+    };
+
+    return result;
+  },
   createDefaultAnswerView: () => {
     const result: IAnswerView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),

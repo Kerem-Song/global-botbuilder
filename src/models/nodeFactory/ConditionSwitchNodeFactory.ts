@@ -23,7 +23,7 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultConditionView();
+    return nodeDefaultHelper.createDefaultConditionSwitchView();
   }
 
   getEditElement() {

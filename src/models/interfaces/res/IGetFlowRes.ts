@@ -53,6 +53,7 @@ export interface IConditionItem {
   op1: string | null;
   op2: string | null;
   operator?: ConditionOperator;
+  nextNodeId?: string;
 }
 
 export interface INodeView {
@@ -163,7 +164,6 @@ export interface IConditionView extends ITrueFalseViewBase {
   join?: ConditionJoin;
   items?: IConditionItem[];
 }
-
 export interface IRetryConditionNode extends INodeBase {
   view: IRetryConditionView;
 }

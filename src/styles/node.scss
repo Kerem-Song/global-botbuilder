@@ -400,6 +400,17 @@
             word-break: break-all;
           }
 
+          &.conditionCaseWrapper {
+            display: flex;
+            flex-direction: column;
+            gap: rem(10);
+
+            p {
+
+              height: rem(50);
+            }
+          }
+
           &.parameterSetNode {
             display: flex;
             flex-flow: column;
