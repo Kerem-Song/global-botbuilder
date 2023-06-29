@@ -100,6 +100,11 @@ export const BotBuilderHeader = () => {
       value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
       nodeName: t('CAPTION_OTHERFLOWREDIRECTNODE'),
     },
+    {
+      className: 'icCondition',
+      value: NODE_TYPES.CONDITION_SWITCH_NODE,
+      nodeName: t('CAPTION_CONDITION_SWITCH_NODE'),
+    },
   ];
 
   const apiNodes = [

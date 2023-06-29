@@ -8,6 +8,7 @@ import { AnswerNodeFactory } from './AnswerNodeFactory';
 import { BasicCardCarouselNodeFactory } from './BasicCardCarouselNodeFactory';
 import { BasicCardNodeFactory } from './BasicCardNodeFactory';
 import { ConditionNodeFactory } from './ConditionNodeFactory';
+import { ConditionSwitchNodeFactory } from './ConditionSwitchNodeFactory';
 import { DataBasicCardNodeFactory } from './DataBasicCardNodeFactory';
 import { DataListCardNodeFactory } from './DataListCardNodeFactory';
 import { DataProductCardNodeFactory } from './DataProductCardNodeFactory';
@@ -42,6 +43,7 @@ const basicCardCarouselNodeFactory = new BasicCardCarouselNodeFactory();
 const listCardNodeFactory = new ListCardNodeFactory();
 const listCardCarouselNodeFactory = new ListCardCarouselNodeFactory();
 const conditionNodeFactory = new ConditionNodeFactory();
+const conditionSwitchNodeFactory = new ConditionSwitchNodeFactory();
 const answerNodeFactory = new AnswerNodeFactory();
 const parameterSetNodeFactory = new ParameterSetNodeFactory();
 const otherFlowRedirectNodeFactory = new OtherFlowRedirectNodeFactory();
@@ -70,6 +72,8 @@ export const nodeFactory = {
         return listCardCarouselNodeFactory;
       case NODE_TYPES.CONDITION_NODE:
         return conditionNodeFactory;
+      case NODE_TYPES.CONDITION_SWITCH_NODE:
+        return conditionSwitchNodeFactory;
       case NODE_TYPES.ANSWER_NODE:
         return answerNodeFactory;
       case NODE_TYPES.PARAMETER_SET_NODE:

@@ -56,6 +56,7 @@ export const SelectNode = ({
       })}
       {...field}
       options={selectorOptions}
+      placeholder={t(`SET_OPTION_NULL`)}
       styles={reactSelectStyle}
       defaultValue={nodeList.find((item) => item.value === defaultValue)}
       value={nodeList.find((item) => item.value === field.value)}

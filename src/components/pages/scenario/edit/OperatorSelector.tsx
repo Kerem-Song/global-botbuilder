@@ -30,6 +30,7 @@ export const OperatorSelector = ({ index }: { index: number }) => {
     <Select
       className="react-selector"
       {...operatorField}
+      placeholder={t(`SET_OPTION_NULL`)}
       options={operatorOptions}
       styles={reactSelectStyle}
       value={operatorOptions.find((item) => item.value === operatorField.value)}

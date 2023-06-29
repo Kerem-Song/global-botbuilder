@@ -1,3 +1,4 @@
+import { usePage } from '@hooks';
 import { getReactSelectStyle } from '@modules';
 import { Dispatch, SetStateAction } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
@@ -22,6 +23,7 @@ export const ButtonTypeSelector = ({
   isCarousel,
   carouselIndex,
 }: IButtonTypeSelector) => {
+  const { t } = usePage();
   const { control, setValue } = useFormContext();
   const reactSelectStyle = getReactSelectStyle({});
   const { field } = useController({
@@ -36,6 +38,7 @@ export const ButtonTypeSelector = ({
       className="react-selector"
       {...field}
       options={options}
+      placeholder={t(`SET_OPTION_NULL`)}
       styles={reactSelectStyle}
       value={options.find((item) => item.value === field.value)}
       onChange={(options: any) => {
