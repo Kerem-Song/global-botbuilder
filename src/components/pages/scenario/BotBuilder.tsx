@@ -73,7 +73,10 @@ export const Botbuilder = () => {
   const isHistoryViewer = useHistoryViewerMatch();
 
   const { getScenario } = useScenarioClient();
-  const { fetchStatus } = getScenario(selectedScenario?.id);
+  getScenario(selectedScenario?.id);
+  // if (!isHistoryViewer) {
+
+  // }
 
   const { isOpen, handleIsOpen } = useModalOpen();
 
@@ -120,11 +123,11 @@ export const Botbuilder = () => {
   }, []);
 
   useEffect(() => {
-    if (canvasRef.current && fetchStatus === 'idle') {
+    if (canvasRef.current) {
       canvasRef.current.style.left = '0px';
       canvasRef.current.style.top = '0px';
     }
-  }, [fetchStatus]);
+  }, [selectedScenario]);
 
   const factor = { x: 0, y: 0 };
   const panning = (x: number, y: number) => {
