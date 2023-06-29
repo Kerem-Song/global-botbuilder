@@ -34,6 +34,10 @@
     border: 0;
     color: $gray200;
     cursor: not-allowed;
+    &:hover {
+      background-color: $gray100;
+      color: $gray200;
+    }
   }
   .icon {
     align-items: center;
@@ -80,6 +84,10 @@ a.luna-btn {
   &:disabled {
     background: $primary200;
     color: #ffffff;
+    &:hover {
+      background: $primary200;
+      color: #ffffff;
+    }
   }
 }
 

@@ -48,6 +48,11 @@
     .nodeHeadTitle {
       width: rem(132);
       font-weight: 500;
+
+      div {
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
     }
 
     .nodeIcon {
