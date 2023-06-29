@@ -84,6 +84,9 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       /**
        * todo : 인증 실패 같은 공통 Exception 처리
        */
+      if (err.response.status === 403 || err.response.status === 401) {
+        document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
+      }
 
       if (err.response.data.exception && err.response.data.exception.errorCode === 7656) {
         error({
