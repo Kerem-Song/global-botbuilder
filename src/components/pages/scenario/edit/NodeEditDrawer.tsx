@@ -121,6 +121,8 @@ export const NodeEditDrawer = () => {
               required={true}
               placeholder="Input Chat Bubble name"
               {...register('title')}
+              showCount={true}
+              maxLength={100}
               disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
               textLength={watch('title')?.length || 0}
               readOnly={isHistoryViewer || selectedNode?.type === NODE_TYPES.INTENT_NODE}
