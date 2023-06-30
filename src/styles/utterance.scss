@@ -69,6 +69,7 @@
         }
         &.utterance-popup-tbody {
           min-height: rem(249);
+          max-height: rem(444);
         }
       }
       .utteranceTbody::-webkit-scrollbar {
