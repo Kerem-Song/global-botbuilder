@@ -215,7 +215,12 @@ export const NodeLinkPopUpMenu = ({
   const filterdBtnList = cardTypeValue
     .filter((b) => {
       if (startNode?.type === NODE_TYPES.INTENT_NODE) {
-        return b.value !== (NODE_TYPES.RETRY_CONDITION_NODE && NODE_TYPES.ANSWER_NODE);
+        return (
+          b.value !==
+          (NODE_TYPES.RETRY_CONDITION_NODE &&
+            NODE_TYPES.ANSWER_NODE &&
+            NODE_TYPES.RETRY_CONDITION_NODE)
+        );
       }
       return b;
     })
