@@ -97,11 +97,15 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
         className={classNames('utteranceItems', {
           'utterance-detailModal-items': isOpenUtteranceDetailPopup,
         })}
-        style={{ marginTop: '12px' }}
+        style={{ marginTop: '10px' }}
       >
         {watch('items').length === 0 ? (
-          <Row style={{ width: '100%', marginTop: '12px' }}>
-            <Col className="emptyList utteranceItem">
+          <Row style={{ width: '100%' }}>
+            <Col
+              className={classNames('emptyList', {
+                'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+              })}
+            >
               <div className="empty">
                 <img src={icNoResult} alt="empty" />
                 <span>{t('NO_REGISTERED_UTTERANCE')}</span>
@@ -127,13 +131,17 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
             );
           })
         ) : (
-          <Row style={{ width: '100%', marginTop: '12px' }}>
-            <div className="emptyList utteranceItem">
+          <Row style={{ width: '100%' }}>
+            <Col
+              className={classNames('emptyList', {
+                'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+              })}
+            >
               <div className="empty">
                 <img src={icNoResult} alt="empty" />
                 <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
               </div>
-            </div>
+            </Col>
           </Row>
         )}
       </Row>
