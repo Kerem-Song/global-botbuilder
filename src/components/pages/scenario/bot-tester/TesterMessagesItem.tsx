@@ -337,7 +337,6 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
             )}
           </div>
         );
-
       case TESTER_DATA_TYPES.quickReplies:
         return (
           <div className="quickReplies">
