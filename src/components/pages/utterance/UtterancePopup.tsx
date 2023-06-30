@@ -42,6 +42,11 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   const handleClose = () => {
     handleIsOpenUtterancePopup(false);
     removeUtteranceQueries();
+    setSearchData({
+      sort: 1,
+      scenarios: selectedScenarios && selectedScenarios.id,
+      searchWord: undefined,
+    });
   };
 
   const handleDetailPopupOpen = (intentId?: string) => {
