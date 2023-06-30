@@ -4,7 +4,7 @@ import { useI18n } from '@hooks';
 import { ConditionJoin } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
-import { FALSE_SUFFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';
+import { CONDITION_SUFFIX, FALSE_SUFFIX, NODE_PREFIX, TRUE_SUFFIX } from '@modules';
 import { FC, useRef } from 'react';
 
 export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
@@ -24,7 +24,7 @@ export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
                 {item.op2 || '{{ }}'}
               </p>
               <NextNodeButton
-                ctrlId={`${node.id}${TRUE_SUFFIX}${i}`}
+                ctrlId={`${node.id}${CONDITION_SUFFIX}${i}`}
                 nodeId={`${NODE_PREFIX}${node.id}`}
                 type="green"
                 offset={i * 25 + 60}
@@ -33,19 +33,6 @@ export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
           );
         })}
       </div>
-
-      {/* {view.items?.map((item, i) => {
-        return (
-          <div key={i}>
-            <NextNodeButton
-              ctrlId={`${node.id}${TRUE_SUFFIX}`}
-              nodeId={`${NODE_PREFIX}${node.id}`}
-              type="green"
-              offset={i * 50}
-            />
-          </div>
-        );
-      })} */}
 
       <NextNodeButton
         ctrlId={`${node.id}${FALSE_SUFFIX}`}

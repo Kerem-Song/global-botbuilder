@@ -3,6 +3,7 @@ export const NEXT_BUTTON_PREFIX = 'next-';
 export const NODE_PREFIX = 'node-';
 export const TRUE_SUFFIX = '-true';
 export const FALSE_SUFFIX = '-false';
+export const CONDITION_SUFFIX = '-condition-';
 export const NODE_DRAG_FACTOR = 10;
 export const QUICK_MAX_COUNT = 10;
 export const SYS_BOT_ICON = '@sys.bot-icon';

@@ -39,7 +39,7 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
-    arrowHelper.syncTrueFalseNodeArrow(startId, endId, view);
+    arrowHelper.syncConditionFalseNodeArrow(startId, endId, view);
   }
 
   getNodeImgIconUrl() {
@@ -48,8 +48,10 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
 
   getConnectId(node: INode) {
     const view = node.view as IConditionView;
+    const item = view.items?.map((item) => item.nextNodeId);
+    console.log('@item', item);
     return [
-      ...(view.trueThenNextNodeId ? [view.trueThenNextNodeId] : []),
+      ...(node.nextNodeId ? [node.nextNodeId] : []),
       ...(view.falseThenNextNodeId ? [view.falseThenNextNodeId] : []),
     ];
   }

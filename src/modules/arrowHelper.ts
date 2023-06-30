@@ -11,7 +11,13 @@ import {
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
-import { FALSE_SUFFIX, NEXT_BUTTON_PREFIX, NODE_PREFIX, TRUE_SUFFIX } from './constants';
+import {
+  CONDITION_SUFFIX,
+  FALSE_SUFFIX,
+  NEXT_BUTTON_PREFIX,
+  NODE_PREFIX,
+  TRUE_SUFFIX,
+} from './constants';
 import { lunaToast } from './lunaToast';
 
 const OVERFLOWLINK = 99999;
@@ -32,6 +38,7 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.DATA_BASIC_CARD_NODE,
   NODE_TYPES.DATA_LIST_CARD_NODE,
   NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+  NODE_TYPES.CONDITION_SWITCH_NODE,
 ];
 
 const invalidateConnectNoteType: TNodeTypes[] = [
@@ -269,6 +276,25 @@ export const arrowHelper = {
       view.trueThenNextNodeId = endId;
     }
 
+    if (startId.endsWith(FALSE_SUFFIX)) {
+      view.falseThenNextNodeId = endId;
+    }
+  },
+  syncConditionFalseNodeArrow: (
+    startId: string,
+    endId?: string,
+    view?: IConditionView,
+  ) => {
+    if (!view) {
+      return;
+    }
+
+    if (startId.includes(CONDITION_SUFFIX))
+      view.items?.map((item, i) => {
+        if (startId.endsWith(CONDITION_SUFFIX + i)) {
+          item.nextNodeId = endId;
+        }
+      });
     if (startId.endsWith(FALSE_SUFFIX)) {
       view.falseThenNextNodeId = endId;
     }
