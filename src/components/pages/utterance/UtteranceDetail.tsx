@@ -184,7 +184,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       });
       if (res) {
         handleClose();
-        handleIsOpenUtterancePopup!(true);
+        handleIsOpenUtterancePopup!(false);
       }
     } else {
       handleClose();

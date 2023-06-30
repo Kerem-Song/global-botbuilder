@@ -27,7 +27,6 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const [text, setText] = useState<string>('');
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { t } = useI18n('botTest');
   const { botId } = useParams();
   const dispatch = useDispatch();
@@ -51,7 +50,6 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   };
 
   const handleClose = () => {
-    setScrollPosition(scrollRef.current?.scrollTop || 0);
     setText('');
     handleIsOpen(false);
   };
@@ -111,17 +109,14 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   }, [botId]);
 
   useEffect(() => {
-    if (isOpen && scrollRef.current) {
-      scrollRef.current.scrollTop = scrollPosition;
-      setDebugMeta(undefined);
+    if (isOpen) {
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
+        }
+      }, 10);
     }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
-    }
-  }, [botTesterData]);
+  }, [isOpen, botTesterData]);
 
   return (
     <>

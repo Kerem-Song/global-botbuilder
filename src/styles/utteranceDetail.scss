@@ -41,7 +41,7 @@
     }
   }
   .add {
-    margin-top: rem(20);
+    margin-top: rem(8);
     border-bottom: none;
     border-top-left-radius: rem(8);
     border-top-right-radius: rem(8);
@@ -100,11 +100,17 @@
         }
       }
       .emptyList {
+        width: 100%;
+        border: 1px solid $gray200;
+        border-radius: rem(8);
         height: rem(214);
         display: flex;
         justify-content: center;
         align-items: center;
         color: $gray500;
+        &.utterance-detailModal-emptyList {
+          height: rem(170);
+        }
 
         .empty {
           display: flex;
@@ -166,7 +172,7 @@
 
 .utterance-detailModalWrap {
   width: rem(1080);
-  height: rem(652);
+  height: rem(577);
   overflow: hidden;
   margin: 0 auto;
   padding: rem(10) rem(20) rem(20) rem(20);
@@ -174,8 +180,9 @@
   background-color: $grayWhite;
 
   .utterance-detailModal {
+    height: rem(260);
     .utterance-detailModal-items {
-      max-height: rem(230);
+      max-height: rem(180);
       overflow-y: auto;
     }
     .utterance-detailModal-items::-webkit-scrollbar {
@@ -204,6 +211,7 @@
 
   .headerTitle {
     font-size: rem(20);
+    font-weight: 500;
   }
   .utteranceDetailClose {
     padding: 0;
