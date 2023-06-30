@@ -8,17 +8,19 @@ import { INode, NODE_TYPES, NodeKind } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { util } from '@modules/util';
 import { GuideInfo } from '@store/botbuilderSlice';
-import { addArrow, appendNode } from '@store/makingNode';
+import { appendNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
   setIsClickHeaderBtn,
 } from '@store/otherFlowScenarioPopupSlice';
 import { useEffect, useRef, useState } from 'react';
+import { useController, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 export const OtherFlowScenariosPopup = () => {
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
-
+  const { control } = useForm();
   const dispatch = useDispatch();
 
   const otherflowPopupRef = useRef<HTMLDivElement | null>(null);
@@ -38,6 +40,7 @@ export const OtherFlowScenariosPopup = () => {
     (state) => state.otherFlowScenariosPopupStatusReducer.isClickHeaderBtn,
   );
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+  const { field: searchInput } = useController({ name: 'searchInput', control });
   const [scenarioList, setScenarioList] = useState<
     {
       id: string;
@@ -135,12 +138,6 @@ export const OtherFlowScenariosPopup = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (data) {
-      setItems(scenarioList);
-    }
-  }, [scenarioList]);
-
   const [items, setItems] = useState(scenarioList);
   const [userInput, setUserInput] = useState<string | null>('');
 
@@ -158,6 +155,12 @@ export const OtherFlowScenariosPopup = () => {
       setItems(scenarioList);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setItems(scenarioList);
+    }
+  }, [scenarioList]);
 
   useEffect(() => {
     if (!otherflowPopupRef.current) {
@@ -186,27 +189,36 @@ export const OtherFlowScenariosPopup = () => {
       </Row>
       <>
         <Input
+          {...searchInput}
           placeholder={t('INPUT_SEARCH_WORD')}
           search
           onSearch={(data) => onSearch(data as string)}
-          onChange={(e) => setUserInput(e.currentTarget.value)}
+          onChange={(e) => {
+            setUserInput(e.currentTarget.value);
+            searchInput.onChange();
+            onSearch(e.currentTarget.value);
+          }}
           value={userInput || ''}
         />
       </>
-      {items?.map((item, i) => (
-        <Row justify="flex-start" align="center" gap={8} className="btnRow" key={i}>
-          <Col span={24}>
-            <div
-              className="luna-chatbot-list luna-popup-list"
-              onClick={() => item.data.action(item.name, item.data.firstNodeId)}
-              role="presentation"
-              style={{ width: '100%' }}
-            >
-              <div className="items-name">{item.name}</div>
-            </div>
-          </Col>
-        </Row>
-      ))}
+      {items?.length ? (
+        items?.map((item, i) => (
+          <Row justify="flex-start" align="center" gap={8} className="btnRow" key={i}>
+            <Col span={24}>
+              <div
+                className="luna-chatbot-list luna-popup-list"
+                onClick={() => item.data.action(item.name, item.data.firstNodeId)}
+                role="presentation"
+                style={{ width: '100%' }}
+              >
+                <div className="items-name">{item.name}</div>
+              </div>
+            </Col>
+          </Row>
+        ))
+      ) : (
+        <div>{t(`NO_SCENARIO_RESULTS`)}</div>
+      )}
     </div>
   );
 };

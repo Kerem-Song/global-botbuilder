@@ -226,6 +226,9 @@
 .historyViewerMain {
   padding-left: 0;
 
+  input {
+    pointer-events: none;
+  }
   .scenarioWrapper {
 
     .botBuilderWrapper {
@@ -243,6 +246,14 @@
         button {
           pointer-events: none ;
         }
+      }
+
+      .buttonWrapper {
+        pointer-events: none;
+      }
+
+      .listItems {
+        pointer-events: none;
       }
 
       .botBuilderDrawer {
@@ -282,7 +293,7 @@
         }
 
         .wrapper {
-          height: calc(100vh);
+          height: calc(100vh - rem(49));
         }
 
         .wrapper::-webkit-scrollbar {

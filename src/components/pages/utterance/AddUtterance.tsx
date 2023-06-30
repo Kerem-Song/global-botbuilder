@@ -46,33 +46,48 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
       text: utteranceWord,
     });
 
-    if (checkUtteranceDuplication.length > 0) {
-      errorModal(checkUtteranceDuplication[0].intentName);
-      if (utteranceRef.current) {
-        utteranceRef.current.select();
-      }
-      setIsEditing(false);
-      return;
-    }
+    const isDuplicateUtterance = getValues('items')
+      .map((x) => x.text?.toLowerCase())
+      .includes(utteranceWord.toLowerCase());
 
-    if (
-      getValues('items')
-        .map((x) => x.text?.toLowerCase())
-        ?.includes(utteranceWord.toLowerCase())
-    ) {
-      errorModal(getValues('name'));
-      if (utteranceRef.current) {
-        utteranceRef.current.select();
+    if (checkUtteranceDuplication.length === 0) {
+      if (isDuplicateUtterance) {
+        errorModal(getValues('name'));
+        if (utteranceRef.current) {
+          utteranceRef.current.select();
+        }
+        setIsEditing(false);
+        return;
       }
-      setIsEditing(false);
-      return;
-    } else {
       prepend({ text: utteranceWord });
       setIsActive(true);
       setIsEditing(false);
       setUtteranceWord('');
       if (utteranceRef.current) {
         utteranceRef.current.focus();
+      }
+    } else {
+      const isDuplicateUtteranceInSameIntent =
+        getValues('items')
+          .map((x) => x.text?.toLowerCase())
+          ?.includes(checkUtteranceDuplication[0].utterance.toLocaleLowerCase()) ===
+          false && getValues('name') === checkUtteranceDuplication[0].intentName;
+
+      if (isDuplicateUtteranceInSameIntent) {
+        prepend({ text: utteranceWord });
+        setIsActive(true);
+        setIsEditing(false);
+        setUtteranceWord('');
+        if (utteranceRef.current) {
+          utteranceRef.current.focus();
+        }
+        return;
+      } else {
+        errorModal(checkUtteranceDuplication[0].intentName);
+        if (utteranceRef.current) {
+          utteranceRef.current.select();
+        }
+        setIsEditing(false);
       }
     }
   };

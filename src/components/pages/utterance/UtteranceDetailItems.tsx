@@ -46,6 +46,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
     if (deleteItems.length === 0) {
       return;
     }
+
     const result = await confirm({
       title: t('DELETE_UTTERANCE'),
       description: <span>{t('DELETE_CONFIRM', { count: deleteItems.length })}</span>,
@@ -53,9 +54,9 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
 
     if (result) {
       deleteItems.map((item) => {
-        setIsActive(true);
         const index = getValues().items.indexOf(item);
         remove(index);
+        setIsActive(true);
       });
       lunaToast.success(tc('DELETE_MESSAGE'));
     }
