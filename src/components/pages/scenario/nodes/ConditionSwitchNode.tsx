@@ -27,7 +27,7 @@ export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
                 ctrlId={`${node.id}${TRUE_SUFFIX}${i}`}
                 nodeId={`${NODE_PREFIX}${node.id}`}
                 type="green"
-                offset={i * 65 + 70}
+                offset={i * 25 + 60}
               />
             </div>
           );

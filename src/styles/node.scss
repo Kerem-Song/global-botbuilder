@@ -406,8 +406,10 @@
             gap: rem(10);
 
             p {
-
-              height: rem(50);
+              height: rem(15);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: pre;
             }
           }
 

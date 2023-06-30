@@ -16,6 +16,7 @@ interface IReactSelect {
 
 export const ConditionSwitchNodeEdit = () => {
   useNodeEditSave();
+  const CONDITION_LIMIT = 13;
   const { t, tc } = usePage();
   const {
     getValues,
@@ -63,7 +64,7 @@ export const ConditionSwitchNodeEdit = () => {
   ) => {
     console.log('handle add condition btn');
     e.preventDefault();
-    if (fields.length < 5) {
+    if (fields.length < CONDITION_LIMIT) {
       append({
         op1: '',
         operator: ConditionOperator.Is,
@@ -273,7 +274,7 @@ export const ConditionSwitchNodeEdit = () => {
               </div>
             ) : (
               watch(`view.join`) !== undefined &&
-              i < 4 && (
+              i < CONDITION_LIMIT - 1 && (
                 <div
                   className={classNames(`joinWrapper`, {
                     on: watch(`view.join`) !== undefined,
@@ -285,7 +286,7 @@ export const ConditionSwitchNodeEdit = () => {
                       on: watch(`view.join`) !== undefined,
                     })}
                     onClick={(e) => {
-                      if (i < 4 && fields.length === i + 1) {
+                      if (i < CONDITION_LIMIT - 1 && fields.length === i + 1) {
                         handleAddConditionButton(e);
                       }
                     }}
