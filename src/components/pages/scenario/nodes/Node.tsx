@@ -160,6 +160,14 @@ export const Node: FC<INodeProps> = ({
     }
   };
 
+  const handleZIndex = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const selectedNode = document.getElementById(`${NODE_PREFIX}${id}`);
+
+    if (selectedNode?.parentElement?.parentElement?.parentElement) {
+      selectedNode.parentElement.parentElement.parentElement.style.zIndex = '3';
+    }
+  };
+
   useEffect(() => {
     if (clipBoard) {
       window.addEventListener('keydown', handleCtrlVCommand);
@@ -253,7 +261,7 @@ export const Node: FC<INodeProps> = ({
                 }}
                 disabled={isHistoryViewer}
               >
-                <Button shape="ghost" small>
+                <Button shape="ghost" small onClick={(e) => handleZIndex(e)}>
                   <i className="fa-solid fa-ellipsis-vertical" />
                 </Button>
               </Popper>

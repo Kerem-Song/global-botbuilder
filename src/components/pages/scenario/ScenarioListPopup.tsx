@@ -46,6 +46,7 @@ export const ScenarioListPopup: FC<{
     watch,
     setValue,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<IScenarioListInput>({
     resolver: yupResolver(schema),
@@ -53,6 +54,7 @@ export const ScenarioListPopup: FC<{
 
   const handleScenarioPopupClose = () => {
     dispatch(setScenarioPopupOpen(false));
+    clearErrors('scenarioName');
   };
 
   const onSubmit = async () => {
