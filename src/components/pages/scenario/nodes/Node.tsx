@@ -278,6 +278,7 @@ export const Node: FC<INodeProps> = ({
                 onDragStart={(e) => {
                   e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
                   e.dataTransfer.setData('pointType', 'blue');
+                  e.dataTransfer.setData('isDraggedNodeBottom', 'true');
                   dispatch(
                     setGuideStartNode({
                       startId: `${NODE_PREFIX}${id}`,

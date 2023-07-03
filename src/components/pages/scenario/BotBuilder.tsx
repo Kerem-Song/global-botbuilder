@@ -54,6 +54,7 @@ export const Botbuilder = () => {
     x: 0,
     y: 0,
   });
+  const [isDraggedNodeBottom, setIsDraggedNodeBottom] = useState<boolean>(false);
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
 
   const otherFlowPopupIsOpen = useRootState(
@@ -192,8 +193,10 @@ export const Botbuilder = () => {
   const handleChatbubbleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
     const cardType = e.dataTransfer.getData('cardType') as TNodeTypes;
+    const isNodeBottom = e.dataTransfer.getData('isDraggedNodeBottom');
 
     if (!cardType) {
+      isNodeBottom === 'true' && setIsDraggedNodeBottom(true);
       handleIsOpen(true);
       setPopUpPosition({
         x: Math.round(e.clientX / scale) - canvasRect.left,
@@ -203,6 +206,7 @@ export const Botbuilder = () => {
     }
 
     if (cardType === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE) {
+      setIsDraggedNodeBottom(false);
       dispatch(
         setOtherFlowPopupPosition({
           x: Math.round(e.clientX / scale) - canvasRect.left,
@@ -213,7 +217,7 @@ export const Botbuilder = () => {
 
       return;
     }
-
+    setIsDraggedNodeBottom(false);
     const nodeName = e.dataTransfer.getData('nodeName') as string;
     const nodeView = nodeDefaultHelper.createDefaultView(cardType);
 
@@ -442,6 +446,7 @@ export const Botbuilder = () => {
                 <NodeLinkPopUpMenu
                   handleIsOpen={handleIsOpen}
                   popUpPosition={popUpPosition}
+                  isDraggedNodeBottom={isDraggedNodeBottom}
                 />
               )}
           {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
