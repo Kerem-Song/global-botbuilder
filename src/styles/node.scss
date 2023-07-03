@@ -229,6 +229,7 @@
             padding-left: rem(5);
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
 
             &.empty {
               color: $gray300;
