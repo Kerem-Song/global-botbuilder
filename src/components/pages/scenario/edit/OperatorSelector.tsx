@@ -30,7 +30,6 @@ export const OperatorSelector = ({ index }: { index: number }) => {
     <Select
       className="react-selector"
       {...operatorField}
-      placeholder={t(`SET_OPTION_NULL`)}
       options={operatorOptions}
       placeholder={t(`INPUT_VARIABLE_SECOND_CONDITION_PLACEHOLDER`)}
       styles={reactSelectStyle}
