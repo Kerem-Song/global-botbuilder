@@ -52,6 +52,15 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       }
       if (!response.data.isSuccess) {
         if (response.data.exception) {
+          if (response.data.exception.errorCode === 7653) {
+            error({
+              title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+              description: tc(`HTTP_PROVIDER_DELETE_BOT_ERROR_DESC`),
+            }).then(() => {
+              document.location.href = `/${i18n.language}/dashboard`;
+            });
+            return Promise.reject(new Error(response.data.exception.message));
+          }
           const requestData = response.config.data;
           if (requestData) {
             const requestObj = JSON.parse(requestData);
