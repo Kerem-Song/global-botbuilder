@@ -579,6 +579,7 @@ export const useYupValidation = () => {
       nextNodeId: yup
         .string()
         .nullable()
+        .not([''], t(`VALIDATION_REQUIRED`))
         .when(['type', 'option'], {
           is: (type: string, option: number) => {
             return type === NODE_TYPES.INTENT_NODE && option === NodeOption.Fallback;
