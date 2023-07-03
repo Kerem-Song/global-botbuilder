@@ -644,6 +644,15 @@
       font-weight: 500;
     }
   }
+
+  .noScenarioResult {
+    padding: rem(12);
+    color: $gray300;
+    font-weight: 500;
+    font-size: rem(12);
+    text-align: center;
+    line-height: rem(25);
+  }
 }
 
 
