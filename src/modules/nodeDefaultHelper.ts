@@ -314,7 +314,7 @@ export const nodeDefaultHelper = {
       retailPriceParam: '',
       discountAmountParam: '',
       salePriceParam: '',
-      profileIconUrl: '',
+      profileIconUrl: SYS_BOT_ICON,
       profileImgPath: '',
       profileName: '',
       description: '',
