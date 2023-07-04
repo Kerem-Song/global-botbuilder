@@ -56,21 +56,21 @@ export const Collapse: FC<CollapseProps> = ({
       if (result) {
         const childrenViews = watch('view.childrenViews');
         setIsCollapsed(false);
-        setValue(`view.useImageCtrl`, false, { shouldValidate: true });
+        setValue(`view.useImageCtrl`, false, { shouldDirty: true });
 
         if (index !== undefined && childrenViews) {
           for (const i in childrenViews) {
             setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '', {
-              shouldValidate: true,
+              shouldDirty: true,
             });
           }
         } else {
           setValue(`view.imageCtrl.imageUrl`, '', {
-            shouldValidate: true,
+            shouldDirty: true,
           });
         }
       } else {
-        setValue(`view.useImageCtrl`, true, { shouldValidate: true });
+        setValue(`view.useImageCtrl`, true, { shouldDirty: true });
       }
     }
   };
@@ -80,16 +80,12 @@ export const Collapse: FC<CollapseProps> = ({
 
     if (watch(`view.useImageCtrl`) === false && childrenViewArr) {
       for (const i in childrenViewArr) {
-        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false, {
-          shouldValidate: true,
-        });
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, false);
         // setValue(`view.childrenViews.${Number(i)}.imageCtrl.imageUrl`, '');
       }
     } else {
       for (const i in childrenViewArr) {
-        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, true, {
-          shouldValidate: true,
-        });
+        setValue(`view.childrenViews.${Number(i)}.useImageCtrl`, true);
       }
     }
   }, [watch(`view.useImageCtrl`)]);
@@ -102,23 +98,15 @@ export const Collapse: FC<CollapseProps> = ({
         watch(`view.useImageCtrl`) === false &&
         !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
       ) {
-        setValue(`view.useImageCtrl`, false, {
-          shouldValidate: true,
-        });
+        setValue(`view.useImageCtrl`, false);
       } else {
-        setValue(`view.useImageCtrl`, true, {
-          shouldValidate: true,
-        });
+        setValue(`view.useImageCtrl`, true);
       }
     } else {
       if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-        setValue(`view.useImageCtrl`, false, {
-          shouldValidate: true,
-        });
+        setValue(`view.useImageCtrl`, false);
       } else {
-        setValue(`view.useImageCtrl`, true, {
-          shouldValidate: true,
-        });
+        setValue(`view.useImageCtrl`, true);
       }
     }
   }, [watch(`view.imageCtrl`)]);
