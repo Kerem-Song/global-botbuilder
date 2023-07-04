@@ -646,6 +646,23 @@
     }
   }
 
+  .luna-input-wrap {
+    margin-bottom: rem(8);
+  }
+
+  .btnRow {
+    padding: 0;
+
+    div:has(.luna-popup-list) {
+      padding: rem(0) !important;
+    }
+  }
+  
+  .luna-popup-list {
+    padding: rem(12) !important;
+    height: rem(40) !important;
+  }
+
   .noScenarioResult {
     padding: rem(12);
     color: $gray300;

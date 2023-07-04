@@ -348,6 +348,12 @@
               align-items: center;
               flex-flow: column;
 
+              p {
+                color: $gray500;
+                font-size: rem(12);
+                font-weight: 500;
+              }
+
               img {
                 width: rem(30);
                 height: rem(30);
