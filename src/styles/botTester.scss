@@ -322,7 +322,7 @@
             max-height: rem(253);
           }
 
-          .squreImageCardCarousel {
+          .squareImageCardCarousel {
             max-height: rem(251);
           }
 
@@ -345,10 +345,11 @@
           .cardCarouselContents {
             width: rem(264);
             height: fit-content;
+            padding: rem(12);
             display: flex;
             flex-direction: column;
             gap: rem(10);
-            padding: rem(12);
+            word-break: break-all;
 
             &.rectangleImageContents {
               height: 100%;
@@ -363,6 +364,7 @@
               font-weight: 700;
               font-size: rem(14);
               line-height: rem(17);
+              margin-bottom: rem(4);
             }
             .cardCarouselDesc {
               font-weight: 400;

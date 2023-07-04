@@ -18,7 +18,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
     <div
       className={classNames('cardCarousel', {
         rectangleImageCardCarousel: item.image?.imageAspectRatio === 0,
-        squreImageCardCarousel: item.image?.imageAspectRatio != 0,
+        squareImageCardCarousel: item.image?.imageAspectRatio != 0,
       })}
     >
       {item.image && (
@@ -45,11 +45,11 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           <div>
             <div className="cardCarouselTitle">
               <MultiClamp clamp={2} ellipsis={'...'}>
-                {item.title.substring(0, 39)}
+                {item.title.substring(0, 40)}
               </MultiClamp>
             </div>
             <div className="cardCarouselDesc">
-              <MultiClamp clamp={8}>{item.contentText?.substring(0, 229)}</MultiClamp>
+              <MultiClamp clamp={8}>{item.contentText?.substring(0, 230)}</MultiClamp>
             </div>
           </div>
           <div>
