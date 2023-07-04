@@ -260,7 +260,7 @@ export const DataListCardNodeEdit = () => {
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
             useCounter={false}
-            btnNamePlaceholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+            dataApiPlaceholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
           />
         )}
       </Collapse>

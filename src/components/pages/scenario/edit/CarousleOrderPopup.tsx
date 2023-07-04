@@ -115,7 +115,7 @@ export const CarouselOrderPopup: FC<{
       shouldCloseOnEsc={closeOnEsc}
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}
-      shouldReturnFocusAfterClose={false}
+      // shouldReturnFocusAfterClose={false}
       shouldFocusAfterRender={false}
     >
       <div

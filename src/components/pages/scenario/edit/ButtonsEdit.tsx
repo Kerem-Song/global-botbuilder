@@ -22,14 +22,14 @@ export const ButtonsEdit = ({
   imageRatio,
   nodeId,
   useCounter,
-  btnNamePlaceholder,
+  dataApiPlaceholder,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
   useCounter: boolean;
-  btnNamePlaceholder?: string;
+  dataApiPlaceholder?: string;
 }) => {
   const { t, tc } = usePage();
   const selectOptions = [
@@ -136,7 +136,7 @@ export const ButtonsEdit = ({
                     : undefined
                 }
                 placeholder={
-                  btnNamePlaceholder ? btnNamePlaceholder : t(`BUTTON_NAME_PLACEHOLDER`)
+                  dataApiPlaceholder ? dataApiPlaceholder : t(`BUTTON_NAME_PLACEHOLDER`)
                 }
                 readOnly={isHistoryViewer}
               />
@@ -205,7 +205,9 @@ export const ButtonsEdit = ({
                         ? `view.buttons.${i}.actionValue`
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
-                    placeholder={t(`SET_URL_PLACEHOLDER`)}
+                    placeholder={
+                      dataApiPlaceholder ? dataApiPlaceholder : t(`SET_URL_PLACEHOLDER`)
+                    }
                   />
                 </FormItem>
               </>
