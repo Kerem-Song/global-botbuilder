@@ -54,11 +54,9 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           </div>
           <div>
             <div
-              className={
-                item.image?.imageAspectRatio === 0
-                  ? 'rectangleImageBtn'
-                  : 'squareImageBtn'
-              }
+              className={classNames('rectangleImageBtn', {
+                squareImageBtn: item.image?.imageAspectRatio === 1,
+              })}
             >
               {item.buttons.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;

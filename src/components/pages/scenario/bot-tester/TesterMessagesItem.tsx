@@ -82,11 +82,9 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 )}
                 {item.buttons.length > 0 && (
                   <div
-                    className={
-                      item.image?.imageAspectRatio === 0
-                        ? 'rectangleImageBtn'
-                        : 'squareImageBtn'
-                    }
+                    className={classNames('rectangleImageBtn', {
+                      squareImageBtn: item.image?.imageAspectRatio === 1,
+                    })}
                   >
                     {item.buttons.map((v, i) => (
                       <TesterMessagesItemButton key={i} item={v} />
