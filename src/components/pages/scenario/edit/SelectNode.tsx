@@ -2,6 +2,7 @@ import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -25,7 +26,7 @@ export const SelectNode = ({
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const reactSelectStyle = getReactSelectStyle({});
 
-  const { control } = useFormContext();
+  const { control, reset } = useFormContext();
   const { field } = useController({
     name: `${fieldName}`,
     control,
@@ -49,6 +50,9 @@ export const SelectNode = ({
     }));
   const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
 
+  useEffect(() => {
+    reset();
+  }, [nodeId]);
   return (
     <Select
       className={classNames('react-selector', {
