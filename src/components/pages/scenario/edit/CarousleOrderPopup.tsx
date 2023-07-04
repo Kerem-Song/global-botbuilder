@@ -116,6 +116,7 @@ export const CarouselOrderPopup: FC<{
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}
       shouldReturnFocusAfterClose={false}
+      shouldFocusAfterRender={false}
     >
       <div
         onWheel={(e) => e.stopPropagation()}
