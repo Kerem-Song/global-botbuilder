@@ -22,12 +22,14 @@ export const ButtonsEdit = ({
   imageRatio,
   nodeId,
   useCounter,
+  btnNamePlaceholder,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
   useCounter: boolean;
+  btnNamePlaceholder?: string;
 }) => {
   const { t, tc } = usePage();
   const selectOptions = [
@@ -133,7 +135,9 @@ export const ButtonsEdit = ({
                       )?.length || 0
                     : undefined
                 }
-                placeholder={t(`BUTTON_NAME_PLACEHOLDER`)}
+                placeholder={
+                  btnNamePlaceholder ? btnNamePlaceholder : t(`BUTTON_NAME_PLACEHOLDER`)
+                }
                 readOnly={isHistoryViewer}
               />
             </FormItem>
