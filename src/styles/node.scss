@@ -625,6 +625,7 @@
 
 .otherFlowRedirectPopup {
   padding: rem(12) !important;
+  width: rem(218);
 
   .otherFlowRedirectPopupLabelWrapper {
     padding-bottom: rem(8);
@@ -647,12 +648,13 @@
   }
 
   .luna-input-wrap {
-    margin-bottom: rem(8);
+    margin-bottom: rem(12);
   }
 
   .btnRow {
     padding: 0;
-
+    margin: 0 !important;
+    width: rem(192) !important;
     div:has(.luna-popup-list) {
       padding: rem(0) !important;
     }
@@ -660,6 +662,7 @@
   
   .luna-popup-list {
     padding: rem(12) !important;
+    padding-left: rem(14) !important;
     height: rem(40) !important;
   }
 
