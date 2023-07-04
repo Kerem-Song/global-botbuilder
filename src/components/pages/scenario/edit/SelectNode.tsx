@@ -26,7 +26,7 @@ export const SelectNode = ({
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const reactSelectStyle = getReactSelectStyle({});
 
-  const { control, reset } = useFormContext();
+  const { control, resetField } = useFormContext();
   const { field } = useController({
     name: `${fieldName}`,
     control,
@@ -51,7 +51,7 @@ export const SelectNode = ({
   const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
 
   useEffect(() => {
-    reset();
+    resetField('view.nextNodeId');
   }, [nodeId]);
   return (
     <Select
