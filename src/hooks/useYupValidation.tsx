@@ -138,10 +138,7 @@ export const useYupValidation = () => {
     is: true,
     then: yup.object().shape({
       imageFile: imageFileEditSchema,
-      imageUrl: yup
-        .string()
-        // .url(t(`VALIDATION_URL`))
-        .required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
     }),
   });
 
