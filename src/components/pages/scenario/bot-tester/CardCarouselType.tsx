@@ -15,7 +15,12 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
   handleImgOnError,
 }) => {
   return (
-    <div className="cardCarousel">
+    <div
+      className={classNames('cardCarousel', {
+        rectangleImageCardCarousel: item.image?.imageAspectRatio === 0,
+        squreImageCardCarousel: item.image?.imageAspectRatio != 0,
+      })}
+    >
       {item.image && (
         <img
           className={
@@ -31,23 +36,34 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
         />
       )}
       {item.title || item.contentText ? (
-        <div className="cardCarouselContents">
-          <div className="cardCarouselTitle">
-            <MultiClamp clamp={2} ellipsis={'...'}>
-              {item.title.substring(0, 39)}
-            </MultiClamp>
+        <div
+          className={classNames('cardCarouselContents', {
+            rectangleImageContents: item.image?.imageAspectRatio === 0,
+            squareImageContents: item.image?.imageAspectRatio != 0,
+          })}
+        >
+          <div>
+            <div className="cardCarouselTitle">
+              <MultiClamp clamp={2} ellipsis={'...'}>
+                {item.title.substring(0, 39)}
+              </MultiClamp>
+            </div>
+            <div className="cardCarouselDesc">
+              <MultiClamp clamp={8}>{item.contentText?.substring(0, 229)}</MultiClamp>
+            </div>
           </div>
-          <div className="cardCarouselDesc">
-            <MultiClamp clamp={8}>{item.contentText?.substring(0, 229)}</MultiClamp>
-          </div>
-          <div
-            className={
-              item.image?.imageAspectRatio === 0 ? 'rectangleImageBtn' : 'squareImageBtn'
-            }
-          >
-            {item.buttons.map((v, i) => {
-              return <TesterMessagesItemButton key={i} item={v} />;
-            })}
+          <div>
+            <div
+              className={
+                item.image?.imageAspectRatio === 0
+                  ? 'rectangleImageBtn'
+                  : 'squareImageBtn'
+              }
+            >
+              {item.buttons.map((v, i) => {
+                return <TesterMessagesItemButton key={i} item={v} />;
+              })}
+            </div>
           </div>
         </div>
       ) : (
