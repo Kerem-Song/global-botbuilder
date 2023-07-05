@@ -329,7 +329,7 @@ export const useYupValidation = () => {
     .required(t(`VALIDATION_REQUIRED`));
 
   const otherFlowRedirectNodeEditSchema = yup.object().shape({
-    //otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    // otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
   const intentNodeEditSchema = yup.string().nullable().required(t(`VALIDATION_REQUIRED`));
@@ -582,6 +582,12 @@ export const useYupValidation = () => {
             return type === NODE_TYPES.INTENT_NODE && option === NodeOption.Fallback;
           },
           then: intentNodeEditSchema,
+        })
+        .when('type', {
+          is: (type: string) => {
+            return type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
+          },
+          then: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
         }),
     })
     .required();
