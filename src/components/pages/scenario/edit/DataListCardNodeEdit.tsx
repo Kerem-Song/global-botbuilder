@@ -160,7 +160,9 @@ export const DataListCardNodeEdit = () => {
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-8">
-              <span className="subLabel">{t(`IMAGE_UPLOAD_LABEL`)} </span>
+              <span className="subLabel">
+                {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
+              </span>
               <span className="required">*</span>
             </div>
             <div className="m-b-8">
