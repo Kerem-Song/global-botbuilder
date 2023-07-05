@@ -22,39 +22,44 @@ export const DeployButtons = () => {
 
   const handleDeployChannel = async (isOpChannel: boolean) => {
     setIsOp(isOpChannel);
+
     const isLive = botInfo?.channelInfos?.find((x) => x.isLive)?.name;
     const isTest = botInfo?.channelInfos?.find((x) => !x.isLive)?.name;
-    const result = await confirm({
+
+    const deployingConfirm = await confirm({
       title: isOpChannel ? t('DEPLOY_OPERATIONAL_CHANNEL') : t('DEPLOY_TEST_CHANNEL'),
       description: (
         <span>
           <span style={{ color: 'blue' }}>{isOpChannel ? isLive : isTest}</span>
-          <span style={{ whiteSpace: 'pre-wrap' }}>
-            {' '}
-            {t('DEPLOYING_CONFIRM_MESSAGE')}
-          </span>
+          <span style={{ whiteSpace: 'pre-line' }}>{t('DEPLOYING_CONFIRM_MESSAGE')}</span>
         </span>
       ),
     });
-    if (result) {
+
+    if (deployingConfirm) {
       const deployChannel: IDeploy = {
         botId: botId!,
         isLive: isOpChannel,
       };
-      const res = await deployingBotAsync(deployChannel);
-      if (res && res.isSuccess) {
-        lunaToast.success(t('DEPLOYING_SUCCESS'));
-      } else {
+
+      const res = await deployingBotAsync({
+        ...deployChannel,
+        customErrorCode: [7633, 7645, 7647],
+      });
+
+      console.log('res', res);
+
+      const deployFailedMessage = (
+        <p style={{ whiteSpace: 'pre-line' }}>{t('DEPLOYING_FAILED_MESSAGE')}</p>
+      );
+
+      if (res === 7633 || res === 7645 || res === 7647) {
         error({
           title: t('DEPLOYING_FAILED'),
-          description: (
-            <p style={{ whiteSpace: 'break-spaces' }}>
-              {res && res.exception!.errorCode === 7633
-                ? t('DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE')
-                : t('DEPLOYING_FAILED_MESSAGE')}
-            </p>
-          ),
+          description: deployFailedMessage,
         });
+      } else {
+        lunaToast.success(t('DEPLOYING_SUCCESS'));
       }
     } else {
       return;
@@ -78,7 +83,6 @@ export const DeployButtons = () => {
   return (
     <div className="deployBtns">
       <Button
-        style={{ marginRight: '8px' }}
         type="lineBlue"
         disabled={activate && testLinked ? false : true}
         onClick={() => handleDeployChannel(false)}

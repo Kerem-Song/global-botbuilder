@@ -47,7 +47,7 @@ export const ProductCardCarouselType: FC<IProductCardCarouselTypeProps> = ({
                   handleImgOnError(e);
                 }}
               />
-              <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
+              <MultiClamp clamp={1}>{item.title.substring(0, 40)}</MultiClamp>
             </div>
           </div>
           <div className="productCardCarouselWrap">
@@ -74,7 +74,7 @@ export const ProductCardCarouselType: FC<IProductCardCarouselTypeProps> = ({
             >
               <div className="productDesc">
                 <MultiClamp clamp={2} ellipsis={'...'}>
-                  {item.description.substring(0, 59)}
+                  {item.description.substring(0, 60)}
                 </MultiClamp>
               </div>
             </div>

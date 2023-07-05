@@ -26,7 +26,7 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
         <div className="header">
           <span>
             <MultiClamp clamp={1} ellipsis={'...'}>
-              {item.header.substring(0, 39)}
+              {item.header.substring(0, 40)}
             </MultiClamp>
           </span>
         </div>
@@ -62,12 +62,12 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
                     <div className="listInfo">
                       <div className="infoTitle">
                         <MultiClamp clamp={2} ellipsis={'...'}>
-                          {x.title.substring(0, 59)}
+                          {x.title.substring(0, 60)}
                         </MultiClamp>
                       </div>
                       <div className="infoDesc">
                         <MultiClamp clamp={1} ellipsis={'...'}>
-                          {x.description.substring(0, 39)}
+                          {x.description.substring(0, 40)}
                         </MultiClamp>
                       </div>
                     </div>

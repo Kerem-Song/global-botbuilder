@@ -150,7 +150,7 @@ export const TesterMessagesItemButton = ({
         }}
       >
         <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 29)}
+          {item.label.substring(0, 30)}
         </MultiClamp>
       </button>
     );
@@ -164,7 +164,7 @@ export const TesterMessagesItemButton = ({
         }}
       >
         <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 29)}
+          {item.label.substring(0, 30)}
         </MultiClamp>
       </button>
     );
@@ -178,7 +178,7 @@ export const TesterMessagesItemButton = ({
         }}
       >
         <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 29)}
+          {item.label.substring(0, 30)}
         </MultiClamp>
       </button>
     );
@@ -192,7 +192,7 @@ export const TesterMessagesItemButton = ({
         }}
       >
         <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 29)}
+          {item.label.substring(0, 30)}
         </MultiClamp>
       </button>
     );

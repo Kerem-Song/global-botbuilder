@@ -53,6 +53,11 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
     handleIsOpenUtterancePopup(false);
     handleIsOpenUtteranceDetailPopup(intentId);
     removeUtteranceQueries();
+    setSearchData({
+      sort: 1,
+      scenarios: selectedScenarios && selectedScenarios.id,
+      searchWord: undefined,
+    });
   };
 
   return (
