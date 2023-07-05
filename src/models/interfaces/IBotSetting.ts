@@ -1,9 +1,11 @@
+import { IReq } from './req';
+
 export interface IBotSetting {
   botId: string;
   botName: string;
 }
 
-export interface IUpdateBotActivate {
+export interface IUpdateBotActivate extends IReq {
   isActivate: boolean;
   botId: string;
 }
