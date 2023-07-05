@@ -173,9 +173,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
           offset={[0, 10]}
           disable={item.alias.length <= 14}
         >
-          <Col flex="auto" style={{ fontSize: '13px' }} className="scenarioListName">
-            {item.alias}
-          </Col>
+          <Col className="scenarioListName">{item.alias}</Col>
         </Tooltip>
         <Col className="scenarioListSwitch">
           <Switch onChange={handleSwitch} checked={item.activated} />
