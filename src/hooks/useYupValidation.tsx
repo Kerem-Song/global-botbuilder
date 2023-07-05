@@ -237,6 +237,7 @@ export const useYupValidation = () => {
       .transform((value, originalValue) => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       }),
+    currencyUnit: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     buttons: buttonsEditSchema,
   });
 

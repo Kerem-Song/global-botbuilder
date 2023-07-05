@@ -229,7 +229,7 @@ export const DataProductCardNodeEdit = () => {
                 }
               />
 
-              <Row justify="space-between" align="flex-end" gap={4}>
+              <Row justify="space-between" align="flex-start" gap={4}>
                 <Col span={16} className="retailPrice">
                   <FormItem error={errors.view?.retailPriceParam}>
                     <InputWithTitleCounter
@@ -246,7 +246,17 @@ export const DataProductCardNodeEdit = () => {
                 </Col>
                 <Col className="productSelectorWrapper" span={8}>
                   <FormItem error={errors.view?.currencyUnit}>
-                    <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
+                    {/* <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" /> */}
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.currencyUnit,
+                      })}
+                      label={t(`PRODUCT_NODE_CURRENCY_UNIT`)}
+                      required={true}
+                      {...register(`view.currencyUnit`)}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                    />
                   </FormItem>
                 </Col>
               </Row>

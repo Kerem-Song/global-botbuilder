@@ -197,6 +197,7 @@
     "PRODUCT_NODE_INFO_SETTING": "상품 정보 설정",
     "PRODUCT_NODE_PRODUCT_NAME": "상품명",
     "PRODUCT_NODE_PRICE": "정가 설정",
+    "PRODUCT_NODE_CURRENCY_UNIT": "통화",
     "PRODUCT_NODE_DISCOUNT": "할인 적용",
     "PRODUCT_NODE_SALE_PRICE": "판매가 설정",
     "PRODUCT_NODE_SET_PRODUCT_NAME": "상품명 입력",
