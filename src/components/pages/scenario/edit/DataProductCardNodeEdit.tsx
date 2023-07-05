@@ -229,7 +229,7 @@ export const DataProductCardNodeEdit = () => {
                 }
               />
 
-              <Row justify="space-between" align="end" gap={4}>
+              <Row justify="space-between" align="flex-end" gap={4}>
                 <Col span={16} className="retailPrice">
                   <FormItem error={errors.view?.retailPriceParam}>
                     <InputWithTitleCounter
