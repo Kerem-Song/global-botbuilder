@@ -468,6 +468,7 @@ export const useYupValidation = () => {
     }),
     profileIconUrl: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     profileName: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    currencyUnit: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     buttons: dataApiButtonsEditSchema,
   });
