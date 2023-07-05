@@ -273,7 +273,7 @@
     "VALIDATION_BUTTON_MAX": "버튼은 3개까지만 가능합니다",
     "VALIDATION_CHECK_FALLBACK_START_TITLE": "저장 불가",
     "VALIDATION_CHECK_FALLBACK_START_DESC": "'챗봇 도움말'에 말풍선을 연결해주세요.",
-    "VALIDATION_CHECK_NODE_DESC": "필수 항목이 미입력된 말풍선이 있습니다.",
+    "VALIDATION_CHECK_NODE_DESC": "시나리오를 저장할 수 없습니다.\n에러 처리된 말풍선을 확인해주세요.",
     "CAPTION_ANSWERNODE": "Quick Reply",
     "CAPTION_BASICCARDCAROUSELNODE": "Basic Card Carousel",
     "CAPTION_BASICCARDCAROUSELTEMPLATENODE": "Data Basic",
