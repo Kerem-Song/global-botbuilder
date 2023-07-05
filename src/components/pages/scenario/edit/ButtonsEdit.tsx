@@ -22,15 +22,16 @@ export const ButtonsEdit = ({
   imageRatio,
   nodeId,
   useCounter,
-  dataApiPlaceholder,
+  isDataApi,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
   useCounter: boolean;
-  dataApiPlaceholder?: string;
+  isDataApi?: boolean;
 }) => {
+  console.log('@isDataApi', isDataApi);
   const { t, tc } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
@@ -136,7 +137,9 @@ export const ButtonsEdit = ({
                     : undefined
                 }
                 placeholder={
-                  dataApiPlaceholder ? dataApiPlaceholder : t(`BUTTON_NAME_PLACEHOLDER`)
+                  isDataApi
+                    ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
+                    : t(`BUTTON_NAME_PLACEHOLDER`)
                 }
                 readOnly={isHistoryViewer}
               />
@@ -206,7 +209,9 @@ export const ButtonsEdit = ({
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
                     placeholder={
-                      dataApiPlaceholder ? dataApiPlaceholder : t(`SET_URL_PLACEHOLDER`)
+                      isDataApi
+                        ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
+                        : t(`SET_URL_PLACEHOLDER`)
                     }
                   />
                 </FormItem>
@@ -232,7 +237,11 @@ export const ButtonsEdit = ({
                     maxLength={useCounter ? 300 : undefined}
                     isLight={true}
                     required={true}
-                    placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
+                    placeholder={
+                      isDataApi
+                        ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
+                        : t(`SET_MESSAGE_PLACEHOLDER`)
+                    }
                     {...register(
                       index === undefined
                         ? `view.buttons.${i}.actionValue`

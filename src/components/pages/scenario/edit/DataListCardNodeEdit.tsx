@@ -135,6 +135,7 @@ export const DataListCardNodeEdit = () => {
             required={true}
             {...register('view.header')}
             readOnly={isHistoryViewer}
+            placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
           />
         </FormItem>
       </div>
@@ -260,7 +261,7 @@ export const DataListCardNodeEdit = () => {
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
             useCounter={false}
-            dataApiPlaceholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+            isDataApi={true}
           />
         )}
       </Collapse>

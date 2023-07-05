@@ -286,7 +286,7 @@ export const DataProductCardNodeEdit = () => {
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
             useCounter={false}
-            dataApiPlaceholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
+            isDataApi={true}
           />
         )}
       </Collapse>
