@@ -40,7 +40,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       scenarioId: item.id,
     });
 
-    if (!exception) {
+    if (!exception || activated) {
       const res = await scenarioActiveAsync({
         flowId: item.id,
         activated: activated,
@@ -56,7 +56,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             <span>{t('SCENARIO_OFF_LINK_MESSAGE', { scenario: item.alias })}</span>
             <br />
             <span style={{ color: '#ff4975', fontWeight: 500 }}>
-              : {exception.linkInfos.map((l) => l.currentFlowAlias).join(',')}
+              :{' '}
+              {[...new Set(exception.linkInfos.map((l) => l.currentFlowAlias))].join(',')}
             </span>
             <br />
             <span>{tc('OFF_CONFIRM')}</span>
