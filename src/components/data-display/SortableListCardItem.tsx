@@ -13,6 +13,7 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
   const listItemImgSrc = `${
     import.meta.env.VITE_API_BASE_URL
   }/builderimage/forbuilder?origin=${item.imageUrl}&sessionToken=${token}`;
+
   return (
     <Row justify="flex-start" align="center" key={item.id}>
       <Col span={18} className="listItemsContent">

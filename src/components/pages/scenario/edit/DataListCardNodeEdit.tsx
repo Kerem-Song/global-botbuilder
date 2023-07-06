@@ -64,6 +64,12 @@ export const DataListCardNodeEdit = () => {
     }
   };
 
+  useEffect(() => {
+    if (watch(`view.count`)) {
+      setCarouselNum(watch(`view.count`));
+    }
+  }, [watch(`view.count`)]);
+
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>

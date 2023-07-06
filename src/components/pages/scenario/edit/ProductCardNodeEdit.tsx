@@ -177,6 +177,7 @@ export const ProductCardNodeEdit = () => {
                       {...register(`view.currencyUnit`)}
                       isLight={true}
                       readOnly={isHistoryViewer}
+                      placeholder={'ex.USD'}
                     />
                   </FormItem>
                 </Col>
