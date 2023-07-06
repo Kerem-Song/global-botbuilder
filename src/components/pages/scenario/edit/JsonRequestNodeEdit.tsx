@@ -139,6 +139,7 @@ export const JsonRequestNodeEdit = () => {
   useEffect(() => {
     console.log('@watch view id', watch('view.id'));
     resetField('view.apiRes', { keepDirty: false });
+    resetField('view.queryStrings', { keepDirty: false });
     resetField('view.responseMapping', { keepDirty: false });
     resetField('nextNodeId', { keepDirty: false });
   }, [watch('view.id')]);
