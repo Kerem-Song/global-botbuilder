@@ -13,6 +13,10 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
   const listItemImgSrc = `${
     import.meta.env.VITE_API_BASE_URL
   }/builderimage/forbuilder?origin=${item.imageUrl}&sessionToken=${token}`;
+  const newImg = new Image();
+  // newImg.crossOrigin = 'Anonymous';
+  // newImg.src = builderImageSrc + '?not-from-cache-please';
+  newImg.src = listItemImgSrc;
   return (
     <Row justify="flex-start" align="center" key={item.id}>
       <Col span={18} className="listItemsContent">
@@ -43,12 +47,15 @@ export const SortableListCardItem = ({ item }: { item: IListCardItem }) => {
         >
           {item.imageUrl && listItemImgSrc ? (
             <img
-              src={listItemImgSrc}
+              src={(newImg.src = listItemImgSrc)}
               alt="itemThumbnail"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = icImgNotFound;
                 // e.currentTarget.className = 'imgNotFound';
+              }}
+              onLoad={() => {
+                newImg.src = listItemImgSrc;
               }}
             />
           ) : (

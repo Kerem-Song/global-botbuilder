@@ -55,7 +55,10 @@ export const ImageFileUploader = ({
   const builderImageSrc = `${
     import.meta.env.VITE_API_BASE_URL
   }/builderimage/forbuilder?origin=${getValues(imageUrl)}&sessionToken=${token}`;
-
+  const newImg = new Image();
+  // newImg.crossOrigin = 'Anonymous';
+  // newImg.src = builderImageSrc + '?not-from-cache-please';
+  newImg.src = builderImageSrc;
   const handleImageCtrlId = () => {
     switch (imageCtrl) {
       case IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL:
@@ -184,7 +187,7 @@ export const ImageFileUploader = ({
                 <>
                   {console.log('@img side2')}
                   <img
-                    src={builderImageSrc}
+                    src={(newImg.src = builderImageSrc)}
                     alt="templateImage"
                     onError={(e) => {
                       console.log('@on error2');
@@ -198,6 +201,7 @@ export const ImageFileUploader = ({
                       ) {
                         console.log('@onload error2');
                         e.currentTarget.className = '';
+                        newImg.src = builderImageSrc;
                       }
                     }}
                     crossOrigin="anonymous"
