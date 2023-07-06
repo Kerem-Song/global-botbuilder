@@ -98,14 +98,28 @@ export const Collapse: FC<CollapseProps> = ({
         watch(`view.useImageCtrl`) === false &&
         !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
       ) {
+        console.log('@1', index, childrenViewArr);
         setValue(`view.useImageCtrl`, false);
       } else {
+        console.log('@2', index, childrenViewArr);
         setValue(`view.useImageCtrl`, true);
       }
     } else {
-      if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
+      if (!watch(`view.useImageCtrl`) && !watch(`view.imageCtrl.imageUrl`)) {
+        console.log('@3', index, childrenViewArr);
+        console.log(
+          '@3 watch(`view.imageCtrl.imageUrl`)',
+          watch(`view.useImageCtrl`),
+          !watch(`view.imageCtrl.imageUrl`) === true,
+        );
         setValue(`view.useImageCtrl`, false);
       } else {
+        console.log('@4', index, childrenViewArr);
+        console.log(
+          '@4 watch(`view.imageCtrl.imageUrl`)',
+          watch(`view.useImageCtrl`),
+          !watch(`view.imageCtrl.imageUrl`) === true,
+        );
         setValue(`view.useImageCtrl`, true);
       }
     }
@@ -139,7 +153,6 @@ export const Collapse: FC<CollapseProps> = ({
                         console.log('onchange~~~~~~~~~~~~~~~~');
                         setValue(`view.imageCtrl.imageUrl`, '', {
                           shouldDirty: true,
-                          shouldValidate: true,
                         });
                         e.target.files = null;
                         e.target.value = '';
