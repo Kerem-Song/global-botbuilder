@@ -44,7 +44,7 @@ export const DeployButtons = () => {
 
       const res = await deployingBotAsync({
         ...deployChannel,
-        customErrorCode: [7633, 7645, 7647],
+        customErrorCode: [7632, 7633, 7645, 7647],
       });
 
       console.log('res', res);
@@ -53,7 +53,7 @@ export const DeployButtons = () => {
         <p style={{ whiteSpace: 'pre-line' }}>{t('DEPLOYING_FAILED_MESSAGE')}</p>
       );
 
-      if (res === 7633 || res === 7645 || res === 7647) {
+      if (res === 7632 || res === 7633 || res === 7645 || res === 7647) {
         error({
           title: t('DEPLOYING_FAILED'),
           description: deployFailedMessage,
