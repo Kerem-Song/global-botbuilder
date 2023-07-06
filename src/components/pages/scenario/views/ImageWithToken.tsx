@@ -9,24 +9,18 @@ export const ImageWithToken = ({ origin }: { origin?: string }) => {
   const builderImageSrc = `${
     import.meta.env.VITE_API_BASE_URL
   }/builderimage/forbuilder?origin=${origin}&sessionToken=${token}`;
-  const newImg = new Image();
-  // newImg.crossOrigin = 'Anonymous';
-  // newImg.src = builderImageSrc + '?not-from-cache-please';
-  newImg.src = builderImageSrc;
+
   return (
     <>
       {origin && builderImageSrc ? (
         <img
-          src={(newImg.src = builderImageSrc)}
+          src={builderImageSrc}
           alt="thumbnailImage"
           onError={(e) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = icImgNotFound;
             // e.currentTarget.className = 'imgNotFound';
             console.log('@err in img with token', e);
-          }}
-          onLoad={(e) => {
-            newImg.src = builderImageSrc;
           }}
         />
       ) : (
