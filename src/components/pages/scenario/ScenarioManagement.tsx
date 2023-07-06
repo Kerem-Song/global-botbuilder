@@ -6,8 +6,9 @@ import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { setPopupType, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import { ScenarioListPopup } from './ScenarioListPopup';
@@ -19,6 +20,7 @@ export const ScenarioManagement: FC<{
   setIsActivated: (value: boolean) => void;
 }> = ({ scenarios, searchKeyword, isActivated, setSearchKeyword, setIsActivated }) => {
   const { t } = usePage();
+  const { pathname } = useLocation();
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
   const dispatch = useDispatch();
   const { scenarioCreating } = useScenarioClient();
@@ -42,6 +44,13 @@ export const ScenarioManagement: FC<{
       (!isActivated || x.activated) &&
       (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
   );
+
+  useEffect(() => {
+    return () => {
+      dispatch(setScenarioPopupOpen(false));
+    };
+  }, [pathname]);
+
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">

@@ -13,6 +13,7 @@ import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 import * as yup from 'yup';
 
 interface IScenarioListInput {
@@ -27,6 +28,7 @@ export const ScenarioListPopup: FC<{
   const { t, tc } = usePage();
   const dispatch = useDispatch();
   const { scenarioCreateAsync, scenarioRenameAsync } = useScenarioClient();
+  const { pathname } = useLocation();
   const token = useRootState((state) => state.botInfoReducer.token);
   const popupType = useRootState((state) => state.scenarioListPopupReducer.popupType);
   const item = useRootState((state) => state.scenarioListPopupReducer.item);
