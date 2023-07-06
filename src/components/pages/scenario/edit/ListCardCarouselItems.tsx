@@ -60,6 +60,51 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
       {fields.map((item, j) => (
         <div key={item.id} className="listFieldsWrapper">
           <div className="m-b-8">
+            <Space direction="vertical">
+              <span className="label">
+                <FormItem
+                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
+                >
+                  <InputWithTitleCounter
+                    label={t(`ENTER_TITLE`)}
+                    showCount={true}
+                    maxLength={60}
+                    required={true}
+                    isLight={true}
+                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}
+                    textLength={
+                      watch(`view.childrenViews.${nestedIndex}.items.${j}.title`)
+                        ?.length || 0
+                    }
+                    placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+                    readOnly={isHistoryViewer}
+                  />
+                </FormItem>
+              </span>
+            </Space>
+          </div>
+          <div className="m-b-8">
+            <Space direction="vertical">
+              <span className="label">
+                <InputWithTitleCounter
+                  label={t(`ENTER_CONTENT`)}
+                  showCount
+                  maxLength={40}
+                  isLight={true}
+                  {...register(
+                    `view.childrenViews.${nestedIndex}.items.${j}.description`,
+                  )}
+                  textLength={
+                    watch(`view.childrenViews.${nestedIndex}.items.${j}.description`)
+                      ?.length || 0
+                  }
+                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
+                  readOnly={isHistoryViewer}
+                />
+              </span>
+            </Space>
+          </div>
+          <div className="m-b-8">
             <span className="subLabel">
               {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
             </span>
@@ -103,51 +148,6 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                   />
                 </>
               </FormItem>
-            </Space>
-          </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
-              <span className="label">
-                <FormItem
-                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
-                >
-                  <InputWithTitleCounter
-                    label={t(`ENTER_TITLE`)}
-                    showCount={true}
-                    maxLength={60}
-                    required={true}
-                    isLight={true}
-                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}
-                    textLength={
-                      watch(`view.childrenViews.${nestedIndex}.items.${j}.title`)
-                        ?.length || 0
-                    }
-                    placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
-                  />
-                </FormItem>
-              </span>
-            </Space>
-          </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
-              <span className="label">
-                <InputWithTitleCounter
-                  label={t(`ENTER_CONTENT`)}
-                  showCount
-                  maxLength={40}
-                  isLight={true}
-                  {...register(
-                    `view.childrenViews.${nestedIndex}.items.${j}.description`,
-                  )}
-                  textLength={
-                    watch(`view.childrenViews.${nestedIndex}.items.${j}.description`)
-                      ?.length || 0
-                  }
-                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
-                  readOnly={isHistoryViewer}
-                />
-              </span>
             </Space>
           </div>
           {j > 1 && (
