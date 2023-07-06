@@ -20,7 +20,9 @@ export const ImageWithToken = ({ origin }: { origin?: string }) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = icImgNotFound;
             // e.currentTarget.className = 'imgNotFound';
+            console.log('@err in img with token', e);
           }}
+          crossOrigin="anonymous"
         />
       ) : (
         <div className="skeleton"></div>

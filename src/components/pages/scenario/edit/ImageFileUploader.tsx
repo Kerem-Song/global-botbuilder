@@ -165,6 +165,7 @@ export const ImageFileUploader = ({
                     alt="templateImage"
                     onError={(e) => {
                       console.log('@on error1');
+                      console.log('@err1?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {
@@ -176,6 +177,7 @@ export const ImageFileUploader = ({
                         e.currentTarget.className = '';
                       }
                     }}
+                    crossOrigin="anonymous"
                   />
                 </>
               ) : (
@@ -186,6 +188,7 @@ export const ImageFileUploader = ({
                     alt="templateImage"
                     onError={(e) => {
                       console.log('@on error2');
+                      console.log('@err2?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {
@@ -197,6 +200,7 @@ export const ImageFileUploader = ({
                         e.currentTarget.className = '';
                       }
                     }}
+                    crossOrigin="anonymous"
                   />
                 </>
               )
