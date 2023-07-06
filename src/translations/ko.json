@@ -1,5 +1,5 @@
 {
-  "dashboard": {
+  "DASHBOARD": {
     "TITLE": "홈페이지",
     "SEARCH_PLACEHOLDER": "봇 이름을 검색하세요.",
     "MY_CHATBOT": "내 챗봇",
@@ -14,7 +14,7 @@
     "BOT_STATUS_ACTIVE": "Active",
     "MSG_DUPLICATED_BOT_NAME": "중복된 이름입니다."
   },
-  "common": {
+  "COMMON": {
     "intlDateTime": "{{val, datetime}}",
     "SAVE": "저장",
     "OK": "확인",
@@ -55,7 +55,7 @@
     "DEFAULT_LBL_BUTTON": "버튼",
     "DEFAULT_LBL_QUICKREPLY": "Quick Reply"
   },
-  "scenario": {
+  "SCENARIO": {
     "TITLE": "시나리오",
     "TESTER": "테스트하기",
     "SINGLE": "단일",
@@ -318,7 +318,7 @@
     "RENAME": "이름 바꾸기",
     "CAROUSEL_SETTING": "캐로셀 편집"
   },
-  "sidebar": {
+  "SIDEBAR": {
     "PARTNERS_CENTER": "파트너스 센터",
     "DASHBOARD": "대시보드",
     "CHATBOT_LIST": "챗봇 리스트",
@@ -333,10 +333,10 @@
     "SETTING": "설정",
     "LIST_ALL": "전체 목록 보기"
   },
-  "imgeditor": {
+  "IMGEDITOR": {
     "TITLE": "이미지 편집"
   },
-  "botTest": {
+  "BOTTEST": {
     "BOT_TESTER": "테스트하기",
     "HEADER": "봇 테스트하기",
     "ENTER_TEXT": "텍스트를 입력해주세요.",
@@ -346,7 +346,7 @@
     "CHATBUBBLE_NAME": "말풍선명",
     "DISCOUNT": "할인"
   },
-  "utterance": {
+  "UTTERANCE": {
     "TITLE": "인텐트 관리",
     "DELETE_INTENT": "인텐트 삭제하기",
     "DELETE_INTENT_MESSAGE": "인텐트와 인텐트에 등록되어 있는 모든 발화가 삭제됩니다.\n삭제하시겠습니까?",
@@ -369,7 +369,7 @@
     "NO_SEARCH_RESULT_FOUND": "검색 결과가 없습니다.",
     "SEARCH_INTENT_PLACEHOLDER": "검색어를 입력해주세요."
   },
-  "utternaceDetailPage": {
+  "UTTERNACEDETAILPAGE": {
     "TITLE": "인텐트 정보",
     "LIST": "목록으로",
     "DELETE_INTENT": "인텐트 삭제하기",
@@ -398,7 +398,7 @@
     "ENTITY_NAME_REGEX": "특수문자는 - _만 입력 가능합니다.",
     "ADD_INTENT": "인텐트 등록"
   },
-  "setting": {
+  "SETTING": {
     "TITLE": "챗봇 설정",
     "DEFAULT_SETTING": "기본 설정",
     "BOT_NAME_PLACEHOLDER": "봇 이름을 입력해주세요.",
@@ -473,7 +473,7 @@
     "BOT_IS_NOT_ACTIVATE_EXCEPTION": "파트너스 센터에서 챗봇 빌더가 미운영 상태입니다.",
     "ALREADY_EXISTS_ACTIVATED_BOT_EXCEPTION": "이미 다른 봇이 활성화 되었습니다.\n활성화된 봇을 비활성화 후, 다시 시도해주세요."
   },
-  "deployment": {
+  "DEPLOYMENT": {
     "TITLE": "배포",
     "REFERENCE_TIME": "기준 시간",
     "DEPLOY_TEST_CHANNEL": "테스트 채널 배포하기",
@@ -508,7 +508,7 @@
     "CHANNEL_NOT_FOUND": "채널을 찾을 수 없음",
     "CHANNEL_NOT_USING_BY_PS_CENTER": "채널 미운영"
   },
-  "history": {
+  "HISTORY": {
     "TITLE": "히스토리",
     "INQUIRY_YEAR": "조회 연도",
     "ALL_YEAR": "전체",
