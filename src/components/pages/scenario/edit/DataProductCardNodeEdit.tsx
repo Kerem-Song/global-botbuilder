@@ -244,6 +244,7 @@ export const DataProductCardNodeEdit = () => {
                       {...register(`view.retailPriceParam`)}
                       isLight={true}
                       readOnly={isHistoryViewer}
+                      placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                     />
                   </FormItem>
                 </Col>
@@ -259,6 +260,7 @@ export const DataProductCardNodeEdit = () => {
                       {...register(`view.currencyUnit`)}
                       isLight={true}
                       readOnly={isHistoryViewer}
+                      placeholder={'ex.USD'}
                     />
                   </FormItem>
                 </Col>
