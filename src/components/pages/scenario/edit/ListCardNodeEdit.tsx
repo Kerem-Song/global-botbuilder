@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, FormItem, Row, Space } from '@components';
+import { Button, Col, Collapse, Divider, FormItem, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -88,7 +88,7 @@ export const ListCardNodeEdit = () => {
       <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id} className="listFieldsWrapper">
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Space direction="vertical">
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
@@ -107,7 +107,7 @@ export const ListCardNodeEdit = () => {
                 </span>
               </Space>
             </div>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Space direction="vertical">
                 <span className="label">
                   <InputWithTitleCounter
@@ -129,7 +129,7 @@ export const ListCardNodeEdit = () => {
               </span>
               <span className="required"> *</span>
             </div>
-            <div className="m-b-8">
+            <div>
               <Space direction="vertical">
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <>
@@ -152,6 +152,7 @@ export const ListCardNodeEdit = () => {
                       registerName={`view.items.${i}.imageUrl`}
                       placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                       isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
+                      isSmall={true}
                     />
                   </>
                 </FormItem>
@@ -164,6 +165,7 @@ export const ListCardNodeEdit = () => {
                 </Button>
               </div>
             )}
+            {i < fields.length && <Divider style={{ margin: '32px 0' }} />}
           </div>
         ))}
         <div>

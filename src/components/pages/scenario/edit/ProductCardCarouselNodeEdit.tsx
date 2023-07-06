@@ -158,6 +158,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                   ? false
                                   : true
                               }
+                              isSmall={true}
                             />
                           </>
                         </FormItem>

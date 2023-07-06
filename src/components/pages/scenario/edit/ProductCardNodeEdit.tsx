@@ -102,6 +102,7 @@ export const ProductCardNodeEdit = () => {
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                     isValid={errors.view?.profileIconUrl ? false : true}
+                    isSmall={true}
                   />
                 </>
               </FormItem>

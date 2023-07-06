@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, Row, Space } from '@components';
+import { Button, Col, Collapse, Divider, Row, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -59,7 +59,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
       {fields.map((item, j) => (
         <div key={item.id} className="listFieldsWrapper">
-          <div className="m-b-8">
+          <div className="m-b-12">
             <Space direction="vertical">
               <span className="label">
                 <FormItem
@@ -83,7 +83,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
               </span>
             </Space>
           </div>
-          <div className="m-b-8">
+          <div className="m-b-12">
             <Space direction="vertical">
               <span className="label">
                 <InputWithTitleCounter
@@ -110,7 +110,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
             </span>
             <span className="required"> *</span>
           </div>
-          <div className="m-b-8">
+          <div>
             <Space direction="vertical">
               <FormItem
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
@@ -145,6 +145,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                         ? false
                         : true
                     }
+                    isSmall={true}
                   />
                 </>
               </FormItem>
@@ -157,6 +158,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
               </Button>
             </div>
           )}
+          {j < fields.length && <Divider style={{ margin: '32px 0' }} />}
         </div>
       ))}
       <div>

@@ -159,7 +159,7 @@ export const DataListCardNodeEdit = () => {
       <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Space direction="vertical">
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
@@ -184,7 +184,7 @@ export const DataListCardNodeEdit = () => {
                 </span>
               </Space>
             </div>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Space direction="vertical">
                 <span className="label">
                   {/* <InputWithTitleCounter
@@ -234,6 +234,7 @@ export const DataListCardNodeEdit = () => {
                       registerName={`view.items.${i}.imageUrl`}
                       placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                       isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
+                      isSmall={true}
                     />
                   </>
                 </FormItem>

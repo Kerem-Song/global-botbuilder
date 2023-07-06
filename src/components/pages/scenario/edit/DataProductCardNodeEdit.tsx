@@ -185,6 +185,7 @@ export const DataProductCardNodeEdit = () => {
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                     isValid={errors.view?.profileIconUrl ? false : true}
+                    isSmall={true}
                   />
                 </>
               </FormItem>
