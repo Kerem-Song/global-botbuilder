@@ -28,7 +28,7 @@ export const DashboardComponent = () => {
       return true;
     }
     if (data.length === 0) {
-      return true;
+      return false;
     }
 
     if (!filteredList?.length) {
