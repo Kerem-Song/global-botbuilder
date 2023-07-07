@@ -13,7 +13,6 @@ import {
   TNodeTypes,
 } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { lunaToast } from '@modules/lunaToast';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import editNodeAsync from '@store/editNodeAsync';
@@ -324,6 +323,24 @@ export const BotBuilderHeader = () => {
     resolver: yupResolver(schema),
   });
 
+  const isSavable = () => {
+    if (scenarioSaving) {
+      return true;
+    }
+
+    if (changed) {
+      return false;
+    }
+
+    if (formMethods.formState.isDirty) {
+      if (Object.entries(formMethods.formState.dirtyFields).length > 0) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   return (
     <>
       <div className="botBuilderHeader">
@@ -408,7 +425,7 @@ export const BotBuilderHeader = () => {
             small
             type="primary"
             onClick={handleScenarioSave}
-            disabled={scenarioSaving || (!changed && !isEditDrawOpen)}
+            disabled={isSavable()}
           >
             {tc(`SAVE`)}
           </Button>
