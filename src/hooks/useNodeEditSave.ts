@@ -27,41 +27,37 @@ export const useNodeEditSave = () => {
   } = useFormContext<INodeEditModel>();
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
 
-  const handleSave = (changed: boolean) => {
+  const handleSave = () => {
     console.log('handleSave');
     const model = getValues();
     trigger().then((isValid) => {
       dispatch(setInvalidateNode({ id: model.id, isValid }));
     });
-    if (changed) {
+
+    console.log('isDirty', isDirty);
+    console.log('dirtyFields', dirtyFields);
+
+    if (Object.entries(dirtyFields).length > 0) {
       dispatch(editNode(model));
       reset({ id: '', title: '' });
     }
   };
 
   useEffect(() => {
-    console.log('isDirty', isDirty);
-    console.log('dirtyFields', dirtyFields);
-    if (isDirty) {
-      setIsChanged(true);
-    }
-  }, [isDirty]);
-
-  useEffect(() => {
     console.log('@@@@useEffect');
     return () => {
       console.log('@@@@useEffect callback');
       if (selectedNode && index === undefined && !isHistoryViewer) {
-        handleSave(isChanged);
+        handleSave();
       }
     };
-  }, [selected, isChanged]);
+  }, [selected, isDirty]);
 
   useEffect(() => {
     return () => {
       if (selectedNode && index !== undefined && !isHistoryViewer) {
-        handleSave(isChanged);
+        handleSave();
       }
     };
-  }, [selected, index, isChanged]);
+  }, [selected, index, isDirty]);
 };
