@@ -357,6 +357,9 @@
           gap: rem(4);
 
           & .btnQuickRelply {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: rem(192);
             height: rem(36);
             background-color: $gray100;

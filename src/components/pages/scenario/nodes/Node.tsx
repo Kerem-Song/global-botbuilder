@@ -130,11 +130,11 @@ export const Node: FC<INodeProps> = ({
   };
 
   const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Delete') {
+    if (e.key === 'Delete' && !isHistoryViewer) {
       deleteCard(node);
-    } else if (e.code === 'KeyC' && e.ctrlKey) {
+    } else if (e.code === 'KeyC' && e.ctrlKey && !isHistoryViewer) {
       handleDuplicationCard(node);
-    } else if (e.code === 'KeyX' && e.ctrlKey) {
+    } else if (e.code === 'KeyX' && e.ctrlKey && !isHistoryViewer) {
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
     }
@@ -146,7 +146,7 @@ export const Node: FC<INodeProps> = ({
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
-    if (e.code === 'KeyV' && e.ctrlKey) {
+    if (e.code === 'KeyV' && e.ctrlKey && !isHistoryViewer) {
       handlePasteCard({
         x:
           canvasRect && viewRect

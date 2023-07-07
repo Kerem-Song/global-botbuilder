@@ -333,10 +333,10 @@ export const Botbuilder = () => {
   };
 
   const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.shiftKey && e.code === 'KeyZ' && e.ctrlKey) {
+    if (e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isHistoryViewer) {
       updateLineAll();
       dispatch(ActionCreators.redo());
-    } else if (!e.shiftKey && e.code === 'KeyZ' && e.ctrlKey) {
+    } else if (!e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isHistoryViewer) {
       updateLineAll();
       dispatch(ActionCreators.undo());
     }
