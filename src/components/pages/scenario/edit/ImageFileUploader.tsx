@@ -132,10 +132,6 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
-  useEffect(() => {
-    console.log('@@@@imageurl', watch(imageUrl));
-  }, [watch(imageUrl)]);
-
   return (
     <>
       <label
@@ -159,7 +155,6 @@ export const ImageFileUploader = ({
             {watch(imageUrl) ? (
               watch(imgPath) ? (
                 <>
-                  {console.log('@img side1')}
                   <img
                     src={watch(imgPath)}
                     alt="templateImage"
@@ -181,7 +176,6 @@ export const ImageFileUploader = ({
                 </>
               ) : (
                 <>
-                  {console.log('@img side2')}
                   <img
                     src={builderImageSrc}
                     alt="templateImage"
