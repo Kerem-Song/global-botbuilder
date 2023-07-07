@@ -8,7 +8,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 export const Layout = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('common'.toUpperCase());
+  const { t } = useTranslation('COMMON');
   const { pathname } = useLocation();
   nodeDefaultHelper.tc = t;
   arrowHelper.tc = t;
