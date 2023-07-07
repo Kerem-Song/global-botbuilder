@@ -226,6 +226,10 @@
 .historyViewerMain {
   padding-left: 0;
 
+  label {
+    pointer-events: none;
+  }
+  
   input {
     pointer-events: none;
   }
@@ -284,7 +288,8 @@
           pointer-events: none;
         }
 
-        .joinWrapper {
+        .joinWrapper .on {
+          display: flex !important;
           pointer-events: none;
         }
 
@@ -294,6 +299,7 @@
 
         .luna-btn {
           display: none;
+          pointer-events: none;
         }
 
         .wrapper {
