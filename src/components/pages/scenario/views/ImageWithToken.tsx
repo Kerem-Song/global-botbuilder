@@ -1,9 +1,8 @@
 import { icImgNotFound } from '@assets';
-import { usePage, useRootState } from '@hooks';
-import { useEffect, useRef, useState } from 'react';
+import { useRootState } from '@hooks';
+import { useState } from 'react';
 
 export const ImageWithToken = ({ origin }: { origin?: string }) => {
-  const { t } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
   const [imgErr, setImgErr] = useState<boolean>(false);
   const builderImageSrc = `${
