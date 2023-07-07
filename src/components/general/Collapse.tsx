@@ -1,6 +1,6 @@
 import { icCollapseClose, icCollapseOpen } from '@assets';
 import { Button, Col, Divider, Row, Switch } from '@components';
-import { usePage, useSystemModal } from '@hooks';
+import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
 import { IGNodeEditModel, IHasChildren, IHasClassNameNStyle } from '@models';
 import {
   IHasImageCtrlViewBase,
@@ -24,12 +24,13 @@ export const Collapse: FC<CollapseProps> = ({
 }) => {
   const { t } = usePage();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
-  const { register, setValue, watch, control } =
+  const { register, setValue, watch, getValues, control } =
     useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
   const { confirm } = useSystemModal();
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const isHistoryViewer = useHistoryViewerMatch();
 
   // console.log(
   //   'field in collapse',
@@ -39,7 +40,7 @@ export const Collapse: FC<CollapseProps> = ({
   //     ? `view.childrenViews.${index}.useImageCtrl`
   //     : `view.useImageCtrl`,
   // );
-
+  const values = getValues();
   const isCollapsedModalForImage = async () => {
     if (field === 'useImageCtrl' && index !== undefined) {
       const result = await confirm({
@@ -91,7 +92,23 @@ export const Collapse: FC<CollapseProps> = ({
   }, [watch(`view.useImageCtrl`)]);
 
   useEffect(() => {
+    if (field !== 'useImageCtrl') {
+      return;
+    }
     const childrenViewArr = watch(`view.childrenViews`);
+
+    if (isHistoryViewer) {
+      console.log('@childrenViewArr', childrenViewArr);
+      console.log('@getvalue', watch(`view.imageCtrl`));
+      if (childrenViewArr && childrenViewArr[0].imageCtrl.imageUrl) {
+        // console.log('@5', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
+        setValue(`view.useImageCtrl`, true);
+      } else {
+        // console.log('@6', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
+        setValue(`view.useImageCtrl`, false);
+      }
+      return;
+    }
 
     if (index !== undefined && childrenViewArr) {
       if (
@@ -103,9 +120,21 @@ export const Collapse: FC<CollapseProps> = ({
         setValue(`view.useImageCtrl`, true);
       }
     } else {
-      if (!watch(`view.useImageCtrl`) && !watch(`view.imageCtrl.imageUrl`)) {
+      if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
+        // console.log('@3', index, childrenViewArr);
+        // console.log(
+        //   '@3 watch(`view.imageCtrl.imageUrl`)',
+        //   watch(`view.useImageCtrl`),
+        //   watch(`view.imageCtrl.imageUrl`),
+        // );
         setValue(`view.useImageCtrl`, false);
       } else {
+        // console.log('@4', index, childrenViewArr);
+        // console.log(
+        //   '@4 watch(`view.imageCtrl.imageUrl`)',
+        //   watch(`view.useImageCtrl`),
+        //   watch(`view.imageCtrl.imageUrl`),
+        // );
         setValue(`view.useImageCtrl`, true);
       }
     }

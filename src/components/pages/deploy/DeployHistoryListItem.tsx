@@ -44,7 +44,9 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
               <td className="deployHistoryList channelType">
                 {x.isLive ? t('OPERATIONAL') : t('TEST')}
               </td>
-              <td className="deployHistoryList channelName">{x.snsChannel}</td>
+              <td className="deployHistoryList channelName">
+                {x.snsChannel ? x.snsChannel : '-'}
+              </td>
               <td className="deployHistoryList deployDateTime">
                 {util.toLocaleDateTimeString(new Date(x.createAt))}
               </td>

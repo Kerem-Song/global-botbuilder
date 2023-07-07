@@ -95,7 +95,9 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
         <div className="deployInfo">
           <div className="info">
             <span className="infoTitle">{t('CHANNEL_NAME')}</span>
-            <span className="infoContent">{detailInfo.snsChannel}</span>
+            <span className="infoContent">
+              {detailInfo.snsChannel ? detailInfo.snsChannel : '-'}
+            </span>
           </div>
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>
