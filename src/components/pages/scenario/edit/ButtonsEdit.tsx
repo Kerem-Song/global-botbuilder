@@ -31,7 +31,6 @@ export const ButtonsEdit = ({
   useCounter: boolean;
   isDataApi?: boolean;
 }) => {
-  console.log('@isDataApi', isDataApi);
   const { t, tc } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },

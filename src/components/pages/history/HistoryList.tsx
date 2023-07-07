@@ -34,7 +34,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     year: year,
   });
   const [ref, inView] = useInView();
-  console.log('@category', category);
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();

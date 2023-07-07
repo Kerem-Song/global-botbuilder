@@ -103,7 +103,7 @@ export const Collapse: FC<CollapseProps> = ({
         setValue(`view.useImageCtrl`, true);
       }
     } else {
-      if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
+      if (!watch(`view.useImageCtrl`) && !watch(`view.imageCtrl.imageUrl`)) {
         setValue(`view.useImageCtrl`, false);
       } else {
         setValue(`view.useImageCtrl`, true);
@@ -139,7 +139,6 @@ export const Collapse: FC<CollapseProps> = ({
                         console.log('onchange~~~~~~~~~~~~~~~~');
                         setValue(`view.imageCtrl.imageUrl`, '', {
                           shouldDirty: true,
-                          shouldValidate: true,
                         });
                         e.target.files = null;
                         e.target.value = '';
