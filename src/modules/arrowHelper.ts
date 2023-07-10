@@ -291,7 +291,8 @@ export const arrowHelper = {
 
     if (startId.includes(CONDITION_SUFFIX))
       view.items?.map((item, i) => {
-        if (startId.endsWith(CONDITION_SUFFIX + i)) {
+        if (startId.endsWith(CONDITION_SUFFIX + item.id)) {
+          console.log('@item next node id', item.nextNodeId, endId);
           item.nextNodeId = endId;
         }
       });

@@ -24,7 +24,7 @@ export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
                 {item.op2 || '{{ }}'}
               </p>
               <NextNodeButton
-                ctrlId={`${node.id}${CONDITION_SUFFIX}${i}`}
+                ctrlId={`${node.id}${CONDITION_SUFFIX}${item.id}`}
                 nodeId={`${NODE_PREFIX}${node.id}`}
                 type="green"
                 offset={i * 25 + 60}

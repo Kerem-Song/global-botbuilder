@@ -49,7 +49,7 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   getConnectId(node: INode) {
     const view = node.view as IConditionView;
     const item = view.items?.map((item) => item.nextNodeId);
-    console.log('@item', item);
+    // console.log('@item', item);
     return [
       ...(node.nextNodeId ? [node.nextNodeId] : []),
       ...(view.falseThenNextNodeId ? [view.falseThenNextNodeId] : []),

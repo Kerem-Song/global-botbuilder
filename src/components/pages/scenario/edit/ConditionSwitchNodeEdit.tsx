@@ -2,6 +2,7 @@ import { Button, Collapse, Divider, FormItem, Radio, Space } from '@components';
 import { useNodeEditSave, usePage, useRootState, useScenarioClient } from '@hooks';
 import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
+import { ID_GEN, ID_TYPES } from '@modules';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
@@ -70,6 +71,7 @@ export const ConditionSwitchNodeEdit = () => {
         operator: ConditionOperator.Is,
         op2: '',
         nextNodeId: '',
+        id: ID_GEN.generate(ID_TYPES.CTRL),
       });
     } else {
       //modal alert

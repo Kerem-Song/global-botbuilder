@@ -199,8 +199,8 @@ export const Botbuilder = () => {
       isNodeBottom === 'true' && setIsDraggedNodeBottom(true);
       handleIsOpen(true);
       setPopUpPosition({
-        x: Math.round(e.clientX / scale) - canvasRect.left / scale,
-        y: Math.round(e.clientY / scale) - canvasRect.top / scale,
+        x: Math.round(e.clientX / scale) - canvasRect.left,
+        y: Math.round(e.clientY / scale) - canvasRect.top,
       });
       return;
     }
@@ -209,8 +209,8 @@ export const Botbuilder = () => {
       setIsDraggedNodeBottom(false);
       dispatch(
         setOtherFlowPopupPosition({
-          x: Math.round(e.clientX / scale) - canvasRect.left / scale,
-          y: Math.round(e.clientY / scale) - canvasRect.top / scale,
+          x: Math.round(e.clientX / scale) - canvasRect.left,
+          y: Math.round(e.clientY / scale) - canvasRect.top,
         }),
       );
       dispatch(otherFlowScenariosPopupStatus(true));
@@ -243,8 +243,8 @@ export const Botbuilder = () => {
     const addNode: INode = {
       id: ID_GEN.generate('node'),
       type: cardType,
-      x: Math.round(e.clientX / scale) - canvasRect.left / scale,
-      y: Math.round(e.clientY / scale) - canvasRect.top / scale,
+      x: Math.round(e.clientX / scale) - canvasRect.left,
+      y: Math.round(e.clientY / scale) - canvasRect.top,
       title: `${nodeName} ` + `${index}`.padStart(2, '0'),
       nodeKind: nodeFactory.getFactory(cardType)?.nodeKind || NodeKind.Unkonown,
       view: nodeView,
@@ -327,8 +327,8 @@ export const Botbuilder = () => {
     const canvasRect = canvasRef.current?.getBoundingClientRect() || new DOMRect();
 
     setPoints({
-      x: Math.round(e.clientX / scale) - canvasRect.left / scale,
-      y: Math.round(e.clientY / scale) - canvasRect.top / scale,
+      x: Math.round(e.clientX / scale) - canvasRect.left,
+      y: Math.round(e.clientY / scale) - canvasRect.top,
     });
   };
 

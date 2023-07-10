@@ -116,7 +116,15 @@ export const nodeDefaultHelper = {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
-      items: [{ op1: '', operator: undefined, op2: '', nextNodeId: '' }],
+      items: [
+        {
+          op1: '',
+          operator: undefined,
+          op2: '',
+          nextNodeId: '',
+          id: ID_GEN.generate(ID_TYPES.CTRL),
+        },
+      ],
       join: ConditionJoin.And,
     };
 

@@ -54,6 +54,7 @@ export interface IConditionItem {
   op2: string | null;
   operator?: ConditionOperator;
   nextNodeId?: string;
+  id?: string;
 }
 
 export interface INodeView {
