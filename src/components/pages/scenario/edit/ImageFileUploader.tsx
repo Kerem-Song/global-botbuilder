@@ -69,12 +69,15 @@ export const ImageFileUploader = ({
       await imageUploadAsync({ formData })
         .then((res) => {
           console.log('res.data image', res?.data);
-          setValue(imageUrl, res?.data.result, { shouldDirty: true });
+          setValue(imageUrl, res?.data.result, {
+            shouldDirty: true,
+            shouldValidate: true,
+          });
           setValue(imageFilePath, null, { shouldDirty: true });
           setValue(imgPath, null, { shouldDirty: true });
         })
         .catch((err) => {
-          setValue(imageUrl, null, { shouldDirty: true });
+          setValue(imageUrl, null, { shouldDirty: true, shouldValidate: true });
           setValue(imageFilePath, null, { shouldDirty: true });
           setValue(imgPath, null, { shouldDirty: true });
           //modal 띄우기?
