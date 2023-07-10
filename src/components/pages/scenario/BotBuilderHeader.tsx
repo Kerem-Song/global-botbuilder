@@ -248,12 +248,16 @@ export const BotBuilderHeader = () => {
         setOtherFlowPopupPosition({
           x:
             canvasRect && viewRect
-              ? Math.round(viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x))
+              ? Math.round(
+                  viewRect.width / scale / 2 -
+                    108 * 2 +
+                    (viewRect.x - canvasRect.x) / scale,
+                )
               : 0,
           y:
             canvasRect && viewRect
               ? Math.round(
-                  viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y),
+                  viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y) / scale,
                 )
               : 0,
         }),
@@ -291,11 +295,15 @@ export const BotBuilderHeader = () => {
       seq: 0,
       x:
         canvasRect && viewRect
-          ? Math.round(viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x))
+          ? Math.round(
+              viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x) / scale,
+            )
           : 0,
       y:
         canvasRect && viewRect
-          ? Math.round(viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y))
+          ? Math.round(
+              viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y) / scale,
+            )
           : 0,
     };
     dispatch(appendNode(addNode));
