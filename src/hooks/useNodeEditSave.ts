@@ -10,22 +10,26 @@ import { useDispatch } from 'react-redux';
 import { useRootState } from './useRootState';
 
 export const useNodeEditSave = () => {
-  const [isChanged, setIsChanged] = useState(false);
   const dispatch = useDispatch();
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const isHistoryViewer = useHistoryViewerMatch();
-  console.log(carouselIndexObj);
 
   const selectedNode = nodes.find((x) => x.id === selected);
   const {
     getValues,
     trigger,
     reset,
+    watch,
     formState: { isDirty, dirtyFields },
   } = useFormContext<INodeEditModel>();
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
+  const viewId = watch('view.id');
+
+  useEffect(() => {
+    reset();
+  }, [viewId]);
 
   const handleSave = () => {
     console.log('handleSave');

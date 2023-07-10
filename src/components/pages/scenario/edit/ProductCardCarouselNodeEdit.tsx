@@ -51,9 +51,9 @@ export const ProductCardCarouselNodeEdit = () => {
     trigger(`view.childrenViews.${index}.${price}`);
   };
 
-  useEffect(() => {
-    resetField(`view.childrenViews.${index}.currencyUnit`, { keepDirty: true });
-  }, [index]);
+  // useEffect(() => {
+  //   resetField(`view.childrenViews.${index}.currencyUnit`, { keepDirty: true });
+  // }, [index]);
 
   const salePrice =
     Number(watch(`view.childrenViews.${index}.retailPrice`)) -

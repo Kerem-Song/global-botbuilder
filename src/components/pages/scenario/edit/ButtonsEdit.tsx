@@ -95,12 +95,12 @@ export const ButtonsEdit = ({
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedNode = nodes.find((x) => x.id === selected);
 
-  useEffect(() => {
-    resetField(
-      index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
-      { keepDirty: true, keepError: true },
-    );
-  }, [nodeId]);
+  // useEffect(() => {
+  //   resetField(
+  //     index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
+  //     { keepDirty: true, keepError: true },
+  //   );
+  // }, [nodeId]);
 
   return (
     <>

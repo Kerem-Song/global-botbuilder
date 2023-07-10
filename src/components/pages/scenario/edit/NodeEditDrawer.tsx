@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
+  console.log('^^^^ NodeEditDrawer');
   const { t } = usePage();
   const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
