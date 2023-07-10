@@ -158,6 +158,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                   ? false
                                   : true
                               }
+                              isSmall={true}
                             />
                           </>
                         </FormItem>
@@ -218,11 +219,11 @@ export const ProductCardCarouselNodeEdit = () => {
                           />
                         </FormItem>
 
-                        <FormItem
-                          error={errors.view?.childrenViews?.[index]?.retailPrice}
-                        >
-                          <Row justify="space-between" gap={4}>
-                            <Col span={16} className="retailPrice">
+                        <Row justify="space-between" gap={4}>
+                          <Col span={16} className="retailPrice">
+                            <FormItem
+                              error={errors.view?.childrenViews?.[index]?.retailPrice}
+                            >
                               <InputWithTitleCounter
                                 className={classNames({
                                   'luna-input-error':
@@ -241,15 +242,27 @@ export const ProductCardCarouselNodeEdit = () => {
                                 isLight={true}
                                 readOnly={isHistoryViewer}
                               />
-                            </Col>
-                            <Col className="productSelectorWrapper" span={8}>
-                              <Input
+                            </FormItem>
+                          </Col>
+                          <Col className="productSelectorWrapper" span={8}>
+                            <FormItem
+                              error={errors.view?.childrenViews?.[index]?.currencyUnit}
+                            >
+                              <InputWithTitleCounter
+                                className={classNames({
+                                  'luna-input-error':
+                                    errors.view?.childrenViews?.[index]?.currencyUnit,
+                                })}
+                                label={t(`PRODUCT_NODE_CURRENCY_UNIT`)}
+                                required={true}
                                 {...register(`view.childrenViews.${index}.currencyUnit`)}
                                 placeholder="ex.USD"
+                                isLight={true}
+                                readOnly={isHistoryViewer}
                               />
-                            </Col>
-                          </Row>
-                        </FormItem>
+                            </FormItem>
+                          </Col>
+                        </Row>
 
                         <FormItem
                           error={errors.view?.childrenViews?.[index]?.discountAmount}

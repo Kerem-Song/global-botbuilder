@@ -18,11 +18,13 @@ import { useDispatch } from 'react-redux';
 
 interface INodeLinkPopUpMenuProps {
   popUpPosition: { x: number; y: number };
+  isDraggedNodeBottom: boolean;
   handleIsOpen: (value: boolean) => void;
 }
 
 export const NodeLinkPopUpMenu = ({
   popUpPosition,
+  isDraggedNodeBottom,
   handleIsOpen,
 }: INodeLinkPopUpMenuProps) => {
   const { t } = usePage();
@@ -213,6 +215,13 @@ export const NodeLinkPopUpMenu = ({
   console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
   console.log('startNode Type', startNode?.type);
   const filterdBtnList = cardTypeValue
+    .filter((b) => {
+      if (!isDraggedNodeBottom) {
+        return b.value !== NODE_TYPES.ANSWER_NODE;
+      }
+
+      return b;
+    })
     .filter((b) => {
       if (startNode?.type === NODE_TYPES.INTENT_NODE) {
         return (

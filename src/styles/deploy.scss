@@ -14,13 +14,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .deployBtns {
+      display: flex;
+      gap: rem(8);
+    }
     .referenceTime {
       width: fit-content;
       line-height: rem(19);
       font-size: rem(16);
       font-weight: 500;
       color: $grayBlack;
-      margin-bottom: rem(20);
     }
   }
   .deployHistoryListWrap {

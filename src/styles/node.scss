@@ -229,6 +229,7 @@
             padding-left: rem(5);
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
 
             &.empty {
               color: $gray300;
@@ -356,6 +357,9 @@
           gap: rem(4);
 
           & .btnQuickRelply {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: rem(192);
             height: rem(36);
             background-color: $gray100;
@@ -637,6 +641,7 @@
 
 .otherFlowRedirectPopup {
   padding: rem(12) !important;
+  width: rem(218);
 
   .otherFlowRedirectPopupLabelWrapper {
     padding-bottom: rem(8);
@@ -656,6 +661,34 @@
       font-size: rem(14);
       font-weight: 500;
     }
+  }
+
+  .luna-input-wrap {
+    margin-bottom: rem(12);
+  }
+
+  .btnRow {
+    padding: 0;
+    margin: 0 !important;
+    width: rem(192) !important;
+    div:has(.luna-popup-list) {
+      padding: rem(0) !important;
+    }
+  }
+  
+  .luna-popup-list {
+    padding: rem(12) !important;
+    padding-left: rem(14) !important;
+    height: rem(40) !important;
+  }
+
+  .noScenarioResult {
+    padding: rem(12);
+    color: $gray300;
+    font-weight: 500;
+    font-size: rem(12);
+    text-align: center;
+    line-height: rem(25);
   }
 }
 

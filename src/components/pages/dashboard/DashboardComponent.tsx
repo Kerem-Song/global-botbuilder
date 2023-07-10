@@ -25,10 +25,10 @@ export const DashboardComponent = () => {
 
   const isEmpty = () => {
     if (!data) {
-      return true;
+      return false;
     }
     if (data.length === 0) {
-      return true;
+      return false;
     }
 
     if (!filteredList?.length) {

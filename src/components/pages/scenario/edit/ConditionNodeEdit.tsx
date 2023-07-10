@@ -75,6 +75,9 @@ export const ConditionNodeEdit = () => {
     }
   };
 
+  console.log('@fields', fields);
+  console.log('@join', watch('view.join'));
+
   return (
     <>
       <Collapse label={t(`CONDITION_NODE_SET_CONDITION`)} useSwitch={false}>

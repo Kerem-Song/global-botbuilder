@@ -3,6 +3,7 @@ import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { bool } from 'yup';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
@@ -14,6 +15,7 @@ interface IImageCtrlIdPathProps {
   isValid?: boolean;
   registerName: string;
   placeholder?: string;
+  isSmall?: boolean;
 }
 
 export const ImageInput = ({
@@ -23,6 +25,7 @@ export const ImageInput = ({
   registerName,
   placeholder,
   isValid,
+  isSmall,
 }: IImageCtrlIdPathProps) => {
   const { t } = usePage();
   const {
@@ -63,8 +66,8 @@ export const ImageInput = ({
         placeholder={placeholder}
         readOnly={isHistoryViewer}
         onBlur={handleImgOnBlur}
-        maxRows={2.125}
-        minRows={2.125}
+        maxRows={isSmall ? 1 : 2.125}
+        minRows={isSmall ? 1 : 2.125}
         className={classNames({ invalid: !isValid })}
       />
     </div>

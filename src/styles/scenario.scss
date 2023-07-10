@@ -146,8 +146,10 @@
       .scenarioListName {
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: rem(110);
+        min-width: rem(112);
+        max-width: rem(112);
         white-space: nowrap;
+        font-size: rem(13);
       }
 
       .scenarioListSwitch {

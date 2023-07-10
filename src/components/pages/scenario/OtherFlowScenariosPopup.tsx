@@ -217,7 +217,7 @@ export const OtherFlowScenariosPopup = () => {
           </Row>
         ))
       ) : (
-        <div>{t(`NO_SCENARIO_RESULTS`)}</div>
+        <div className="noScenarioResult">{t(`NO_SCENARIO_RESULTS`)}</div>
       )}
     </div>
   );

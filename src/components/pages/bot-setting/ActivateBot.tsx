@@ -7,7 +7,7 @@ import { ConnectChannel } from './ConnectChannel';
 
 export const ActivateBot = () => {
   const { t, navigate } = usePage();
-  const { confirm } = useSystemModal();
+  const { confirm, error } = useSystemModal();
   const { botActivateAsync } = useBotClient();
   const [activate, setActivate] = useState<boolean>();
   const botSettingInfo = useRootState(
@@ -26,11 +26,27 @@ export const ActivateBot = () => {
       isActivate: true,
     };
 
-    const res = await botActivateAsync(botActivate);
+    const res = await botActivateAsync({ ...botActivate, customErrorCode: [7647, 7631] });
 
-    if (res?.data.isSuccess) {
+    if (res === 7647) {
+      error({
+        title: t('FAILED_ACTIVATED_BOT'),
+        description: (
+          <p style={{ whiteSpace: 'pre-line' }}>{t('BOT_IS_NOT_ACTIVATE_EXCEPTION')}</p>
+        ),
+      });
+    } else if (res === 7631) {
+      error({
+        title: t('FAILED_ACTIVATED_BOT'),
+        description: (
+          <p style={{ whiteSpace: 'pre-line' }}>
+            {t('ALREADY_EXISTS_ACTIVATED_BOT_EXCEPTION')}
+          </p>
+        ),
+      });
+    } else {
       lunaToast.success(t('SUCCESS_ACTIVATED_BOT'));
-      console.log('data', botSettingInfo);
+      return;
     }
   };
 

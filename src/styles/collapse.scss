@@ -13,11 +13,9 @@
     padding: rem(12);
 
     .listFieldsWrapper {
-      padding-bottom: rem(32);
-    }
-
-    .listFieldsWrapper:has(.deleteBtn) {
-      padding-bottom: rem(7);
+      .deleteBtn {
+        padding-bottom: 0 !important;
+      }
     }
   
     &[data-collapsed='true'] {

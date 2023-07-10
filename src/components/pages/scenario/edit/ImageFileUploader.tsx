@@ -1,16 +1,10 @@
 import { icImg, icImgNotFound } from '@assets';
-import {
-  imageUploadClient,
-  useHttp,
-  usePage,
-  useRootState,
-  useSystemModal,
-} from '@hooks';
+import { imageUploadClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
-import { ID_TYPES, SYS_BOT_ICON } from '@modules';
+import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
 import { SyntheticEvent, useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
@@ -30,14 +24,10 @@ export const ImageFileUploader = ({
     formState: { errors },
   } = useFormContext();
 
-  const values = getValues();
-
   const { imageUploadAsync } = imageUploadClient();
-  const { error, info } = useSystemModal();
+  const { error } = useSystemModal();
 
   const token = useRootState((state) => state.botInfoReducer.token);
-  const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const botImg = botInfo?.iconUrl;
 
   const {
     imageCtrl: imgCtrl,
@@ -132,10 +122,6 @@ export const ImageFileUploader = ({
     }
   }, [watch(imageFilePath)]);
 
-  useEffect(() => {
-    console.log('@@@@imageurl', watch(imageUrl));
-  }, [watch(imageUrl)]);
-
   return (
     <>
       <label
@@ -159,12 +145,12 @@ export const ImageFileUploader = ({
             {watch(imageUrl) ? (
               watch(imgPath) ? (
                 <>
-                  {console.log('@img side1')}
                   <img
                     src={watch(imgPath)}
                     alt="templateImage"
                     onError={(e) => {
                       console.log('@on error1');
+                      console.log('@err1?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {
@@ -180,12 +166,12 @@ export const ImageFileUploader = ({
                 </>
               ) : (
                 <>
-                  {console.log('@img side2')}
                   <img
                     src={builderImageSrc}
                     alt="templateImage"
                     onError={(e) => {
                       console.log('@on error2');
+                      console.log('@err2?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {

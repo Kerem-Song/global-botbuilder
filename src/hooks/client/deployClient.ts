@@ -2,6 +2,7 @@ import { useHttp, useRootState } from '@hooks';
 import { IHasResult, IPagingItems } from '@models';
 import {
   IDeploy,
+  IException,
   IResponseDeploy,
   IResponseSearchDeployHistory,
   ISearchDeployHistory,
@@ -51,25 +52,33 @@ export const useDeployClient = () => {
   };
 
   const deployingBotMutate = useMutation(async (data: IDeploy) => {
-    const result = await http.post<IDeploy, AxiosResponse<IResponseDeploy>>(
+    const res = await http.post<IDeploy, AxiosResponse<IResponseDeploy>>(
       'Bot/Deploy',
       data,
     );
-    if (result) {
+
+    const exception = res.data.exception as IException;
+
+    if (exception) {
       queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
-      return result.data;
+      return exception.errorCode;
     }
+
+    if (res.data.isSuccess) {
+      queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
+    }
+    return '';
   });
 
   const updateDeployHistoryCommentMutate = useMutation(
     async (data: IUpdateDeployHistoryComment) => {
-      const result = await http.post<
-        IUpdateDeployHistoryComment,
-        AxiosResponse<IResponse>
-      >('Bot/UpdateDeployHistoryComment', data);
-      if (result) {
+      const res = await http.post<IUpdateDeployHistoryComment, AxiosResponse<IResponse>>(
+        'Bot/UpdateDeployHistoryComment',
+        data,
+      );
+      if (res) {
         queryClient.invalidateQueries([DEPLOY_HISTORY_LIST_KEY]);
-        return result.data;
+        return res.data;
       }
     },
   );

@@ -25,11 +25,12 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
   const [deployResult, setDeployResult] = useState<IDeployResult[]>([
     { value: 0, message: t('UNKNOWN_ERROR') },
     { value: 1, message: t('SUCCESS') },
-    { value: 2, message: t('CHANNEL_IN_USE') },
-    { value: 3, message: t('SERVER_CONNECTION_FAILURE') },
-    { value: 6, message: t('DISABLED_CHANNEL') },
-    { value: 8, message: t('SCENARIO_ERROR') },
+    { value: 2, message: t('ALREADY_DEPLOIED_SNS_CHANNEL') },
+    { value: 3, message: t('S3_CONNECTION_FAIL') },
+    { value: 6, message: t('CHANNEL_NOT_ACTIVATED') },
+    { value: 8, message: t('INVALIDATE_FLOW_GROUP') },
     { value: 9, message: t('CHANNEL_NOT_FOUND') },
+    { value: 10, message: t('CHANNEL_NOT_USING_BY_PS_CENTER') },
   ]);
   const [isActive, setIsActive] = useState<boolean>(false);
   const { updateDeployHistoryCommentAsync } = useDeployClient();
@@ -94,7 +95,9 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
         <div className="deployInfo">
           <div className="info">
             <span className="infoTitle">{t('CHANNEL_NAME')}</span>
-            <span className="infoContent">{detailInfo.snsChannel}</span>
+            <span className="infoContent">
+              {detailInfo.snsChannel ? detailInfo.snsChannel : '-'}
+            </span>
           </div>
           <div className="info">
             <span className="infoTitle">{t('DEPLOYMENT_DATE_AND_TIME')}</span>

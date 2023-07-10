@@ -1,3 +1,5 @@
+import { IReq } from './req';
+
 export interface ISearchDeployHistory {
   pageNo: number;
   countPerPage: number;
@@ -21,7 +23,7 @@ export interface IResponseSearchDeployHistory {
   createAtByBrand: string;
 }
 
-export interface IDeploy {
+export interface IDeploy extends IReq {
   botId: string;
   isLive: boolean;
 }

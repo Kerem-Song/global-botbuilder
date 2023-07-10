@@ -102,6 +102,7 @@ export const ProductCardNodeEdit = () => {
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`IMAGE_INPUT_PLACEHOLDER`)}
                     isValid={errors.view?.profileIconUrl ? false : true}
+                    isSmall={true}
                   />
                 </>
               </FormItem>
@@ -144,9 +145,9 @@ export const ProductCardNodeEdit = () => {
                 />
               </FormItem>
 
-              <FormItem error={errors.view && errors.view.retailPrice}>
-                <Row justify="space-between" gap={4}>
-                  <Col span={16} className="retailPrice">
+              <Row justify="space-between" gap={4}>
+                <Col span={16} className="retailPrice">
+                  <FormItem error={errors.view && errors.view.retailPrice}>
                     <InputWithTitleCounter
                       className={classNames({
                         'luna-input-error': errors.view?.retailPrice,
@@ -162,12 +163,25 @@ export const ProductCardNodeEdit = () => {
                       isLight={true}
                       readOnly={isHistoryViewer}
                     />
-                  </Col>
-                  <Col className="productSelectorWrapper" span={8}>
-                    <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
-                  </Col>
-                </Row>
-              </FormItem>
+                  </FormItem>
+                </Col>
+                <Col className="productSelectorWrapper" span={8}>
+                  <FormItem error={errors.view?.currencyUnit}>
+                    {/* <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" /> */}
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.currencyUnit,
+                      })}
+                      label={t(`PRODUCT_NODE_CURRENCY_UNIT`)}
+                      required={true}
+                      {...register(`view.currencyUnit`)}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                      placeholder={'ex.USD'}
+                    />
+                  </FormItem>
+                </Col>
+              </Row>
 
               <FormItem error={errors.view && errors.view.discountAmount}>
                 <InputWithTitleCounter

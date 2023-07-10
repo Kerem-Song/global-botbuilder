@@ -159,7 +159,9 @@ export const DataProductCardNodeEdit = () => {
       <div className="node-item-wrap collapse">
         <Collapse label={t(`PROFILE`)} useSwitch={false}>
           <div className="m-b-8">
-            <span className="subLabel">{t(`PROFILE_IMAGE_UPLOAD`)} </span>
+            <span className="subLabel">
+              {t(`PROFILE_IMAGE_UPLOAD`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
+            </span>
             <span className="required">*</span>
           </div>
           <div className="m-b-8">
@@ -183,6 +185,7 @@ export const DataProductCardNodeEdit = () => {
                     registerName={`view.profileIconUrl`}
                     placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
                     isValid={errors.view?.profileIconUrl ? false : true}
+                    isSmall={true}
                   />
                 </>
               </FormItem>
@@ -229,9 +232,9 @@ export const DataProductCardNodeEdit = () => {
                 }
               />
 
-              <FormItem error={errors.view && errors.view.retailPriceParam}>
-                <Row justify="space-between" gap={4}>
-                  <Col span={16} className="retailPrice">
+              <Row justify="space-between" align="flex-start" gap={4}>
+                <Col span={16} className="retailPrice">
+                  <FormItem error={errors.view?.retailPriceParam}>
                     <InputWithTitleCounter
                       className={classNames({
                         'luna-input-error': errors.view?.retailPriceParam,
@@ -241,20 +244,56 @@ export const DataProductCardNodeEdit = () => {
                       {...register(`view.retailPriceParam`)}
                       isLight={true}
                       readOnly={isHistoryViewer}
+                      placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                     />
-                  </Col>
-                  <Col className="productSelectorWrapper" span={8}>
+                  </FormItem>
+                </Col>
+                <Col className="productSelectorWrapper" span={8}>
+                  <FormItem error={errors.view?.currencyUnit}>
+                    {/* <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" /> */}
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.currencyUnit,
+                      })}
+                      label={t(`PRODUCT_NODE_CURRENCY_UNIT`)}
+                      required={true}
+                      {...register(`view.currencyUnit`)}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                      placeholder={'ex.USD'}
+                    />
+                  </FormItem>
+                </Col>
+              </Row>
+              {/* <div className="dataRetailPriceWrapper">
+                <div className="dataRetailPrice">
+                  <FormItem error={errors.view?.retailPriceParam}>
+                    <InputWithTitleCounter
+                      className={classNames({
+                        'luna-input-error': errors.view?.retailPriceParam,
+                      })}
+                      label={t(`PRODUCT_NODE_PRICE`)}
+                      required={true}
+                      {...register(`view.retailPriceParam`)}
+                      isLight={true}
+                      readOnly={isHistoryViewer}
+                      placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
+                    />
+                  </FormItem>
+                </div>
+                <div className="dataCurrencyUnit">
+                  <FormItem error={errors.view?.currencyUnit}>
                     <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
-                  </Col>
-                </Row>
-              </FormItem>
-
+                  </FormItem>
+                </div>
+              </div> */}
               <FormItem error={errors.view && errors.view.discountAmountParam}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountAmountParam`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
+                  placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                 />
               </FormItem>
               <FormItem error={errors.view && errors.view.salePriceParam}>
@@ -263,6 +302,7 @@ export const DataProductCardNodeEdit = () => {
                   {...register(`view.salePriceParam`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
+                  placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                 />
               </FormItem>
               <FormItem error={errors.view && errors.view.description}>
@@ -272,7 +312,7 @@ export const DataProductCardNodeEdit = () => {
                   {...register(`view.description`)}
                   isLight={true}
                   readOnly={isHistoryViewer}
-                  placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
+                  placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                 />
               </FormItem>
             </Space>
@@ -286,6 +326,7 @@ export const DataProductCardNodeEdit = () => {
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
             useCounter={false}
+            isDataApi={true}
           />
         )}
       </Collapse>

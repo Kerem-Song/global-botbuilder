@@ -65,3 +65,25 @@
     }
   }
 }
+
+.dataRetailPriceWrapper {
+  display: grid;
+  justify-content: center;
+  align-items: end;
+
+  .dataRetailPrice {
+    grid-column: 1/16;
+  }
+
+  .dataCurrencyUnit {
+    grid-column: 17/24;
+    display: grid;
+    
+    input {
+      grid-row: 2/3;
+    }
+    .error-message {
+      grid-row: 3/3;
+    }
+  }
+}

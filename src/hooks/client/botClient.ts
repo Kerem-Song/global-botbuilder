@@ -167,11 +167,19 @@ export const useBotClient = () => {
 
   const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
     const res = await http.post('/bot/updatebotactivate', args);
-    if (res) {
+
+    const exception = res.data.exception as IException;
+
+    if (exception) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      console.log(res);
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
+    return;
   });
 
   const botChannelActivateMutate = useMutation(async (args: IUpdateChannelActivate) => {

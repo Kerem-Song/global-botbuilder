@@ -138,10 +138,7 @@ export const useYupValidation = () => {
     is: true,
     then: yup.object().shape({
       imageFile: imageFileEditSchema,
-      imageUrl: yup
-        .string()
-        // .url(t(`VALIDATION_URL`))
-        .required(t(`VALIDATION_REQUIRED`)),
+      imageUrl: yup.string().required(t(`VALIDATION_REQUIRED`)),
     }),
   });
 
@@ -240,6 +237,7 @@ export const useYupValidation = () => {
       .transform((value, originalValue) => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       }),
+    currencyUnit: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     buttons: buttonsEditSchema,
   });
 
@@ -332,7 +330,7 @@ export const useYupValidation = () => {
     .required(t(`VALIDATION_REQUIRED`));
 
   const otherFlowRedirectNodeEditSchema = yup.object().shape({
-    //otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
+    // otherFlowId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
   const intentNodeEditSchema = yup.string().nullable().required(t(`VALIDATION_REQUIRED`));
@@ -471,6 +469,7 @@ export const useYupValidation = () => {
     }),
     profileIconUrl: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     profileName: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
+    currencyUnit: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     description: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
     buttons: dataApiButtonsEditSchema,
   });
@@ -579,11 +578,18 @@ export const useYupValidation = () => {
       nextNodeId: yup
         .string()
         .nullable()
+        .not([''], t(`VALIDATION_REQUIRED`))
         .when(['type', 'option'], {
           is: (type: string, option: number) => {
             return type === NODE_TYPES.INTENT_NODE && option === NodeOption.Fallback;
           },
           then: intentNodeEditSchema,
+        })
+        .when('type', {
+          is: (type: string) => {
+            return type === NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
+          },
+          then: yup.string().nullable().trim().required(t(`VALIDATION_REQUIRED`)),
         }),
     })
     .required();

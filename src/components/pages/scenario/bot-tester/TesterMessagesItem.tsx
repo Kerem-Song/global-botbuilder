@@ -69,24 +69,22 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 {item.title && (
                   <div className="cardTitle">
                     <MultiClamp clamp={2} ellipsis={'...'}>
-                      {item.title.substring(0, 39)}
+                      {item.title.substring(0, 40)}
                     </MultiClamp>
                   </div>
                 )}
                 {item.contentText && (
                   <div className="cardContentText">
                     <MultiClamp clamp={8} ellipsis={'...'}>
-                      {item.contentText.substring(0, 229)}
+                      {item.contentText.substring(0, 230)}
                     </MultiClamp>
                   </div>
                 )}
                 {item.buttons.length > 0 && (
                   <div
-                    className={
-                      item.image?.imageAspectRatio === 0
-                        ? 'rectangleImageBtn'
-                        : 'squareImageBtn'
-                    }
+                    className={classNames('rectangleImageBtn', {
+                      squareImageBtn: item.image?.imageAspectRatio === 1,
+                    })}
                   >
                     {item.buttons.map((v, i) => (
                       <TesterMessagesItemButton key={i} item={v} />
@@ -142,7 +140,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
               {item.header && (
                 <div className="header">
                   <MultiClamp clamp={1} ellipsis={'...'}>
-                    {item.header.substring(0, 39)}
+                    {item.header.substring(0, 40)}
                   </MultiClamp>
                 </div>
               )}
@@ -171,12 +169,12 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                           <div className="listInfo">
                             <div className="infoTitle">
                               <MultiClamp clamp={2} ellipsis={'...'}>
-                                {x.title.substring(0, 59)}
+                                {x.title.substring(0, 60)}
                               </MultiClamp>
                             </div>
                             <div className="infoDesc">
                               <MultiClamp clamp={1} ellipsis={'...'}>
-                                {x.description.substring(0, 39)}
+                                {x.description.substring(0, 40)}
                               </MultiClamp>
                             </div>
                           </div>
@@ -273,7 +271,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                         handleImgOnError(e);
                       }}
                     />
-                    <MultiClamp clamp={1}>{item.title.substring(0, 39)}</MultiClamp>
+                    <MultiClamp clamp={1}>{item.title.substring(0, 40)}</MultiClamp>
                   </div>
                 </div>
                 <div className="productCardPrices">
@@ -294,7 +292,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                 <div className="productContents">
                   <div className="productDesc">
                     <MultiClamp clamp={2} ellipsis={'...'}>
-                      {item.description.substring(0, 59)}
+                      {item.description.substring(0, 60)}
                     </MultiClamp>
                   </div>
                   {item.buttons.length > 0 ? (

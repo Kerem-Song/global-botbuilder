@@ -1,3 +1,4 @@
 {
-  "git-blame.gitWebUrl": ""
+  "git-blame.gitWebUrl": "",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

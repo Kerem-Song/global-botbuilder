@@ -22,12 +22,14 @@ export const ButtonsEdit = ({
   imageRatio,
   nodeId,
   useCounter,
+  isDataApi,
 }: {
   index?: number;
   isCarousel?: boolean;
   imageRatio?: ImageAspectRatio;
   nodeId?: string;
   useCounter: boolean;
+  isDataApi?: boolean;
 }) => {
   const { t, tc } = usePage();
   const selectOptions = [
@@ -133,7 +135,11 @@ export const ButtonsEdit = ({
                       )?.length || 0
                     : undefined
                 }
-                placeholder={t(`BUTTON_NAME_PLACEHOLDER`)}
+                placeholder={
+                  isDataApi
+                    ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
+                    : t(`BUTTON_NAME_PLACEHOLDER`)
+                }
                 readOnly={isHistoryViewer}
               />
             </FormItem>
@@ -201,7 +207,11 @@ export const ButtonsEdit = ({
                         ? `view.buttons.${i}.actionValue`
                         : `view.childrenViews.${index}.buttons.${i}.actionValue`,
                     )}
-                    placeholder={t(`SET_URL_PLACEHOLDER`)}
+                    placeholder={
+                      isDataApi
+                        ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
+                        : t(`SET_URL_PLACEHOLDER`)
+                    }
                   />
                 </FormItem>
               </>
@@ -226,7 +236,11 @@ export const ButtonsEdit = ({
                     maxLength={useCounter ? 300 : undefined}
                     isLight={true}
                     required={true}
-                    placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
+                    placeholder={
+                      isDataApi
+                        ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
+                        : t(`SET_MESSAGE_PLACEHOLDER`)
+                    }
                     {...register(
                       index === undefined
                         ? `view.buttons.${i}.actionValue`

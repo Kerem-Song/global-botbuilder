@@ -10,9 +10,7 @@ import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-const manualExceptionCode = [
-  7301, 7604, 7608, 7610, 7612, 7614, 7631, 7633, 7636, 7654, 7638,
-];
+const manualExceptionCode = [7301, 7604, 7608, 7610, 7612, 7614, 7636, 7654, 7638];
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 
@@ -52,6 +50,15 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       }
       if (!response.data.isSuccess) {
         if (response.data.exception) {
+          if (response.data.exception.errorCode === 7653) {
+            error({
+              title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+              description: tc(`HTTP_PROVIDER_DELETE_BOT_ERROR_DESC`),
+            }).then(() => {
+              document.location.href = `/${i18n.language}/dashboard`;
+            });
+            return Promise.reject(new Error(response.data.exception.message));
+          }
           const requestData = response.config.data;
           if (requestData) {
             const requestObj = JSON.parse(requestData);

@@ -130,11 +130,11 @@ export const Node: FC<INodeProps> = ({
   };
 
   const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Delete') {
+    if (e.key === 'Delete' && !isHistoryViewer) {
       deleteCard(node);
-    } else if (e.code === 'KeyC' && e.ctrlKey) {
+    } else if (e.code === 'KeyC' && e.ctrlKey && !isHistoryViewer) {
       handleDuplicationCard(node);
-    } else if (e.code === 'KeyX' && e.ctrlKey) {
+    } else if (e.code === 'KeyX' && e.ctrlKey && !isHistoryViewer) {
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
     }
@@ -146,7 +146,7 @@ export const Node: FC<INodeProps> = ({
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
-    if (e.code === 'KeyV' && e.ctrlKey) {
+    if (e.code === 'KeyV' && e.ctrlKey && !isHistoryViewer) {
       handlePasteCard({
         x:
           canvasRect && viewRect
@@ -157,6 +157,14 @@ export const Node: FC<INodeProps> = ({
             ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
             : 0,
       });
+    }
+  };
+
+  const handleZIndex = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const selectedNode = document.getElementById(`${NODE_PREFIX}${id}`);
+
+    if (selectedNode?.parentElement?.parentElement?.parentElement) {
+      selectedNode.parentElement.parentElement.parentElement.style.zIndex = '3';
     }
   };
 
@@ -253,7 +261,7 @@ export const Node: FC<INodeProps> = ({
                 }}
                 disabled={isHistoryViewer}
               >
-                <Button shape="ghost" small>
+                <Button shape="ghost" small onClick={(e) => handleZIndex(e)}>
                   <i className="fa-solid fa-ellipsis-vertical" />
                 </Button>
               </Popper>
@@ -270,6 +278,7 @@ export const Node: FC<INodeProps> = ({
                 onDragStart={(e) => {
                   e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
                   e.dataTransfer.setData('pointType', 'blue');
+                  e.dataTransfer.setData('isDraggedNodeBottom', 'true');
                   dispatch(
                     setGuideStartNode({
                       startId: `${NODE_PREFIX}${id}`,

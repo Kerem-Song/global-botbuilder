@@ -97,6 +97,14 @@
         &:hover {
           background-color: $primary100;
           cursor: pointer;
+
+          .checkbox {
+            background-color: $grayWhite;
+          }
+
+          .checkbox:checked {
+            background-color: $primary500;
+          }
         }
       }
       .emptyList {

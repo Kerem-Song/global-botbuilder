@@ -2,11 +2,10 @@
   background-image: radial-gradient($gray200 10%, $gray150 10%);
   background-position: 0 0;
   background-size: rem(12) rem(12);
-  height: 100%;
-  // width: 100%;
-  // 확인 필요
-  width: calc(100vw - rem(270));
   height: calc(100vh - rem(51));
+  // 확인 필요
+  width: calc(100vw - rem(275));
+  overflow: hidden;
 }
 
 .botTesterWrapper {
@@ -123,7 +122,6 @@
   }
 }
 
-
 .botBuilderDrawer {
   //  height: calc(100vh - rem(97));
 
@@ -148,7 +146,7 @@
   .wrapper:hover::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */
   }
-  
+
   // .wrapper::-webkit-scrollbar {
   //   display: none;
   // }
@@ -340,14 +338,20 @@
               -moz-box-sizing: border-box;
               -webkit-box-sizing: border-box;
               border: rem(1) dashed $primary300;
-              border-radius: rem(8);             
+              border-radius: rem(8);
             }
-          
+
             .imgUploadSkeleton {
               display: flex;
               justify-content: center;
               align-items: center;
               flex-flow: column;
+
+              p {
+                color: $gray500;
+                font-size: rem(12);
+                font-weight: 500;
+              }
 
               img {
                 width: rem(30);
@@ -375,7 +379,7 @@
         .imgUploadWrapper {
           width: rem(168);
           height: 100%;
-          
+
           .imgUploadSkeleton {
             width: 100%;
             height: rem(168);
@@ -387,7 +391,7 @@
               border-radius: rem(8);
               object-fit: contain;
               background-color: $gray150;
-            } 
+            }
 
             .imgNotFound {
               width: rem(30);
@@ -409,7 +413,6 @@
               height: rem(30);
             }
           }
-          
 
           &.small {
             width: rem(64);
@@ -417,7 +420,7 @@
             margin-bottom: rem(8);
 
             .imgUploadSkeleton {
-              height: rem(64);
+              height: 100%;
             }
 
             img {
@@ -439,7 +442,7 @@
 
         .rectangle {
           width: 100%;
-          
+
           img {
             border: rem(1) solid $gray200;
             border-radius: rem(8);

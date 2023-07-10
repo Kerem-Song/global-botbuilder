@@ -18,7 +18,7 @@ import {
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import ReactLoading from 'react-loading';
 
@@ -39,6 +39,7 @@ export const JsonRequestNodeEdit = () => {
     setValue,
     control,
     resetField,
+    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
   console.log('@json req view', getValues().view);
@@ -134,6 +135,14 @@ export const JsonRequestNodeEdit = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    console.log('@watch view id', watch('view.id'));
+    resetField('view.apiRes', { keepDirty: false });
+    resetField('view.queryStrings', { keepDirty: false });
+    resetField('view.responseMapping', { keepDirty: false });
+    resetField('nextNodeId', { keepDirty: false });
+  }, [watch('view.id')]);
 
   return (
     <>

@@ -11,8 +11,10 @@ import Select from 'react-select';
 
 export const OtherFlowRedirectNodeEdit = () => {
   useNodeEditSave();
-  const [scenarioList, setScenarioList] = useState<IReactSelect[]>([]);
   const { t } = usePage();
+  const [scenarioList, setScenarioList] = useState<IReactSelect[]>([
+    { value: '', label: t(`SET_OPTION_NULL`) },
+  ]);
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const {
@@ -34,12 +36,14 @@ export const OtherFlowRedirectNodeEdit = () => {
   useEffect(() => {
     console.log('###########################', data);
     if (data) {
-      setScenarioList(
-        data?.map((item) => ({
-          label: item.alias,
-          value: item.firstNodeId,
-        })),
-      );
+      setScenarioList([
+        ...scenarioList.concat(
+          data?.map((item) => ({
+            value: item.firstNodeId,
+            label: item.alias,
+          })),
+        ),
+      ]);
     }
   }, [data]);
 

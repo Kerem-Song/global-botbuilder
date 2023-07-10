@@ -179,6 +179,7 @@ export const DataBasicCardNodeEdit = () => {
             imageRatio={watch(`view.imageCtrl.aspectRatio`)}
             nodeId={values.id}
             useCounter={false}
+            isDataApi={true}
           />
         )}
       </Collapse>

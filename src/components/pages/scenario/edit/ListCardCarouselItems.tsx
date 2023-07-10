@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, Row, Space } from '@components';
+import { Button, Col, Collapse, Divider, Row, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
@@ -59,13 +59,58 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
       {fields.map((item, j) => (
         <div key={item.id} className="listFieldsWrapper">
+          <div className="m-b-12">
+            <Space direction="vertical">
+              <span className="label">
+                <FormItem
+                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
+                >
+                  <InputWithTitleCounter
+                    label={t(`ENTER_TITLE`)}
+                    showCount={true}
+                    maxLength={60}
+                    required={true}
+                    isLight={true}
+                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}
+                    textLength={
+                      watch(`view.childrenViews.${nestedIndex}.items.${j}.title`)
+                        ?.length || 0
+                    }
+                    placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
+                    readOnly={isHistoryViewer}
+                  />
+                </FormItem>
+              </span>
+            </Space>
+          </div>
+          <div className="m-b-12">
+            <Space direction="vertical">
+              <span className="label">
+                <InputWithTitleCounter
+                  label={t(`ENTER_CONTENT`)}
+                  showCount
+                  maxLength={40}
+                  isLight={true}
+                  {...register(
+                    `view.childrenViews.${nestedIndex}.items.${j}.description`,
+                  )}
+                  textLength={
+                    watch(`view.childrenViews.${nestedIndex}.items.${j}.description`)
+                      ?.length || 0
+                  }
+                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
+                  readOnly={isHistoryViewer}
+                />
+              </span>
+            </Space>
+          </div>
           <div className="m-b-8">
             <span className="subLabel">
               {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
             </span>
             <span className="required"> *</span>
           </div>
-          <div className="m-b-8">
+          <div>
             <Space direction="vertical">
               <FormItem
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
@@ -100,54 +145,10 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                         ? false
                         : true
                     }
+                    isSmall={true}
                   />
                 </>
               </FormItem>
-            </Space>
-          </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
-              <span className="label">
-                <FormItem
-                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
-                >
-                  <InputWithTitleCounter
-                    label={t(`ENTER_TITLE`)}
-                    showCount={true}
-                    maxLength={60}
-                    required={true}
-                    isLight={true}
-                    {...register(`view.childrenViews.${nestedIndex}.items.${j}.title`)}
-                    textLength={
-                      watch(`view.childrenViews.${nestedIndex}.items.${j}.title`)
-                        ?.length || 0
-                    }
-                    placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
-                  />
-                </FormItem>
-              </span>
-            </Space>
-          </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
-              <span className="label">
-                <InputWithTitleCounter
-                  label={t(`ENTER_CONTENT`)}
-                  showCount
-                  maxLength={40}
-                  isLight={true}
-                  {...register(
-                    `view.childrenViews.${nestedIndex}.items.${j}.description`,
-                  )}
-                  textLength={
-                    watch(`view.childrenViews.${nestedIndex}.items.${j}.description`)
-                      ?.length || 0
-                  }
-                  placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
-                  readOnly={isHistoryViewer}
-                />
-              </span>
             </Space>
           </div>
           {j > 1 && (
@@ -157,6 +158,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
               </Button>
             </div>
           )}
+          {j < fields.length && <Divider style={{ margin: '32px 0' }} />}
         </div>
       ))}
       <div>
