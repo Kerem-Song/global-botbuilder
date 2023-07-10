@@ -50,9 +50,9 @@ export const SelectNode = ({
     }));
   const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
 
-  useEffect(() => {
-    resetField('view.nextNodeId');
-  }, [nodeId]);
+  // useEffect(() => {
+  //   resetField('view.nextNodeId');
+  // }, [nodeId]);
   return (
     <Select
       className={classNames('react-selector', {
