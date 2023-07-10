@@ -159,10 +159,18 @@ export const useBotClient = () => {
       '/bot/updatebotname',
       args,
     );
-    if (res) {
-      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      return res;
+
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
     }
+
+    if (res.data.isSuccess) {
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
+    }
+
+    return;
   });
 
   const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {

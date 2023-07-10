@@ -88,18 +88,15 @@ export const DefaultSettingBot = () => {
       botName: getValues('botName').trim(),
     };
 
-    const res = await botUpdateNameAsync(saveBotName);
+    const res = await botUpdateNameAsync({ ...saveBotName, customErrorCode: [7654] });
 
-    if (res?.data.isSuccess) {
+    if (res === 7654) {
+      setBotNameInputError(t('VALIDATION_BOT_NAME'));
+      return;
+    } else {
       lunaToast.success(t('SAVE_BOT_MESSAGE'));
       setIsSaveBtnActive(false);
       setIsSaveBtnsActive((prev) => ({ ...prev, isSaveBtnActive: false }));
-
-      return;
-    }
-
-    if (res?.data.exception.errorCode === 7654) {
-      setBotNameInputError(t('VALIDATION_BOT_NAME'));
       return;
     }
   };
