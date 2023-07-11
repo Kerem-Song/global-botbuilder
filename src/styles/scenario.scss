@@ -292,7 +292,7 @@
             .variableListItems::-webkit-scrollbar {
               width: rem(8);
               height: rem(8);
-              background-color: rgba(208, 221, 255, 0);
+              background-color: rgb(208, 221, 255, 0.2);
             }
 
             .variableListItems::-webkit-scrollbar-thumb {
