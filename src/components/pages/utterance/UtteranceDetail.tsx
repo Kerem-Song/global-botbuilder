@@ -74,7 +74,11 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 
   const { reset, handleSubmit, control, getValues } = formMethods;
 
-  const { fields, remove, prepend } = useFieldArray({ control, name: 'items' });
+  const { fields, remove, prepend } = useFieldArray({
+    control,
+    name: 'items',
+    keyName: 'keyName',
+  });
 
   useEffect(() => {
     if (hasIntentId && hasIntentId.data) {

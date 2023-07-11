@@ -12,7 +12,7 @@ import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook
 
 export interface IUtteranceDetailItemsProps {
   formMethods: UseFormReturn<IUtteranceModel>;
-  fields: FieldArrayWithId<IUtteranceModel, 'items', 'id'>[];
+  fields: FieldArrayWithId<IUtteranceModel, 'items', 'keyName'>[];
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
@@ -30,9 +30,9 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
 
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
   const { confirm } = useSystemModal();
-  const { register, getValues, watch } = formMethods;
+  const { register, getValues, setValue, watch } = formMethods;
 
-  const filterKeyword = fields.filter((x) =>
+  const filterKeyword = watch('items').filter((x) =>
     x.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase()),
   );
 
@@ -41,7 +41,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   };
 
   const openDeleteCheckboxModal = async () => {
-    const deleteItems = getValues().items.filter((x) => x.isChecked);
+    const deleteItems = filterKeyword.filter((x) => x.isChecked);
 
     if (deleteItems.length === 0) {
       return;
@@ -87,10 +87,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           shape="ghost"
           className="icDelete"
           onClick={openDeleteCheckboxModal}
-          disabled={
-            getValues('items') &&
-            getValues().items.filter((x) => x.isChecked).length === 0
-          }
+          disabled={filterKeyword.filter((x) => x.isChecked).length === 0}
         />
       </Space>
       <Row
@@ -112,10 +109,15 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
               </div>
             </Col>
           </Row>
-        ) : filterKeyword.length > 0 ? (
-          filterKeyword.map((v, i) => {
+        ) : fields.length > 0 ? (
+          fields.map((v, i) => {
+            if (
+              !v.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase())
+            ) {
+              return <div key={i}></div>;
+            }
             return (
-              <div key={v.id} className="utteranceItem">
+              <div key={i} className="utteranceItem">
                 <Checkbox
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}
@@ -125,7 +127,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                     'utterance-detailModal-item': isOpenUtteranceDetailPopup,
                   })}
                 >
-                  {util.replaceKeywordMark(v.text!, searchKeyWord)}
+                  {util.replaceKeywordMark(v.text || '', searchKeyWord)}
                 </p>
               </div>
             );
