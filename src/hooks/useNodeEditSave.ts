@@ -29,6 +29,7 @@ export const useNodeEditSave = () => {
 
   useEffect(() => {
     reset();
+    trigger();
   }, [viewId]);
 
   const handleSave = () => {

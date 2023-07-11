@@ -1,8 +1,10 @@
 import { Input } from '@components/data-entry';
+import { usePage } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePopper } from 'react-popper';
 
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
@@ -65,7 +67,7 @@ export const Popper = <T extends object>({
 
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
-
+  const { i18n } = useTranslation();
   const { styles, attributes, update } = usePopper(
     referenceElement.current,
     popperElement.current,
@@ -143,6 +145,10 @@ export const Popper = <T extends object>({
       setSelected(selectedId);
     }
   }, [popperSelect]);
+
+  useEffect(() => {
+    setItems(popperItems);
+  }, [i18n.language]);
 
   return (
     <div ref={outsideClickRef}>
