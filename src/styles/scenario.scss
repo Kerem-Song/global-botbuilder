@@ -240,9 +240,6 @@
           background-color: $grayWhite;
 
           .variableList {
-            max-height: calc(100vh - rem(230));
-            overflow-y: auto;
-
             .variableListHeader {
               padding: rem(12);
               display: grid;
@@ -258,37 +255,54 @@
                 grid-column: 2 / span 2;
               }
             }
-
-            .variableItemList {
-              width: 100%;
-              height: rem(38);
-              display: grid;
-              grid-template-columns: 5fr 5fr 1fr;
-              align-items: center;
-              word-break: break-all;
-              padding: 0 rem(12);
-              cursor: pointer;
-
-              &:hover {
-                background-color: $primary100;
-              }
-
-              .variableInfo {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                margin-right: rem(2);
-              }
-              .deleteBtn {
-                padding: 0;
-                border: none;
-                background-color: transparent;
+            .variableListItems {
+              max-height: calc(100vh - rem(265));
+              overflow-y: auto;
+              .variableItem {
+                width: 100%;
+                height: rem(38);
+                display: grid;
+                grid-template-columns: 5fr 5fr 1fr;
+                align-items: center;
+                word-break: break-all;
+                padding: 0 rem(12);
+                gap: rem(15);
                 cursor: pointer;
+
+                &:hover {
+                  background-color: $primary100;
+                }
+
+                .variableInfo {
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                }
+                .deleteBtn {
+                  border: none;
+                  background-color: transparent;
+                  cursor: pointer;
+                }
+              }
+
+              .variableSkeletonList {
+                padding: rem(10) rem(8);
               }
             }
+            .variableListItems::-webkit-scrollbar {
+              width: rem(8);
+              height: rem(8);
+              background-color: rgba(208, 221, 255, 0);
+            }
 
-            .variableSkeletonList {
-              padding: rem(10) rem(8);
+            .variableListItems::-webkit-scrollbar-thumb {
+              height: 30%;
+              background-color: rgba(208, 221, 255, 0);
+              border-radius: rem(18);
+              transition: background-color 2s ease-out;
+            }
+            *:hover::-webkit-scrollbar-thumb {
+              background-color: rgba(208, 221, 255, 0.8);
             }
 
             .emptyVariableList {
