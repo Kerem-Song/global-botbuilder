@@ -7,12 +7,14 @@ import {
   IHasButtonViewBase,
   INodeBase,
   IRetryConditionView,
+  ISwitchView,
   ITrueFalseViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 
 import {
   CONDITION_SUFFIX,
+  DEFAULT_SUFFIX,
   FALSE_SUFFIX,
   NEXT_BUTTON_PREFIX,
   NODE_PREFIX,
@@ -113,6 +115,32 @@ export const arrowHelper = {
         end: `${NODE_PREFIX}${view.trueThenNextNodeId}`,
         isNextNode: true,
         type: 'green',
+      });
+    }
+
+    return result;
+  },
+  createConditionSwitchNodeArrow: (nodeId: string, view?: ISwitchView): IArrow[] => {
+    const result: IArrow[] = [];
+    if (view && view.defaultNextNodeId) {
+      result.push({
+        start: `${NEXT_BUTTON_PREFIX}${nodeId}${DEFAULT_SUFFIX}`,
+        updateKey: `${NODE_PREFIX}${nodeId}`,
+        end: `${NODE_PREFIX}${view.defaultNextNodeId}`,
+        isNextNode: true,
+        type: 'red',
+      });
+    }
+
+    if (view && view.conditions) {
+      view.conditions?.map((condition) => {
+        result.push({
+          start: `${NEXT_BUTTON_PREFIX}${nodeId}${CONDITION_SUFFIX}${condition.id}`,
+          updateKey: `${NODE_PREFIX}${nodeId}`,
+          end: `${NODE_PREFIX}${condition.trueThenNextNodeId}`,
+          isNextNode: true,
+          type: 'green',
+        });
       });
     }
 
@@ -280,24 +308,23 @@ export const arrowHelper = {
       view.falseThenNextNodeId = endId;
     }
   },
-  syncConditionFalseNodeArrow: (
-    startId: string,
-    endId?: string,
-    view?: IConditionView,
-  ) => {
+  syncConditionFalseNodeArrow: (startId: string, endId?: string, view?: ISwitchView) => {
     if (!view) {
       return;
     }
+    console.log('@sync start id:', startId);
+    console.log('@sync end id:', endId);
+    console.log('@sync view: ', view);
 
     if (startId.includes(CONDITION_SUFFIX))
-      view.items?.map((item, i) => {
-        if (startId.endsWith(CONDITION_SUFFIX + item.id)) {
-          console.log('@item next node id', item.nextNodeId, endId);
-          item.nextNodeId = endId;
+      view.conditions?.map((condition, i) => {
+        if (startId.endsWith(CONDITION_SUFFIX + condition.id)) {
+          condition.trueThenNextNodeId = endId;
         }
       });
-    if (startId.endsWith(FALSE_SUFFIX)) {
-      view.falseThenNextNodeId = endId;
+
+    if (startId.endsWith(DEFAULT_SUFFIX)) {
+      view.defaultNextNodeId = endId;
     }
   },
   syncHasButtonArrow: (startId: string, endId?: string, view?: IHasButtonViewBase) => {

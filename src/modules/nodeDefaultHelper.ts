@@ -20,6 +20,7 @@ import {
   IProductCardCarouselView,
   IProductCardView,
   IRetryConditionView,
+  ISwitchView,
   ITextView,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -112,7 +113,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultConditionSwitchView: () => {
+  createDefaultConditions: (seq?: number) => {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
@@ -121,11 +122,20 @@ export const nodeDefaultHelper = {
           op1: '',
           operator: undefined,
           op2: '',
-          nextNodeId: '',
-          id: ID_GEN.generate(ID_TYPES.CTRL),
         },
       ],
       join: ConditionJoin.And,
+      trueThenNextNodeId: '',
+    };
+
+    return result;
+  },
+  createDefaultConditionSwitchView: () => {
+    const result: ISwitchView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.CONDITION_SWITCH_VIEW,
+      conditions: [nodeDefaultHelper.createDefaultConditions()],
+      defaultNextNodeId: '',
     };
 
     return result;

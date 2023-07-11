@@ -4,7 +4,13 @@ import { getReactSelectStyle } from '@modules';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
-export const OperatorSelector = ({ index }: { index: number }) => {
+export const OperatorSelector = ({
+  index,
+  nestedIndex,
+}: {
+  index: number;
+  nestedIndex?: number;
+}) => {
   const { getConditionOperatorLabel } = useI18n();
   const { t } = usePage();
   const operatorOptions = [
@@ -21,7 +27,10 @@ export const OperatorSelector = ({ index }: { index: number }) => {
 
   const { control } = useFormContext();
   const { field: operatorField } = useController({
-    name: `view.items.${index}.operator`,
+    // name: nestedIndex
+    //   ? `view.conditions.${nestedIndex}.items.${0}.operator`
+    //   : `view.items.${index}.operator`,
+    name: `view.conditions.${nestedIndex}.items.${0}.operator`,
     control,
   });
   const reactSelectStyle = getReactSelectStyle({});

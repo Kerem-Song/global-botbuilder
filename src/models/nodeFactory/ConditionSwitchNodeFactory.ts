@@ -3,7 +3,11 @@ import { ConditionSwitchNodeEdit } from '@components/pages/scenario/edit/Conditi
 import { ConditionSwitchNode } from '@components/pages/scenario/nodes/ConditionSwitchNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
-import { IConditionView, IViewBase } from '@models/interfaces/res/IGetFlowRes';
+import {
+  IConditionView,
+  ISwitchView,
+  IViewBase,
+} from '@models/interfaces/res/IGetFlowRes';
 import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
@@ -35,7 +39,7 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    return arrowHelper.createConditionNodeArrow(nodeId, view);
+    return arrowHelper.createConditionSwitchNodeArrow(nodeId, view);
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
@@ -47,12 +51,15 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   }
 
   getConnectId(node: INode) {
-    const view = node.view as IConditionView;
-    const item = view.items?.map((item) => item.nextNodeId);
-    // console.log('@item', item);
+    const view = node.view as ISwitchView;
+    const trueThenNextNodeIds = view.conditions?.map(
+      (condition) => condition.trueThenNextNodeId,
+    );
+    console.log('@item', trueThenNextNodeIds);
+
     return [
-      ...(node.nextNodeId ? [node.nextNodeId] : []),
-      ...(view.falseThenNextNodeId ? [view.falseThenNextNodeId] : []),
+      ...(trueThenNextNodeIds ? (trueThenNextNodeIds as never) : []),
+      ...(view.defaultNextNodeId ? [view.defaultNextNodeId] : []),
     ];
   }
 }
