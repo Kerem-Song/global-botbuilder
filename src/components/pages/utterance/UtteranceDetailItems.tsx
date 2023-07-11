@@ -88,8 +88,11 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           className="icDelete"
           onClick={openDeleteCheckboxModal}
           disabled={
-            getValues('items') &&
-            getValues().items.filter((x) => x.isChecked).length === 0
+            (getValues('items') &&
+              getValues('items').filter((x) => x.isChecked).length === 0) ||
+            fields.filter((x) =>
+              x.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase()),
+            ).length === 0
           }
         />
       </Space>
