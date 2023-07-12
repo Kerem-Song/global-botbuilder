@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Space } from '@components';
 import { useI18n, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
-import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { UseFieldArrayPrepend, UseFormReturn } from 'react-hook-form';
 
 export interface IAddUtteranceProps {
@@ -91,6 +91,12 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (utteranceRef.current) {
+      utteranceRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className="utterance add">
