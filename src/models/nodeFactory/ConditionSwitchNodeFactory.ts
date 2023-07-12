@@ -55,7 +55,6 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
     const trueThenNextNodeIds = view.conditions?.map(
       (condition) => condition.trueThenNextNodeId,
     );
-    console.log('@item', trueThenNextNodeIds);
 
     return [
       ...(trueThenNextNodeIds ? (trueThenNextNodeIds as never) : []),

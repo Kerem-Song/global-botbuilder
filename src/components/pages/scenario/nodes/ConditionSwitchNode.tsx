@@ -21,28 +21,26 @@ export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
   return (
     <Card>
       <div className="countConditionWrapper conditionCaseWrapper" ref={conditionNodeRef}>
-        {view.conditions?.map((condition, i) => {
-          return (
-            <div key={condition.id}>
-              {condition.items?.map((item, j) => (
-                <>
-                  <p className="conditionCase">
-                    Case
-                    {item.op1}{' '}
-                    {item.operator ? getConditionOperatorLabel(item.operator) : ''}{' '}
-                    {item.op2 || '{{ }}'}
-                  </p>
-                  <NextNodeButton
-                    ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
-                    nodeId={`${NODE_PREFIX}${node.id}`}
-                    type="green"
-                    offset={i * 25 + 60}
-                  />
-                </>
-              ))}
-            </div>
-          );
-        })}
+        {view.conditions?.map((condition, i) => (
+          <div key={condition.id}>
+            {condition.items?.map((item, j) => (
+              <div key={j}>
+                <p className="conditionCase">
+                  Case
+                  {item.op1}{' '}
+                  {item.operator ? getConditionOperatorLabel(item.operator) : ''}{' '}
+                  {item.op2 || '{{ }}'}
+                </p>
+                <NextNodeButton
+                  ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
+                  nodeId={`${NODE_PREFIX}${node.id}`}
+                  type="green"
+                  offset={i * 25 + 60}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
 
       <NextNodeButton

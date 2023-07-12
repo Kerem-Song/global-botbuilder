@@ -66,9 +66,11 @@ export const ConditionSwitchNodeEdit = () => {
     e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
   ) => {
     console.log('handle add condition btn');
+    const join = watch(`view.conditions.0.join`);
+
     e.preventDefault();
     if (fields.length < CONDITION_LIMIT) {
-      append(nodeDefaultHelper.createDefaultConditions());
+      append(nodeDefaultHelper.createDefaultConditions(join));
     } else {
       //modal alert
       console.log('13개까지 가능');
@@ -101,16 +103,20 @@ export const ConditionSwitchNodeEdit = () => {
                 </FormItem>
               </Space>
             </div>
-            {watch(`view.conditions.${i}.join`) !== undefined && i === 0 ? (
+            {i === 0 ? (
               <div className="joinWrapper">
                 <label
                   className={classNames(`join`)}
                   role="presentation"
                   onClick={(e) => {
-                    setValue(`view.conditions.${i}.join`, ConditionJoin.And, {
-                      shouldDirty: true,
+                    fields.map((field, i) => {
+                      setValue(`view.conditions.${i}.join`, ConditionJoin.And, {
+                        shouldDirty: true,
+                      });
                     });
-                    handleAddConditionButton(e);
+                    if (fields.length === 1) {
+                      handleAddConditionButton(e);
+                    }
                   }}
                 >
                   {/* <input
@@ -122,7 +128,7 @@ export const ConditionSwitchNodeEdit = () => {
                   />
                   <div data-join={'and'}>And</div> */}
                   <Radio
-                    checked={watch(`view.conditions.${i}.join`) === ConditionJoin.And}
+                    checked={watch(`view.conditions.0.join`) === ConditionJoin.And}
                     onChange={() => {
                       // setValue('view.conditions.${i}.join', ConditionJoin.And);
                       // handleAddConditionButton();
@@ -136,10 +142,14 @@ export const ConditionSwitchNodeEdit = () => {
                   className={classNames(`join`)}
                   role="presentation"
                   onClick={(e) => {
-                    setValue(`view.conditions.${i}.join`, ConditionJoin.Or, {
-                      shouldDirty: true,
+                    fields.map((field, i) => {
+                      setValue(`view.conditions.${i}.join`, ConditionJoin.Or, {
+                        shouldDirty: true,
+                      });
                     });
-                    handleAddConditionButton(e);
+                    if (fields.length === 1) {
+                      handleAddConditionButton(e);
+                    }
                   }}
                 >
                   {/* <input
@@ -151,7 +161,7 @@ export const ConditionSwitchNodeEdit = () => {
                   />
                   <div data-join={'or'}>Or</div> */}
                   <Radio
-                    checked={watch(`view.conditions.${i}.join`) === ConditionJoin.Or}
+                    checked={watch(`view.conditions.0.join`) === ConditionJoin.Or}
                     onChange={() => {
                       // setValue('view.conditions.${i}.join', ConditionJoin.Or);
                       // handleAddConditionButton();
@@ -182,7 +192,7 @@ export const ConditionSwitchNodeEdit = () => {
                     }}
                   >
                     {fields.length === i + 1 ? '+ Add' : ''}{' '}
-                    {Number(watch(`view.conditions.${i}.join`)) === ConditionJoin.And
+                    {Number(watch(`view.conditions.0.join`)) === ConditionJoin.And
                       ? 'And'
                       : 'Or'}
                   </Button>

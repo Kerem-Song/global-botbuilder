@@ -113,7 +113,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultConditions: (seq?: number) => {
+  createDefaultConditions: (join = ConditionJoin.And, seq?: number) => {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
@@ -124,17 +124,17 @@ export const nodeDefaultHelper = {
           op2: '',
         },
       ],
-      join: ConditionJoin.And,
+      join: join,
       trueThenNextNodeId: '',
     };
 
     return result;
   },
-  createDefaultConditionSwitchView: () => {
+  createDefaultConditionSwitchView: (join = ConditionJoin.And) => {
     const result: ISwitchView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_SWITCH_VIEW,
-      conditions: [nodeDefaultHelper.createDefaultConditions()],
+      conditions: [nodeDefaultHelper.createDefaultConditions(join)],
       defaultNextNodeId: '',
     };
 
