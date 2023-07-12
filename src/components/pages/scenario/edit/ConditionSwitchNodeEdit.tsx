@@ -1,26 +1,18 @@
 import { Button, Collapse, Divider, FormItem, Radio, Space } from '@components';
-import { useNodeEditSave, usePage, useRootState, useScenarioClient } from '@hooks';
-import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
-import { IConditionView, ISwitchView } from '@models/interfaces/res/IGetFlowRes';
-import { ID_GEN, ID_TYPES } from '@modules';
+import { useNodeEditSave, usePage } from '@hooks';
+import { ConditionJoin, IGNodeEditModel } from '@models';
+import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ConditionSwitchConditions } from './ConditionSwitchConditions';
-import { OperatorSelector } from './OperatorSelector';
 import { SelectNode } from './SelectNode';
-import { VariableSelector } from './VariableSelector';
-interface IReactSelect {
-  value: string;
-  label: string;
-}
 
 export const ConditionSwitchNodeEdit = () => {
   useNodeEditSave();
   const CONDITION_LIMIT = 13;
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const {
     getValues,
     control,
@@ -31,32 +23,12 @@ export const ConditionSwitchNodeEdit = () => {
   const values = getValues();
   console.log('value.view in condition node edit', values.view);
 
-  const [join, setJoin] = useState<ConditionJoin>();
-
   const { fields, append, remove } = useFieldArray({
     name: `view.conditions`,
     control,
   });
 
-  const selectedScenario = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
-  const [scenario, setScenario] = useState<IReactSelect[]>([]);
-
-  const { getCachedScenario } = useScenarioClient();
-  const data = getCachedScenario(selectedScenario?.id);
-
   const { field: joinField } = useController({ name: 'view.conditions.0.join', control });
-
-  useEffect(() => {
-    if (data) {
-      setScenario(data.nodes.map((item) => ({ value: item.alias, label: item.alias })));
-    }
-  }, [data]);
-
-  const handleJoin = (join: ConditionJoin) => {
-    setJoin(join);
-  };
 
   const handleDeleteButton = (index: number) => {
     remove(index);

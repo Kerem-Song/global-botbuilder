@@ -1,16 +1,9 @@
 import { Card } from '@components';
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { useI18n } from '@hooks';
-import { ConditionJoin } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
-import { IConditionView, ISwitchView } from '@models/interfaces/res/IGetFlowRes';
-import {
-  CONDITION_SUFFIX,
-  DEFAULT_SUFFIX,
-  FALSE_SUFFIX,
-  NODE_PREFIX,
-  TRUE_SUFFIX,
-} from '@modules';
+import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
+import { CONDITION_SUFFIX, DEFAULT_SUFFIX, NODE_PREFIX } from '@modules';
 import { FC, useRef } from 'react';
 
 export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {

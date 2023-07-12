@@ -1,55 +1,24 @@
-import { FormItem, Space } from '@components';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
-import { ConditionOperator, IGNodeEditModel } from '@models';
-import { IConditionView, ISwitchView } from '@models/interfaces/res/IGetFlowRes';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { FormItem } from '@components';
+import { useHistoryViewerMatch, usePage } from '@hooks';
+import { IGNodeEditModel } from '@models';
+import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { OperatorSelector } from './OperatorSelector';
 import { VariableSelector } from './VariableSelector';
 
 export const ConditionSwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
-  const CONDITION_LIMIT = 13;
   const { t } = usePage();
   const isHistoryViewer = useHistoryViewerMatch();
   const {
-    getValues,
     control,
-    watch,
-    setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
-  const values = getValues();
 
-  const { field: joinField } = useController({
-    name: `view.conditions.${nestedIndex}.join`,
-    control,
-  });
-
-  const { fields, append, remove } = useFieldArray({
+  const { fields } = useFieldArray({
     name: `view.conditions.${nestedIndex}.items`,
     control,
   });
-
-  const handleDeleteButton = (index: number) => {
-    remove(index);
-  };
-
-  const handleAddConditionButton = (
-    e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
-  ) => {
-    console.log('handle add condition btn');
-    e.preventDefault();
-    if (fields.length < 5) {
-      append({
-        op1: '',
-        operator: ConditionOperator.Is,
-        op2: '',
-      });
-    } else {
-      //modal alert
-      console.log('5개까지 가능');
-    }
-  };
 
   return (
     <>
