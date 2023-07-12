@@ -109,7 +109,23 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
               </div>
             </Col>
           </Row>
-        ) : fields.length > 0 ? (
+        ) : (
+          filterKeyword.length === 0 && (
+            <Row style={{ width: '100%' }}>
+              <Col
+                className={classNames('emptyList', {
+                  'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+                })}
+              >
+                <div className="empty">
+                  <img src={icNoResult} alt="empty" />
+                  <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
+                </div>
+              </Col>
+            </Row>
+          )
+        )}
+        {fields.length > 0 &&
           fields.map((v, i) => {
             if (
               !v.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase())
@@ -131,21 +147,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                 </p>
               </div>
             );
-          })
-        ) : (
-          <Row style={{ width: '100%' }}>
-            <Col
-              className={classNames('emptyList', {
-                'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
-              })}
-            >
-              <div className="empty">
-                <img src={icNoResult} alt="empty" />
-                <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
-              </div>
-            </Col>
-          </Row>
-        )}
+          })}
       </Row>
     </div>
   );
