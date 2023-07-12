@@ -41,7 +41,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   };
 
   const openDeleteCheckboxModal = async () => {
-    const deleteItems = filterKeyword.filter((x) => x.isChecked);
+    const deleteItems = getValues().items.filter((x) => x.isChecked);
 
     if (deleteItems.length === 0) {
       return;
