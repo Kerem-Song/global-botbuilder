@@ -101,8 +101,8 @@ export const BotBuilderHeader = () => {
     },
     {
       className: 'icCondition',
-      value: NODE_TYPES.CONDITION_SWITCH_NODE,
-      nodeName: t('CAPTION_CONDITION_SWITCH_NODE'),
+      value: NODE_TYPES.SWITCH_NODE,
+      nodeName: t('CAPTION_SWITCH_NODE'),
     },
   ];
 

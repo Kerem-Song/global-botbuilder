@@ -72,7 +72,7 @@ export const nodeFactory = {
         return listCardCarouselNodeFactory;
       case NODE_TYPES.CONDITION_NODE:
         return conditionNodeFactory;
-      case NODE_TYPES.CONDITION_SWITCH_NODE:
+      case NODE_TYPES.SWITCH_NODE:
         return switchNodeFactory;
       case NODE_TYPES.ANSWER_NODE:
         return answerNodeFactory;
