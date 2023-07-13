@@ -18,7 +18,7 @@ export const HistoryViewerComponent = () => {
   const { botId, historyId } = useParams();
   const { getFlowSnapShot } = useHistoryClient();
   const { data } = getFlowSnapShot({ botId: botId!, historyId: historyId! });
-
+  console.log('@data.res', data?.result.nodes);
   useEffect(() => {
     if (!data) {
       return;

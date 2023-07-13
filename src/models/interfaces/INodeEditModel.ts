@@ -12,4 +12,5 @@ export interface INodeEditModel {
   nextNodeId?: string;
   view?: IViewBase;
   option?: number;
+  annotation?: string;
 }
