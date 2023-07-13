@@ -19,7 +19,7 @@ import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
-import { ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
+import { CANVAS_LIMIT, ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import { appendNode, updateNode } from '@store/makingNode';
@@ -123,19 +123,27 @@ export const Botbuilder = () => {
     dispatch(zoomIn());
   }, []);
 
+  const startNode = nodes.find((item) => item.type === NODE_TYPES.INTENT_NODE);
+
   useEffect(() => {
     if (canvasRef.current) {
-      canvasRef.current.style.left = '0px';
-      canvasRef.current.style.top = '0px';
+      if (startNode) {
+        console.log('@startNode.x.toString();', startNode.x.toString());
+        console.log('@startNode.y.toString();', startNode.y.toString());
+        canvasRef.current.style.left = -startNode.x.toString() + 'px';
+        canvasRef.current.style.top = -startNode.y.toString() + 'px';
+      }
+      // canvasRef.current.style.left = '0px';
+      // canvasRef.current.style.top = '0px';
     }
-  }, [selectedScenario]);
+  }, [selectedScenario, startNode?.x]);
 
   const factor = { x: 0, y: 0 };
   const panning = (x: number, y: number) => {
     if (
       !canvasRef.current ||
-      parseInt(canvasRef.current.style.left) + x / scale > 4000 ||
-      parseInt(canvasRef.current.style.top) + y / scale > 4000
+      parseInt(canvasRef.current.style.left) + x / scale > CANVAS_LIMIT ||
+      parseInt(canvasRef.current.style.top) + y / scale > CANVAS_LIMIT
     ) {
       return;
     }
@@ -380,7 +388,7 @@ export const Botbuilder = () => {
 
         <div
           className="canvasWrapper"
-          style={{ left: 4000, top: 4000, zoom: `${scale * 100}%` }}
+          style={{ left: CANVAS_LIMIT, top: CANVAS_LIMIT, zoom: `${scale * 100}%` }}
           ref={canvasRef}
           role="presentation"
           onContextMenu={(e) => {
@@ -395,7 +403,7 @@ export const Botbuilder = () => {
                 y: item.y,
               }}
               scale={scale}
-              bounds={{ top: -4000, left: -4000, right: 4000 }}
+              bounds={{ top: -CANVAS_LIMIT, left: -CANVAS_LIMIT, right: CANVAS_LIMIT }}
               key={item.id}
               enableUserSelectHack={true}
               onDrag={(e) => {
