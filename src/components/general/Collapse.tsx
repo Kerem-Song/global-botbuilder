@@ -158,7 +158,7 @@ export const Collapse: FC<CollapseProps> = ({
                     : `view.useImageCtrl`,
                   {
                     onChange: (e) => {
-                      if (!e.target.checked) {
+                      if (!e.target.checked && field !== 'useUtteranceParam') {
                         // setValue(
                         //   index !== undefined
                         //     ? `view.childrenViews.${index}.imageCtrl.imageUrl`
