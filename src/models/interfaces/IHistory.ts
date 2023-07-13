@@ -1,4 +1,5 @@
-import { INode } from './INode';
+import { IOtherFlowRedirectView } from '@models/interfaces/res/IGetFlowRes';
+
 import { IScenarioModel } from './IScenarioModel';
 import { INodeBase } from './res/IGetFlowRes';
 
@@ -111,9 +112,13 @@ export interface IGetFlowSnapShot {
   historyId: string;
 }
 
+export interface IGetFlowSnapShotNodes extends INodeBase {
+  view?: IOtherFlowRedirectView;
+}
+
 export interface IGetFlowSnapShotRes extends IScenarioModel {
   alias: string;
   id: string;
-  nodes: INodeBase[];
+  nodes: IGetFlowSnapShotNodes[];
   seq: number;
 }
