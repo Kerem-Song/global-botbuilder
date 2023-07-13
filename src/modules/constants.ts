@@ -5,6 +5,7 @@ export const TRUE_SUFFIX = '-true';
 export const FALSE_SUFFIX = '-false';
 export const CONDITION_SUFFIX = '-condition-';
 export const DEFAULT_SUFFIX = '-default';
+export const CANVAS_LIMIT = 10000;
 export const NODE_DRAG_FACTOR = 10;
 export const QUICK_MAX_COUNT = 10;
 export const SYS_BOT_ICON = '@sys.bot-icon';

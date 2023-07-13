@@ -202,7 +202,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
             <div className="entitiesWrapper">
               <div className="entityDetailHeader">
                 <Title level={2}>{t('ENTITY_DETAIL')}</Title>
-                <Button htmlType="submit" type="primary" large>
+                <Button htmlType="submit" type="primary" large disabled={!isActive}>
                   {t('SAVE_ENTITY')}
                 </Button>
               </div>
