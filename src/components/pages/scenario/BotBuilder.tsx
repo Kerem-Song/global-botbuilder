@@ -128,15 +128,13 @@ export const Botbuilder = () => {
   useEffect(() => {
     if (canvasRef.current) {
       if (startNode) {
-        console.log('@startNode.x.toString();', startNode.x.toString());
-        console.log('@startNode.y.toString();', startNode.y.toString());
-        canvasRef.current.style.left = -startNode.x.toString() + 'px';
-        canvasRef.current.style.top = -startNode.y.toString() + 'px';
+        canvasRef.current.style.left = -startNode.x + 'px';
+        canvasRef.current.style.top = -startNode.y + 'px';
       }
       // canvasRef.current.style.left = '0px';
       // canvasRef.current.style.top = '0px';
     }
-  }, [selectedScenario, startNode?.x]);
+  }, [selectedScenario, startNode]);
 
   const factor = { x: 0, y: 0 };
   const panning = (x: number, y: number) => {
