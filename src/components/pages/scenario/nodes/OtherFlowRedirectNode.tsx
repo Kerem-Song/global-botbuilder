@@ -31,7 +31,7 @@ export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
         scenarioInHistoryViewer &&
         scenarioInHistoryViewer.length &&
         scenarioInHistoryViewer.map((itemInHistory) => (
-          <div key={itemInHistory.id}>{itemInHistory.nextNodeId}</div>
+          <div key={itemInHistory.id}>{itemInHistory.view?.otherFlowAlias}</div>
         ))
       );
     }
