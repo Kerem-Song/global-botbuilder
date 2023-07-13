@@ -7,7 +7,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { OperatorSelector } from './OperatorSelector';
 import { VariableSelector } from './VariableSelector';
 
-export const ConditionSwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
+export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   const { t } = usePage();
   const isHistoryViewer = useHistoryViewerMatch();
   const {

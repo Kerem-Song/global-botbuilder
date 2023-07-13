@@ -8,7 +8,6 @@ import { AnswerNodeFactory } from './AnswerNodeFactory';
 import { BasicCardCarouselNodeFactory } from './BasicCardCarouselNodeFactory';
 import { BasicCardNodeFactory } from './BasicCardNodeFactory';
 import { ConditionNodeFactory } from './ConditionNodeFactory';
-import { ConditionSwitchNodeFactory } from './ConditionSwitchNodeFactory';
 import { DataBasicCardNodeFactory } from './DataBasicCardNodeFactory';
 import { DataListCardNodeFactory } from './DataListCardNodeFactory';
 import { DataProductCardNodeFactory } from './DataProductCardNodeFactory';
@@ -21,6 +20,7 @@ import { ParameterSetNodeFactory } from './ParameterSetNodeFactory';
 import { ProductCardCarouselNodeFactory } from './ProductCardCarouselNodeFactory';
 import { ProductCardNodeFactory } from './ProductCardNodeFactory';
 import { RetryConditionNodeFactory } from './RetryConditionNodeFactory';
+import { SwitchNodeFactory } from './SwitchNodeFactory';
 import { TextNodeFactory } from './TextNodeFactory';
 
 export interface INodeFactory {
@@ -43,7 +43,7 @@ const basicCardCarouselNodeFactory = new BasicCardCarouselNodeFactory();
 const listCardNodeFactory = new ListCardNodeFactory();
 const listCardCarouselNodeFactory = new ListCardCarouselNodeFactory();
 const conditionNodeFactory = new ConditionNodeFactory();
-const conditionSwitchNodeFactory = new ConditionSwitchNodeFactory();
+const switchNodeFactory = new SwitchNodeFactory();
 const answerNodeFactory = new AnswerNodeFactory();
 const parameterSetNodeFactory = new ParameterSetNodeFactory();
 const otherFlowRedirectNodeFactory = new OtherFlowRedirectNodeFactory();
@@ -73,7 +73,7 @@ export const nodeFactory = {
       case NODE_TYPES.CONDITION_NODE:
         return conditionNodeFactory;
       case NODE_TYPES.CONDITION_SWITCH_NODE:
-        return conditionSwitchNodeFactory;
+        return switchNodeFactory;
       case NODE_TYPES.ANSWER_NODE:
         return answerNodeFactory;
       case NODE_TYPES.PARAMETER_SET_NODE:

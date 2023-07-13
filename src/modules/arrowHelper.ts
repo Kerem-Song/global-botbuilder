@@ -120,7 +120,7 @@ export const arrowHelper = {
 
     return result;
   },
-  createConditionSwitchNodeArrow: (nodeId: string, view?: ISwitchView): IArrow[] => {
+  createSwitchNodeArrow: (nodeId: string, view?: ISwitchView): IArrow[] => {
     const result: IArrow[] = [];
     if (view && view.defaultNextNodeId) {
       result.push({

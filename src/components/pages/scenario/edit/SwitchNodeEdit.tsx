@@ -6,10 +6,10 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import classNames from 'classnames';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
-import { ConditionSwitchConditions } from './ConditionSwitchConditions';
 import { SelectNode } from './SelectNode';
+import { SwitchConditions } from './SwitchConditions';
 
-export const ConditionSwitchNodeEdit = () => {
+export const SwitchNodeEdit = () => {
   useNodeEditSave();
   const CONDITION_LIMIT = 13;
   const { t } = usePage();
@@ -59,7 +59,7 @@ export const ConditionSwitchNodeEdit = () => {
 
         {fields.map((condition, i) => (
           <Space direction="vertical" key={condition.id}>
-            <ConditionSwitchConditions nestedIndex={i} />
+            <SwitchConditions nestedIndex={i} />
             <div className="m-b-8">
               <Space direction="vertical">
                 <div>

@@ -1,6 +1,6 @@
 import { icCondition } from '@assets';
-import { ConditionSwitchNodeEdit } from '@components/pages/scenario/edit/ConditionSwitchNodeEdit';
-import { ConditionSwitchNode } from '@components/pages/scenario/nodes/ConditionSwitchNode';
+import { SwitchNodeEdit } from '@components/pages/scenario/edit/SwitchNodeEdit';
+import { SwitchNode } from '@components/pages/scenario/nodes/SwitchNode';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import {
@@ -13,7 +13,7 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
 
-export class ConditionSwitchNodeFactory implements INodeFactory {
+export class SwitchNodeFactory implements INodeFactory {
   constructor() {
     this.typeName = NODE_TYPES.CONDITION_NODE;
     this.nodeKind = NodeKind.CommandNode;
@@ -27,19 +27,19 @@ export class ConditionSwitchNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultConditionSwitchView();
+    return nodeDefaultHelper.createDefaultSwitchView();
   }
 
   getEditElement() {
-    return ConditionSwitchNodeEdit;
+    return SwitchNodeEdit;
   }
 
   getNodeElement() {
-    return ConditionSwitchNode;
+    return SwitchNode;
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    return arrowHelper.createConditionSwitchNodeArrow(nodeId, view);
+    return arrowHelper.createSwitchNodeArrow(nodeId, view);
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {

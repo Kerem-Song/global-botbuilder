@@ -6,7 +6,7 @@ import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { CONDITION_SUFFIX, DEFAULT_SUFFIX, NODE_PREFIX } from '@modules';
 import { FC, useRef } from 'react';
 
-export const ConditionSwitchNode: FC<IHasNode> = ({ node }) => {
+export const SwitchNode: FC<IHasNode> = ({ node }) => {
   const { getConditionOperatorLabel } = useI18n();
   const view = node.view as ISwitchView;
   const conditionNodeRef = useRef<HTMLDivElement>(null);
