@@ -30,7 +30,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
 
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
   const { confirm } = useSystemModal();
-  const { register, getValues, setValue, watch } = formMethods;
+  const { register, getValues, watch } = formMethods;
 
   const filterKeyword = watch('items').filter((x) =>
     x.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase()),
@@ -130,10 +130,10 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
             if (
               !v.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase())
             ) {
-              return <div key={i}></div>;
+              return <div key={v.keyName}></div>;
             }
             return (
-              <div key={i} className="utteranceItem">
+              <div key={v.keyName} className="utteranceItem">
                 <Checkbox
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}

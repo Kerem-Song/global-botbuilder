@@ -5,7 +5,6 @@ import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { NODE_PREFIX } from '@modules';
-import { setInvalidateNode } from '@store/botbuilderSlice';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
