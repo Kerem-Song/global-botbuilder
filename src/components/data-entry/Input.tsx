@@ -143,6 +143,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       aria-required={required}
       readOnly={readOnly}
       title={inputRef.current?.value}
+      autoComplete="off"
     />
   );
   if (isWrapping) {

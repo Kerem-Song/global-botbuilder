@@ -213,6 +213,7 @@ export const ImageFileUploader = ({
               className="file-name-input"
               onChange={handleChangeFile}
               style={{ display: 'none' }}
+              autoComplete="off"
             />
           </div>
         </div>

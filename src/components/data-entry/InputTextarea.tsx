@@ -46,6 +46,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
         maxLength={args.maxLength}
         ref={ref}
         readOnly={readOnly}
+        autoComplete="off"
       />
     );
   },
