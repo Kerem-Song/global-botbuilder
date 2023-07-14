@@ -390,6 +390,32 @@
           }
         }
 
+        .conditionCase {
+          display: flex;
+          flex-direction: column;
+          gap: rem(10);
+          padding: rem(8) rem(10);
+          width: rem(192);
+          min-height: rem(30);
+          background-color: $gray100;
+          border: rem(1) solid $gray200;
+          border-radius: rem(8);
+
+          // .conditionCase {
+          //   height: rem(15);
+          //   overflow: hidden;
+          //   text-overflow: ellipsis;
+          //   white-space: pre;
+          // }
+
+          p {
+            height: rem(15);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: pre;
+          }
+        }
+
         // Count
         .countConditionWrapper {
           padding: rem(8) rem(10);
@@ -402,19 +428,6 @@
           .dataCardDesc {
             white-space: pre-line;
             word-break: break-all;
-          }
-
-          &.conditionCaseWrapper {
-            display: flex;
-            flex-direction: column;
-            gap: rem(10);
-
-            p {
-              height: rem(15);
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: pre;
-            }
           }
 
           &.parameterSetNode {

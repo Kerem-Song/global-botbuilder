@@ -55,6 +55,9 @@ export const SwitchNodeEdit = () => {
         <div className="m-b-8">
           <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
           <span className="required">*</span>
+          <Button small onClick={handleAddConditionButton}>
+            조건 추가
+          </Button>
         </div>
 
         {fields.map((condition, i) => (
@@ -73,113 +76,9 @@ export const SwitchNodeEdit = () => {
                     error={errors.view?.conditions?.[i]?.trueThenNextNodeId}
                   />
                 </FormItem>
+                {i !== fields.length && <Divider />}
               </Space>
             </div>
-            {i === 0 ? (
-              <div className="joinWrapper">
-                <label
-                  className={classNames(`join`)}
-                  role="presentation"
-                  onClick={(e) => {
-                    fields.map((field, i) => {
-                      setValue(`view.conditions.${i}.join`, ConditionJoin.And, {
-                        shouldDirty: true,
-                      });
-                    });
-                    if (fields.length === 1) {
-                      handleAddConditionButton(e);
-                    }
-                  }}
-                >
-                  {/* <input
-                    {...register(`view.conditions.${i}.join`, { valueAsNumber: true })}
-                    type="radio"
-                    value={ConditionJoin.And}
-                    checked={Number(watch(`view.conditions.${i}.join`)) === ConditionJoin.And}
-                    onClick={() => handleJoin(ConditionJoin.And)}
-                  />
-                  <div data-join={'and'}>And</div> */}
-                  <Radio
-                    checked={watch(`view.conditions.0.join`) === ConditionJoin.And}
-                    onChange={() => {
-                      // setValue('view.conditions.${i}.join', ConditionJoin.And);
-                      // handleAddConditionButton();
-                    }}
-                    ref={joinField.ref}
-                  >
-                    <div data-join={'and'}>And</div>
-                  </Radio>
-                </label>
-                <label
-                  className={classNames(`join`)}
-                  role="presentation"
-                  onClick={(e) => {
-                    fields.map((field, i) => {
-                      setValue(`view.conditions.${i}.join`, ConditionJoin.Or, {
-                        shouldDirty: true,
-                      });
-                    });
-                    if (fields.length === 1) {
-                      handleAddConditionButton(e);
-                    }
-                  }}
-                >
-                  {/* <input
-                    {...register(`view.conditions.${i}.join`, { valueAsNumber: true })}
-                    type="radio"
-                    value={ConditionJoin.Or}
-                    checked={Number(watch(`view.conditions.${i}.join`)) === ConditionJoin.Or}
-                    onClick={() => handleJoin(ConditionJoin.Or)}
-                  />
-                  <div data-join={'or'}>Or</div> */}
-                  <Radio
-                    checked={watch(`view.conditions.0.join`) === ConditionJoin.Or}
-                    onChange={() => {
-                      // setValue('view.conditions.${i}.join', ConditionJoin.Or);
-                      // handleAddConditionButton();
-                    }}
-                    ref={joinField.ref}
-                  >
-                    <div data-join={'or'}>Or</div>
-                  </Radio>
-                </label>
-              </div>
-            ) : (
-              watch(`view.conditions.${i}.join`) !== undefined &&
-              i < CONDITION_LIMIT - 1 && (
-                <div
-                  className={classNames(`joinWrapper`, {
-                    on: watch(`view.conditions.${i}.join`) !== undefined,
-                  })}
-                >
-                  <Button
-                    shape="ghost"
-                    className={classNames(`join button`, {
-                      on: watch(`view.conditions.${i}.join`) !== undefined,
-                    })}
-                    onClick={(e) => {
-                      if (i < CONDITION_LIMIT - 1 && fields.length === i + 1) {
-                        handleAddConditionButton(e);
-                      }
-                    }}
-                  >
-                    {fields.length === i + 1 ? '+ Add' : ''}{' '}
-                    {Number(watch(`view.conditions.0.join`)) === ConditionJoin.And
-                      ? 'And'
-                      : 'Or'}
-                  </Button>
-                </div>
-              )
-            )}
-            {i > 0 ? (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`CONDITION_NODE_DELETE_CONDITION`)}
-                </Button>
-              </div>
-            ) : (
-              <div className="deleteBtn"></div>
-            )}
           </Space>
         ))}
 

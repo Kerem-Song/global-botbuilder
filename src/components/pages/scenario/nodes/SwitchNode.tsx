@@ -13,25 +13,25 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
 
   return (
     <Card>
-      <div className="countConditionWrapper conditionCaseWrapper" ref={conditionNodeRef}>
+      <div className="conditionSwitchWrapper" ref={conditionNodeRef}>
         {view.conditions?.map((condition, i) => (
-          <div key={condition.id}>
+          <div key={condition.id} className="conditionCase">
             {condition.items?.map((item, j) => (
               <div key={j}>
-                <p className="conditionCase">
+                <p className="">
                   Case
                   {item.op1}{' '}
                   {item.operator ? getConditionOperatorLabel(item.operator) : ''}{' '}
                   {item.op2 || '{{ }}'}
                 </p>
-                <NextNodeButton
-                  ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
-                  nodeId={`${NODE_PREFIX}${node.id}`}
-                  type="green"
-                  offset={i * 25 + 60}
-                />
               </div>
             ))}
+            <NextNodeButton
+              ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
+              nodeId={`${NODE_PREFIX}${node.id}`}
+              type="green"
+              offset={i * 33 + 57}
+            />
           </div>
         ))}
       </div>
