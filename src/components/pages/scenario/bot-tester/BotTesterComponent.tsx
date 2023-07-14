@@ -32,8 +32,12 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const dispatch = useDispatch();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
+  const botTesterRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { botTesterMutateAsync, refreshBotTesterAsync } = useBotTesterClient();
+  const isEditDrawerOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
+  );
 
   const handleRefresh = async () => {
     const sendToken = {
@@ -118,11 +122,31 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     }
   }, [isOpen, botTesterData]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (botTesterRef.current) {
+          botTesterRef.current.blur();
+          handleIsOpen(false);
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       {isOpen && (
         <Draggable handle=".botTesterHeader" onDrag={undefined} bounds="#layout">
-          <div className="botTester">
+          <div
+            className={classNames('botTester', {
+              editDrawerOpen: isEditDrawerOpen,
+            })}
+            ref={botTesterRef}
+          >
             <div className="botTesterHeader">
               <div className="text">{t('HEADER')}</div>
               <button className="icon refreshBtn" onClick={handleRefresh} />
