@@ -256,6 +256,10 @@ export const useYupValidation = () => {
     // falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
+  const switchNodeEditSchema = yup.object().shape({
+    conditions: yup.array().of(conditionNodeEditSchema),
+  });
+
   const retryConditionNodeEditSchema = yup.object().shape({
     trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
     falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
@@ -539,6 +543,10 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.CONDITION_NODE,
           then: conditionNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.SWITCH_NODE,
+          then: switchNodeEditSchema,
         })
         .when('type', {
           is: NODE_TYPES.RETRY_CONDITION_NODE,
