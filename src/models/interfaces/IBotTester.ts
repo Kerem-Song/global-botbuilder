@@ -35,7 +35,7 @@ export interface ISendMessage {
       value: string;
     };
     postback?: {
-      queryString: string;
+      // queryString: string;
     };
   };
 }

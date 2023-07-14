@@ -82,6 +82,7 @@ export const TesterMessagesItemButton = ({
         utterance: {
           value: item.postback.actValueIsUttr!,
         },
+        postback: item.postback,
       },
     };
 
