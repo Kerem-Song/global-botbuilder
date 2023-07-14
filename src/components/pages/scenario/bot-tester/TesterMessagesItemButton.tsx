@@ -46,7 +46,9 @@ export const TesterMessagesItemButton = ({
       lunaMessage: {
         id: 'lunaNodeLink',
         postback: item.postback,
-        lunaNode: lunaNodeLink,
+        lunaNode: {
+          value: lunaNodeLink!,
+        },
       },
     };
 
