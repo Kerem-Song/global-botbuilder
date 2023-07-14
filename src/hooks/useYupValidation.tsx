@@ -296,6 +296,7 @@ export const useYupValidation = () => {
         is: true,
         then: yup
           .string()
+          .nullable()
           .trim()
           .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
           .when('.', {
@@ -303,6 +304,7 @@ export const useYupValidation = () => {
             then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
             otherwise: yup
               .string()
+              .nullable()
               .matches(
                 PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
                 t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),

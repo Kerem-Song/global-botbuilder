@@ -5,17 +5,18 @@ import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { NODE_PREFIX } from '@modules';
-import { setInvalidateNode } from '@store/botbuilderSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
 import { useDispatch } from 'react-redux';
 
+import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
   console.log('^^^^ NodeEditDrawer');
   const { t } = usePage();
+  const [showAnnotation, setShowAnnotation] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
@@ -55,6 +56,7 @@ export const NodeEditDrawer = () => {
         view: selectedNode.view,
         nextNodeId: selectedNode.nextNodeId,
         option: selectedNode.option,
+        annotation: selectedNode.annotation,
       };
 
       if (selectedNode.type === NODE_TYPES.ANSWER_NODE) {
@@ -96,6 +98,20 @@ export const NodeEditDrawer = () => {
     return <EditElement />;
   };
 
+  const handleAnnotation = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.code === 'KeyQ') {
+      setShowAnnotation(!showAnnotation);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => handleAnnotation(e));
+
+    return () => {
+      window.removeEventListener('keydown', (e) => handleAnnotation(e));
+    };
+  }, [showAnnotation]);
+
   console.log('errors in edit drawer', errors);
   return (
     <Drawer
@@ -106,7 +122,7 @@ export const NodeEditDrawer = () => {
       duration={200}
       size={360}
     >
-      <div className="wrapper">
+      <div className="wrapper" role="tab" tabIndex={0}>
         <div className="header">
           <span>{getValues().caption}</span>
         </div>
@@ -130,7 +146,11 @@ export const NodeEditDrawer = () => {
             />
           </FormItem>
         </div>
-
+        {showAnnotation && (
+          <div className="node-item-wrap">
+            <InputTextAreaWithTitleCounter label="annotation" />
+          </div>
+        )}
         {editItem()}
       </div>
     </Drawer>

@@ -34,6 +34,9 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { botTesterMutateAsync, refreshBotTesterAsync } = useBotTesterClient();
+  const isEditDrawerOpen = useRootState(
+    (state) => state.botBuilderReducer.isEditDrawerOpen,
+  );
 
   const handleRefresh = async () => {
     const sendToken = {
@@ -122,7 +125,11 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     <>
       {isOpen && (
         <Draggable handle=".botTesterHeader" onDrag={undefined} bounds="#layout">
-          <div className="botTester">
+          <div
+            className={classNames('botTester', {
+              isEditDrawerOpen: isEditDrawerOpen,
+            })}
+          >
             <div className="botTesterHeader">
               <div className="text">{t('HEADER')}</div>
               <button className="icon refreshBtn" onClick={handleRefresh} />

@@ -15,4 +15,5 @@ export interface INode {
   y: number;
   view?: IViewBase;
   nextNodeId?: string;
+  annotation?: string;
 }

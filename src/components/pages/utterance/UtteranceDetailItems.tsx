@@ -30,7 +30,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
 
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
   const { confirm } = useSystemModal();
-  const { register, getValues, setValue, watch } = formMethods;
+  const { register, getValues, watch } = formMethods;
 
   const filterKeyword = watch('items').filter((x) =>
     x.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase()),
@@ -41,7 +41,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   };
 
   const openDeleteCheckboxModal = async () => {
-    const deleteItems = filterKeyword.filter((x) => x.isChecked);
+    const deleteItems = getValues().items.filter((x) => x.isChecked);
 
     if (deleteItems.length === 0) {
       return;
@@ -109,15 +109,31 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
               </div>
             </Col>
           </Row>
-        ) : fields.length > 0 ? (
+        ) : (
+          filterKeyword.length === 0 && (
+            <Row style={{ width: '100%' }}>
+              <Col
+                className={classNames('emptyList', {
+                  'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+                })}
+              >
+                <div className="empty">
+                  <img src={icNoResult} alt="empty" />
+                  <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
+                </div>
+              </Col>
+            </Row>
+          )
+        )}
+        {fields.length > 0 &&
           fields.map((v, i) => {
             if (
               !v.text?.trim().toLowerCase().includes(searchKeyWord.trim().toLowerCase())
             ) {
-              return <div key={i}></div>;
+              return <div key={v.keyName}></div>;
             }
             return (
-              <div key={i} className="utteranceItem">
+              <div key={v.keyName} className="utteranceItem">
                 <Checkbox
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}
@@ -131,21 +147,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                 </p>
               </div>
             );
-          })
-        ) : (
-          <Row style={{ width: '100%' }}>
-            <Col
-              className={classNames('emptyList', {
-                'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
-              })}
-            >
-              <div className="empty">
-                <img src={icNoResult} alt="empty" />
-                <span>{t('NO_SEARCH_UTTERANCE_RESULT_FOUND')}</span>
-              </div>
-            </Col>
-          </Row>
-        )}
+          })}
       </Row>
     </div>
   );

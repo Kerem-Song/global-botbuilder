@@ -35,7 +35,7 @@ export interface ISendMessage {
       value: string;
     };
     postback?: {
-      queryString: string;
+      // queryString: string;
     };
   };
 }
@@ -51,6 +51,7 @@ export interface ITesterQuickReply {
     lunaNodeLink?: string;
     actValueIsUttr?: string;
     lblIsUttr?: string;
+    label?: string;
   };
 }
 
