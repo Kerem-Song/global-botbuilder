@@ -30,7 +30,7 @@ export const OperatorSelector = ({
     // name: nestedIndex
     //   ? `view.conditions.${nestedIndex}.items.${0}.operator`
     //   : `view.items.${index}.operator`,
-    name: `view.conditions.${nestedIndex}.items.${0}.operator`,
+    name: `view.conditions.${nestedIndex}.items.${index}.operator`,
     control,
   });
   const reactSelectStyle = getReactSelectStyle({});

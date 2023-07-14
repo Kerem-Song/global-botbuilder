@@ -1,16 +1,18 @@
-import { Button, Collapse, Divider, FormItem, Radio, Space } from '@components';
-import { useNodeEditSave, usePage } from '@hooks';
-import { ConditionJoin, IGNodeEditModel } from '@models';
+import { Button, Collapse, FormItem, Space } from '@components';
+import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import classNames from 'classnames';
+import { useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
+import { SwitchNodeCarousel } from '../switchNodeEditCarousel';
 import { SelectNode } from './SelectNode';
 import { SwitchConditions } from './SwitchConditions';
 
 export const SwitchNodeEdit = () => {
   useNodeEditSave();
+  const [current, setCurrent] = useState(0);
   const CONDITION_LIMIT = 13;
   const { t } = usePage();
   const {
@@ -21,6 +23,7 @@ export const SwitchNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
   const values = getValues();
+  const isHistoryViewer = useHistoryViewerMatch();
   console.log('value.view in condition node edit', values.view);
 
   const { fields, append, remove } = useFieldArray({
@@ -34,9 +37,7 @@ export const SwitchNodeEdit = () => {
     remove(index);
   };
 
-  const handleAddConditionButton = (
-    e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
-  ) => {
+  const handleAddConditionButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log('handle add condition btn');
     const join = watch(`view.conditions.0.join`);
 
@@ -51,56 +52,59 @@ export const SwitchNodeEdit = () => {
 
   return (
     <>
-      <Collapse label={t(`CONDITION_NODE_SET_CONDITION`)} useSwitch={false}>
-        <div className="m-b-8">
-          <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
-          <span className="required">*</span>
-          <Button small onClick={handleAddConditionButton}>
-            조건 추가
-          </Button>
-        </div>
-
-        {fields.map((condition, i) => (
-          <Space direction="vertical" key={condition.id}>
-            <SwitchConditions nestedIndex={i} />
-            <div className="m-b-8">
-              <Space direction="vertical">
-                <div>
-                  <span className="label">{t(`SET_CONNECT_NEXT_NODE`)} </span>
-                  <span className="required">*</span>
+      {values.view && (
+        <SwitchNodeCarousel
+          conditionsId={values.view.id}
+          addCarousel={handleAddConditionButton}
+        >
+          {fields.map((condition, i) => (
+            <Collapse label={`Case ${i + 1}`} useSwitch={false} key={condition.id}>
+              {i > 0 && (
+                <div className="deleteBtn">
+                  <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
+                    {t(`CONDITION_NODE_CASE_DELETE`)}
+                  </Button>
                 </div>
-                <FormItem error={errors.view?.conditions?.[i]?.trueThenNextNodeId}>
-                  <SelectNode
-                    fieldName={`view.conditions.${i}.trueThenNextNodeId`}
-                    nodeId={getValues().id}
-                    error={errors.view?.conditions?.[i]?.trueThenNextNodeId}
-                  />
-                </FormItem>
-                {i !== fields.length && <Divider />}
-              </Space>
-            </div>
-          </Space>
-        ))}
-
-        <div className="node-item-wrap collapse">
-          <Divider />
-          <div className="m-b-8">
-            <Space direction="vertical">
-              <span className="label">else</span>
-              <div>
-                <span>{t(`SET_NEXT_MESSAGE`)} </span>
+              )}
+              {/* <Space direction="vertical"> */}
+              <SwitchConditions nestedIndex={i} />
+              <div className="m-b-8">
+                <Space direction="vertical">
+                  <div>
+                    <span className="label">{t(`SET_CONNECT_NEXT_NODE`)} </span>
+                    <span className="required">*</span>
+                  </div>
+                  <FormItem error={errors.view?.conditions?.[i]?.trueThenNextNodeId}>
+                    <SelectNode
+                      fieldName={`view.conditions.${i}.trueThenNextNodeId`}
+                      nodeId={getValues().id}
+                      error={errors.view?.conditions?.[i]?.trueThenNextNodeId}
+                    />
+                  </FormItem>
+                </Space>
               </div>
-              <FormItem error={errors.view?.defaultNextNodeId}>
-                <SelectNode
-                  fieldName={'view.defaultNextNodeId'}
-                  nodeId={getValues().id}
-                  error={errors.view?.defaultNextNodeId}
-                />
-              </FormItem>
-            </Space>
-          </div>
+              {/* </Space> */}
+            </Collapse>
+          ))}
+        </SwitchNodeCarousel>
+      )}
+      <div className="node-item-wrap">
+        <div className="m-b-8">
+          <Space direction="vertical">
+            <span className="label">else</span>
+            <div>
+              <span>{t(`SET_NEXT_MESSAGE`)} </span>
+            </div>
+            <FormItem error={errors.view?.defaultNextNodeId}>
+              <SelectNode
+                fieldName={'view.defaultNextNodeId'}
+                nodeId={getValues().id}
+                error={errors.view?.defaultNextNodeId}
+              />
+            </FormItem>
+          </Space>
         </div>
-      </Collapse>
+      </div>
     </>
   );
 };

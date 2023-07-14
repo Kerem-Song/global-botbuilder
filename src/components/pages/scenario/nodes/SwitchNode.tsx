@@ -16,16 +16,17 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
       <div className="conditionSwitchWrapper" ref={conditionNodeRef}>
         {view.conditions?.map((condition, i) => (
           <div key={condition.id} className="conditionCase">
-            {condition.items?.map((item, j) => (
-              <div key={j}>
-                <p className="">
-                  Case
-                  {item.op1}{' '}
-                  {item.operator ? getConditionOperatorLabel(item.operator) : ''}{' '}
-                  {item.op2 || '{{ }}'}
-                </p>
-              </div>
-            ))}
+            <span className="caseLabel">{i + 1}: </span>
+            <p className="">
+              {condition.items?.[0].op1}{' '}
+              {condition.items?.[0].operator
+                ? getConditionOperatorLabel(condition.items?.[0].operator)
+                : ''}{' '}
+              {condition.items?.[0].op2 || '{{ }}'}
+            </p>
+            {/* {condition.items?.map((item, j) => (
+              <div key={j}></div>
+            ))} */}
             <NextNodeButton
               ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
               nodeId={`${NODE_PREFIX}${node.id}`}

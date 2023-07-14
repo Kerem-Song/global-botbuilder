@@ -392,22 +392,12 @@
 
         .conditionCase {
           display: flex;
-          flex-direction: column;
-          gap: rem(10);
           padding: rem(8) rem(10);
           width: rem(192);
-          min-height: rem(30);
+          min-height: rem(15);
           background-color: $gray100;
           border: rem(1) solid $gray200;
           border-radius: rem(8);
-
-          // .conditionCase {
-          //   height: rem(15);
-          //   overflow: hidden;
-          //   text-overflow: ellipsis;
-          //   white-space: pre;
-          // }
-
           p {
             height: rem(15);
             overflow: hidden;
@@ -564,7 +554,7 @@
         border: 1px solid $gray200;
         border-radius: rem(4);
       }
-
+ 
       .page {
         font-size: rem(13);
         line-height: rem(16);

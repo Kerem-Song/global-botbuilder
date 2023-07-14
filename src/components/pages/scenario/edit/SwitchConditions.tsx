@@ -167,7 +167,8 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                   }}
                 >
                   {fields.length === i + 1 ? '+ Add' : ''}{' '}
-                  {Number(watch(`view.conditions.0.join`)) === ConditionJoin.And
+                  {Number(watch(`view.conditions.${nestedIndex}.join`)) ===
+                  ConditionJoin.And
                     ? 'And'
                     : 'Or'}
                 </Button>
