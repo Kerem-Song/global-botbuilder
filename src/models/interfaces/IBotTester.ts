@@ -37,6 +37,7 @@ export interface ISendMessage {
     postback?: {
       // queryString: string;
     };
+    lunaNode?: string;
   };
 }
 

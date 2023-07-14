@@ -29,7 +29,6 @@ export const TesterMessagesItemButton = ({
   const { botTesterMutateAsync } = useBotTesterClient();
   const token = useRootState((state) => state.botInfoReducer.token);
   const actionType = item.actionType;
-  const label = item.postback?.label;
   const lunaNodeLink = item.postback?.lunaNodeLink;
   const webLinkUrl = item.postback?.webLinkUrl;
   const dispatch = useDispatch();
@@ -46,9 +45,8 @@ export const TesterMessagesItemButton = ({
       sessionToken: token!,
       lunaMessage: {
         id: 'lunaNodeLink',
-        postback: {
-          queryString: `lunaNodeLink=${lunaNodeLink}&label=${label}`,
-        },
+        postback: item.postback,
+        lunaNode: lunaNodeLink,
       },
     };
 
@@ -116,6 +114,7 @@ export const TesterMessagesItemButton = ({
         utterance: {
           value: item.label!,
         },
+        postback: item.postback,
       },
     };
 
