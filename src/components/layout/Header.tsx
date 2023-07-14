@@ -3,7 +3,9 @@ import { Button, IPopperItem, Popper } from '@components';
 import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
 import { useModalOpen } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
+import { setToken } from '@store/authSlice';
 import { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 import useI18n from '../../hooks/useI18n';
@@ -14,6 +16,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   name,
 }) => {
   const { tc } = useI18n();
+  const dispatch = useDispatch();
   const languageMenus = [
     {
       id: `ko`,
@@ -61,8 +64,9 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
       data: {
         action: () => {
           console.log('logout');
+          dispatch(setToken({ refreshToken: undefined }));
           window.location.href =
-            'https://auth.lunacode.dev/oauth/signin?clientPrev=null&clientType=1';
+            'https://auth.lunacode.dev/oauth/signin?flag=logout&clientPrev=null&clientType=3';
         },
       },
     },
