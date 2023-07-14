@@ -51,7 +51,6 @@ export const ScenarioManagement: FC<{
     };
   }, [pathname]);
 
-  console.log('@scenarios', scenarios);
   return (
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">

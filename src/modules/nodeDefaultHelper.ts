@@ -113,7 +113,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultConditions: (join = ConditionJoin.And, seq?: number) => {
+  createDefaultConditions: (join = undefined, seq?: number) => {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
@@ -130,7 +130,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultSwitchView: (join = ConditionJoin.And) => {
+  createDefaultSwitchView: (join = undefined) => {
     const result: ISwitchView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.SWITCH_VIEW,

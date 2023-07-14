@@ -207,7 +207,7 @@ export const useScenarioClient = () => {
         return converted;
       });
       const result = { ...old, nodes: resultNodes };
-      console.log('@result in save mutate', nodes, resultNodes);
+
       const res = await http.post('builder/updateflow', {
         sessionToken: token,
         flow: result,

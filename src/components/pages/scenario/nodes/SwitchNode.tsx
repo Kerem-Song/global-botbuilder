@@ -11,13 +11,11 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
   const view = node.view as ISwitchView;
   const conditionNodeRef = useRef<HTMLDivElement>(null);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
-  console.log('@carouselIndexObj', carouselIndexObj);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedNode = nodes.find((x) => x.id === selected);
-  console.log('@caro selectedNode', selectedNode);
   const index = carouselIndexObj[`${selectedNode?.view?.id}`];
-  console.log('@caro index ', index);
+
   return (
     <Card>
       <div className="conditionSwitchWrapper" ref={conditionNodeRef}>

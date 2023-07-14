@@ -11,7 +11,7 @@ import { NextNodeButton } from '../NextNodeButton';
 export const JsonRequestNode: FC<IHasNode> = ({ node }) => {
   const view: IJsonRequestView = node.view as IJsonRequestView;
   const { t } = usePage();
-  console.log('@json node id', node.id);
+
   return (
     <Card>
       <div className="method">{view.method}</div>

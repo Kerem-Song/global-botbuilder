@@ -62,7 +62,6 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   }, [current]);
 
   const NextDisabled = () => {
-    console.log('@cur', current, length);
     if (current + 1 > Math.min(current + 1, length - 1, CONDITIONS_LIMIT - 1)) {
       return true;
     }
