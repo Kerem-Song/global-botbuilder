@@ -45,8 +45,9 @@ export const TesterMessagesItemButton = ({
       sessionToken: token!,
       lunaMessage: {
         id: 'lunaNodeLink',
-        postback: {
-          queryString: `lunaNodeLink=${lunaNodeLink}`,
+        postback: item.postback,
+        lunaNode: {
+          value: lunaNodeLink!,
         },
       },
     };
@@ -81,6 +82,7 @@ export const TesterMessagesItemButton = ({
         utterance: {
           value: item.postback.actValueIsUttr!,
         },
+        postback: item.postback,
       },
     };
 
@@ -114,6 +116,7 @@ export const TesterMessagesItemButton = ({
         utterance: {
           value: item.label!,
         },
+        postback: item.postback,
       },
     };
 
