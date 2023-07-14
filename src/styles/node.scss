@@ -2,13 +2,13 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  border: 2px solid $grayWhite;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: rem(12);
   background-color: $grayWhite;
   max-width: rem(218);
   min-width: rem(218);
   padding: rem(12) rem(12) rem(24) rem(12);
-  box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
+  // box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   cursor: pointer;
   color: $grayBlack;
   font-size: rem(14);
