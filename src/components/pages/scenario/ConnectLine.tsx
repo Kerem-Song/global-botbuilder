@@ -46,6 +46,21 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const stroke = strokes[type][active ? 1 : 0];
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
   const { addUpdateLines, removeUpdateLines } = useUpdateLines();
+  const handleDeleteLine = (e: KeyboardEvent) => {
+    console.log('@event????');
+    console.log('@event', e, e.key);
+    if (active && e.key === 'Delete') {
+      onDelete?.();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => handleDeleteLine(e));
+
+    return () => {
+      window.removeEventListener('keydown', (e) => handleDeleteLine(e));
+    };
+  }, [active]);
+
   useEffect(() => {
     const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
     const end = document.querySelector<HTMLDivElement>(`#${endId}`);
