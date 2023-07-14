@@ -31,7 +31,7 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
               ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
               nodeId={`${NODE_PREFIX}${node.id}`}
               type="green"
-              offset={i * 33 + 57}
+              offset={i * 40 + 57}
             />
           </div>
         ))}

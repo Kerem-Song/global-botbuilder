@@ -8,6 +8,7 @@ import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
+import { CONDITIONS_LIMIT } from '@modules';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -61,11 +62,15 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   }, [current]);
 
   const NextDisabled = () => {
-    if (current + 1 > Math.min(current + 1, length - 1, 9)) {
+    console.log('@cur', current, length);
+    if (current + 1 > Math.min(current + 1, length - 1, CONDITIONS_LIMIT - 1)) {
       return true;
     }
 
-    if (isHistoryViewer && current >= Math.min(current + 1, children.length - 1, 9)) {
+    if (
+      isHistoryViewer &&
+      current >= Math.min(current + 1, children.length - 1, CONDITIONS_LIMIT - 1)
+    ) {
       return true;
     }
 
@@ -75,9 +80,9 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (NextDisabled()) {
-      return;
-    }
+    // if (NextDisabled()) {
+    //   return;
+    // }
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
@@ -87,6 +92,11 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
     setCurrent(current !== 0 ? current - 1 : 0);
   };
 
+  // useEffect(() => {
+  //   return () => {
+  //     setCurrent(length - 1);
+  //   };
+  // }, [addCarousel]);
   return (
     <>
       {addCarousel && (
@@ -109,7 +119,15 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
             </button>
           </Col>
           <Col>
-            <Button onClick={addCarousel}>{t(`CONDITION_NODE_CASE_ADD`)}</Button>
+            <Button
+              onClick={(e) => {
+                addCarousel(e);
+                setCurrent(length);
+              }}
+              disabled={current === CONDITIONS_LIMIT - 1}
+            >
+              {t(`CONDITION_NODE_CASE_ADD`)}
+            </Button>
           </Col>
           <Col>
             <button
@@ -147,15 +165,6 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
               </div>
             );
           })}
-          {!isHistoryViewer && (
-            <div style={{ width: `${switchWidth}px`, flex: 'none' }}>
-              <div style={{ width: `${switchWidth}px` }}>
-                <Button block onClick={addCarousel} style={{ border: 'none' }}>
-                  {t(`ADD_CAHTBUBBLE_BTN`)}
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>

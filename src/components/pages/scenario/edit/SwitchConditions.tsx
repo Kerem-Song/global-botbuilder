@@ -2,7 +2,6 @@ import { Button, FormItem, Radio } from '@components';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
-import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import classNames from 'classnames';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 

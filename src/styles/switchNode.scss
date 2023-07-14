@@ -1,3 +1,9 @@
+.conditionSwitchWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: rem(5);
+}
+
 .switchNodeCarouselBtn {
   cursor: pointer;
   padding: rem(1);

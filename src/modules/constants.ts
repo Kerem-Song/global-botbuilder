@@ -8,6 +8,7 @@ export const DEFAULT_SUFFIX = '-default';
 export const CANVAS_LIMIT = 10000;
 export const NODE_DRAG_FACTOR = 10;
 export const QUICK_MAX_COUNT = 10;
+export const CONDITIONS_LIMIT = 13;
 export const SYS_BOT_ICON = '@sys.bot-icon';
 export const SYS_BRAND_CURRENCY = '@sys.brand-currency';
 export const EMOJI_REGEX =

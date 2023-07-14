@@ -2,18 +2,17 @@ import { Button, Collapse, FormItem, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
+import { CONDITIONS_LIMIT } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
-import { SwitchNodeCarousel } from '../switchNodeEditCarousel';
+import { SwitchNodeCarousel } from '../SwitchNodeCarousel';
 import { SelectNode } from './SelectNode';
 import { SwitchConditions } from './SwitchConditions';
 
 export const SwitchNodeEdit = () => {
   useNodeEditSave();
-  const [current, setCurrent] = useState(0);
-  const CONDITION_LIMIT = 13;
+
   const { t } = usePage();
   const {
     getValues,
@@ -42,7 +41,7 @@ export const SwitchNodeEdit = () => {
     const join = watch(`view.conditions.0.join`);
 
     e.preventDefault();
-    if (fields.length < CONDITION_LIMIT) {
+    if (fields.length < CONDITIONS_LIMIT) {
       append(nodeDefaultHelper.createDefaultConditions(join));
     } else {
       //modal alert
