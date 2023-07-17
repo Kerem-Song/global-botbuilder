@@ -113,7 +113,10 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultConditions: (join = undefined, seq?: number) => {
+  createDefaultConditions: (
+    join: ConditionJoin | undefined = undefined,
+    seq?: number,
+  ) => {
     const result: IConditionView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CONDITION_VIEW,
