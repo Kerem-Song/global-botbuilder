@@ -1,4 +1,5 @@
 import { useRootState } from '@hooks/useRootState';
+import { IException } from '@models';
 import { IHasResult } from '@models/interfaces/IHasResult';
 import { IPagingItems } from '@models/interfaces/IPagingItems';
 import {
@@ -127,15 +128,22 @@ export const useUtteranceClient = () => {
   };
 
   const intentMutate = useMutation(async (intent: ISaveIntent) => {
-    const result = await http.post<ISaveIntent, AxiosResponse<IResponseCheckDuplication>>(
+    const res = await http.post<ISaveIntent, AxiosResponse<IResponseCheckDuplication>>(
       'Builder/SaveIntent',
       intent,
     );
 
-    if (result) {
-      queryClient.removeQueries([UTTERNACE_LIST_KEY]);
-      return result.data;
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
     }
+
+    if (res.data.isSuccess) {
+      queryClient.removeQueries([UTTERNACE_LIST_KEY]);
+      return res.data;
+    }
+    return;
   });
 
   const intentGetMutate = useMutation(async (intent: IGetIntent) => {

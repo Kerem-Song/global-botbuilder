@@ -148,20 +148,9 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         : itemData.connectScenarioId || null,
     };
 
-    const res = await intentAsync(saveIntent);
+    const res = await intentAsync({ ...saveIntent, customErrorCode: [7612] });
 
-    if (res && res.isSuccess) {
-      lunaToast.success(tc('SAVE_MESSAGE'));
-      if (isOpenUtteranceDetailPopup && handleClose) {
-        handleClose();
-        handleIsOpenUtterancePopup!(true);
-      } else {
-        setNavigateUrl(`/${botId}/utterance`);
-      }
-      return;
-    }
-
-    if (res?.exception.errorCode === 7612) {
+    if (res === 7612) {
       const checkIntentDuplication = await checkIntentDuplicationAsync({
         name: getValues('name'),
         intentId: getValues('intentId'),
@@ -174,6 +163,15 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
           description: <span>{t('DUPLICATE_INTENT_MESSAGE')}</span>,
         });
       }
+    } else {
+      lunaToast.success(tc('SAVE_MESSAGE'));
+      if (isOpenUtteranceDetailPopup && handleClose) {
+        handleClose();
+        handleIsOpenUtterancePopup!(true);
+      } else {
+        setNavigateUrl(`/${botId}/utterance`);
+      }
+      return;
     }
   };
 
