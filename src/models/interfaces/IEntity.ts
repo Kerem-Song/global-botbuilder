@@ -1,3 +1,7 @@
+import { IException } from '@models';
+
+import { IReq } from './req';
+
 export interface ISearchEntryGroup {
   sessionToken: string;
   countPerPage: number;
@@ -15,7 +19,7 @@ export interface IEntriesModel {
   synonym?: string[];
 }
 
-export interface ISaveEntryGroup {
+export interface ISaveEntryGroup extends IReq {
   sessionToken?: string;
   name: string;
   isRegex?: boolean;
@@ -45,22 +49,8 @@ export interface IDeleteEntryGroup {
   entryGroupId: string;
 }
 
-export interface IEntityException {
-  errorMessages: string[];
-  invalidateProperties: string[];
-  errorCode: number;
-  subErrorCode: number;
-  message: string;
-  targetSite?: null;
-  innerException?: null;
-  helpLink?: null;
-  source?: null;
-  hResult?: number;
-  stackTrace?: null;
-}
-
 export interface IResponseEntity<T> {
   result: T;
-  exception: IEntityException;
+  exception: IException;
   isSuccess: boolean;
 }

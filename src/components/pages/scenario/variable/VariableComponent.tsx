@@ -1,6 +1,7 @@
 import { icDeleteDefault, icPlusWhite } from '@assets';
 import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
+import { Tooltip } from '@components/navigation/Tooltip';
 import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
 import { useVariableClient } from '@hooks/client/variableClient';
 import { IDeleteParameter, IVariableList } from '@models';
@@ -75,7 +76,6 @@ export const VariableComponent = () => {
           <div className="variableList">
             <div className="variableListHeader">
               <span className="variableName">{t('NAME')}</span>
-              <span className="varibleType">{t('VARIABLE_VALUE')}</span>
             </div>
             <div className="variableListItems">
               {isFetching && <VariableSkeleton />}
@@ -90,12 +90,15 @@ export const VariableComponent = () => {
                         handleIsOpen(true);
                       }}
                     >
-                      <span className="variableInfo">{item.name}</span>
-                      <span className="variableInfo">
-                        {item.defaultValue === null || item.defaultValue === ''
-                          ? '-'
-                          : item.defaultValue}
-                      </span>
+                      <div className="variableInfo">
+                        {item.name.length > 13 ? (
+                          <Tooltip tooltip={item.name}>
+                            <span className="variableName">{item.name}</span>
+                          </Tooltip>
+                        ) : (
+                          <span className="variableName">{item.name}</span>
+                        )}
+                      </div>
                       <button
                         className="deleteBtn"
                         onClick={(e) => {

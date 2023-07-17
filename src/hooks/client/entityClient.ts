@@ -1,6 +1,7 @@
 import { useHttp, useRootState } from '@hooks';
 import {
   IDeleteEntryGroup,
+  IException,
   IGetEntryGroup,
   IHasResult,
   IPagingItems,
@@ -93,15 +94,20 @@ export const useEntityClient = () => {
   };
 
   const entryGroupMutate = useMutation(async (entry: ISaveEntryGroup) => {
-    const result = await http.post<
+    const res = await http.post<
       ISaveEntryGroup,
       AxiosResponse<IResponseEntity<IResponseSaveEntryGroup>>
     >('Builder/SaveEntryGroup', entry);
 
-    if (result) {
-      console.log('result', result);
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
       removeEntityQueries();
-      return result.data;
+      return res.data;
     }
   });
 

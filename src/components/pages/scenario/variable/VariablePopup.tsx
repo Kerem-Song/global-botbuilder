@@ -98,14 +98,14 @@ export const VariablePopup: FC<VariablePopupProps> = ({
       },
     };
 
-    const res = await variableAsync(saveParameter);
+    const res = await variableAsync({ ...saveParameter, customErrorCode: [7636] });
 
-    if (res && res.isSuccess) {
+    if (res === 7636) {
+      setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
+    } else {
       lunaToast.success(tc('SAVE_MESSAGE'));
       reset();
       handleClose();
-    } else if (res?.exception?.errorCode === 7636) {
-      setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
     }
   };
 
@@ -168,6 +168,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
               onChange={handleParameterName}
               onBlur={field.onBlur}
               isError={parameterInputError || errors.name?.message ? true : false}
+              disabled={variableList && variableList.name.length > 0}
             />
             <span className="error-message">{parameterInputError}</span>
             <span className="error-message parameter-error">{errors.name?.message}</span>

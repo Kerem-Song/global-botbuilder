@@ -1,4 +1,5 @@
 import { IException } from './IResponse';
+import { IReq } from './req';
 export interface IIntentListItem {
   updateUtc: string;
   intentId: string;
@@ -27,7 +28,7 @@ export interface IGetIntent {
   intentId?: string;
 }
 
-export interface ISaveIntent {
+export interface ISaveIntent extends IReq {
   sessionToken?: string;
   intentId?: string;
   intentName: string;

@@ -6,13 +6,22 @@ interface InputWithTitleCounterProps extends InputProps {
   label?: string;
   isLight?: boolean;
   textLength?: number;
+  counterLimit?: number;
 }
 export const InputWithTitleCounter = forwardRef<
   HTMLInputElement,
   InputWithTitleCounterProps
 >((args, ref) => {
-  const { label, isLight, textLength, showCount, required, readOnly, ...inputProps } =
-    args;
+  const {
+    label,
+    isLight,
+    textLength,
+    showCount,
+    required,
+    readOnly,
+    counterLimit,
+    ...inputProps
+  } = args;
 
   return (
     <>
@@ -24,7 +33,7 @@ export const InputWithTitleCounter = forwardRef<
         {showCount ? (
           <span className="textCounter">
             {textLength || 0}
-            {`/${args.maxLength}`}
+            {`/${counterLimit ? counterLimit : args.maxLength}`}
           </span>
         ) : undefined}
       </div>

@@ -32,7 +32,7 @@ export interface IPopperSelectItem<T> {
   data?: T;
 }
 
-export type ItemType = 'button' | 'icon-front' | 'search' | 'children';
+export type ItemType = 'button' | 'icon-front' | 'search' | 'children' | 'disable';
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
@@ -209,6 +209,7 @@ export const Popper = <T extends object>({
             item={item}
             popupList={popupList}
             handleSelect={handleSelect}
+            className={classNames({ disable: item.type === 'disable' })}
           />
         ))}
         {popperSelect?.map((item: IPopperSelectItem<T>) => (
