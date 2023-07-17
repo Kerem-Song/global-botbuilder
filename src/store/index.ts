@@ -32,7 +32,17 @@ const rootReducer = combineReducers({
   botTesterReducer,
   intentReducer,
   intentListReducer,
-  makingNodeSliceReducer: undoable(makingNodeSliceReducer, { debug: true, limit: 20 }),
+  makingNodeSliceReducer: undoable(makingNodeSliceReducer, {
+    debug: true,
+    limit: 20,
+    filter: (action) => {
+      if (!(action.type as string).startsWith('makingNode/')) {
+        return false;
+      }
+
+      return action.type !== 'makingNode/setStartNodeName';
+    },
+  }),
   historyInfoReducer,
   otherFlowScenariosPopupStatusReducer,
   scenarioListPopupReducer,

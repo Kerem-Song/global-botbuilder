@@ -4,7 +4,7 @@ import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
 import { initSelectedScenario, setBasicScenarios } from '@store/botbuilderSlice';
-import { initNodes } from '@store/makingNode';
+import { initNodes, setStartNodeName } from '@store/makingNode';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import * as base64 from 'base-64';
@@ -148,6 +148,7 @@ export const useScenarioClient = () => {
       if (res && res.data?.isSuccess) {
         queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
         queryClient.invalidateQueries([SCENARIO_LIST, botId]);
+        dispatch(setStartNodeName(res.data?.result));
         return res;
       }
     },

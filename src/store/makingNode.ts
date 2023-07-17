@@ -1,4 +1,4 @@
-import { IArrow, INode, NODE_TYPES } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
   IAnswerView,
@@ -45,6 +45,18 @@ export const makingNodeSlice = createSlice({
       state.arrows = [];
       state.changed = false;
       converted.map((x) => (state.arrows = [...state.arrows, ...x.arrows]));
+    },
+    setStartNodeName: (state, action: PayloadAction<string>) => {
+      const startNode = state.nodes.find(
+        (x) => x.nodeKind === NodeKind.CommandNode && x.option === 16,
+      );
+      if (startNode) {
+        startNode.title = action.payload;
+        const nodes = [...state.nodes];
+        const index = nodes.indexOf(startNode);
+        nodes.splice(index, 1, startNode);
+        state.nodes = nodes;
+      }
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
@@ -295,5 +307,6 @@ export const {
   initNodes,
   updateButtonOrder,
   updateListItemOrder,
+  setStartNodeName,
 } = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;
