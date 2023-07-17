@@ -44,7 +44,7 @@ export const BotAside = () => {
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
-  const brandName = useRootState((state) => state.brandInfoReducer.brandName);
+  const brandInfo = useRootState((state) => state.brandInfoReducer);
   const role = useRootState((state) => state.userInfoReducer.role);
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const { getBotListQuery } = useBotClient();
@@ -70,7 +70,7 @@ export const BotAside = () => {
   ) => {
     return {
       id,
-      url: `/${i18n.language}/${url}`,
+      url: `/${i18n.language}/${brandInfo.brandId}/${url}`,
       name,
       icon,
       selectedIcon,
@@ -120,7 +120,7 @@ export const BotAside = () => {
                 if (botId === id) {
                   return;
                 }
-                navigate(`/${i18n.language}/${id}/scenario`);
+                navigate(`/${i18n.language}/${brandInfo.brandId}/${id}/scenario`);
                 dispatch(setSesstionToken());
                 dispatch(initBotBuilder());
               },
@@ -136,7 +136,7 @@ export const BotAside = () => {
       data: {
         action: (id: string) => {
           console.log(id);
-          navigate(`/${i18n.language}/dashboard`);
+          navigate(`/${i18n.language}/${brandInfo.brandId}/dashboard`);
           dispatch(setSesstionToken());
           dispatch(initBotBuilder());
         },
@@ -167,11 +167,12 @@ export const BotAside = () => {
           </button>
         </div>
 
-        <NavLink to={`/${i18n.language}/dashboard`}>
+        <NavLink to={`/${i18n.language}/${brandInfo.brandId}/dashboard`}>
           <div className="brandName" data-sidebar={sidebarStatus}>
             {sidebarStatus ? (
               <p>
-                {brandName} <span className="chatbotList">{ts(`CHATBOT_LIST`)}</span>
+                {brandInfo.brandName}{' '}
+                <span className="chatbotList">{ts(`CHATBOT_LIST`)}</span>
               </p>
             ) : (
               <div className="brandNameWrapper">

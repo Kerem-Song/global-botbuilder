@@ -31,15 +31,20 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const navigate = useNavigate();
   const matches = useMatches();
   const userInfo = useRootState((state) => state.userInfoReducer);
+  const brandInfo = useRootState((state) => state.brandInfoReducer);
   const role = userInfo.role || 0;
   const localeNavigate = (to: To, options?: NavigateOptions) => {
     if (typeof to === 'string') {
-      navigate(`/${i18n.language}${to}`, options);
+      navigate(`/${i18n.language}/${brandInfo.brandId}${to}`, options);
       return;
     }
 
     navigate(
-      { pathname: `/${i18n.language}${to.pathname}`, hash: to.hash, search: to.search },
+      {
+        pathname: `/${i18n.language}/${brandInfo.brandId}${to.pathname}`,
+        hash: to.hash,
+        search: to.search,
+      },
       options,
     );
   };

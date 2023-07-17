@@ -5,6 +5,7 @@ import { setToken } from '@store/authSlice';
 import { setBrandInfo } from '@store/brandInfoSlice';
 import { setUserInfo } from '@store/userInfoSlice';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
@@ -12,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 export const AuthPage = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
   const { IssueTokenAsync } = useAuthClient();
   const queryParams = useQueryParams();
   const code = queryParams.get('code');
@@ -33,7 +35,8 @@ export const AuthPage = () => {
         staffType: res.staffType,
       }),
     );
-    navigate('/');
+    console.log('navigate', `/${i18n.language}/${res.brandId}`);
+    navigate(`/${i18n.language}/${res.brandId}`);
   };
 
   useEffect(() => {
