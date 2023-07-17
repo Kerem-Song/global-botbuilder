@@ -56,7 +56,9 @@ export const botbuilderSlice = createSlice({
     initSelectedScenario: (state, action: PayloadAction<IScenarioModel[]>) => {
       console.log('initSelectedScenario');
       if (state.selectedScenario) {
-        if (action.payload.find((x) => x.id === state.selectedScenario?.id)) {
+        const found = action.payload.find((x) => x.id === state.selectedScenario?.id);
+        if (found) {
+          state.selectedScenario = found;
           return;
         }
       }
