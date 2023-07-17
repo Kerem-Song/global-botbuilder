@@ -168,6 +168,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
               onChange={handleParameterName}
               onBlur={field.onBlur}
               isError={parameterInputError || errors.name?.message ? true : false}
+              disabled={variableList && variableList.name.length > 0}
             />
             <span className="error-message">{parameterInputError}</span>
             <span className="error-message parameter-error">{errors.name?.message}</span>

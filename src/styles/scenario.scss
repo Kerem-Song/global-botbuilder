@@ -266,7 +266,7 @@
                 width: 100%;
                 height: rem(38);
                 display: grid;
-                grid-template-columns: 5fr 5fr 1fr;
+                grid-template-columns: 9fr 1fr;
                 align-items: center;
                 word-break: break-all;
                 padding: 0 rem(12);
@@ -281,6 +281,11 @@
                   text-overflow: ellipsis;
                   overflow: hidden;
                   white-space: nowrap;
+                  div {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  }
                 }
                 .deleteBtn {
                   border: none;
