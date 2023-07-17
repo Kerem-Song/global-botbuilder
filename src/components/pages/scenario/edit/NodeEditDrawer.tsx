@@ -20,6 +20,9 @@ export const NodeEditDrawer = () => {
   const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+  const selectedScenario = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
   const isEditDrawerOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
@@ -129,21 +132,27 @@ export const NodeEditDrawer = () => {
 
         <div className="node-item-wrap">
           <FormItem error={errors.title}>
-            <InputWithTitleCounter
-              label={
-                selectedNode?.type === NODE_TYPES.INTENT_NODE
-                  ? t(`CHAT_SCENARIO_NAME`)
-                  : t(`CHAT_BUBBLE_NAME`)
-              }
-              required={true}
-              placeholder="Input Chat Bubble name"
-              {...register('title')}
-              showCount={selectedNode?.type === NODE_TYPES.INTENT_NODE ? false : true}
-              maxLength={selectedNode?.type === NODE_TYPES.INTENT_NODE ? undefined : 100}
-              disabled={selectedNode?.type === NODE_TYPES.INTENT_NODE}
-              textLength={watch('title')?.length || 0}
-              readOnly={isHistoryViewer || selectedNode?.type === NODE_TYPES.INTENT_NODE}
-            />
+            {selectedNode?.type === NODE_TYPES.INTENT_NODE ? (
+              <InputWithTitleCounter
+                label={t(`CHAT_SCENARIO_NAME`)}
+                required={true}
+                placeholder="Input Chat Bubble name"
+                disabled
+                readOnly
+                value={selectedScenario?.alias}
+              />
+            ) : (
+              <InputWithTitleCounter
+                label={t(`CHAT_BUBBLE_NAME`)}
+                required={true}
+                placeholder="Input Chat Bubble name"
+                {...register('title')}
+                showCount
+                maxLength={100}
+                textLength={watch('title')?.length || 0}
+                readOnly={isHistoryViewer}
+              />
+            )}
           </FormItem>
         </div>
         {showAnnotation && (

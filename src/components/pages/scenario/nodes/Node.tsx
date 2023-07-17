@@ -64,7 +64,9 @@ export const Node: FC<INodeProps> = ({
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
   );
-
+  const selectedScenario = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
 
   const { updateLine } = useUpdateLines();
@@ -243,7 +245,7 @@ export const Node: FC<INodeProps> = ({
             {title ? (
               <div className="nodeHeadTitle">
                 <MultiClamp clamp={2} ellipsis={'...'}>
-                  {title}
+                  {node.option === NodeOption.First ? selectedScenario?.alias : title}
                 </MultiClamp>
               </div>
             ) : undefined}
