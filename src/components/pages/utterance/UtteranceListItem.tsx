@@ -29,7 +29,6 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
   const { botId } = useParams();
   const { navigate } = usePage();
   const { t, tc } = useI18n('utterance');
-
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
@@ -104,13 +103,13 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
       })}
     >
       {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
-      {!isFetching && isExistInitialData(initialData)
+      {isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
             const pages = v.items;
             return pages.map((x, i) => {
               const foundFlow = data?.find((item) => item.id === x.flowId);
-              const inactivatedFlow = foundFlow && foundFlow.activated === false;
-              const showScenarioList = isOpenUtterancePopup === false;
+              const inactivatedFlow = foundFlow && !foundFlow.activated;
+              const showScenarioList = !isOpenUtterancePopup;
               return (
                 <tr
                   key={i}

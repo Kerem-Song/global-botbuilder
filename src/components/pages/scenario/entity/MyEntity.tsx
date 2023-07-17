@@ -114,7 +114,7 @@ export const MyEntity: FC<IMyEntityProps> = ({
       <div className="entityWrapper">
         <Row gap={12}>
           {isFetching && <EntitySkeleton />}
-          {!isFetching && isExistInitialData(initialData)
+          {isExistInitialData(initialData)
             ? initialData?.pages.map((v) => {
                 const pages = v.items;
                 return pages.map((x, i) => {
