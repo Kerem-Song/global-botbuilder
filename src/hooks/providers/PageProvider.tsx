@@ -2,7 +2,7 @@ import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
 import { IHandle } from '@models/interfaces/IHandle';
 import { i18n } from 'i18next';
-import { createContext, FC, useState } from 'react';
+import { createContext, FC, useEffect, useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { Navigate, NavigateOptions, To, useMatches, useNavigate } from 'react-router';
 
@@ -47,15 +47,25 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
 
   console.log(userInfo.staffType, handle?.role, role);
-  if (userInfo.staffType !== 0 && handle?.role && (role & handle.role) !== handle.role) {
-    error({
-      title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
-      description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
-    }).then(() => {
-      localeNavigate('/dashboard');
-    });
+
+  const isNotAuth =
+    userInfo.staffType !== 0 && handle?.role && (role & handle.role) !== handle.role;
+
+  useEffect(() => {
+    if (isNotAuth) {
+      error({
+        title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
+        description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
+      }).then(() => {
+        localeNavigate('/dashboard');
+      });
+    }
+  }, [isNotAuth]);
+
+  if (isNotAuth) {
     return <></>;
   }
+
   return (
     <PageContext.Provider
       value={{
