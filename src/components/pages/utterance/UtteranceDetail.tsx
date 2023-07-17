@@ -107,6 +107,10 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   };
 
   const handleDeleteIntentBtn = async () => {
+    if (isActive) {
+      setIsActive(false);
+    }
+
     const result = await confirm({
       title: t('DELETE_INTENT'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
