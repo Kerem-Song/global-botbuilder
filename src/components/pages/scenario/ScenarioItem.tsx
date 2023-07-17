@@ -186,13 +186,15 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             offset={[5, 10]}
             popperItems={scenarioMenus}
             onChange={(m) => {
-              m.data?.action?.(item);
+              selectedScenarios?.id === item.id && m.data?.action?.(item);
             }}
             popup
             popupList
           >
             <Button small shape="ghost">
+              {/* {selectedScenarios?.id === item.id && ( */}
               <i className="fa-solid fa-ellipsis-vertical" />
+              {/* )} */}
             </Button>
           </Popper>
         </Col>

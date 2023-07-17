@@ -102,7 +102,11 @@ export const ScenarioManagement: FC<{
             !filteredScenarios?.length ? (
               <div className="noScenarioResults">
                 <img src={icEmptyBot} alt="noScenarioResult" />
-                <p>{t(`NO_SCENARIO_RESULTS`)}</p>
+                {scenarios.length ? (
+                  <p>{t(`NO_SCENARIO_RESULTS`)}</p>
+                ) : (
+                  <p>{t(`NO_REGISTERED_SCNEARIO`)}</p>
+                )}
               </div>
             ) : (
               <SortableScenarioListContainer

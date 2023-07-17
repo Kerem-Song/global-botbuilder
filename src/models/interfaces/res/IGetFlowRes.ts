@@ -164,6 +164,11 @@ export interface IConditionView extends ITrueFalseViewBase {
   items?: IConditionItem[];
 }
 
+export interface ISwitchView extends IViewBase {
+  conditions?: IConditionView[];
+  defaultNextNodeId?: string;
+}
+
 export interface IRetryConditionNode extends INodeBase {
   view: IRetryConditionView;
 }

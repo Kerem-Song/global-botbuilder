@@ -256,6 +256,10 @@ export const useYupValidation = () => {
     // falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
   });
 
+  const switchNodeEditSchema = yup.object().shape({
+    conditions: yup.array().of(conditionNodeEditSchema),
+  });
+
   const retryConditionNodeEditSchema = yup.object().shape({
     trueThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
     falseThenNextNodeId: yup.string().required(t(`VALIDATION_REQUIRED`)),
@@ -357,12 +361,22 @@ export const useYupValidation = () => {
       yup.object().shape({
         value: yup
           .string()
+          .nullable()
           .trim()
-          .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
           .when('.', {
-            is: (name: string) => name && !name.startsWith('.'),
-            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+            is: (name: string) => !name,
+            then: yup.string().nullable().notRequired(),
             otherwise: yup
+              .string()
+              .matches(
+                PARAMETER_REGEX_FIRST_LETTER,
+                t('PARAMETER_VALIDATION_FIRST_LETTER'),
+              ),
+          })
+
+          .when('.', {
+            is: (name: string) => name && name.startsWith('.'),
+            then: yup
               .string()
               .matches(
                 PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
@@ -370,7 +384,7 @@ export const useYupValidation = () => {
               ),
           })
           .when('.', {
-            is: (name: string) => name && name.startsWith('.'),
+            is: (name: string) => name && !name.startsWith('.'),
             then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
           }),
       }),
@@ -529,6 +543,10 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.CONDITION_NODE,
           then: conditionNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.SWITCH_NODE,
+          then: switchNodeEditSchema,
         })
         .when('type', {
           is: NODE_TYPES.RETRY_CONDITION_NODE,

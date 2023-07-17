@@ -142,7 +142,7 @@ export const Collapse: FC<CollapseProps> = ({
 
   return (
     <div className="node-item-wrap collapse">
-      <div className="collapseHeader">
+      <div className="collapseHeader" onClick={handleCollapse} role="presentation">
         <Row
           style={{ justifyContent: 'space-between', alignItems: 'center', width: '100%' }}
         >
@@ -182,7 +182,7 @@ export const Collapse: FC<CollapseProps> = ({
             )}
           </Col>
           <Col span={3}>
-            <Button shape="ghost" onClick={handleCollapse}>
+            <Button shape="ghost">
               <img src={isCollapsed ? icCollapseClose : icCollapseOpen} alt="collapsed" />
             </Button>
           </Col>

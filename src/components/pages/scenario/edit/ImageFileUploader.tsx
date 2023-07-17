@@ -152,8 +152,6 @@ export const ImageFileUploader = ({
                     src={watch(imgPath)}
                     alt="templateImage"
                     onError={(e) => {
-                      console.log('@on error1');
-                      console.log('@err1?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {
@@ -161,7 +159,6 @@ export const ImageFileUploader = ({
                         !Object.keys(errors).length &&
                         e.currentTarget.className === 'imgNotFound'
                       ) {
-                        console.log('@onload error1');
                         e.currentTarget.className = '';
                       }
                     }}
@@ -173,8 +170,6 @@ export const ImageFileUploader = ({
                     src={builderImageSrc}
                     alt="templateImage"
                     onError={(e) => {
-                      console.log('@on error2');
-                      console.log('@err2?', e);
                       handleImgOnError(e);
                     }}
                     onLoad={(e) => {
@@ -182,7 +177,6 @@ export const ImageFileUploader = ({
                         !Object.keys(errors).length &&
                         e.currentTarget.className === 'imgNotFound'
                       ) {
-                        console.log('@onload error2');
                         e.currentTarget.className = '';
                       }
                     }}
@@ -213,6 +207,7 @@ export const ImageFileUploader = ({
               className="file-name-input"
               onChange={handleChangeFile}
               style={{ display: 'none' }}
+              autoComplete="off"
             />
           </div>
         </div>

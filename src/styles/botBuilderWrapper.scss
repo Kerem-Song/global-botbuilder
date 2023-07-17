@@ -325,6 +325,7 @@
         justify-content: center;
         align-items: center;
         height: rem(170);
+        cursor: pointer;
 
         &.skeleton {
           .imgUploadWrapper {

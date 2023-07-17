@@ -13,7 +13,6 @@ export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
   const scenario: IScenarioModel[] | undefined = data?.filter(
     (item) => item.firstNodeId === node.nextNodeId,
   );
-  console.log('@scenario data', data);
   const isHistoryViewer = useHistoryViewerMatch();
 
   const handleNodeHistoryViewer = () => {

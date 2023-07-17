@@ -20,6 +20,7 @@ import { ParameterSetNodeFactory } from './ParameterSetNodeFactory';
 import { ProductCardCarouselNodeFactory } from './ProductCardCarouselNodeFactory';
 import { ProductCardNodeFactory } from './ProductCardNodeFactory';
 import { RetryConditionNodeFactory } from './RetryConditionNodeFactory';
+import { SwitchNodeFactory } from './SwitchNodeFactory';
 import { TextNodeFactory } from './TextNodeFactory';
 
 export interface INodeFactory {
@@ -42,6 +43,7 @@ const basicCardCarouselNodeFactory = new BasicCardCarouselNodeFactory();
 const listCardNodeFactory = new ListCardNodeFactory();
 const listCardCarouselNodeFactory = new ListCardCarouselNodeFactory();
 const conditionNodeFactory = new ConditionNodeFactory();
+const switchNodeFactory = new SwitchNodeFactory();
 const answerNodeFactory = new AnswerNodeFactory();
 const parameterSetNodeFactory = new ParameterSetNodeFactory();
 const otherFlowRedirectNodeFactory = new OtherFlowRedirectNodeFactory();
@@ -70,6 +72,8 @@ export const nodeFactory = {
         return listCardCarouselNodeFactory;
       case NODE_TYPES.CONDITION_NODE:
         return conditionNodeFactory;
+      case NODE_TYPES.SWITCH_NODE:
+        return switchNodeFactory;
       case NODE_TYPES.ANSWER_NODE:
         return answerNodeFactory;
       case NODE_TYPES.PARAMETER_SET_NODE:

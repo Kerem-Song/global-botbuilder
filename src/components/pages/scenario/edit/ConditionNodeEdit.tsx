@@ -27,8 +27,6 @@ export const ConditionNodeEdit = () => {
   const values = getValues();
   console.log('value.view in condition node edit', values.view);
 
-  const [join, setJoin] = useState<ConditionJoin>();
-
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
     control,
@@ -50,10 +48,6 @@ export const ConditionNodeEdit = () => {
     }
   }, [data]);
 
-  const handleJoin = (join: ConditionJoin) => {
-    setJoin(join);
-  };
-
   const handleDeleteButton = (index: number) => {
     remove(index);
   };
@@ -74,9 +68,6 @@ export const ConditionNodeEdit = () => {
       console.log('5개까지 가능');
     }
   };
-
-  console.log('@fields', fields);
-  console.log('@join', watch('view.join'));
 
   return (
     <>
