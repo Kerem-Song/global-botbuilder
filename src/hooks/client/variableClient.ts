@@ -1,5 +1,5 @@
 import { useHttp, useRootState } from '@hooks';
-import { IHasResults, ISearchParameter } from '@models';
+import { IException, IHasResults, ISearchParameter } from '@models';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -51,16 +51,23 @@ export const useVariableClient = () => {
   };
 
   const variableMutate = useMutation(async (variable: ISaveParameter) => {
-    const result = await http.post<
+    const res = await http.post<
       ISaveParameter,
       AxiosResponse<IResponseSaveParameter<ISaveParameterData>>
     >('Builder/SaveParameter', variable);
 
-    if (result) {
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
       queryClient.invalidateQueries(['variable-list', token]);
       queryClient.invalidateQueries(['variable-select-list', token]);
-      return result.data;
+      return res.data;
     }
+    return '';
   });
 
   const variableDeleteMutate = useMutation(async (deleteVariable: IDeleteParameter) => {

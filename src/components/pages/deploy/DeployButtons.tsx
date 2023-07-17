@@ -47,8 +47,6 @@ export const DeployButtons = () => {
         customErrorCode: [7632, 7633, 7645, 7647],
       });
 
-      console.log('res', res);
-
       const deployFailedMessage = (
         <p style={{ whiteSpace: 'pre-line' }}>{t('DEPLOYING_FAILED_MESSAGE')}</p>
       );

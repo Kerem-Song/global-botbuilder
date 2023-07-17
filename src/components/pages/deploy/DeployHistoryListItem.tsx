@@ -22,7 +22,6 @@ export const DeployHistoryListItem: FC<IDeployHistoryListItem> = ({
   const { t } = usePage();
   const { isOpen, handleIsOpen } = useModalOpen();
   const [detailInfo, setDetailInfo] = useState({});
-
   return (
     <tbody>
       {isFetching && <DeploySkeleton />}

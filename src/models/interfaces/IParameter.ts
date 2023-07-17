@@ -1,4 +1,5 @@
 import { IException } from './IResponse';
+import { IReq } from './req';
 
 export interface ISearchParameter {
   sessionToken: string;
@@ -17,7 +18,7 @@ export interface ISaveParameterData {
   id?: string;
 }
 
-export interface ISaveParameter {
+export interface ISaveParameter extends IReq {
   sessionToken: string;
   data: ISaveParameterData;
 }
