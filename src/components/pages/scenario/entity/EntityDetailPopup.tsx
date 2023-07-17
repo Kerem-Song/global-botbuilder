@@ -97,14 +97,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
     };
 
     if (isActive && !isEntriesActive) {
-      const res = await entryGroupAsync(saveEntry);
-      if (res && res.isSuccess) {
+      const res = await entryGroupAsync({ ...saveEntry, customErrorCode: [7608] });
+
+      if (res === 7608) {
+        setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
+        return;
+      } else {
         handleResetEntryInfo();
         lunaToast.success(tc('SAVE_MESSAGE'));
-        return;
-      }
-      if (res && res.exception && res.exception.errorCode === 7608) {
-        setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
         return;
       }
     }
