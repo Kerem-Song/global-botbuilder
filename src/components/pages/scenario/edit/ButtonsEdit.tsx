@@ -119,7 +119,8 @@ export const ButtonsEdit = ({
                 required
                 label={t(`BUTTON_NAME`)}
                 showCount={useCounter ? true : false}
-                maxLength={useCounter ? 14 : undefined}
+                counterLimit={14}
+                maxLength={100}
                 isLight={true}
                 {...register(
                   index === undefined

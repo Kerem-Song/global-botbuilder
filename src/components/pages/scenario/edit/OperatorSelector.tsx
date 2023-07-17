@@ -27,10 +27,10 @@ export const OperatorSelector = ({
 
   const { control } = useFormContext();
   const { field: operatorField } = useController({
-    name: nestedIndex
-      ? `view.conditions.${nestedIndex}.items.${index}.operator`
-      : `view.items.${index}.operator`,
-    // name: `view.conditions.${nestedIndex}.items.${index}.operator`,
+    // name: nestedIndex
+    //   ? `view.conditions.${nestedIndex}.items.${index}.operator`
+    //   : `view.items.${index}.operator`,
+    name: `view.conditions.${nestedIndex}.items.${index}.operator`,
     control,
   });
   const reactSelectStyle = getReactSelectStyle({});
