@@ -24,6 +24,7 @@ import {
 } from '@store/otherFlowScenarioPopupSlice';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import ReactLoading from 'react-loading';
 import { useDispatch } from 'react-redux';
 
 import { ID_GEN, ID_TYPES, useAppDispatch } from '../../../modules';
@@ -344,6 +345,19 @@ export const BotBuilderHeader = () => {
     return true;
   };
 
+  useEffect(() => {
+    const builderMain = document.querySelector<HTMLDivElement>('.botBuilderMain');
+    if (scenarioSaving && builderMain) {
+      builderMain.style.opacity = '0.2';
+    }
+    return () => {
+      if (scenarioSaving && builderMain) {
+        builderMain.style.opacity = '1';
+      }
+      return;
+    };
+  }, [scenarioSaving]);
+
   return (
     <>
       <div className="botBuilderHeader">
@@ -439,6 +453,17 @@ export const BotBuilderHeader = () => {
           <NodeEditDrawer />
         </form>
       </FormProvider>
+      {scenarioSaving && (
+        <div className="botBuilderLoadingWrapper">
+          <ReactLoading
+            type="spin"
+            color="#4478FF"
+            height={70}
+            width={70}
+            className="botBuilderLoading"
+          />
+        </div>
+      )}
     </>
   );
 };
