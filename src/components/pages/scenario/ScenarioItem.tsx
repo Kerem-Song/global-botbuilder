@@ -192,9 +192,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             popupList
           >
             <Button small shape="ghost">
-              {/* {selectedScenarios?.id === item.id && ( */}
               <i className="fa-solid fa-ellipsis-vertical" />
-              {/* )} */}
             </Button>
           </Popper>
         </Col>

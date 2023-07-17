@@ -141,12 +141,18 @@
         background-color: $primary100;
         border: rem(1) solid $primary200;
         border-radius: rem(8);
+
+        .items-name {
+          color: $grayBlack !important;
+        }
       }
       .invalidate {
         background-color: $progress-bg;
         border: rem(1) solid $red;
       }
-
+      .items-name {
+        color: $gray200 !important;
+      }
       .scenarioListName {
         text-overflow: ellipsis;
         overflow: hidden;
