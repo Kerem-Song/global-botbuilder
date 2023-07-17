@@ -133,26 +133,35 @@
         border: rem(1) solid $gray200;
         border-radius: rem(8);
       }
+
       .luna-card-bordered:hover {
         background-color: $primary100;
         border: rem(1) solid $gray200;
       }
+
       .selected {
         background-color: $primary100;
         border: rem(1) solid $primary200;
         border-radius: rem(8);
 
-        .items-name {
-          color: $grayBlack !important;
+        .disable {
+          .items-name {
+            color: $grayBlack !important;
+          }
         }
       }
+
+      .disable {
+        .items-name {
+          color: $gray200 !important;
+        }
+      }
+
       .invalidate {
         background-color: $progress-bg;
         border: rem(1) solid $red;
       }
-      .items-name {
-        color: $gray200 !important;
-      }
+      
       .scenarioListName {
         text-overflow: ellipsis;
         overflow: hidden;

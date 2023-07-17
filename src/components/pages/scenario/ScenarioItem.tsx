@@ -130,6 +130,12 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     dispatch(setScenarioPopupOpen(true));
   };
 
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
+
+  const selectedScenario = classNames({ selected: selectedScenarios?.id === item.id });
+
   const scenarioMenus: IPopperItem<{
     action: ((item: IScenarioModel) => void) | null;
   }>[] = [
@@ -139,6 +145,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       data: {
         action: handleScenariRename,
       },
+      type: selectedScenarios?.id !== item.id ? 'disable' : 'children',
     },
     {
       id: `delete`,
@@ -146,14 +153,16 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       data: {
         action: handleScenarioDelete,
       },
+      type: selectedScenarios?.id !== item.id ? 'disable' : 'children',
+    },
+    {
+      id: 'duplicate',
+      name: t(`DUPLICATION`),
+      data: {
+        action: () => null,
+      },
     },
   ];
-
-  const selectedScenarios = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
-
-  const selectedScenario = classNames({ selected: selectedScenarios?.id === item.id });
 
   return (
     <Card
