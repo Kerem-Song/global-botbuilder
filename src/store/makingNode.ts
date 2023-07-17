@@ -1,4 +1,4 @@
-import { IArrow, INode, NODE_TYPES, NodeKind } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind, NodeOption } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
   IAnswerView,
@@ -48,7 +48,7 @@ export const makingNodeSlice = createSlice({
     },
     setStartNodeName: (state, action: PayloadAction<string>) => {
       const startNode = state.nodes.find(
-        (x) => x.nodeKind === NodeKind.CommandNode && x.option === 16,
+        (x) => x.nodeKind === NodeKind.CommandNode && x.option === NodeOption.First,
       );
       if (startNode) {
         startNode.title = action.payload;

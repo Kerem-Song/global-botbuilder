@@ -1,6 +1,6 @@
 import { useHistoryViewerMatch, usePage, useScenarioClient } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
-import { IScenarioModel } from '@models';
+import { IScenarioModel, NodeOption } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { FC } from 'react';
 import { useParams } from 'react-router';
@@ -23,7 +23,8 @@ export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
         historyId: historyId!,
       });
       const scenarioInHistoryViewer = historyData?.result.nodes.filter(
-        (item) => item.option === 64 && item.nextNodeId === node.nextNodeId,
+        (item) =>
+          item.option === NodeOption.Wormhole && item.nextNodeId === node.nextNodeId,
       );
 
       return (
