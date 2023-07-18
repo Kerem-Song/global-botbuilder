@@ -37,6 +37,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
       scenarios: selectedScenarios && selectedScenarios.id,
       searchWord: keyword || undefined,
     });
+    removeUtteranceQueries();
   }, 500);
 
   const handleClose = () => {

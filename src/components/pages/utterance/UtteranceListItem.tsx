@@ -46,6 +46,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     data: initialData,
     fetchNextPage,
     isFetching,
+    isFetchedAfterMount,
   } = changePageNumberQuery(searchData);
 
   const handleIntent = (intentId: string) => {
@@ -102,8 +103,10 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
         'utterance-popup-tbody': isOpenUtterancePopup,
       })}
     >
-      {isFetching && <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />}
-      {isExistInitialData(initialData)
+      {isFetching && !isFetchedAfterMount && (
+        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
+      )}
+      {isFetchedAfterMount && isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
             const pages = v.items;
             return pages.map((x, i) => {

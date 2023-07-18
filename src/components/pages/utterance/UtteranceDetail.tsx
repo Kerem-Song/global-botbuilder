@@ -33,18 +33,18 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, tc, setNavigateUrl } = usePage();
   const { t } = useI18n('utternaceDetailPage');
-  const { botId, brandId } = useParams();
+  const { botId } = useParams();
   const {
     intentAsync,
     getIntentDetailQuery,
     intentDeleteAsync,
     checkIntentDuplicationAsync,
+    removeUtteranceQueries,
   } = useUtteranceClient();
   const hasIntentId = getIntentDetailQuery(intentId);
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
   const { confirm, error } = useSystemModal();
-
   const selectedScenarios = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -101,8 +101,10 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const handleListBtn = () => {
     if (isOpenUtteranceDetailPopup && handleClose) {
       handleClose();
+      removeUtteranceQueries();
     } else {
       navigate(`/${botId}/utterance`);
+      removeUtteranceQueries();
     }
   };
 

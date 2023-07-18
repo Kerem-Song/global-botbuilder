@@ -80,7 +80,7 @@ export const useUtteranceClient = () => {
         searchData.searchWord,
       ],
       async ({ pageParam = 1 }) => {
-        return await getPageQuery({ pageNo: pageParam, ...searchData });
+        return await getPageQuery({ ...searchData, pageNo: pageParam });
       },
       {
         getNextPageParam: (lastpage, pages) => {

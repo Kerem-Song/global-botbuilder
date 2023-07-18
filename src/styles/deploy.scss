@@ -50,7 +50,7 @@
 
           .deployHistoryListHeader {
             padding: rem(12);
-            width: fit-content;
+            width: rem(110);
             font-weight: 700;
           }
           .deployHistoryList {
@@ -63,7 +63,7 @@
             text-align: center;
           }
           .channelType {
-            min-width: rem(120);
+            min-width: rem(142);
             text-align: center;
           }
           .channelName {
@@ -72,6 +72,7 @@
           .deployDateTime {
             min-width: rem(185);
             text-align: center;
+            white-space: nowrap;
           }
           .account {
             width: rem(187);
