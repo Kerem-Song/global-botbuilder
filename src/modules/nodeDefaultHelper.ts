@@ -20,6 +20,7 @@ import {
   IParameterSetParams,
   IProductCardCarouselView,
   IProductCardView,
+  IResetVariableCardView,
   IRetryConditionView,
   ISwitchView,
   ITextView,
@@ -400,6 +401,14 @@ export const nodeDefaultHelper = {
       isConsult: true,
       isLive: true,
       inquiryType: '',
+    };
+    return result;
+  },
+  createDefaultResetVariableCardView: () => {
+    const result: IResetVariableCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.RESET_VARIABLE_CARD_VIEW,
+      variables: [{ key: '', value: '' }],
     };
     return result;
   },

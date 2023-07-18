@@ -399,6 +399,11 @@ export interface ICsCardView extends IViewBase {
   isConsult: boolean;
   inquiryType: string;
 }
+
+export interface IResetVariableCardView extends IViewBase {
+  variables?: IJson[];
+}
+
 export interface IGetFlowRes {
   alias: string;
   id: string;

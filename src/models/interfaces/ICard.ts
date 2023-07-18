@@ -59,6 +59,7 @@ export const VIEW_TYPES = {
   DATA_PRODUCT_CARD_VIEW: 'ProductCardCarouselTemplateView',
   DATA_LIST_CARD_VIEW: 'ListCardCarouselTemplateView',
   CS_CARD_VIEW: 'CsCardView',
+  RESET_VARIABLE_CARD_VIEW: 'ResetVariableCardView',
 };
 
 export const NODE_TYPES = {
@@ -85,6 +86,7 @@ export const NODE_TYPES = {
   DATA_PRODUCT_CARD_NODE: 'ProductCardCarouselTemplateNode',
   DATA_LIST_CARD_NODE: 'ListCardCarouselTemplateNode',
   CS_NODE: 'CsNode',
+  RESET_VARIABLE_NODE: 'ResetVariableNode',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;

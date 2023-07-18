@@ -20,6 +20,7 @@ import { OtherFlowRedirectNodeFactory } from './OtherFlowRedirectNodeFactory';
 import { ParameterSetNodeFactory } from './ParameterSetNodeFactory';
 import { ProductCardCarouselNodeFactory } from './ProductCardCarouselNodeFactory';
 import { ProductCardNodeFactory } from './ProductCardNodeFactory';
+import { ResetVariableNodeFactory } from './ResetVariableNodeFactory';
 import { RetryConditionNodeFactory } from './RetryConditionNodeFactory';
 import { SwitchNodeFactory } from './SwitchNodeFactory';
 import { TextNodeFactory } from './TextNodeFactory';
@@ -56,6 +57,7 @@ const dataBasicCardNodeFactory = new DataBasicCardNodeFactory();
 const dataProductCardNodeFactory = new DataProductCardNodeFactory();
 const dataListCardNodeFactory = new DataListCardNodeFactory();
 const csNodeFactory = new CsNodeFactory();
+const resetVariableNodeFactory = new ResetVariableNodeFactory();
 
 export const nodeFactory = {
   getFactory: (TNodeTypes: TNodeTypes | undefined): INodeFactory | undefined => {
@@ -98,6 +100,8 @@ export const nodeFactory = {
         return dataListCardNodeFactory;
       case NODE_TYPES.CS_NODE:
         return csNodeFactory;
+      case NODE_TYPES.RESET_VARIABLE_NODE:
+        return resetVariableNodeFactory;
       default:
         return undefined;
     }

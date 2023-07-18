@@ -110,6 +110,11 @@ export const BotBuilderHeader = () => {
       value: NODE_TYPES.CS_NODE,
       nodeName: t(`CAPTION_CSNODE`),
     },
+    {
+      className: 'icText',
+      value: NODE_TYPES.RESET_VARIABLE_NODE,
+      nodeName: t(`CAPTION_RESETVARIABLENODE`),
+    },
   ];
 
   const apiNodes = [

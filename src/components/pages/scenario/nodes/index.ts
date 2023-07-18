@@ -13,5 +13,6 @@ export * from './ListCardNode';
 export * from './Node';
 export * from './OtherFlowRedirectNode';
 export * from './ParameterSetNode';
+export * from './ResetVariableNode';
 export * from './RetryConditionNode';
 export * from './TextNode';
