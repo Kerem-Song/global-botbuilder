@@ -12,7 +12,7 @@ export const ACTION_TYPES = {
   LUNA_NODE_REDIRECT: 'lunaNodeRedirect',
   ACT_VALUE_IS_UTTR: 'actValueIsUttr',
   LBL_IS_UTTR: 'lblIsUttr',
-  URL: 'linkWebUrl', //server 확인 필요
+  URL: 'linkWebUrl',
 };
 
 export type ActionTypes = ValueOf<typeof ACTION_TYPES>;
@@ -393,6 +393,12 @@ export interface IDataBasicCardView extends IBasicCardView, IDataCardView {}
 export interface IDataProductCardView extends IProductCardTemplateView, IDataCardView {}
 
 export interface IDataListCardView extends IListCardView, IDataCardView {}
+
+export interface ICsCardView extends IViewBase {
+  isLive: boolean;
+  isConsult: boolean;
+  inquiryType: string;
+}
 export interface IGetFlowRes {
   alias: string;
   id: string;

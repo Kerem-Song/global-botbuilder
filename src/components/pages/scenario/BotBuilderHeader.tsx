@@ -105,6 +105,11 @@ export const BotBuilderHeader = () => {
       value: NODE_TYPES.SWITCH_NODE,
       nodeName: t('CAPTION_SWITCHNODE'),
     },
+    {
+      className: 'icText',
+      value: NODE_TYPES.CS_NODE,
+      nodeName: t(`CAPTION_CSNODE`),
+    },
   ];
 
   const apiNodes = [

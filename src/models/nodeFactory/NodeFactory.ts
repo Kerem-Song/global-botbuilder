@@ -8,6 +8,7 @@ import { AnswerNodeFactory } from './AnswerNodeFactory';
 import { BasicCardCarouselNodeFactory } from './BasicCardCarouselNodeFactory';
 import { BasicCardNodeFactory } from './BasicCardNodeFactory';
 import { ConditionNodeFactory } from './ConditionNodeFactory';
+import { CsNodeFactory } from './CsNodeFactory';
 import { DataBasicCardNodeFactory } from './DataBasicCardNodeFactory';
 import { DataListCardNodeFactory } from './DataListCardNodeFactory';
 import { DataProductCardNodeFactory } from './DataProductCardNodeFactory';
@@ -54,6 +55,7 @@ const jsonRequestNodeFactory = new JsonRequestNodeFactory();
 const dataBasicCardNodeFactory = new DataBasicCardNodeFactory();
 const dataProductCardNodeFactory = new DataProductCardNodeFactory();
 const dataListCardNodeFactory = new DataListCardNodeFactory();
+const csNodeFactory = new CsNodeFactory();
 
 export const nodeFactory = {
   getFactory: (TNodeTypes: TNodeTypes | undefined): INodeFactory | undefined => {
@@ -94,7 +96,8 @@ export const nodeFactory = {
         return dataProductCardNodeFactory;
       case NODE_TYPES.DATA_LIST_CARD_NODE:
         return dataListCardNodeFactory;
-
+      case NODE_TYPES.CS_NODE:
+        return csNodeFactory;
       default:
         return undefined;
     }

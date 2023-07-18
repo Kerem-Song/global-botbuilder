@@ -8,6 +8,7 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
+  ICsCardView,
   IDataBasicCardView,
   IDataListCardView,
   IDataProductCardView,
@@ -389,6 +390,16 @@ export const nodeDefaultHelper = {
         aspectRatio: aspectRatio,
       },
       buttons: [],
+    };
+    return result;
+  },
+  createDefaultCsCardView: () => {
+    const result: ICsCardView = {
+      id: ID_GEN.generate(ID_TYPES.VIEW),
+      typeName: VIEW_TYPES.CS_CARD_VIEW,
+      isConsult: true,
+      isLive: true,
+      inquiryType: '',
     };
     return result;
   },
