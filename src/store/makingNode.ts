@@ -1,4 +1,4 @@
-import { IArrow, INode, NODE_TYPES, NodeKind } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind, NodeOption } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import {
   IAnswerView,
