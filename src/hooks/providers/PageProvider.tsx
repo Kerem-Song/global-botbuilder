@@ -1,5 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
+import { StaffType } from '@models';
 import { IHandle } from '@models/interfaces/IHandle';
 import { i18n } from 'i18next';
 import { createContext, FC, useEffect, useState } from 'react';
@@ -32,7 +33,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const matches = useMatches();
   const userInfo = useRootState((state) => state.userInfoReducer);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
-  const role = userInfo.role || 0;
+  const role = userInfo.role || StaffType.Administrator;
   const localeNavigate = (to: To, options?: NavigateOptions) => {
     if (typeof to === 'string') {
       navigate(`/${i18n.language}/${brandInfo.brandId}${to}`, options);
@@ -54,7 +55,9 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   console.log(userInfo.staffType, handle?.role, role);
 
   const isNotAuth =
-    userInfo.staffType !== 0 && handle?.role && (role & handle.role) !== handle.role;
+    userInfo.staffType !== StaffType.Administrator &&
+    handle?.role &&
+    (role & handle.role) !== handle.role;
 
   useEffect(() => {
     if (isNotAuth) {

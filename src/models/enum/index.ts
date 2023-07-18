@@ -5,4 +5,5 @@ export * from './NodeKind';
 export * from './NodeOption';
 export * from './PriceDisplayType';
 export * from './SnsKind';
+export * from './StaffType';
 export * from './VariableKind';
