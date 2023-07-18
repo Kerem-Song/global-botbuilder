@@ -85,7 +85,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
       }}
     >
       {navigateUrl ? (
-        <Navigate to={`/${i18n.language}${navigateUrl}`} />
+        <Navigate to={`/${i18n.language}/${brandInfo.brandId}${navigateUrl}`} />
       ) : (
         <>{children}</>
       )}
