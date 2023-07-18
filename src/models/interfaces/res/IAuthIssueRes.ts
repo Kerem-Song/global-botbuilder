@@ -1,3 +1,5 @@
+import { StaffType } from '@models';
+
 export interface IAuthIssueRes {
   token: string;
   loginUserName: string;
@@ -5,6 +7,6 @@ export interface IAuthIssueRes {
   brandName: string;
   brandId: string;
   companyName: string;
-  staffType: number;
+  staffType: StaffType;
   role: number;
 }

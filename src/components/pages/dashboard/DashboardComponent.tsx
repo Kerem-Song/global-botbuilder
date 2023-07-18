@@ -2,8 +2,7 @@ import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage, useRootState } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
-import { IBotInput, IException } from '@models';
-import { lunaToast } from '@modules/lunaToast';
+import { StaffType } from '@models';
 
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
@@ -11,7 +10,7 @@ import { NewBotPopup } from './NewBotPopup';
 
 export const DashboardComponent = () => {
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
-  const isManager = staffType === 2;
+  const isManager = staffType === StaffType.Manager;
   const { value: searchKeyword, onChange } = useInputState();
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();

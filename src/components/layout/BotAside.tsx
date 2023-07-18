@@ -22,6 +22,7 @@ import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
+import { StaffType } from '@models';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
 import classNames from 'classnames';
@@ -210,8 +211,8 @@ export const BotAside = () => {
             {menu
               .filter(
                 (x) =>
-                  staffType === 0 ||
-                  x.role === 0 ||
+                  staffType === StaffType.Administrator ||
+                  x.role === StaffType.Administrator ||
                   (role !== undefined && (x.role & role) === x.role),
               )
               .map((item) => {
@@ -254,8 +255,8 @@ export const BotAside = () => {
             {subMenu
               .filter(
                 (x) =>
-                  staffType === 0 ||
-                  x.role === 0 ||
+                  staffType === StaffType.Administrator ||
+                  x.role === StaffType.Administrator ||
                   (role !== undefined && (x.role & role) === x.role),
               )
               .map((item) => {

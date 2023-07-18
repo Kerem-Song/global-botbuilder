@@ -1,5 +1,6 @@
 import { Button, Card, Col, Row, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
+import { StaffType } from '@models';
 import { util } from '@modules/util';
 import { useEffect, useState } from 'react';
 
@@ -11,12 +12,12 @@ export const DeleteBot = () => {
     (state) => state.botSettingInfoReducer.botSettingInfo,
   );
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
-  const isManager = staffType === 2;
+  const isManager = staffType === StaffType.Manager;
   const removeCancelExpireUtc = botSettingInfo && botSettingInfo.removeCancelExpireUtc;
   const [activeDeleteBtn, setActiveDeleteBtn] = useState<boolean>(false);
   const [activeRecoverBtn, setActiveRecoverBtn] = useState<boolean>(false);
 
-  const checkActivatedBot = async (staffType: number) => {
+  const checkActivatedBot = async (staffType: StaffType) => {
     if (botSettingInfo && staffType) {
       const title = botSettingInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
       const message = botSettingInfo.activated

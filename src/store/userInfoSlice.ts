@@ -1,16 +1,16 @@
-import { IBotModel } from '@models';
+import { IBotModel, StaffType } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IUserInfo {
   loginUserName?: string;
   loginId?: string;
   companyName?: string;
-  staffType?: number;
+  staffType?: StaffType;
   role?: number;
 }
 
 const initialState: IUserInfo = {
-  staffType: 0,
+  staffType: StaffType.Administrator,
   loginUserName: '아무나',
   loginId: 'unkown@lunasoft.co.kr',
 };

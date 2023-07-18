@@ -1,3 +1,5 @@
+import { StaffType } from '@models';
+
 import { IReq } from './req';
 
 export interface IBotSetting {
@@ -40,6 +42,6 @@ export interface IResponseUpdateBotIcon {
   isSuccess: boolean;
   newToken: string;
   role: number;
-  staffType: number;
+  staffType: StaffType;
   result: boolean;
 }
