@@ -33,7 +33,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, tc, setNavigateUrl } = usePage();
   const { t } = useI18n('utternaceDetailPage');
-  const { botId } = useParams();
+  const { botId, brandId } = useParams();
   const {
     intentAsync,
     getIntentDetailQuery,
