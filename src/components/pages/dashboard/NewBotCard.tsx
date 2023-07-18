@@ -1,14 +1,41 @@
-import { icAdd } from '@assets';
+import { icAdd, icAddDisable } from '@assets';
 import { Card, Title } from '@components';
-import { usePage } from '@hooks';
+import { usePage, useRootState, useSystemModal } from '@hooks';
+import { StaffType } from '@models';
+import classNames from 'classnames';
 import { FC } from 'react';
 
 export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
+  const staffType = useRootState((state) => state.userInfoReducer.staffType);
+  console.log('@staffType === StaffType.Manager ', staffType);
+  const { error } = useSystemModal();
+
+  const handleOnClickAuth = async () => {
+    if (staffType === StaffType.Manager) {
+      await error({
+        title: tc(`NEW_BOT_CARD_AUTH_ERROR_TITLE`),
+        description: (
+          <>
+            <span style={{ whiteSpace: 'pre-line' }}>
+              {tc(`NEW_BOT_CARD_AUTH_ERROR_DESC`)}
+            </span>
+          </>
+        ),
+      });
+    } else {
+      return onClick();
+    }
+  };
+
   return (
-    <Card bordered={false} onClick={onClick} className="new-chatbot">
+    <Card
+      bordered={false}
+      onClick={handleOnClickAuth}
+      className={classNames('new-chatbot', { disabled: staffType === StaffType.Manager })}
+    >
       <div className="title">
-        <img src={icAdd} alt="add" />
+        <img src={staffType === StaffType.Manager ? icAddDisable : icAdd} alt="add" />
         <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
       </div>
       <div className="title-hover">
@@ -16,7 +43,7 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
           <path
             d="M 7 0 L 7 14 M 0 7 L 14 7"
             strokeWidth={2}
-            stroke="#6993FF"
+            stroke={staffType === StaffType.Manager ? '#929292' : '#6993FF'}
             fill="none"
           />
         </svg>

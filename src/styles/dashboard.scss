@@ -53,6 +53,18 @@
         display: block;
       }
     }
+
+    &.disabled {
+      border-color: $gray250;
+
+      .title {
+        color: $gray250;
+      }
+
+      &:hover {
+        background-color: $gray150;
+      }
+    }
   }
 
   .chatbot-card {

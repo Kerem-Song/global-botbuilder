@@ -1,4 +1,5 @@
 import icAdd from '@assets/icons/ic_add.svg';
+import icAddDisable from '@assets/icons/ic_add_disable.svg';
 import icApiRequest from '@assets/icons/ic_api_request.svg';
 import icBackActive from '@assets/icons/ic_back_active.svg';
 import icBackInactive from '@assets/icons/ic_back_inactive.svg';
@@ -147,6 +148,7 @@ import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
 import imgNotFoundImg from '@assets/images/img_not_found_img.svg';
 export {
   icAdd,
+  icAddDisable,
   icApiRequest,
   icBackActive,
   icBackInactive,

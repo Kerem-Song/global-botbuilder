@@ -17,6 +17,7 @@ export const NewBotPopup: FC<{
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
+  const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const { botSaveAsync } = useBotClient();
   const defaultValues: IBotInput = {
     brandId,
