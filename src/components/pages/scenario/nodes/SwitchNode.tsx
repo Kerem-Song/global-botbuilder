@@ -23,10 +23,14 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
           <div
             key={condition.id}
             className="conditionCase"
-            style={{
-              backgroundColor:
-                view.id === selectedNode?.view?.id && index === i ? 'red' : '#f7f7fa',
-            }}
+            style={
+              view.id === selectedNode?.view?.id && index === i
+                ? {
+                    backgroundColor: '#ecf2ff',
+                    borderColor: '#a1bbff',
+                  }
+                : {}
+            }
           >
             <span className="caseLabel">{i + 1}: </span>
             <p className="">
