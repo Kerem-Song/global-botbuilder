@@ -1,5 +1,4 @@
 import useI18n from '@hooks/useI18n';
-import usePage from '@hooks/usePage';
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
 import { setToken } from '@store/authSlice';
@@ -10,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
-const manualExceptionCode = [7301, 7604, 7608, 7610, 7614, 7638];
+const manualExceptionCode = [7301, 7604, 7610, 7614, 7638];
 
 export const HttpContext = createContext<AxiosInstance | undefined>(undefined);
 

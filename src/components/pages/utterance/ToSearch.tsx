@@ -24,17 +24,19 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
   const [scenario, setScenario] = useState<string>('all');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
-  const { invalidateIntentQuery } = useUtteranceClient();
+  const { removeUtteranceQueries } = useUtteranceClient();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const reactSelectStyle = getReactSelectStyle<IReactSelect>({});
 
   const handleReset = () => {
-    setSearchData({
+    const searchData = {
       sort: 1,
       scenarios: 'all',
       searchWord: undefined,
-    });
+    };
+    setSearchData(searchData);
+    removeUtteranceQueries();
     setSort('1');
     setScenario('all');
     setSearchKeyword('');
@@ -47,7 +49,7 @@ export const ToSearch: FC<IToSearchProps> = ({ setSearchData }) => {
       searchWord: keyword || undefined,
     };
     setSearchData(searchData);
-    invalidateIntentQuery(searchData);
+    removeUtteranceQueries();
   };
 
   useEffect(() => {

@@ -34,6 +34,7 @@ export const MyEntity: FC<IMyEntityProps> = ({
     data: initialData,
     fetchNextPage,
     isFetching,
+    isFetchedAfterMount,
   } = changePageNumberQuery(searchKeyword, false);
 
   const handleSearch = useDebouncedCallback((keyword?: string) => {
@@ -113,8 +114,8 @@ export const MyEntity: FC<IMyEntityProps> = ({
       </div>
       <div className="entityWrapper">
         <Row gap={12}>
-          {isFetching && <EntitySkeleton />}
-          {isExistInitialData(initialData)
+          {isFetching && !isFetchedAfterMount && <EntitySkeleton />}
+          {isFetchedAfterMount && isExistInitialData(initialData)
             ? initialData?.pages.map((v) => {
                 const pages = v.items;
                 return pages.map((x, i) => {

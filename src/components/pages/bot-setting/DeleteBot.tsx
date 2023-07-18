@@ -16,8 +16,8 @@ export const DeleteBot = () => {
   const [activeDeleteBtn, setActiveDeleteBtn] = useState<boolean>(false);
   const [activeRecoverBtn, setActiveRecoverBtn] = useState<boolean>(false);
 
-  const checkActivatedBot = async (isManager: number) => {
-    if (botSettingInfo && !isManager) {
+  const checkActivatedBot = async (staffType: number) => {
+    if (botSettingInfo && staffType) {
       const title = botSettingInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
       const message = botSettingInfo.activated
         ? t('DISABLED_DELETE_BOT_MESSAGE')
@@ -38,6 +38,7 @@ export const DeleteBot = () => {
   const handleDeleteBtn = async () => {
     if (!isManager) {
       await checkActivatedBot(staffType!);
+      console.log('sss');
     } else {
       setActiveDeleteBtn(false);
     }

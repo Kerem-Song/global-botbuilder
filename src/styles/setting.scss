@@ -101,7 +101,8 @@
               border-radius: 12px;
               padding: 20px;
               .channel {
-                width: rem(178);
+                width: fit-content;
+                max-width: rem(400);
                 height: rem(48);
                 display: flex;
                 align-items: center;
