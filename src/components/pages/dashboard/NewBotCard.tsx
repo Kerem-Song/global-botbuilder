@@ -8,7 +8,6 @@ import { FC } from 'react';
 export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t, tc } = usePage();
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
-  console.log('@staffType === StaffType.Manager ', staffType);
   const { error } = useSystemModal();
 
   const handleOnClickAuth = async () => {

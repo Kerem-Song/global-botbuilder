@@ -57,7 +57,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
               title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
               description: tc(`HTTP_PROVIDER_DELETE_BOT_ERROR_DESC`),
             }).then(() => {
-              document.location.href = `/${i18n.language}/dashboard`;
+              document.location.href = urlToDashbaord;
             });
             return Promise.reject(new Error(response.data.exception.message));
           }
