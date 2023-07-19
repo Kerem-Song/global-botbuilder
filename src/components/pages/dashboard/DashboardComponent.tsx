@@ -1,16 +1,13 @@
 import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
-import { useBotClient, useModalOpen, usePage, useRootState } from '@hooks';
+import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
-import { StaffType } from '@models';
 
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
 import { NewBotPopup } from './NewBotPopup';
 
 export const DashboardComponent = () => {
-  const staffType = useRootState((state) => state.userInfoReducer.staffType);
-  const isManager = staffType === StaffType.Manager;
   const { value: searchKeyword, onChange } = useInputState();
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
@@ -74,11 +71,9 @@ export const DashboardComponent = () => {
           </Col>
         ) : (
           <>
-            {!isManager && (
-              <Col span={8}>
-                <NewBotCard onClick={() => handleIsOpen(true)} />
-              </Col>
-            )}
+            <Col span={8}>
+              <NewBotCard onClick={() => handleIsOpen(true)} />
+            </Col>
 
             {filteredList?.map((bot) => {
               return (
