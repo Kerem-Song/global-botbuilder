@@ -44,6 +44,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   const hasIntentId = getIntentDetailQuery(intentId);
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
+  const utteranceRef = useRef<HTMLInputElement>(null);
   const { confirm, error } = useSystemModal();
   const selectedScenarios = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
@@ -262,11 +263,13 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
             isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
           />
           <AddUtterance
+            utteranceRef={utteranceRef}
             formMethods={formMethods}
             prepend={prepend}
             setIsActive={setIsActive}
           />
           <UtteranceDetailItems
+            utteranceRef={utteranceRef}
             formMethods={formMethods}
             fields={fields}
             remove={remove}

@@ -7,7 +7,7 @@ import { IUtteranceModel } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import classNames from 'classnames';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, RefObject, SetStateAction, useState } from 'react';
 import { FieldArrayWithId, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
 
 export interface IUtteranceDetailItemsProps {
@@ -16,6 +16,7 @@ export interface IUtteranceDetailItemsProps {
   remove: UseFieldArrayRemove;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
+  utteranceRef: RefObject<HTMLInputElement>;
 }
 
 export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
@@ -24,6 +25,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   remove,
   setIsActive,
   isOpenUtteranceDetailPopup,
+  utteranceRef,
 }) => {
   const { tc } = usePage();
   const { t } = useI18n('utternaceDetailPage');
@@ -137,6 +139,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                 <Checkbox
                   {...register(`items.${i}.isChecked`)}
                   style={{ marginLeft: '20px' }}
+                  utteranceRef={utteranceRef}
                 />
                 <p
                   className={classNames('item', {

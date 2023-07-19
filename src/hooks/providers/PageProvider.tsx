@@ -65,6 +65,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
         title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
         description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
       }).then(() => {
+        console.log('@page provider dashboard?');
         localeNavigate('/dashboard');
       });
     }

@@ -3,28 +3,35 @@ import { Button, Col, Input, Row, Space } from '@components';
 import { useI18n, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { UseFieldArrayPrepend, UseFormReturn } from 'react-hook-form';
 
 export interface IAddUtteranceProps {
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   prepend: UseFieldArrayPrepend<IUtteranceModel, 'items'>;
+  utteranceRef: RefObject<HTMLInputElement>;
 }
 
 export const AddUtterance: FC<IAddUtteranceProps> = ({
   formMethods,
   prepend,
   setIsActive,
+  utteranceRef,
 }) => {
   const { t } = useI18n('utternaceDetailPage');
-
   const { error } = useSystemModal();
-  const utteranceRef = useRef<HTMLInputElement>(null);
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { checkUtteranceDuplicationAsync } = useUtteranceClient();
-
   const { getValues } = formMethods;
 
   const handleAddUtternace = async () => {
@@ -96,7 +103,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
     if (utteranceRef.current) {
       utteranceRef.current.focus();
     }
-  }, []);
+  }, [utteranceRef]);
 
   return (
     <div className="utterance add">
