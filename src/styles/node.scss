@@ -357,9 +357,6 @@
           gap: rem(4);
 
           & .btnQuickRelply {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: rem(192);
             height: rem(36);
             background-color: $gray100;
@@ -367,6 +364,7 @@
             border-radius: rem(99);
             font-size: rem(13);
             color: $grayBlack;
+            line-height: 0;
 
             &:hover {
               background-color: $primary100;

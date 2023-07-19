@@ -23,6 +23,10 @@
   color: $gray500;
   border-color: $gray200;
   background: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+
   &:hover {
     background: $gray200;
   }
@@ -184,7 +188,7 @@ a.luna-btn {
 
 .sortableBtn {
   button {
-    white-space: pre-wrap;
+    // white-space: pre-wrap;
     height: 100%;
   }
 }
