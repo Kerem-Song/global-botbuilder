@@ -4,7 +4,7 @@ import { useQueryParams } from '@hooks/useQueryParams';
 import { setToken } from '@store/authSlice';
 import { setBrandInfo } from '@store/brandInfoSlice';
 import { setUserInfo } from '@store/userInfoSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -20,6 +20,7 @@ export const AuthPage = () => {
   const queryParams = useQueryParams();
   const code = queryParams.get('code');
   const returnInfo = queryParams.get('state');
+  const [navigateUrl, setNavigateUrl] = useState<string>();
 
   const handleAuth = async () => {
     if (!returnInfo || !code) {
@@ -45,11 +46,17 @@ export const AuthPage = () => {
     console.log('navigate', `/${i18n.language}/${res.brandId}`);
     // navigate(`/${i18n.language}/${res.brandId}`);
     if (returnUrl) {
-      navigate(returnUrl);
+      setNavigateUrl(returnUrl);
     } else {
-      navigate(`/${i18n.language}/${res.brandId}`);
+      setNavigateUrl(`/${i18n.language}/${res.brandId}`);
     }
   };
+
+  useEffect(() => {
+    if (navigateUrl) {
+      navigate(navigateUrl);
+    }
+  }, [navigateUrl]);
 
   useEffect(() => {
     handleAuth();
