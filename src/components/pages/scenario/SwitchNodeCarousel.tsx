@@ -1,8 +1,12 @@
 import {
+  icAdd,
+  icAddDisable,
   icCarouselNextActive,
   icCarouselNextInactive,
   icCarouselPrevActive,
   icCarouselPrevInactive,
+  icDelete,
+  icDeleteDisable,
 } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
@@ -17,12 +21,14 @@ export interface SwitchNodeCarouselProps {
   children: ReactNode[];
   conditionsId: string;
   addCarousel?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  deleteCarousel?: (e: number) => void;
 }
 
 export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   conditionsId,
   children,
   addCarousel,
+  deleteCarousel,
 }) => {
   const switchWidth = 350;
   const [current, setCurrent] = useState(0);
@@ -33,7 +39,6 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   });
 
   const { t } = usePage();
-  const { updateLine } = useUpdateLines();
 
   const length = children.length;
   const dispatch = useDispatch();
@@ -79,9 +84,9 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    // if (NextDisabled()) {
-    //   return;
-    // }
+    if (NextDisabled()) {
+      return;
+    }
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
@@ -98,49 +103,77 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   // }, [addCarousel]);
   return (
     <>
-      {addCarousel && (
+      {addCarousel && deleteCarousel && (
         <Row
           justify="space-between"
           align="center"
           className="carouselBtnWrapper node-item-wrap"
         >
+          <Row justify="center" align="center">
+            <Col>
+              <button
+                className="switchNodeCarouselBtn"
+                onClick={(e) => {
+                  addCarousel(e);
+                  setCurrent(length);
+                }}
+                disabled={current === CONDITIONS_LIMIT - 1}
+              >
+                <img
+                  src={current === CONDITIONS_LIMIT - 1 ? icAddDisable : icAdd}
+                  alt="icAdd"
+                />
+              </button>
+            </Col>
+            <Col>
+              <button
+                className="switchNodeCarouselBtn"
+                onClick={(e) => {
+                  deleteCarousel(current);
+                  setCurrent(current === 0 ? 0 : current - 1);
+                }}
+                disabled={length === 1}
+              >
+                <img src={length === 1 ? icDeleteDisable : icDelete} alt="icDelete" />
+              </button>
+            </Col>
+          </Row>
+
           <Col>
-            <button
-              className="switchNodeCarouselBtn"
-              onClick={handlePrevClick}
-              disabled={current === 0}
-              // shape="round"
-            >
-              <img
-                src={current === 0 ? icCarouselPrevInactive : icCarouselPrevActive}
-                alt="carouselPrevBtn"
-              />
-            </button>
+            <p className="page">
+              {current >= children.length
+                ? undefined
+                : `${current + 1}/${children.length}`}
+            </p>
           </Col>
-          <Col>
-            <Button
-              onClick={(e) => {
-                addCarousel(e);
-                setCurrent(length);
-              }}
-              disabled={current === CONDITIONS_LIMIT - 1}
-            >
-              {t(`CONDITION_NODE_CASE_ADD`)}
-            </Button>
-          </Col>
-          <Col>
-            <button
-              className="switchNodeCarouselBtn"
-              onClick={handleNextClick}
-              disabled={NextDisabled()}
-              // shape="round"
-            >
-              <img
-                src={NextDisabled() ? icCarouselNextInactive : icCarouselNextActive}
-                alt="carouselNextBtn"
-              />
-            </button>
-          </Col>
+          <Row justify="center" align="center">
+            <Col>
+              <button
+                className="switchNodeCarouselBtn"
+                onClick={handlePrevClick}
+                disabled={current === 0}
+                // shape="round"
+              >
+                <img
+                  src={current === 0 ? icCarouselPrevInactive : icCarouselPrevActive}
+                  alt="carouselPrevBtn"
+                />
+              </button>
+            </Col>
+            <Col>
+              <button
+                className="switchNodeCarouselBtn"
+                onClick={handleNextClick}
+                disabled={NextDisabled()}
+                // shape="round"
+              >
+                <img
+                  src={NextDisabled() ? icCarouselNextInactive : icCarouselNextActive}
+                  alt="carouselNextBtn"
+                />
+              </button>
+            </Col>
+          </Row>
         </Row>
       )}
       <div

@@ -22,15 +22,13 @@ export const SwitchNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   console.log('value.view in condition node edit', values.view);
 
   const { fields, append, remove } = useFieldArray({
     name: `view.conditions`,
     control,
   });
-
-  const { field: joinField } = useController({ name: 'view.conditions.0.join', control });
 
   const handleDeleteButton = (index: number) => {
     remove(index);
@@ -55,17 +53,10 @@ export const SwitchNodeEdit = () => {
         <SwitchNodeCarousel
           conditionsId={values.view.id}
           addCarousel={handleAddConditionButton}
+          deleteCarousel={handleDeleteButton}
         >
           {fields.map((condition, i) => (
             <Collapse label={`Case ${i + 1}`} useSwitch={false} key={condition.id}>
-              {i > 0 && (
-                <div className="deleteBtn">
-                  <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                    {t(`CONDITION_NODE_CASE_DELETE`)}
-                  </Button>
-                </div>
-              )}
-              {/* <Space direction="vertical"> */}
               <SwitchConditions nestedIndex={i} />
               <div className="m-b-8">
                 <Space direction="vertical">
@@ -82,7 +73,6 @@ export const SwitchNodeEdit = () => {
                   </FormItem>
                 </Space>
               </div>
-              {/* </Space> */}
             </Collapse>
           ))}
         </SwitchNodeCarousel>

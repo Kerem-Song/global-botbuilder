@@ -11,7 +11,7 @@ import { VariableSelector } from './VariableSelector';
 export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   const CONDITION_LIMIT = 5;
   const { t } = usePage();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const {
     watch,
     setValue,
