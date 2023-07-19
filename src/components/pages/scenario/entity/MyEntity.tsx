@@ -140,14 +140,9 @@ export const MyEntity: FC<IMyEntityProps> = ({
                           />
                         </div>
                         <div className="entries">
-                          <span className="entry">
-                            <MultiClamp clamp={4}>
-                              {util.replaceKeywordMark(
-                                x.entries.join(', '),
-                                searchKeyword,
-                              )}
-                            </MultiClamp>
-                          </span>
+                          <div className="entry">
+                            {util.replaceKeywordMark(x.entries.join(', '), searchKeyword)}
+                          </div>
                         </div>
                       </div>
                     </Col>
