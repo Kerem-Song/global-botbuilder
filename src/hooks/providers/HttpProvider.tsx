@@ -6,6 +6,7 @@ import { updateRole } from '@store/userInfoSlice';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
@@ -17,6 +18,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
   const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
+  const brandInfo = useRootState((state) => state.brandInfoReducer);
   const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -24,6 +26,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
     //withCredentials: true,
   });
   console.log('import.meta. env', import.meta.env);
+  const urlToDashbaord = `/${i18n.language}/${brandInfo.brandId}/dashboard`;
 
   instance.interceptors.request.use(
     function (config) {
@@ -97,7 +100,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
             title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
             description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
           }).then(() => {
-            document.location.href = `/${i18n.language}/dashboard`;
+            document.location.href = urlToDashbaord;
           });
         } else {
           document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
@@ -109,7 +112,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
           title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
           description: tc(`HTTP_PROVIDER_NO_BOT_ERROR_DESC`),
         }).then(() => {
-          document.location.href = `/${i18n.language}/dashboard`;
+          document.location.href = urlToDashbaord;
         });
       }
       return Promise.reject(err);

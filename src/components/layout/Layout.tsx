@@ -25,6 +25,7 @@ export const Layout = () => {
   console.log(brandId, brandIdState);
 
   if (brandId !== brandIdState) {
+    console.log('@branadId????');
     document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
     return <></>;
   }
