@@ -57,6 +57,10 @@ export const SwitchNodeEdit = () => {
         >
           {fields.map((condition, i) => (
             <Collapse label={`Case ${i + 1}`} useSwitch={false} key={condition.id}>
+              <div className="m-b-8">
+                <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
+                <span className="required">*</span>
+              </div>
               <SwitchConditions nestedIndex={i} />
               <div className="m-b-8">
                 <Space direction="vertical">
