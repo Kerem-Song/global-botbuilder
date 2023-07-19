@@ -53,10 +53,23 @@ export const botbuilderSlice = createSlice({
     setBasicScenarios: (state, action: PayloadAction<IScenarioModel[]>) => {
       state.basicScenarios = action.payload;
     },
-    initSelectedScenario: (state, action: PayloadAction<IScenarioModel[]>) => {
-      console.log('initSelectedScenario');
-      if (state.selectedScenario) {
-        const found = action.payload.find((x) => x.id === state.selectedScenario?.id);
+    initSelectedScenario: (
+      state,
+      action: PayloadAction<{
+        scenarios: IScenarioModel[];
+        scenarioId: string | undefined;
+      }>,
+    ) => {
+      const { scenarios, scenarioId } = action.payload;
+      console.log('initSelectedScenario', scenarioId);
+
+      state.selected = undefined;
+      state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
+
+      if (scenarioId) {
+        const found = scenarios.find((x) => x.id === scenarioId);
         if (found) {
           state.selectedScenario = found;
           return;
@@ -64,13 +77,10 @@ export const botbuilderSlice = createSlice({
       }
 
       state.selectedScenario = state.basicScenarios?.find((x) => x.isStartFlow);
-      state.selected = undefined;
-      state.isEditDrawerOpen = false;
-      state.invalidateNodes = {};
-      state.carouselIndex = {};
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       console.log('setSelectedScenario', action.payload);
+
       state.selectedScenario = action.payload;
       state.selected = undefined;
       state.isEditDrawerOpen = false;

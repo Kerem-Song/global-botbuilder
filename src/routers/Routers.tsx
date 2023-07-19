@@ -18,6 +18,7 @@ import StatisticsPage from '../pages/StatisticsPage';
 import UtteranceDetailPage from '../pages/UtteranceDetailPage';
 import UtterancePage from '../pages/UtterancePage';
 import { LocaleNavigate } from './LocaleNavigate';
+import { ScenarioNavigate } from './ScenarioNavigate';
 
 const finalRoutes = [
   ...supportedLngs.map((lang) => {
@@ -48,8 +49,20 @@ const finalRoutes = [
               children: [
                 {
                   path: 'scenario',
-                  element: <ScenarioPage />,
                   handle: { title: 'SCENARIO', role: 2 },
+                  children: [
+                    {
+                      path: ':scenarioId',
+                      element: <ScenarioPage />,
+                      handle: { title: 'SCENARIO', role: 2 },
+                    },
+                    {
+                      index: true,
+                      element: <ScenarioNavigate />,
+                      handle: { title: 'SCENARIO', role: 2 },
+                      errorElement: <>404</>,
+                    },
+                  ],
                 },
                 {
                   path: 'utterance',
@@ -112,105 +125,7 @@ const finalRoutes = [
             { path: '', element: <Navigate to="dashboard" replace={true} /> },
           ],
         },
-        {
-          children: [
-            {
-              path: 'dashboard',
-              element: <DefaultLayout />,
-              handle: { title: 'DASHBOARD', role: 0 },
-              children: [
-                {
-                  index: true,
-                  element: <DashboardPage />,
-                  handle: { title: 'DASHBOARD', role: 0 },
-                  errorElement: <>404</>,
-                },
-              ],
-            },
-            {
-              path: ':botId',
-              element: <BotLayout />,
-              errorElement: <>404</>,
-              children: [
-                {
-                  path: 'scenario',
-                  element: <ScenarioPage />,
-                  handle: { title: 'SCENARIO', role: 2 },
-                },
-                {
-                  path: 'utterance',
-                  handle: { title: 'UTTERANCE', role: 2 },
-                  children: [
-                    {
-                      path: '',
-                      element: <UtterancePage />,
-                      handle: { title: 'UTTERANCE', role: 2 },
-                    },
-                    {
-                      path: 'detail',
-                      children: [
-                        {
-                          path: '',
-                          element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 2 },
-                        },
-                        {
-                          path: ':intentId',
-                          element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 2 },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  path: 'data-api',
-                  element: <DataApiPage />,
-                  handle: { title: 'SKILL', role: 8 },
-                },
-                {
-                  path: 'deployment',
-                  element: <DeploymentPage />,
-                  handle: { title: 'DEPLOYMENT', role: 16 },
-                },
-                {
-                  path: 'history',
-                  element: <HistoryPage />,
-                  handle: { title: 'HISTORY', role: 32 },
-                },
-                {
-                  path: 'statistics',
-                  element: <StatisticsPage />,
-                  handle: { title: 'STATISTICS', role: 64 },
-                },
-                {
-                  path: 'chatrecord',
-                  element: <StatisticsPage />,
-                  handle: { title: 'CHATRECORD', role: 128 },
-                },
-                {
-                  path: 'setting',
-                  element: <SettingPage />,
-                  handle: { title: 'SETTING', role: 256 },
-                },
-              ],
-            },
-            {
-              path: ':botId',
-              element: <HistoryViewerLayout />,
-              errorElement: <>404?</>,
-              children: [
-                {
-                  path: 'viewer/:historyId/:createByBrand/:actorEmail/:actorName',
-                  element: <HistoryViewer />,
-                  handle: { title: `` },
-                },
-              ],
-            },
-            { path: 'help', element: <HelpPage />, errorElement: <>404</> },
-            { path: '', element: <Navigate to="/dashboard" replace={true} /> },
-          ],
-        },
+
         { path: '*', element: <>404</>, handle: true },
       ],
     };

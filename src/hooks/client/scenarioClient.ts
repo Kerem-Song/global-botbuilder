@@ -25,7 +25,7 @@ export const useScenarioClient = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const http = useHttp();
-  const { botId } = useParams();
+  const { botId, scenarioId } = useParams();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const token = useRootState((state) => state.botInfoReducer.token);
 
@@ -61,7 +61,7 @@ export const useScenarioClient = () => {
 
             // 기본 시나리오 세팅
             dispatch(setBasicScenarios(basicScenarios));
-            dispatch(initSelectedScenario(scenarios));
+            dispatch(initSelectedScenario({ scenarios, scenarioId }));
 
             const restScenarios = scenarios
               .filter((x) => !x.isFallbackFlow && !x.isStartFlow)

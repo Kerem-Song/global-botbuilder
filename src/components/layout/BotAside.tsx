@@ -82,7 +82,14 @@ export const BotAside = () => {
   };
 
   const menu = [
-    getMenuItem(1, `${botId}/scenario`, 'scenario', icScenario, icScenarioSelected, 2),
+    getMenuItem(
+      1,
+      `${botId}/scenario/start`,
+      'scenario',
+      icScenario,
+      icScenarioSelected,
+      2,
+    ),
     getMenuItem(
       2,
       `${botId}/utterance`,
@@ -121,7 +128,7 @@ export const BotAside = () => {
                 if (botId === id) {
                   return;
                 }
-                navigate(`/${i18n.language}/${brandInfo.brandId}/${id}/scenario`);
+                navigate(`/${i18n.language}/${brandInfo.brandId}/${id}/scenario/start`);
                 dispatch(setSesstionToken());
                 dispatch(initBotBuilder());
               },

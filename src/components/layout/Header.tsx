@@ -17,6 +17,12 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
 }) => {
   const { tc } = useI18n();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const matches = useMatches();
+  const { i18n, ts } = useI18n();
+  const { t } = useI18n('botTest');
+  const navigate = useNavigate();
+
   const languageMenus = [
     {
       id: `ko`,
@@ -40,7 +46,8 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
     },
   ];
   const userInfo = useRootState((state) => state.userInfoReducer);
-  const userInfoMenus: IPopperItem<{ action: () => void }>[] = [
+  const brandInfo = useRootState((state) => state.brandInfoReducer);
+  const userInfoMenus: IPopperItem<{ action: (path: string) => void }>[] = [
     {
       id: 'info',
       name: 'cs_kimsuky',
@@ -62,20 +69,18 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
       name: tc('LOGOUT'),
       type: 'button',
       data: {
-        action: () => {
+        action: (path: string) => {
           console.log('logout');
+
           dispatch(setToken({ refreshToken: undefined }));
-          window.location.href =
-            'https://auth.lunacode.dev/oauth/signin?flag=logout&clientPrev=null&clientType=3';
+          const clientPrev = encodeURI(`${brandInfo.brandId}|${path}`);
+          window.location.href = `https://auth.lunacode.dev/oauth/signin?clientPrev=${clientPrev}&clientType=77`;
         },
       },
     },
   ];
-  const location = useLocation();
-  const matches = useMatches();
-  const { i18n, ts } = useI18n();
-  const { t } = useI18n('botTest');
-  const navigate = useNavigate();
+
+  console.log('!@!@', location.pathname);
 
   const changeLanguageHandler = (lang: string) => {
     i18n.changeLanguage(lang, () => {
@@ -131,7 +136,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
             onChange={(e) => {
               console.log(e);
               if (e.data?.action) {
-                e.data.action();
+                e.data.action(location.pathname);
               }
             }}
           >

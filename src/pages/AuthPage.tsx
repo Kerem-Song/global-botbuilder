@@ -17,12 +17,15 @@ export const AuthPage = () => {
   const { IssueTokenAsync } = useAuthClient();
   const queryParams = useQueryParams();
   const code = queryParams.get('code');
-  const brandId = queryParams.get('state');
+  const returnInfo = queryParams.get('state');
 
   const handleAuth = async () => {
-    if (!brandId || !code) {
+    if (!returnInfo || !code) {
       return <></>;
     }
+
+    const [brandId, returnUrl] = decodeURI(returnInfo).split('|');
+
     const res = await IssueTokenAsync({ brandId, tokenCode: code });
     dispath(setToken({ refreshToken: res.token }));
     dispath(setBrandInfo({ brandId: res.brandId, brandName: res.brandName }));
@@ -36,12 +39,17 @@ export const AuthPage = () => {
       }),
     );
     console.log('navigate', `/${i18n.language}/${res.brandId}`);
-    navigate(`/${i18n.language}/${res.brandId}`);
+    // navigate(`/${i18n.language}/${res.brandId}`);
+    if (returnUrl) {
+      navigate(returnUrl);
+    } else {
+      navigate(`/${i18n.language}/${res.brandId}`);
+    }
   };
 
   useEffect(() => {
     handleAuth();
-  }, [brandId, code]);
+  }, [returnInfo, code]);
 
   return (
     <>

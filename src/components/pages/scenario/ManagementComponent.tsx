@@ -1,6 +1,9 @@
 import { IScenarioModel } from '@models';
+import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
 import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import usePage from '../../../hooks/usePage';
@@ -9,6 +12,8 @@ import { VariableComponent } from './variable/VariableComponent';
 
 export const ManagementComponent = () => {
   const { t } = usePage();
+  const dispatch = useDispatch();
+  const { scenarioId } = useParams();
   const [scenarioTab, setScenarioTab] = useState<boolean>(true);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActivated, setIsActivated] = useState(false);
@@ -34,6 +39,18 @@ export const ManagementComponent = () => {
         ),
     );
   }, [searchKeyword, isActivated, data]);
+
+  useEffect(() => {
+    if (data && scenarioId) {
+      if (scenarioId === 'start') {
+        dispatch(setSelectedScenario(data.find((x) => x.isStartFlow)));
+      } else if (scenarioId === 'fallback') {
+        dispatch(setSelectedScenario(data.find((x) => x.isFallbackFlow)));
+      } else {
+        dispatch(setSelectedScenario(data.find((x) => x.id === scenarioId)));
+      }
+    }
+  }, [scenarioId, data]);
 
   return (
     <div className="managementWrapper">
