@@ -16,8 +16,11 @@ export const brandInfoSlice = createSlice({
       state.brandName = brandName;
       state.brandId = brandId;
     },
+    setBrandId: (state, action: PayloadAction<string>) => {
+      state.brandId = action.payload;
+    },
   },
 });
 
-export const { setBrandInfo } = brandInfoSlice.actions;
+export const { setBrandInfo, setBrandId } = brandInfoSlice.actions;
 export default brandInfoSlice.reducer;

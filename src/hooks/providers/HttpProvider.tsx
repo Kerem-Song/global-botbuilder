@@ -5,6 +5,7 @@ import { setToken } from '@store/authSlice';
 import { updateRole } from '@store/userInfoSlice';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
+import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -18,11 +19,11 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
   const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
+  const [cookies] = useCookies(['RT']);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
   const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    headers: { Authorization: token },
     //withCredentials: true,
   });
   console.log('import.meta. env', import.meta.env);
@@ -33,6 +34,11 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       /**
        * todo : Authorization같은 공통 Request 처리
        */
+      if (!config.headers) {
+        config.headers = {};
+      }
+
+      config.headers.Authorization = cookies.RT;
       return config;
     },
 

@@ -5,6 +5,7 @@ import { setToken } from '@store/authSlice';
 import { setBrandInfo } from '@store/brandInfoSlice';
 import { setUserInfo } from '@store/userInfoSlice';
 import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router';
@@ -14,6 +15,7 @@ export const AuthPage = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const { i18n } = useTranslation();
+  const [cookies, setCookie, removeCookie] = useCookies(['RT', 'BRAND']);
   const { IssueTokenAsync } = useAuthClient();
   const queryParams = useQueryParams();
   const code = queryParams.get('code');
@@ -27,7 +29,9 @@ export const AuthPage = () => {
     const [brandId, returnUrl] = decodeURI(returnInfo).split('|');
 
     const res = await IssueTokenAsync({ brandId, tokenCode: code });
-    dispath(setToken({ refreshToken: res.token }));
+    //dispath(setToken({ refreshToken: res.token }));
+    setCookie('RT', res.token);
+    setCookie('BRAND', brandId);
     dispath(setBrandInfo({ brandId: res.brandId, brandName: res.brandName }));
     dispath(
       setUserInfo({

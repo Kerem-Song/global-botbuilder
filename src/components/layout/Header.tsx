@@ -47,7 +47,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   ];
   const userInfo = useRootState((state) => state.userInfoReducer);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
-  const userInfoMenus: IPopperItem<{ action: (path: string) => void }>[] = [
+  const userInfoMenus: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'info',
       name: 'cs_kimsuky',
@@ -69,12 +69,14 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
       name: tc('LOGOUT'),
       type: 'button',
       data: {
-        action: (path: string) => {
+        action: () => {
           console.log('logout');
-
-          dispatch(setToken({ refreshToken: undefined }));
-          const clientPrev = encodeURI(`${brandInfo.brandId}|${path}`);
-          window.location.href = `https://auth.lunacode.dev/oauth/signin?clientPrev=${clientPrev}&clientType=77`;
+          dispatch(setToken({ refreshToken: 'logout' }));
+          const clientPrev = encodeURI(`${brandInfo.brandId}`);
+          console.log(clientPrev);
+          window.location.href = `${
+            import.meta.env.VITE_LOGIN_URL
+          }?clientPrev=${clientPrev}&clientType=${import.meta.env.VITE_CLIENT_TYPE}`;
         },
       },
     },
@@ -136,7 +138,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
             onChange={(e) => {
               console.log(e);
               if (e.data?.action) {
-                e.data.action(location.pathname);
+                e.data.action();
               }
             }}
           >
