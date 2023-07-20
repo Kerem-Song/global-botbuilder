@@ -1,6 +1,7 @@
 import { useRootState } from '@hooks';
 import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { setBrandId } from '@store/brandInfoSlice';
 import { systemModalClose } from '@store/systemModalSlice';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
@@ -25,6 +26,11 @@ export const Layout = () => {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (brandId) {
+      dispatch(setBrandId(brandId));
+    }
+  }, [brandId]);
   console.log(brandId, cookies.BRAND);
 
   if (!cookies.RT) {
