@@ -3,15 +3,7 @@ import { Button, Col, Input, Row, Space } from '@components';
 import { useI18n, useSystemModal } from '@hooks';
 import { useUtteranceClient } from '@hooks/client/utteranceClient';
 import { IUtteranceModel } from '@models';
-import {
-  Dispatch,
-  FC,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, FC, RefObject, SetStateAction, useEffect, useState } from 'react';
 import { UseFieldArrayPrepend, UseFormReturn } from 'react-hook-form';
 
 export interface IAddUtteranceProps {

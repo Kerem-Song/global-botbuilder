@@ -22,12 +22,18 @@ import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { CANVAS_LIMIT, ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { setSelected, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import {
+  setIsScenarioSavedMutate,
+  setSelected,
+  zoomIn,
+  zoomOut,
+} from '@store/botbuilderSlice';
 import { appendNode, updateNode } from '@store/makingNode';
 import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
@@ -126,14 +132,19 @@ export const Botbuilder = () => {
 
   const startNode = nodes.find((item) => item.type === NODE_TYPES.INTENT_NODE);
 
+  const isSaved = useRootState((state) => state.botBuilderReducer.isScenarioSavedMutate);
+
   useEffect(() => {
     if (canvasRef.current) {
-      if (startNode) {
+      if (startNode && !isSaved) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';
       }
       // canvasRef.current.style.left = '0px';
       // canvasRef.current.style.top = '0px';
+      return () => {
+        dispatch(setIsScenarioSavedMutate(false));
+      };
     }
   }, [selectedScenario, startNode]);
 

@@ -44,6 +44,7 @@ export const OperatorSelector = ({
       styles={reactSelectStyle}
       value={operatorOptions.find((item) => item.value === operatorField.value)}
       onChange={(options: any) => operatorField.onChange(options?.value)}
+      menuPortalTarget={document.body}
     />
   );
 };

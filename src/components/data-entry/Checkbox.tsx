@@ -1,5 +1,3 @@
-import '../../styles/checkbox.scss';
-
 import { IHasClassNameNStyle } from '@models';
 import { forwardRef, RefObject } from 'react';
 
@@ -10,13 +8,12 @@ export interface CheckboxProps extends IDataEntryProp, IHasClassNameNStyle {
   utteranceRef?: RefObject<HTMLInputElement>;
 }
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { utteranceRef, ...rest } = props;
-
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((args, ref) => {
+  const { utteranceRef, ...argsWithoutRef } = args;
   return (
     <div className="checkboxContainer" role="presentation">
       <input
-        {...rest}
+        {...argsWithoutRef}
         className="checkbox"
         type="checkbox"
         ref={ref}

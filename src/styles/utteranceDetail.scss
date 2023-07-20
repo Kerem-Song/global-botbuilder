@@ -77,22 +77,17 @@
 
       .utteranceItem {
         width: 100%;
-        padding: rem(20);
         min-height: rem(44);
         border: 1px solid $gray200;
         border-radius: rem(8);
         margin-bottom: rem(4);
 
         .item {
-          width: rem(990);
           margin-left: rem(12);
           font-size: rem(13);
           line-height: rem(16);
-          word-wrap: break-word;
-          padding: 10px 0;
-          &.utterance-detailModal-item {
-            width: rem(920);
-          }
+          word-break: break-all;
+          padding: 10px 10px 10px 0;
         }
         &:hover {
           background-color: $primary100;

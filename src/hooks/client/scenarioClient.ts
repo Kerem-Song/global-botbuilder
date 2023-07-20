@@ -3,7 +3,9 @@ import { useRootState } from '@hooks/useRootState';
 import { IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
+import { setIsScenarioSavedMutate } from '@store/botbuilderSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { lunaToast } from '../../modules/lunaToast';
@@ -14,6 +16,7 @@ import { SCENARIO_LIST_SELECT_QUERY_KEY } from './scenarioSelectClient';
 const SCENARIO_LIST = 'scenario-list';
 
 export const useScenarioClient = () => {
+  const dispatch = useDispatch();
   const { tc } = usePage();
   const queryClient = useQueryClient();
   const http = useHttp();
@@ -117,7 +120,10 @@ export const useScenarioClient = () => {
         queryClient.invalidateQueries(['scenario', scenarioId]);
         queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);
+        dispatch(setIsScenarioSavedMutate(true));
         return res;
+      } else {
+        dispatch(setIsScenarioSavedMutate(false));
       }
     },
   );
@@ -149,6 +155,7 @@ export const useScenarioClient = () => {
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioSortAsync: scenarioSortMutate.mutateAsync,
     scenarioSaving: scenarioSaveMutate.isLoading,
+    scenarioSavingIsIdle: scenarioSaveMutate.status,
     scenarioCreating: scenarioCreateMutate.isLoading,
   };
 };

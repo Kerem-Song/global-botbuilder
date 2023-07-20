@@ -131,7 +131,13 @@
                 line-height: rem(18);
                 .entry {
                   color: $gray500;
-                  word-break: break-word;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 4;
+                  -webkit-box-orient: vertical;
+                  line-height: rem(17);
+                  height: rem(68);
                 }
               }
               &:hover {
