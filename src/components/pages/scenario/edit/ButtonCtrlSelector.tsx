@@ -36,6 +36,7 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
         field.onChange(options?.value);
         setValue(value, '', { shouldDirty: true });
       }}
+      menuPortalTarget={document.body}
     />
   );
 };

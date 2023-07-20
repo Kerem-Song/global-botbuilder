@@ -230,6 +230,7 @@ export const DataProductCardNodeEdit = () => {
                 onChange={(options: any) =>
                   priceDisplayTypeField.onChange(options?.value)
                 }
+                menuPortalTarget={document.body}
               />
 
               <Row justify="space-between" align="flex-start" gap={4}>

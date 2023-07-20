@@ -53,6 +53,7 @@ export const ButtonTypeSelector = ({
         );
       }}
       minMenuHeight={500}
+      menuPortalTarget={document.body}
     />
   );
 };

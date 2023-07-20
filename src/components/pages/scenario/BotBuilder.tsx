@@ -132,7 +132,7 @@ export const Botbuilder = () => {
   const startNode = nodes.find((item) => item.type === NODE_TYPES.INTENT_NODE);
 
   const isSaved = useRootState((state) => state.botBuilderReducer.isScenarioSavedMutate);
-  console.log('@scenarioSavingStatus', isSaved);
+
   useEffect(() => {
     if (canvasRef.current) {
       if (startNode && !isSaved) {
