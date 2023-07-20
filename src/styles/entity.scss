@@ -142,6 +142,9 @@
               &:hover {
                 background-color: $primary100;
               }
+              &.entityCardSkeleton {
+                height: rem(130);
+              }
             }
           }
           .emptyEntityCardWrapper {

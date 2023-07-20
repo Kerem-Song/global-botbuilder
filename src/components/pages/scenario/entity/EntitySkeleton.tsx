@@ -5,7 +5,7 @@ import ReactLoadingSkeleton from 'react-loading-skeleton';
 export const EntitySkeleton = () => {
   return (
     <Col span={6}>
-      <div className="entityCard" role="presentation">
+      <div className="entityCard entityCardSkeleton" role="presentation">
         <div className="cardHeader">
           <div className="cardHeader">
             <span className="title">
@@ -19,20 +19,6 @@ export const EntitySkeleton = () => {
             </span>
           </div>
         </div>
-        <ReactLoadingSkeleton
-          width={`${util.random(100)}%`}
-          count={1}
-          height={16}
-          baseColor="rgba(0,0,0,0.06)"
-          style={{ lineHeight: 2 }}
-        />
-        <ReactLoadingSkeleton
-          width={`${util.random(100)}%`}
-          count={1}
-          height={16}
-          baseColor="rgba(0,0,0,0.06)"
-          style={{ lineHeight: 2 }}
-        />
         <ReactLoadingSkeleton
           width={`${util.random(100)}%`}
           count={1}
