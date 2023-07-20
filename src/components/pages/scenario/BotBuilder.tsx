@@ -13,6 +13,7 @@ import {
   useRootState,
   useScenarioClient,
 } from '@hooks';
+import { useScenarioBoardClient } from '@hooks/client/scenarioBoardClient';
 import { useAddArrow } from '@hooks/useAddArrow';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -73,7 +74,7 @@ export const Botbuilder = () => {
   const { addArrowHandler } = useAddArrow();
   const isHistoryViewer = useHistoryViewerMatch();
 
-  const { getScenario } = useScenarioClient();
+  const { getScenario } = useScenarioBoardClient();
   getScenario(selectedScenario?.id);
   // if (!isHistoryViewer) {
 

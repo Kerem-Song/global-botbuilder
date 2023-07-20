@@ -1,5 +1,6 @@
 import { useHistoryViewerMatch, usePage, useScenarioClient } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
+import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IScenarioModel, NodeOption } from '@models';
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { FC } from 'react';
@@ -8,8 +9,8 @@ import { useParams } from 'react-router';
 export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
   const { t } = usePage();
   const { botId, historyId } = useParams();
-  const { getCachedScenarioList } = useScenarioClient();
-  const data = getCachedScenarioList(botId);
+  const { getScenarioList } = useScenarioSelectClient();
+  const { data } = getScenarioList();
   const scenario: IScenarioModel[] | undefined = data?.filter(
     (item) => item.firstNodeId === node.nextNodeId,
   );

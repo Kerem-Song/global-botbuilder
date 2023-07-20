@@ -63,12 +63,13 @@ export const botbuilderSlice = createSlice({
       const { scenarios, scenarioId } = action.payload;
       console.log('initSelectedScenario', scenarioId);
 
-      state.selected = undefined;
-      state.isEditDrawerOpen = false;
-      state.invalidateNodes = {};
-      state.carouselIndex = {};
+      if (state.selectedScenario) {
+        if (scenarios.find((x) => x.id === state.selectedScenario?.id)) {
+          return;
+        }
+      }
 
-      if (scenarioId) {
+      if (scenarioId && scenarioId !== 'start') {
         const found = scenarios.find((x) => x.id === scenarioId);
         if (found) {
           state.selectedScenario = found;
@@ -77,6 +78,10 @@ export const botbuilderSlice = createSlice({
       }
 
       state.selectedScenario = state.basicScenarios?.find((x) => x.isStartFlow);
+      state.selected = undefined;
+      state.isEditDrawerOpen = false;
+      state.invalidateNodes = {};
+      state.carouselIndex = {};
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
       console.log('setSelectedScenario', action.payload);

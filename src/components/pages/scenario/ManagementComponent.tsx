@@ -1,3 +1,4 @@
+import { useScenarioListClient } from '@hooks/client/scenarioListClient';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
@@ -18,7 +19,7 @@ export const ManagementComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActivated, setIsActivated] = useState(false);
   const [scenarioList, setScenarioList] = useState<IScenarioModel[]>([]);
-  const { getScenarioList } = useScenarioClient();
+  const { getScenarioList } = useScenarioListClient(scenarioId);
   const { data } = getScenarioList();
   const handleScenarioNameTags = (value: boolean) => {
     setScenarioTab(value);
