@@ -65,7 +65,6 @@ export const OtherFlowRedirectNodeEdit = () => {
               defaultValue={scenarioList.find((item) => item.value === values.nextNodeId)}
               value={scenarioList.find((item) => item.value === field.value)}
               onChange={(options: any) => field.onChange(options?.value)}
-              menuPortalTarget={document.body}
             />
           </FormItem>
         </Space>
