@@ -50,17 +50,16 @@ export const getReactSelectStyle = <T>({
       width: '100%',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
-
       padding: '10px 8px',
+      borderRadius: '6px',
       fontSize: '13px',
       fontWeight: state.isSelected ? 700 : 400,
       color: state.isSelected ? '#222222' : '#757575',
       lineHeight: 1.5,
-      backgroundColor: 'white',
+      backgroundColor: state.isFocused ? '#ecf2ff' : 'white',
       ':hover': {
         color: '#222222',
         backgroundColor: '#ECF2FF',
-        borderRadius: '6px',
       },
     }),
     singleValue: (provided) => ({
