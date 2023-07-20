@@ -180,11 +180,10 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
         role="presentation"
         style={{
           width: `${switchWidth}px`,
-          overflowX: 'hidden',
         }}
         className="carouselComponent"
       >
-        <div style={{ display: 'flex', overflowX: 'hidden', ...style }}>
+        <div style={{ display: 'flex', ...style }}>
           {children.map((c, i) => {
             return (
               <div

@@ -32,7 +32,13 @@ export interface IPopperSelectItem<T> {
   data?: T;
 }
 
-export type ItemType = 'button' | 'icon-front' | 'search' | 'children' | 'disable';
+export type ItemType =
+  | 'button'
+  | 'icon-front'
+  | 'search'
+  | 'children'
+  | 'disable'
+  | 'normal';
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
