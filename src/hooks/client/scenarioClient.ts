@@ -3,9 +3,18 @@ import { useRootState } from '@hooks/useRootState';
 import { IHasResults, IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { initSelectedScenario, setBasicScenarios } from '@store/botbuilderSlice';
+import {
+  initSelectedScenario,
+  setBasicScenarios,
+  setIsScenarioSavedMutate,
+} from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  MutationCache,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import * as base64 from 'base-64';
 import { useDispatch } from 'react-redux';
@@ -218,7 +227,10 @@ export const useScenarioClient = () => {
         queryClient.invalidateQueries(['scenario', scenarioId]);
         queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);
+        dispatch(setIsScenarioSavedMutate(true));
         return res;
+      } else {
+        dispatch(setIsScenarioSavedMutate(false));
       }
     },
   );
@@ -255,6 +267,7 @@ export const useScenarioClient = () => {
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioSortAsync: scenarioSortMutate.mutateAsync,
     scenarioSaving: scenarioSaveMutate.isLoading,
+    scenarioSavingIsIdle: scenarioSaveMutate.status,
     scenarioCreating: scenarioCreateMutate.isLoading,
   };
 };

@@ -28,6 +28,7 @@ export interface BotBuilderMaker {
   clipBoard?: INode;
   isHandleCutCard?: boolean;
   isBezierMode?: boolean;
+  isScenarioSavedMutate?: boolean;
 }
 
 const initialState: BotBuilderMaker = {
@@ -149,6 +150,9 @@ export const botbuilderSlice = createSlice({
     setIsBeziderMode: (state, action: PayloadAction<boolean>) => {
       state.isBezierMode = action.payload;
     },
+    setIsScenarioSavedMutate: (state, action: PayloadAction<boolean>) => {
+      state.isScenarioSavedMutate = action.payload;
+    },
   },
 });
 
@@ -167,5 +171,6 @@ export const {
   setClipBoard,
   setIsHandleCutCard,
   setIsBeziderMode,
+  setIsScenarioSavedMutate,
 } = botbuilderSlice.actions;
 export default botbuilderSlice.reducer;
