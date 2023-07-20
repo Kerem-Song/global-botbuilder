@@ -145,7 +145,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       data: {
         action: handleScenariRename,
       },
-      type: selectedScenarios?.id !== item.id ? 'disable' : 'children',
+      type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
     },
     {
       id: `delete`,
@@ -153,7 +153,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       data: {
         action: handleScenarioDelete,
       },
-      type: selectedScenarios?.id !== item.id ? 'disable' : 'children',
+      type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
     },
     {
       id: 'duplicate',
