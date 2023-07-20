@@ -66,7 +66,6 @@ export const CsNodeEdit = () => {
               )}
               value={inquiryTypeList.find((item) => item.value === field.value)}
               onChange={(options: any) => field.onChange(options?.value)}
-              menuPortalTarget={document.body}
             />
           </FormItem>
         </Space>

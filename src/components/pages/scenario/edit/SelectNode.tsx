@@ -65,7 +65,6 @@ export const SelectNode = ({
       defaultValue={nodeList.find((item) => item.value === defaultValue)}
       value={nodeList.find((item) => item.value === field.value)}
       onChange={(options: any) => field.onChange(options?.value)}
-      menuPortalTarget={document.body}
     />
   );
 };

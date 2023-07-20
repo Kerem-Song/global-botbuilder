@@ -180,7 +180,6 @@ export const VariablePopup: FC<VariablePopupProps> = ({
             <Select
               options={totalFormatList}
               styles={reactSelectStyle}
-              menuPortalTarget={document.body}
               placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
               value={totalFormatList?.find((x) => x.value === formats) || null}
               onChange={(e: any) => {

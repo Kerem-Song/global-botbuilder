@@ -60,7 +60,6 @@ export const RetryConditionNodeEdit = () => {
             value={countOptions.find((item) => item.value === field.value)}
             onChange={(options: any) => field.onChange(options?.value)}
             isSearchable={false}
-            menuPortalTarget={document.body}
           />
         </div>
         <div className="m-b-8">
