@@ -1,5 +1,3 @@
-import '../../styles/checkbox.scss';
-
 import { IHasClassNameNStyle } from '@models';
 import { forwardRef, RefObject } from 'react';
 

@@ -141,13 +141,9 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
                   style={{ marginLeft: '20px' }}
                   utteranceRef={utteranceRef}
                 />
-                <p
-                  className={classNames('item', {
-                    'utterance-detailModal-item': isOpenUtteranceDetailPopup,
-                  })}
-                >
+                <span className="item">
                   {util.replaceKeywordMark(v.text || '', searchKeyWord)}
-                </p>
+                </span>
               </div>
             );
           })}

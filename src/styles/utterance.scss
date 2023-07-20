@@ -3,7 +3,6 @@
   width: rem(1120);
   padding: rem(32) 0;
   margin: 0 auto;
-  // overflow: hidden;
 
   .title {
     width: 100%;
@@ -114,7 +113,6 @@
         }
         .connectScenarios {
           width: rem(300);
-
           &.connectScenarios-inactivated {
             color: $gray250;
           }
@@ -123,6 +121,18 @@
         .utterance {
           width: rem(540);
           word-break: break-word;
+          .utteranceItems {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+        }
+        .utteranceItemsSkeleton {
+          width: rem(540);
+        }
+        .hidden-scenarioList-utteranceItemsSkeleton {
+          width: rem(790);
         }
 
         .icon {
@@ -157,6 +167,7 @@
         }
         .hidden-scenarioList-utterance {
           width: rem(760);
+
           word-break: break-word;
         }
       }
