@@ -1,5 +1,6 @@
 import { Button, Collapse, Divider, FormItem, Radio, Space } from '@components';
-import { useNodeEditSave, usePage, useRootState, useScenarioClient } from '@hooks';
+import { useNodeEditSave, usePage, useRootState } from '@hooks';
+import { useScenarioBoardClient } from '@hooks/client/scenarioBoardClient';
 import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
 import { IConditionView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -37,7 +38,7 @@ export const ConditionNodeEdit = () => {
   );
   const [scenario, setScenario] = useState<IReactSelect[]>([]);
 
-  const { getCachedScenario } = useScenarioClient();
+  const { getCachedScenario } = useScenarioBoardClient();
   const data = getCachedScenario(selectedScenario?.id);
 
   const { field: joinField } = useController({ name: 'view.join', control });
