@@ -157,7 +157,7 @@ export const DefaultSettingBot = () => {
             <span>{t('BOT_ID')}</span>
           </Col>
           <Col flex="auto">
-            <Input className="botId" value={botSettingInfo?.id || ''} disabled />
+            <Input value={botSettingInfo?.id || ''} disabled />
           </Col>
           <Col>
             <Button onClick={handleCopyBotId} icon={icCopy}>
