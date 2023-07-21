@@ -61,6 +61,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path={`view.conditions.${nestedIndex}.items.${i}.op1`}
+                maxLength={105}
               />
             </FormItem>
             <FormItem
@@ -73,6 +74,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                 control={control}
                 path={`view.conditions.${nestedIndex}.items.${i}.op2`}
+                maxLength={105}
               />
             </FormItem>
 

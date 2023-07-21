@@ -196,6 +196,7 @@ export const JsonRequestNodeEdit = () => {
                     placeholder="Key"
                     {...register(`view.headers.${i}.key`)}
                     readOnly={isHistoryViewer}
+                    maxLength={50}
                   />
                 </Col>
                 <Col span={12}>
@@ -203,6 +204,7 @@ export const JsonRequestNodeEdit = () => {
                     placeholder="Value"
                     {...register(`view.headers.${i}.value`)}
                     readOnly={isHistoryViewer}
+                    maxLength={2000}
                   />
                 </Col>
                 <Col span={2}>
@@ -320,6 +322,7 @@ export const JsonRequestNodeEdit = () => {
                 {...register(`view.responseMapping.${i}.key`)}
                 readOnly={isHistoryViewer}
                 className="m-b-12"
+                maxLength={50}
               />
             </FormItem>
             <div className="m-b-8">
@@ -332,6 +335,7 @@ export const JsonRequestNodeEdit = () => {
                 path={`view.responseMapping.${i}.value`}
                 placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
                 readOnly={isHistoryViewer}
+                maxLength={50}
               />
             </FormItem>
             <div className="deleteBtn">

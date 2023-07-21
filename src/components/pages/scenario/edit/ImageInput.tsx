@@ -69,6 +69,7 @@ export const ImageInput = ({
         maxRows={isSmall ? 1 : 2.125}
         minRows={isSmall ? 1 : 2.125}
         className={classNames({ invalid: !isValid })}
+        maxLength={2055}
       />
     </div>
   );

@@ -259,6 +259,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 placeholder="ex.USD"
                                 isLight={true}
                                 readOnly={isHistoryViewer}
+                                maxLength={155}
                               />
                             </FormItem>
                           </Col>

@@ -178,6 +178,7 @@ export const ProductCardNodeEdit = () => {
                       isLight={true}
                       readOnly={isHistoryViewer}
                       placeholder={'ex.USD'}
+                      maxLength={155}
                     />
                   </FormItem>
                 </Col>
