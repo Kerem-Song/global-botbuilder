@@ -1,18 +1,16 @@
 import {
-  icAdd,
-  icAddDisable,
   icCarouselNextActive,
   icCarouselNextInactive,
   icCarouselPrevActive,
   icCarouselPrevInactive,
   icDelete,
   icDeleteDisable,
+  icPlusBlue,
+  icPlusDisable,
 } from '@assets';
-import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
-import { useUpdateLines } from '@hooks/useUpdateLines';
-import { CONDITIONS_LIMIT, NODE_PREFIX } from '@modules';
+import { CONDITIONS_LIMIT } from '@modules';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -120,7 +118,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                 disabled={current === CONDITIONS_LIMIT - 1}
               >
                 <img
-                  src={current === CONDITIONS_LIMIT - 1 ? icAddDisable : icAdd}
+                  src={current === CONDITIONS_LIMIT - 1 ? icPlusDisable : icPlusBlue}
                   alt="icAdd"
                 />
               </button>

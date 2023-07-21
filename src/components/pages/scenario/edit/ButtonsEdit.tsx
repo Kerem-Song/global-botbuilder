@@ -213,6 +213,7 @@ export const ButtonsEdit = ({
                         ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
                         : t(`SET_URL_PLACEHOLDER`)
                     }
+                    maxLength={1055}
                   />
                 </FormItem>
               </>

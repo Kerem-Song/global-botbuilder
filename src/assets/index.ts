@@ -84,6 +84,8 @@ import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
 import icPlus from '@assets/icons/ic_plus.svg';
+import icPlusBlue from '@assets/icons/ic_plus_blue.svg';
+import icPlusDisable from '@assets/icons/ic_plus_disable.svg';
 import icPlusWhite from '@assets/icons/ic_plus_white.svg';
 import icPopupClose from '@assets/icons/ic_popup_close.svg';
 import icPrev from '@assets/icons/ic_prev.svg';
@@ -146,6 +148,7 @@ import icLine from '@assets/images/img_line.svg';
 import imgLinebot from '@assets/images/img_linebot.svg';
 import imgLinebotInactivate from '@assets/images/img_linebot_inactivate.svg';
 import imgNotFoundImg from '@assets/images/img_not_found_img.svg';
+
 export {
   icAdd,
   icAddDisable,
@@ -235,6 +238,8 @@ export {
   icPen,
   icPenActive,
   icPlus,
+  icPlusBlue,
+  icPlusDisable,
   icPlusWhite,
   icPopupClose,
   icPrev,
