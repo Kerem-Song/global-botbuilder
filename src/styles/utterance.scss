@@ -67,8 +67,8 @@
           display: flex;
         }
         &.utterance-popup-tbody {
-          min-height: rem(249);
-          max-height: rem(444);
+          min-height: rem(219);
+          max-height: rem(457);
         }
       }
       .utteranceTbody::-webkit-scrollbar {
@@ -197,7 +197,7 @@
           }
         }
         &.popup {
-          height: rem(249);
+          height: rem(219);
         }
       }
     }
