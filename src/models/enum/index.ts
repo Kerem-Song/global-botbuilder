@@ -4,6 +4,7 @@ export * from './ImageAspectRatio';
 export * from './NodeKind';
 export * from './NodeOption';
 export * from './PriceDisplayType';
+export * from './Role';
 export * from './SnsKind';
 export * from './StaffType';
 export * from './VariableKind';

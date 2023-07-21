@@ -2,6 +2,7 @@ import { DefaultLayout } from '@components';
 import { BotLayout } from '@components/layout/BotLayout';
 import { HistoryViewerLayout } from '@components/layout/HistoryViewerLayout';
 import { Layout } from '@components/layout/Layout';
+import { Role } from '@models';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { supportedLngs } from '../modules/constants';
@@ -32,12 +33,12 @@ const finalRoutes = [
             {
               path: 'dashboard',
               element: <DefaultLayout />,
-              handle: { title: 'DASHBOARD', role: 0 },
+              handle: { title: 'DASHBOARD', role: Role.None },
               children: [
                 {
                   index: true,
                   element: <DashboardPage />,
-                  handle: { title: 'DASHBOARD', role: 0 },
+                  handle: { title: 'DASHBOARD', role: Role.None },
                   errorElement: <>404</>,
                 },
               ],
@@ -49,29 +50,29 @@ const finalRoutes = [
               children: [
                 {
                   path: 'scenario',
-                  handle: { title: 'SCENARIO', role: 2 },
+                  handle: { title: 'SCENARIO', role: Role.Scenario },
                   children: [
                     {
                       path: ':scenarioId',
                       element: <ScenarioPage />,
-                      handle: { title: 'SCENARIO', role: 2 },
+                      handle: { title: 'SCENARIO', role: Role.Scenario },
                     },
                     {
                       index: true,
                       element: <ScenarioNavigate />,
-                      handle: { title: 'SCENARIO', role: 2 },
+                      handle: { title: 'SCENARIO', role: Role.Scenario },
                       errorElement: <>404</>,
                     },
                   ],
                 },
                 {
                   path: 'utterance',
-                  handle: { title: 'UTTERANCE', role: 2 },
+                  handle: { title: 'UTTERANCE', role: Role.Scenario },
                   children: [
                     {
                       path: '',
                       element: <UtterancePage />,
-                      handle: { title: 'UTTERANCE', role: 2 },
+                      handle: { title: 'UTTERANCE', role: Role.Scenario },
                     },
                     {
                       path: 'detail',
@@ -79,12 +80,12 @@ const finalRoutes = [
                         {
                           path: '',
                           element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 2 },
+                          handle: { title: 'UTTERANCE', role: Role.Scenario },
                         },
                         {
                           path: ':intentId',
                           element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: 2 },
+                          handle: { title: 'UTTERANCE', role: Role.Scenario },
                         },
                       ],
                     },
@@ -93,32 +94,32 @@ const finalRoutes = [
                 {
                   path: 'data-api',
                   element: <DataApiPage />,
-                  handle: { title: 'SKILL', role: 8 },
+                  handle: { title: 'SKILL', role: Role.Skill },
                 },
                 {
                   path: 'deployment',
                   element: <DeploymentPage />,
-                  handle: { title: 'DEPLOYMENT', role: 16 },
+                  handle: { title: 'DEPLOYMENT', role: Role.Deploy },
                 },
                 {
                   path: 'history',
                   element: <HistoryPage />,
-                  handle: { title: 'HISTORY', role: 32 },
+                  handle: { title: 'HISTORY', role: Role.History },
                 },
                 {
                   path: 'statistics',
                   element: <StatisticsPage />,
-                  handle: { title: 'STATISTICS', role: 64 },
+                  handle: { title: 'STATISTICS', role: Role.Statistics },
                 },
                 {
                   path: 'chatrecord',
                   element: <StatisticsPage />,
-                  handle: { title: 'CHATRECORD', role: 128 },
+                  handle: { title: 'CHATRECORD', role: Role.ChatRecord },
                 },
                 {
                   path: 'setting',
                   element: <SettingPage />,
-                  handle: { title: 'SETTING', role: 256 },
+                  handle: { title: 'SETTING', role: Role.Setting },
                 },
               ],
             },
@@ -130,7 +131,7 @@ const finalRoutes = [
                 {
                   path: 'viewer/:historyId/:createByBrand/:actorEmail/:actorName',
                   element: <HistoryViewer />,
-                  handle: { title: `` },
+                  handle: { title: `HISTORY VIEWER`, role: Role.History },
                 },
               ],
             },
