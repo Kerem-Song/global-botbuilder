@@ -1,4 +1,4 @@
-import { icEmptyBot } from '@assets';
+import { icEmptyBot, icPlusWhite } from '@assets';
 import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
 import { usePage, useRootState } from '@hooks';
@@ -86,13 +86,14 @@ export const ScenarioManagement: FC<{
         <Button
           block
           type="primary"
+          icon={icPlusWhite}
           onClick={() => {
             dispatch(setPopupType('create'));
             dispatch(setScenarioPopupOpen(true));
           }}
           disabled={scenarioCreating}
         >
-          + {t(`ADD_A_NEW_SCENARIO_BTN`)}
+          {t(`ADD_A_NEW_SCENARIO_BTN`)}
         </Button>
       </div>
 
