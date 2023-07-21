@@ -236,6 +236,7 @@ export const JsonRequestNodeEdit = () => {
                     placeholder="Key"
                     {...register(`view.queryStrings.${i}.key`)}
                     readOnly={isHistoryViewer}
+                    maxLength={50}
                   />
                 </Col>
                 <Col span={12}>
@@ -243,6 +244,7 @@ export const JsonRequestNodeEdit = () => {
                     placeholder="Value"
                     {...register(`view.queryStrings.${i}.value`)}
                     readOnly={isHistoryViewer}
+                    maxLength={2000}
                   />
                 </Col>
                 <Col span={2}>
