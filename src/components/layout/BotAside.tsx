@@ -1,28 +1,11 @@
-import {
-  icChatbot,
-  icDeploy,
-  icDeploySelected,
-  icHelp,
-  icHelpSelected,
-  icHistory,
-  icHistorySelected,
-  icLine,
-  icLnbHide,
-  icLnbShow,
-  icScenario,
-  icScenarioSelected,
-  icSetting,
-  icSettingSelected,
-  icStatistics,
-  icStatisticsSelected,
-  icUtterance,
-  icUtteranceSelected,
-} from '@assets/index';
+import { icChatbot, icLine, icLnbHide, icLnbShow } from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { StaffType } from '@models';
+import { menuModule } from '@modules/menuModule';
+import { util } from '@modules/util';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
 import classNames from 'classnames';
@@ -61,60 +44,6 @@ export const BotAside = () => {
 
   console.log('role, staffType', role, staffType);
 
-  const getMenuItem = (
-    id: number,
-    url: string,
-    name: string,
-    icon: string,
-    selectedIcon: string,
-    role: number,
-  ) => {
-    return {
-      id,
-      url: `/${i18n.language}/${brandInfo.brandId}/${url}`,
-      name,
-      icon,
-      selectedIcon,
-      alt: url.replace(/^./, url[0].toUpperCase()),
-      desc: ts(`${name.toUpperCase()}`),
-      role,
-    };
-  };
-
-  const menu = [
-    getMenuItem(
-      1,
-      `${botId}/scenario/start`,
-      'scenario',
-      icScenario,
-      icScenarioSelected,
-      2,
-    ),
-    getMenuItem(
-      2,
-      `${botId}/utterance`,
-      'utterance',
-      icUtterance,
-      icUtteranceSelected,
-      2,
-    ),
-    getMenuItem(4, `${botId}/deployment`, 'deployment', icDeploy, icDeploySelected, 16),
-    getMenuItem(5, `${botId}/history`, 'history', icHistory, icHistorySelected, 32),
-    getMenuItem(
-      6,
-      `${botId}/statistics`,
-      'statistics',
-      icStatistics,
-      icStatisticsSelected,
-      64,
-    ),
-  ];
-
-  const subMenu = [
-    getMenuItem(1, 'help', 'help', icHelp, icHelpSelected, 0),
-    getMenuItem(2, `${botId}/setting`, 'setting', icSetting, icSettingSelected, 256),
-  ];
-
   const botList: IPopperSelectItem<{ action: (id: string) => void }>[] = [
     ...(data
       ? data.slice(0, 3).map((x) => {
@@ -128,7 +57,13 @@ export const BotAside = () => {
                 if (botId === id) {
                   return;
                 }
-                navigate(`/${i18n.language}/${brandInfo.brandId}/${id}/scenario/start`);
+
+                navigate(
+                  `/${i18n.language}/${brandInfo.brandId}/${id}/${util.getEnterBotPath(
+                    staffType,
+                    role,
+                  )}`,
+                );
                 dispatch(setSesstionToken());
                 dispatch(initBotBuilder());
               },
@@ -215,13 +150,8 @@ export const BotAside = () => {
 
         <nav className="mainNav">
           <ul>
-            {menu
-              .filter(
-                (x) =>
-                  staffType === StaffType.Administrator ||
-                  x.role === StaffType.Administrator ||
-                  (role !== undefined && (x.role & role) === x.role),
-              )
+            {menuModule.menu
+              .filter((x) => util.checkRole(x.role, staffType, role))
               .map((item) => {
                 return (
                   <Tooltip
@@ -246,7 +176,7 @@ export const BotAside = () => {
                             <img src={item.icon} alt={item.alt} />
                           )}
                         </span>
-                        {<span className="desc">{item.desc}</span>}
+                        {<span className="desc">{ts(item.desc)}</span>}
                       </li>
                     </NavLink>
                   </Tooltip>
@@ -259,7 +189,7 @@ export const BotAside = () => {
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
-            {subMenu
+            {menuModule.subMenu
               .filter(
                 (x) =>
                   staffType === StaffType.Administrator ||
@@ -284,7 +214,7 @@ export const BotAside = () => {
                           <img src={item.icon} alt={item.alt} />
                         )}
                       </span>
-                      {sidebarStatus && <span className="desc">{item.desc}</span>}
+                      {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
                     </li>
                   </NavLink>
                 );

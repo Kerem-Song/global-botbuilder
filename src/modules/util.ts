@@ -1,6 +1,29 @@
+import { StaffType } from '@models';
 import parse from 'html-react-parser';
 
+import { menuModule } from './menuModule';
+
 export const util = {
+  getEnterBotPath: (type?: StaffType, role?: number) => {
+    const goto = menuModule.menu.find((x) => util.checkRole(x.role, type, role));
+    if (goto) {
+      return goto.url;
+    } else {
+      return 'scenario/start';
+    }
+  },
+  checkRole: (checkRole: number, type?: StaffType, role?: number) => {
+    // 어드민은 모든 권한
+    if (type === StaffType.Administrator) {
+      return true;
+    }
+
+    if (!role) {
+      return false;
+    }
+
+    return (checkRole & role) === checkRole;
+  },
   replaceKeywordMark: (text: string, keyword?: string, isStart = false) => {
     if (!keyword) {
       return text;

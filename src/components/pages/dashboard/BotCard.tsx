@@ -3,18 +3,17 @@ import { Card, Col, Row, Space } from '@components';
 import { DisplayDate } from '@components/data-display/DisplayDate';
 import { usePage } from '@hooks';
 import { IBotModel } from '@models';
-import { util } from '@modules/util';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 export const BotCard: FC<{ model: IBotModel }> = ({ model }) => {
-  const { navigate, t } = usePage();
+  const { enterBot, t } = usePage();
   const operatingChannelName = model.channelInfos?.find((x) => x.isLive)?.name;
   const testChannelName = model.channelInfos?.find((x) => !x.isLive)?.name;
   return (
     <Card
       radius="large"
-      onClick={() => navigate(`/${model.id}/scenario/start`)}
+      onClick={() => enterBot(model.id)}
       className="chatbot-card"
       titleClassName="title"
       title={

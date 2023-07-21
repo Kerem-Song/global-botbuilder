@@ -2,6 +2,7 @@ import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
 import { StaffType } from '@models';
 import { IHandle } from '@models/interfaces/IHandle';
+import { util } from '@modules/util';
 import { i18n } from 'i18next';
 import { createContext, FC, useEffect, useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
@@ -19,6 +20,7 @@ export const PageContext = createContext<
       i18n: i18n;
       navigate: (to: To, options?: NavigateOptions) => void;
       setNavigateUrl: (value: string) => void;
+      enterBot: (botId: string) => void;
     }
   | undefined
 >(undefined);
@@ -48,6 +50,11 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
       },
       options,
     );
+  };
+
+  const enterBot = (botId: string) => {
+    const path = util.getEnterBotPath(userInfo.staffType, userInfo.role);
+    localeNavigate(`/${botId}/${path}`);
   };
 
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
@@ -86,6 +93,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
         isReadOnly,
         navigate: localeNavigate,
         setNavigateUrl,
+        enterBot,
       }}
     >
       {navigateUrl ? (
