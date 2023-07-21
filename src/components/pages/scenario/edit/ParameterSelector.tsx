@@ -12,6 +12,7 @@ export interface IParameterSelectorProps<T extends object> {
   isDisabled?: boolean;
   placeholder?: string;
   error?: any;
+  maxLength?: number;
 }
 
 export const ParameterSelector = <T extends object>({
@@ -20,6 +21,7 @@ export const ParameterSelector = <T extends object>({
   readOnly,
   path,
   error,
+  maxLength,
 }: IParameterSelectorProps<T>) => {
   const {
     getVariableSelectListQuery: { data },
@@ -73,6 +75,7 @@ export const ParameterSelector = <T extends object>({
         onChange={field.onChange}
         create={handleCreate}
         error={error}
+        maxLength={maxLength}
       />
     </>
   );

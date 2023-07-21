@@ -10,6 +10,7 @@ export interface IVariableSelectorProps<T extends object> {
   readOnly?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
+  maxLength?: number;
 }
 
 export const VariableSelector = <T extends object>({
@@ -18,6 +19,7 @@ export const VariableSelector = <T extends object>({
   placeholder,
   control,
   path,
+  maxLength,
 }: IVariableSelectorProps<T>) => {
   const {
     getVariableSelectListQuery: { data },
@@ -53,6 +55,7 @@ export const VariableSelector = <T extends object>({
       }}
       onChange={field.onChange}
       create={handleCreate}
+      maxLength={maxLength}
     />
   );
 };

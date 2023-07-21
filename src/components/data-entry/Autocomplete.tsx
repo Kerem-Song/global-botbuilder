@@ -22,6 +22,7 @@ export interface AutocompleteProps<T extends object> {
   placeholder?: string;
   prefix?: ReactNode;
   sufix?: ReactNode;
+  maxLength?: number;
   create?: (value: string | undefined) => T | undefined;
   onChangeValue?: (value: T | undefined) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -148,6 +149,7 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
             }
           }}
           value={search}
+          maxLength={args.maxLength}
           onChange={(e) => {
             args.onChange?.(e);
             handleSearchChange(e.target.value);

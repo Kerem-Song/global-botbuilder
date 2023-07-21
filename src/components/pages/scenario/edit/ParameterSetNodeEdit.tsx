@@ -58,6 +58,7 @@ export const ParameterSetNodeEdit = () => {
                 control={control}
                 path={`view.parameters.${i}.name`}
                 placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+                maxLength={300}
                 readOnly={isHistoryViewer}
               />
             </FormItem>
@@ -75,6 +76,7 @@ export const ParameterSetNodeEdit = () => {
                 placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
                 control={control}
                 path={`view.parameters.${i}.value`}
+                maxLength={2000}
                 readOnly={isHistoryViewer}
               />
             </FormItem>
