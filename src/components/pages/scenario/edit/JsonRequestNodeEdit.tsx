@@ -181,6 +181,7 @@ export const JsonRequestNodeEdit = () => {
             required={true}
             {...register('view.url')}
             readOnly={isHistoryViewer}
+            maxLength={2055}
           />
         </FormItem>
         <Divider style={{ margin: '28px 0' }} />
@@ -273,6 +274,7 @@ export const JsonRequestNodeEdit = () => {
             placeholder={t(`API_REQUEST_JSON_BODY_PLACEHOLDER`)}
             {...register('view.body')}
             readOnly={isHistoryViewer}
+            maxLength={65535}
           />
         </FormItem>
         <Divider style={{ margin: '28px 0' }} />

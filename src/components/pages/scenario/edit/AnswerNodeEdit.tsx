@@ -78,6 +78,7 @@ export const AnswerNodeEdit = () => {
                 path="view.utteranceParam"
                 placeholder={t('INPUT_VARIABLE_PLACEHOLDER')}
                 isDisabled={!use}
+                maxLength={55}
               />
             </FormItem>
           </div>

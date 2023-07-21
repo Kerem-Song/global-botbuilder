@@ -217,6 +217,7 @@ export const ProductCardNodeEdit = () => {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     checkPriceRegex(e, 'salePrice'),
                 })}
+                maxLength={11}
               />
             </Space>
           </Collapse>

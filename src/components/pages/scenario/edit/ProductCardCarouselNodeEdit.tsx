@@ -314,6 +314,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 checkPriceRegex(e, index, 'salePrice'),
                             },
                           )}
+                          maxLength={11}
                         />
                       </Space>
                     </Collapse>
