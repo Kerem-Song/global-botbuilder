@@ -31,7 +31,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, tc, setNavigateUrl } = usePage();
+  const { navigate, tc } = usePage();
   const { t } = useI18n('utternaceDetailPage');
   const { botId } = useParams();
   const {
@@ -168,12 +168,8 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       }
     } else {
       lunaToast.success(tc('SAVE_MESSAGE'));
-      if (isOpenUtteranceDetailPopup && handleClose) {
-        handleClose();
-        handleIsOpenUtterancePopup!(true);
-      } else {
-        setNavigateUrl(`/${botId}/utterance`);
-      }
+      setIsActive(false);
+
       return;
     }
   };

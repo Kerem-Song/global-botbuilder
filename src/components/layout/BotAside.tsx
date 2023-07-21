@@ -24,7 +24,7 @@ export const BotAside = () => {
   const { botId } = useParams();
   const [page, setPage] = useState<string>();
 
-  const { i18n, t, ts } = useI18n();
+  const { i18n, ts } = useI18n();
 
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const botInfo = useRootState((state) => state.botInfoReducer.botInfo);
@@ -147,7 +147,6 @@ export const BotAside = () => {
             )}
           </div>
         </Popper>
-
         <nav className="mainNav">
           <ul>
             {menuModule.menu
@@ -156,7 +155,7 @@ export const BotAside = () => {
                 return (
                   <Tooltip
                     key={item.id}
-                    tooltip={item.desc}
+                    tooltip={ts(item.desc)}
                     placement="bottom-start"
                     offset={[10, 0]}
                     disable={sidebarStatus}
@@ -185,7 +184,6 @@ export const BotAside = () => {
           </ul>
         </nav>
       </div>
-
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>

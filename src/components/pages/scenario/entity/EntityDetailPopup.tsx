@@ -103,8 +103,8 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
         return;
       } else {
-        handleResetEntryInfo();
         lunaToast.success(tc('SAVE_MESSAGE'));
+        setIsActive(false);
         return;
       }
     }
