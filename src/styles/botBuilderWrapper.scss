@@ -208,6 +208,7 @@
       }
 
       .addBtn {
+        margin-top: rem(24);
         width: 100%;
         height: rem(40);
         background-color: $grayWhite;
@@ -313,11 +314,12 @@
       .deleteBtn {
         display: flex;
         justify-content: center;
-        padding-bottom: rem(25);
+        // padding-bottom: rem(25);
 
         button {
           color: $gray300;
           text-decoration: underline;
+          font-size: rem(13);
 
           &:hover {
             color: $primary500;

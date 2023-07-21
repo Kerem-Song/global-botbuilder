@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
+import { Button, Col, Collapse, Divider, FormItem, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
@@ -253,6 +253,7 @@ export const DataListCardNodeEdit = () => {
                 </Button>
               </div>
             )}
+            {fields.length !== i + 1 && <Divider style={{ margin: '28px 0' }} />}
           </div>
         ))}
         <div>
