@@ -7,7 +7,6 @@ import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import MultiClamp from 'react-multi-clamp';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { EmptyEntityCard } from './EmptyEntityCard';
