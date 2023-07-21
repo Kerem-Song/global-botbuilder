@@ -170,7 +170,7 @@ export const ListCardNodeEdit = () => {
         ))}
         <div>
           {fields.length < 5 ? (
-            <Button shape="ghost" className="addBtn" onClick={handleAddListButton}>
+            <Button shape="ghost" className="addBtn list" onClick={handleAddListButton}>
               <span>+ {t(`ADD_A_NEW_LIST`)}</span>
             </Button>
           ) : null}

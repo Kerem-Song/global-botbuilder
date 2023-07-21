@@ -208,13 +208,16 @@
       }
 
       .addBtn {
-        margin-top: rem(24);
         width: 100%;
         height: rem(40);
         background-color: $grayWhite;
         border: rem(1) dashed #b5b4b4;
         border-radius: rem(8);
 
+        &.list {
+          margin-top: rem(24);
+        }
+        
         &:hover {
           background-image: url('@assets/icons/ic_img_add_hover.svg');
           background-repeat: no-repeat;
