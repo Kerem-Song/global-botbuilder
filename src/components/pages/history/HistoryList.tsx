@@ -1,7 +1,7 @@
 import { icNoResult } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { usePage } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import {
   IHistoryCondition,
@@ -34,6 +34,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
     year: year,
   });
   const [ref, inView] = useInView();
+  const brandInfo = useRootState((state) => state.brandInfoReducer);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -137,7 +138,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
 
     window.open(
       window.location.origin +
-        `/${botId}/viewer/${id}/${util.toLocaleDateTimeString(
+        `/${brandInfo.brandId}/${botId}/viewer/${id}/${util.toLocaleDateTimeString(
           new Date(item.createAtByBrand),
         )}/${item.actorEmail}/${item.actorName}/`,
 

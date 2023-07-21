@@ -122,6 +122,18 @@ const finalRoutes = [
                 },
               ],
             },
+            {
+              path: ':botId',
+              element: <HistoryViewerLayout />,
+              errorElement: <>404?</>,
+              children: [
+                {
+                  path: 'viewer/:historyId/:createByBrand/:actorEmail/:actorName',
+                  element: <HistoryViewer />,
+                  handle: { title: `` },
+                },
+              ],
+            },
             { path: '', element: <Navigate to="dashboard" replace={true} /> },
           ],
         },

@@ -5,6 +5,8 @@
   padding: rem(7) rem(12);
   background-color: $gray100;
   border-bottom: 1px solid $gray200;
+  height: rem(51);
+  overflow: hidden;
 
   .cardNumWrapper {
     width: rem(150);
