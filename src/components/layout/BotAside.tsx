@@ -147,7 +147,7 @@ export const BotAside = () => {
             )}
           </div>
         </Popper>
-        <nav className="mainNav">
+        <nav className="mainNav" data-sidebar={sidebarStatus}>
           <ul>
             {menuModule.menu
               .filter((x) => util.checkRole(x.role, staffType, role))

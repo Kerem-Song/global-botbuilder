@@ -86,9 +86,10 @@ aside {
   }
 
   .lnbHeader {
+    margin-top: rem(10);
     &[data-sidebar='true'] {
       height: rem(43);
-      padding: rem(12) rem(16);
+      padding: rem(12) rem(32);
       &:hover {
         a {
           color: $gray300;
@@ -221,7 +222,21 @@ aside {
 }
 
 .mainNav {
-  margin: rem(12) rem(9);
+  margin: rem(27) rem(9);
+
+  &[data-sidebar='true'] {
+    margin: rem(28) rem(20);
+
+    li {
+      padding: rem(12) rem(16);
+      height: rem(40);
+      border-radius: rem(4);
+
+      .desc {
+        padding-left: rem(8);
+      }
+    }
+  }
 }
 
 nav {
