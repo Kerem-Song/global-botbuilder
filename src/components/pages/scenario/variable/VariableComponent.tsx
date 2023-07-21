@@ -61,13 +61,13 @@ export const VariableComponent = () => {
           <Col>
             <Button
               type="primary"
+              icon={icPlusWhite}
               className="addVariableBtn"
               onClick={() => {
                 handleId();
                 handleIsOpen(true);
               }}
             >
-              <img className="plusBtn" src={icPlusWhite} alt="add" />
               <span>{t('ADD_VARIABLE')}</span>
             </Button>
           </Col>

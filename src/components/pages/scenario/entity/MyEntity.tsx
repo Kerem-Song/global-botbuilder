@@ -92,12 +92,12 @@ export const MyEntity: FC<IMyEntityProps> = ({
       <div className="entity">
         <Button
           type="primary"
+          icon={icPlusWhite}
           onClick={() => {
             handleIsOpen(false);
             handleIsOpenEntityDetailPopup(true);
           }}
         >
-          <img src={icPlusWhite} alt="add" style={{ marginRight: '3px' }} />
           <span>{t('ADD_ENTITY')}</span>
         </Button>
         <Input
