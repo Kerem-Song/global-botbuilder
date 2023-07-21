@@ -158,7 +158,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
               </Button>
             </div>
           )}
-          {j < fields.length && <Divider style={{ margin: '32px 0' }} />}
+          {fields.length !== j + 1 && <Divider style={{ margin: '28px 0' }} />}
         </div>
       ))}
       <div>

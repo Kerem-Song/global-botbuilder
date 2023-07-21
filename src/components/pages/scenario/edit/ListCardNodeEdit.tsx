@@ -165,7 +165,7 @@ export const ListCardNodeEdit = () => {
                 </Button>
               </div>
             )}
-            {i < fields.length && <Divider style={{ margin: '32px 0' }} />}
+            {fields.length !== i + 1 && <Divider style={{ margin: '28px 0' }} />}
           </div>
         ))}
         <div>
