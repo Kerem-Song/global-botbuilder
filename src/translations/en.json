@@ -392,7 +392,7 @@
     "CHANNEL_NOT_FOUND": "Channel Not Found",
     "CHANNEL_TYPE": "Channel Type",
     "DEPLOY_NOTES": "Memo not found. ",
-    "DEPLOY_NUMBER": "Deployment Number",
+    "DEPLOY_NUMBER": "Deploy Number",
     "DEPLOY_OPERATIONAL_CHANNEL": "Deploy Operation Channel",
     "DEPLOY_TEST_CHANNEL": "Deploy Test Channel",
     "DEPLOYING_CHANNEL_CONNECT_FAILED_MESSAGE": "Deployment has failed. Please check the channel connection with Partners Center. ",
