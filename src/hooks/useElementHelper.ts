@@ -405,6 +405,7 @@ export const useElementHelper = (
       } else {
         mouseElement.style.opacity = disableAlpha;
       }
+
       if (isBezierMode && bezier !== '') {
         mouseElement.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
       } else {
@@ -413,10 +414,6 @@ export const useElementHelper = (
           `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
         );
       }
-      mouseElement.setAttribute(
-        'd',
-        `M ${startPoint.x} ${startPoint.y} ${line1} ${line2} ${line3} ${line4} L ${endPoint.x} ${endPoint.y}`,
-      );
     }
 
     if (deleteElement) {
