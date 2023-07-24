@@ -64,13 +64,9 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   };
 
   return (
-    <Card
-      radius="normal"
-      bodyStyle={{ padding: '20px' }}
-      style={{ border: '1px solid #DCDCDC', marginTop: '20px' }}
-    >
+    <Card radius="normal" className="entityRegistryCard">
       <Space direction="vertical">
-        <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
+        <Row align="center" gap={10} style={{ marginBottom: '10px' }}>
           <Col style={{ width: '140px' }}>
             <span>{t('ENTITY_NAME')}</span>
             <span style={{ color: 'red' }}> *</span>
@@ -89,7 +85,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
             <span className="error-message">{errors.name?.message}</span>
           </Col>
         </Row>
-        <Row align="center" gap={10} style={{ marginBottom: '20px' }}>
+        <Row align="center" gap={10} style={{ marginBottom: '10px' }}>
           <Col style={{ width: '140px' }}>
             <span>{t('ENTRY_TYPE')}</span>
             <span style={{ color: 'red' }}> *</span>
@@ -126,6 +122,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
             </Col>
             <Col flex="auto">
               <Input
+                style={{ height: '36px' }}
                 placeholder={t('INPUT_REGULAR_EXPRESSION')}
                 isError={regexInputError || errors.entries?.message ? true : false}
                 ref={field.ref}

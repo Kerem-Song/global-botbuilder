@@ -56,7 +56,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
                   style={{ lineHeight: 2 }}
                 />
               </Col>
-              <Col span={util.random(8)}>
+              <Col span={util.random(6)}>
                 <ReactLoadingSkeleton
                   count={1}
                   height={16}
@@ -64,7 +64,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
                   style={{ lineHeight: 2 }}
                 />
               </Col>
-              <Col span={util.random(8)}>
+              <Col span={util.random(7)}>
                 <ReactLoadingSkeleton
                   count={1}
                   height={16}
