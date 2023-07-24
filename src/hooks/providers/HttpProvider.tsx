@@ -102,12 +102,27 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       if (err.response.status === 403 || err.response.status === 401) {
         console.log('@Err status', err, err.response.status);
         if (err.response.data.exception.errorCode === 7659) {
-          error({
-            title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
-            description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
-          }).then(() => {
-            document.location.href = urlToDashbaord;
-          });
+          if (err.response.data.exception.staffRole === '0') {
+            error({
+              title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+              description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
+            }).then(() => {
+              console.log('logout');
+              dispatch(setToken({ refreshToken: 'logout' }));
+              const clientPrev = encodeURI(`${brandInfo.brandId}`);
+              console.log(clientPrev);
+              window.location.href = `${
+                import.meta.env.VITE_LOGIN_URL
+              }?clientPrev=${clientPrev}&clientType=${import.meta.env.VITE_CLIENT_TYPE}`;
+            });
+          } else {
+            error({
+              title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
+              description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
+            }).then(() => {
+              document.location.href = urlToDashbaord;
+            });
+          }
         } else {
           document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
         }
