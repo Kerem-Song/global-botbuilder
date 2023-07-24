@@ -120,6 +120,7 @@ export const QuicksEdit = () => {
                     {...register(`view.quicks.${i}.actionValue`)}
                     readOnly={isHistoryViewer}
                     placeholder={t(`SET_URL_PLACEHOLDER`)}
+                    maxLength={1055}
                   />
                 </FormItem>
               </>
