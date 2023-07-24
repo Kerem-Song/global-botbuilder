@@ -18,7 +18,7 @@ import { useAddArrow } from '@hooks/useAddArrow';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind, NodeOption, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { CANVAS_LIMIT, ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -63,7 +63,7 @@ export const Botbuilder = () => {
   });
   const [isDraggedNodeBottom, setIsDraggedNodeBottom] = useState<boolean>(false);
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
-
+  const [isStartNode, setIsStartNode] = useState<boolean>(false);
   const otherFlowPopupIsOpen = useRootState(
     (state) => state.otherFlowScenariosPopupStatusReducer.isOpen,
   );
@@ -136,7 +136,8 @@ export const Botbuilder = () => {
 
   useEffect(() => {
     if (canvasRef.current) {
-      if (startNode && !isSaved) {
+      console.log('@startNode selected', selected);
+      if (startNode && startNode.id !== selected && !isStartNode && !isSaved) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';
       }
@@ -144,6 +145,7 @@ export const Botbuilder = () => {
       // canvasRef.current.style.top = '0px';
       return () => {
         dispatch(setIsScenarioSavedMutate(false));
+        setIsStartNode(false);
       };
     }
   }, [selectedScenario, startNode]);
@@ -377,6 +379,7 @@ export const Botbuilder = () => {
         role="tab"
         onDragStart={(e) => {
           const from = e.dataTransfer.getData('id');
+
           if (from) {
             return;
           }
@@ -420,6 +423,10 @@ export const Botbuilder = () => {
                 e.stopPropagation();
                 if (e.isTrusted) {
                   updateLine(`${NODE_PREFIX}${item.id}`);
+                }
+
+                if (item.type === NODE_TYPES.INTENT_NODE) {
+                  setIsStartNode(true);
                 }
               }}
               onStop={(e) => {
