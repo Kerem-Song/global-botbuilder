@@ -1,6 +1,6 @@
 import { Checkbox, Switch } from '@components/data-entry';
 import { Button } from '@components/general/Button';
-import { Col, Row } from '@components/layout';
+import { Col, Row, Space } from '@components/layout';
 import { useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
@@ -39,40 +39,42 @@ export const BotBuilderZoomBtn = () => {
   console.log('future', future);
 
   return (
-    <Row className="botBuilderCanvasBtn">
-      <Col className="botBuilderZoomBtn">
-        <Button small shape="ghost" className="minusZoomBtn" onClick={handleZoomOut} />
-        <span>{Math.round(scale * 100)}</span>
-        <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
-      </Col>
-      {!isHistoryViewer && (
-        <Col className="operationBtn">
-          <Button
-            small
-            className="undo"
-            disabled={!past}
-            onClick={() => {
-              updateLineAll();
-              dispatch(ActionCreators.undo());
-            }}
-          />
-          <Button
-            small
-            className="redo"
-            disabled={!future}
-            onClick={() => {
-              updateLineAll();
-              dispatch(ActionCreators.redo());
-            }}
-          />
+    <Space>
+      <Row className="botBuilderCanvasBtn">
+        <Col className="botBuilderZoomBtn">
+          <Button small shape="ghost" className="minusZoomBtn" onClick={handleZoomOut} />
+          <span>{Math.round(scale * 100)}</span>
+          <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
         </Col>
-      )}
+        {!isHistoryViewer && (
+          <Col className="operationBtn">
+            <Button
+              small
+              className="undo"
+              disabled={!past}
+              onClick={() => {
+                updateLineAll();
+                dispatch(ActionCreators.undo());
+              }}
+            />
+            <Button
+              small
+              className="redo"
+              disabled={!future}
+              onClick={() => {
+                updateLineAll();
+                dispatch(ActionCreators.redo());
+              }}
+            />
+          </Col>
+        )}
 
-      <Col className="p-l-10">
-        <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
-          {isBezierMode ? 'B' : 'L'}
-        </Button>
-      </Col>
-    </Row>
+        <Col className="p-l-10">
+          <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
+            {isBezierMode ? 'B' : 'L'}
+          </Button>
+        </Col>
+      </Row>
+    </Space>
   );
 };
