@@ -70,6 +70,7 @@ export const LineContainer: FC = () => {
       ) : undefined}
       {guideInfo ? (
         <ConnectLine
+          isGuide={true}
           startId={guideInfo.startId}
           endId="icGuide"
           type={guideInfo.type}

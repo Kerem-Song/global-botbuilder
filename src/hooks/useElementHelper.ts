@@ -53,9 +53,15 @@ export const useElementHelper = (
   const offset = { x: cr.x + svgRect.x, y: cr.y + svgRect.y };
 
   const arrowPoint = {
+    // x: isNextNode ? er.x - offset.x - arrowSize.width : er.x + ehw - offset.x - ahw,
+    // y: isNextNode
+    //   ? er.y - offset.y + ehh
+    //   : sr.y < er.y
+    //   ? er.y - sr.y + outSize.height - arrowSize.height
+    //   : outSize.height - arrowSize.height,
     x: isNextNode ? er.x - offset.x - arrowSize.width : er.x + ehw - offset.x - ahw,
     y: isNextNode
-      ? er.y - offset.y + ehh
+      ? er.y - offset.y + ahh
       : sr.y < er.y
       ? er.y - sr.y + outSize.height - arrowSize.height
       : outSize.height - arrowSize.height,
@@ -70,7 +76,10 @@ export const useElementHelper = (
     }
   };
 
-  const setArrowStyle = (element: SVGPathElement | null) => {
+  const setArrowStyle = (
+    element: SVGPathElement | null,
+    dragEl: HTMLDivElement | null,
+  ) => {
     if (element) {
       if (!end) {
         element.style.opacity = '0';
@@ -82,6 +91,24 @@ export const useElementHelper = (
         element.style.opacity = '1';
         const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
         element.style.transform = translate;
+      }
+    }
+
+    if (dragEl) {
+      if (!end) {
+        dragEl.style.opacity = '0';
+      } else if (!start) {
+        dragEl.style.opacity = disableAlpha;
+        const translate = `translate(${
+          svgRect.x + arrowPoint.x - (isNextNode ? 8 : 4)
+        }px, ${svgRect.y + arrowPoint.y - (isNextNode ? 4 : 8)}px)`;
+        dragEl.style.transform = translate;
+      } else {
+        dragEl.style.opacity = '1';
+        const translate = `translate(${
+          svgRect.x + arrowPoint.x - (isNextNode ? 8 : 4)
+        }px, ${svgRect.y + arrowPoint.y - (isNextNode ? 4 : 8)}px)`;
+        dragEl.style.transform = translate;
       }
     }
   };

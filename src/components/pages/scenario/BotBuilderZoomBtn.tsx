@@ -17,8 +17,6 @@ export const BotBuilderZoomBtn = () => {
   const future =
     useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
-  const useTextFunction =
-    useRootState((state) => state.userInfoReducer.companyName) === '비즈챗봇팀';
   const isHistoryViewer = useHistoryViewerMatch();
   const handleZoomOut = () => {
     dispatch(zoomOut());
@@ -29,7 +27,12 @@ export const BotBuilderZoomBtn = () => {
   };
 
   useEffect(() => {
+    dispatch(setIsBeziderMode(localStorage.getItem('isBezierMode') === 'B'));
+  }, []);
+
+  useEffect(() => {
     updateLineAll();
+    localStorage.setItem('isBezierMode', isBezierMode ? 'B' : 'L');
   }, [isBezierMode]);
 
   console.log('past', past);
@@ -64,13 +67,12 @@ export const BotBuilderZoomBtn = () => {
           />
         </Col>
       )}
-      {useTextFunction ? (
-        <Col className="p-l-10">
-          <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
-            {isBezierMode ? 'B' : 'L'}
-          </Button>
-        </Col>
-      ) : null}
+
+      <Col className="p-l-10">
+        <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
+          {isBezierMode ? 'B' : 'L'}
+        </Button>
+      </Col>
     </Row>
   );
 };
