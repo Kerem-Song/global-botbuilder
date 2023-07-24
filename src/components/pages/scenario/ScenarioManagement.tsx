@@ -97,7 +97,11 @@ export const ScenarioManagement: FC<{
         </Button>
       </div>
 
-      <div className="scenarioListWrapper">
+      <div
+        className={classNames('scenarioListWrapper', {
+          hasScrollbar: filteredScenarios && filteredScenarios.length > 10,
+        })}
+      >
         <Space gap="small" direction="vertical">
           {scenarios ? (
             !filteredScenarios?.length ? (

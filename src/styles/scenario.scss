@@ -124,6 +124,10 @@
       scrollbar-width: none;
       padding: rem(0) rem(10);
 
+      &.hasScrollbar:hover {
+        padding-right: rem(2);
+      }
+
       .luna-space-vertical {
         overflow: hidden;
       }
@@ -199,10 +203,6 @@
           padding-top: rem(10);
         }
       }
-    }
-
-    .scenarioListWrapper:hover {
-      padding-right: rem(2);
     }
     
     .scenarioListWrapper::-webkit-scrollbar {
