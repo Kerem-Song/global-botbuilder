@@ -178,14 +178,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       onRequestClose={handleResetEntryInfo}
       shouldCloseOnOverlayClick={false}
     >
-      <div className="detail header">
+      <div className="detail">
         <div className="listBtn">
           <Button icon={icPrev} onClick={handleListBtn}>
             {t('ENTITY_LIST')}
           </Button>
         </div>
-        <button className="closeBtn" onClick={handleClose}>
-          <img src={icPopupClose} alt="modal close btn"></img>
+        <button className="detailCloseBtn" onClick={handleClose}>
+          <img src={icPopupClose} alt="modal closebtn"></img>
         </button>
       </div>
       <FormProvider {...formMethods}>

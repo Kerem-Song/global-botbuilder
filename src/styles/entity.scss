@@ -28,18 +28,18 @@
       }
     }
     .closeBtn {
-      width: rem(20);
-      height: rem(20);
+      width: rem(16);
+      height: rem(16);
       border: none;
       background-color: $grayWhite;
-      img {
-        width: 100%;
-      }
     }
   }
   .detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid $gray150;
-    padding-bottom: rem(10);
+    padding: rem(11) rem(20);
     .listBtn {
       display: flex;
       justify-content: center;
@@ -47,6 +47,12 @@
       img {
         margin-right: rem(5);
       }
+    }
+    .detailCloseBtn {
+      width: rem(16);
+      height: rem(32);
+      border: none;
+      background-color: $grayWhite;
     }
   }
   .myEntitiesContainer {
@@ -196,15 +202,20 @@
       .entityDetailHeader {
         display: flex;
         justify-content: space-between;
+        margin-bottom: rem(10);
+      }
+      .entityRegistryCard {
+        border: 1px solid $gray200;
+        padding: 0 rem(10);
       }
       .searchInput {
-        margin: rem(12) 0;
+        margin: rem(10) 0;
         display: flex;
         justify-content: flex-end;
       }
       .registerEntry {
         .entityDetail {
-          height: rem(250);
+          height: rem(324);
           overflow-y: scroll;
           border: 1px solid $gray200;
         }
@@ -222,7 +233,6 @@
         *:hover::-webkit-scrollbar-thumb {
           background-color: rgba(208, 221, 255, 0.8);
         }
-
         div {
           div {
             div {
@@ -398,7 +408,7 @@
               }
             }
             .emptyList {
-              height: rem(153);
+              height: rem(217);
               display: flex;
               justify-content: center;
               align-items: center;
