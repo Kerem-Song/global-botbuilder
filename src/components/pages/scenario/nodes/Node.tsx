@@ -59,7 +59,7 @@ export const Node: FC<INodeProps> = ({
 
   const { tc } = usePage();
   const dispatch = useDispatch();
-
+  const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const invalidate = useRootState(
     (state) => state.botBuilderReducer.invalidateNodes[node.id],
@@ -68,6 +68,7 @@ export const Node: FC<INodeProps> = ({
     (state) => state.botBuilderReducer.selectedScenario,
   );
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
+  const guideInfo = useRootState((state) => state.botBuilderReducer.guideInfo);
 
   const { updateLine } = useUpdateLines();
   const wrapClass = classNames(className, 'luna-node', {
@@ -99,10 +100,9 @@ export const Node: FC<INodeProps> = ({
   };
 
   const handleBottomDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    if (e.isTrusted) {
-      const guide = document.querySelector<HTMLDivElement>('#icGuide');
-
-      if (guide) {
+    const guide = document.querySelector<HTMLDivElement>('#icGuide');
+    if (guide) {
+      if (e.isTrusted) {
         const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
         const cr = canvas?.getBoundingClientRect() || new DOMRect();
         const newPosition = {
@@ -111,7 +111,10 @@ export const Node: FC<INodeProps> = ({
         };
         guide.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
       }
-      updateLine(`${NODE_PREFIX}${id}`);
+      if (guideInfo) {
+        updateLine(guideInfo.nodeId || guideInfo.startId);
+      }
+      //updateLine(`${NODE_PREFIX}${id}`);
     }
   };
 
@@ -217,6 +220,7 @@ export const Node: FC<INodeProps> = ({
               return;
             }
 
+            dispatch(setGuideStartNode());
             const nodeId = e.dataTransfer.getData('nodeId');
             const isNext = e.dataTransfer.getData('isNext');
             const pointType = e.dataTransfer.getData('pointType');
@@ -271,33 +275,35 @@ export const Node: FC<INodeProps> = ({
           </div>
           <div className={bodyClass}>{handleShowingNodesWithoutCards()}</div>
           {nodekind === NodeKind.InputNode && (
-            <Button shape="ghost" className="icNodeBottom">
-              <div
-                id={`${NODE_PREFIX}bottom-${id}`}
-                role="presentation"
-                className="node-draggable-ignore"
-                draggable
-                onDragStart={(e) => {
-                  e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
-                  e.dataTransfer.setData('pointType', 'blue');
-                  e.dataTransfer.setData('isDraggedNodeBottom', 'true');
-                  dispatch(
-                    setGuideStartNode({
-                      startId: `${NODE_PREFIX}${id}`,
-                      isNext: false,
-                      type: 'blue',
-                    }),
-                  );
-                }}
-                onDragEnd={() => {
-                  dispatch(setGuideStartNode());
-                }}
-                onDrag={handleBottomDrag}
-                onMouseDown={(e) => e.stopPropagation()}
-              >
-                <img src={icNodeBottom} alt="icNodeBottom" />
+            <>
+              <div className="icNodeBottom">
+                <div
+                  id={`${NODE_PREFIX}bottom-${id}`}
+                  role="presentation"
+                  className="node-draggable-ignore"
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData('id', `${NODE_PREFIX}${id}`);
+                    e.dataTransfer.setData('pointType', 'blue');
+                    e.dataTransfer.setData('isDraggedNodeBottom', 'true');
+                    dispatch(
+                      setGuideStartNode({
+                        startId: `${NODE_PREFIX}${id}`,
+                        isNext: false,
+                        type: 'blue',
+                      }),
+                    );
+                  }}
+                  onDragEnd={() => {
+                    dispatch(setGuideStartNode());
+                  }}
+                  onDrag={handleBottomDrag}
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
+                  <img src={icNodeBottom} alt="icNodeBottom" />
+                </div>
               </div>
-            </Button>
+            </>
           )}
         </div>
       </Popper>

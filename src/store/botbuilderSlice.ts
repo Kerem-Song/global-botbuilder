@@ -10,6 +10,7 @@ const transformOptions = {
 
 export interface GuideInfo {
   startId: string;
+  endId?: string;
   nodeId?: string;
   isNext: boolean;
   type: 'blue' | 'green' | 'red' | 'yellow';
@@ -125,7 +126,7 @@ export const botbuilderSlice = createSlice({
       }
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
-      console.log(action.payload);
+      console.log('setGuideStartNode', action.payload);
       state.guideInfo = action.payload;
       if (action.payload) {
         state.savedGuideInfo = action.payload;

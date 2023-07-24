@@ -161,7 +161,7 @@
         background-color: $progress-bg;
         border: rem(1) solid $red;
       }
-      
+
       .scenarioListName {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -361,4 +361,37 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+.nextNodeEnd {
+  border-radius: rem(10);
+  width: rem(20);
+  height: rem(20);
+  background-image: url('@assets/icons/ic_node.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+
+  &.green {
+    background-image: url('@assets/icons/ic_node_green.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.red {
+    background-image: url('@assets/icons/ic_node_red.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.yellow {
+    background-image: url('@assets/icons/ic_node_yellow.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &:hover {
+    background-color: transparent;
+    border-color: transparent;
+  }
 }
