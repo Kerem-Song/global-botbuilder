@@ -54,9 +54,6 @@ export const ScenarioManagement: FC<{
 
   useEffect(() => {
     if (scenarioListRef.current) {
-      console.log('@scenarioListRef scrollHeight', scenarioListRef.current?.scrollHeight);
-      console.log('@scenarioListRef clientHeight', scenarioListRef.current?.clientHeight);
-
       scenarioListRef.current.scrollHeight > scenarioListRef.current.clientHeight &&
         setIsOverflow(true);
     }

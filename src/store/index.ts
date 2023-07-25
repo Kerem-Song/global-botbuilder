@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { PersistConfig, persistReducer } from 'redux-persist';
+import storageLocal from 'redux-persist/lib/storage';
 import storage from 'redux-persist/lib/storage/session';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 import undoable from 'redux-undo';
@@ -20,27 +21,6 @@ import sideBarStatusReducer from './sidebarStatusSlice';
 import systemModalReducer from './systemModalSlice';
 import userInfoReducer from './userInfoSlice';
 
-const rootReducer = combineReducers({
-  authReducer,
-  userInfoReducer,
-  systemModalReducer,
-  sideBarStatusReducer,
-  brandInfoReducer,
-  botBuilderReducer,
-  botInfoReducer,
-  botSettingInfoReducer,
-  botTesterReducer,
-  intentReducer,
-  intentListReducer,
-  makingNodeSliceReducer: undoable(makingNodeSliceReducer, {
-    debug: true,
-    limit: 20,
-  }),
-  historyInfoReducer,
-  otherFlowScenariosPopupStatusReducer,
-  scenarioListPopupReducer,
-});
-
 type ReducerType = typeof rootReducer;
 type CombinedStateType = ReturnType<ReducerType>;
 
@@ -58,5 +38,41 @@ const persistConfig: PersistConfig<CombinedStateType> = {
     }),
   ],
 };
+
+const localPersistConfig = {
+  key: 'local',
+  storage: storageLocal,
+  whitelist: ['botInfoReducer'],
+  transforms: [
+    encryptTransform({
+      secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
+      onError: function (error) {
+        // Handle the error.
+        console.log('error', error);
+      },
+    }),
+  ],
+};
+
+const rootReducer = combineReducers({
+  authReducer,
+  userInfoReducer,
+  systemModalReducer,
+  sideBarStatusReducer,
+  brandInfoReducer,
+  botBuilderReducer,
+  botInfoReducer: persistReducer(localPersistConfig, botInfoReducer),
+  botSettingInfoReducer,
+  botTesterReducer,
+  intentReducer,
+  intentListReducer,
+  makingNodeSliceReducer: undoable(makingNodeSliceReducer, {
+    debug: true,
+    limit: 20,
+  }),
+  historyInfoReducer,
+  otherFlowScenariosPopupStatusReducer,
+  scenarioListPopupReducer,
+});
 
 export default persistReducer(persistConfig, rootReducer);
