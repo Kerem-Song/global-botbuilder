@@ -11,7 +11,6 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
-import { VariableSelector } from './VariableSelector';
 
 export const ResetVariableNodeEdit = () => {
   useNodeEditSave();
