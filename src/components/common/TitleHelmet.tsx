@@ -1,7 +1,5 @@
+import { useI18n, usePage } from '@hooks';
 import { Helmet } from 'react-helmet-async';
-
-import useI18n from '../../hooks/useI18n';
-import usePage from '../../hooks/usePage';
 
 export const TitleHelmet = () => {
   const { pageName } = usePage();

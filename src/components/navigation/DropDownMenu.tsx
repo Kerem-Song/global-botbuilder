@@ -1,9 +1,7 @@
 import '../../styles/dropdownMenu.scss';
 
-import React, { FC, useEffect, useState } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
-import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
+import { IDataEntryProp, IHasClassNameNStyle } from '@models';
+import { FC, useEffect, useState } from 'react';
 
 export const DropDownMenu: FC<IDataEntryProp & IHasClassNameNStyle> = ({
   disabled,

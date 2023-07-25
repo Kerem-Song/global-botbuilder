@@ -1,8 +1,6 @@
-import { IHasClassNameNStyle } from '@models';
+import { IHasChildren, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import React, { createElement, FC } from 'react';
-
-import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
 export type ButtonShape = 'default' | 'circle' | 'round' | 'ghost';
 

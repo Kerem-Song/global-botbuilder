@@ -1,6 +1,5 @@
 import { Button } from '@components/general';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { IHasClassNameNStyle, SizeType } from '@models';
+import { IDataEntryProp, IHasClassNameNStyle, SizeType } from '@models';
 import { util } from '@modules/util';
 import classNames from 'classnames';
 import {
@@ -13,8 +12,6 @@ import {
   useRef,
   useState,
 } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 export interface InputProps extends IDataEntryProp, IHasClassNameNStyle {
   maxLength?: number;

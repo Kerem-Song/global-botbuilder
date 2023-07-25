@@ -1,8 +1,7 @@
 import { NextNodeButton } from '@components/pages/scenario/NextNodeButton';
 import { IHasNode } from '@models/interfaces/IHasNode';
+import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
-
-import { NODE_PREFIX } from '../../../../modules';
 
 export const IntentNode: FC<IHasNode> = ({ node }) => {
   return (

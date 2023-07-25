@@ -1,9 +1,7 @@
 import '../../styles/checkbox.scss';
 
-import { IHasChildren, IHasClassNameNStyle } from '@models';
+import { IDataEntryProp, IHasChildren, IHasClassNameNStyle } from '@models';
 import { forwardRef } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 interface CheckboxProps extends IHasChildren, IDataEntryProp, IHasClassNameNStyle {
   disabled?: boolean;

@@ -1,8 +1,8 @@
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 
-import { NODE_PREFIX } from '../../../../modules';
 import { BasicCardView } from '../views/BasicCardView';
 
 export const BasicCardNode: FC<IHasNode> = ({ node }) => {

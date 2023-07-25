@@ -1,7 +1,6 @@
+import { useRootState } from '@hooks';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { useRootState } from '../../hooks/useRootState';
 
 export const HistoryViewerHeader: FC<{ isBotPage?: boolean }> = ({ isBotPage }) => {
   const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);

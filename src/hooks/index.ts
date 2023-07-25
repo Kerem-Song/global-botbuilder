@@ -7,6 +7,7 @@ export * from './useI18n';
 export * from './useModalOpen';
 export * from './useNodeContextMenu';
 export * from './useNodeEditSave';
+export * from './useOutsideClick';
 export * from './usePage';
 export * from './useRootState';
 export * from './useSystemModal';

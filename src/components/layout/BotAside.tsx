@@ -1,21 +1,18 @@
 import { icChatbot, icLine, icLnbHide, icLnbShow } from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
-import { useBotClient } from '@hooks';
+import { useBotClient, useI18n, useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { StaffType } from '@models';
 import { menuModule } from '@modules/menuModule';
 import { util } from '@modules/util';
 import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
+import { setSidebarClose, setSidebarStatus } from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-
-import useI18n from '../../hooks/useI18n';
-import { useRootState } from '../../hooks/useRootState';
-import { setSidebarClose, setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const BotAside = () => {
   const location = useLocation();
