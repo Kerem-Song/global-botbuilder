@@ -1,4 +1,4 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { AnyAction, combineReducers } from '@reduxjs/toolkit';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import storageLocal from 'redux-persist/lib/storage';
 import storage from 'redux-persist/lib/storage/session';
@@ -6,7 +6,7 @@ import { encryptTransform } from 'redux-persist-transform-encrypt';
 import undoable from 'redux-undo';
 
 import authReducer from './authSlice';
-import botBuilderReducer from './botbuilderSlice';
+import botBuilderReducer, { BotBuilderMaker } from './botbuilderSlice';
 import botInfoReducer from './botInfoSlice';
 import botSettingInfoReducer from './botSettingInfoSlice';
 import botTesterReducer from './botTesterSlice';
@@ -39,7 +39,7 @@ const persistConfig: PersistConfig<CombinedStateType> = {
   ],
 };
 
-const localPersistConfig = {
+const localPersistConfig: PersistConfig<BotBuilderMaker> = {
   key: 'local',
   storage: storageLocal,
   whitelist: ['isBezierMode'],
