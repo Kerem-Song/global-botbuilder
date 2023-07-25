@@ -28,13 +28,13 @@ export const BotBuilderZoomBtn = () => {
 
   useEffect(() => {
     // dispatch(setIsBeziderMode(localStorage.getItem('isBezierMode') === 'B'));
-    dispatch(setIsBeziderMode(isBezierMode));
+    dispatch(setIsBeziderMode(isBezierMode ?? false));
   }, []);
 
   useEffect(() => {
     updateLineAll();
     // localStorage.setItem('isBezierMode', isBezierMode ? 'B' : 'L');
-    dispatch(setIsBeziderMode(isBezierMode));
+    dispatch(setIsBeziderMode(isBezierMode ?? false));
   }, [isBezierMode]);
 
   console.log('past', past);
