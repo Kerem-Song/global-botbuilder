@@ -28,7 +28,6 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
-
   const [representativeEntry, setRepresentativeEntry] = useState<string>('');
   const {
     control,

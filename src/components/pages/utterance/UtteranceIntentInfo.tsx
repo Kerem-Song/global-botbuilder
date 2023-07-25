@@ -94,12 +94,12 @@ export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
           <Col flex="auto">
             <FormItem error={errors.name}>
               <Input
+                maxLength={50}
+                showCount
                 ref={intentNameRef}
                 value={nameField.value}
                 onChange={handleIntentName}
                 placeholder={t('INPUT_INTENT_NAME')}
-                maxLength={20}
-                showCount
               />
             </FormItem>
           </Col>

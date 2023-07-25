@@ -316,9 +316,11 @@
                     border: 1px solid #dcdcdc;
                     border-radius: rem(8);
                     background-color: $primary150;
+                    .synonymText {
+                      width: 100%;
+                    }
                     .synonymDeleteBtn {
                       padding: 0;
-                      margin-left: rem(7);
                       width: rem(13);
                       height: rem(13);
                       border: none;

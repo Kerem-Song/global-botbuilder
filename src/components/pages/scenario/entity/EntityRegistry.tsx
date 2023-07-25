@@ -73,13 +73,13 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
           </Col>
           <Col flex="auto">
             <Input
-              placeholder={t('INPUT_ENTITY_NAME')}
-              maxLength={20}
+              maxLength={45}
               showCount
               ref={nameField.ref}
               value={nameField.value}
               onChange={handleEntityName}
               isError={entryNameInputError || errors.name?.message ? true : false}
+              placeholder={t('INPUT_ENTITY_NAME')}
             />
             <span className="error-message">{entryNameInputError}</span>
             <span className="error-message">{errors.name?.message}</span>
