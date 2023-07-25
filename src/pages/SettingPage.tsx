@@ -1,8 +1,7 @@
+import { TitleHelmet } from '@components';
 import { SettingComponent } from '@components/pages/bot-setting/SettingComponent';
+import { PageProvider } from '@hooks';
 import { FC } from 'react';
-
-import { TitleHelmet } from '../components/common/TitleHelmet';
-import { PageProvider } from '../hooks/providers/PageProvider';
 
 export const SettingPage: FC = () => {
   return (

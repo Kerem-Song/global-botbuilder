@@ -5,6 +5,7 @@ import './modules/i18next';
 import './modules/modal';
 import './styles.scss';
 
+import { HttpProvider } from '@hooks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import i18next from 'i18next';
 import { Suspense } from 'react';
@@ -16,7 +17,6 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { HttpProvider } from './hooks/providers/HttpProvider';
 import { persistor, store } from './modules/store';
 import { Routers } from './routers/Routers';
 
