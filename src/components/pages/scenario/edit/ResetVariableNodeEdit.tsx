@@ -5,7 +5,6 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IResetVariableCardView } from '@models/interfaces/res/IGetFlowRes';
-import { getReactSelectStyle } from '@modules';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -25,7 +24,7 @@ export const ResetVariableNodeEdit = () => {
     control,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IResetVariableCardView>>();
-  const reactSelectStyle = getReactSelectStyle({});
+
   const isHistoryViewer = useHistoryViewerMatch();
   const { field } = useController({
     name: `nextNodeId`,

@@ -73,6 +73,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
       setSvgStyle(svgRef.current);
       setArrowStyle(arrowRef.current, arrowDragRef.current);
       setLinePath(lineRef.current, lineMouseRef.current, deleteRef.current);
+      dispatch(setUseMovingStartPoint(false));
     });
     return () => {
       removeUpdateLines(updateKey || startId, startId, endId);
@@ -88,7 +89,6 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   ]);
 
   const handleArrowDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    dispatch(setUseMovingStartPoint(false));
     const guide = document.querySelector<HTMLDivElement>('#icGuide');
     if (guide) {
       if (e.isTrusted) {
