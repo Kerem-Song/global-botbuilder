@@ -42,7 +42,7 @@ const persistConfig: PersistConfig<CombinedStateType> = {
 const localPersistConfig = {
   key: 'local',
   storage: storageLocal,
-  whitelist: ['botInfoReducer'],
+  whitelist: ['isBezierMode'],
   transforms: [
     encryptTransform({
       secretKey: import.meta.env.VITE_REDUX_PERSIST_SECRET_KEY,
@@ -60,8 +60,8 @@ const rootReducer = combineReducers({
   systemModalReducer,
   sideBarStatusReducer,
   brandInfoReducer,
-  botBuilderReducer,
-  botInfoReducer: persistReducer(localPersistConfig, botInfoReducer),
+  botBuilderReducer: persistReducer(localPersistConfig, botBuilderReducer),
+  botInfoReducer,
   botSettingInfoReducer,
   botTesterReducer,
   intentReducer,
