@@ -124,6 +124,17 @@
       scrollbar-width: none;
       padding: rem(0) rem(10);
 
+      &.hasScrollbar:hover {
+        padding-right: rem(2);
+      }
+
+      &.hasScrollbar:hover::-webkit-scrollbar {
+        display: inline-block;
+        width: rem(8);
+        height: rem(8);
+        background-color: #f7f7fa; /*스크롤바 뒷 배경 색상*/
+      } 
+      
       .luna-space-vertical {
         overflow: hidden;
       }
@@ -200,10 +211,6 @@
         }
       }
     }
-
-    .scenarioListWrapper:hover {
-      padding-right: rem(2);
-    }
     
     .scenarioListWrapper::-webkit-scrollbar {
       display: none;
@@ -216,12 +223,12 @@
       transition: background-color 2s ease-out;
     }
 
-    .scenarioListWrapper:hover::-webkit-scrollbar {
-      display: inline-block;
-      width: rem(8);
-      height: rem(8);
-      background-color: #f7f7fa; /*스크롤바 뒷 배경 색상*/
-    }
+    // .scenarioListWrapper:hover::-webkit-scrollbar {
+    //   display: inline-block;
+    //   width: rem(8);
+    //   height: rem(8);
+    //   background-color: #f7f7fa; /*스크롤바 뒷 배경 색상*/
+    // }
 
     .scenarioListWrapper:hover::-webkit-scrollbar-thumb {
       background-color: rgba(0, 0, 0, 0.15); /* 스크롤바의 색상 */

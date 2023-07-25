@@ -1,4 +1,4 @@
-import { IException } from './IResponse';
+import { IException, IResponse } from './IResponse';
 import { IReq } from './req';
 export interface IIntentListItem {
   updateUtc: string;
@@ -76,7 +76,7 @@ export interface IScenarioData {
   scenarios: string | undefined;
 }
 
-export interface ICheckUtterance {
+export interface ICheckUtterance extends IReq {
   sessionToken: string;
   utteranceId?: string;
   text: string;
@@ -100,14 +100,11 @@ export interface IResponseCheckDuplication {
   newToken: null;
 }
 
-export interface IResponseCheckUtteranceDuplication {
+export interface IResponseCheckUtteranceDuplication extends IResponse {
   result: {
     intentId: string;
     intentName: string;
     utterance: string;
     utteranceId: string;
   }[];
-  exception: null;
-  isSuccess: boolean;
-  newToken: null;
 }

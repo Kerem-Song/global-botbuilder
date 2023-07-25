@@ -29,50 +29,29 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   const handleAddUtternace = async () => {
     if (!utteranceWord || !utteranceWord.trim()) return;
 
-    const errorModal = (items: string) => {
-      error({
-        title: t('DUPLICATE_UTTERANCE'),
-        description: (
-          <div style={{ whiteSpace: 'pre-wrap' }}>
-            <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
-            <span style={{ color: 'red' }}>{items}</span>
-          </div>
-        ),
-      });
-    };
-
     const checkUtteranceDuplication = await checkUtteranceDuplicationAsync({
       text: utteranceWord,
+      customErrorCode: [7000],
     });
 
-    const isDuplicateUtterance = getValues('items')
-      .map((x) => x.text?.toLowerCase())
-      .includes(utteranceWord.toLowerCase());
+    if (Array.isArray(checkUtteranceDuplication)) {
+      const isDuplicateUtterance = getValues('items')
+        .map((x) => x.text?.toLowerCase())
+        .includes(utteranceWord.toLowerCase());
 
-    if (checkUtteranceDuplication.length === 0) {
-      if (isDuplicateUtterance) {
-        errorModal(getValues('name'));
-        if (utteranceRef.current) {
-          utteranceRef.current.select();
-        }
-        setIsEditing(false);
-        return;
-      }
-      prepend({ text: utteranceWord });
-      setIsActive(true);
-      setIsEditing(false);
-      setUtteranceWord('');
-      if (utteranceRef.current) {
-        utteranceRef.current.focus();
-      }
-    } else {
-      const isDuplicateUtteranceInSameIntent =
-        getValues('items')
-          .map((x) => x.text?.toLowerCase())
-          ?.includes(checkUtteranceDuplication[0].utterance.toLocaleLowerCase()) ===
-          false && getValues('name') === checkUtteranceDuplication[0].intentName;
+      const errorModal = (items: string) => {
+        error({
+          title: t('DUPLICATE_UTTERANCE'),
+          description: (
+            <div style={{ whiteSpace: 'pre-wrap' }}>
+              <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
+              <span style={{ color: 'red' }}>{items}</span>
+            </div>
+          ),
+        });
+      };
 
-      if (isDuplicateUtteranceInSameIntent) {
+      const handleAddUtteranceSuccess = () => {
         prepend({ text: utteranceWord });
         setIsActive(true);
         setIsEditing(false);
@@ -80,13 +59,35 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         if (utteranceRef.current) {
           utteranceRef.current.focus();
         }
-        return;
-      } else {
-        errorModal(checkUtteranceDuplication[0].intentName);
+      };
+
+      const handleAddUtteranceError = (errorMessage: string) => {
+        errorModal(errorMessage);
         if (utteranceRef.current) {
           utteranceRef.current.select();
         }
         setIsEditing(false);
+        return;
+      };
+
+      if (checkUtteranceDuplication.length === 0) {
+        if (isDuplicateUtterance) {
+          handleAddUtteranceError(getValues('name'));
+          return;
+        } else {
+          handleAddUtteranceSuccess();
+        }
+      } else {
+        const isDuplicateUtteranceInSameIntent =
+          getValues('items')
+            .map((x) => x.text?.toLowerCase())
+            ?.includes(checkUtteranceDuplication[0].utterance.toLocaleLowerCase()) ===
+            false && getValues('name') === checkUtteranceDuplication[0].intentName;
+        if (isDuplicateUtteranceInSameIntent) {
+          handleAddUtteranceSuccess();
+        } else {
+          handleAddUtteranceError(checkUtteranceDuplication[0].intentName);
+        }
       }
     }
   };
@@ -104,6 +105,8 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         <Row>
           <Col flex="auto">
             <Input
+              maxLength={2500}
+              showCount
               ref={utteranceRef}
               value={utteranceWord}
               onChange={(e) => {

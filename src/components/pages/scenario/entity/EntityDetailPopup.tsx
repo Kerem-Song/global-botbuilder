@@ -58,8 +58,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
         .string()
         .trim()
         .required(t('VALIDATION_REQUIRED'))
-        .matches(ENTITY_NAME_REGEX, t('ENTITY_NAME_REGEX'))
-        .max(20, t('VALIDATION_STRING_LIMIT')),
+        .matches(ENTITY_NAME_REGEX, t('ENTITY_NAME_REGEX')),
       entries: yup
         .array()
         .min(1, t('VALIDATION_REQUIRED'))

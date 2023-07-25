@@ -6,7 +6,7 @@ import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { setPopupType, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 
@@ -19,6 +19,7 @@ export const ScenarioManagement: FC<{
   setSearchKeyword: (value: string) => void;
   setIsActivated: (value: boolean) => void;
 }> = ({ scenarios, searchKeyword, isActivated, setSearchKeyword, setIsActivated }) => {
+  const [isOverflow, setIsOverflow] = useState<boolean>(false);
   const { t } = usePage();
   const { pathname } = useLocation();
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
@@ -30,7 +31,7 @@ export const ScenarioManagement: FC<{
   const basicScenarioList = useRootState(
     (state) => state.botBuilderReducer.basicScenarios,
   );
-
+  const scenarioListRef = useRef<HTMLDivElement>(null);
   const handleSwitch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsActivated(e.target.checked);
   };
@@ -50,6 +51,17 @@ export const ScenarioManagement: FC<{
       dispatch(setScenarioPopupOpen(false));
     };
   }, [pathname]);
+
+  useEffect(() => {
+    if (scenarioListRef.current) {
+      scenarioListRef.current.scrollHeight > scenarioListRef.current.clientHeight &&
+        setIsOverflow(true);
+    }
+
+    return () => {
+      setIsOverflow(false);
+    };
+  }, [scenarioListRef.current?.scrollHeight]);
 
   return (
     <div className="scenarioTabWrapper">
@@ -97,7 +109,13 @@ export const ScenarioManagement: FC<{
         </Button>
       </div>
 
-      <div className="scenarioListWrapper">
+      <div
+        className={classNames('scenarioListWrapper', {
+          // hasScrollbar: filteredScenarios && filteredScenarios.length > 10,
+          hasScrollbar: isOverflow,
+        })}
+        ref={scenarioListRef}
+      >
         <Space gap="small" direction="vertical">
           {scenarios ? (
             !filteredScenarios?.length ? (
