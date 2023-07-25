@@ -1,4 +1,5 @@
 export * from './client';
+export * from './providers';
 export * from './useElementHelper';
 export * from './useHistoryViewerMatch';
 export * from './useHttp';

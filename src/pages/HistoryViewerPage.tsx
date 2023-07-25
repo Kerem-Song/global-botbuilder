@@ -1,5 +1,5 @@
-import { TitleHelmet } from '@components/common';
-import { PageProvider } from '@hooks/providers/PageProvider';
+import { TitleHelmet } from '@components';
+import { PageProvider } from '@hooks';
 
 import { HistoryViewerComponent } from '../components/pages/history/HistoryViewerComponent';
 

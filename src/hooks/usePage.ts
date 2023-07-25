@@ -1,6 +1,5 @@
+import { PageContext } from '@hooks';
 import { useContext } from 'react';
-
-import { PageContext } from './providers/PageProvider';
 
 export const usePage = () => {
   const context = useContext(PageContext);

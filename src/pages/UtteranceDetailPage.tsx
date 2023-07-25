@@ -1,8 +1,7 @@
+import { TitleHelmet } from '@components';
 import { UtteranceDetailComponent } from '@components/pages/utterance/UtteranceDetailComponent';
+import { PageProvider } from '@hooks';
 import { FC } from 'react';
-
-import { TitleHelmet } from '../components/common/TitleHelmet';
-import { PageProvider } from '../hooks/providers/PageProvider';
 
 export const UtteranceDetailPage: FC = () => {
   return (

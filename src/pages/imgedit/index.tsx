@@ -1,8 +1,7 @@
-import { TitleHelmet } from '@components/common/TitleHelmet';
+import { TitleHelmet } from '@components';
 import ImageEditorComponent from '@components/image-editor/ImageCropper';
+import { PageProvider } from '@hooks';
 import { FC } from 'react';
-
-import { PageProvider } from '../../hooks/providers/PageProvider';
 
 export const ImageEditorPage: FC = () => {
   return (

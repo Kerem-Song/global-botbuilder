@@ -1,6 +1,5 @@
+import { HttpContext } from '@hooks';
 import { useContext } from 'react';
-
-import { HttpContext } from './providers/HttpProvider';
 
 export const useHttp = () => {
   const context = useContext(HttpContext);
