@@ -2,7 +2,7 @@ import { icNodeBottom } from '@assets';
 import { Button } from '@components/general';
 import { useElementHelper, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { setGuideStartNode } from '@store/botbuilderSlice';
+import { setGuideStartNode, setSelected } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { FC, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -212,8 +212,10 @@ export const ConnectLine: FC<IConnectLineProps> = ({
           style={{
             position: 'absolute',
             cursor: 'pointer',
+            zIndex: active || highlight ? 1 : 0,
           }}
           onDragStart={(e) => {
+            console.log('@#@#@#arrow drag start');
             e.dataTransfer.setData('id', startId);
             e.dataTransfer.setData('pointType', type);
             if (updateKey) {
@@ -236,6 +238,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
             );
           }}
           onDragEnd={() => {
+            console.log('active', active);
             dispatch(setGuideStartNode());
           }}
           onDrag={handleArrowDrag}
