@@ -181,8 +181,10 @@ export const useUtteranceClient = () => {
   );
 
   const checkUtteranceDuplicationMutate = useMutation(
-    async (criteria: Pick<ICheckUtterance, 'utteranceId' | 'text'>) => {
-      const result = await http.post<
+    async (
+      criteria: Pick<ICheckUtterance, 'utteranceId' | 'text' | 'customErrorCode'>,
+    ) => {
+      const res = await http.post<
         ICheckUtterance,
         AxiosResponse<IResponseCheckUtteranceDuplication>
       >('Builder/CheckUtterance', {
@@ -190,7 +192,15 @@ export const useUtteranceClient = () => {
         ...criteria,
       });
 
-      return result.data.result;
+      const exception = res.data.exception as IException;
+
+      if (exception) {
+        return exception.errorCode;
+      }
+
+      if (res.data.isSuccess) {
+        return res.data.result;
+      }
     },
   );
 

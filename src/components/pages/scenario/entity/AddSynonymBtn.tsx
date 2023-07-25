@@ -105,7 +105,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
       {fields.map((tag, i) => {
         return (
           <div key={i} className="synonym">
-            <span>
+            <span className="synonymText">
               {util.replaceKeywordMark(
                 getValues(`entries.${index}.synonym.${i}`),
                 searchKeyword,
