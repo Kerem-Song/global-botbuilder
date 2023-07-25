@@ -43,6 +43,20 @@ main {
   height: calc(100% - rem($headerSize));
   overflow-y: auto;
 }
+main::-webkit-scrollbar {
+  width: rem(8);
+  height: rem(8);
+  background-color: rgba(208, 221, 255, 0);
+}
+main::-webkit-scrollbar-thumb {
+  height: 30%;
+  background-color: rgba(208, 221, 255, 0);
+  border-radius: rem(18);
+  transition: background-color 2s ease-out;
+}
+*:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(208, 221, 255, 0.8);
+}
 
 footer {
   height: 25px;

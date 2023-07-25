@@ -2,8 +2,8 @@ import { useModalOpenExtra, useRootState } from '@hooks';
 import { ISearchData } from '@models';
 import { FC, useState } from 'react';
 
-import { UtteranceDetailPopup } from '../utterance/UtteranceDetailPopup';
-import { UtterancePopup } from '../utterance/UtterancePopup';
+import { IntentDetailPopup } from '../intent/IntentDetailPopup';
+import { IntentPopup } from '../intent/IntentPopup';
 
 export interface IIntentUtterancePopupProps {
   isOpenUtterancePopup: boolean;
@@ -36,7 +36,7 @@ export const IntentUtterancePopup: FC<IIntentUtterancePopupProps> = ({
   return (
     <>
       {isOpenUtterancePopup && (
-        <UtterancePopup
+        <IntentPopup
           isOpenUtterancePopup={isOpenUtterancePopup}
           handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
           handleIsOpenUtteranceDetailPopup={handleOpenDetailUtterancePopup}
@@ -46,7 +46,7 @@ export const IntentUtterancePopup: FC<IIntentUtterancePopupProps> = ({
       )}
 
       {isOpenUtteranceDetailPopup && (
-        <UtteranceDetailPopup
+        <IntentDetailPopup
           intentId={intentId}
           isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
           handleCloseUtteranceDetailPopup={handleCloseUtteranceDetailPopup}

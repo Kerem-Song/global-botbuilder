@@ -14,7 +14,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
   const showScenarioList = !isOpenUtterancePopup;
   return (
     <>
-      {util.range(5).map((n) => (
+      {util.range(showScenarioList ? 9 : 5).map((n) => (
         <tr className="utteranceTbodyTr utteranceTbodyTrSkeleton " key={n}>
           <td
             role="presentation"

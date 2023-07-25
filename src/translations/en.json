@@ -66,7 +66,7 @@
     "SETTING": "Settings",
     "SKILL": "Skill",
     "STATISTICS": "Statistics",
-    "UTTERANCE": "Intent"
+    "INTENT": "Intent"
   },
   "BOTTEST": {
     "BOT_TESTER": "Test",
@@ -335,7 +335,7 @@
     "VARIABLE_SETTING": "Variable Settings",
     "VARIABLE_VALUE": "Value"
   },
-  "UTTERANCE": {
+  "INTENT": {
     "TITLE": "Intent Management",
     "TO_SEARCH": "Search",
     "SORT": "Sort",
@@ -357,7 +357,7 @@
     "NO_REGISTERED_INTENT": "No registered intents found.  ",
     "NO_SEARCH_RESULT_FOUND": "No search results found. "
   },
-  "UTTERNACEDETAILPAGE": {
+  "INTENTDETAILPAGE": {
     "TITLE": "Intent Information",
     "LIST": "Go to List",
     "DELETE_INTENT": "Delete Intent",

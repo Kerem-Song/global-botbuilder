@@ -7,10 +7,10 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import ReactModal from 'react-modal';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { UtteranceListHeader } from './UtteranceListHeader';
-import { UtteranceListItem } from './UtteranceListItem';
+import { IntentListHeader } from './IntentListHeader';
+import { IntentListItem } from './IntentListItem';
 
-export interface IUtterancePopupProps {
+export interface IIntentPopupProps {
   isOpenUtterancePopup: boolean;
   handleIsOpenUtterancePopup: (value: boolean) => void;
   handleIsOpenUtteranceDetailPopup: (intentId?: string) => void;
@@ -18,7 +18,7 @@ export interface IUtterancePopupProps {
   setSearchData: Dispatch<SetStateAction<ISearchData>>;
 }
 
-export const UtterancePopup: FC<IUtterancePopupProps> = ({
+export const IntentPopup: FC<IIntentPopupProps> = ({
   isOpenUtterancePopup,
   handleIsOpenUtterancePopup,
   handleIsOpenUtteranceDetailPopup,
@@ -28,7 +28,7 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
   const selectedScenarios = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
-  const { t } = useI18n('utterance');
+  const { t } = useI18n('intent');
   const { removeUtteranceQueries } = useUtteranceClient();
 
   const handleSearch = useDebouncedCallback((keyword: string) => {
@@ -92,11 +92,11 @@ export const UtterancePopup: FC<IUtterancePopupProps> = ({
         </div>
         <div className="utteranceListWrap utterancePopupListWrap">
           <table className="utteranceTable">
-            <UtteranceListHeader
+            <IntentListHeader
               isOpenUtterancePopup={isOpenUtterancePopup}
               handleDetailPopupOpen={handleDetailPopupOpen}
             />
-            <UtteranceListItem
+            <IntentListItem
               searchData={searchData}
               isOpenUtterancePopup={isOpenUtterancePopup}
               handleDetailPopupOpen={handleDetailPopupOpen}

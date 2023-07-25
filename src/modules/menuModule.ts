@@ -37,7 +37,7 @@ const getMenuItem = (
 
 const menu = [
   getMenuItem(1, `scenario/start`, 'scenario', icScenario, icScenarioSelected, 2),
-  getMenuItem(2, `utterance`, 'utterance', icUtterance, icUtteranceSelected, 2),
+  getMenuItem(2, `intent`, 'intent', icUtterance, icUtteranceSelected, 2),
   getMenuItem(4, `deployment`, 'deployment', icDeploy, icDeploySelected, 16),
   getMenuItem(5, `history`, 'history', icHistory, icHistorySelected, 32),
   getMenuItem(6, `statistics`, 'statistics', icStatistics, icStatisticsSelected, 64),

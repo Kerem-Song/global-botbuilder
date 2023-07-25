@@ -13,11 +13,11 @@ import DeploymentPage from '../pages/DeploymentPage';
 import HelpPage from '../pages/HelpPage';
 import HistoryPage from '../pages/HistoryPage';
 import { HistoryViewer } from '../pages/HistoryViewerPage';
+import IntentDetailPage from '../pages/IntentDetailPage';
+import IntentPage from '../pages/IntentPage';
 import ScenarioPage from '../pages/ScenarioPage';
 import SettingPage from '../pages/SettingPage';
 import StatisticsPage from '../pages/StatisticsPage';
-import UtteranceDetailPage from '../pages/UtteranceDetailPage';
-import UtterancePage from '../pages/UtterancePage';
 import { LocaleNavigate } from './LocaleNavigate';
 import { ScenarioNavigate } from './ScenarioNavigate';
 
@@ -66,26 +66,26 @@ const finalRoutes = [
                   ],
                 },
                 {
-                  path: 'utterance',
-                  handle: { title: 'UTTERANCE', role: Role.Scenario },
+                  path: 'intent',
+                  handle: { title: 'INTENT', role: Role.Scenario },
                   children: [
                     {
                       path: '',
-                      element: <UtterancePage />,
-                      handle: { title: 'UTTERANCE', role: Role.Scenario },
+                      element: <IntentPage />,
+                      handle: { title: 'INTENT', role: Role.Scenario },
                     },
                     {
                       path: 'detail',
                       children: [
                         {
                           path: '',
-                          element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: Role.Scenario },
+                          element: <IntentDetailPage />,
+                          handle: { title: 'INTENT', role: Role.Scenario },
                         },
                         {
                           path: ':intentId',
-                          element: <UtteranceDetailPage />,
-                          handle: { title: 'UTTERANCE', role: Role.Scenario },
+                          element: <IntentDetailPage />,
+                          handle: { title: 'INTENT', role: Role.Scenario },
                         },
                       ],
                     },

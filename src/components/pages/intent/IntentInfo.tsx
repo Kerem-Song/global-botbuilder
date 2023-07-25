@@ -14,21 +14,21 @@ import {
 import { useController, UseFormReturn } from 'react-hook-form';
 import Select from 'react-select';
 
-export interface IUtteranceGroupInfoProps {
+export interface IIntentGroupInfoProps {
   intentNameRef: MutableRefObject<HTMLInputElement | null>;
   formMethods: UseFormReturn<IUtteranceModel>;
   setIsActive: Dispatch<SetStateAction<boolean>>;
   isOpenUtteranceDetailPopup?: boolean;
 }
 
-export const UtteranceIntentInfo: FC<IUtteranceGroupInfoProps> = ({
+export const IntentInfo: FC<IIntentGroupInfoProps> = ({
   intentNameRef,
   formMethods,
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
   const { i18n } = useI18n();
-  const { t } = useI18n('utternaceDetailPage');
+  const { t } = useI18n('IntentDetailPage');
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
 

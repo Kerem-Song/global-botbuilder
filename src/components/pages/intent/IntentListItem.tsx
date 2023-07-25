@@ -11,23 +11,23 @@ import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
-import { lunaToast } from '../../../../src/modules/lunaToast';
+import { lunaToast } from '../../../modules/lunaToast';
 import { UtteranceSkeleton } from './UtteranceSkeleton';
 
-export interface IUtteranceListItemProps {
+export interface IIntentListItemProps {
   searchData: ISearchData;
   isOpenUtterancePopup: boolean;
   handleDetailPopupOpen?: (intentId: string) => void;
 }
 
-export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
+export const IntentListItem: FC<IIntentListItemProps> = ({
   searchData,
   isOpenUtterancePopup,
   handleDetailPopupOpen,
 }) => {
   const { botId } = useParams();
   const { navigate } = usePage();
-  const { t, tc } = useI18n('utterance');
+  const { t, tc } = useI18n('intent');
   const [ref, inView] = useInView();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { confirm } = useSystemModal();
@@ -52,7 +52,7 @@ export const UtteranceListItem: FC<IUtteranceListItemProps> = ({
     if (isOpenUtterancePopup && handleDetailPopupOpen) {
       handleDetailPopupOpen(intentId);
     } else {
-      navigate(`/${botId}/utterance/detail/${intentId}`);
+      navigate(`/${botId}/intent/detail/${intentId}`);
     }
   };
 

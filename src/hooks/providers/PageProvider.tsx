@@ -59,8 +59,6 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
 
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
 
-  console.log(userInfo.staffType, handle?.role, role);
-
   const isNotAuth =
     userInfo.staffType !== StaffType.Administrator &&
     handle?.role &&

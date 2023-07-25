@@ -149,6 +149,7 @@ export const BotAside = () => {
             {menuModule.menu
               .filter((x) => util.checkRole(x.role, staffType, role))
               .map((item) => {
+                console.log('item', item.desc);
                 return (
                   <Tooltip
                     key={item.id}

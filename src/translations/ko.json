@@ -64,7 +64,7 @@
     "CHATBOT_LIST": "챗봇 리스트",
     "SCENARIO": "시나리오",
     "IMAGEEDITOR": "이미지 에디터",
-    "UTTERANCE": "인텐트",
+    "INTENT": "인텐트",
     "SKILL": "스킬",
     "DEPLOYMENT": "배포",
     "HISTORY": "히스토리",
@@ -360,7 +360,7 @@
     "RENAME": "이름 바꾸기",
     "CAROUSEL_SETTING": "캐로셀 편집"
   },
-  "UTTERANCE": {
+  "INTENT": {
     "TITLE": "인텐트 관리",
     "TO_SEARCH": "검색하기",
     "SORT": "정렬",
@@ -382,7 +382,7 @@
     "NO_REGISTERED_INTENT": "등록된 인텐트가 없습니다.",
     "NO_SEARCH_RESULT_FOUND": "검색 결과가 없습니다."
   },
-  "UTTERNACEDETAILPAGE": {
+  "INTENTDETAILPAGE": {
     "TITLE": "인텐트 정보",
     "LIST": "목록으로",
     "DELETE_INTENT": "인텐트 삭제하기",

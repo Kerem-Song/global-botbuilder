@@ -2,11 +2,11 @@ import { useModalOpen, usePage } from '@hooks';
 import { ISearchData } from '@models/interfaces/IUtterance';
 import { useState } from 'react';
 
+import { IntentListHeader } from './IntentListHeader';
+import { IntentListItem } from './IntentListItem';
 import { ToSearch } from './ToSearch';
-import { UtteranceListHeader } from './UtteranceListHeader';
-import { UtteranceListItem } from './UtteranceListItem';
 
-export const UtteranceComponent = () => {
+export const IntentComponent = () => {
   const { t } = usePage();
   const [searchData, setSearchData] = useState<ISearchData>({
     sort: 1,
@@ -21,8 +21,8 @@ export const UtteranceComponent = () => {
       <ToSearch searchData={searchData} setSearchData={setSearchData} />
       <div className="utteranceListWrap">
         <table className="utteranceTable">
-          <UtteranceListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
-          <UtteranceListItem
+          <IntentListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
+          <IntentListItem
             searchData={searchData}
             isOpenUtterancePopup={isOpenUtterancePopup}
           />

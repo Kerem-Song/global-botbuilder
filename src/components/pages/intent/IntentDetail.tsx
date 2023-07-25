@@ -12,19 +12,19 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import * as yup from 'yup';
 
-import { lunaToast } from '../../../../src/modules/lunaToast';
+import { lunaToast } from '../../../modules/lunaToast';
 import { AddUtterance } from './AddUtterance';
+import { IntentInfo } from './IntentInfo';
 import { UtteranceDetailItems } from './UtteranceDetailItems';
-import { UtteranceIntentInfo } from './UtteranceIntentInfo';
 
-export interface IUtteranceDetailProps {
+export interface IIntentDetailProps {
   intentId?: string;
   isOpenUtteranceDetailPopup?: boolean;
   handleIsOpenUtterancePopup?: (value: boolean) => void;
   handleClose?: () => void;
 }
 
-export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
+export const IntentDetail: FC<IIntentDetailProps> = ({
   intentId,
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
@@ -32,7 +32,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, tc } = usePage();
-  const { t } = useI18n('utternaceDetailPage');
+  const { t } = useI18n('intentDetailPage');
   const { botId } = useParams();
   const {
     intentAsync,
@@ -104,7 +104,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
       handleClose();
       removeUtteranceQueries();
     } else {
-      navigate(`/${botId}/utterance`);
+      navigate(`/${botId}/intent`);
       removeUtteranceQueries();
     }
   };
@@ -132,7 +132,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
         if (isOpenUtteranceDetailPopup && handleClose) {
           handleClose();
         } else {
-          navigate(`/${botId}/utterance`);
+          navigate(`/${botId}/intent`);
         }
       }
     }
@@ -252,7 +252,7 @@ export const UtteranceDetail: FC<IUtteranceDetailProps> = ({
               </Button>
             </div>
           </div>
-          <UtteranceIntentInfo
+          <IntentInfo
             intentNameRef={intentNameRef}
             formMethods={formMethods}
             setIsActive={setIsActive}

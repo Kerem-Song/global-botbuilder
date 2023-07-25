@@ -3,24 +3,24 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import { useParams } from 'react-router';
 
-export interface IUtteranceListHeaderProps {
+export interface IIntentListHeaderProps {
   isOpenUtterancePopup?: boolean;
   handleDetailPopupOpen?: () => void;
 }
 
-export const UtteranceListHeader: FC<IUtteranceListHeaderProps> = ({
+export const IntentListHeader: FC<IIntentListHeaderProps> = ({
   isOpenUtterancePopup,
   handleDetailPopupOpen,
 }) => {
   const { utterancdId, botId } = useParams();
   const { navigate } = usePage();
-  const { t } = useI18n('utterance');
+  const { t } = useI18n('intent');
 
   const showScenarioList = isOpenUtterancePopup === false;
 
   const goToDetail = () => {
     if (!utterancdId && showScenarioList) {
-      navigate(`/${botId}/utterance/detail/`);
+      navigate(`/${botId}/intent/detail/`);
       return;
     }
 

@@ -11,8 +11,6 @@
 @import './styles/input.scss';
 @import './styles/dashboard.scss';
 @import './styles/checkbox.scss';
-@import './styles/dropdown.scss';
-@import './styles/dropdownMenu.scss';
 @import './styles/inputTextarea.scss';
 @import './styles/reactSelect.scss';
 @import './styles/radio.scss';
@@ -26,9 +24,9 @@
 @import './styles/testerSlide.scss';
 @import './styles/toast.scss';
 @import './styles/nodeLinkPopUpMenu.scss';
-@import './styles/utterance.scss';
-@import './styles/utteranceAlertModal.scss';
-@import './styles/utteranceDetail.scss';
+@import './styles/intent.scss';
+@import './styles/intentDetail.scss';
+@import './styles/intentPopup.scss';
 @import './styles/setting.scss';
 @import './styles/collapse.scss';
 @import './styles/carouselOrderPopup.scss';
@@ -40,5 +38,4 @@
 @import './styles/dataApi.scss';
 @import './styles/variableModal.scss';
 @import './styles/arrowTextBox.scss';
-@import './styles/utterancePopup.scss';
 @import './styles/switchNode.scss';

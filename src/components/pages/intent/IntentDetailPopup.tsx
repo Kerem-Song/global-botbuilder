@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import ReactModal from 'react-modal';
 
-import { UtteranceDetail } from './UtteranceDetail';
+import { IntentDetail } from './IntentDetail';
 
-export interface IUtteranceDetailPopupProps {
+export interface IIntentDetailPopupProps {
   intentId?: string;
   isOpenUtteranceDetailPopup: boolean;
   handleCloseUtteranceDetailPopup: () => void;
   handleIsOpenUtterancePopup: (value: boolean) => void;
 }
 
-export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
+export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
   intentId,
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
@@ -28,7 +28,7 @@ export const UtteranceDetailPopup: FC<IUtteranceDetailPopupProps> = ({
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}
     >
-      <UtteranceDetail
+      <IntentDetail
         intentId={intentId}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}

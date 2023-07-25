@@ -19,7 +19,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   setIsActive,
   utteranceRef,
 }) => {
-  const { t } = useI18n('utternaceDetailPage');
+  const { t } = useI18n('intentDetailPage');
   const { error } = useSystemModal();
   const [utteranceWord, setUtteranceWord] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
