@@ -3,7 +3,7 @@ import { useRootState } from '@hooks/useRootState';
 import { IScenarioModel } from '@models';
 import { FlowDeleteException } from '@models/exceptions/FlowDeleteException';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
-import { setIsScenarioSavedMutate } from '@store/botbuilderSlice';
+import { setUseMovingStartPoint } from '@store/botbuilderSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -120,10 +120,10 @@ export const useScenarioClient = () => {
         queryClient.invalidateQueries(['scenario', scenarioId]);
         queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);
-        dispatch(setIsScenarioSavedMutate(true));
+        dispatch(setUseMovingStartPoint(false));
         return res;
       } else {
-        dispatch(setIsScenarioSavedMutate(false));
+        dispatch(setUseMovingStartPoint(true));
       }
     },
   );

@@ -2,7 +2,7 @@ import { icNodeBottom } from '@assets';
 import { Button } from '@components/general';
 import { useElementHelper, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { setGuideStartNode } from '@store/botbuilderSlice';
+import { setGuideStartNode, setUseMovingStartPoint } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { FC, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -89,6 +89,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   ]);
 
   const handleArrowDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    dispatch(setUseMovingStartPoint(false));
     const guide = document.querySelector<HTMLDivElement>('#icGuide');
     if (guide) {
       if (e.isTrusted) {

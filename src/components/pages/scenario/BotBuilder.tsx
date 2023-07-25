@@ -23,8 +23,8 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { CANVAS_LIMIT, ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import {
-  setIsScenarioSavedMutate,
   setSelected,
+  setUseMovingStartPoint,
   zoomIn,
   zoomOut,
 } from '@store/botbuilderSlice';
@@ -132,19 +132,21 @@ export const Botbuilder = () => {
 
   const startNode = nodes.find((item) => item.type === NODE_TYPES.INTENT_NODE);
 
-  const isSaved = useRootState((state) => state.botBuilderReducer.isScenarioSavedMutate);
+  const useMovingStart = useRootState(
+    (state) => state.botBuilderReducer.useMovingStartPoint,
+  );
 
   useEffect(() => {
     if (canvasRef.current) {
       console.log('@startNode selected', selected);
-      if (startNode && startNode.id !== selected && !isStartNode && !isSaved) {
+      if (startNode && startNode.id !== selected && !isStartNode && useMovingStart) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';
       }
       // canvasRef.current.style.left = '0px';
       // canvasRef.current.style.top = '0px';
       return () => {
-        dispatch(setIsScenarioSavedMutate(false));
+        dispatch(setUseMovingStartPoint(true));
         setIsStartNode(false);
       };
     }
