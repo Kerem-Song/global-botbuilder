@@ -4,13 +4,13 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
 } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setSelected } from '@store/botbuilderSlice';
 import { removeItem, updateNode } from '@store/makingNode';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { NODE_PREFIX } from '../../../../modules';
 import { BasicCardView } from '../views/BasicCardView';
 
 export const BasicCardCarouselNode: FC<IHasNode> = ({ node }) => {

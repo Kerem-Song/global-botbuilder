@@ -1,9 +1,6 @@
+import { IHasChildren, IHasClassNameNStyle, SizeType } from '@models';
 import classNames from 'classnames';
 import { CSSProperties, FC } from 'react';
-
-import { IHasChildren } from '../../models/interfaces/IHasChildren';
-import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
-import { SizeType } from '../../models/types/SizeType';
 
 export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;

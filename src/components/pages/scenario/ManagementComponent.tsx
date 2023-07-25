@@ -1,3 +1,4 @@
+import { usePage } from '@hooks';
 import { useScenarioListClient } from '@hooks/client/scenarioListClient';
 import { IScenarioModel } from '@models';
 import { setSelectedScenario } from '@store/botbuilderSlice';
@@ -6,8 +7,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { useScenarioClient } from '../../../hooks/client/scenarioClient';
-import usePage from '../../../hooks/usePage';
 import { ScenarioManagement } from './ScenarioManagement';
 import { VariableComponent } from './variable/VariableComponent';
 

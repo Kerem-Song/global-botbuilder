@@ -1,7 +1,5 @@
-import { IHasClassNameNStyle } from '@models';
+import { IDataEntryProp, IHasClassNameNStyle } from '@models';
 import { forwardRef, RefObject } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 export interface CheckboxProps extends IDataEntryProp, IHasClassNameNStyle {
   checked?: boolean;

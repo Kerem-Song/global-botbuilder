@@ -1,16 +1,15 @@
 import { icEmptyBot, icPlusWhite } from '@assets';
 import { Button, Divider, Input, Space, Switch } from '@components';
 import { SortableScenarioListContainer } from '@components/data-display/SortableScenarioListContainer';
-import { usePage, useRootState } from '@hooks';
+import { usePage, useRootState, useScenarioClient } from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { setPopupType, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 
-import { useScenarioClient } from '../../../hooks/client/scenarioClient';
 import { ScenarioListPopup } from './ScenarioListPopup';
 export const ScenarioManagement: FC<{
   scenarios?: IScenarioModel[];

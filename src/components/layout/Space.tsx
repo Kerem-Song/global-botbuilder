@@ -1,10 +1,7 @@
-import { IHasClassNameNStyle } from '@models';
+import { DirectionType, IHasChildren, IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { SizeType } from 'src/models/types/SizeType';
-
-import { IHasChildren } from '../../models/interfaces/IHasChildren';
-import { DirectionType } from '../../models/types/DirectionType';
 
 export interface ISpaceProp extends IHasChildren, IHasClassNameNStyle {
   direction?: DirectionType;

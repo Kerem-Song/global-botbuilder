@@ -1,10 +1,9 @@
 import { Button, Divider, Row, Space, Title } from '@components';
+import { useRootState } from '@hooks';
+import { systemModalClose } from '@store/systemModalSlice';
 import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
-
-import { useRootState } from '../../hooks/useRootState';
-import { systemModalClose } from '../../store/systemModalSlice';
 
 export const SystemModalContainer = () => {
   const modalInfo = useRootState((state) => state.systemModalReducer);

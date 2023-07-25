@@ -1,9 +1,7 @@
+import { IHasChildren, IHasClassNameNStyle } from '@models';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { FC } from 'react';
-
-import { IHasChildren } from '../../models/interfaces/IHasChildren';
-import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
 
 export interface RowProps extends IHasChildren, IHasClassNameNStyle {
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between';

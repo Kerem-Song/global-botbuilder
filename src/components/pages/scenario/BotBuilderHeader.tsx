@@ -13,6 +13,7 @@ import {
   TNodeTypes,
 } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
+import { ID_GEN, ID_TYPES, useAppDispatch } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { setInvalidateNode } from '@store/botbuilderSlice';
 import editNodeAsync from '@store/editNodeAsync';
@@ -27,7 +28,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import ReactLoading from 'react-loading';
 import { useDispatch } from 'react-redux';
 
-import { ID_GEN, ID_TYPES, useAppDispatch } from '../../../modules';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 
 export const BotBuilderHeader = () => {

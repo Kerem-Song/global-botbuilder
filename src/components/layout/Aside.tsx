@@ -5,15 +5,13 @@ import {
   icLnbHide,
   icLnbShow,
 } from '@assets/index';
+import { useI18n, useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
+import { setSidebarClose, setSidebarStatus } from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
-import useI18n from '../../hooks/useI18n';
-import { useRootState } from '../../hooks/useRootState';
-import { setSidebarClose, setSidebarStatus } from '../../store/sidebarStatusSlice';
 
 export const Aside = () => {
   const dispatch = useDispatch();

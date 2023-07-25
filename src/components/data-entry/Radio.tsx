@@ -1,9 +1,7 @@
 import '../../styles/radio.scss';
 
-import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
+import { IDataEntryProp, IHasChildren, IHasClassNameNStyle } from '@models';
 import { forwardRef } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 export interface IRadioProps extends IHasChildren, IDataEntryProp, IHasClassNameNStyle {
   disabled?: boolean;

@@ -1,8 +1,7 @@
 import '../../styles/switch.scss';
 
+import { IDataEntryProp } from '@models';
 import { forwardRef } from 'react';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
 
 export interface ISwitchProps extends IDataEntryProp {
   checked?: boolean;

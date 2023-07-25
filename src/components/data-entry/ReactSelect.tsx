@@ -1,10 +1,8 @@
 import '../../styles/reactSelect.scss';
 
-import React, { FC, useState } from 'react';
+import { IDataEntryProp, IHasClassNameNStyle } from '@models';
+import { FC, useState } from 'react';
 import Select from 'react-select';
-
-import { IDataEntryProp } from '../../models/interfaces/IDataEntryProp';
-import { IHasClassNameNStyle } from '../../models/interfaces/IHasStyle';
 
 const options = [
   { value: 'all', label: '전체' },

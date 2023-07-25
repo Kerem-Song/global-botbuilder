@@ -1,5 +1,5 @@
 import { Input } from '@components/data-entry';
-import { usePage } from '@hooks';
+import { useOutsideClick, usePage } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
@@ -7,7 +7,6 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePopper } from 'react-popper';
 
-import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import { PopperListItem } from './PopperListItem';
 import { PopperSelectItem } from './PopperSelectItem';
 

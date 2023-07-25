@@ -1,26 +1,21 @@
 import { icUser } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
-import { useModalOpen } from '@hooks';
+import { useI18n, useModalOpen, useRootState } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { setToken } from '@store/authSlice';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
-import useI18n from '../../hooks/useI18n';
-import { useRootState } from '../../hooks/useRootState';
-
 export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   isBotPage,
   name,
 }) => {
-  const { tc } = useI18n();
   const dispatch = useDispatch();
   const location = useLocation();
   const matches = useMatches();
-  const { i18n, ts } = useI18n();
-  const { t } = useI18n('botTest');
+  const { i18n, ts, tc, t } = useI18n('botTest');
   const navigate = useNavigate();
 
   const languageMenus = [
