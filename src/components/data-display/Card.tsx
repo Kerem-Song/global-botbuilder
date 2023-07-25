@@ -2,7 +2,7 @@ import { IHasChildren, IHasClassNameNStyle, SizeType } from '@models';
 import classNames from 'classnames';
 import { CSSProperties, FC } from 'react';
 
-export interface CardProps extends IHasChildren, IHasClassNameNStyle {
+export interface ICardProps extends IHasChildren, IHasClassNameNStyle {
   title?: React.ReactNode;
   bordered?: boolean;
   hoverable?: boolean;
@@ -14,7 +14,7 @@ export interface CardProps extends IHasChildren, IHasClassNameNStyle {
   onClick?: () => void;
 }
 
-export const Card: FC<CardProps> = ({
+export const Card: FC<ICardProps> = ({
   children,
   className,
   bodyClassName,

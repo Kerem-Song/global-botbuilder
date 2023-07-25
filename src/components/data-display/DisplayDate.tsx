@@ -1,13 +1,13 @@
-import { Tooltip } from '@components/navigation/Tooltip';
+import { Tooltip } from '@components';
 import { useI18n } from '@hooks';
-import { util } from '@modules/util';
+import { util } from '@modules';
 import { FC } from 'react';
 
-export interface DisplayDateProps {
+export interface IDisplayDateProps {
   date: Date;
 }
 
-export const DisplayDate: FC<DisplayDateProps> = ({ date }) => {
+export const DisplayDate: FC<IDisplayDateProps> = ({ date }) => {
   const { tc } = useI18n();
   const today = new Date();
   if (

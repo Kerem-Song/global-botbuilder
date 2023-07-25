@@ -2,7 +2,7 @@ import '../styles.scss';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Card, CardProps } from '../components/data-display/Card';
+import { Card, ICardProps } from '../components/data-display/Card';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -16,7 +16,7 @@ export default {
 } as ComponentMeta<typeof Card>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Card> = (args: CardProps) => (
+const Template: ComponentStory<typeof Card> = (args: ICardProps) => (
   <div>
     <Card {...args} />
   </div>
