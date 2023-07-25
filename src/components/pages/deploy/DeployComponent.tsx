@@ -9,7 +9,7 @@ import { DeployHistoryListItem } from './DeployHistoryListItem';
 import { DeployPagination } from './DeployPagination';
 
 export const DeployComponent = () => {
-  const countPerPage = 30;
+  const countPerPage = 15;
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { t } = usePage();
