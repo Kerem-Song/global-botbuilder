@@ -9,6 +9,7 @@ import { getReactSelectStyle } from '@modules';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
+import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 import { VariableSelector } from './VariableSelector';
 
@@ -79,11 +80,12 @@ export const ResetVariableNodeEdit = () => {
             <Row gap={2} justify="space-between">
               <Col span={21}>
                 <FormItem error={errors.view?.variables?.[i]?.value}>
-                  <VariableSelector
+                  <ParameterSelector
                     placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
                     control={control}
                     path={`view.variables.${i}.value`}
                     readOnly={isHistoryViewer}
+                    maxLength={55}
                   />
                 </FormItem>
               </Col>
