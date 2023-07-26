@@ -83,7 +83,7 @@ export const ResetVariableNodeEdit = () => {
                     control={control}
                     path={`view.variables.${i}.value`}
                     readOnly={isHistoryViewer}
-                    maxLength={55}
+                    maxLength={50}
                   />
                 </FormItem>
               </Col>

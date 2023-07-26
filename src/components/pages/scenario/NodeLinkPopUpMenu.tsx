@@ -126,6 +126,18 @@ export const NodeLinkPopUpMenu = ({
       nodeName: t(`NODE_LINK_POPUP_MENU_DATA_PRODUCT_CARD_NODE`),
       nodeKind: NodeKind.InputNode,
     },
+    {
+      className: 'icText',
+      value: NODE_TYPES.RESET_VARIABLE_NODE,
+      nodeName: t(`CAPTION_RESETVARIABLENODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icText',
+      value: NODE_TYPES.CS_NODE,
+      nodeName: t(`CAPTION_CSNODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
   ];
 
   const [userInput, setUserInput] = useState<string>();
@@ -224,12 +236,7 @@ export const NodeLinkPopUpMenu = ({
     })
     .filter((b) => {
       if (startNode?.type === NODE_TYPES.INTENT_NODE) {
-        return (
-          b.value !==
-          (NODE_TYPES.RETRY_CONDITION_NODE &&
-            NODE_TYPES.ANSWER_NODE &&
-            NODE_TYPES.RETRY_CONDITION_NODE)
-        );
+        return b.value !== (NODE_TYPES.ANSWER_NODE && NODE_TYPES.RETRY_CONDITION_NODE);
       }
       return b;
     })

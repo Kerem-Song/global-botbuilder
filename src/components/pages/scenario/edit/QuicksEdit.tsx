@@ -75,7 +75,7 @@ export const QuicksEdit = () => {
                 required={true}
                 showCount={true}
                 counterLimit={13}
-                maxLength={105}
+                maxLength={100}
                 isLight={true}
                 {...register(`view.quicks.${i}.label`)}
                 textLength={watch(`view.quicks.${i}.label`)?.length || 0}
