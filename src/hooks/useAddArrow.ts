@@ -15,7 +15,7 @@ export const useAddArrow = () => {
   const addArrowHandler = (nodes: INode[], arrow: IArrow) => {
     dispatch(addArrow({ arrow }));
     const selctedArrow = selected as IArrow;
-    if (selctedArrow.start === arrow.start) {
+    if (selctedArrow && selctedArrow.start === arrow.start) {
       dispatch(setSelected(arrow));
     }
   };
