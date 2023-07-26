@@ -22,8 +22,8 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
 
   return (
     <ReactModal
-      overlayClassName="utterancePopupOverlay node-draggable-ignore"
-      className="utteranceModal detail"
+      overlayClassName="intentPopupOverlay node-draggable-ignore"
+      className="intentPopupModal detail"
       isOpen={isOpenUtteranceDetailPopup}
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}

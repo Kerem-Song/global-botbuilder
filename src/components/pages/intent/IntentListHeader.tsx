@@ -31,27 +31,27 @@ export const IntentListHeader: FC<IIntentListHeaderProps> = ({
   };
 
   return (
-    <thead className="utteranceThead">
-      <tr className="utteranceTheadTr">
+    <thead className="intentThead">
+      <tr className="intentTheadTr">
         <th
-          className={classNames('utteranceList intent add', {
-            'hidden-scenarioList': !showScenarioList,
+          className={classNames('intentList intent add', {
+            hiddenScenarioListIntent: !showScenarioList,
           })}
         >
           {t('INTENT')}
           <button className="addBtn" onClick={goToDetail} />
         </th>
         {showScenarioList ? (
-          <th className="utteranceList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
+          <th className="intentList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
         ) : null}
         <th
-          className={classNames('utteranceList utterance', {
-            'hidden-scenarioList-utterance': !showScenarioList,
+          className={classNames('intentList utterance', {
+            hiddenScenarioListUtterance: !showScenarioList,
           })}
         >
           {t('UTTERANCE')}
         </th>
-        <th className="utteranceList icon" />
+        <th className="intentList icon" />
       </tr>
     </thead>
   );

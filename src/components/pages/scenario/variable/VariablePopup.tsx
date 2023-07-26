@@ -162,6 +162,8 @@ export const VariablePopup: FC<VariablePopupProps> = ({
           </Col>
           <Col span={18}>
             <Input
+              showCount={variableList && variableList.name.length > 0 ? false : true}
+              maxLength={50}
               placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
               ref={field.ref}
               value={field.value || ''}

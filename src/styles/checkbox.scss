@@ -5,10 +5,10 @@
     appearance: none;
     width: rem(20);
     height: rem(20);
+    background-color: $grayWhite;
     border: rem(1) solid $gray200;
     border-radius: rem(6);
     cursor: pointer;
-
     &:checked {
       border-color: transparent;
       background-image: url('/src/assets/icons/ic_check.svg');
@@ -17,7 +17,6 @@
       background-color: $primary500;
       cursor: pointer;
     }
-
     &:disabled {
       border-color: transparent;
       background-image: url('/src/assets/icons/ic_check.svg');

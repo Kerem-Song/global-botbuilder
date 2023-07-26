@@ -4,22 +4,20 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 
-export interface IUtteranceSkeletonProps {
+export interface IIntentSkeletonProps {
   isOpenUtterancePopup: boolean;
 }
 
-export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
-  isOpenUtterancePopup,
-}) => {
+export const IntentSkeleton: FC<IIntentSkeletonProps> = ({ isOpenUtterancePopup }) => {
   const showScenarioList = !isOpenUtterancePopup;
   return (
     <>
       {util.range(showScenarioList ? 9 : 5).map((n) => (
-        <tr className="utteranceTbodyTr utteranceTbodyTrSkeleton " key={n}>
+        <tr className="intentTbodyTr intentTbodyTrSkeleton " key={n}>
           <td
             role="presentation"
-            className={classNames('utteranceList intent', {
-              'hidden-scenarioList': !showScenarioList,
+            className={classNames('intentList intent', {
+              hiddenScenarioListIntent: !showScenarioList,
             })}
           >
             <ReactLoadingSkeleton
@@ -31,7 +29,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
             />
           </td>
           {showScenarioList ? (
-            <td role="presentation" className="utteranceList connectScenarios">
+            <td role="presentation" className="intentList connectScenarios">
               <ReactLoadingSkeleton
                 count={1}
                 height={16}
@@ -43,8 +41,8 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
           ) : null}
           <td
             role="presentation"
-            className={classNames('utteranceList utteranceItemsSkeleton', {
-              'hidden-scenarioList-utteranceItemsSkeleton': !showScenarioList,
+            className={classNames('intentList intentItemsSkeleton', {
+              hiddenScenarioListIntentSkeleton: !showScenarioList,
             })}
           >
             <Row gap={10}>
@@ -74,7 +72,7 @@ export const UtteranceSkeleton: FC<IUtteranceSkeletonProps> = ({
               </Col>
             </Row>
           </td>
-          <td className="utteranceList icon" />
+          <td className="intentList icon" />
         </tr>
       ))}
     </>
