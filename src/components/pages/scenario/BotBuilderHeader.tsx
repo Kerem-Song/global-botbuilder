@@ -82,8 +82,8 @@ export const BotBuilderHeader = () => {
     },
     {
       className: 'icCondition',
-      value: NODE_TYPES.CONDITION_NODE,
-      nodeName: t('CAPTION_CONDITIONNODE'),
+      value: NODE_TYPES.SWITCH_NODE,
+      nodeName: t('CAPTION_SWITCHNODE'),
     },
     {
       className: 'icCount',
@@ -99,11 +99,6 @@ export const BotBuilderHeader = () => {
       className: 'icOtherFlowRedirect',
       value: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
       nodeName: t('CAPTION_OTHERFLOWREDIRECTNODE'),
-    },
-    {
-      className: 'icCondition',
-      value: NODE_TYPES.SWITCH_NODE,
-      nodeName: t('CAPTION_SWITCHNODE'),
     },
     {
       className: 'icText',

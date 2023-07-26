@@ -40,7 +40,7 @@ export const SelectNode = ({
           `${NODE_PREFIX}${nodeId}`,
           `${NODE_PREFIX}${item.id}`,
           nodes,
-          true,
+          fieldName !== 'nextNodeId' ? true : false,
         ) === undefined,
     )
     .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))

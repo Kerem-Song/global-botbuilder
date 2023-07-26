@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
@@ -275,6 +276,8 @@ export const DataListCardNodeEdit = () => {
           />
         )}
       </Collapse>
+
+      <ConnectNodeBottomEdit nodeId={values.id} />
     </>
   );
 };

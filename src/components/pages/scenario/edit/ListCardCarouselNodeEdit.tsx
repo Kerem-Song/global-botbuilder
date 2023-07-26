@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { ImageSettings } from './ImageSettings';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ListCardCarouselItems } from './ListCardCarouselItems';
@@ -110,6 +111,8 @@ export const ListCardCarouselNodeEdit = () => {
                     />
                   )}
                 </Collapse>
+
+                <ConnectNodeBottomEdit nodeId={values.id} />
               </div>
             ),
         )}

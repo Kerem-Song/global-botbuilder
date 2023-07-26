@@ -5,6 +5,7 @@ import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
+import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 
 export const TextNodeEdit = () => {
@@ -15,9 +16,11 @@ export const TextNodeEdit = () => {
   const {
     register,
     watch,
+    getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
   const isHistoryViewer = useHistoryViewerMatch();
+  const values = getValues();
 
   return (
     <>
@@ -37,6 +40,7 @@ export const TextNodeEdit = () => {
           />
         </FormItem>
       </div>
+      <ConnectNodeBottomEdit nodeId={values.id} />
     </>
   );
 };

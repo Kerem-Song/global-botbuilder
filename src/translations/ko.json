@@ -344,7 +344,7 @@
     "NODE_LINK_POPUP_MENU_LIST_CARD_CAROUSEL_CARD_NODE": "List Carousel",
     "NODE_LINK_POPUP_MENU_PRODUCT_CARD_CAROUSEL_CARD_NODE": "Commerce Carousel",
     "NODE_LINK_POPUP_MENU_ANSWER_NODE": "Quick Reply",
-    "NODE_LINK_POPUP_MENU_CONDITION_NODE": "Condition",
+    "NODE_LINK_POPUP_MENU_SWITCH_NODE": "Switch",
     "NODE_LINK_POPUP_MENU_RETRY_CONDITION_NODE": "Count",
     "NODE_LINK_POPUP_MENU_PARAMETER_SET_NODE": "Set Parameter",
     "NODE_LINK_POPUP_MENU_OTHER_FLOW_REDIRECT_NODE": "Scenario Node",
@@ -358,7 +358,8 @@
     "DELETE": "삭제",
     "UTTERANCE": "발화",
     "RENAME": "이름 바꾸기",
-    "CAROUSEL_SETTING": "캐로셀 편집"
+    "CAROUSEL_SETTING": "캐로셀 편집",
+    "SET_CONNECT_NODE_BOTTOM": "하단 메시지 연결 설정"
   },
   "INTENT": {
     "TITLE": "인텐트 관리",

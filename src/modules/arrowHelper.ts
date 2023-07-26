@@ -48,6 +48,8 @@ const invalidateConnectNoteType: TNodeTypes[] = [
   NODE_TYPES.INTENT_NODE,
   NODE_TYPES.RETRY_CONDITION_NODE,
   NODE_TYPES.PARAMETER_SET_NODE,
+  NODE_TYPES.RESET_VARIABLE_NODE,
+  NODE_TYPES.CS_NODE,
 ];
 
 export const arrowHelper = {

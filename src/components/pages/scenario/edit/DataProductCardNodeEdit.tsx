@@ -14,6 +14,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
@@ -330,6 +331,8 @@ export const DataProductCardNodeEdit = () => {
           />
         )}
       </Collapse>
+
+      <ConnectNodeBottomEdit nodeId={values.id} />
     </>
   );
 };

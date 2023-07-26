@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
+import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { ImageSettings } from './ImageSettings';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
@@ -90,6 +91,8 @@ export const BasicCardNodeEdit = () => {
           />
         )}
       </Collapse>
+
+      <ConnectNodeBottomEdit nodeId={values.id} />
     </>
   );
 };

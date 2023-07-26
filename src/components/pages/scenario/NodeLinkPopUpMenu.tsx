@@ -80,8 +80,8 @@ export const NodeLinkPopUpMenu = ({
     },
     {
       className: 'icCondition',
-      value: NODE_TYPES.CONDITION_NODE,
-      nodeName: t(`NODE_LINK_POPUP_MENU_CONDITION_NODE`),
+      value: NODE_TYPES.SWITCH_NODE,
+      nodeName: t(`NODE_LINK_POPUP_MENU_SWITCH_NODE`),
       nodeKind: NodeKind.CommandNode,
     },
     {
@@ -236,7 +236,7 @@ export const NodeLinkPopUpMenu = ({
     .filter(
       (b) =>
         b.nodeKind !== NodeKind.CommandNode ||
-        b.value === NODE_TYPES.CONDITION_NODE ||
+        b.value === NODE_TYPES.SWITCH_NODE ||
         guideStart?.isNext,
     )
     .filter(
