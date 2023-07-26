@@ -13,10 +13,16 @@ export const ResetVariableNode: FC<IHasNode> = ({ node }) => {
     <Card>
       <div className="countConditionWrapper">
         <div className="dataCardDesc">
-          {view.variables?.map((item, i) => (
+          <p>
+            {t(`RESET_VARIABLE_NODE_SET`)} :{' '}
+            {view.resetAll === 'all'
+              ? t(`RESET_VARIABLE_NODE_RESET_ALL`)
+              : t(`RESET_VARIABLE_NODE_RESET_SELECT`)}
+          </p>
+          {view.parameters?.map((item, i) => (
             // <MultiClamp clamp={1} ellipsis={'...'} key={item.key}>
             <MultiClamp clamp={1} ellipsis={'...'} key={i}>
-              {`variable ${i + 1}: ${item.value}`}
+              {item.name}
             </MultiClamp>
           ))}
         </div>

@@ -229,6 +229,17 @@
             display: none;
           }
         }
+
+        &:disabled:hover {
+          color: $gray150;
+          background-image: none;
+          background-color: $grayWhite;
+          border: rem(1) dashed #b5b4b4;
+
+          span {
+            display: block;
+          }
+        }
       }
 
       .input {

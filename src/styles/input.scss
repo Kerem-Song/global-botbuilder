@@ -19,16 +19,19 @@
   border: 1px solid $gray200;
   border-radius: rem(8);
   transition: all 0.3s;
+
   &:hover {
     border-color: $primary500;
     border-right-width: 1px;
   }
+
   &:focus {
     border-color: $primary500;
     box-shadow: 0 0 0 2px setAlpha($primary500, 0.2);
     border-right-width: 1px;
     outline: 0;
   }
+
   &:disabled {
     border: 1px solid $gray200;
     background-color: $gray100;
@@ -55,16 +58,23 @@
   border: 1px solid $gray200;
   border-radius: rem(8);
   transition: all 0.3s;
+
   &:hover {
     border-color: $primary500;
     border-right-width: 1px;
   }
+
   &:focus-within {
     border-color: $primary500;
     box-shadow: 0 0 0 2px setAlpha($primary500, 0.2);
     border-right-width: 1px;
     outline: 0;
   }
+
+  &:has(.luna-input:disabled) {
+    background-color: $gray150;
+  }
+
   .luna-input {
     padding: 0;
     height: rem(26);
@@ -73,42 +83,55 @@
     border-radius: 0;
     outline: none;
     flex: auto;
+
     &:focus {
       box-shadow: none;
     }
+
+    &:disabled {
+      background-color: $gray150;
+    }
   }
+
   .count {
     padding-left: rem(5);
     line-height: 2;
     color: $gray300;
   }
+
   .input-button {
     width: rem(16);
     height: rem(20);
     padding: rem(2) 0;
+
     span {
       width: rem(16);
       height: rem(16);
+
       .search {
         width: rem(16);
         height: rem(16);
         background-repeat: no-repeat;
         background-image: url('@assets/icons/ic_search.svg');
+        
         &:hover {
           background-image: url('@assets/icons/ic_search_active.svg');
         }
       }
+
       .clear {
         width: rem(16);
         height: rem(16);
         background-repeat: no-repeat;
         background-image: url('@assets/icons/ic_search_delete.svg');
+
         &:hover {
           background-image: url('@assets/icons/ic_search_delete_active.svg');
         }
       }
     }
   }
+
   .checkbox {
     appearance: none;
     width: rem(20);
@@ -137,12 +160,14 @@
 .luna-input-error {
   border: 1px solid $red;
   border-radius: rem(8);
+
   &:focus-within {
     border-color: $red;
     box-shadow: 0 0 0 2px setAlpha($red, 0.2);
     border-right-width: 1px;
     outline: 0;
   }
+
   &:hover {
     border-color: #f00;
     border-right-width: 1px;
@@ -152,9 +177,11 @@
 .luna-input-large {
   height: rem(49);
   font-size: rem(14);
+
   .luna-input {
     height: rem(40);
   }
+
   .input-button {
     width: rem(24);
     height: rem(20);

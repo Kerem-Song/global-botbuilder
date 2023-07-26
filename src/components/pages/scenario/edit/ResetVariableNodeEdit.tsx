@@ -1,7 +1,7 @@
 import { Button, Collapse } from '@components';
-import { FormItem } from '@components/data-entry';
+import { FormItem, Radio } from '@components/data-entry';
 import { Col, Row } from '@components/layout';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useHistoryViewerMatch, useNodeEditSave, usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IResetVariableCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -19,9 +19,13 @@ export const ResetVariableNodeEdit = () => {
   ]);
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
+  const { confirm } = useSystemModal();
   const {
     getValues,
+    setValue,
     control,
+    watch,
+    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IResetVariableCardView>>();
 
@@ -34,17 +38,19 @@ export const ResetVariableNodeEdit = () => {
   const values = getValues();
 
   const {
-    fields: variablesFields,
+    fields: parametersFields,
     append,
     remove,
   } = useFieldArray({
-    name: `view.variables`,
+    name: `view.parameters`,
     control,
   });
 
+  const { field: resetAll } = useController({ name: 'view.resetAll', control });
+
   const handleAddVariableButton = () => {
     append({
-      key: '',
+      name: '',
       value: '',
     });
   };
@@ -53,7 +59,7 @@ export const ResetVariableNodeEdit = () => {
     remove(index);
   };
 
-  console.log('values in other flow redirect node edit:', values);
+  console.log('@values in other flow redirect node edit:', values);
   console.log('data in ofr', data);
 
   useEffect(() => {
@@ -70,20 +76,76 @@ export const ResetVariableNodeEdit = () => {
     }
   }, [data]);
 
+  const handleResetRadio = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = await confirm({
+      title: t(`RESET_VARIABLE_NODE_CHANGE_SETTING`),
+      description: (
+        <>
+          <span style={{ whiteSpace: 'pre-line' }}>
+            {t(`RESET_VARIABLE_NODE_CHANGE_SETTING_DESC`)}
+          </span>
+        </>
+      ),
+    });
+
+    if (result) {
+      remove();
+    }
+  };
+
   return (
     <>
-      <Collapse label={t(`RESET_VARIABLE_NODE_LABEL`)} useSwitch={false}>
-        {variablesFields.map((item, i) => (
+      <Collapse label={t(`RESET_VARIABLE_NODE_SET`)} useSwitch={false}>
+        <p className="m-b-8">
+          {t(`RESET_VARIABLE_NODE_LABEL`)} <span className="required">*</span>
+        </p>
+        <FormItem error={errors.view?.resetAll}>
+          <Row justify="space-between" className="m-b-8">
+            <Col span={12} className="radioContainer">
+              <Radio
+                checked={watch('view.resetAll') === 'all'}
+                onChange={(e) => {
+                  resetAll.onChange(e);
+                  if (watch(`view.parameters`)?.length) {
+                    handleResetRadio(e);
+                  }
+                }}
+                ref={resetAll.ref}
+                value={'all'}
+              >
+                <span>{t(`RESET_VARIABLE_NODE_RESET_ALL`)}</span>
+              </Radio>
+            </Col>
+            <Col span={12} className="radioContainer">
+              <Radio
+                checked={watch('view.resetAll') === 'select'}
+                onChange={(e) => {
+                  resetAll.onChange(e);
+                  if (!parametersFields.length) {
+                    handleAddVariableButton();
+                  }
+                }}
+                ref={resetAll.ref}
+                value={'select'}
+              >
+                <span>{t(`RESET_VARIABLE_NODE_RESET_SELECT`)}</span>
+              </Radio>
+            </Col>
+          </Row>
+        </FormItem>
+        <p className="m-b-8">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
+        {parametersFields.map((item, i) => (
           <div key={item.id}>
             <Row gap={2} justify="space-between">
               <Col span={21}>
-                <FormItem error={errors.view?.variables?.[i]?.value}>
+                <FormItem error={errors.view?.parameters?.[i]?.name}>
                   <ParameterSelector
                     placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
                     control={control}
-                    path={`view.variables.${i}.value`}
+                    path={`view.parameters.${i}.name`}
                     readOnly={isHistoryViewer}
-                    maxLength={50}
+                    maxLength={125}
+                    isDisabled={watch('view.resetAll') === 'all'}
                   />
                 </FormItem>
               </Col>
@@ -92,13 +154,19 @@ export const ResetVariableNodeEdit = () => {
                   shape="ghost"
                   className="icDelete"
                   onClick={() => handleDeleteVariableButton(i)}
+                  disabled={watch('view.resetAll') === 'all'}
                 />
               </Col>
             </Row>
           </div>
         ))}
-        <div className="apiFieldAddBtn m-b-8">
-          <Button className="addBtn" shape="ghost" onClick={handleAddVariableButton}>
+        <div className="m-b-8">
+          <Button
+            className="addBtn"
+            shape="ghost"
+            onClick={handleAddVariableButton}
+            disabled={watch('view.resetAll') === 'all'}
+          >
             + Variable
           </Button>
         </div>

@@ -401,7 +401,8 @@ export interface ICsCardView extends IViewBase {
 }
 
 export interface IResetVariableCardView extends IViewBase {
-  variables?: IJson[];
+  resetAll: 'all' | 'select';
+  parameters?: { name: ''; value: '' }[];
 }
 
 export interface IGetFlowRes {

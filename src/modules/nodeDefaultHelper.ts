@@ -408,7 +408,8 @@ export const nodeDefaultHelper = {
     const result: IResetVariableCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.RESET_VARIABLE_CARD_VIEW,
-      variables: [{ key: '', value: '' }],
+      resetAll: 'all',
+      parameters: [{ name: '', value: '' }],
     };
     return result;
   },

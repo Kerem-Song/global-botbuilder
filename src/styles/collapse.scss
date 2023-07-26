@@ -91,6 +91,10 @@
     background-image: url('@assets/icons/ic_card_delete.svg');
     background-position: center;
     background-repeat: no-repeat;
+
+    &:disabled {
+      background-image: url('@assets/icons/ic_card_delete_disabled.svg');
+    }
   }
 }
 
