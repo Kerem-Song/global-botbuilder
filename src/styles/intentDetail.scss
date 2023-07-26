@@ -1,21 +1,18 @@
-.utteranceDetailWrap {
+.intentDetailWrap {
   position: relative;
   width: rem(1120);
   padding: rem(32) 0;
   margin: 0 auto;
   overflow: hidden;
-
-  .detailButtons {
+  .intentDetailButtons {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     .addIntent {
       font-size: rem(20);
       font-weight: 500;
     }
-
     .deleteBtn {
       margin-right: rem(8);
     }
@@ -46,7 +43,6 @@
     border-top-left-radius: rem(8);
     border-top-right-radius: rem(8);
   }
-
   .list {
     border-bottom-left-radius: rem(8);
     border-bottom-right-radius: rem(8);
@@ -70,18 +66,15 @@
     *:hover::-webkit-scrollbar-thumb {
       background-color: rgba(208, 221, 255, 0.8);
     }
-
     div {
       display: flex;
       align-items: center;
-
       .utteranceItem {
         width: 100%;
         min-height: rem(44);
         border: 1px solid $gray200;
         border-radius: rem(8);
         margin-bottom: rem(4);
-
         .item {
           margin-left: rem(12);
           font-size: rem(13);
@@ -91,14 +84,6 @@
         }
         &:hover {
           background-color: $primary100;
-
-          .checkbox {
-            background-color: $grayWhite;
-          }
-
-          .checkbox:checked {
-            background-color: $primary500;
-          }
         }
       }
       .emptyList {
@@ -110,10 +95,9 @@
         justify-content: center;
         align-items: center;
         color: $gray500;
-        &.utterance-detailModal-emptyList {
+        &.intentDetailPopupEmptyList {
           height: rem(170);
         }
-
         .empty {
           display: flex;
           flex-direction: column;
@@ -172,7 +156,7 @@
   }
 }
 
-.utterance-detailModalWrap {
+.intentDetailPopupWrap {
   width: rem(1080);
   height: rem(577);
   overflow: hidden;
@@ -181,18 +165,18 @@
   border-radius: rem(12);
   background-color: $grayWhite;
 
-  .utterance-detailModal {
+  .intentDetailPopup {
     height: rem(260);
-    .utterance-detailModal-items {
+    .intentDetailPopupItems {
       max-height: rem(180);
       overflow-y: auto;
     }
-    .utterance-detailModal-items::-webkit-scrollbar {
+    .intentDetailPopupItems::-webkit-scrollbar {
       width: rem(8);
       height: rem(8);
       background-color: rgba(208, 221, 255, 0);
     }
-    .utterance-detailModal-items::-webkit-scrollbar-thumb {
+    .intentDetailPopupItems::-webkit-scrollbar-thumb {
       height: 30%;
       background-color: rgba(208, 221, 255, 0);
       border-radius: rem(18);
@@ -204,7 +188,7 @@
   }
 }
 
-.detailPopupHeaderWrap {
+.intentDetailPopupHeader {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -215,7 +199,7 @@
     font-size: rem(20);
     font-weight: 500;
   }
-  .utteranceDetailClose {
+  .intentDetailPopupClose {
     padding: 0;
     height: 16px;
     img {

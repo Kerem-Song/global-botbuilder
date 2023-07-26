@@ -67,7 +67,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
   return (
     <div
       className={classNames('utterance list', {
-        'utterance-detailModal': isOpenUtteranceDetailPopup,
+        intentDetailPopup: isOpenUtteranceDetailPopup,
       })}
     >
       <Space direction="horizontal">
@@ -94,7 +94,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
       </Space>
       <Row
         className={classNames('utteranceItems', {
-          'utterance-detailModal-items': isOpenUtteranceDetailPopup,
+          intentDetailPopupItems: isOpenUtteranceDetailPopup,
         })}
         style={{ marginTop: '10px' }}
       >
@@ -102,7 +102,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
           <Row style={{ width: '100%' }}>
             <Col
               className={classNames('emptyList', {
-                'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+                intentDetailPopupEmptyList: isOpenUtteranceDetailPopup,
               })}
             >
               <div className="empty">
@@ -116,7 +116,7 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
             <Row style={{ width: '100%' }}>
               <Col
                 className={classNames('emptyList', {
-                  'utterance-detailModal-emptyList': isOpenUtteranceDetailPopup,
+                  intentDetailPopupEmptyList: isOpenUtteranceDetailPopup,
                 })}
               >
                 <div className="empty">

@@ -16,11 +16,11 @@ export const IntentComponent = () => {
   const { isOpen: isOpenUtterancePopup } = useModalOpen();
 
   return (
-    <div className="utteranceWrap">
+    <div className="intentWrap">
       <div className="title">{t('TITLE')}</div>
       <ToSearch searchData={searchData} setSearchData={setSearchData} />
-      <div className="utteranceListWrap">
-        <table className="utteranceTable">
+      <div className="intentListWrap">
+        <table className="intentTable">
           <IntentListHeader isOpenUtterancePopup={isOpenUtterancePopup} />
           <IntentListItem
             searchData={searchData}

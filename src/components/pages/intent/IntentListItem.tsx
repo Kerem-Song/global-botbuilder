@@ -12,7 +12,7 @@ import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router';
 
 import { lunaToast } from '../../../modules/lunaToast';
-import { UtteranceSkeleton } from './UtteranceSkeleton';
+import { IntentSkeleton } from './IntentSkeleton';
 
 export interface IIntentListItemProps {
   searchData: ISearchData;
@@ -98,12 +98,12 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
 
   return (
     <tbody
-      className={classNames('utteranceTbody', {
-        'utterance-popup-tbody': isOpenUtterancePopup,
+      className={classNames('intentTbody', {
+        'intent-popup-tbody': isOpenUtterancePopup,
       })}
     >
       {isFetching && !isFetchedAfterMount && (
-        <UtteranceSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
+        <IntentSkeleton isOpenUtterancePopup={isOpenUtterancePopup} />
       )}
       {isFetchedAfterMount && isExistInitialData(initialData)
         ? initialData?.pages.map((v) => {
@@ -116,24 +116,26 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
                 <tr
                   key={i}
                   ref={ref}
-                  className="utteranceTbodyTr"
+                  className="intentTbodyTr"
                   onClick={() => handleIntent(x.intentId)}
                 >
                   <td
                     role="presentation"
-                    className={classNames('utteranceList intent', {
-                      'hidden-scenarioList': !showScenarioList,
+                    className={classNames('intentList intent', {
+                      hiddenScenarioListIntent: !showScenarioList,
                     })}
                   >
-                    {searchData?.searchWord
-                      ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
-                      : x.intentName}
+                    <span className="intentName">
+                      {searchData?.searchWord
+                        ? util.replaceKeywordMark(x.intentName, searchData?.searchWord)
+                        : x.intentName}
+                    </span>
                   </td>
                   {showScenarioList ? (
                     <td
                       role="presentation"
-                      className={classNames('utteranceList connectScenarios', {
-                        'connectScenarios-inactivated': inactivatedFlow,
+                      className={classNames('intentList connectScenarios', {
+                        connectScenariosInactivated: inactivatedFlow,
                       })}
                     >
                       {x.flowName === null ? '-' : x.flowName}
@@ -141,8 +143,8 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
                   ) : null}
                   <td
                     role="presentation"
-                    className={classNames('utteranceList utterance', {
-                      'hidden-scenarioList-utterance': !showScenarioList,
+                    className={classNames('intentList utterance', {
+                      hiddenScenarioListUtterance: !showScenarioList,
                     })}
                   >
                     <span className="utteranceItems">

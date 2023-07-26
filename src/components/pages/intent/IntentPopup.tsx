@@ -63,26 +63,29 @@ export const IntentPopup: FC<IIntentPopupProps> = ({
 
   return (
     <ReactModal
-      overlayClassName="utterancePopupOverlay node-draggable-ignore"
-      className="utteranceModal"
+      overlayClassName="intentPopupOverlay node-draggable-ignore"
+      className="intentPopupModal"
       isOpen={isOpenUtterancePopup}
       onRequestClose={handleClose}
       shouldCloseOnOverlayClick={false}
     >
-      <div className="utteranceWrap" onContextMenu={(e) => e.stopPropagation()}>
-        <div className="utteranceDetail">
-          <div className="utteranceDetailTitle">
+      <div
+        className="intentWrap intentPopupWrap"
+        onContextMenu={(e) => e.stopPropagation()}
+      >
+        <div className="intentPopupHeader">
+          <div className="intentPopupTitle">
             {selectedScenarios?.alias} {t('TITLE')}
           </div>
           <Button
-            className="utteranceDetailClose"
+            className="intentPopupCloseBtn"
             shape="ghost"
             onClick={handleClose}
             icon={icPopupClose}
           />
         </div>
         <Divider />
-        <div className="searchUtterance">
+        <div className="searchIntent">
           <Input
             search
             placeholder={t('SEARCH_INTENT_PLACEHOLDER')}
@@ -90,8 +93,8 @@ export const IntentPopup: FC<IIntentPopupProps> = ({
             onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-        <div className="utteranceListWrap utterancePopupListWrap">
-          <table className="utteranceTable">
+        <div className="intentListWrap intentPopupListWrap">
+          <table className="intentTable">
             <IntentListHeader
               isOpenUtterancePopup={isOpenUtterancePopup}
               handleDetailPopupOpen={handleDetailPopupOpen}

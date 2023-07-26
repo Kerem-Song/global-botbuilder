@@ -205,12 +205,15 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   return (
     <>
       {isOpenUtteranceDetailPopup ? (
-        <div className="detailPopupHeaderWrap" onContextMenu={(e) => e.stopPropagation()}>
+        <div
+          className="intentDetailPopupHeader"
+          onContextMenu={(e) => e.stopPropagation()}
+        >
           <span className="headerTitle">
             {selectedScenarios?.alias} {t('INTENT')}
           </span>
           <Button
-            className="utteranceDetailClose"
+            className="intentDetailPopupClose"
             shape="ghost"
             onClick={handleCloseDetailPopup}
             icon={icPopupClose}
@@ -219,8 +222,8 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
       ) : null}
       {isOpenUtteranceDetailPopup ? <Divider /> : null}
       <div
-        className={classNames('utteranceDetailWrap', {
-          'utterance-detailModalWrap': isOpenUtteranceDetailPopup,
+        className={classNames('intentDetailWrap', {
+          intentDetailPopupWrap: isOpenUtteranceDetailPopup,
         })}
         onContextMenu={(e) => e.stopPropagation()}
       >
@@ -233,7 +236,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
             }
           }}
         >
-          <div className="detailButtons">
+          <div className="intentDetailButtons">
             {!isOpenUtteranceDetailPopup && (
               <Button onClick={handleListBtn}>{t('LIST')}</Button>
             )}
