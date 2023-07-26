@@ -35,7 +35,7 @@ export const IntentListHeader: FC<IIntentListHeaderProps> = ({
       <tr className="intentTheadTr">
         <th
           className={classNames('intentList intent add', {
-            'hidden-scenarioList': !showScenarioList,
+            hiddenScenarioListIntent: !showScenarioList,
           })}
         >
           {t('INTENT')}
@@ -46,7 +46,7 @@ export const IntentListHeader: FC<IIntentListHeaderProps> = ({
         ) : null}
         <th
           className={classNames('intentList utterance', {
-            'hidden-scenarioList-intent': !showScenarioList,
+            hiddenScenarioListUtterance: !showScenarioList,
           })}
         >
           {t('UTTERANCE')}
