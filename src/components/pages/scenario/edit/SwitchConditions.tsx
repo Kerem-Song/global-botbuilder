@@ -1,4 +1,4 @@
-import { Button, FormItem, Radio, Space } from '@components';
+import { Button, Col, Divider, FormItem, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, usePage } from '@hooks';
 import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
@@ -53,9 +53,46 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   };
   return (
     <>
+      <div className="m-b-15">
+        <p className="m-b-8">
+          {t(`SWITCH_NODE_CONDITION_SELECT`)}
+          <span className="required"> *</span>
+        </p>
+
+        <Row justify="space-between" className="m-b-8">
+          <Col span={12} className="radioContainer">
+            <Radio
+              checked={watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.And}
+              onChange={(e) => {
+                joinField.onChange(+e.target.value);
+              }}
+              ref={joinField.ref}
+              value={ConditionJoin.And}
+            >
+              <span>And</span>
+            </Radio>
+          </Col>
+          <Col span={12} className="radioContainer">
+            <Radio
+              checked={watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.Or}
+              onChange={(e) => {
+                joinField.onChange(+e.target.value);
+              }}
+              ref={joinField.ref}
+              value={ConditionJoin.Or}
+            >
+              <span>Or</span>
+            </Radio>
+          </Col>
+        </Row>
+      </div>
       {fields.map((item, i) => (
         <div key={item.id}>
-          <Space direction="vertical">
+          <Space direction="vertical" className="m-b-8">
+            <div>
+              <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
+              <span className="required">*</span>
+            </div>
             <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
               <VariableSelector
                 placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
@@ -78,104 +115,26 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
               />
             </FormItem>
 
-            {i === 0 ? (
-              <div className="joinWrapper">
-                <label
-                  className={classNames(`join`)}
-                  role="presentation"
-                  onClick={(e) => {
-                    setValue(`view.conditions.${nestedIndex}.join`, ConditionJoin.And, {
-                      shouldDirty: true,
-                    });
-
-                    if (fields.length === 1) {
-                      handleAddConditionButton(e);
-                    }
-                  }}
-                >
-                  {/* <input
-                    {...register(`view.conditions.${i}.join`, { valueAsNumber: true })}
-                    type="radio"
-                    value={ConditionJoin.And}
-                    checked={Number(watch(`view.conditions.${i}.join`)) === ConditionJoin.And}
-                    onClick={() => handleJoin(ConditionJoin.And)}
-                  />
-                  <div data-join={'and'}>And</div> */}
-                  <Radio
-                    checked={
-                      watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.And
-                    }
-                    onChange={() => {
-                      // setValue('view.conditions.${i}.join', ConditionJoin.And);
-                      // handleAddConditionButton();
-                    }}
-                    ref={joinField.ref}
-                  >
-                    <div data-join={'and'}>And</div>
-                  </Radio>
-                </label>
-                <label
-                  className={classNames(`join`)}
-                  role="presentation"
-                  onClick={(e) => {
-                    setValue(`view.conditions.${nestedIndex}.join`, ConditionJoin.Or, {
-                      shouldDirty: true,
-                    });
-
-                    if (fields.length === 1) {
-                      handleAddConditionButton(e);
-                    }
-                  }}
-                >
-                  {/* <input
-                    {...register(`view.conditions.${i}.join`, { valueAsNumber: true })}
-                    type="radio"
-                    value={ConditionJoin.Or}
-                    checked={Number(watch(`view.conditions.${i}.join`)) === ConditionJoin.Or}
-                    onClick={() => handleJoin(ConditionJoin.Or)}
-                  />
-                  <div data-join={'or'}>Or</div> */}
-                  <Radio
-                    checked={
-                      watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.Or
-                    }
-                    onChange={() => {
-                      // setValue('view.conditions.${i}.join', ConditionJoin.Or);
-                      // handleAddConditionButton();
-                    }}
-                    ref={joinField.ref}
-                  >
-                    <div data-join={'or'}>Or</div>
-                  </Radio>
-                </label>
-              </div>
-            ) : (
-              watch(`view.conditions.${nestedIndex}.join`) !== undefined &&
-              i < CONDITION_LIMIT - 1 && (
-                <div
-                  className={classNames(`joinWrapper`, {
-                    on: watch(`view.conditions.${nestedIndex}.join`) !== undefined,
+            {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && (
+              <div
+                className={classNames(`joinWrapper`, {
+                  on: watch(`view.conditions.${nestedIndex}.join`) !== undefined,
+                })}
+              >
+                <Button
+                  shape="ghost"
+                  className={classNames(`join button`, {
+                    on: true,
                   })}
+                  onClick={(e) => {
+                    if (i < CONDITION_LIMIT - 1 && fields.length === i + 1) {
+                      handleAddConditionButton(e);
+                    }
+                  }}
                 >
-                  <Button
-                    shape="ghost"
-                    className={classNames(`join button`, {
-                      on: watch(`view.conditions.${nestedIndex}.join`) !== undefined,
-                    })}
-                    onClick={(e) => {
-                      if (i < CONDITION_LIMIT - 1 && fields.length === i + 1) {
-                        handleAddConditionButton(e);
-                      }
-                    }}
-                  >
-                    {fields.length === i + 1 ? '+ Add' : ''}{' '}
-                    {Number(watch(`view.conditions.${nestedIndex}.join`)) ===
-                    ConditionJoin.And
-                      ? 'And'
-                      : 'Or'}
-                  </Button>
-                </div>
-              )
+                  {fields.length === i + 1 ? '+ Add' : ''}{' '}
+                </Button>
+              </div>
             )}
             {i > 0 ? (
               <div className="deleteBtn">
@@ -186,6 +145,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
             ) : (
               <div className="deleteBtn"></div>
             )}
+            {fields.length !== i + 1 && <Divider />}
           </Space>
         </div>
       ))}
