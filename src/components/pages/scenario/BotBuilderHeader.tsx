@@ -352,18 +352,18 @@ export const BotBuilderHeader = () => {
     return true;
   };
 
-  useEffect(() => {
-    const builderMain = document.querySelector<HTMLDivElement>('.botBuilderMain');
-    if (scenarioSaving && builderMain) {
-      builderMain.style.opacity = '0.2';
-    }
-    return () => {
-      if (scenarioSaving && builderMain) {
-        builderMain.style.opacity = '1';
-      }
-      return;
-    };
-  }, [scenarioSaving]);
+  // useEffect(() => {
+  //   const builderMain = document.querySelector<HTMLDivElement>('.botBuilderMain');
+  //   if (scenarioSaving && builderMain) {
+  //     builderMain.style.opacity = '0.2';
+  //   }
+  //   return () => {
+  //     if (scenarioSaving && builderMain) {
+  //       builderMain.style.opacity = '1';
+  //     }
+  //     return;
+  //   };
+  // }, [scenarioSaving]);
 
   return (
     <>
