@@ -32,17 +32,17 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
                 : {}
             }
           >
-            <span className="caseLabel">{i + 1}: </span>
+            <span className="caseLabel">
+              {/* {i + 1}:  */}
+              if{' '}
+            </span>
             <p className="">
               {condition.items?.[0].op1}{' '}
               {condition.items?.[0].operator
-                ? getConditionOperatorLabel(condition.items?.[0].operator)
+                ? getConditionOperatorLabel(true, condition.items?.[0].operator)
                 : ''}{' '}
               {condition.items?.[0].op2 || '{{ }}'}
             </p>
-            {/* {condition.items?.map((item, j) => (
-              <div key={j}></div>
-            ))} */}
             <NextNodeButton
               ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
               nodeId={`${NODE_PREFIX}${node.id}`}
@@ -51,14 +51,16 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
             />
           </div>
         ))}
+        <div className="conditionCase">
+          <span className="caseLabel">else</span>
+          <NextNodeButton
+            ctrlId={`${node.id}${DEFAULT_SUFFIX}`}
+            nodeId={`${NODE_PREFIX}${node.id}`}
+            type="red"
+            // offset={conditionNodeHeight ? conditionNodeHeight - 20 : 80}
+          />
+        </div>
       </div>
-
-      <NextNodeButton
-        ctrlId={`${node.id}${DEFAULT_SUFFIX}`}
-        nodeId={`${NODE_PREFIX}${node.id}`}
-        type="red"
-        // offset={conditionNodeHeight ? conditionNodeHeight - 20 : 80}
-      />
     </Card>
   );
 };

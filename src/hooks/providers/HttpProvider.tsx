@@ -100,7 +100,6 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
        * todo : 인증 실패 같은 공통 Exception 처리
        */
       if (err.response.status === 403 || err.response.status === 401) {
-        console.log('@Err status', err, err.response.status);
         if (err.response.data.exception.errorCode === 7659) {
           if (err.response.data.exception.staffRole === '0') {
             error({

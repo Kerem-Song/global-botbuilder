@@ -13,7 +13,7 @@ export const IntentNodeEdit = () => {
     getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IIntentView>>();
-  console.log('@intent view', getValues().view);
+
   return (
     <>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>

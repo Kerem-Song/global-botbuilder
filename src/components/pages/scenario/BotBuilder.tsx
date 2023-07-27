@@ -138,7 +138,6 @@ export const Botbuilder = () => {
 
   useEffect(() => {
     if (canvasRef.current) {
-      console.log('@startNode selected', selected);
       if (startNode && startNode.id !== selected && !isStartNode && useMovingStart) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';

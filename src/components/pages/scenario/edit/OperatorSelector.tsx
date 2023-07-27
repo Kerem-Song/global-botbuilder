@@ -20,7 +20,10 @@ export const OperatorSelector = ({
       .map((o) => {
         return {
           value: ConditionOperator[o as ConditionOperatorKeys],
-          label: getConditionOperatorLabel(ConditionOperator[o as ConditionOperatorKeys]),
+          label: getConditionOperatorLabel(
+            false,
+            ConditionOperator[o as ConditionOperatorKeys],
+          ),
         };
       }),
   ];

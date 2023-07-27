@@ -314,9 +314,6 @@ export const arrowHelper = {
     if (!view) {
       return;
     }
-    console.log('@sync start id:', startId);
-    console.log('@sync end id:', endId);
-    console.log('@sync view: ', view);
 
     if (startId.includes(CONDITION_SUFFIX))
       view.conditions?.map((condition, i) => {
