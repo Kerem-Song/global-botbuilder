@@ -20,7 +20,7 @@ export const EntitySkeleton = () => {
           </div>
         </div>
         <ReactLoadingSkeleton
-          width={`${util.random(100)}%`}
+          width="80%"
           count={1}
           height={16}
           baseColor="rgba(0,0,0,0.06)"
