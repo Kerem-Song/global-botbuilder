@@ -135,6 +135,17 @@
           font-size: rem(18);
           line-height: rem(22);
           color: $primary500;
+          
+          span {
+            max-width: rem(600);
+            max-height: rem(44);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
 
           .viewerBtn {
             display: flex;

@@ -105,6 +105,8 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
         } else if (val.changeLogType === 1003 || val.changeLogType === 2005) {
           secondParam = t(`CAPTION_DEACTIVATED`);
         }
+      } else if (secondParam === null) {
+        secondParam = '-';
       }
 
       return (
@@ -218,13 +220,8 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                     <span>{matchCategory(item).categoryLabel}</span>
                   </div>
 
-                  <p className="historyListTitle">
-                    {/* {matchCategory(item).categoryChangeLogType.includes(1008)
-                      ? t(`CAPTION_FLOWGROUPEXPORT_TITLE`)
-                      : matchCategory(item).categoryChangeLogType.includes(1009)
-                      ? t(`CAPTION_FLOWGROUPIMPORT_TITLE`)
-                      : item[matchCategory(item).property]} */}
-                    {handleHistoryListTitle(item)}
+                  <div className="historyListTitle">
+                    <span>{handleHistoryListTitle(item)}</span>
                     {matchCategory(item).categoryChangeLogType.includes(2004) ? (
                       <Button
                         shape="ghost"
@@ -235,7 +232,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                         {t(`VIEWER_BTN`)}
                       </Button>
                     ) : null}
-                  </p>
+                  </div>
 
                   <div>
                     <span className="historyListDesc">

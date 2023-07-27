@@ -3,13 +3,10 @@ import { NODE_TYPES, NodeOption } from '@models';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
 import {
   BOTNAME_REGEX,
-  CONDITION_PARAMETER_REGEX,
   PARAMETER_REGEX,
   PARAMETER_REGEX_FIRST_LETTER,
   PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
-import { setInvalidateNode } from '@store/botbuilderSlice';
-import { is } from 'immer/dist/internal';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
