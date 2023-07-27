@@ -378,7 +378,9 @@
     "UTTERANCE": "발화",
     "RENAME": "이름 바꾸기",
     "CAROUSEL_SETTING": "캐로셀 편집",
-    "SET_CONNECT_NODE_BOTTOM": "하단 메시지 연결 설정"
+    "SET_CONNECT_NODE_BOTTOM": "하단 메시지 연결 설정",
+    "SCENARIO_SAVING_TITLE": "시나리오 저장",
+    "SCENARIO_SAVING_DESC": "시나리오 저장 중입니다. 잠시만 기다려주세요."
   },
   "INTENT": {
     "TITLE": "인텐트 관리",

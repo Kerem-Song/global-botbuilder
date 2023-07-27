@@ -127,7 +127,9 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       title: t('DUPLICATE_SCENARIO'),
       description: (
         <>
-          <span>{t('DUPLICATE_SCENARIO_DESC', { scenario: item.alias })}</span>
+          <span style={{ whiteSpace: 'pre-line' }}>
+            {t('DUPLICATE_SCENARIO_DESC', { scenario: item.alias })}
+          </span>
         </>
       ),
     });

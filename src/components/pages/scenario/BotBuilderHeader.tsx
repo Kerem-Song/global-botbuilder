@@ -1,3 +1,4 @@
+import { Divider, Title } from '@components';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
@@ -26,6 +27,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import ReactLoading from 'react-loading';
+import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
@@ -458,17 +460,37 @@ export const BotBuilderHeader = () => {
           <NodeEditDrawer />
         </form>
       </FormProvider>
-      {scenarioSaving && (
-        <div className="botBuilderLoadingWrapper">
+
+      {/* <div className="botBuilderLoadingWrapper">
+           <ReactLoading
+             type="spin"
+             color="#4478FF"
+             height={70}
+             width={70}
+             className="botBuilderLoading"
+           />
+         </div> */}
+      <ReactModal
+        className="luna-system-modal"
+        isOpen={scenarioSaving}
+        overlayClassName="luna-system-modal-overlay"
+        shouldCloseOnOverlayClick={false}
+      >
+        <div className="title">
+          <Title level={4}>{t(`SCENARIO_SAVING_TITLE`)}</Title>
+        </div>
+        <Divider style={{ margin: 0 }} />
+        <div className="content">
+          {t(`SCENARIO_SAVING_DESC`)}
           <ReactLoading
             type="spin"
             color="#4478FF"
-            height={70}
-            width={70}
+            height={30}
+            width={30}
             className="botBuilderLoading"
           />
         </div>
-      )}
+      </ReactModal>
     </>
   );
 };
