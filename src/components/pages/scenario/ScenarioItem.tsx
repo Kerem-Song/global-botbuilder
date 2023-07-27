@@ -1,12 +1,6 @@
-import { Button, Card, Col, Input, IPopperItem, Popper, Row, Switch } from '@components';
+import { Button, Card, Col, IPopperItem, Popper, Row, Switch } from '@components';
 import { Tooltip } from '@components/navigation/Tooltip';
-import {
-  useModalOpen,
-  usePage,
-  useRootState,
-  useScenarioClient,
-  useSystemModal,
-} from '@hooks';
+import { usePage, useRootState, useScenarioClient, useSystemModal } from '@hooks';
 import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { lunaToast } from '@modules/lunaToast';
@@ -16,7 +10,7 @@ import {
   setScenarioPopupOpen,
 } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 export interface IScenarioItemProps {
@@ -27,8 +21,12 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const { scenarioDeleteAsync, scenarioActiveAsync, scenarioCheckDeleteAsync } =
-    useScenarioClient();
+  const {
+    scenarioDeleteAsync,
+    scenarioActiveAsync,
+    scenarioCheckDeleteAsync,
+    scenarioCreateAsync,
+  } = useScenarioClient();
   const dispatch = useDispatch();
 
   const { handleChangeSelectedScenario } = useSelectedScenarioChange();
@@ -124,6 +122,25 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     }
   };
 
+  const handleDuplicateScenario = async () => {
+    const result = await confirm({
+      title: t('DUPLICATE_SCENARIO'),
+      description: (
+        <>
+          <span>{t('DUPLICATE_SCENARIO_DESC', { scenario: item.alias })}</span>
+        </>
+      ),
+    });
+
+    if (result) {
+      // const res = await scenarioCreateAsync({ token: token, scenarioName: '' });
+      const res = true;
+      if (res) {
+        lunaToast.success(tc(`DUPLICATEING_SCENARIO_IS_SUCCESS`));
+      }
+    }
+  };
+
   const handleScenariRename = (item: IScenarioModel) => {
     dispatch(setPopupType('rename'));
     dispatch(setScenarioListItem(item));
@@ -157,10 +174,11 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     },
     {
       id: 'duplicate',
-      name: t(`DUPLICATION`),
+      name: t(`DUPLICATION_SCEANRIO`),
       data: {
-        action: () => null,
+        action: handleDuplicateScenario,
       },
+      type: 'normal',
     },
   ];
 
@@ -195,7 +213,9 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             offset={[5, 10]}
             popperItems={scenarioMenus}
             onChange={(m) => {
-              selectedScenarios?.id === item.id && m.data?.action?.(item);
+              selectedScenarios?.id === item.id &&
+                m.type !== 'disable' &&
+                m.data?.action?.(item);
             }}
             popup
             popupList

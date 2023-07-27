@@ -1,5 +1,5 @@
 import { Input } from '@components/data-entry';
-import { useOutsideClick, usePage } from '@hooks';
+import { useOutsideClick, usePage, useRootState } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
@@ -151,9 +151,13 @@ export const Popper = <T extends object>({
     }
   }, [popperSelect]);
 
+  const selectedScenarios = useRootState(
+    (state) => state.botBuilderReducer.selectedScenario,
+  );
+
   useEffect(() => {
     setItems(popperItems);
-  }, [i18n.language]);
+  }, [i18n.language, selectedScenarios]);
 
   return (
     <div ref={outsideClickRef}>
