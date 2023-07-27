@@ -192,7 +192,18 @@
         font-size: rem(14);
         line-height: rem(17);
         color: $gray500;
-        text-align: end;     
+        text-align: end;
+
+        .actorInfoWrapper {
+          max-width: rem(400);
+          max-height: rem(20);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
       }
     }
 

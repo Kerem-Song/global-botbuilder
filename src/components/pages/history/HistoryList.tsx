@@ -243,7 +243,7 @@ export const HistoryListItem = ({ category, year }: IHistoryCondition) => {
                 <Col className="historyDateActorWrapper">
                   <p>{util.toLocaleDateTimeString(new Date(item.createAtByBrand))}</p>
 
-                  <p>
+                  <p className="actorInfoWrapper">
                     {item.actorEmail}({item.actorName})
                   </p>
                 </Col>
