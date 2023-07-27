@@ -135,7 +135,7 @@ export const nodeDefaultHelper = {
 
     return result;
   },
-  createDefaultSwitchView: (join = undefined) => {
+  createDefaultSwitchView: (join: ConditionJoin = ConditionJoin.And) => {
     const result: ISwitchView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.SWITCH_VIEW,
