@@ -79,7 +79,13 @@ export const DataProductCardNode: FC<IHasNode> = ({ node }) => {
 
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            {`discount: ${view.salePriceParam}`}
+            {`discount: ${view.discountAmountParam}`}
+          </MultiClamp>
+        </span>
+
+        <span className="dataCardDesc">
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {`sale: ${view.salePriceParam}`}
           </MultiClamp>
         </span>
 

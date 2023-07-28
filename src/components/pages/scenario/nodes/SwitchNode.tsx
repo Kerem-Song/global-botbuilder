@@ -7,6 +7,7 @@ import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { CONDITION_SUFFIX, DEFAULT_SUFFIX, NODE_PREFIX } from '@modules';
 import { FC, useRef } from 'react';
 import MultiClamp from 'react-multi-clamp';
+
 export const SwitchNode: FC<IHasNode> = ({ node }) => {
   const { getConditionOperatorLabel } = useI18n();
   const view = node.view as ISwitchView;
@@ -52,7 +53,7 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
                 : ''}{' '}
               {condition.items?.[0].op2 || '{{ }}'}
             </MultiClamp> */}
-            <MultiClamp clamp={1} ellipsis={'...'}>
+            <p>
               {condition.items?.map((item, i) => (
                 <span key={i}>
                   {item.op1}{' '}
@@ -63,7 +64,7 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
                     changeConditionJoin(condition.join)}
                 </span>
               ))}
-            </MultiClamp>
+            </p>
             <NextNodeButton
               ctrlId={`${node.id}${CONDITION_SUFFIX}${condition.id}`}
               nodeId={`${NODE_PREFIX}${node.id}`}

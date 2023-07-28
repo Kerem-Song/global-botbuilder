@@ -1,10 +1,10 @@
-import { Button, Collapse, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { Collapse, FormItem, Space } from '@components';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { CONDITIONS_LIMIT } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { SwitchNodeCarousel } from '../SwitchNodeCarousel';
 import { SelectNode } from './SelectNode';

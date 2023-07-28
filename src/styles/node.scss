@@ -409,11 +409,14 @@
           border: rem(1) solid $gray200;
           border-radius: rem(8);
           
-          p {
-            height: rem(15);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: pre;
+          p {         
+            span {
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              word-break: break-all;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+            }
           }
 
           .caseLabel {
