@@ -227,6 +227,13 @@ export const NodeLinkPopUpMenu = ({
   console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
   console.log('startNode Type', startNode?.type);
   const filterdBtnList = cardTypeValue
+    .filter((item) => {
+      if (import.meta.env.PROD) {
+        return item.value !== NODE_TYPES.CS_NODE;
+      } else {
+        return item;
+      }
+    })
     .filter((b) => {
       if (!isDraggedNodeBottom) {
         return b.value !== NODE_TYPES.ANSWER_NODE;
