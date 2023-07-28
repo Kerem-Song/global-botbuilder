@@ -152,9 +152,13 @@ export const TesterMessagesItemButton = ({
           }
         }}
       >
-        <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 30)}
-        </MultiClamp>
+        {quickReply ? (
+          item.label
+        ) : (
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {item.label.substring(0, 30)}
+          </MultiClamp>
+        )}
       </button>
     );
   } else if (actionType === 'actValueIsUttr') {
@@ -166,9 +170,13 @@ export const TesterMessagesItemButton = ({
           handleActValueIsUttr();
         }}
       >
-        <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 30)}
-        </MultiClamp>
+        {quickReply ? (
+          item.label
+        ) : (
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {item.label.substring(0, 30)}
+          </MultiClamp>
+        )}
       </button>
     );
   } else if (actionType === 'lblIsUttr') {
@@ -180,9 +188,13 @@ export const TesterMessagesItemButton = ({
           handlelblIsUttr();
         }}
       >
-        <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 30)}
-        </MultiClamp>
+        {quickReply ? (
+          item.label
+        ) : (
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {item.label.substring(0, 30)}
+          </MultiClamp>
+        )}
       </button>
     );
   } else {
@@ -194,9 +206,13 @@ export const TesterMessagesItemButton = ({
           handleNodeUrl();
         }}
       >
-        <MultiClamp clamp={1} ellipsis={'...'}>
-          {item.label.substring(0, 30)}
-        </MultiClamp>
+        {quickReply ? (
+          item.label
+        ) : (
+          <MultiClamp clamp={1} ellipsis={'...'}>
+            {item.label.substring(0, 30)}
+          </MultiClamp>
+        )}
       </button>
     );
   }

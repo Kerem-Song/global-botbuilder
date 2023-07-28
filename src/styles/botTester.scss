@@ -526,11 +526,13 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          word-break: break-all;
+
+          min-width: fit-content;
+          height: rem(34);
           padding: rem(8) rem(14);
           margin-right: rem(8);
-          min-width: fit-content;
-          max-width: rem(300);
+          word-break: break-all;
+          white-space: nowrap;
           border: 1px solid #3b4661;
           background-color: #3b4661;
           border-radius: rem(16);
