@@ -56,6 +56,12 @@ export const ConnectLine: FC<IConnectLineProps> = ({
   const scale = useRootState((state) => state.botBuilderReducer.scale);
   const { addUpdateLines, removeUpdateLines, updateLine } = useUpdateLines();
 
+  const handleDeleteLine = (e: React.KeyboardEvent<SVGElement>) => {
+    if (active && e.key === 'Delete') {
+      onDelete?.();
+    }
+  };
+
   useEffect(() => {
     const canvas = document.querySelector<HTMLDivElement>('.canvasWrapper');
     const end = document.querySelector<HTMLDivElement>(`#${endId}`);
@@ -158,6 +164,11 @@ export const ConnectLine: FC<IConnectLineProps> = ({
           stroke={stroke}
           strokeWidth={Math.max(strokeWidth + 7, 20)}
           fill="none"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            handleDeleteLine(e);
+          }}
+          className="focusedPath"
         />
         <g
           ref={deleteRef}
