@@ -46,13 +46,6 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
               {/* {i + 1}:  */}
               if{' '}
             </span>
-            {/* <MultiClamp clamp={1} ellipsis={'...'}>
-              {condition.items?.[0].op1}{' '}
-              {condition.items?.[0].operator
-                ? getConditionOperatorLabel(true, condition.items?.[0].operator)
-                : ''}{' '}
-              {condition.items?.[0].op2 || '{{ }}'}
-            </MultiClamp> */}
             <p>
               {condition.items?.map((item, i) => (
                 <span key={i}>

@@ -215,9 +215,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
             offset={[5, 10]}
             popperItems={scenarioMenus}
             onChange={(m) => {
-              selectedScenarios?.id === item.id &&
-                m.type !== 'disable' &&
-                m.data?.action?.(item);
+              m.type !== 'disable' && m.data?.action?.(item);
             }}
             popup
             popupList
