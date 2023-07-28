@@ -21,21 +21,30 @@ export const VariableComponent = () => {
   const token = useRootState((state) => state.botInfoReducer.token);
   const { isOpen, handleIsOpen } = useModalOpen();
 
-  const openDeleteVariableModal = async (parameterId: string) => {
+  const openDeleteParameterModal = async (parameterId: string) => {
+    const getUsingParameterIds =
+      variableList?.result.filter((x) => x.using).map((x) => x.id) || [];
+    const deleteParameterId = parameterId;
+    const confirmDesc = (
+      <p style={{ whiteSpace: 'pre-wrap' }}>
+        {getUsingParameterIds.includes(deleteParameterId)
+          ? t('DELETE_USING_VARIABLE_MESSAGE')
+          : t('DELETE_VARIABLE_MESSAGE')}
+      </p>
+    );
+
     const result = await confirm({
       title: t('DELETE_VARIABLE'),
-      description: (
-        <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_VARIABLE_MESSAGE')}</p>
-      ),
+      description: confirmDesc,
     });
 
     if (result) {
-      const deleteVariable: IDeleteParameter = {
+      const deleteParameter: IDeleteParameter = {
         sessionToken: token!,
-        parameterId: parameterId,
+        parameterId: deleteParameterId,
       };
 
-      const res = await variableDeleteAsync(deleteVariable);
+      const res = await variableDeleteAsync(deleteParameter);
       if (res && res.isSuccess) {
         lunaToast.success(tc('DELETE_MESSAGE'));
       }
@@ -91,7 +100,7 @@ export const VariableComponent = () => {
                       }}
                     >
                       <div className="variableInfo">
-                        {item.name.length > 13 ? (
+                        {item.name.length > 14 ? (
                           <Tooltip tooltip={item.name}>
                             <span className="variableName">{item.name}</span>
                           </Tooltip>
@@ -103,7 +112,7 @@ export const VariableComponent = () => {
                         className="deleteBtn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          openDeleteVariableModal(item.id);
+                          openDeleteParameterModal(item.id);
                         }}
                       >
                         <img src={icDeleteDefault} alt="delete" />

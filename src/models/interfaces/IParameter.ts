@@ -9,6 +9,7 @@ export interface IVariableList {
   defaultValue: string | null;
   formatType: number | null;
   id: string;
+  using: boolean;
 }
 
 export interface ISaveParameterData {
