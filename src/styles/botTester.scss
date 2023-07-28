@@ -322,48 +322,70 @@
           align-items: center;
           border: 1px solid $tester-bg;
 
-          .rectangleImageCardCarousel {
-            max-height: rem(253);
+          &.rectangleImageCardCarousel {
+            max-height: rem(398);
           }
 
-          .squareImageCardCarousel {
-            max-height: rem(251);
+          &.squareImageCardCarousel {
+            max-height: rem(494);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
           }
 
           &:hover {
             border: 1px solid $primary500;
+            border-radius: rem(13);
+          }
+
+          .cardCarouselImg {
+            width: 100%;
+            object-fit: contain;
+            border-radius: rem(13) rem(13) 0 0;
           }
 
           .cardCarouselImg_rectangle {
-            width: rem(264);
             height: rem(131);
-            object-fit: contain;
             border-radius: rem(13) rem(13) 0 0;
           }
+
+          .onlyCardCarouselImg_rectangle {
+            border-radius: rem(13);
+          }
+
           .cardCarouselImg_square {
-            width: 100%;
-            height: rem(262);
-            object-fit: contain;
+            height: rem(264);
             border-radius: rem(13) rem(13) 0 0;
           }
+
+          .onlyCardCarouselImg_square {
+            height: rem(262);
+            border-radius: rem(13);
+          }
+
           .cardCarouselContents {
             width: rem(264);
-            height: fit-content;
-            padding: rem(12);
             display: flex;
             flex-direction: column;
             gap: rem(10);
             word-break: break-all;
 
             &.rectangleImageContents {
+              padding: rem(12);
               height: 100%;
               justify-content: space-between;
+            }
+            &.onlyRectangleImageContents {
+              padding: 0;
             }
             &.squareImageContents {
-              height: 100%;
+              padding: rem(12);
+              // height: 100%;
               justify-content: space-between;
             }
-
+            &.onlySquareImageContents {
+              padding: 0;
+            }
             .cardCarouselTitle {
               font-weight: 700;
               font-size: rem(14);
@@ -618,12 +640,16 @@ div {
   div {
     div {
       .rectangleImageBtn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: rem(4);
         button {
           word-break: break-all;
           width: rem(240);
           height: rem(35);
           padding: rem(9) rem(14);
-          margin-top: rem(4);
           border: none;
           border-radius: rem(8);
           background-color: #dbdee5;
@@ -638,7 +664,6 @@ div {
         justify-content: space-between;
         align-items: center;
         gap: rem(6);
-
         button {
           display: flex;
           justify-content: center;

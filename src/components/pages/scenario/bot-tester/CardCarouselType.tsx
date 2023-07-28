@@ -7,28 +7,45 @@ import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
 export interface ICardCarouselTypeProps {
   item: ITesterCard;
+  contents: ITesterCard[];
   handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
 export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
   item,
+  contents,
   handleImgOnError,
 }) => {
+  const isRectangleImage = item.image?.imageAspectRatio === 0;
+  const hasTitleAndContent = item.title && item.contentText;
+  const hasButtons = item.buttons.length > 0;
+  const onlyCardCarouselImage = contents.every(
+    (x) => x.title.length === 0 && x.contentText?.length === 0 && x.buttons.length === 0,
+  );
   return (
     <div
       className={classNames('cardCarousel', {
-        rectangleImageCardCarousel: item.image?.imageAspectRatio === 0,
-        squareImageCardCarousel: item.image?.imageAspectRatio != 0,
+        rectangleImageCardCarousel: isRectangleImage,
+        squareImageCardCarousel: !isRectangleImage,
       })}
     >
       {item.image && (
         <img
-          className={
-            item.image?.imageAspectRatio === 0
-              ? 'cardCarouselImg_rectangle'
-              : 'cardCarouselImg_square'
-          }
-          src={item.image?.imageUrl}
+          className={classNames('cardCarouselImg', {
+            cardCarouselImg_rectangle: isRectangleImage,
+            onlyCardCarouselImg_rectangle:
+              onlyCardCarouselImage &&
+              isRectangleImage &&
+              !hasTitleAndContent &&
+              !hasButtons,
+            cardCarouselImg_square: !isRectangleImage,
+            onlyCardCarouselImg_square:
+              onlyCardCarouselImage &&
+              !isRectangleImage &&
+              !hasTitleAndContent &&
+              !hasButtons,
+          })}
+          src={item.image.imageUrl}
           alt="cardCarouselImg"
           onError={(e) => {
             handleImgOnError(e);
@@ -38,8 +55,8 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
       {item.title || item.contentText ? (
         <div
           className={classNames('cardCarouselContents', {
-            rectangleImageContents: item.image?.imageAspectRatio === 0,
-            squareImageContents: item.image?.imageAspectRatio != 0,
+            rectangleImageContents: isRectangleImage,
+            squareImageContents: !isRectangleImage,
           })}
         >
           <div>
@@ -53,11 +70,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
             </div>
           </div>
           <div>
-            <div
-              className={classNames('rectangleImageBtn', {
-                squareImageBtn: item.image?.imageAspectRatio === 1,
-              })}
-            >
+            <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
               {item.buttons.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;
               })}
@@ -65,12 +78,15 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           </div>
         </div>
       ) : (
-        <div className="cardCarouselContents">
-          <div
-            className={classNames('rectangleImageBtn', {
-              squareImageBtn: item.image?.imageAspectRatio === 1,
-            })}
-          >
+        <div
+          className={classNames('cardCarouselContents', {
+            rectangleImageContents: isRectangleImage,
+            onlyRectangleImageContents: isRectangleImage && !hasButtons,
+            squareImageContents: !isRectangleImage,
+            onlySquareImageContents: !isRectangleImage && !hasButtons,
+          })}
+        >
+          <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
             {item.buttons.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
             ))}

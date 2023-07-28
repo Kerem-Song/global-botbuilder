@@ -42,7 +42,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
 
   const token = useRootState((state) => state.botInfoReducer.token);
-  const reactSelectStyle = getReactSelectStyle({});
+  const reactSelectStyle = getReactSelectStyle<IPararmeterList>({});
 
   const variableNameSchema = yup.object({
     name: yup
@@ -134,7 +134,7 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     const formatList = parameterFormats?.result.map((x) => {
       return { value: x.formatType, label: x.example };
     });
-    const totalFormatList = [
+    const totalFormatList: IPararmeterList[] = [
       { value: 0, label: t('VARIABLE_FORMAT_PLACEHOLDER') },
       ...(formatList ? formatList : []),
     ];
@@ -184,8 +184,8 @@ export const VariablePopup: FC<VariablePopupProps> = ({
               styles={reactSelectStyle}
               placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
               value={totalFormatList?.find((x) => x.value === formats) || null}
-              onChange={(e: any) => {
-                setFormats(e.value);
+              onChange={(newOption) => {
+                setFormats(newOption?.value);
               }}
             />
           </Col>

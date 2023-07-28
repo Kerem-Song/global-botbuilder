@@ -116,11 +116,12 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
           >
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
-                {item.contents?.map((c, i) => {
+                {item.contents!.map((c, i) => {
                   return (
                     <CardCarouselType
                       key={i}
                       item={c}
+                      contents={item.contents}
                       handleImgOnError={handleImgOnError}
                     />
                   );
