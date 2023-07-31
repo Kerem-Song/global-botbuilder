@@ -144,10 +144,11 @@ export const Botbuilder = () => {
       ) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';
-      } else {
-        canvasRef.current.style.left = '0px';
-        canvasRef.current.style.top = '0px';
       }
+      // else {
+      //   canvasRef.current.style.left = '0px';
+      //   canvasRef.current.style.top = '0px';
+      // }
       return () => {
         dispatch(setUseMovingStartPoint(true));
         setIsStartNode(false);
