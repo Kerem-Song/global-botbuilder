@@ -18,7 +18,7 @@ export const HistoryViewerComponent = () => {
   const { botId, historyId } = useParams();
   const { getFlowSnapShot } = useHistoryClient();
   const { data } = getFlowSnapShot({ botId: botId!, historyId: historyId! });
-  console.log('@history data', data);
+
   useEffect(() => {
     if (!data) {
       return;
@@ -32,7 +32,7 @@ export const HistoryViewerComponent = () => {
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedNode = nodes.find((x) => x.id === selected);
-  console.log('@selected', nodes);
+
   const formMethods = useForm<INodeEditModel>({
     mode: 'onChange',
     reValidateMode: 'onChange',

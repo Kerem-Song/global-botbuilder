@@ -59,11 +59,9 @@ export const ResetVariableNodeEdit = () => {
     remove(index);
   };
 
-  console.log('@values in other flow redirect node edit:', values);
-  console.log('data in ofr', data);
+  console.log('@values in reset variable edit:', values);
 
   useEffect(() => {
-    console.log('###########################', data);
     if (data) {
       setScenarioList([
         ...scenarioList.concat(
