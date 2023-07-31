@@ -92,6 +92,7 @@
           border-radius: rem(16);
           font-size: rem(13);
           line-height: rem(16);
+          white-space: pre-line;
         }
       }
       .reply {
@@ -269,36 +270,68 @@
         background-color: $grayWhite;
         border-radius: rem(16);
         border: 1px solid $tester-bg;
+        display: flex;
+        flex-direction: column;
 
-        .cardImg_rectangle {
-          width: 100%;
+        .cardImg {
+          width: rem(262);
+          object-fit: contain;
+          border-radius: rem(13) rem(13) 0 0;
+        }
+
+        .cardImgRectangle {
           height: rem(131);
-          object-fit: contain;
-          border-radius: rem(13) rem(13) 0 0;
-        }
-        .cardImg_square {
-          width: 100%;
-          height: rem(262);
-          object-fit: contain;
           border-radius: rem(13) rem(13) 0 0;
         }
 
-        .cardText {
-          word-break: break-all;
-          height: fit-content;
+        .onlyCardImgRectangle {
+          height: rem(131);
+          border-radius: rem(13);
+        }
+
+        .cardImgSquare {
+          height: rem(262);
+          border-radius: rem(13) rem(13) 0 0;
+        }
+
+        .onlyCardImgSquare {
+          height: rem(262);
+          border-radius: rem(13);
+        }
+
+        .cardContents {
+          width: rem(264);
           display: flex;
           flex-direction: column;
-          padding: rem(12);
-          gap: rem(8);
-
+          word-break: break-all;
+          &.rectangleImageContents {
+            padding: rem(12);
+            height: 100%;
+            justify-content: space-between;
+          }
+          &.onlyRectangleImageContents {
+            padding: 0;
+          }
+          &.squareImageContents {
+            padding: rem(12);
+            height: 100%;
+            justify-content: space-between;
+          }
+          &.onlySquareImageContents {
+            padding: 0;
+          }
           .cardTitle {
             font-size: rem(14);
             line-height: rem(17);
             font-weight: 700;
+            margin-bottom: rem(4);
           }
-          .cardContentText {
+          .cardContentDesc {
             font-weight: 400;
             white-space: pre-line;
+          }
+          .hasBtns {
+            margin-top: rem(8);
           }
         }
 
@@ -323,14 +356,13 @@
           border: 1px solid $tester-bg;
 
           &.rectangleImageCardCarousel {
-            max-height: rem(398);
+            max-height: rem(452);
           }
 
           &.squareImageCardCarousel {
-            max-height: rem(494);
+            max-height: rem(509);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
           }
 
           &:hover {
@@ -339,35 +371,38 @@
           }
 
           .cardCarouselImg {
-            width: 100%;
+            width: rem(262);
             object-fit: contain;
             border-radius: rem(13) rem(13) 0 0;
           }
 
-          .cardCarouselImg_rectangle {
+          .cardCarouselRectangleImgWrap {
             height: rem(131);
-            border-radius: rem(13) rem(13) 0 0;
+            .cardCarouselImgRectangle {
+              height: rem(131);
+              border-radius: rem(13) rem(13) 0 0;
+            }
+            .onlyCardCarouselImgRectangle {
+              height: rem(131);
+              border-radius: rem(13);
+            }
           }
 
-          .onlyCardCarouselImg_rectangle {
-            border-radius: rem(13);
-          }
-
-          .cardCarouselImg_square {
-            height: rem(264);
-            border-radius: rem(13) rem(13) 0 0;
-          }
-
-          .onlyCardCarouselImg_square {
+          .cardCarouselSquareImgWrap {
             height: rem(262);
-            border-radius: rem(13);
+            .cardCarouselImgSquare {
+              height: rem(262);
+            }
+            .onlyCardCarouselImgSquare {
+              height: rem(262);
+              border-radius: rem(13);
+            }
           }
 
           .cardCarouselContents {
             width: rem(264);
             display: flex;
             flex-direction: column;
-            gap: rem(10);
             word-break: break-all;
 
             &.rectangleImageContents {
@@ -380,7 +415,7 @@
             }
             &.squareImageContents {
               padding: rem(12);
-              // height: 100%;
+              height: 100%;
               justify-content: space-between;
             }
             &.onlySquareImageContents {
@@ -397,6 +432,9 @@
               font-size: rem(14);
               line-height: rem(17);
               white-space: pre-line;
+            }
+            .hasBtns {
+              margin-top: rem(8);
             }
           }
         }

@@ -16,8 +16,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
   contents,
   handleImgOnError,
 }) => {
-  const isRectangleImage = item.image?.imageAspectRatio === 0;
-  const hasTitleAndContent = item.title && item.contentText;
+  const isRectangleImage = item.image?.imageAspectRatio != 1;
   const hasButtons = item.buttons.length > 0;
   const onlyCardCarouselImage = contents.every(
     (x) => x.title.length === 0 && x.contentText?.length === 0 && x.buttons.length === 0,
@@ -29,29 +28,27 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
         squareImageCardCarousel: !isRectangleImage,
       })}
     >
-      {item.image && (
-        <img
-          className={classNames('cardCarouselImg', {
-            cardCarouselImg_rectangle: isRectangleImage,
-            onlyCardCarouselImg_rectangle:
-              onlyCardCarouselImage &&
-              isRectangleImage &&
-              !hasTitleAndContent &&
-              !hasButtons,
-            cardCarouselImg_square: !isRectangleImage,
-            onlyCardCarouselImg_square:
-              onlyCardCarouselImage &&
-              !isRectangleImage &&
-              !hasTitleAndContent &&
-              !hasButtons,
-          })}
-          src={item.image.imageUrl}
-          alt="cardCarouselImg"
-          onError={(e) => {
-            handleImgOnError(e);
-          }}
-        />
-      )}
+      <div
+        className={
+          isRectangleImage ? 'cardCarouselRectangleImgWrap' : 'cardCarouselSquareImgWrap'
+        }
+      >
+        {item.image && (
+          <img
+            className={classNames('cardCarouselImg', {
+              cardCarouselImgRectangle: !onlyCardCarouselImage && isRectangleImage,
+              onlyCardCarouselImgRectangle: onlyCardCarouselImage && isRectangleImage,
+              cardCarouselImgSquare: !onlyCardCarouselImage && !isRectangleImage,
+              onlyCardCarouselImgSquare: onlyCardCarouselImage && !isRectangleImage,
+            })}
+            src={item.image.imageUrl}
+            alt="cardCarouselImg"
+            onError={(e) => {
+              handleImgOnError(e);
+            }}
+          />
+        )}
+      </div>
       {item.title || item.contentText ? (
         <div
           className={classNames('cardCarouselContents', {
@@ -69,7 +66,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
               <MultiClamp clamp={8}>{item.contentText?.substring(0, 230)}</MultiClamp>
             </div>
           </div>
-          <div>
+          <div className={hasButtons ? 'hasBtns' : undefined}>
             <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
               {item.buttons.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;
@@ -80,10 +77,10 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
       ) : (
         <div
           className={classNames('cardCarouselContents', {
-            rectangleImageContents: isRectangleImage,
-            onlyRectangleImageContents: isRectangleImage && !hasButtons,
-            squareImageContents: !isRectangleImage,
-            onlySquareImageContents: !isRectangleImage && !hasButtons,
+            rectangleImageContents: !onlyCardCarouselImage && isRectangleImage,
+            onlyRectangleImageContents: onlyCardCarouselImage && isRectangleImage,
+            squareImageContents: !onlyCardCarouselImage && !isRectangleImage,
+            onlySquareImageContents: onlyCardCarouselImage && !isRectangleImage,
           })}
         >
           <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
