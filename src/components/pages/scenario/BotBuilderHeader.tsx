@@ -478,7 +478,7 @@ export const BotBuilderHeader = () => {
              className="botBuilderLoading"
            />
          </div> */}
-      <ReactModal
+      {/* <ReactModal
         className="luna-system-modal"
         isOpen={scenarioSaving}
         overlayClassName="luna-system-modal-overlay"
@@ -497,6 +497,21 @@ export const BotBuilderHeader = () => {
             width={30}
             className="botBuilderLoading"
           />
+        </div>
+      </ReactModal> */}
+      <ReactModal
+        style={{ overlay: { display: 'flex' } }}
+        className="deployingModal"
+        isOpen={scenarioSaving}
+      >
+        <div className="contents">
+          <ReactLoading type="spin" color="#4478FF" height={30} width={30} />
+          <div className="title">
+            <span>{t(`SCENARIO_SAVING_TITLE`)}</span>
+          </div>
+          <div className="text">
+            <p>{t(`SCENARIO_SAVING_DESC`)}</p>
+          </div>
         </div>
       </ReactModal>
     </>
