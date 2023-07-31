@@ -41,6 +41,7 @@ const editableArrowNodeTypes: string[] = [
   NODE_TYPES.DATA_BASIC_CARD_NODE,
   NODE_TYPES.DATA_LIST_CARD_NODE,
   NODE_TYPES.DATA_PRODUCT_CARD_NODE,
+  NODE_TYPES.RESET_VARIABLE_NODE,
 ];
 
 const invalidateConnectNoteType: TNodeTypes[] = [
@@ -272,6 +273,7 @@ export const arrowHelper = {
       NODE_TYPES.INTENT_NODE,
       NODE_TYPES.PARAMETER_SET_NODE,
       NODE_TYPES.JSON_REQUEST_NODE,
+      NODE_TYPES.RESET_VARIABLE_NODE,
     ];
 
     if (

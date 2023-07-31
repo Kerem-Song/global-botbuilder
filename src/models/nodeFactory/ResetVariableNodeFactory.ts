@@ -2,9 +2,10 @@ import { icText } from '@assets';
 import { CsNodeEdit } from '@components/pages/scenario/edit/CsNodeEdit';
 import { ResetVariableNodeEdit } from '@components/pages/scenario/edit/ResetVariableNodeEdit';
 import { ResetVariableNode } from '@components/pages/scenario/nodes';
-import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
+import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
+import { arrowHelper } from '@modules/arrowHelper';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
@@ -36,7 +37,11 @@ export class ResetVariableNodeFactory implements INodeFactory {
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
-    return [];
+    if (!nextNodeId) {
+      return [];
+    }
+
+    return [arrowHelper.createNextArrow(nodeId, nextNodeId)];
   }
 
   syncArrow(startId: string, endId?: string, view?: IViewBase) {
@@ -47,7 +52,7 @@ export class ResetVariableNodeFactory implements INodeFactory {
     return icText;
   }
 
-  getConnectId() {
-    return [];
+  getConnectId(node: INode) {
+    return node.nextNodeId ? [node.nextNodeId] : [];
   }
 }

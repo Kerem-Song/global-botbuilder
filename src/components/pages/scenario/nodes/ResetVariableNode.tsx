@@ -2,8 +2,11 @@ import { Card } from '@components';
 import { usePage } from '@hooks';
 import { IHasNode } from '@models/interfaces/IHasNode';
 import { IResetVariableCardView } from '@models/interfaces/res/IGetFlowRes';
+import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 import MultiClamp from 'react-multi-clamp';
+
+import { NextNodeButton } from '../NextNodeButton';
 
 export const ResetVariableNode: FC<IHasNode> = ({ node }) => {
   const { t } = usePage();
@@ -26,6 +29,11 @@ export const ResetVariableNode: FC<IHasNode> = ({ node }) => {
             </MultiClamp>
           ))}
         </div>
+        <NextNodeButton
+          ctrlId={`${node.id}`}
+          nodeId={`${NODE_PREFIX}${node.id}`}
+          type="blue"
+        />
       </div>
     </Card>
   );
