@@ -409,7 +409,7 @@ export const nodeDefaultHelper = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.RESET_VARIABLE_CARD_VIEW,
       resetAll: 'all',
-      parameters: [{ name: '', value: '' }],
+      parameters: [],
     };
     return result;
   },
