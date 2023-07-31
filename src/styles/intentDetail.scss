@@ -194,10 +194,14 @@
   justify-content: space-between;
   align-items: center;
   padding: rem(20) rem(20) rem(10) rem(20);
-
-  .headerTitle {
-    font-size: rem(20);
-    font-weight: 500;
+  .intentDetailListTitle {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    .headerTitle {
+      font-size: rem(20);
+      font-weight: 500;
+    }
   }
   .intentDetailPopupClose {
     padding: 0;
