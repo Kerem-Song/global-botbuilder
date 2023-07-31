@@ -1,4 +1,4 @@
-import { icPopupClose } from '@assets';
+import { icPopupClose, icPrev } from '@assets';
 import { Button, Divider } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
@@ -209,9 +209,16 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
           className="intentDetailPopupHeader"
           onContextMenu={(e) => e.stopPropagation()}
         >
-          <span className="headerTitle">
-            {selectedScenarios?.alias} {t('INTENT')}
-          </span>
+          <div className="intentDetailListTitle">
+            <div className="listBtn">
+              <Button icon={icPrev} onClick={handleListBtn}>
+                {t('INTENT_LIST')}
+              </Button>
+            </div>
+            <span className="headerTitle">
+              {selectedScenarios?.alias} {t('INTENT')}
+            </span>
+          </div>
           <Button
             className="intentDetailPopupClose"
             shape="ghost"

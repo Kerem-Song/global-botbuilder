@@ -431,7 +431,8 @@
     "ENTER_UTTERANCE": "엔터를 눌러 발화 키워드를 입력해주세요.",
     "SEARCH_UTTERANCE_PLACEHOLDER": "검색어를 입력해주세요.",
     "VALIDATION_REQUIRED": "필수 입력 항목 입니다.",
-    "ADD_INTENT": "인텐트 등록"
+    "ADD_INTENT": "인텐트 등록",
+    "INTENT_LIST": "목록"
   },
   "DEPLOYMENT": {
     "TITLE": "배포",

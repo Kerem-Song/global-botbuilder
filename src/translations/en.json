@@ -383,7 +383,7 @@
     "ENTER_UTTERANCE": "Press Enter and input the utterance keyword. ",
     "SEARCH_UTTERANCE_PLACEHOLDER": "Please input the search keyword. ",
     "VALIDATION_REQUIRED": "This is a required field. ",
-    "ADD_INTENT": "Register Intent"
+    "INTENT_LIST": "List"
   },
   "DEPLOYMENT": {
     "ACCOUNT": "Operator Account",
