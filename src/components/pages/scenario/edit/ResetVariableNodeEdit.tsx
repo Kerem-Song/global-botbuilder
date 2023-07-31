@@ -90,6 +90,8 @@ export const ResetVariableNodeEdit = () => {
 
     if (result) {
       remove();
+    } else {
+      setValue('view.resetAll', 'select');
     }
   };
 
