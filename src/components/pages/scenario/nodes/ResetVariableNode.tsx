@@ -11,7 +11,7 @@ export const ResetVariableNode: FC<IHasNode> = ({ node }) => {
 
   return (
     <Card>
-      <div className="countConditionWrapper">
+      <div className="countConditionWrapper resetVariables">
         <div className="dataCardDesc">
           <p>
             {t(`RESET_VARIABLE_NODE_SET`)} :{' '}

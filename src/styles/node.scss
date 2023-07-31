@@ -450,6 +450,11 @@
               text-overflow: ellipsis;
             }
           }
+
+          &.resetVariables {
+            max-height: rem(320);
+            overflow: hidden;
+          }
         }
 
         .nextNodeDrag {
