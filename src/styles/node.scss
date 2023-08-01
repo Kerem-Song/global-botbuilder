@@ -71,8 +71,14 @@
     .nodeIcon {
       border: rem(1) solid $gray200;
       border-radius: rem(4);
-      width: rem(24);
-      height: rem(24);
+      width: rem(28);
+      height: rem(28);
+      padding: rem(2);
+
+      img {
+        width: rem(24);
+        height: rem(24);
+      }
     }
   }
 

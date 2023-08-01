@@ -469,43 +469,13 @@ export const BotBuilderHeader = () => {
         </form>
       </FormProvider>
 
-      {/* <div className="botBuilderLoadingWrapper">
-           <ReactLoading
-             type="spin"
-             color="#4478FF"
-             height={70}
-             width={70}
-             className="botBuilderLoading"
-           />
-         </div> */}
-      {/* <ReactModal
-        className="luna-system-modal"
-        isOpen={scenarioSaving}
-        overlayClassName="luna-system-modal-overlay"
-        shouldCloseOnOverlayClick={false}
-      >
-        <div className="title">
-          <Title level={4}>{t(`SCENARIO_SAVING_TITLE`)}</Title>
-        </div>
-        <Divider style={{ margin: 0 }} />
-        <div className="content">
-          {t(`SCENARIO_SAVING_DESC`)}
-          <ReactLoading
-            type="spin"
-            color="#4478FF"
-            height={30}
-            width={30}
-            className="botBuilderLoading"
-          />
-        </div>
-      </ReactModal> */}
       <ReactModal
         style={{ overlay: { display: 'flex' } }}
         className="deployingModal"
         isOpen={scenarioSaving}
       >
         <div className="contents">
-          <ReactLoading type="spin" color="#4478FF" height={30} width={30} />
+          <ReactLoading type="spin" color="#4478FF" height={50} width={50} />
           <div className="title">
             <span>{t(`SCENARIO_SAVING_TITLE`)}</span>
           </div>
