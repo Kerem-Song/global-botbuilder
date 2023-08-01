@@ -146,6 +146,21 @@ export const useScenarioClient = () => {
     }
   });
 
+  const scenarioDuplicateMutate = useMutation(
+    async ({ scenarioId }: { scenarioId: string }) => {
+      const res = await http.post('builder/duplicateflow', {
+        sessionToken: token,
+        flowId: scenarioId,
+      });
+
+      if (res) {
+        queryClient.invalidateQueries([SCENARIO_LIST_SELECT_QUERY_KEY, botId]);
+        queryClient.invalidateQueries([SCENARIO_LIST, botId]);
+        return res;
+      }
+    },
+  );
+
   return {
     scenarioCreateAsync: scenarioCreateMutate.mutateAsync,
     scenarioRenameAsync: scenarioRenameMutate.mutateAsync,
@@ -154,6 +169,7 @@ export const useScenarioClient = () => {
     scenarioActiveAsync: scenarioActivateMutate.mutateAsync,
     scenarioSaveAsync: scenarioSaveMutate.mutateAsync,
     scenarioSortAsync: scenarioSortMutate.mutateAsync,
+    scenarioDuplicateMutateAsync: scenarioDuplicateMutate.mutateAsync,
     scenarioSaving: scenarioSaveMutate.isLoading,
     scenarioSavingIsIdle: scenarioSaveMutate.status,
     scenarioCreating: scenarioCreateMutate.isLoading,

@@ -25,7 +25,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     scenarioDeleteAsync,
     scenarioActiveAsync,
     scenarioCheckDeleteAsync,
-    scenarioCreateAsync,
+    scenarioDuplicateMutateAsync,
   } = useScenarioClient();
   const dispatch = useDispatch();
 
@@ -135,7 +135,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     });
 
     if (result) {
-      // const res = await scenarioCreateAsync({ token: token, scenarioName: '' });
+      // const res = await scenarioDuplicateMutateAsync({ scenarioId: item.id });
       const res = true;
       if (res) {
         lunaToast.success(tc(`DUPLICATEING_SCENARIO_IS_SUCCESS`));
