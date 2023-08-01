@@ -93,22 +93,22 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
               <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
               <span className="required">*</span>
             </div>
-            <Row justify="space-between" align="center">
-              <Col span={2} style={{ textAlign: 'center' }}>
-                if
-              </Col>
-              <Col span={22}>
-                {' '}
-                <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
+            <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
+              <Row justify="space-between" align="center">
+                <Col span={2} style={{ textAlign: 'center' }}>
+                  if
+                </Col>
+                <Col span={22}>
+                  {' '}
                   <VariableSelector
                     placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
                     control={control}
                     path={`view.conditions.${nestedIndex}.items.${i}.op1`}
                     maxLength={100}
                   />
-                </FormItem>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            </FormItem>
 
             <FormItem
               error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.operator}
@@ -123,6 +123,16 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 maxLength={100}
               />
             </FormItem>
+
+            {i > 0 ? (
+              <div className="deleteBtn">
+                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
+                  {t(`CONDITION_NODE_DELETE_CONDITION`)}
+                </Button>
+              </div>
+            ) : (
+              <div className="deleteBtn"></div>
+            )}
 
             {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && (
               <div
@@ -141,18 +151,9 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                     }
                   }}
                 >
-                  {fields.length === i + 1 ? '+ Add' : ''}{' '}
+                  {fields.length === i + 1 ? `+ ${t(`SWITCH_NODE_ADD_CASE`)}` : ''}{' '}
                 </Button>
               </div>
-            )}
-            {i > 0 ? (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`CONDITION_NODE_DELETE_CONDITION`)}
-                </Button>
-              </div>
-            ) : (
-              <div className="deleteBtn"></div>
             )}
             {fields.length !== i + 1 && <Divider />}
           </Space>

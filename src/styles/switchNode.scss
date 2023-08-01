@@ -4,6 +4,10 @@
   gap: rem(8);
 }
 
+.carouselBtnWrapper {
+  border-bottom: rem(1) solid $gray150;
+}
+
 .switchNodeCarouselBtn {
   display: flex;
   justify-self: center;
@@ -14,9 +18,60 @@
   background-color: $grayWhite;
   border: rem(1) solid $gray200;
   border-radius: rem(4);
+  width: rem(32);
+  height: rem(32);
 
-  img {
-    width: rem(14);
-    height: rem(14);
+  &[data-button='add'] {
+    background-image: url('@assets/icons/ic_add_case.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $primary500;
+
+    &:hover {
+      background-color: $primary700;
+    }
+
+    &:disabled {
+      background-color: $primary200;
+    }   
+  }
+
+  &[data-button='delete'] {
+    background-image: url('@assets/icons/ic_delete_default.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_delete.svg');
+    }
+    &:disabled {
+      background-image: url('@assets/icons/ic_delete_case_disable.svg');
+    }
+  }
+
+  &[data-button='prev'] {
+    background-image: url('@assets/icons/ic_switch_carousel_prev_active.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_switch_carousel_prev_hover.svg');
+    }
+    &:disabled {
+      background-image: url('@assets/icons/ic_switch_carousel_prev_disable.svg');
+    }
+  }
+
+  &[data-button='next'] {
+    background-image: url('@assets/icons/ic_switch_carousel_next_active.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      background-image: url('@assets/icons/ic_switch_carousel_next_hover.svg');
+    }
+    &:disabled {
+      background-image: url('@assets/icons/ic_switch_carousel_next_disable.svg');
+    }
   }
 }

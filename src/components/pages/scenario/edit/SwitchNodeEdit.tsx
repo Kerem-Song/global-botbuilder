@@ -1,4 +1,4 @@
-import { Collapse, FormItem, Space } from '@components';
+import { Collapse, Divider, FormItem, Space } from '@components';
 import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
@@ -57,6 +57,7 @@ export const SwitchNodeEdit = () => {
           {fields.map((condition, i) => (
             <Collapse label={`Case ${i + 1}`} useSwitch={false} key={condition.id}>
               <SwitchConditions nestedIndex={i} />
+              <Divider style={{ margin: '32px 0' }} />
               <div className="m-b-8">
                 <Space direction="vertical">
                   <div>

@@ -1,14 +1,3 @@
-import {
-  icAddSwitch,
-  icCarouselNextActive,
-  icCarouselNextInactive,
-  icCarouselPrevActive,
-  icCarouselPrevInactive,
-  icDelete,
-  icDeleteDisable,
-  icPlusBlue,
-  icPlusDisable,
-} from '@assets';
 import { Col, Row } from '@components/layout';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { CONDITIONS_LIMIT } from '@modules';
@@ -108,7 +97,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
           align="center"
           className="carouselBtnWrapper node-item-wrap"
         >
-          <Row justify="center" align="center">
+          <Row justify="center" align="center" gap={4}>
             <Col>
               <button
                 className="switchNodeCarouselBtn"
@@ -117,12 +106,8 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   setCurrent(length);
                 }}
                 disabled={current === CONDITIONS_LIMIT - 1}
-              >
-                <img
-                  src={current === CONDITIONS_LIMIT - 1 ? icPlusDisable : icAddSwitch}
-                  alt="icAdd"
-                />
-              </button>
+                data-button={'add'}
+              />
             </Col>
             <Col>
               <button
@@ -132,9 +117,8 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   setCurrent(current === 0 ? 0 : current - 1);
                 }}
                 disabled={length === 1}
-              >
-                <img src={length === 1 ? icDeleteDisable : icDelete} alt="icDelete" />
-              </button>
+                data-button={'delete'}
+              />
             </Col>
           </Row>
 
@@ -145,32 +129,22 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                 : `${current + 1}/${children.length}`}
             </p>
           </Col>
-          <Row justify="center" align="center">
+          <Row justify="center" align="center" gap={4}>
             <Col>
               <button
                 className="switchNodeCarouselBtn"
                 onClick={handlePrevClick}
                 disabled={current === 0}
-                // shape="round"
-              >
-                <img
-                  src={current === 0 ? icCarouselPrevInactive : icCarouselPrevActive}
-                  alt="carouselPrevBtn"
-                />
-              </button>
+                data-button={'prev'}
+              />
             </Col>
             <Col>
               <button
                 className="switchNodeCarouselBtn"
                 onClick={handleNextClick}
                 disabled={NextDisabled()}
-                // shape="round"
-              >
-                <img
-                  src={NextDisabled() ? icCarouselNextInactive : icCarouselNextActive}
-                  alt="carouselNextBtn"
-                />
-              </button>
+                data-button={'next'}
+              />
             </Col>
           </Row>
         </Row>
