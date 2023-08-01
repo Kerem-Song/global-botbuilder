@@ -141,7 +141,7 @@ export const ResetVariableNodeEdit = () => {
                     <Col span={21}>
                       <FormItem error={errors.view?.parameters?.[i]?.name}>
                         <ParameterSelector
-                          placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
+                          placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                           control={control}
                           path={`view.parameters.${i}.name`}
                           readOnly={isHistoryViewer}

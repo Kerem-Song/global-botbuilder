@@ -54,12 +54,12 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   return (
     <>
       <div className="m-b-15">
-        <p className="m-b-8">
+        <p className="m-b-20">
           {t(`SWITCH_NODE_CONDITION_SELECT`)}
           <span className="required"> *</span>
         </p>
 
-        <Row justify="space-between" className="m-b-8">
+        <Row justify="space-between" className="m-b-20">
           <Col span={12} className="radioContainer">
             <Radio
               checked={watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.And}
@@ -93,14 +93,23 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
               <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
               <span className="required">*</span>
             </div>
-            <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
-              <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
-                control={control}
-                path={`view.conditions.${nestedIndex}.items.${i}.op1`}
-                maxLength={100}
-              />
-            </FormItem>
+            <Row justify="space-between" align="center">
+              <Col span={2} style={{ textAlign: 'center' }}>
+                if
+              </Col>
+              <Col span={22}>
+                {' '}
+                <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
+                  <VariableSelector
+                    placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
+                    control={control}
+                    path={`view.conditions.${nestedIndex}.items.${i}.op1`}
+                    maxLength={100}
+                  />
+                </FormItem>
+              </Col>
+            </Row>
+
             <FormItem
               error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.operator}
             >
@@ -108,7 +117,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
             </FormItem>
             <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op2}>
               <VariableSelector
-                placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
+                placeholder={t(`INPUT_VARIABLE_THIRD_CONDITION_PLACEHOLDER`)}
                 control={control}
                 path={`view.conditions.${nestedIndex}.items.${i}.op2`}
                 maxLength={100}
