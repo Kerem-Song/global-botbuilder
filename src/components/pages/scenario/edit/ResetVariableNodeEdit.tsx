@@ -96,11 +96,9 @@ export const ResetVariableNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`RESET_VARIABLE_NODE_SET`)} useSwitch={false}>
-        <p className="m-b-8">
-          {t(`RESET_VARIABLE_NODE_LABEL`)} <span className="required">*</span>
-        </p>
+        <p className="m-b-20">{t(`RESET_VARIABLE_NODE_SET`)}</p>
         <FormItem error={errors.view?.resetAll}>
-          <Row justify="space-between" className="m-b-8">
+          <Row justify="space-between" className="m-b-20">
             <Col span={12} className="radioContainer">
               <Radio
                 checked={watch('view.resetAll') === 'all'}
@@ -135,34 +133,35 @@ export const ResetVariableNodeEdit = () => {
         </FormItem>
         {parametersFields?.length > 0 && (
           <>
-            <p className="m-b-8">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
-            {parametersFields.map((item, i) => (
-              <div key={item.id}>
-                <Row gap={2} justify="space-between">
-                  <Col span={21}>
-                    <FormItem error={errors.view?.parameters?.[i]?.name}>
-                      <ParameterSelector
-                        placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
-                        control={control}
-                        path={`view.parameters.${i}.name`}
-                        readOnly={isHistoryViewer}
-                        maxLength={125}
-                        isDisabled={watch('view.resetAll') === 'all'}
+            <div className="m-b-15">
+              <p className="m-b-8">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
+              {parametersFields.map((item, i) => (
+                <div key={item.id}>
+                  <Row gap={4} justify="space-between">
+                    <Col span={21}>
+                      <FormItem error={errors.view?.parameters?.[i]?.name}>
+                        <ParameterSelector
+                          placeholder={t(`PARAMETER_SET_VARIABLE_PLACEHOLDER`)}
+                          control={control}
+                          path={`view.parameters.${i}.name`}
+                          readOnly={isHistoryViewer}
+                          maxLength={125}
+                          isDisabled={watch('view.resetAll') === 'all'}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col span={3}>
+                      <Button
+                        shape="ghost"
+                        className="icDelete"
+                        onClick={() => handleDeleteVariableButton(i)}
+                        disabled={watch('view.resetAll') === 'all'}
                       />
-                    </FormItem>
-                  </Col>
-                  <Col span={3}>
-                    <Button
-                      shape="ghost"
-                      className="icDelete"
-                      onClick={() => handleDeleteVariableButton(i)}
-                      disabled={watch('view.resetAll') === 'all'}
-                    />
-                  </Col>
-                </Row>
-              </div>
-            ))}
-
+                    </Col>
+                  </Row>
+                </div>
+              ))}
+            </div>
             <div className="m-b-8">
               <Button
                 className="addBtn"
@@ -170,7 +169,7 @@ export const ResetVariableNodeEdit = () => {
                 onClick={handleAddVariableButton}
                 disabled={watch('view.resetAll') === 'all'}
               >
-                + Variable
+                + {t(`RESET_VARIABLE_NODE_ADD_VARIABLE`)}
               </Button>
             </div>
           </>

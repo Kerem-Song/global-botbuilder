@@ -1,4 +1,5 @@
 import icAdd from '@assets/icons/ic_add.svg';
+import icAddSwitch from '@assets/icons/ic_add_case.svg';
 import icAddDisable from '@assets/icons/ic_add_disable.svg';
 import icApiRequest from '@assets/icons/ic_api_request.svg';
 import icBackActive from '@assets/icons/ic_back_active.svg';
@@ -45,7 +46,10 @@ import icDataCommerce from '@assets/icons/ic_data_commerce_card.svg';
 import icDataList from '@assets/icons/ic_data_list_card.svg';
 import icDelete from '@assets/icons/ic_delete.svg';
 import icDeleteDefault from '@assets/icons/ic_delete_default.svg';
+import icDeleteDefaultResetVariable from '@assets/icons/ic_delete_default_reset_variable.svg';
 import icDeleteDisable from '@assets/icons/ic_delete_disable.svg';
+import icDeleteDisableResetVariable from '@assets/icons/ic_delete_disable_reset_variable.svg';
+import icDeleteHoverResetVariable from '@assets/icons/ic_delete_hover_reset_variable.svg';
 import icDeploy from '@assets/icons/ic_deploy_default.svg';
 import icDeploySelected from '@assets/icons/ic_deploy_select.svg';
 import icDeploySelectHistory from '@assets/icons/ic_deploy_select_history.svg';
@@ -97,6 +101,7 @@ import icRadio from '@assets/icons/ic_radio_default.svg';
 import icRadioEnabled from '@assets/icons/ic_radio_enabled.svg';
 import icRefresh from '@assets/icons/ic_refresh_default.svg';
 import icRefreshHover from '@assets/icons/ic_refresh_hover.svg';
+import icResetVariable from '@assets/icons/ic_reset_variable.svg';
 import icScenario from '@assets/icons/ic_scenario_default.svg';
 import icScenarioRedo from '@assets/icons/ic_scenario_redo_default.svg';
 import icScenarioRedoDisable from '@assets/icons/ic_scenario_redo_disable.svg';
@@ -152,6 +157,7 @@ import imgNotFoundImg from '@assets/images/img_not_found_img.svg';
 export {
   icAdd,
   icAddDisable,
+  icAddSwitch,
   icApiRequest,
   icBackActive,
   icBackInactive,
@@ -197,7 +203,10 @@ export {
   icDataList,
   icDelete,
   icDeleteDefault,
+  icDeleteDefaultResetVariable,
   icDeleteDisable,
+  icDeleteDisableResetVariable,
+  icDeleteHoverResetVariable,
   icDeploy,
   icDeploySelected,
   icDeploySelectHistory,
@@ -251,6 +260,7 @@ export {
   icRadioEnabled,
   icRefresh,
   icRefreshHover,
+  icResetVariable,
   icScenario,
   icScenarioRedo,
   icScenarioRedoDisable,

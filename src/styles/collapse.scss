@@ -88,12 +88,17 @@
     border: rem(1) solid $gray200;
     border-radius: rem(8);
     background-color: $grayWhite;
-    background-image: url('@assets/icons/ic_card_delete.svg');
+    background-image: url('@assets/icons/ic_delete_default_reset_variable.svg');
     background-position: center;
     background-repeat: no-repeat;
 
+    &:hover {
+      background-image: url('@assets/icons/ic_delete_hover_reset_variable.svg');;
+    }
+
     &:disabled {
-      background-image: url('@assets/icons/ic_card_delete_disabled.svg');
+      background-color: $gray150;
+      background-image: url('@assets/icons/ic_delete_disable_reset_variable.svg');
     }
   }
 }

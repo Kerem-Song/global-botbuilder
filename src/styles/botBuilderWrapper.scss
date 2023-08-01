@@ -213,6 +213,7 @@
         background-color: $grayWhite;
         border: rem(1) dashed #b5b4b4;
         border-radius: rem(8);
+        font-size: rem(13);
 
         &.list {
           margin-top: rem(24);
@@ -230,10 +231,13 @@
           }
         }
 
+        &:disabled {
+          background-color: $gray150;
+          color: $gray250;
+        }
+        
         &:disabled:hover {
-          color: $gray150;
           background-image: none;
-          background-color: $grayWhite;
           border: rem(1) dashed #b5b4b4;
 
           span {

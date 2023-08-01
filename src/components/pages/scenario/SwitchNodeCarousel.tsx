@@ -1,4 +1,5 @@
 import {
+  icAddSwitch,
   icCarouselNextActive,
   icCarouselNextInactive,
   icCarouselPrevActive,
@@ -118,7 +119,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                 disabled={current === CONDITIONS_LIMIT - 1}
               >
                 <img
-                  src={current === CONDITIONS_LIMIT - 1 ? icPlusDisable : icPlusBlue}
+                  src={current === CONDITIONS_LIMIT - 1 ? icPlusDisable : icAddSwitch}
                   alt="icAdd"
                 />
               </button>

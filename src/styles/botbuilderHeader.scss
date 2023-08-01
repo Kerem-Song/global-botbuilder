@@ -225,6 +225,14 @@
           }
         }
 
+        .icResetVariable {
+          background-image: url('@assets/icons/ic_reset_variable.svg');
+
+          &:hover {
+            background-image: url('@assets/icons/ic_reset_variable_hover.svg');
+          }
+        }
+
         .icJsonRequest {
           background-image: url('@assets/icons/ic_api_request.svg');
 

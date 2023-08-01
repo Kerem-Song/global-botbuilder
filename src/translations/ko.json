@@ -312,6 +312,7 @@
     "RESET_VARIABLE_NODE_RESET_ALL": "전체",
     "RESET_VARIABLE_NODE_RESET_SELECT": "선택",
     "RESET_VARIABLE_NODE_CHANGE_SETTING": "초기화 설정 변경",
+    "RESET_VARIABLE_NODE_ADD_VARIABLE": "초기화할 변수 추가",
     "RESET_VARIABLE_NODE_CHANGE_SETTING_DESC": "초기화 설정을 ‘전체’로 변경하면\n선택했던 변수는 모두 지워집니다.\n정말 변경할까요?",
     "TITLE_INPUT": "타이틀",
     "CONTENT_INPUT": "내용",

@@ -1,5 +1,4 @@
-import { icText } from '@assets';
-import { CsNodeEdit } from '@components/pages/scenario/edit/CsNodeEdit';
+import { icResetVariable } from '@assets';
 import { ResetVariableNodeEdit } from '@components/pages/scenario/edit/ResetVariableNodeEdit';
 import { ResetVariableNode } from '@components/pages/scenario/nodes';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
@@ -49,7 +48,7 @@ export class ResetVariableNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icText;
+    return icResetVariable;
   }
 
   getConnectId(node: INode) {

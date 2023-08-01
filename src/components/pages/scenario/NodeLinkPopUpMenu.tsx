@@ -127,7 +127,7 @@ export const NodeLinkPopUpMenu = ({
       nodeKind: NodeKind.InputNode,
     },
     {
-      className: 'icText',
+      className: 'icResetVariable',
       value: NODE_TYPES.RESET_VARIABLE_NODE,
       nodeName: t(`CAPTION_RESETVARIABLENODE`),
       nodeKind: NodeKind.CommandNode,

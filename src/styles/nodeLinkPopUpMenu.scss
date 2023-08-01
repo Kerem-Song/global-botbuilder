@@ -72,6 +72,7 @@
       border-radius: rem(4);
       background-repeat: no-repeat;
       background-position: center;
+
       &:hover {
         background-color: $grayWhite;
       }
@@ -79,6 +80,7 @@
 
     .icText {
       background-image: url('@assets/icons/ic_text.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_text_hover.svg');
       }
@@ -86,6 +88,7 @@
 
     .icBtnTemple {
       background-image: url('@assets/icons/ic_btn_temple.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_btn_temple_hover.svg');
       }
@@ -93,6 +96,7 @@
     
     .icList {
       background-image: url('@assets/icons/ic_list.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_list_hover.svg');
       }
@@ -100,6 +104,7 @@
 
     .icCommerce {
       background-image: url('@assets/icons/ic_commerce.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_commerce_hover.svg');
       }
@@ -107,6 +112,7 @@
 
     .icCaroImg {
       background-image: url('@assets/icons/ic_caro_img.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_caro_img_hover.svg');
       }
@@ -114,6 +120,7 @@
 
     .icCaroList {
       background-image: url('@assets/icons/ic_caro_list.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_caro_list_hover.svg');
       }
@@ -121,6 +128,7 @@
 
     .icCaroCommerce {
       background-image: url('@assets/icons/ic_caro_commerce.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_caro_commerce_hover.svg');
       }
@@ -128,6 +136,7 @@
 
     .icQuickBtn {
       background-image: url('@assets/icons/ic_quick_btn.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_quick_btn_hover.svg');
       }
@@ -135,6 +144,7 @@
     
     .icCondition {
       background-image: url('@assets/icons/ic_condition.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_condition_hover.svg');
       }
@@ -142,6 +152,7 @@
 
     .icCount {
       background-image: url('@assets/icons/ic_count.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_count_hover.svg');
       }
@@ -149,6 +160,7 @@
 
     .icSetParameter {
       background-image: url('@assets/icons/ic_set_parameter.svg');
+
       &:hover {
         background-image: url('@assets/icons/ic_set_parameter_hover.svg');
       }
@@ -156,11 +168,20 @@
 
     .icOtherFlowRedirect {
       background-image: url('@assets/icons/ic_other_flow_redirect.svg');
+      
       &:hover {
         background-image: url('@assets/icons/ic_other_flow_redirect_hover.svg');
       }
     }
 
+    .icResetVariable {
+      background-image: url('@assets/icons/ic_reset_variable.svg');
+
+      &:hover {
+        background-image: url('@assets/icons/ic_reset_variable_hover.svg');
+      }
+    }
+    
     .icJsonRequest {
       background-image: url('@assets/icons/ic_api_request.svg');
 

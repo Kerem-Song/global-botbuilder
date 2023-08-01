@@ -103,7 +103,7 @@ export const BotBuilderHeader = () => {
       nodeName: t('CAPTION_OTHERFLOWREDIRECTNODE'),
     },
     {
-      className: 'icText',
+      className: 'icResetVariable',
       value: NODE_TYPES.RESET_VARIABLE_NODE,
       nodeName: t(`CAPTION_RESETVARIABLENODE`),
     },
