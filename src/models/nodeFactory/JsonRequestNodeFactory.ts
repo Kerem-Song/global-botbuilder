@@ -49,7 +49,7 @@ export class JsonRequestNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icApiRequest;
+    return 'icApiRequest';
   }
 
   getConnectId(node: INode) {

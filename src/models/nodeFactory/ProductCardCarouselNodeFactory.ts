@@ -55,7 +55,7 @@ export class ProductCardCarouselNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icCaroCommerce;
+    return 'icCaroCommerce';
   }
 
   getConnectId(node: INode) {

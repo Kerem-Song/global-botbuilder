@@ -73,11 +73,83 @@
       border-radius: rem(4);
       width: rem(28);
       height: rem(28);
-      padding: rem(2);
+      background-position: center;
+      background-repeat: no-repeat;
 
-      img {
-        width: rem(24);
-        height: rem(24);
+      &[data-icon='icText'] {
+        background-image: url('@assets/icons/ic_text.svg');
+      }
+
+      &[data-icon='icBtnTemple'] {
+        background-image: url('@assets/icons/ic_btn_temple.svg');
+      }
+
+      &[data-icon='icCaroImg'] {
+        background-image: url('@assets/icons/ic_caro_img.svg');
+      }
+
+      &[data-icon='icList'] {
+        background-image: url('@assets/icons/ic_list.svg');
+      }
+
+      &[data-icon='icCaroList'] {
+        background-image: url('@assets/icons/ic_caro_list.svg');
+      }
+
+      &[data-icon='icCommerce'] {
+        background-image: url('@assets/icons/ic_commerce.svg');
+      }
+
+      &[data-icon='icCaroCommerce'] {
+        background-image: url('@assets/icons/ic_caro_commerce.svg');
+      }
+
+      &[data-icon='icQuickBtn'] {
+        background-image: url('@assets/icons/ic_quick_btn.svg');
+      }
+      
+      &[data-icon='icCondition'] {
+        background-image: url('@assets/icons/ic_condition.svg');
+      }
+
+      &[data-icon='icCount'] {
+        background-image: url('@assets/icons/ic_count.svg');
+      }
+
+      &[data-icon='icSetParameter'] {
+        background-image: url('@assets/icons/ic_set_parameter.svg');
+      }
+
+      &[data-icon='icOtherFlowRedirect'] {
+        background-image: url('@assets/icons/ic_other_flow_redirect.svg');
+      }
+
+      &[data-icon='icResetVariable'] {
+        background-image: url('@assets/icons/ic_reset_variable.svg');
+      }
+
+      &[data-icon='icCS'] {
+        background-image: url('@assets/icons/ic_reset_variable.svg');
+      }
+
+      &[data-icon='icApiRequest'] {
+        background-image: url('@assets/icons/ic_api_request.svg');
+      }
+
+      &[data-icon='icDataBasic'] {
+        background-image: url('@assets/icons/ic_data_basic_card.svg');
+      }
+
+      &[data-icon='icDataList'] {
+        background-image: url('@assets/icons/ic_data_list_card.svg');
+      }
+
+      &[data-icon='icDataCommerce'] {
+        background-image: url('@assets/icons/ic_data_commerce_card.svg');
+      }
+
+      &[data-icon='icIntentNode'] {
+        background-image: url('@assets/icons/ic_intent_node.svg');
       }
     }
   }

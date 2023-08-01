@@ -47,7 +47,7 @@ export class SwitchNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icCondition;
+    return 'icCondition';
   }
 
   getConnectId(node: INode) {

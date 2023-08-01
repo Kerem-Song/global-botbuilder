@@ -55,7 +55,7 @@ export class BasicCardCarouselNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icCaroImg;
+    return 'icCaroImg';
   }
 
   getConnectId(node: INode) {

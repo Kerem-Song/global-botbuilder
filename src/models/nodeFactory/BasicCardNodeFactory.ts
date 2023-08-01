@@ -43,7 +43,7 @@ export class BasicCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icBtnTemple;
+    return 'icBtnTemple';
   }
 
   getConnectId(node: INode) {

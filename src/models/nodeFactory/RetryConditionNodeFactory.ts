@@ -44,7 +44,7 @@ export class RetryConditionNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icCount;
+    return 'icCount';
   }
 
   getConnectId(node: INode) {

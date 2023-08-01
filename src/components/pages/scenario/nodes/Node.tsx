@@ -244,8 +244,8 @@ export const Node: FC<INodeProps> = ({
           }}
         >
           <div className={titleClass}>
-            {nodeIcon && <img src={nodeIcon} alt="nodeIcon" className="nodeIcon" />}
-
+            {/* {nodeIcon && <img src={nodeIcon} alt="nodeIcon" className="nodeIcon" />} */}
+            <span className="nodeIcon" data-icon={nodeIcon}></span>
             {title ? (
               <div className="nodeHeadTitle">
                 <MultiClamp clamp={2} ellipsis={'...'}>

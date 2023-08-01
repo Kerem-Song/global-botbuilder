@@ -47,7 +47,7 @@ export class ParameterSetNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icSetParameter;
+    return 'icSetParameter';
   }
 
   getConnectId(node: INode) {

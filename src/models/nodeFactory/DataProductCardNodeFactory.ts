@@ -44,7 +44,7 @@ export class DataProductCardNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return icDataCommerce;
+    return 'icDataCommerce';
   }
 
   getConnectId(node: INode) {
