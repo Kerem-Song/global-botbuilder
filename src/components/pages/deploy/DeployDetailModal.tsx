@@ -2,6 +2,7 @@ import { Button, Divider, Space } from '@components';
 import { Title } from '@components/general';
 import { usePage } from '@hooks';
 import { useDeployClient } from '@hooks/client/deployClient';
+import { usePrompt } from '@hooks/usePrompt';
 import { IDeployResult, IUpdateDeployHistoryComment } from '@models/interfaces/IDeploy';
 import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
@@ -32,11 +33,18 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
     { value: 9, message: t('CHANNEL_NOT_FOUND') },
     { value: 10, message: t('CHANNEL_NOT_USING_BY_PS_CENTER') },
   ]);
-  const [isActive, setIsActive] = useState<boolean>(false);
   const { updateDeployHistoryCommentAsync } = useDeployClient();
-  const { handleSubmit, reset, getValues, control } =
-    useForm<IUpdateDeployHistoryComment>();
+  const {
+    handleSubmit,
+    reset,
+    getValues,
+    control,
+    formState: { isDirty },
+  } = useForm<IUpdateDeployHistoryComment>();
+
   const { field } = useController({ name: 'comment', control: control });
+
+  usePrompt(isDirty);
 
   const handleCancel = () => {
     handleIsOpen(false);
@@ -143,7 +151,6 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
             value={field.value}
             onChange={(e) => {
               field.onChange(e);
-              setIsActive(true);
             }}
           />
         </form>
@@ -155,7 +162,7 @@ export const DeployDetailModal: FC<IDeployDetailModalProps> = ({
             <Button
               className="min-w-100"
               type="primary"
-              disabled={isActive ? false : true}
+              disabled={!isDirty}
               onClick={handleSave}
             >
               {tc('SAVE')}
