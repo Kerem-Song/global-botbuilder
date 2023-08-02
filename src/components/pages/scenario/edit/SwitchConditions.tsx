@@ -94,8 +94,8 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
               <span className="required">*</span>
             </div>
             <Row justify="space-between">
-              <Col span={3} style={{ textAlign: 'center' }}>
-                <p style={{ padding: '12px' }}>if</p>
+              <Col span={3}>
+                <p className="firstConditionIf">if</p>
               </Col>
               <Col span={21}>
                 <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
