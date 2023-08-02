@@ -135,8 +135,8 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
     });
 
     if (result) {
-      // const res = await scenarioDuplicateMutateAsync({ scenarioId: item.id });
-      const res = true;
+      const res = await scenarioDuplicateMutateAsync({ scenarioId: item.id });
+
       if (res) {
         lunaToast.success(tc(`DUPLICATEING_SCENARIO_IS_SUCCESS`));
       }

@@ -148,7 +148,7 @@ export const useScenarioClient = () => {
 
   const scenarioDuplicateMutate = useMutation(
     async ({ scenarioId }: { scenarioId: string }) => {
-      const res = await http.post('builder/duplicateflow', {
+      const res = await http.post('builder/copyflow', {
         sessionToken: token,
         flowId: scenarioId,
       });
