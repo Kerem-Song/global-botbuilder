@@ -83,9 +83,7 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
                     </MultiClamp>
                   </div>
                   <div className="cardContentDesc">
-                    <MultiClamp clamp={8}>
-                      {item.contentText?.substring(0, 230)}
-                    </MultiClamp>
+                    {item.contentText?.substring(0, 230)}
                   </div>
                 </div>
                 <div className={hasButtons ? 'hasBtns' : undefined}>
