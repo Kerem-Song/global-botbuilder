@@ -54,6 +54,7 @@ export type IChangeLogType =
   | 2013
   | 2014
   | 2015
+  | 2016
   | 3001
   | 3002
   | 3003

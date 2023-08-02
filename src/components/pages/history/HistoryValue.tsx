@@ -248,6 +248,17 @@ export const HistoryValue = () => {
       // desc: t(`CAPTION_REGEXUPDATED`),
     },
     {
+      categoryLabel: t(`HISTORY_SCENARIO`),
+      categoryValue: HISTORY_CATEGORY_TYPES.SCENARIO,
+      name: 'FLOWCOPIED',
+      changeLogType: 2016,
+      header: 'originalFlowAlias',
+      prev: 'originalFlowId',
+      next: 'copiedFlowId',
+      property: { flowName: 'flowName' },
+      // desc: t(`CAPTION_FLOWCOPIED`),
+    },
+    {
       categoryLabel: t(`HISTORY_UTTERANCE`),
       categoryValue: HISTORY_CATEGORY_TYPES.INTENT,
       name: 'INTENTNAMECREATED',

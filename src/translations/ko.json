@@ -519,6 +519,7 @@
     "CAPTION_DISCONNECTED": "해제",
     "CAPTION_ACTIVATED": "활성화",
     "CAPTION_DEACTIVATED": "비활성화",
+    "CAPTION_FLOWCOPIED": "시나리오가 복제되었습니다.",
     "NO_RESULT": "조회된 히스토리가 없습니다. \n조건을 바꿔서 다시 시도해보세요."
   },
   "SETTING": {
