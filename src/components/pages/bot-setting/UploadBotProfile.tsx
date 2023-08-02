@@ -21,23 +21,15 @@ import {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
 
 export interface IUploadBotProfileProps {
   isProfileSaveBtnActive: boolean;
   setIsProfileSaveBtnActive: Dispatch<SetStateAction<boolean>>;
-  setIsSaveBtnsActive: Dispatch<
-    SetStateAction<{
-      isSaveBtnActive: boolean;
-      isProfileSaveBtnActive: boolean;
-    }>
-  >;
 }
 
 export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
   isProfileSaveBtnActive,
   setIsProfileSaveBtnActive,
-  setIsSaveBtnsActive,
 }) => {
   const [iconImage, setIconImage] = useState<File | null>();
   const { t } = usePage();
@@ -68,10 +60,8 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
       formData.append('File', iconImage);
       formData.append('SessionToken', token);
       formData.append('CtrlId', 'profile');
-
       imageUploadAsync({ formData })
         .then((res) => {
-          console.log('res.data image', res?.data);
           setValue('iconUrl', res?.data.result);
           setIconImage(null);
         })
@@ -88,7 +78,6 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
   const handleChangeBotProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const ALLOWED_FILE_SIZE = 3 * 1000 * 100; // 300KB 제한
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']; //jpg, png가능
-
     const file = e.target.files && e.target.files[0];
 
     if (!file) {
@@ -118,7 +107,6 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
     }
     setIconImage(file);
     setIsProfileSaveBtnActive(true);
-    setIsSaveBtnsActive((prev) => ({ ...prev, isProfileSaveBtnActive: true }));
   };
 
   const handleSaveProfile = async () => {
@@ -131,13 +119,8 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
       const res = await botImageUploadAsync(send);
 
       if (res) {
-        console.log('res', res);
         lunaToast.success(t('SAVE_BOT_PROFILE_MESSAGE'));
         setIsProfileSaveBtnActive(false);
-        setIsSaveBtnsActive((prev) => ({
-          ...prev,
-          isProfileSaveBtnActive: false,
-        }));
       }
     }
   };

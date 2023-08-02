@@ -33,7 +33,6 @@ export const HandleBotScenario = () => {
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const uploadFile = e.target.files![0];
       const SURPPORTED_FORMATS = ['application/json']; // json 확장자로 사용자 지정 파일 설정
-
       if (SURPPORTED_FORMATS.includes(uploadFile.type)) {
         const res = await confirm({
           title: t('IMPORT_SCENARIO'),
