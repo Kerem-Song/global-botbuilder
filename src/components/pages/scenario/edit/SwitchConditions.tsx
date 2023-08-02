@@ -93,22 +93,21 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
               <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
               <span className="required">*</span>
             </div>
-            <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
-              <Row justify="space-between" align="center">
-                <Col span={2} style={{ textAlign: 'center' }}>
-                  if
-                </Col>
-                <Col span={22}>
-                  {' '}
+            <Row justify="space-between">
+              <Col span={3} style={{ textAlign: 'center' }}>
+                <p style={{ padding: '12px' }}>if</p>
+              </Col>
+              <Col span={21}>
+                <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
                   <VariableSelector
                     placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
                     control={control}
                     path={`view.conditions.${nestedIndex}.items.${i}.op1`}
                     maxLength={100}
                   />
-                </Col>
-              </Row>
-            </FormItem>
+                </FormItem>
+              </Col>
+            </Row>
 
             <FormItem
               error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.operator}
