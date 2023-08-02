@@ -18,17 +18,10 @@ export const DefaultSettingBot = () => {
   const { botUpdateNameAsync } = useBotClient();
   const botNameRef = useRef<HTMLInputElement | null>(null);
   const [botNameInputError, setBotNameInputError] = useState<string>('');
-  const [isSaveBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
   const [isProfileSaveBtnActive, setIsProfileSaveBtnActive] = useState<boolean>(false);
-  const [isSaveBtnsActive, setIsSaveBtnsActive] = useState({
-    isSaveBtnActive: false,
-    isProfileSaveBtnActive: false,
-  });
   const botSettingInfo = useRootState(
     (state) => state.botSettingInfoReducer.botSettingInfo,
   );
-
-  usePrompt(isSaveBtnsActive.isSaveBtnActive || isSaveBtnsActive.isProfileSaveBtnActive);
 
   const botNameSchema = yup.object({
     botName: yup
@@ -55,8 +48,10 @@ export const DefaultSettingBot = () => {
     handleSubmit,
     control,
     getValues,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = formMethods;
+
+  usePrompt(isDirty || isProfileSaveBtnActive);
 
   const { field } = useController({ name: 'botName', control });
 
@@ -77,8 +72,6 @@ export const DefaultSettingBot = () => {
 
   const handleBotName = (e: React.ChangeEvent<HTMLInputElement>) => {
     field.onChange(e);
-    setIsSaveBtnActive(true);
-    setIsSaveBtnsActive((prev) => ({ ...prev, isSaveBtnActive: true }));
     setBotNameInputError('');
   };
 
@@ -95,8 +88,6 @@ export const DefaultSettingBot = () => {
       return;
     } else {
       lunaToast.success(t('SAVE_BOT_MESSAGE'));
-      setIsSaveBtnActive(false);
-      setIsSaveBtnsActive((prev) => ({ ...prev, isSaveBtnActive: false }));
       return;
     }
   };
@@ -142,11 +133,7 @@ export const DefaultSettingBot = () => {
               <span className="error-message">{errors.botName?.message}</span>
             </Col>
             <Col>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={isSaveBtnActive ? false : true}
-              >
+              <Button type="primary" htmlType="submit" disabled={!isDirty}>
                 {t('SAVE')}
               </Button>
             </Col>
@@ -168,7 +155,6 @@ export const DefaultSettingBot = () => {
         <UploadBotProfile
           isProfileSaveBtnActive={isProfileSaveBtnActive}
           setIsProfileSaveBtnActive={setIsProfileSaveBtnActive}
-          setIsSaveBtnsActive={setIsSaveBtnsActive}
         />
       </Space>
     </Card>

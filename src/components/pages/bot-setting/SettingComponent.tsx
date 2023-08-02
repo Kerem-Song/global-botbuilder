@@ -15,7 +15,10 @@ export const SettingComponent = () => {
   const { botId } = useParams();
   const dispatch = useDispatch();
   const { getBotSettingInfoQuery } = useBotClient();
-  getBotSettingInfoQuery(botId!);
+
+  if (botId) {
+    getBotSettingInfoQuery(botId);
+  }
 
   useEffect(() => {
     return () => {
