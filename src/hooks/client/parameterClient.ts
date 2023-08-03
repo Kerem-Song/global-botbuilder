@@ -5,25 +5,25 @@ import { AxiosResponse } from 'axios';
 
 import {
   IDeleteParameter,
+  IParameterList,
   IResponseDeleteParameter,
   IResponseSaveParameter,
   ISaveParameter,
   ISaveParameterData,
-  IVariableList,
 } from '../../models/interfaces/IParameter';
 import { IGetParameterFormats } from './../../models/interfaces/IParameter';
 
-export const useVariableClient = () => {
+export const useParameterClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const getVariableListQuery = () => {
-    return useQuery<IHasResults<IVariableList>>(
-      ['variable-list', token],
+  const getParameterListQuery = () => {
+    return useQuery<IHasResults<IParameterList>>(
+      ['parameter-list', token],
       () =>
         http
-          .post<ISearchParameter, AxiosResponse<IHasResults<IVariableList>>>(
+          .post<ISearchParameter, AxiosResponse<IHasResults<IParameterList>>>(
             'Builder/SearchParameter',
             {
               sessionToken: token,
@@ -50,11 +50,11 @@ export const useVariableClient = () => {
     );
   };
 
-  const variableMutate = useMutation(async (variable: ISaveParameter) => {
+  const parameterMutate = useMutation(async (parameter: ISaveParameter) => {
     const res = await http.post<
       ISaveParameter,
       AxiosResponse<IResponseSaveParameter<ISaveParameterData>>
-    >('Builder/SaveParameter', variable);
+    >('Builder/SaveParameter', parameter);
 
     const exception = res.data.exception as IException;
 
@@ -63,30 +63,30 @@ export const useVariableClient = () => {
     }
 
     if (res.data.isSuccess) {
-      queryClient.invalidateQueries(['variable-list', token]);
-      queryClient.invalidateQueries(['variable-select-list', token]);
+      queryClient.invalidateQueries(['parameter-list', token]);
+      queryClient.invalidateQueries(['parameter-select-list', token]);
       return res.data;
     }
     return '';
   });
 
-  const variableDeleteMutate = useMutation(async (deleteVariable: IDeleteParameter) => {
+  const parameterDeleteMutate = useMutation(async (deleteParameter: IDeleteParameter) => {
     const result = await http.post<
       IDeleteParameter,
       AxiosResponse<IResponseDeleteParameter>
-    >('Builder/DeleteParameter', deleteVariable);
+    >('Builder/DeleteParameter', deleteParameter);
 
     if (result) {
-      queryClient.invalidateQueries(['variable-list', token]);
-      queryClient.invalidateQueries(['variable-select-list', token]);
+      queryClient.invalidateQueries(['parameter-list', token]);
+      queryClient.invalidateQueries(['parameter-select-list', token]);
       return result.data;
     }
   });
 
   return {
-    getVariableListQuery,
+    getParameterListQuery,
     getParameterFormatsQuery,
-    variableAsync: variableMutate.mutateAsync,
-    variableDeleteAsync: variableDeleteMutate.mutateAsync,
+    parameterAsync: parameterMutate.mutateAsync,
+    parameterDeleteAsync: parameterDeleteMutate.mutateAsync,
   };
 };

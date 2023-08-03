@@ -239,7 +239,7 @@
     }
 
     // 변수 탭
-    .variableTabWrapper {
+    .parameterTabWrapper {
       .settingEntityBtn {
         padding: rem(10);
         button {
@@ -250,7 +250,7 @@
         }
       }
 
-      .variableWrapper {
+      .parameterWrapper {
         padding: rem(12);
 
         .title {
@@ -259,28 +259,28 @@
           color: $gray500;
         }
 
-        .variableListWrapper {
+        .parameterListWrapper {
           border: 1px solid $gray200;
           border-radius: rem(6);
           background-color: $grayWhite;
 
-          .variableList {
-            .variableListHeader {
+          .parameterList {
+            .parameterListHeader {
               height: rem(25);
               padding: rem(4) rem(12);
               display: grid;
               grid-template-columns: 9fr 1fr;
               border-radius: rem(5) rem(5) 0 0;
               background-color: $gray150;
-              .variableName {
+              .parameterName {
                 font-size: rem(13);
                 color: $gray500;
               }
             }
-            .variableListItems {
+            .parameterListItems {
               max-height: calc(100vh - rem(250));
               overflow-y: auto;
-              .variableItem {
+              .parameterItem {
                 width: 100%;
                 height: rem(38);
                 display: grid;
@@ -295,7 +295,7 @@
                   background-color: $primary100;
                 }
 
-                .variableInfo {
+                .parameterInfo {
                   text-overflow: ellipsis;
                   overflow: hidden;
                   white-space: nowrap;
@@ -311,17 +311,17 @@
                   cursor: pointer;
                 }
               }
-              .variableSkeletonList {
+              .parameterSkeletonList {
                 padding: rem(10) rem(8);
               }
             }
-            .variableListItems::-webkit-scrollbar {
+            .parameterListItems::-webkit-scrollbar {
               width: rem(8);
               height: rem(8);
               background-color: rgb(208, 221, 255, 0.2);
             }
 
-            .variableListItems::-webkit-scrollbar-thumb {
+            .parameterListItems::-webkit-scrollbar-thumb {
               height: 30%;
               background-color: rgba(208, 221, 255, 0);
               border-radius: rem(18);
@@ -331,13 +331,13 @@
               background-color: rgba(208, 221, 255, 0.8);
             }
 
-            .emptyVariableList {
+            .emptyParameterList {
               height: rem(50);
               display: flex;
               justify-content: center;
               align-items: center;
 
-              .emptyVariable {
+              .emptyParameter {
                 color: $gray300;
               }
             }

@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
+import { ParameterComponent } from './parameter/ParameterComponent';
 import { ScenarioManagement } from './ScenarioManagement';
-import { VariableComponent } from './variable/VariableComponent';
 
 export const ManagementComponent = () => {
   const { t } = usePage();
@@ -81,7 +81,7 @@ export const ManagementComponent = () => {
           setIsActivated={setIsActivated}
         />
       ) : (
-        <VariableComponent />
+        <ParameterComponent />
       )}
     </div>
   );

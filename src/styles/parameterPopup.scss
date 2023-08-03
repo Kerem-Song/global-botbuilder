@@ -1,4 +1,4 @@
-.variableModal {
+.parameterModal {
   width: rem(600);
   height: fit-content;
   margin: auto;
@@ -9,10 +9,10 @@
   .header {
     padding: rem(14) rem(20) rem(0) rem(20);
   }
-  .variableInfo {
+  .parameterInfo {
     padding: rem(9) rem(20) rem(20) rem(20);
   }
-  .variableModalBtns {
+  .parameterModalBtns {
     padding: rem(0) rem(20) rem(20) rem(20);
   }
 }

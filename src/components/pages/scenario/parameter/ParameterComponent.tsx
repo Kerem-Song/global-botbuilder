@@ -3,30 +3,29 @@ import { Button } from '@components/general/Button';
 import { Col, Row } from '@components/layout';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useModalOpen, usePage, useRootState, useSystemModal } from '@hooks';
-import { useVariableClient } from '@hooks/client/variableClient';
-import { IDeleteParameter, IVariableList } from '@models';
+import { useParameterClient } from '@hooks/client/parameterClient';
+import { IDeleteParameter, IParameterList } from '@models';
 import { lunaToast } from '@modules/lunaToast';
 import { useState } from 'react';
 
 import { EntityComponent } from '../entity/EntityComponent';
-import { VariablePopup } from './VariablePopup';
-import { VariableSkeleton } from './VariableSkeleton';
+import { ParameterPopup } from './ParameterPopup';
+import { ParameterSkeleton } from './ParameterSkeleton';
 
-export const VariableComponent = () => {
-  const [isVariableList, setIsVariableList] = useState<IVariableList>();
+export const ParameterComponent = () => {
+  const [isParameterList, setIsParameterList] = useState<IParameterList>();
   const { t, tc } = usePage();
-  const { getVariableListQuery, variableDeleteAsync } = useVariableClient();
-  const { data: variableList, isFetching } = getVariableListQuery();
+  const { getParameterListQuery, parameterDeleteAsync } = useParameterClient();
+  const { data: parameterList, isFetching } = getParameterListQuery();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
   const { isOpen, handleIsOpen } = useModalOpen();
 
-  const openDeleteParameterModal = async (parameterId: string) => {
+  const openDeleteParameterModal = async (deleteParameterId: string) => {
     const getUsingParameterIds =
-      variableList?.result.filter((x) => x.using).map((x) => x.id) || [];
-    const deleteParameterId = parameterId;
+      parameterList?.result.filter((x) => x.using).map((x) => x.id) || [];
     const confirmDesc = (
-      <p style={{ whiteSpace: 'pre-wrap' }}>
+      <p style={{ whiteSpace: 'pre-line' }}>
         {getUsingParameterIds.includes(deleteParameterId)
           ? t('DELETE_USING_VARIABLE_MESSAGE')
           : t('DELETE_VARIABLE_MESSAGE')}
@@ -44,25 +43,25 @@ export const VariableComponent = () => {
         parameterId: deleteParameterId,
       };
 
-      const res = await variableDeleteAsync(deleteParameter);
+      const res = await parameterDeleteAsync(deleteParameter);
       if (res && res.isSuccess) {
         lunaToast.success(tc('DELETE_MESSAGE'));
       }
     }
   };
 
-  const handleId = (item?: IVariableList) => {
+  const handleId = (item?: IParameterList) => {
     if (item) {
-      setIsVariableList(item);
+      setIsParameterList(item);
     } else {
-      setIsVariableList(undefined);
+      setIsParameterList(undefined);
     }
   };
 
   return (
-    <div className="variableTabWrapper">
+    <div className="parameterTabWrapper">
       <EntityComponent />
-      <div className="variableWrapper">
+      <div className="parameterWrapper">
         <Row justify="space-between" align="center" className="m-b-10">
           <Col>
             <span className="title">{t('VARIABLE_LIST')}</span>
@@ -71,7 +70,6 @@ export const VariableComponent = () => {
             <Button
               type="primary"
               icon={icPlusWhite}
-              className="addVariableBtn"
               onClick={() => {
                 handleId();
                 handleIsOpen(true);
@@ -81,31 +79,31 @@ export const VariableComponent = () => {
             </Button>
           </Col>
         </Row>
-        <div className="variableListWrapper">
-          <div className="variableList">
-            <div className="variableListHeader">
-              <span className="variableName">{t('NAME')}</span>
+        <div className="parameterListWrapper">
+          <div className="parameterList">
+            <div className="parameterListHeader">
+              <span className="parameterName">{t('NAME')}</span>
             </div>
-            <div className="variableListItems">
-              {isFetching && <VariableSkeleton />}
-              {!isFetching && variableList && variableList.result.length > 0
-                ? variableList?.result.map((item, i) => (
+            <div className="parameterListItems">
+              {isFetching && <ParameterSkeleton />}
+              {!isFetching && parameterList && parameterList.result.length > 0
+                ? parameterList?.result.map((item, i) => (
                     <div
                       key={i}
                       role="presentation"
-                      className="variableItem"
+                      className="parameterItem"
                       onDoubleClick={() => {
                         handleId(item);
                         handleIsOpen(true);
                       }}
                     >
-                      <div className="variableInfo">
+                      <div className="parameterInfo">
                         {item.name.length > 14 ? (
                           <Tooltip tooltip={item.name}>
-                            <span className="variableName">{item.name}</span>
+                            <span className="parameterName">{item.name}</span>
                           </Tooltip>
                         ) : (
-                          <span className="variableName">{item.name}</span>
+                          <span className="parameterName">{item.name}</span>
                         )}
                       </div>
                       <button
@@ -120,18 +118,20 @@ export const VariableComponent = () => {
                     </div>
                   ))
                 : !isFetching &&
-                  variableList!.result.length === 0 && (
-                    <div className="emptyVariableList">
-                      <span className="emptyVariable">{t('NO_REGISTERED_VARIABLE')}</span>
+                  parameterList!.result.length === 0 && (
+                    <div className="emptyParameterList">
+                      <span className="emptyParameter">
+                        {t('NO_REGISTERED_VARIABLE')}
+                      </span>
                     </div>
                   )}
             </div>
           </div>
         </div>
-        <VariablePopup
+        <ParameterPopup
           isOpen={isOpen}
           handleIsOpen={handleIsOpen}
-          variableList={isVariableList}
+          parameterList={isParameterList}
         />
       </div>
     </div>
