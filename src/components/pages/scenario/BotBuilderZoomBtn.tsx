@@ -5,6 +5,7 @@ import { useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setIsBeziderMode, zoomIn, zoomOut } from '@store/botbuilderSlice';
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
@@ -71,10 +72,19 @@ export const BotBuilderZoomBtn = () => {
           </Col>
         )}
 
-        <Col className="p-l-10">
-          <Button small onClick={() => dispatch(setIsBeziderMode(!isBezierMode))}>
-            {isBezierMode ? 'B' : 'L'}
-          </Button>
+        <Col className="lineShapeSelectorWrapper">
+          <Button
+            small
+            className={classNames('lineShapeSelector straight', {
+              selected: !isBezierMode,
+            })}
+            onClick={() => dispatch(setIsBeziderMode(false))}
+          ></Button>
+          <Button
+            small
+            className={classNames('lineShapeSelector curved', { selected: isBezierMode })}
+            onClick={() => dispatch(setIsBeziderMode(true))}
+          ></Button>
         </Col>
       </Row>
     </Space>

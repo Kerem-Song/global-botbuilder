@@ -102,6 +102,56 @@
   }
 }
 
+.lineShapeSelectorWrapper {
+  display: flex;
+  margin-left: rem(12);
+  padding: rem(4) !important;
+  gap: rem(4);
+  background-color: $grayWhite;
+  border: rem(1) solid $gray200;
+  border-radius: rem(4);
+  height: rem(32);
+
+  .lineShapeSelector {
+    border: none;
+    border-radius: rem(4);
+    width: rem(22);
+    height: rem(22);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $grayWhite;
+    box-shadow:none;
+
+    &.selected {
+      background-color: $primary100;
+
+      &.straight {
+        background-image: url('@assets/icons/ic_line_straight_selected.svg');
+      }
+
+      &.curved {
+        background-image: url('@assets/icons/ic_line_curved_selected.svg');
+      }
+    }
+    
+    &.straight {
+      background-image: url('@assets/icons/ic_line_straight.svg');
+
+      &:not(.selected):hover {
+        background-image: url('@assets/icons/ic_line_straight_hover.svg');
+      }
+    }
+
+    &.curved {
+      background-image: url('@assets/icons/ic_line_curved.svg');
+
+      &:not(.selected):hover {
+        background-image: url('@assets/icons/ic_line_curved_hover.svg');
+      }
+    }
+  }
+}
+
 .botBuilderMain {
   padding-left: rem(12);
   height: 100%;
