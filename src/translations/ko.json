@@ -383,7 +383,9 @@
     "CAROUSEL_SETTING": "캐로셀 편집",
     "SET_CONNECT_NODE_BOTTOM": "하단 메시지 연결 설정",
     "SCENARIO_SAVING_TITLE": "시나리오 저장",
-    "SCENARIO_SAVING_DESC": "시나리오 저장 중입니다. 잠시만 기다려주세요."
+    "SCENARIO_SAVING_DESC": "시나리오 저장 중입니다. 잠시만 기다려주세요.",
+    "LINE_STRAIGHT": "직선형",
+    "LINE_CURVE": "곡선형"
   },
   "INTENT": {
     "TITLE": "인텐트 관리",

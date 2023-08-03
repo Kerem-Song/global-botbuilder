@@ -1,7 +1,7 @@
-import { Checkbox, Switch } from '@components/data-entry';
+import { Tooltip } from '@components';
 import { Button } from '@components/general/Button';
 import { Col, Row, Space } from '@components/layout';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setIsBeziderMode, zoomIn, zoomOut } from '@store/botbuilderSlice';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 export const BotBuilderZoomBtn = () => {
+  const { t } = usePage();
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -73,18 +74,22 @@ export const BotBuilderZoomBtn = () => {
         )}
 
         <Col className="lineShapeSelectorWrapper">
-          <Button
-            small
-            className={classNames('lineShapeSelector straight', {
-              selected: !isBezierMode,
-            })}
-            onClick={() => dispatch(setIsBeziderMode(false))}
-          ></Button>
-          <Button
-            small
-            className={classNames('lineShapeSelector curved', { selected: isBezierMode })}
-            onClick={() => dispatch(setIsBeziderMode(true))}
-          ></Button>
+          <Tooltip tooltip={t(`LINE_STRAIGHT`)}>
+            <button
+              className={classNames('lineShapeSelector straight', {
+                selected: !isBezierMode,
+              })}
+              onClick={() => dispatch(setIsBeziderMode(false))}
+            />
+          </Tooltip>
+          <Tooltip tooltip={t(`LINE_CURVE`)}>
+            <button
+              className={classNames('lineShapeSelector curved', {
+                selected: isBezierMode,
+              })}
+              onClick={() => dispatch(setIsBeziderMode(true))}
+            />
+          </Tooltip>
         </Col>
       </Row>
     </Space>
