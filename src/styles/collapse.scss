@@ -11,12 +11,6 @@
   
   .collapseWrapper {
     padding: rem(12);
-
-    .listFieldsWrapper {
-      .deleteBtn {
-        padding-bottom: 0 !important;
-      }
-    }
   
     &[data-collapsed='true'] {
       display: block;

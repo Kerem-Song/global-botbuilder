@@ -152,11 +152,13 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
             </Space>
           </div>
           {j > 1 && (
-            <div className="deleteBtn">
-              <Button shape="ghost" onClick={() => handleDeleteListButton(j)}>
-                {t(`DELETE_A_LIST`)}
-              </Button>
-            </div>
+            <Button
+              shape="ghost"
+              className="deleteBtn"
+              onClick={() => handleDeleteListButton(j)}
+            >
+              {t(`DELETE_A_LIST`)}
+            </Button>
           )}
           {fields.length !== j + 1 && <Divider style={{ margin: '28px 0' }} />}
         </div>

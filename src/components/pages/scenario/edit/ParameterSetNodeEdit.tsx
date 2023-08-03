@@ -81,11 +81,13 @@ export const ParameterSetNodeEdit = () => {
               />
             </FormItem>
             {i > 0 && (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`PARAMETER_SET_DELETE_BUTTON`)}
-                </Button>
-              </div>
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteButton(i)}
+              >
+                {t(`PARAMETER_SET_DELETE_BUTTON`)}
+              </Button>
             )}
             <Divider style={{ margin: '32px 0' }} />
           </div>

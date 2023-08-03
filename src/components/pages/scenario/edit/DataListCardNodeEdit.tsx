@@ -248,11 +248,13 @@ export const DataListCardNodeEdit = () => {
               </Space>
             </div>
             {i > 1 && (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteListButton(i)}>
-                  {t(`DELETE_A_LIST`)}
-                </Button>
-              </div>
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteListButton(i)}
+              >
+                {t(`DELETE_A_LIST`)}
+              </Button>
             )}
             {fields.length !== i + 1 && <Divider style={{ margin: '28px 0' }} />}
           </div>

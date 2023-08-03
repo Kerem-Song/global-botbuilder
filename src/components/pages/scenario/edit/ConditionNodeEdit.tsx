@@ -277,11 +277,13 @@ export const ConditionNodeEdit = () => {
               )
             )}
             {i > 0 ? (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`CONDITION_NODE_DELETE_CONDITION`)}
-                </Button>
-              </div>
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteButton(i)}
+              >
+                {t(`CONDITION_NODE_DELETE_CONDITION`)}
+              </Button>
             ) : (
               <div className="deleteBtn"></div>
             )}

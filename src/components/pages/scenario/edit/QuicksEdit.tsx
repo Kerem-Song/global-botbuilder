@@ -145,15 +145,18 @@ export const QuicksEdit = () => {
                 />
               </FormItem>
             )}
-            <div className="deleteBtn">
-              {i === 0 && !watch('view.useUtteranceParam') ? (
-                <></>
-              ) : (
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`DELETE_BUTTON`)}
-                </Button>
-              )}
-            </div>
+
+            {i === 0 && !watch('view.useUtteranceParam') ? (
+              <></>
+            ) : (
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteButton(i)}
+              >
+                {t(`DELETE_BUTTON`)}
+              </Button>
+            )}
           </Space>
         </Space>
       ))}

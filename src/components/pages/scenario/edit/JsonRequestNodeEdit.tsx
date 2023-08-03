@@ -342,11 +342,13 @@ export const JsonRequestNodeEdit = () => {
                 maxLength={50}
               />
             </FormItem>
-            <div className="deleteBtn">
-              <Button shape="ghost" onClick={() => handleDeleteResMappingButton(i)}>
-                {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
-              </Button>
-            </div>
+            <Button
+              shape="ghost"
+              className="deleteBtn"
+              onClick={() => handleDeleteResMappingButton(i)}
+            >
+              {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
+            </Button>
           </div>
         ))}
 

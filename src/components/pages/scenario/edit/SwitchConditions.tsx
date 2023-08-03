@@ -130,14 +130,14 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
             </FormItem>
 
             {i > 0 ? (
-              <div className="deleteBtn">
-                <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                  {t(`CONDITION_NODE_DELETE_CONDITION`)}
-                </Button>
-              </div>
-            ) : (
-              <div className="deleteBtn"></div>
-            )}
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteButton(i)}
+              >
+                {t(`CONDITION_NODE_DELETE_CONDITION`)}
+              </Button>
+            ) : null}
 
             {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && (
               <div

@@ -263,11 +263,13 @@ export const ButtonsEdit = ({
               </>
             )}
 
-            <div className="deleteBtn">
-              <Button shape="ghost" onClick={() => handleDeleteButton(i)}>
-                {t(`DELETE_BUTTON`)}
-              </Button>
-            </div>
+            <Button
+              shape="ghost"
+              className="deleteBtn"
+              onClick={() => handleDeleteButton(i)}
+            >
+              {t(`DELETE_BUTTON`)}
+            </Button>
           </Space>
         </Space>
       ))}
