@@ -54,8 +54,6 @@ export const nodeHelper = {
     if (view) {
       if (Object.keys(view).includes('childrenViews')) {
         clone.view = nodeHelper.cloneHasChildrenView(view as IHasChildrenView);
-      } else if (Object.keys(view).includes('conditions')) {
-        clone.view = nodeHelper.cloneSwitchView(view as ISwitchView);
       } else {
         clone.view = nodeHelper.cloneView(view);
       }
@@ -81,16 +79,16 @@ export const nodeHelper = {
 
     return clone;
   },
-  cloneSwitchView: (view: ISwitchView) => {
-    const { conditions, ...restProps } = view;
-    const cloneConditions = conditions?.map((x) => nodeHelper.cloneView(x));
+  // cloneSwitchView: (view: ISwitchView) => {
+  //   const { conditions, ...restProps } = view;
+  //   const cloneConditions = conditions?.map((x) => nodeHelper.cloneView(x));
 
-    return {
-      ...nodeHelper.cloneObject(restProps),
-      id: ID_GEN.generate(ID_TYPES.VIEW),
-      conditions: cloneConditions,
-    };
-  },
+  //   return {
+  //     ...nodeHelper.cloneObject(restProps),
+  //     id: ID_GEN.generate(ID_TYPES.VIEW),
+  //     conditions: cloneConditions,
+  //   };
+  // },
   cloneObject: (obj: object) => {
     const arrays = nodeHelper.filterArray(obj);
     const ctrls = nodeHelper.filterCtrl(obj);

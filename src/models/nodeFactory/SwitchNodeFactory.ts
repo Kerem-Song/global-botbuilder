@@ -52,7 +52,7 @@ export class SwitchNodeFactory implements INodeFactory {
 
   getConnectId(node: INode) {
     const view = node.view as ISwitchView;
-    const trueThenNextNodeIds = view.conditions?.map(
+    const trueThenNextNodeIds = view.childrenViews?.map(
       (condition) => condition.trueThenNextNodeId,
     );
 

@@ -133,7 +133,7 @@ export const NodeLinkPopUpMenu = ({
       nodeKind: NodeKind.CommandNode,
     },
     {
-      className: 'icText',
+      className: 'icCS',
       value: NODE_TYPES.CS_NODE,
       nodeName: t(`CAPTION_CSNODE`),
       nodeKind: NodeKind.CommandNode,

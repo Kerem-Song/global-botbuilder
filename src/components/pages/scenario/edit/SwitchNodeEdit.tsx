@@ -25,7 +25,7 @@ export const SwitchNodeEdit = () => {
   console.log('value.view in condition node edit', values.view);
 
   const { fields, append, remove } = useFieldArray({
-    name: `view.conditions`,
+    name: `view.childrenViews`,
     control,
   });
 
@@ -35,7 +35,7 @@ export const SwitchNodeEdit = () => {
 
   const handleAddConditionButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log('handle add condition btn');
-    const join = watch(`view.conditions.0.join`);
+    const join = watch(`view.childrenViews.0.join`);
 
     e.preventDefault();
     if (fields.length < CONDITIONS_LIMIT) {
@@ -64,11 +64,11 @@ export const SwitchNodeEdit = () => {
                     <span className="label">{t(`SET_CONNECT_NEXT_NODE`)} </span>
                     <span className="required">*</span>
                   </div>
-                  <FormItem error={errors.view?.conditions?.[i]?.trueThenNextNodeId}>
+                  <FormItem error={errors.view?.childrenViews?.[i]?.trueThenNextNodeId}>
                     <SelectNode
-                      fieldName={`view.conditions.${i}.trueThenNextNodeId`}
+                      fieldName={`view.childrenViews.${i}.trueThenNextNodeId`}
                       nodeId={getValues().id}
-                      error={errors.view?.conditions?.[i]?.trueThenNextNodeId}
+                      error={errors.view?.childrenViews?.[i]?.trueThenNextNodeId}
                     />
                   </FormItem>
                 </Space>

@@ -165,7 +165,7 @@ export interface IConditionView extends ITrueFalseViewBase {
 }
 
 export interface ISwitchView extends IViewBase {
-  conditions?: IConditionView[];
+  childrenViews?: IConditionView[];
   defaultNextNodeId?: string;
 }
 

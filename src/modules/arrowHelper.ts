@@ -135,8 +135,8 @@ export const arrowHelper = {
       });
     }
 
-    if (view && view.conditions) {
-      view.conditions?.map((condition) => {
+    if (view && view.childrenViews) {
+      view.childrenViews?.map((condition) => {
         result.push({
           start: `${NEXT_BUTTON_PREFIX}${nodeId}${CONDITION_SUFFIX}${condition.id}`,
           updateKey: `${NODE_PREFIX}${nodeId}`,
@@ -318,7 +318,7 @@ export const arrowHelper = {
     }
 
     if (startId.includes(CONDITION_SUFFIX))
-      view.conditions?.map((condition, i) => {
+      view.childrenViews?.map((condition, i) => {
         if (startId.endsWith(CONDITION_SUFFIX + condition.id)) {
           condition.trueThenNextNodeId = endId;
         }

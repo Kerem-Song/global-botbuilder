@@ -29,7 +29,7 @@ export const SwitchNode: FC<IHasNode> = ({ node }) => {
   return (
     <Card>
       <div className="conditionSwitchWrapper" ref={conditionNodeRef}>
-        {view.conditions?.map((condition, i) => (
+        {view.childrenViews?.map((condition, i) => (
           <div
             key={condition.id}
             className="conditionCase"

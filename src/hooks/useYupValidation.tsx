@@ -254,7 +254,7 @@ export const useYupValidation = () => {
   });
 
   const switchNodeEditSchema = yup.object().shape({
-    conditions: yup.array().of(conditionNodeEditSchema),
+    childrenViews: yup.array().of(conditionNodeEditSchema),
   });
 
   const retryConditionNodeEditSchema = yup.object().shape({

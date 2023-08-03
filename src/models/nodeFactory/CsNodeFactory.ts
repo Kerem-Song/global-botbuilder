@@ -43,7 +43,7 @@ export class CsNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return 'icText';
+    return 'icCS';
   }
 
   getConnectId() {

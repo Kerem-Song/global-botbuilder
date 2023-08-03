@@ -233,6 +233,14 @@
           }
         }
 
+        .icCS {
+          background-image: url('@assets/icons/ic_CS.svg');
+
+          &:hover {
+            background-image: url('@assets/icons/ic_CS_hover.svg');
+          }
+        }
+
         .icJsonRequest {
           background-image: url('@assets/icons/ic_api_request.svg');
 

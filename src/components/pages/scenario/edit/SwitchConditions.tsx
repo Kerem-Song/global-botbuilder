@@ -20,12 +20,12 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
 
   const { fields, append, remove } = useFieldArray({
-    name: `view.conditions.${nestedIndex}.items`,
+    name: `view.childrenViews.${nestedIndex}.items`,
     control,
   });
 
   const { field: joinField } = useController({
-    name: `view.conditions.${nestedIndex}.join`,
+    name: `view.childrenViews.${nestedIndex}.join`,
     control,
   });
 
@@ -37,7 +37,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
   ) => {
     console.log('handle add condition btn');
-    const join = watch(`view.conditions.${nestedIndex}.join`);
+    const join = watch(`view.childrenViews.${nestedIndex}.join`);
 
     e.preventDefault();
     if (fields.length < CONDITION_LIMIT) {
@@ -62,7 +62,9 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
         <Row justify="space-between" className="m-b-20">
           <Col span={12} className="radioContainer">
             <Radio
-              checked={watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.And}
+              checked={
+                watch(`view.childrenViews.${nestedIndex}.join`) === ConditionJoin.And
+              }
               onChange={(e) => {
                 joinField.onChange(+e.target.value);
               }}
@@ -74,7 +76,9 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
           </Col>
           <Col span={12} className="radioContainer">
             <Radio
-              checked={watch(`view.conditions.${nestedIndex}.join`) === ConditionJoin.Or}
+              checked={
+                watch(`view.childrenViews.${nestedIndex}.join`) === ConditionJoin.Or
+              }
               onChange={(e) => {
                 joinField.onChange(+e.target.value);
               }}
@@ -98,11 +102,13 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 <p className="firstConditionIf">if</p>
               </Col>
               <Col span={21}>
-                <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op1}>
+                <FormItem
+                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.op1}
+                >
                   <VariableSelector
                     placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
                     control={control}
-                    path={`view.conditions.${nestedIndex}.items.${i}.op1`}
+                    path={`view.childrenViews.${nestedIndex}.items.${i}.op1`}
                     maxLength={100}
                   />
                 </FormItem>
@@ -110,15 +116,15 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
             </Row>
 
             <FormItem
-              error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.operator}
+              error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.operator}
             >
               <OperatorSelector index={i} nestedIndex={nestedIndex} />
             </FormItem>
-            <FormItem error={errors.view?.conditions?.[nestedIndex]?.items?.[i]?.op2}>
+            <FormItem error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.op2}>
               <VariableSelector
                 placeholder={t(`INPUT_VARIABLE_THIRD_CONDITION_PLACEHOLDER`)}
                 control={control}
-                path={`view.conditions.${nestedIndex}.items.${i}.op2`}
+                path={`view.childrenViews.${nestedIndex}.items.${i}.op2`}
                 maxLength={100}
               />
             </FormItem>
@@ -136,7 +142,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
             {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && (
               <div
                 className={classNames(`joinWrapper`, {
-                  on: watch(`view.conditions.${nestedIndex}.join`) !== undefined,
+                  on: watch(`view.childrenViews.${nestedIndex}.join`) !== undefined,
                 })}
               >
                 <Button
