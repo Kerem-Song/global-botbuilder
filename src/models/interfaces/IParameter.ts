@@ -4,7 +4,7 @@ import { IReq } from './req';
 export interface ISearchParameter {
   sessionToken: string;
 }
-export interface IVariableList {
+export interface IParameterList {
   name: string;
   defaultValue: string | null;
   formatType: number | null;
@@ -44,7 +44,7 @@ export interface IGetParameterFormats {
   formatStr: string;
 }
 
-export interface IPararmeterList {
+export interface IPararmeterFormatList {
   value: number;
   label: string;
 }

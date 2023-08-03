@@ -1,9 +1,9 @@
 import ReactLoadingSkeleton from 'react-loading-skeleton';
 
-export const VariableSkeleton = () => {
+export const ParameterSkeleton = () => {
   return (
-    <div className="variableItem">
-      <span className="variableInfo">
+    <div className="parameterItem">
+      <span className="parameterInfo">
         <ReactLoadingSkeleton
           count={1}
           height={16}
@@ -11,7 +11,7 @@ export const VariableSkeleton = () => {
           style={{ lineHeight: 2 }}
         />
       </span>
-      <span className="variableInfo">
+      <span className="parameterInfo">
         <ReactLoadingSkeleton
           count={1}
           height={16}

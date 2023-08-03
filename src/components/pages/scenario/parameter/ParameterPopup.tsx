@@ -1,12 +1,12 @@
 import { Button, Col, Divider, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useI18n, usePage, useRootState } from '@hooks';
-import { useVariableClient } from '@hooks/client/variableClient';
+import { useParameterClient } from '@hooks/client/parameterClient';
 import {
-  IPararmeterList,
+  IParameterList,
+  IPararmeterFormatList,
   ISaveParameter,
   ISaveParameterData,
-  IVariableList,
 } from '@models';
 import {
   getReactSelectStyle,
@@ -24,25 +24,25 @@ import * as yup from 'yup';
 export interface VariablePopupProps {
   isOpen: boolean;
   handleIsOpen: (value: boolean) => void;
-  variableList?: IVariableList | undefined;
+  parameterList?: IParameterList | undefined;
 }
 
-export const VariablePopup: FC<VariablePopupProps> = ({
+export const ParameterPopup: FC<VariablePopupProps> = ({
   isOpen,
   handleIsOpen,
-  variableList,
+  parameterList,
 }) => {
   const { i18n } = useI18n();
-  const { t, tc } = usePage();
   const language = i18n.language;
-  const [formats, setFormats] = useState<number>();
-  const [parameterInputError, setParameterInputError] = useState<string>('');
-  const { variableAsync, getParameterFormatsQuery } = useVariableClient();
-  const { data: parameterFormats } = getParameterFormatsQuery();
-  const [totalFormatList, setTotalScenarioList] = useState<IPararmeterList[]>();
-
+  const { t, tc } = usePage();
   const token = useRootState((state) => state.botInfoReducer.token);
-  const reactSelectStyle = getReactSelectStyle<IPararmeterList>({});
+  const { parameterAsync, getParameterFormatsQuery } = useParameterClient();
+  const { data: parameterFormats } = getParameterFormatsQuery();
+  const [parameterFormat, setParameterFormat] = useState<number>();
+  const [totalParameterFormatList, setTotalParameterFormatList] =
+    useState<IPararmeterFormatList[]>();
+  const [parameterInputError, setParameterInputError] = useState<string>('');
+  const reactSelectStyle = getReactSelectStyle<IPararmeterFormatList>({});
 
   const variableNameSchema = yup.object({
     name: yup
@@ -91,14 +91,14 @@ export const VariablePopup: FC<VariablePopupProps> = ({
     const saveParameter: ISaveParameter = {
       sessionToken: token!,
       data: {
-        id: variableList?.id,
+        id: parameterList?.id,
         name: variable.name,
         defaultValue: variable.defaultValue,
-        formatType: formats!,
+        formatType: parameterFormat!,
       },
     };
 
-    const res = await variableAsync({ ...saveParameter, customErrorCode: [7636] });
+    const res = await parameterAsync({ ...saveParameter, customErrorCode: [7636] });
 
     if (res === 7636) {
       setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
@@ -115,54 +115,54 @@ export const VariablePopup: FC<VariablePopupProps> = ({
   };
 
   useEffect(() => {
-    if (variableList?.id) {
-      const resetValue = {
-        id: variableList.id,
-        name: variableList.name,
-        defaultValue: variableList.defaultValue,
-        formatType: variableList.formatType!,
+    if (parameterList?.id) {
+      const parameterValue = {
+        id: parameterList.id,
+        name: parameterList.name,
+        defaultValue: parameterList.defaultValue,
+        formatType: parameterList.formatType!,
       };
-      reset(resetValue);
-      setFormats(variableList.formatType!);
+      reset(parameterValue);
+      setParameterFormat(parameterList.formatType!);
     } else if (isOpen) {
       reset({ name: '' });
-      setFormats(undefined);
+      setParameterFormat(undefined);
     }
-  }, [variableList?.id, isOpen]);
+  }, [parameterList?.id, isOpen]);
 
   useEffect(() => {
     const formatList = parameterFormats?.result.map((x) => {
       return { value: x.formatType, label: x.example };
     });
-    const totalFormatList: IPararmeterList[] = [
+    const totalFormatList: IPararmeterFormatList[] = [
       { value: 0, label: t('VARIABLE_FORMAT_PLACEHOLDER') },
       ...(formatList ? formatList : []),
     ];
-    setTotalScenarioList(totalFormatList);
+    setTotalParameterFormatList(totalFormatList);
   }, [parameterFormats, language]);
 
   return (
     <ReactModal
       style={{ overlay: { display: 'flex' } }}
-      className="variableModal"
+      className="parameterModal"
       isOpen={isOpen}
       onRequestClose={handleClose}
     >
       <div className="header">
         <Title level={4}>
-          {variableList?.id ? t('MODIFY_VARIABLE') : t('ADD_VARIABLE')}
+          {parameterList?.id ? t('MODIFY_VARIABLE') : t('ADD_VARIABLE')}
         </Title>
       </div>
       <Divider />
       <form onSubmit={handleSubmit(handleSave)}>
-        <Row align="center" className="variableInfo">
+        <Row align="center" className="parameterInfo">
           <Col span={6}>
             {t('VARIABLE_NAME')}
             <span style={{ color: 'red' }}>*</span>
           </Col>
           <Col span={18}>
             <Input
-              showCount={variableList && variableList.name.length > 0 ? false : true}
+              showCount={parameterList && parameterList.name.length > 0 ? false : true}
               maxLength={50}
               placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
               ref={field.ref}
@@ -170,33 +170,35 @@ export const VariablePopup: FC<VariablePopupProps> = ({
               onChange={handleParameterName}
               onBlur={field.onBlur}
               isError={parameterInputError || errors.name?.message ? true : false}
-              disabled={variableList && variableList.name.length > 0}
+              disabled={parameterList && parameterList.name.length > 0}
             />
             <span className="error-message">{parameterInputError}</span>
             <span className="error-message parameter-error">{errors.name?.message}</span>
           </Col>
         </Row>
-        <Row align="center" className="variableInfo">
+        <Row align="center" className="parameterInfo">
           <Col span={6}>{t('VARIABLE_FORMAT')}</Col>
           <Col span={18}>
             <Select
-              options={totalFormatList}
+              options={totalParameterFormatList}
               styles={reactSelectStyle}
               placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
-              value={totalFormatList?.find((x) => x.value === formats) || null}
+              value={
+                totalParameterFormatList?.find((x) => x.value === parameterFormat) || null
+              }
               onChange={(newOption) => {
-                setFormats(newOption?.value);
+                setParameterFormat(newOption?.value);
               }}
             />
           </Col>
         </Row>
-        <Row align="center" className="variableInfo">
+        <Row align="center" className="parameterInfo">
           <Col span={6}>{t('DEFAULT_VALUE')}</Col>
           <Col span={18}>
             <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
           </Col>
         </Row>
-        <Row justify="flex-end" className="variableModalBtns">
+        <Row justify="flex-end" className="parameterModalBtns">
           <Space>
             <Button className="min-w-100" onClick={handleClose}>
               {tc('CANCEL')}
