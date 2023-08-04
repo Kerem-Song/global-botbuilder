@@ -138,7 +138,9 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
                         connectScenariosInactivated: inactivatedFlow,
                       })}
                     >
-                      {x.flowName === null ? '-' : x.flowName}
+                      <span className="flowName">
+                        {x.flowName === null ? '-' : x.flowName}
+                      </span>
                     </td>
                   ) : null}
                   <td

@@ -87,7 +87,8 @@
           padding: rem(12) rem(20);
         }
         .intent {
-          width: rem(200);
+          width: rem(280);
+          word-break: break-word;
           .intentName {
             display: -webkit-box;
             overflow: hidden;
@@ -111,13 +112,21 @@
           }
         }
         .connectScenarios {
-          width: rem(300);
+          width: rem(280);
+          word-break: break-word;
+          .flowName {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+
           &.connectScenariosInactivated {
             color: $gray250;
           }
         }
         .utterance {
-          width: rem(540);
+          width: rem(480);
           word-break: break-word;
           .utteranceItems {
             display: -webkit-box;
@@ -127,10 +136,10 @@
           }
         }
         .intentItemsSkeleton {
-          width: rem(540);
+          width: rem(480);
         }
         .hiddenScenarioListIntentSkeleton {
-          width: rem(790);
+          width: rem(680);
         }
         .icon {
           padding: rem(8) rem(20);
@@ -158,10 +167,11 @@
           }
         }
         .hiddenScenarioListIntent {
-          width: rem(200);
+          width: rem(280);
+          word-break: break-word;
         }
         .hiddenScenarioListUtterance {
-          width: rem(760);
+          width: rem(680);
           word-break: break-word;
         }
       }

@@ -100,8 +100,9 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   }, [hasIntentId?.data]);
 
   const handleListBtn = () => {
-    if (isOpenUtteranceDetailPopup && handleClose) {
+    if (isOpenUtteranceDetailPopup && handleClose && handleIsOpenUtterancePopup) {
       handleClose();
+      handleIsOpenUtterancePopup(true);
       removeUtteranceQueries();
     } else {
       navigate(`/${botId}/intent`);
