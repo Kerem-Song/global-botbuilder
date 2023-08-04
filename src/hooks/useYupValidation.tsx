@@ -8,7 +8,6 @@ import {
   PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 const checkNextNodeIdTypes: string[] = [
@@ -18,7 +17,6 @@ const checkNextNodeIdTypes: string[] = [
 
 export const useYupValidation = () => {
   const { t, tc } = usePage();
-  const dispatch = useDispatch();
   const [isDuplicated, setIsDuplicated] = useState(false);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
@@ -388,6 +386,32 @@ export const useYupValidation = () => {
     ),
   });
 
+  const parameterClearNodeEditSchema = yup.object().shape({
+    parameters: yup.array().of(
+      yup.object().shape({
+        name: yup
+          .string()
+          .trim()
+          .required(t(`VALIDATION_REQUIRED`))
+          .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
+          .when('.', {
+            is: (name: string) => name && !name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+            otherwise: yup
+              .string()
+              .matches(
+                PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
+                t('PARAMETER_VALIDATION_NEXT_LETTER_AFTER_DOT'),
+              ),
+          })
+          .when('.', {
+            is: (name: string) => name && name.startsWith('.'),
+            then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
+          }),
+      }),
+    ),
+  });
+
   const dataBasicCardNodeEditSchema = yup.object().shape({
     itemsRefName: yup
       .string()
@@ -556,6 +580,10 @@ export const useYupValidation = () => {
         .when('type', {
           is: NODE_TYPES.OTHER_FLOW_REDIRECT_NODE,
           then: otherFlowRedirectNodeEditSchema,
+        })
+        .when('type', {
+          is: NODE_TYPES.PARAMETER_CLEAR_NODE,
+          then: parameterClearNodeEditSchema,
         })
         .when('type', {
           is: NODE_TYPES.ANSWER_NODE,
