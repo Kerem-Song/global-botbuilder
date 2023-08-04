@@ -115,58 +115,60 @@ export const ImageSettings = ({
   const { field: aspectRatio } = useController({ name: 'aspectRatio', control });
 
   return (
-    <Space direction="vertical">
-      <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
-      <Row justify="space-between">
-        <Col span={12} className="radioContainer">
-          <Radio
-            name="aspectRatio"
-            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle}
-            onChange={(e) => {
-              if (imageCtrl !== IMAGE_CTRL_TYPES.IMAGE_CTRL) {
-                setImageAspectRatioModal(ImageAspectRatio.Rectangle);
-              } else {
-                setImageRatio(ImageAspectRatio.Rectangle);
-                setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
-                  shouldDirty: true,
-                });
+    <Space direction="vertical" gap={12}>
+      <Space direction="vertical" gap={8}>
+        <span className="subLabel bold">{t(`IMAGE_TYPE`)}</span>
+        <Row justify="space-between">
+          <Col span={12} className="radioContainer">
+            <Radio
+              name="aspectRatio"
+              checked={
+                watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle
               }
-              aspectRatio.onChange(e);
-            }}
-            ref={aspectRatio.ref}
-          >
-            <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
-          </Radio>
-        </Col>
-        <Col span={12} className="radioContainer">
-          <Radio
-            name="aspectRatio"
-            checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
-            onChange={(e) => {
-              setImageAspectRatioModal(ImageAspectRatio.Square);
-              aspectRatio.onChange(e);
-            }}
-            ref={aspectRatio.ref}
-          >
-            <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
-          </Radio>
-        </Col>
-      </Row>
-
-      <div>
-        <span className="subLabel">
-          {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
-        </span>
-        <span className="required"> *</span>
-      </div>
-
-      <ImageFileUploader
-        imageCtrl={imageCtrl}
-        index={index}
-        listItemIndex={listItemIndex}
-        imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
-        isValid={isValid}
-      />
+              onChange={(e) => {
+                if (imageCtrl !== IMAGE_CTRL_TYPES.IMAGE_CTRL) {
+                  setImageAspectRatioModal(ImageAspectRatio.Rectangle);
+                } else {
+                  setImageRatio(ImageAspectRatio.Rectangle);
+                  setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+                    shouldDirty: true,
+                  });
+                }
+                aspectRatio.onChange(e);
+              }}
+              ref={aspectRatio.ref}
+            >
+              <span>{t(`IMAGE_TYPE_RECTANGLE`)}</span>
+            </Radio>
+          </Col>
+          <Col span={12} className="radioContainer">
+            <Radio
+              name="aspectRatio"
+              checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
+              onChange={(e) => {
+                setImageAspectRatioModal(ImageAspectRatio.Square);
+                aspectRatio.onChange(e);
+              }}
+              ref={aspectRatio.ref}
+            >
+              <span>{t(`IMAGE_TYPE_SQUARE`)}</span>
+            </Radio>
+          </Col>
+        </Row>
+        <div>
+          <span className="subLabel">
+            {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}
+          </span>
+          <span className="required"> *</span>
+        </div>
+        <ImageFileUploader
+          imageCtrl={imageCtrl}
+          index={index}
+          listItemIndex={listItemIndex}
+          imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
+          isValid={isValid}
+        />
+      </Space>
       <ImageInput
         imageCtrl={imageCtrl}
         index={index}

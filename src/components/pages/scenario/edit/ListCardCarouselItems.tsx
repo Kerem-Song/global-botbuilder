@@ -60,7 +60,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
       {fields.map((item, j) => (
         <div key={item.id} className="listFieldsWrapper">
           <div className="m-b-12">
-            <Space direction="vertical">
+            <Space direction="vertical" gap={12}>
               <span className="label">
                 <FormItem
                   error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.title}
@@ -84,7 +84,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
             </Space>
           </div>
           <div className="m-b-12">
-            <Space direction="vertical">
+            <Space direction="vertical" gap={12}>
               <span className="label">
                 <InputWithTitleCounter
                   label={t(`ENTER_CONTENT`)}
@@ -110,8 +110,8 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
             </span>
             <span className="required"> *</span>
           </div>
-          <div>
-            <Space direction="vertical">
+          <div className="m-b-8">
+            <Space direction="vertical" gap={12}>
               <FormItem
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
               >
@@ -160,7 +160,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
               {t(`DELETE_A_LIST`)}
             </Button>
           )}
-          {fields.length !== j + 1 && <Divider style={{ margin: '28px 0' }} />}
+          {fields.length !== j + 1 && <Divider style={{ margin: '32px 0' }} />}
         </div>
       ))}
       <div>

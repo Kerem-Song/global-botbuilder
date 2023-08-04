@@ -90,7 +90,7 @@ export const ListCardNodeEdit = () => {
         {fields.map((item, i) => (
           <div key={item.id} className="listFieldsWrapper">
             <div className="m-b-12">
-              <Space direction="vertical">
+              <Space direction="vertical" gap={12}>
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
                     <InputWithTitleCounter
@@ -109,7 +109,7 @@ export const ListCardNodeEdit = () => {
               </Space>
             </div>
             <div className="m-b-12">
-              <Space direction="vertical">
+              <Space direction="vertical" gap={12}>
                 <span className="label">
                   <InputWithTitleCounter
                     label={t(`ENTER_CONTENT`)}
@@ -130,8 +130,8 @@ export const ListCardNodeEdit = () => {
               </span>
               <span className="required"> *</span>
             </div>
-            <div>
-              <Space direction="vertical">
+            <div className="m-b-8">
+              <Space direction="vertical" gap={12}>
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <>
                     <Row align="center" gap={12} style={{ margin: 0 }}>
@@ -168,7 +168,7 @@ export const ListCardNodeEdit = () => {
                 {t(`DELETE_A_LIST`)}
               </Button>
             )}
-            {fields.length !== i + 1 && <Divider style={{ margin: '28px 0' }} />}
+            {fields.length !== i + 1 && <Divider style={{ margin: '32px 0' }} />}
           </div>
         ))}
         <div>

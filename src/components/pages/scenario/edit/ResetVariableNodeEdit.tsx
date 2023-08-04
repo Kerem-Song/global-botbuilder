@@ -134,7 +134,7 @@ export const ResetVariableNodeEdit = () => {
         {parametersFields?.length > 0 && (
           <>
             <div className="m-b-15">
-              <p className="m-b-8">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
+              <p className="m-b-12">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
               {parametersFields.map((item, i) => (
                 <div key={item.id}>
                   <Row gap={4} justify="space-between">
@@ -162,7 +162,7 @@ export const ResetVariableNodeEdit = () => {
                 </div>
               ))}
             </div>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Button
                 className="addBtn"
                 shape="ghost"
@@ -177,7 +177,7 @@ export const ResetVariableNodeEdit = () => {
       </Collapse>
 
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
-        <div className="m-b-8">
+        <div className="m-b-12">
           <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
         </div>
         <FormItem error={errors.nextNodeId}>

@@ -53,7 +53,7 @@ export const DataBasicCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
@@ -88,9 +88,9 @@ export const DataBasicCardNodeEdit = () => {
             />
           </Col>
         </Row>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
-          <Row justify="space-between" className="m-b-8">
+          <Row justify="space-between" className="m-b-12">
             <Col span={12} className="radioContainer">
               <Radio
                 name="view.isShuffle"
@@ -132,7 +132,7 @@ export const DataBasicCardNodeEdit = () => {
       </Collapse>
 
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
-        <Space direction="vertical">
+        <Space direction="vertical" gap={12}>
           <FormItem error={errors.view && errors.view.title}>
             {/* <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}

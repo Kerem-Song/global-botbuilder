@@ -116,14 +116,14 @@ export const ProductCardCarouselNodeEdit = () => {
                 </div>
                 <div className="node-item-wrap collapse">
                   <Collapse label={t(`PROFILE`)} useSwitch={false}>
-                    <div className="m-b-8">
+                    <div className="m-b-12">
                       <span className="subLabel">
                         {t(`PROFILE_IMAGE_UPLOAD`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
                       </span>
                       <span className="required">*</span>
                     </div>
-                    <div className="m-b-8">
-                      <Space direction="vertical">
+                    <div className="m-b-12">
+                      <Space direction="vertical" gap={12}>
                         <FormItem
                           error={errors.view?.childrenViews?.[index]?.profileIconUrl}
                         >
@@ -165,8 +165,8 @@ export const ProductCardCarouselNodeEdit = () => {
                         </FormItem>
                       </Space>
                     </div>
-                    <div className="m-b-8">
-                      <Space direction="vertical">
+                    <div className="m-b-12">
+                      <Space direction="vertical" gap={12}>
                         <FormItem
                           error={
                             errors.view &&
@@ -194,9 +194,9 @@ export const ProductCardCarouselNodeEdit = () => {
                   </Collapse>
                 </div>
                 <div className="node-item-wrap collapse">
-                  <div className="m-b-8">
+                  <div className="m-b-12">
                     <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
-                      <Space direction="vertical">
+                      <Space direction="vertical" gap={12}>
                         <FormItem
                           error={
                             errors.view &&

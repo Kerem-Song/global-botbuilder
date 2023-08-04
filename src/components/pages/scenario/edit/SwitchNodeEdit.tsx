@@ -58,8 +58,8 @@ export const SwitchNodeEdit = () => {
             <Collapse label={`Case ${i + 1}`} useSwitch={false} key={condition.id}>
               <SwitchConditions nestedIndex={i} />
               <Divider style={{ margin: '32px 0' }} />
-              <div className="m-b-8">
-                <Space direction="vertical">
+              <div className="m-b-12">
+                <Space direction="vertical" gap={12}>
                   <div>
                     <span className="label">{t(`SET_CONNECT_NEXT_NODE`)} </span>
                     <span className="required">*</span>
@@ -78,8 +78,8 @@ export const SwitchNodeEdit = () => {
         </SwitchNodeCarousel>
       )}
       <div className="node-item-wrap">
-        <div className="m-b-8">
-          <Space direction="vertical">
+        <div className="m-b-12">
+          <Space direction="vertical" gap={12}>
             <span className="label">else</span>
             <div>
               <span>{t(`SET_NEXT_MESSAGE`)} </span>

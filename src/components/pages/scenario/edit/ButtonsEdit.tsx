@@ -1,4 +1,4 @@
-import { Button, FormItem, Input, Space } from '@components';
+import { Button, Divider, FormItem, Input, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
@@ -106,7 +106,7 @@ export const ButtonsEdit = ({
     <>
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
-          <Space direction="vertical">
+          <Space direction="vertical" gap={12}>
             {/* <span className="subLabel">{t(`BUTTON_NAME`)}</span> */}
             <FormItem
               error={
@@ -144,125 +144,128 @@ export const ButtonsEdit = ({
                 readOnly={isHistoryViewer}
               />
             </FormItem>
-            <span className="subLabel">
-              {t(`BUTTON_TYPE`)}
-              <span className="required"> *</span>
-            </span>
-            <ButtonTypeSelector
-              index={i}
-              options={selectOptions}
-              setButtonType={setButtonType}
-              carouselIndex={index}
-              isCarousel={isCarousel}
-            />
-            {watch(
-              index === undefined
-                ? `view.buttons.${i}.actionType`
-                : `view.childrenViews.${index}.buttons.${i}.actionType`,
-            ) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
-              <>
-                <span className="subLabel">{t(`SELECT_NODE`)}</span>
-                <FormItem
-                  error={
-                    index === undefined
-                      ? errors.view?.buttons?.[i]?.actionValue
-                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
-                  }
-                >
-                  <SelectNode
-                    fieldName={
-                      index === undefined
-                        ? `view.buttons.${i}.actionValue`
-                        : `view.childrenViews.${index}.buttons.${i}.actionValue`
-                    }
-                    nodeId={nodeId}
+            <Space direction="vertical" gap={8}>
+              <span className="subLabel">
+                {t(`BUTTON_TYPE`)}
+                <span className="required"> *</span>
+              </span>
+              <ButtonTypeSelector
+                index={i}
+                options={selectOptions}
+                setButtonType={setButtonType}
+                carouselIndex={index}
+                isCarousel={isCarousel}
+              />
+            </Space>
+            <Space direction="vertical" gap={8}>
+              {watch(
+                index === undefined
+                  ? `view.buttons.${i}.actionType`
+                  : `view.childrenViews.${index}.buttons.${i}.actionType`,
+              ) === ACTION_TYPES.LUNA_NODE_REDIRECT && (
+                <>
+                  <span className="subLabel">{t(`SELECT_NODE`)}</span>
+                  <FormItem
                     error={
                       index === undefined
                         ? errors.view?.buttons?.[i]?.actionValue
                         : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                     }
-                  />
-                </FormItem>
-              </>
-            )}
-            {watch(
-              index === undefined
-                ? `view.buttons.${i}.actionType`
-                : `view.childrenViews.${index}.buttons.${i}.actionType`,
-            ) === ACTION_TYPES.URL && (
-              <>
-                <span className="subLabel">
-                  {t(`SET_URL`)}
-                  <span className="required"> *</span>
-                </span>
-                <FormItem
-                  error={
-                    index === undefined
-                      ? errors.view?.buttons?.[i]?.actionValue
-                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
-                  }
-                >
-                  <Input
-                    {...register(
+                  >
+                    <SelectNode
+                      fieldName={
+                        index === undefined
+                          ? `view.buttons.${i}.actionValue`
+                          : `view.childrenViews.${index}.buttons.${i}.actionValue`
+                      }
+                      nodeId={nodeId}
+                      error={
+                        index === undefined
+                          ? errors.view?.buttons?.[i]?.actionValue
+                          : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
+                      }
+                    />
+                  </FormItem>
+                </>
+              )}
+              {watch(
+                index === undefined
+                  ? `view.buttons.${i}.actionType`
+                  : `view.childrenViews.${index}.buttons.${i}.actionType`,
+              ) === ACTION_TYPES.URL && (
+                <>
+                  <span className="subLabel">
+                    {t(`SET_URL`)}
+                    <span className="required"> *</span>
+                  </span>
+                  <FormItem
+                    error={
                       index === undefined
-                        ? `view.buttons.${i}.actionValue`
-                        : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                    )}
-                    placeholder={
-                      isDataApi
-                        ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
-                        : t(`SET_URL_PLACEHOLDER`)
+                        ? errors.view?.buttons?.[i]?.actionValue
+                        : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                     }
-                    maxLength={1055}
-                  />
-                </FormItem>
-              </>
-            )}
-            {watch(
-              index === undefined
-                ? `view.buttons.${i}.actionType`
-                : `view.childrenViews.${index}.buttons.${i}.actionType`,
-            ) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (
-              <>
-                <FormItem
-                  error={
-                    index === undefined
-                      ? errors.view?.buttons?.[i]?.actionValue
-                      : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
-                  }
-                >
-                  <InputTextAreaWithTitleCounter
-                    className="actValueIsUttrInput"
-                    label={t(`SET_MESSAGE`)}
-                    showCount={useCounter ? true : false}
-                    maxLength={useCounter ? 300 : undefined}
-                    isLight={true}
-                    required={true}
-                    placeholder={
-                      isDataApi
-                        ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
-                        : t(`SET_MESSAGE_PLACEHOLDER`)
-                    }
-                    {...register(
+                  >
+                    <Input
+                      {...register(
+                        index === undefined
+                          ? `view.buttons.${i}.actionValue`
+                          : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                      )}
+                      placeholder={
+                        isDataApi
+                          ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)
+                          : t(`SET_URL_PLACEHOLDER`)
+                      }
+                      maxLength={1055}
+                    />
+                  </FormItem>
+                </>
+              )}
+              {watch(
+                index === undefined
+                  ? `view.buttons.${i}.actionType`
+                  : `view.childrenViews.${index}.buttons.${i}.actionType`,
+              ) === ACTION_TYPES.ACT_VALUE_IS_UTTR && (
+                <>
+                  <FormItem
+                    error={
                       index === undefined
-                        ? `view.buttons.${i}.actionValue`
-                        : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                    )}
-                    textLength={
-                      useCounter
-                        ? watch(
-                            index === undefined
-                              ? `view.buttons.${i}.actionValue`
-                              : `view.childrenViews.${index}.buttons.${i}.actionValue`,
-                          )?.length || 0
-                        : undefined
+                        ? errors.view?.buttons?.[i]?.actionValue
+                        : errors.view?.childrenViews?.[index]?.buttons?.[i]?.actionValue
                     }
-                    readOnly={isHistoryViewer}
-                  />
-                </FormItem>
-              </>
-            )}
-
+                  >
+                    <InputTextAreaWithTitleCounter
+                      className="actValueIsUttrInput"
+                      label={t(`SET_MESSAGE`)}
+                      showCount={useCounter ? true : false}
+                      maxLength={useCounter ? 300 : undefined}
+                      isLight={true}
+                      required={true}
+                      placeholder={
+                        isDataApi
+                          ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
+                          : t(`SET_MESSAGE_PLACEHOLDER`)
+                      }
+                      {...register(
+                        index === undefined
+                          ? `view.buttons.${i}.actionValue`
+                          : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                      )}
+                      textLength={
+                        useCounter
+                          ? watch(
+                              index === undefined
+                                ? `view.buttons.${i}.actionValue`
+                                : `view.childrenViews.${index}.buttons.${i}.actionValue`,
+                            )?.length || 0
+                          : undefined
+                      }
+                      readOnly={isHistoryViewer}
+                    />
+                  </FormItem>
+                </>
+              )}
+            </Space>
             <Button
               shape="ghost"
               className="deleteBtn"
@@ -271,6 +274,7 @@ export const ButtonsEdit = ({
               {t(`DELETE_BUTTON`)}
             </Button>
           </Space>
+          {fields.length !== i + 1 && <Divider style={{ margin: '0 0 32px 0' }} />}
         </Space>
       ))}
       {fields.length < (imageRatio === ImageAspectRatio.Square ? 2 : 3) && (

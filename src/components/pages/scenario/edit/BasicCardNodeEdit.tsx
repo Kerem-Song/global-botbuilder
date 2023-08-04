@@ -44,7 +44,7 @@ export const BasicCardNodeEdit = () => {
       </Collapse>
 
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
-        <Space direction="vertical">
+        <Space direction="vertical" gap={12}>
           {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
           {/* <div className="textareaWrapper">
             <p className={classNames('textareaLabel', 'light')}>{t(`TITLE_INPUT`)}</p>

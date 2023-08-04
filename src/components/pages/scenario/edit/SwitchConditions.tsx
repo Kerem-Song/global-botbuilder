@@ -92,7 +92,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
       </div>
       {fields.map((item, i) => (
         <div key={item.id}>
-          <Space direction="vertical" className="m-b-8">
+          <Space direction="vertical" className="m-b-12" gap={12}>
             <div>
               <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
               <span className="required">*</span>
@@ -160,7 +160,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 </Button>
               </div>
             )}
-            {fields.length !== i + 1 && <Divider />}
+            {fields.length !== i + 1 && <Divider style={{ margin: '32px 0' }} />}
           </Space>
         </div>
       ))}

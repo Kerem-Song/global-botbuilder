@@ -43,13 +43,13 @@ export const RetryConditionNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION`)} useSwitch={false}>
-        <div className="m-b-8">
+        <div className="m-b-12">
           <span className="subLabel">
             {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_COUNT`)}{' '}
           </span>
           <span className="required">*</span>
         </div>
-        <div className={classnames('input m-b-8', {})}>
+        <div className={classnames('input m-b-12', {})}>
           <Select
             className="react-selector"
             {...field}
@@ -62,8 +62,8 @@ export const RetryConditionNodeEdit = () => {
             isSearchable={false}
           />
         </div>
-        <div className="m-b-8">
-          <Space direction="vertical">
+        <div className="m-b-12">
+          <Space direction="vertical" gap={12}>
             <div>
               <span className="label">
                 {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_TRUE_THEN_NEXT_MESSAGE`)}{' '}
@@ -78,11 +78,10 @@ export const RetryConditionNodeEdit = () => {
               />
             </FormItem>
           </Space>
-
-          <Divider />
         </div>
-        <div className="m-b-8">
-          <Space direction="vertical">
+        <Divider style={{ margin: '32px 0' }} />
+        <div className="m-b-12">
+          <Space direction="vertical" gap={12}>
             <div>
               <span>
                 {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_FALSE_THEN_NEXT_MESSAGE`)}

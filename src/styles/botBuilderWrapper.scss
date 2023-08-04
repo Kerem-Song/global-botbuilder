@@ -227,7 +227,7 @@
     .node-item-wrap {
       position: relative;
       background: $gray100;
-      padding: rem(12);
+      padding: rem(12) rem(12) rem(32) rem(12);
       margin-bottom: rem(12);
       .label {
         font-size: rem(15);
@@ -370,7 +370,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: rem(20);
+        margin-bottom: rem(32);
         width: 100%;
         height: rem(30);
         padding: rem(8) rem(10);

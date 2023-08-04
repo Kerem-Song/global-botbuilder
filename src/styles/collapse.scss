@@ -10,7 +10,7 @@
   }
   
   .collapseWrapper {
-    padding: rem(12);
+    padding: rem(12) rem(12) rem(32) rem(12);
   
     &[data-collapsed='true'] {
       display: block;

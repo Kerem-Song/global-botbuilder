@@ -8,6 +8,7 @@ import {
   InputTextarea,
   Radio,
   Row,
+  Space,
 } from '@components';
 import {
   dataApiTestClient,
@@ -147,11 +148,11 @@ export const JsonRequestNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
-        <p className="m-b-8">
+        <p className="m-b-12">
           Method <span className="required">*</span>
         </p>
         <FormItem error={errors.view?.method}>
-          <Row justify="space-between" className="m-b-8">
+          <Row justify="space-between" className="m-b-12">
             <Col span={12} className="radioContainer">
               <Radio
                 checked={watch('view.method') === 'POST'}
@@ -184,13 +185,13 @@ export const JsonRequestNodeEdit = () => {
             maxLength={2055}
           />
         </FormItem>
-        <Divider style={{ margin: '28px 0' }} />
-        <div className="m-b-8">
+        <Divider style={{ margin: '32px 0' }} />
+        <div className="m-b-12">
           <span className="subLabel">{t(`API_REQUEST_HEADER_INPUT_LABEL`)}</span>
         </div>
         {headersField.map((header, i) => (
           <div key={header.id}>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Row gap={4} align="center">
                 <Col span={9}>
                   <Input
@@ -219,18 +220,18 @@ export const JsonRequestNodeEdit = () => {
             </div>
           </div>
         ))}
-        <div className="apiFieldAddBtn m-b-8">
+        <div className="apiFieldAddBtn m-b-12">
           <Button className="addBtn" shape="ghost" onClick={handleAddHeadersButton}>
             + Header
           </Button>
         </div>
-        <Divider style={{ margin: '28px 0' }} />
-        <div className="m-b-8">
+        <Divider style={{ margin: '32px 0' }} />
+        <div className="m-b-12">
           <span className="subLabel">{t(`API_REQUEST_QUERY_STRING_INPUT_LABEL`)}</span>
         </div>
         {queryStringField.map((queryString, i) => (
           <div key={queryString.id}>
-            <div className="m-b-8">
+            <div className="m-b-12">
               <Row gap={4} align="center">
                 <Col span={9}>
                   <Input
@@ -259,12 +260,12 @@ export const JsonRequestNodeEdit = () => {
             </div>
           </div>
         ))}
-        <div className="apiFieldAddBtn m-b-8">
+        <div className="apiFieldAddBtn m-b-12">
           <Button className="addBtn" shape="ghost" onClick={handleAddQueryStringsButton}>
             + Query String{' '}
           </Button>
         </div>
-        <Divider style={{ margin: '28px 0' }} />
+        <Divider style={{ margin: '32px 0' }} />
         <FormItem>
           <InputTextAreaWithTitleCounter
             className="textNodeTextArea"
@@ -277,7 +278,7 @@ export const JsonRequestNodeEdit = () => {
             maxLength={65535}
           />
         </FormItem>
-        <Divider style={{ margin: '28px 0' }} />
+        <Divider style={{ margin: '32px 0' }} />
         <Row align="center" className="apiValidationHeader">
           <Col span={21}>{t(`API_REQUEST_VALIDATION`)}</Col>
           <Col span={2}>
@@ -314,45 +315,50 @@ export const JsonRequestNodeEdit = () => {
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
-          <div key={res.id}>
-            <div className="m-b-4">
-              <span className="subLabel">Json Path</span>
-            </div>
-            <FormItem error={errors.view?.responseMapping?.[i]?.key}>
-              <InputTextAreaWithTitleCounter
-                placeholder={t(
-                  `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
-                )}
-                {...register(`view.responseMapping.${i}.key`)}
-                readOnly={isHistoryViewer}
-                className="m-b-12"
-                maxLength={50}
-              />
-            </FormItem>
-            <div className="m-b-8">
-              <p className="subLabel m-b-12">Set to</p>
-              <p className="subLabel">variable</p>
-            </div>
-            <FormItem error={errors.view?.responseMapping?.[i]?.value}>
-              <ParameterSelector
-                control={control}
-                path={`view.responseMapping.${i}.value`}
-                placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-                readOnly={isHistoryViewer}
-                maxLength={50}
-              />
-            </FormItem>
-            <Button
-              shape="ghost"
-              className="deleteBtn"
-              onClick={() => handleDeleteResMappingButton(i)}
-            >
-              {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
-            </Button>
-          </div>
+          <>
+            <Space direction="vertical" key={res.id} gap={12}>
+              <FormItem error={errors.view?.responseMapping?.[i]?.key}>
+                <InputTextAreaWithTitleCounter
+                  label="Json Path"
+                  placeholder={t(
+                    `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
+                  )}
+                  {...register(`view.responseMapping.${i}.key`)}
+                  readOnly={isHistoryViewer}
+                  className="m-b-12"
+                  maxLength={50}
+                  isLight={true}
+                />
+              </FormItem>
+              <div>
+                <p className="subLabel m-b-12">Set to</p>
+                <p className="subLabel m-b-8">variable</p>
+
+                <FormItem error={errors.view?.responseMapping?.[i]?.value}>
+                  <ParameterSelector
+                    control={control}
+                    path={`view.responseMapping.${i}.value`}
+                    placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+                    readOnly={isHistoryViewer}
+                    maxLength={50}
+                  />
+                </FormItem>
+              </div>
+              <Button
+                shape="ghost"
+                className="deleteBtn"
+                onClick={() => handleDeleteResMappingButton(i)}
+              >
+                {t(`API_REQUEST_RESPONSE_MAPPING_DELETE`)}
+              </Button>
+            </Space>
+            {resMappingField.length !== i + 1 && (
+              <Divider style={{ margin: '0 0 32px 0' }} />
+            )}
+          </>
         ))}
 
-        <div className="apiFieldAddBtn m-b-8">
+        <div className="apiFieldAddBtn m-b-12">
           <Button className="addBtn" shape="ghost" onClick={handleAddResMappingButton}>
             + {t(`API_REQUEST_RESPONSE_MAPPING_ADD`)}
           </Button>
@@ -360,7 +366,7 @@ export const JsonRequestNodeEdit = () => {
       </Collapse>
       <Collapse label={t(`API_REQUEST_MESSAGE_CONNECT_SETTING`)} useSwitch={false}>
         <>
-          <div className="m-b-8">
+          <div className="m-b-12">
             <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
           </div>
           <FormItem error={errors.nextNodeId}>

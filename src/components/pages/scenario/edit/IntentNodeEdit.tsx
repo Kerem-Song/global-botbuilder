@@ -17,7 +17,7 @@ export const IntentNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
-        <div className="m-b-8">
+        <div className="m-b-12">
           <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
           <span className="required">*</span>
         </div>

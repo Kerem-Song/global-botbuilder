@@ -83,7 +83,7 @@ export const DataProductCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
@@ -117,9 +117,9 @@ export const DataProductCardNodeEdit = () => {
             />
           </Col>
         </div>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
-          <Row justify="space-between" className="m-b-8">
+          <Row justify="space-between" className="m-b-12">
             <Col span={12} className="radioContainer">
               <Radio
                 name="view.isShuffle"
@@ -159,14 +159,14 @@ export const DataProductCardNodeEdit = () => {
       </div>
       <div className="node-item-wrap collapse">
         <Collapse label={t(`PROFILE`)} useSwitch={false}>
-          <div className="m-b-8">
+          <div className="m-b-12">
             <span className="subLabel">
               {t(`PROFILE_IMAGE_UPLOAD`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
             </span>
             <span className="required">*</span>
           </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <FormItem error={errors.view?.profileIconUrl}>
                 <>
                   <Row align="center" gap={12} style={{ margin: 0 }}>
@@ -192,8 +192,8 @@ export const DataProductCardNodeEdit = () => {
               </FormItem>
             </Space>
           </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <FormItem error={errors.view && errors.view.profileName}>
                 <InputTextAreaWithTitleCounter
                   {...register('view.profileName')}
@@ -212,9 +212,9 @@ export const DataProductCardNodeEdit = () => {
         </Collapse>
       </div>
       <div className="node-item-wrap collapse">
-        <div className="m-b-8">
+        <div className="m-b-12">
           <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
-            <Space direction="vertical">
+            <Space direction="vertical" gap={12}>
               <span className="subLabel">
                 {t(`DATA_PRODUCT_CARD_NODE_PRICE_DISPLAY_SETTING`)}
               </span>

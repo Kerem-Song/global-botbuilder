@@ -1,4 +1,4 @@
-import { Button, Collapse, Divider, FormItem } from '@components';
+import { Button, Collapse, Divider, FormItem, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
@@ -44,57 +44,75 @@ export const ParameterSetNodeEdit = () => {
     <>
       <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
         {fields.map((item, i) => (
-          <div key={item.id}>
-            <div className="m-b-8">
-              <span className="subLabel">{t(`PARAMETER_SET_VARIABLE`)} </span>
-              <span className="required">*</span>
-            </div>
-            <FormItem
-              error={
-                errors.view && errors.view.parameters && errors.view.parameters[i]?.name
-              }
-            >
-              <ParameterSelector
-                control={control}
-                path={`view.parameters.${i}.name`}
-                placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-                maxLength={50}
-                readOnly={isHistoryViewer}
+          <>
+            <Space direction="vertical" key={item.id} gap={12}>
+              <Space direction="vertical" gap={8}>
+                <div>
+                  <span className="subLabel">{t(`PARAMETER_SET_VARIABLE`)} </span>
+                  <span className="required">*</span>
+                </div>
+                <FormItem
+                  error={
+                    errors.view &&
+                    errors.view.parameters &&
+                    errors.view.parameters[i]?.name
+                  }
+                >
+                  <ParameterSelector
+                    control={control}
+                    path={`view.parameters.${i}.name`}
+                    placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
+                    maxLength={50}
+                    readOnly={isHistoryViewer}
+                  />
+                </FormItem>
+              </Space>
+              <Space direction="vertical" gap={8}>
+                <div>
+                  <span className="subLabel">{t(`PARAMETER_SET_VALUE_TO_STORE`)} </span>
+                  <span className="required">*</span>
+                </div>
+                <FormItem
+                  error={
+                    errors.view &&
+                    errors.view.parameters &&
+                    errors.view.parameters[i]?.value
+                  }
+                >
+                  <VariableSelector
+                    placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
+                    control={control}
+                    path={`view.parameters.${i}.value`}
+                    maxLength={2000}
+                    readOnly={isHistoryViewer}
+                  />
+                </FormItem>
+              </Space>
+              {i > 0 && (
+                <Button
+                  shape="ghost"
+                  className="deleteBtn"
+                  onClick={() => handleDeleteButton(i)}
+                >
+                  {t(`PARAMETER_SET_DELETE_BUTTON`)}
+                </Button>
+              )}
+            </Space>
+            {fields.length !== i + 1 && (
+              <Divider
+                style={i === 0 ? { margin: '32px 0' } : { margin: '0 0 32px 0' }}
               />
-            </FormItem>
-
-            <div className="m-b-8">
-              <span className="subLabel">{t(`PARAMETER_SET_VALUE_TO_STORE`)} </span>
-              <span className="required">*</span>
-            </div>
-            <FormItem
-              error={
-                errors.view && errors.view.parameters && errors.view.parameters[i]?.value
-              }
-            >
-              <VariableSelector
-                placeholder={t(`PARAMETER_SET_VALUE_TO_STORE_PLACEHOLDER`)}
-                control={control}
-                path={`view.parameters.${i}.value`}
-                maxLength={2000}
-                readOnly={isHistoryViewer}
-              />
-            </FormItem>
-            {i > 0 && (
-              <Button
-                shape="ghost"
-                className="deleteBtn"
-                onClick={() => handleDeleteButton(i)}
-              >
-                {t(`PARAMETER_SET_DELETE_BUTTON`)}
-              </Button>
             )}
-            <Divider style={{ margin: '32px 0' }} />
-          </div>
+          </>
         ))}
 
         {fields.length < 10 && (
-          <Button shape="ghost" className="addBtn" onClick={handleAddButton}>
+          <Button
+            shape="ghost"
+            className="addBtn"
+            onClick={handleAddButton}
+            style={fields.length === 1 ? { marginTop: '32px' } : {}}
+          >
             <span>+ {t(`PARAMETER_SET_ADD_BUTTON`)}</span>
           </Button>
         )}

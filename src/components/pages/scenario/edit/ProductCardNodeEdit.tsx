@@ -76,14 +76,14 @@ export const ProductCardNodeEdit = () => {
       </div>
       <div className="node-item-wrap collapse">
         <Collapse label={t(`PROFILE`)} useSwitch={false}>
-          <div className="m-b-8">
+          <div className="m-b-12">
             <span className="subLabel">
               {t(`PROFILE_IMAGE_UPLOAD`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
             </span>
             <span className="required">*</span>
           </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <FormItem error={errors.view?.profileIconUrl}>
                 <>
                   <Row align="center" gap={12} style={{ margin: 0 }}>
@@ -109,8 +109,8 @@ export const ProductCardNodeEdit = () => {
               </FormItem>
             </Space>
           </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <FormItem error={errors.view && errors.view.profileName}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_BRAND_NAME`)}
@@ -129,9 +129,9 @@ export const ProductCardNodeEdit = () => {
         </Collapse>
       </div>
       <div className="node-item-wrap collapse">
-        <div className="m-b-8">
+        <div className="m-b-12">
           <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
-            <Space direction="vertical">
+            <Space direction="vertical" gap={12}>
               <FormItem error={errors.view && errors.view.description}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}

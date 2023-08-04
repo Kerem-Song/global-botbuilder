@@ -66,12 +66,12 @@ export const AnswerNodeEdit = () => {
   return (
     <>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
-        <div className="m-b-8">
+        <div className="m-b-12">
           <span className="subLabel">{t('VARIABLE_SETTING')} </span>
           <span className="required">*</span>
         </div>
         <div className={classnames('input', { 'disabled ': !use })}>
-          <div className="m-b-8">
+          <div className="m-b-12">
             <FormItem error={errors.view?.utteranceParam}>
               <ParameterSelector
                 control={control}
@@ -84,7 +84,7 @@ export const AnswerNodeEdit = () => {
           </div>
           {use && (
             <>
-              <div className="m-b-8">
+              <div className="m-b-12">
                 <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
                 <span className="required">*</span>
               </div>

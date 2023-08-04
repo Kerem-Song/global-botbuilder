@@ -74,7 +74,7 @@ export const DataListCardNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
           <ParameterSelector
             control={control}
@@ -108,9 +108,9 @@ export const DataListCardNodeEdit = () => {
             />
           </Col>
         </Row>
-        <p className="m-b-8">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
+        <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_CAROUSEL_PRINT_OUT`)}</p>
         <div className="dataCarouselPrintOut">
-          <Row justify="space-between" className="m-b-8">
+          <Row justify="space-between" className="m-b-12">
             <Col span={12} className="radioContainer">
               <Radio
                 name="view.isShuffle"
@@ -167,7 +167,7 @@ export const DataListCardNodeEdit = () => {
         {fields.map((item, i) => (
           <div key={item.id}>
             <div className="m-b-12">
-              <Space direction="vertical">
+              <Space direction="vertical" gap={12}>
                 <span className="label">
                   <FormItem error={errors.view?.items?.[i]?.title}>
                     {/* <InputWithTitleCounter
@@ -192,7 +192,7 @@ export const DataListCardNodeEdit = () => {
               </Space>
             </div>
             <div className="m-b-12">
-              <Space direction="vertical">
+              <Space direction="vertical" gap={12}>
                 <span className="label">
                   {/* <InputWithTitleCounter
                     label={t(`CONTENT_INPUT`)}
@@ -218,8 +218,8 @@ export const DataListCardNodeEdit = () => {
               </span>
               <span className="required">*</span>
             </div>
-            <div className="m-b-8">
-              <Space direction="vertical">
+            <div className="m-b-12">
+              <Space direction="vertical" gap={12}>
                 <FormItem error={errors.view?.items?.[i]?.imageUrl}>
                   <>
                     <Row align="center" gap={12} style={{ margin: 0 }}>
@@ -256,7 +256,7 @@ export const DataListCardNodeEdit = () => {
                 {t(`DELETE_A_LIST`)}
               </Button>
             )}
-            {fields.length !== i + 1 && <Divider style={{ margin: '28px 0' }} />}
+            {fields.length !== i + 1 && <Divider style={{ margin: '32px 0' }} />}
           </div>
         ))}
         <div>

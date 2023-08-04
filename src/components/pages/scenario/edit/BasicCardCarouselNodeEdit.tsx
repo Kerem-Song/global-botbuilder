@@ -81,7 +81,7 @@ export const BasicCardCarousleNodeEdit = () => {
                 </Collapse>
 
                 <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
-                  <Space direction="vertical">
+                  <Space direction="vertical" gap={12}>
                     <FormItem error={errors.view?.childrenViews?.[index]?.title}>
                       <InputWithTitleCounter
                         label={t(`TITLE_INPUT`)}

@@ -75,9 +75,9 @@ export const OtherFlowRedirectNodeEdit = () => {
 
   return (
     <div className="node-item-wrap">
-      <div className="m-b-8">
-        <Space direction="vertical">
-          <div className="m-b-8">
+      <div className="m-b-12">
+        <Space direction="vertical" gap={12}>
+          <div className="m-b-12">
             <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE_SET`)} </span>
             <span className="required">*</span>
           </div>

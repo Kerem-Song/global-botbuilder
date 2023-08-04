@@ -73,12 +73,12 @@ export const ConditionNodeEdit = () => {
   return (
     <>
       <Collapse label={t(`CONDITION_NODE_SET_CONDITION`)} useSwitch={false}>
-        <div className="m-b-8">
+        <div className="m-b-12">
           <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
           <span className="required">*</span>
         </div>
         {fields.length === 0 && (
-          <Space direction="vertical">
+          <Space direction="vertical" gap={12}>
             <FormItem
               error={errors.view && errors.view.items && errors.view?.items[0]?.op1}
             >
@@ -166,7 +166,7 @@ export const ConditionNodeEdit = () => {
           </Space>
         )}
         {fields.map((item, i) => (
-          <Space direction="vertical" key={item.id}>
+          <Space direction="vertical" key={item.id} gap={12}>
             <FormItem
               error={errors.view && errors.view.items && errors.view.items[i]?.op1}
             >
@@ -291,8 +291,8 @@ export const ConditionNodeEdit = () => {
         ))}
 
         <div className="node-item-wrap collapse">
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <div>
                 <span className="label">{t(`SET_CONNECT_NEXT_NODE`)} </span>
                 <span className="required">*</span>
@@ -308,8 +308,8 @@ export const ConditionNodeEdit = () => {
 
             <Divider />
           </div>
-          <div className="m-b-8">
-            <Space direction="vertical">
+          <div className="m-b-12">
+            <Space direction="vertical" gap={12}>
               <span className="label">else</span>
               <div>
                 <span>{t(`SET_NEXT_MESSAGE`)} </span>
