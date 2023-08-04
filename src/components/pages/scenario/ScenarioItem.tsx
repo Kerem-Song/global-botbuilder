@@ -123,24 +123,25 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   };
 
   const handleDuplicateScenario = async () => {
-    const result = await confirm({
-      title: t('DUPLICATE_SCENARIO'),
-      description: (
-        <>
-          <span style={{ whiteSpace: 'pre-line' }}>
-            {t('DUPLICATE_SCENARIO_DESC', { scenario: item.alias })}
-          </span>
-        </>
-      ),
-    });
+    // const result = await confirm({
+    //   title: t('DUPLICATE_SCENARIO'),
+    //   description: (
+    //     <>
+    //       <span style={{ whiteSpace: 'pre-line' }}>
+    //         {t('DUPLICATE_SCENARIO_DESC', { scenario: item.alias })}
+    //       </span>
+    //     </>
+    //   ),
+    // });
+    // if (result) {
+    //   const res = await scenarioDuplicateMutateAsync({ scenario: item });
 
-    if (result) {
-      const res = await scenarioDuplicateMutateAsync({ scenarioId: item.id });
-
-      if (res) {
-        lunaToast.success(t(`DUPLICATEING_SCENARIO_IS_SUCCESS`));
-      }
-    }
+    //   if (res) {
+    //     lunaToast.success(t(`DUPLICATEING_SCENARIO_IS_SUCCESS`));
+    //   }
+    dispatch(setPopupType('duplicate'));
+    dispatch(setScenarioListItem(item));
+    dispatch(setScenarioPopupOpen(true));
   };
 
   const handleScenariRename = (item: IScenarioModel) => {

@@ -40,7 +40,7 @@ export const useScenarioClient = () => {
   );
 
   const scenarioRenameMutate = useMutation(
-    async ({ token, scenario }: { token: string; scenario: IScenarioModel }) => {
+    async ({ scenario }: { scenario: IScenarioModel }) => {
       const res = await http.post('/builder/renameflow', {
         sessionToken: token,
         flowId: scenario.id,
@@ -147,10 +147,11 @@ export const useScenarioClient = () => {
   });
 
   const scenarioDuplicateMutate = useMutation(
-    async ({ scenarioId }: { scenarioId: string }) => {
+    async ({ scenario }: { scenario: IScenarioModel }) => {
       const res = await http.post('builder/copyflow', {
         sessionToken: token,
-        flowId: scenarioId,
+        flowId: scenario.id,
+        name: scenario.alias,
       });
 
       if (res) {

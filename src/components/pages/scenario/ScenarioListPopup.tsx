@@ -27,7 +27,8 @@ export const ScenarioListPopup: FC<{
 }> = ({ isOpen, scenarios }) => {
   const { t, tc } = usePage();
   const dispatch = useDispatch();
-  const { scenarioCreateAsync, scenarioRenameAsync } = useScenarioClient();
+  const { scenarioCreateAsync, scenarioRenameAsync, scenarioDuplicateMutateAsync } =
+    useScenarioClient();
   const { pathname } = useLocation();
   const token = useRootState((state) => state.botInfoReducer.token);
   const popupType = useRootState((state) => state.scenarioListPopupReducer.popupType);
@@ -69,27 +70,43 @@ export const ScenarioListPopup: FC<{
         (scenario) => scenario.alias === watch('scenarioName'),
       );
 
+      if (filtered) {
+        setError('scenarioName', {
+          type: 'custom',
+          message: t(`DUPLICATED_SCENARIO_NAME_MESSAGE`),
+        });
+        return;
+      }
+
       let res;
       if (popupType === 'create') {
         res = await scenarioCreateAsync({
           token,
           scenarioName: watch('scenarioName'),
         });
+      } else if (popupType === 'duplicate') {
+        if (item) {
+          res = await scenarioDuplicateMutateAsync({
+            scenario: { ...item, alias: watch('scenarioName') },
+          });
+        }
       } else {
         if (item) {
           res = await scenarioRenameAsync({
-            token: token!,
             scenario: { ...item, alias: watch('scenarioName') },
           });
         }
       }
+      console.log('@res', res);
 
-      if (res?.data && res.data.isSuccess) {
+      if (res?.data && res.data.isSuccess && !filtered) {
         dispatch(setScenarioPopupOpen(false));
         lunaToast.success(
           popupType === 'create'
             ? t(`MAKING_NEW_SCENARIO_IS_SUCCESS`)
-            : t('CHANGING_SCENARIO_NAME_SUCCESS'),
+            : popupType === 'rename'
+            ? t('CHANGING_SCENARIO_NAME_SUCCESS')
+            : t('DUPLICATEING_SCENARIO_IS_SUCCESS'),
         );
       } else {
         if (filtered) {
@@ -97,7 +114,6 @@ export const ScenarioListPopup: FC<{
             type: 'custom',
             message: t(`DUPLICATED_SCENARIO_NAME_MESSAGE`),
           });
-          // lunaToast.error(t(`DUPLICATED_SCENARIO_NAME_MESSAGE`));
         } else {
           const exeption = res?.data.exception as IException;
 
@@ -108,7 +124,7 @@ export const ScenarioListPopup: FC<{
   };
 
   useEffect(() => {
-    if (popupType === 'rename' && item) {
+    if ((popupType === 'rename' || popupType === 'duplicate') && item) {
       setValue('scenarioName', item.alias);
     } else if (popupType === 'create') {
       setValue('scenarioName', '');
@@ -129,7 +145,9 @@ export const ScenarioListPopup: FC<{
         <Title level={4}>
           {popupType === 'create'
             ? t('MAKING_NEW_SCENARIO_LABEL')
-            : t('CHANGE_SCENARIO_NAME')}
+            : popupType === 'rename'
+            ? t('CHANGE_SCENARIO_NAME')
+            : t('DUPLICATE_SCENARIO')}
         </Title>
       </div>
       <Divider />

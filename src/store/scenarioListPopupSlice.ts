@@ -6,7 +6,7 @@ export interface IScenarioListPopup {
   scenarioName: string;
   isOpen: boolean;
   item?: IScenarioModel;
-  popupType: 'create' | 'rename';
+  popupType: 'create' | 'rename' | 'duplicate';
 }
 
 const initialState: IScenarioListPopup = {
