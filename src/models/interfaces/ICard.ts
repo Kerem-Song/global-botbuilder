@@ -58,8 +58,8 @@ export const VIEW_TYPES = {
   DATA_BASIC_CARD_VIEW: 'BasicCardCarouselTemplateView',
   DATA_PRODUCT_CARD_VIEW: 'ProductCardCarouselTemplateView',
   DATA_LIST_CARD_VIEW: 'ListCardCarouselTemplateView',
-  CS_CARD_VIEW: 'CsCardView',
-  RESET_VARIABLE_CARD_VIEW: 'ResetVariableCardView',
+  CS_CENTER_SCENE_VIEW: 'CSCenterSceneView',
+  RESET_VARIABLE_CARD_VIEW: 'ParameterClearCardView',
 };
 
 export const NODE_TYPES = {
@@ -85,8 +85,8 @@ export const NODE_TYPES = {
   DATA_BASIC_CARD_NODE: 'BasicCardCarouselTemplateNode',
   DATA_PRODUCT_CARD_NODE: 'ProductCardCarouselTemplateNode',
   DATA_LIST_CARD_NODE: 'ListCardCarouselTemplateNode',
-  CS_NODE: 'CsNode',
-  RESET_VARIABLE_NODE: 'ResetVariableNode',
+  CS_CENTER_SCENE_NODE: 'CSCenterSceneNode',
+  PARAMETER_CLEAR_NODE: 'ParameterClearNode',
 } as const;
 
 export type TViewTypes = ValueOf<typeof VIEW_TYPES>;

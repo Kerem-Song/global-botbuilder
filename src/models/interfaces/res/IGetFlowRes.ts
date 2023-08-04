@@ -394,15 +394,15 @@ export interface IDataProductCardView extends IProductCardTemplateView, IDataCar
 
 export interface IDataListCardView extends IListCardView, IDataCardView {}
 
-export interface ICsCardView extends IViewBase {
+export interface ICSCenterSceneView extends IViewBase {
   isLive: boolean;
   isConsult: boolean;
   inquiryType: string;
 }
 
-export interface IResetVariableCardView extends IViewBase {
+export interface IParameterClearCardView extends IViewBase {
   resetAll: 'all' | 'select';
-  parameters?: { name: ''; value: '' }[];
+  parameters?: { name: '' }[];
 }
 
 export interface IGetFlowRes {

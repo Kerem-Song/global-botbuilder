@@ -127,15 +127,15 @@ export const NodeLinkPopUpMenu = ({
       nodeKind: NodeKind.InputNode,
     },
     {
-      className: 'icResetVariable',
-      value: NODE_TYPES.RESET_VARIABLE_NODE,
-      nodeName: t(`CAPTION_RESETVARIABLENODE`),
+      className: 'icParameterClear',
+      value: NODE_TYPES.PARAMETER_CLEAR_NODE,
+      nodeName: t(`CAPTION_PARAMETERCLEARNODE`),
       nodeKind: NodeKind.CommandNode,
     },
     {
       className: 'icCS',
-      value: NODE_TYPES.CS_NODE,
-      nodeName: t(`CAPTION_CSNODE`),
+      value: NODE_TYPES.CS_CENTER_SCENE_NODE,
+      nodeName: t(`CAPTION_CSCENTERSCENENODE`),
       nodeKind: NodeKind.CommandNode,
     },
   ];
@@ -229,7 +229,7 @@ export const NodeLinkPopUpMenu = ({
   const filterdBtnList = cardTypeValue
     .filter((item) => {
       if (import.meta.env.PROD) {
-        return item.value !== NODE_TYPES.CS_NODE;
+        return item.value !== NODE_TYPES.CS_CENTER_SCENE_NODE;
       } else {
         return item;
       }

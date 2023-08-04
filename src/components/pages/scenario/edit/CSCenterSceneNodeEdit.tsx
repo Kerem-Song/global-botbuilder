@@ -1,6 +1,6 @@
 import { useNodeEditSave } from '@hooks';
 
-export const CsNodeEdit = () => {
+export const CSCenterSceneNodeEdit = () => {
   useNodeEditSave();
 
   return <div></div>;

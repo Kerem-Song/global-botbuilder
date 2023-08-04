@@ -124,7 +124,7 @@
         background-image: url('@assets/icons/ic_other_flow_redirect.svg');
       }
 
-      &[data-icon='icResetVariable'] {
+      &[data-icon='icParameterClear'] {
         background-image: url('@assets/icons/ic_reset_variable.svg');
       }
 
@@ -529,7 +529,7 @@
             }
           }
 
-          &.resetVariables {
+          &.parameterClear {
             max-height: rem(320);
             overflow: hidden;
           }

@@ -4,14 +4,14 @@ import { Col, Row } from '@components/layout';
 import { useHistoryViewerMatch, useNodeEditSave, usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
-import { IResetVariableCardView } from '@models/interfaces/res/IGetFlowRes';
+import { IParameterClearCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 
-export const ResetVariableNodeEdit = () => {
+export const ParameterClearNodeEdit = () => {
   useNodeEditSave();
   const { t } = usePage();
   const [scenarioList, setScenarioList] = useState<IReactSelect[]>([
@@ -27,7 +27,7 @@ export const ResetVariableNodeEdit = () => {
     watch,
     reset,
     formState: { errors },
-  } = useFormContext<IGNodeEditModel<IResetVariableCardView>>();
+  } = useFormContext<IGNodeEditModel<IParameterClearCardView>>();
 
   const isHistoryViewer = useHistoryViewerMatch();
   const { field } = useController({
@@ -51,7 +51,6 @@ export const ResetVariableNodeEdit = () => {
   const handleAddVariableButton = () => {
     append({
       name: '',
-      value: '',
     });
   };
 
@@ -76,11 +75,11 @@ export const ResetVariableNodeEdit = () => {
 
   const handleResetRadio = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const result = await confirm({
-      title: t(`RESET_VARIABLE_NODE_CHANGE_SETTING`),
+      title: t(`PARAMETER_CLEAR_NODE_CHANGE_SETTING`),
       description: (
         <>
           <span style={{ whiteSpace: 'pre-line' }}>
-            {t(`RESET_VARIABLE_NODE_CHANGE_SETTING_DESC`)}
+            {t(`PARAMETER_CLEAR_NODE_CHANGE_SETTING_DESC`)}
           </span>
         </>
       ),
@@ -95,8 +94,8 @@ export const ResetVariableNodeEdit = () => {
 
   return (
     <>
-      <Collapse label={t(`RESET_VARIABLE_NODE_SET`)} useSwitch={false}>
-        <p className="m-b-20">{t(`RESET_VARIABLE_NODE_SET`)}</p>
+      <Collapse label={t(`PARAMETER_CLEAR_NODE_SET`)} useSwitch={false}>
+        <p className="m-b-20">{t(`PARAMETER_CLEAR_NODE_SET`)}</p>
         <FormItem error={errors.view?.resetAll}>
           <Row justify="space-between" className="m-b-20">
             <Col span={12} className="radioContainer">
@@ -111,7 +110,7 @@ export const ResetVariableNodeEdit = () => {
                 ref={resetAll.ref}
                 value={'all'}
               >
-                <span>{t(`RESET_VARIABLE_NODE_RESET_ALL`)}</span>
+                <span>{t(`PARAMETER_CLEAR_NODE_RESET_ALL`)}</span>
               </Radio>
             </Col>
             <Col span={12} className="radioContainer">
@@ -126,7 +125,7 @@ export const ResetVariableNodeEdit = () => {
                 ref={resetAll.ref}
                 value={'select'}
               >
-                <span>{t(`RESET_VARIABLE_NODE_RESET_SELECT`)}</span>
+                <span>{t(`PARAMETER_CLEAR_NODE_RESET_SELECT`)}</span>
               </Radio>
             </Col>
           </Row>
@@ -134,7 +133,7 @@ export const ResetVariableNodeEdit = () => {
         {parametersFields?.length > 0 && (
           <>
             <div className="m-b-15">
-              <p className="m-b-12">{t(`RESET_VARIABLE_NODE_SELECT_VARIABLES`)}</p>
+              <p className="m-b-12">{t(`PARAMETER_CLEAR_NODE_SELECT_VARIABLES`)}</p>
               {parametersFields.map((item, i) => (
                 <div key={item.id}>
                   <Row gap={4} justify="space-between">
@@ -169,7 +168,7 @@ export const ResetVariableNodeEdit = () => {
                 onClick={handleAddVariableButton}
                 disabled={watch('view.resetAll') === 'all'}
               >
-                + {t(`RESET_VARIABLE_NODE_ADD_VARIABLE`)}
+                + {t(`PARAMETER_CLEAR_NODE_ADD_VARIABLE`)}
               </Button>
             </div>
           </>

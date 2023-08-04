@@ -1,26 +1,26 @@
 import { Card } from '@components';
 import { usePage } from '@hooks';
 import { IHasNode } from '@models/interfaces/IHasNode';
-import { IResetVariableCardView } from '@models/interfaces/res/IGetFlowRes';
+import { IParameterClearCardView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
 import { FC } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { NextNodeButton } from '../NextNodeButton';
 
-export const ResetVariableNode: FC<IHasNode> = ({ node }) => {
+export const ParameterClearNode: FC<IHasNode> = ({ node }) => {
   const { t } = usePage();
-  const view: IResetVariableCardView = node.view as IResetVariableCardView;
+  const view: IParameterClearCardView = node.view as IParameterClearCardView;
 
   return (
     <Card>
-      <div className="countConditionWrapper resetVariables">
+      <div className="countConditionWrapper parameterClear">
         <div className="dataCardDesc">
           <p>
-            {t(`RESET_VARIABLE_NODE_SET`)} :{' '}
+            {t(`PARAMETER_CLEAR_NODE_SET`)} :{' '}
             {view.resetAll === 'all'
-              ? t(`RESET_VARIABLE_NODE_RESET_ALL`)
-              : t(`RESET_VARIABLE_NODE_RESET_SELECT`)}
+              ? t(`PARAMETER_CLEAR_NODE_RESET_ALL`)
+              : t(`PARAMETER_CLEAR_NODE_RESET_SELECT`)}
           </p>
           {view.parameters?.map((item, i) => (
             // <MultiClamp clamp={1} ellipsis={'...'} key={item.key}>

@@ -8,7 +8,7 @@ import { AnswerNodeFactory } from './AnswerNodeFactory';
 import { BasicCardCarouselNodeFactory } from './BasicCardCarouselNodeFactory';
 import { BasicCardNodeFactory } from './BasicCardNodeFactory';
 import { ConditionNodeFactory } from './ConditionNodeFactory';
-import { CsNodeFactory } from './CsNodeFactory';
+import { CSCenterSceneNodeFactory } from './CSCenterSceneNodeFactory';
 import { DataBasicCardNodeFactory } from './DataBasicCardNodeFactory';
 import { DataListCardNodeFactory } from './DataListCardNodeFactory';
 import { DataProductCardNodeFactory } from './DataProductCardNodeFactory';
@@ -17,10 +17,10 @@ import { JsonRequestNodeFactory } from './JsonRequestNodeFactory';
 import { ListCardCarouselNodeFactory } from './ListCardCarouselNodeFactory';
 import { ListCardNodeFactory } from './ListCardNodeFactory';
 import { OtherFlowRedirectNodeFactory } from './OtherFlowRedirectNodeFactory';
+import { ParameterClearNodeFactory } from './ParameterClearNodeFactory';
 import { ParameterSetNodeFactory } from './ParameterSetNodeFactory';
 import { ProductCardCarouselNodeFactory } from './ProductCardCarouselNodeFactory';
 import { ProductCardNodeFactory } from './ProductCardNodeFactory';
-import { ResetVariableNodeFactory } from './ResetVariableNodeFactory';
 import { RetryConditionNodeFactory } from './RetryConditionNodeFactory';
 import { SwitchNodeFactory } from './SwitchNodeFactory';
 import { TextNodeFactory } from './TextNodeFactory';
@@ -56,8 +56,8 @@ const jsonRequestNodeFactory = new JsonRequestNodeFactory();
 const dataBasicCardNodeFactory = new DataBasicCardNodeFactory();
 const dataProductCardNodeFactory = new DataProductCardNodeFactory();
 const dataListCardNodeFactory = new DataListCardNodeFactory();
-const csNodeFactory = new CsNodeFactory();
-const resetVariableNodeFactory = new ResetVariableNodeFactory();
+const cSCenterSceneNodeFactory = new CSCenterSceneNodeFactory();
+const parameterClearNodeFactory = new ParameterClearNodeFactory();
 
 export const nodeFactory = {
   getFactory: (TNodeTypes: TNodeTypes | undefined): INodeFactory | undefined => {
@@ -98,10 +98,10 @@ export const nodeFactory = {
         return dataProductCardNodeFactory;
       case NODE_TYPES.DATA_LIST_CARD_NODE:
         return dataListCardNodeFactory;
-      case NODE_TYPES.CS_NODE:
-        return csNodeFactory;
-      case NODE_TYPES.RESET_VARIABLE_NODE:
-        return resetVariableNodeFactory;
+      case NODE_TYPES.CS_CENTER_SCENE_NODE:
+        return cSCenterSceneNodeFactory;
+      case NODE_TYPES.PARAMETER_CLEAR_NODE:
+        return parameterClearNodeFactory;
       default:
         return undefined;
     }

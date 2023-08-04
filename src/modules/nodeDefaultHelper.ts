@@ -8,7 +8,7 @@ import {
   IBasicCardCarouselView,
   IBasicCardView,
   IConditionView,
-  ICsCardView,
+  ICSCenterSceneView,
   IDataBasicCardView,
   IDataListCardView,
   IDataProductCardView,
@@ -17,10 +17,10 @@ import {
   IListCardItem,
   IListCardView,
   IOtherFlowRedirectView,
+  IParameterClearCardView,
   IParameterSetParams,
   IProductCardCarouselView,
   IProductCardView,
-  IResetVariableCardView,
   IRetryConditionView,
   ISwitchView,
   ITextView,
@@ -394,18 +394,18 @@ export const nodeDefaultHelper = {
     };
     return result;
   },
-  createDefaultCsCardView: () => {
-    const result: ICsCardView = {
+  createDefaultCSCenterSceneView: () => {
+    const result: ICSCenterSceneView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
-      typeName: VIEW_TYPES.CS_CARD_VIEW,
+      typeName: VIEW_TYPES.CS_CENTER_SCENE_VIEW,
       isConsult: true,
       isLive: true,
       inquiryType: '',
     };
     return result;
   },
-  createDefaultResetVariableCardView: () => {
-    const result: IResetVariableCardView = {
+  createDefaultParameterClearCardView: () => {
+    const result: IParameterClearCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.RESET_VARIABLE_CARD_VIEW,
       resetAll: 'all',

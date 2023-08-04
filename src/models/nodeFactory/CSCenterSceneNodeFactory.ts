@@ -1,6 +1,6 @@
 import { icText } from '@assets';
-import { CsNodeEdit } from '@components/pages/scenario/edit/CsNodeEdit';
-import { CsNode } from '@components/pages/scenario/nodes';
+import { CSCenterSceneNodeEdit } from '@components/pages/scenario/edit/CSCenterSceneNodeEdit';
+import { CSCenterSceneNode } from '@components/pages/scenario/nodes';
 import { NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
@@ -8,9 +8,9 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
 
-export class CsNodeFactory implements INodeFactory {
+export class CSCenterSceneNodeFactory implements INodeFactory {
   constructor() {
-    this.typeName = NODE_TYPES.CS_NODE;
+    this.typeName = NODE_TYPES.CS_CENTER_SCENE_NODE;
     this.nodeKind = NodeKind.CommandNode;
     this.NodeContextMenuKinds =
       NodeContextMenuKind.Duplication |
@@ -23,15 +23,15 @@ export class CsNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultCsCardView();
+    return nodeDefaultHelper.createDefaultCSCenterSceneView();
   }
 
   getEditElement() {
-    return CsNodeEdit;
+    return CSCenterSceneNodeEdit;
   }
 
   getNodeElement() {
-    return CsNode;
+    return CSCenterSceneNode;
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {

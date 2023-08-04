@@ -1,5 +1,5 @@
-import { ResetVariableNodeEdit } from '@components/pages/scenario/edit/ResetVariableNodeEdit';
-import { ResetVariableNode } from '@components/pages/scenario/nodes';
+import { ParameterClearNodeEdit } from '@components/pages/scenario/edit/ParameterClearNodeEdit';
+import { ParameterClearNode } from '@components/pages/scenario/nodes';
 import { INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { NodeContextMenuKind } from '@models/enum/NodeContextMenuKind';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
@@ -8,9 +8,9 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 
 import { INodeFactory } from './NodeFactory';
 
-export class ResetVariableNodeFactory implements INodeFactory {
+export class ParameterClearNodeFactory implements INodeFactory {
   constructor() {
-    this.typeName = NODE_TYPES.RESET_VARIABLE_NODE;
+    this.typeName = NODE_TYPES.PARAMETER_CLEAR_NODE;
     this.nodeKind = NodeKind.CommandNode;
     this.NodeContextMenuKinds =
       NodeContextMenuKind.Duplication |
@@ -23,15 +23,15 @@ export class ResetVariableNodeFactory implements INodeFactory {
   NodeContextMenuKinds: NodeContextMenuKind;
 
   getDefaultView() {
-    return nodeDefaultHelper.createDefaultResetVariableCardView();
+    return nodeDefaultHelper.createDefaultParameterClearCardView();
   }
 
   getEditElement() {
-    return ResetVariableNodeEdit;
+    return ParameterClearNodeEdit;
   }
 
   getNodeElement() {
-    return ResetVariableNode;
+    return ParameterClearNode;
   }
 
   createArrows(nodeId: string, nextNodeId?: string, view?: IViewBase) {
@@ -47,7 +47,7 @@ export class ResetVariableNodeFactory implements INodeFactory {
   }
 
   getNodeImgIconUrl() {
-    return 'icResetVariable';
+    return 'icParameterClear';
   }
 
   getConnectId(node: INode) {
