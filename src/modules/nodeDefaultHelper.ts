@@ -408,7 +408,7 @@ export const nodeDefaultHelper = {
     const result: IParameterClearCardView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.RESET_VARIABLE_CARD_VIEW,
-      resetAll: 'all',
+      isAll: true,
       parameters: [],
     };
     return result;

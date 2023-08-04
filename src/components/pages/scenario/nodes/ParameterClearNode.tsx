@@ -18,7 +18,7 @@ export const ParameterClearNode: FC<IHasNode> = ({ node }) => {
         <div className="dataCardDesc">
           <p>
             {t(`PARAMETER_CLEAR_NODE_SET`)} :{' '}
-            {view.resetAll === 'all'
+            {view.isAll === true
               ? t(`PARAMETER_CLEAR_NODE_RESET_ALL`)
               : t(`PARAMETER_CLEAR_NODE_RESET_SELECT`)}
           </p>

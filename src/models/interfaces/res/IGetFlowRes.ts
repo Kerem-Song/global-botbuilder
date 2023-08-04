@@ -401,7 +401,7 @@ export interface ICSCenterSceneView extends IViewBase {
 }
 
 export interface IParameterClearCardView extends IViewBase {
-  resetAll: 'all' | 'select';
+  isAll: boolean;
   parameters?: { name: '' }[];
 }
 

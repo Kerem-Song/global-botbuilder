@@ -46,7 +46,7 @@ export const ParameterClearNodeEdit = () => {
     control,
   });
 
-  const { field: resetAll } = useController({ name: 'view.resetAll', control });
+  const { field: isAll } = useController({ name: 'view.isAll', control });
 
   const handleAddVariableButton = () => {
     append({
@@ -88,7 +88,7 @@ export const ParameterClearNodeEdit = () => {
     if (result) {
       remove();
     } else {
-      setValue('view.resetAll', 'select');
+      setValue('view.isAll', false);
     }
   };
 
@@ -96,34 +96,34 @@ export const ParameterClearNodeEdit = () => {
     <>
       <Collapse label={t(`PARAMETER_CLEAR_NODE_SET`)} useSwitch={false}>
         <p className="m-b-20">{t(`PARAMETER_CLEAR_NODE_SET`)}</p>
-        <FormItem error={errors.view?.resetAll}>
+        <FormItem error={errors.view?.isAll}>
           <Row justify="space-between" className="m-b-20">
             <Col span={12} className="radioContainer">
               <Radio
-                checked={watch('view.resetAll') === 'all'}
+                checked={watch('view.isAll') === true}
                 onChange={(e) => {
-                  resetAll.onChange(e);
+                  isAll.onChange(e);
+                  setValue('view.isAll', true, { shouldDirty: true });
                   if (watch(`view.parameters`)?.length) {
                     handleResetRadio(e);
                   }
                 }}
-                ref={resetAll.ref}
-                value={'all'}
+                ref={isAll.ref}
               >
                 <span>{t(`PARAMETER_CLEAR_NODE_RESET_ALL`)}</span>
               </Radio>
             </Col>
             <Col span={12} className="radioContainer">
               <Radio
-                checked={watch('view.resetAll') === 'select'}
+                checked={watch('view.isAll') === false}
                 onChange={(e) => {
-                  resetAll.onChange(e);
+                  isAll.onChange(e);
+                  setValue('view.isAll', false, { shouldDirty: true });
                   if (!parametersFields.length) {
                     handleAddVariableButton();
                   }
                 }}
-                ref={resetAll.ref}
-                value={'select'}
+                ref={isAll.ref}
               >
                 <span>{t(`PARAMETER_CLEAR_NODE_RESET_SELECT`)}</span>
               </Radio>
@@ -145,7 +145,7 @@ export const ParameterClearNodeEdit = () => {
                           path={`view.parameters.${i}.name`}
                           readOnly={isHistoryViewer}
                           maxLength={125}
-                          isDisabled={watch('view.resetAll') === 'all'}
+                          isDisabled={watch('view.isAll') === true}
                         />
                       </FormItem>
                     </Col>
@@ -154,7 +154,7 @@ export const ParameterClearNodeEdit = () => {
                         shape="ghost"
                         className="icDelete"
                         onClick={() => handleDeleteVariableButton(i)}
-                        disabled={watch('view.resetAll') === 'all'}
+                        disabled={watch('view.isAll') === true}
                       />
                     </Col>
                   </Row>
@@ -166,7 +166,7 @@ export const ParameterClearNodeEdit = () => {
                 className="addBtn"
                 shape="ghost"
                 onClick={handleAddVariableButton}
-                disabled={watch('view.resetAll') === 'all'}
+                disabled={watch('view.isAll') === true}
               >
                 + {t(`PARAMETER_CLEAR_NODE_ADD_VARIABLE`)}
               </Button>
