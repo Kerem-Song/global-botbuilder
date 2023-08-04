@@ -1,15 +1,16 @@
 import { imgNotFoundImg } from '@assets';
-import { Divider, Space } from '@components/layout';
 import { ITesterDataType, ITesterDebugMeta, TESTER_DATA_TYPES } from '@models';
-import classNames from 'classnames';
 import { SyntheticEvent } from 'react';
-import MultiClamp from 'react-multi-clamp';
 
-import { CardCarouselType } from './CardCarouselType';
+import { BasicCardCarouselType } from './BasicCardCarouselType';
+import { BasicCardType } from './BasicCardType';
 import { ListCardCarouselType } from './ListCardCarouselType';
+import { ListCardType } from './ListCardType';
 import { ProductCardCarouselType } from './ProductCardCarouselType';
+import { ProductCardType } from './ProductCardType';
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 import { TesterSlide } from './TesterSlide';
+import { TextCardType } from './TextCardType';
 
 export interface TesterProps {
   item: ITesterDataType;
@@ -24,97 +25,14 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
   const itemType = () => {
     switch (item.type) {
       case TESTER_DATA_TYPES.text:
-        return (
-          <>
-            {item.isMe ? (
-              <div className="send">
-                <div className="sendMessage">{item.value}</div>
-              </div>
-            ) : (
-              <div
-                role="presentation"
-                className="reply"
-                onClick={() => onClick(item.debugMeta)}
-              >
-                <div className="replyMessage">{item.value}</div>
-              </div>
-            )}
-          </>
-        );
+        return <TextCardType item={item} onClick={onClick} />;
       case TESTER_DATA_TYPES.card: {
-        const isRectangleImage = item.image?.imageAspectRatio !== 1;
-        const hasButtons = item.buttons.length > 0;
-        const onlyCardImage =
-          item.title?.length === 0 &&
-          item.contentText?.length === 0 &&
-          item.buttons.length === 0;
         return (
-          <div
-            className="basicCardContainer"
-            role="presentation"
-            onClick={() => onClick(item.debugMeta)}
-          >
-            {item.image && (
-              <img
-                className={classNames('cardImg', {
-                  cardImgRectangle: !onlyCardImage && isRectangleImage,
-                  onlyCardImgRectangle: onlyCardImage && isRectangleImage,
-                  cardImgSquare: !onlyCardImage && !isRectangleImage,
-                  onlyCardImgSquare: onlyCardImage && !isRectangleImage,
-                })}
-                src={item.image.imageUrl}
-                alt="cardCarouselImg"
-                onError={(e) => {
-                  handleImgOnError(e);
-                }}
-              />
-            )}
-            {item.title || item.contentText ? (
-              <div
-                className={classNames('cardContents', {
-                  rectangleImageContents: isRectangleImage,
-                  squareImageContents: !isRectangleImage,
-                })}
-              >
-                <div>
-                  <div className="cardTitle">
-                    <MultiClamp clamp={2} ellipsis={'...'}>
-                      {item.title?.substring(0, 40)}
-                    </MultiClamp>
-                  </div>
-                  <div className="cardContentDesc">
-                    {item.contentText?.substring(0, 230)}
-                  </div>
-                </div>
-                <div className={hasButtons ? 'hasBtns' : undefined}>
-                  <div
-                    className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}
-                  >
-                    {item.buttons.map((v, i) => {
-                      return <TesterMessagesItemButton key={i} item={v} />;
-                    })}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div
-                className={classNames('cardContents', {
-                  rectangleImageContents: !onlyCardImage && isRectangleImage,
-                  onlyRectangleImageContents: onlyCardImage && isRectangleImage,
-                  squareImageContents: !onlyCardImage && !isRectangleImage,
-                  onlySquareImageContents: onlyCardImage && !isRectangleImage,
-                })}
-              >
-                <div
-                  className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}
-                >
-                  {item.buttons.map((v, i) => (
-                    <TesterMessagesItemButton key={i} item={v} />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          <BasicCardType
+            item={item}
+            onClick={onClick}
+            handleImgOnError={handleImgOnError}
+          />
         );
       }
       case TESTER_DATA_TYPES.cardCarousel:
@@ -126,9 +44,9 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
           >
             {item.contents.length === 0 ? null : (
               <TesterSlide gapSize={10} offset={55}>
-                {item.contents!.map((c, i) => {
+                {item.contents?.map((c, i) => {
                   return (
-                    <CardCarouselType
+                    <BasicCardCarouselType
                       key={i}
                       item={c}
                       contents={item.contents}
@@ -142,90 +60,11 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
         );
       case TESTER_DATA_TYPES.listCard:
         return (
-          <div
-            className="listCardContainer"
-            role="presentation"
-            onClick={() => onClick(item.debugMeta)}
-          >
-            <div className="listCard">
-              {item.header && (
-                <div className="header">
-                  <MultiClamp clamp={1} ellipsis={'...'}>
-                    {item.header.substring(0, 40)}
-                  </MultiClamp>
-                </div>
-              )}
-              {item.image ? (
-                <img
-                  className={
-                    item.image.imageAspectRatio === 0
-                      ? 'listCardImg_rectangle'
-                      : 'listCardImg_square'
-                  }
-                  src={item.image?.imageUrl}
-                  alt="img"
-                  onError={(e) => {
-                    handleImgOnError(e);
-                  }}
-                />
-              ) : (
-                <></>
-              )}
-              <div className="listCardContentsWrap">
-                <div className="listCardContents">
-                  {item.items.map((x, i) => {
-                    return (
-                      <div key={i} className="listCardContent">
-                        <div className="cardList">
-                          <div className="listInfo">
-                            <div className="infoTitle">
-                              <MultiClamp clamp={2} ellipsis={'...'}>
-                                {x.title.substring(0, 60)}
-                              </MultiClamp>
-                            </div>
-                            <div className="infoDesc">
-                              <MultiClamp clamp={1} ellipsis={'...'}>
-                                {x.description.substring(0, 40)}
-                              </MultiClamp>
-                            </div>
-                          </div>
-                          <div className="listImg">
-                            <img
-                              src={x.image?.imageUrl}
-                              alt="img"
-                              onError={(e) => {
-                                handleImgOnError(e);
-                              }}
-                            />
-                          </div>
-                        </div>
-                        {item.items.length - 1 === i ? <Space /> : <Divider />}
-                      </div>
-                    );
-                  })}
-                  {item.image?.imageUrl && item.buttons.length > 0 ? (
-                    <div
-                      className={
-                        item.image?.imageAspectRatio === 0
-                          ? 'rectangleImageBtn'
-                          : 'squareImageBtn'
-                      }
-                    >
-                      {item.buttons?.map((v, i) => {
-                        return <TesterMessagesItemButton key={i} item={v} />;
-                      })}
-                    </div>
-                  ) : (
-                    <div className="rectangleImageBtn">
-                      {item.buttons?.map((v, i) => {
-                        return <TesterMessagesItemButton key={i} item={v} />;
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+          <ListCardType
+            item={item}
+            onClick={onClick}
+            handleImgOnError={handleImgOnError}
+          />
         );
       case TESTER_DATA_TYPES.listCardCarousel:
         return (
@@ -251,78 +90,11 @@ export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
         );
       case TESTER_DATA_TYPES.productCard:
         return (
-          <div
-            className="productCardContainer"
-            role="presentation"
-            onClick={() => onClick(item.debugMeta)}
-          >
-            <div className="productCard">
-              <div>
-                <img
-                  className={
-                    item.image?.imageAspectRatio === 0
-                      ? 'productCardImg_rectangle'
-                      : 'productCardImg_square'
-                  }
-                  src={item.image?.imageUrl}
-                  alt="productCardImg"
-                  onError={(e) => {
-                    handleImgOnError(e);
-                  }}
-                />
-              </div>
-              <div className="productCardContents">
-                <div className="productCardTitle">
-                  <div className="title">
-                    <img
-                      className="icon"
-                      src={item.icon.url}
-                      alt="iconImg"
-                      onError={(e) => {
-                        handleImgOnError(e);
-                      }}
-                    />
-                    <MultiClamp clamp={1}>{item.title.substring(0, 40)}</MultiClamp>
-                  </div>
-                </div>
-                <div className="productCardPrices">
-                  {item.price?.isShowDiscount && (
-                    <>
-                      <div className="price">
-                        <p className="prevPrice">{item.price.retailDisplay}</p>
-                      </div>
-                      <div className="discount">
-                        <p className="discountAmount">{item.price.discountDisplay}</p>
-                      </div>
-                    </>
-                  )}
-                  <div className="price">
-                    <p className="currentPrice">{item.price?.mainDisplay}</p>
-                  </div>
-                </div>
-                <div className="productContents">
-                  <div className="productDesc">
-                    <MultiClamp clamp={2} ellipsis={'...'}>
-                      {item.description.substring(0, 60)}
-                    </MultiClamp>
-                  </div>
-                  {item.buttons.length > 0 ? (
-                    <div
-                      className={
-                        item.image?.imageAspectRatio === 0
-                          ? 'rectangleImageBtn'
-                          : 'squareImageBtn'
-                      }
-                    >
-                      {item.buttons?.map((v, i) => {
-                        return <TesterMessagesItemButton key={i} item={v} />;
-                      })}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductCardType
+            item={item}
+            onClick={onClick}
+            handleImgOnError={handleImgOnError}
+          />
         );
       case TESTER_DATA_TYPES.productCardCarousel:
         return (

@@ -44,6 +44,10 @@
       background-repeat: no-repeat;
       background-position: center;
       cursor: pointer;
+      img {
+        width: rem(16);
+        height: rem(16);
+      }
     }
     .refreshBtn {
       background-image: url('@assets/icons/ic_refresh_default.svg');
@@ -273,6 +277,11 @@
         display: flex;
         flex-direction: column;
 
+        &:hover {
+          border: 1px solid $primary500;
+          border-radius: rem(14);
+        }
+
         .cardImg {
           width: rem(262);
           object-fit: contain;
@@ -281,7 +290,6 @@
 
         .cardImgRectangle {
           height: rem(131);
-          border-radius: rem(13) rem(13) 0 0;
         }
 
         .onlyCardImgRectangle {
@@ -291,7 +299,6 @@
 
         .cardImgSquare {
           height: rem(262);
-          border-radius: rem(13) rem(13) 0 0;
         }
 
         .onlyCardImgSquare {
@@ -334,10 +341,6 @@
             margin-top: rem(8);
           }
         }
-
-        &:hover {
-          border: 1px solid $primary500;
-        }
       }
 
       .cardCarouselContainer {
@@ -367,7 +370,7 @@
 
           &:hover {
             border: 1px solid $primary500;
-            border-radius: rem(13);
+            border-radius: rem(14);
           }
 
           .cardCarouselImg {

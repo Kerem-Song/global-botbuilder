@@ -1,3 +1,4 @@
+import { IHasResult } from '@models';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -12,22 +13,22 @@ import { useHttp } from './../useHttp';
 export const useBotTesterClient = () => {
   const http = useHttp();
   const botTesterMutate = useMutation(async (sendMessage: ISendMessage) => {
-    const result = await http.post<ISendMessage, AxiosResponse<IBotTester>>(
+    const res = await http.post<ISendMessage, AxiosResponse<IHasResult<IBotTester>>>(
       'BotTest/Send',
       sendMessage,
     );
 
-    return result.data;
+    return res.data;
   });
 
   const refreshBotTesterMutate = useMutation(
     async (reFreshBotToken: IRefreshBotTester) => {
-      const result = await http.post<
+      const res = await http.post<
         IRefreshBotTester,
         AxiosResponse<IResponseRefreshBotTester>
       >('BotTest/Refresh', reFreshBotToken);
 
-      return result.data;
+      return res.data;
     },
   );
 

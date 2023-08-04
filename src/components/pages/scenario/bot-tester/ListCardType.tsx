@@ -1,60 +1,53 @@
 import { Divider, Space } from '@components';
-import { IListTypeCard } from '@models';
-import classNames from 'classnames';
+import { IListTypeCard, ITesterDebugMeta } from '@models';
 import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
 
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
-export interface IListCardCarouselTypeProps {
+export interface IListCardTypeProps {
   item: IListTypeCard;
+  onClick: (debugMeta?: ITesterDebugMeta) => void;
   handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
-export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
+export const ListCardType: FC<IListCardTypeProps> = ({
   item,
+  onClick,
   handleImgOnError,
 }) => {
   return (
     <div
-      className={classNames('listCard', {
-        listCardCarouselRectangleImageCard: item.image?.imageAspectRatio === 0,
-        listCardCarouselSquareImageCard: item.image?.imageAspectRatio != 0,
-      })}
+      className="listCardContainer"
+      role="presentation"
+      onClick={() => onClick(item.debugMeta)}
     >
-      {item.header && (
-        <div className="header">
-          <span>
+      <div className="listCard">
+        {item.header && (
+          <div className="header">
             <MultiClamp clamp={1} ellipsis={'...'}>
               {item.header.substring(0, 40)}
             </MultiClamp>
-          </span>
-        </div>
-      )}
-      {item.image ? (
-        <img
-          className={
-            item.image.imageAspectRatio === 0
-              ? 'listCardImg_rectangle'
-              : 'listCardImg_square'
-          }
-          src={item.image?.imageUrl}
-          alt="img"
-          onError={(e) => {
-            handleImgOnError(e);
-          }}
-        />
-      ) : (
-        <></>
-      )}
-      <div className="listCardContentsWrap">
-        <div
-          className={classNames('listCardContents', {
-            listCardCarouselRectangleImageContents: item.image?.imageAspectRatio === 0,
-            listCardCarouselSqureImageContents: item.image?.imageAspectRatio != 0,
-          })}
-        >
-          <div className="listContentsInfo">
+          </div>
+        )}
+        {item.image ? (
+          <img
+            className={
+              item.image.imageAspectRatio === 0
+                ? 'listCardImg_rectangle'
+                : 'listCardImg_square'
+            }
+            src={item.image?.imageUrl}
+            alt="img"
+            onError={(e) => {
+              handleImgOnError(e);
+            }}
+          />
+        ) : (
+          <></>
+        )}
+        <div className="listCardContentsWrap">
+          <div className="listCardContents">
             {item.items.map((x, i) => {
               return (
                 <div key={i} className="listCardContent">
@@ -85,8 +78,6 @@ export const ListCardCarouselType: FC<IListCardCarouselTypeProps> = ({
                 </div>
               );
             })}
-          </div>
-          <div>
             {item.image?.imageUrl && item.buttons.length > 0 ? (
               <div
                 className={

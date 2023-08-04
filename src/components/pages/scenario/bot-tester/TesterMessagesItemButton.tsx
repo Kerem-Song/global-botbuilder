@@ -4,8 +4,8 @@ import {
   IHasClassNameNStyle,
   IQuickRepliesContent,
   ISendMessage,
+  ITesterButton,
   ITesterDataType,
-  ITesterQuickReply,
   TESTER_DATA_TYPES,
 } from '@models';
 import { setTesterData } from '@store/botTesterSlice';
@@ -14,7 +14,7 @@ import MultiClamp from 'react-multi-clamp';
 import { useDispatch } from 'react-redux';
 
 export interface TesterMessagesItemButtonProps extends IHasClassNameNStyle {
-  item: ITesterQuickReply;
+  item: ITesterButton;
   card?: boolean;
   cardCarousel?: boolean;
   productCardCarousel?: boolean;
@@ -35,19 +35,19 @@ export const TesterMessagesItemButton = ({
 
   const handleNodeUrl = async () => {
     const replyNodeLink: ITesterDataType = {
-      value: item.label!,
+      value: item.label,
       isMe: true,
       type: 'text',
     };
     dispatch(setTesterData([replyNodeLink]));
 
     const sendLunaNodeLink: ISendMessage = {
-      sessionToken: token!,
+      sessionToken: token,
       lunaMessage: {
         id: 'lunaNodeLink',
         postback: item.postback,
         lunaNode: {
-          value: lunaNodeLink!,
+          value: lunaNodeLink,
         },
       },
     };
@@ -69,18 +69,18 @@ export const TesterMessagesItemButton = ({
 
   const handleActValueIsUttr = async () => {
     const actValueIsUttr: ITesterDataType = {
-      value: item.postback.actValueIsUttr!,
+      value: item.postback.actValueIsUttr,
       isMe: true,
       type: 'text',
     };
     dispatch(setTesterData([actValueIsUttr]));
 
     const sendActValueIsUttr: ISendMessage = {
-      sessionToken: token!,
+      sessionToken: token,
       lunaMessage: {
         id: 'actValueIsUttr',
         utterance: {
-          value: item.postback.actValueIsUttr!,
+          value: item.postback.actValueIsUttr,
         },
         postback: item.postback,
       },
@@ -103,18 +103,18 @@ export const TesterMessagesItemButton = ({
 
   const handlelblIsUttr = async () => {
     const lblIsUttr: ITesterDataType = {
-      value: item.label!,
+      value: item.label,
       isMe: true,
       type: 'text',
     };
     dispatch(setTesterData([lblIsUttr]));
 
     const sendlblIsUttr: ISendMessage = {
-      sessionToken: token!,
+      sessionToken: token,
       lunaMessage: {
         id: 'lblIsUttr',
         utterance: {
-          value: item.label!,
+          value: item.label,
         },
         postback: item.postback,
       },

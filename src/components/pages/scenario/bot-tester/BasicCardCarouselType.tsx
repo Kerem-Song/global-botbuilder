@@ -1,4 +1,4 @@
-import { ITesterCard } from '@models';
+import { IBasicCard } from '@models';
 import classNames from 'classnames';
 import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
@@ -6,21 +6,23 @@ import MultiClamp from 'react-multi-clamp';
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
 export interface ICardCarouselTypeProps {
-  item: ITesterCard;
-  contents: ITesterCard[];
+  item: IBasicCard;
+  contents: IBasicCard[];
   handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
-export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
+export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
   item,
   contents,
   handleImgOnError,
 }) => {
   const isRectangleImage = item.image?.imageAspectRatio != 1;
-  const hasButtons = item.buttons.length > 0;
-  const onlyCardCarouselImage = contents.every(
-    (x) => x.title.length === 0 && x.contentText?.length === 0 && x.buttons.length === 0,
-  );
+  const hasButtons = item.buttons && item.buttons.length > 0;
+  const onlyCardCarouselImage = contents.every((x) => {
+    if (x.title && x.buttons) {
+      x.title.length === 0 && x.contentText?.length === 0 && x.buttons.length === 0;
+    }
+  });
   return (
     <div
       className={classNames('cardCarousel', {
@@ -59,7 +61,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           <div>
             <div className="cardCarouselTitle">
               <MultiClamp clamp={2} ellipsis={'...'}>
-                {item.title.substring(0, 40)}
+                {item.title?.substring(0, 40)}
               </MultiClamp>
             </div>
             <div className="cardCarouselDesc">
@@ -68,7 +70,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           </div>
           <div className={hasButtons ? 'hasBtns' : undefined}>
             <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
-              {item.buttons.map((v, i) => {
+              {item.buttons?.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;
               })}
             </div>
@@ -84,7 +86,7 @@ export const CardCarouselType: FC<ICardCarouselTypeProps> = ({
           })}
         >
           <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
-            {item.buttons.map((v, i) => (
+            {item.buttons?.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
             ))}
           </div>

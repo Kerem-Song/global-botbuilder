@@ -1,4 +1,4 @@
-import { ITesterCard } from '@models';
+import { IProductCard } from '@models';
 import classNames from 'classnames';
 import { FC, SyntheticEvent } from 'react';
 import MultiClamp from 'react-multi-clamp';
@@ -6,7 +6,7 @@ import MultiClamp from 'react-multi-clamp';
 import { TesterMessagesItemButton } from './TesterMessagesItemButton';
 
 export interface IProductCardCarouselTypeProps {
-  item: ITesterCard;
+  item: IProductCard;
   handleImgOnError: (e: SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
@@ -47,7 +47,7 @@ export const ProductCardCarouselType: FC<IProductCardCarouselTypeProps> = ({
                   handleImgOnError(e);
                 }}
               />
-              <MultiClamp clamp={1}>{item.title.substring(0, 40)}</MultiClamp>
+              <MultiClamp clamp={1}>{item.title?.substring(0, 40)}</MultiClamp>
             </div>
           </div>
           <div className="productCardCarouselWrap">
@@ -74,7 +74,7 @@ export const ProductCardCarouselType: FC<IProductCardCarouselTypeProps> = ({
             >
               <div className="productDesc">
                 <MultiClamp clamp={2} ellipsis={'...'}>
-                  {item.description.substring(0, 60)}
+                  {item.description?.substring(0, 60)}
                 </MultiClamp>
               </div>
             </div>

@@ -72,7 +72,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     };
 
     const sendMessage: ISendMessage = {
-      sessionToken: token!,
+      sessionToken: token,
       lunaMessage: {
         id: 'utterance',
         utterance: {
