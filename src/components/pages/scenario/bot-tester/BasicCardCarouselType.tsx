@@ -16,7 +16,7 @@ export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
   contents,
   handleImgOnError,
 }) => {
-  const isRectangleImage = item.image?.imageAspectRatio != 1;
+  const isSquareImage = item.image?.imageAspectRatio === 1;
   const hasButtons = item.buttons && item.buttons.length > 0;
   const onlyCardCarouselImage = contents.every((x) => {
     if (x.title && x.buttons) {
@@ -26,22 +26,22 @@ export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
   return (
     <div
       className={classNames('cardCarousel', {
-        rectangleImageCardCarousel: isRectangleImage,
-        squareImageCardCarousel: !isRectangleImage,
+        squareImageCardCarousel: isSquareImage,
+        rectangleImageCardCarousel: !isSquareImage,
       })}
     >
-      <div
-        className={
-          isRectangleImage ? 'cardCarouselRectangleImgWrap' : 'cardCarouselSquareImgWrap'
-        }
-      >
-        {item.image && (
+      {item.image && (
+        <div
+          className={
+            isSquareImage ? 'cardCarouselSquareImgWrap' : 'cardCarouselRectangleImgWrap'
+          }
+        >
           <img
             className={classNames('cardCarouselImg', {
-              cardCarouselImgRectangle: !onlyCardCarouselImage && isRectangleImage,
-              onlyCardCarouselImgRectangle: onlyCardCarouselImage && isRectangleImage,
-              cardCarouselImgSquare: !onlyCardCarouselImage && !isRectangleImage,
-              onlyCardCarouselImgSquare: onlyCardCarouselImage && !isRectangleImage,
+              cardCarouselImgSquare: !onlyCardCarouselImage && isSquareImage,
+              onlyCardCarouselImgSquare: onlyCardCarouselImage && isSquareImage,
+              cardCarouselImgRectangle: !onlyCardCarouselImage && !isSquareImage,
+              onlyCardCarouselImgRectangle: onlyCardCarouselImage && !isSquareImage,
             })}
             src={item.image.imageUrl}
             alt="cardCarouselImg"
@@ -49,13 +49,13 @@ export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
               handleImgOnError(e);
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
       {item.title || item.contentText ? (
         <div
           className={classNames('cardCarouselContents', {
-            rectangleImageContents: isRectangleImage,
-            squareImageContents: !isRectangleImage,
+            squareImageContents: isSquareImage,
+            rectangleImageContents: !isSquareImage,
           })}
         >
           <div>
@@ -69,7 +69,7 @@ export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
             </div>
           </div>
           <div className={hasButtons ? 'hasBtns' : undefined}>
-            <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
+            <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
               {item.buttons?.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;
               })}
@@ -79,13 +79,13 @@ export const BasicCardCarouselType: FC<ICardCarouselTypeProps> = ({
       ) : (
         <div
           className={classNames('cardCarouselContents', {
-            rectangleImageContents: !onlyCardCarouselImage && isRectangleImage,
-            onlyRectangleImageContents: onlyCardCarouselImage && isRectangleImage,
-            squareImageContents: !onlyCardCarouselImage && !isRectangleImage,
-            onlySquareImageContents: onlyCardCarouselImage && !isRectangleImage,
+            squareImageContents: !onlyCardCarouselImage && isSquareImage,
+            onlySquareImageContents: onlyCardCarouselImage && isSquareImage,
+            rectangleImageContents: !onlyCardCarouselImage && !isSquareImage,
+            onlyRectangleImageContents: onlyCardCarouselImage && !isSquareImage,
           })}
         >
-          <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
+          <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
             {item.buttons?.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
             ))}

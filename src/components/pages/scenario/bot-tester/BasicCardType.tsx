@@ -16,7 +16,7 @@ export const BasicCardType: FC<IBasicCardTypeProps> = ({
   onClick,
   handleImgOnError,
 }) => {
-  const isRectangleImage = item.image?.imageAspectRatio !== 1;
+  const isSquareImage = item.image?.imageAspectRatio === 1;
   const hasButtons = item.buttons && item.buttons.length > 0;
   const onlyCardImage =
     item.title?.length === 0 &&
@@ -32,10 +32,10 @@ export const BasicCardType: FC<IBasicCardTypeProps> = ({
       {item.image && (
         <img
           className={classNames('cardImg', {
-            cardImgRectangle: !onlyCardImage && isRectangleImage,
-            onlyCardImgRectangle: onlyCardImage && isRectangleImage,
-            cardImgSquare: !onlyCardImage && !isRectangleImage,
-            onlyCardImgSquare: onlyCardImage && !isRectangleImage,
+            cardImgSquare: !onlyCardImage && isSquareImage,
+            onlyCardImgSquare: onlyCardImage && isSquareImage,
+            cardImgRectangle: !onlyCardImage && !isSquareImage,
+            onlyCardImgRectangle: onlyCardImage && !isSquareImage,
           })}
           src={item.image.imageUrl}
           alt="cardCarouselImg"
@@ -47,8 +47,8 @@ export const BasicCardType: FC<IBasicCardTypeProps> = ({
       {item.title || item.contentText ? (
         <div
           className={classNames('cardContents', {
-            rectangleImageContents: isRectangleImage,
-            squareImageContents: !isRectangleImage,
+            squareImageContents: isSquareImage,
+            rectangleImageContents: !isSquareImage,
           })}
         >
           <div>
@@ -60,7 +60,7 @@ export const BasicCardType: FC<IBasicCardTypeProps> = ({
             <div className="cardContentDesc">{item.contentText?.substring(0, 230)}</div>
           </div>
           <div className={hasButtons ? 'hasBtns' : undefined}>
-            <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
+            <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
               {item.buttons?.map((v, i) => {
                 return <TesterMessagesItemButton key={i} item={v} />;
               })}
@@ -70,13 +70,13 @@ export const BasicCardType: FC<IBasicCardTypeProps> = ({
       ) : (
         <div
           className={classNames('cardContents', {
-            rectangleImageContents: !onlyCardImage && isRectangleImage,
-            onlyRectangleImageContents: onlyCardImage && isRectangleImage,
-            squareImageContents: !onlyCardImage && !isRectangleImage,
-            onlySquareImageContents: onlyCardImage && !isRectangleImage,
+            squareImageContents: !onlyCardImage && isSquareImage,
+            onlySquareImageContents: onlyCardImage && isSquareImage,
+            rectangleImageContents: !onlyCardImage && !isSquareImage,
+            onlyRectangleImageContents: onlyCardImage && !isSquareImage,
           })}
         >
-          <div className={isRectangleImage ? 'rectangleImageBtn' : 'squareImageBtn'}>
+          <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
             {item.buttons?.map((v, i) => (
               <TesterMessagesItemButton key={i} item={v} />
             ))}

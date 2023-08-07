@@ -15,6 +15,7 @@ export const ProductCardType: FC<IProductCardTypeProps> = ({
   onClick,
   handleImgOnError,
 }) => {
+  const isSquareImage = item.image?.imageAspectRatio === 1;
   return (
     <div
       className="productCardContainer"
@@ -25,9 +26,7 @@ export const ProductCardType: FC<IProductCardTypeProps> = ({
         <div>
           <img
             className={
-              item.image?.imageAspectRatio === 0
-                ? 'productCardImg_rectangle'
-                : 'productCardImg_square'
+              isSquareImage ? 'productCardImg_square' : 'productCardImg_rectangle'
             }
             src={item.image?.imageUrl}
             alt="productCardImg"
@@ -72,13 +71,7 @@ export const ProductCardType: FC<IProductCardTypeProps> = ({
               </MultiClamp>
             </div>
             {item.buttons.length > 0 ? (
-              <div
-                className={
-                  item.image?.imageAspectRatio === 0
-                    ? 'rectangleImageBtn'
-                    : 'squareImageBtn'
-                }
-              >
+              <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
                 {item.buttons?.map((v, i) => {
                   return <TesterMessagesItemButton key={i} item={v} />;
                 })}
