@@ -395,9 +395,7 @@ export interface IDataProductCardView extends IProductCardTemplateView, IDataCar
 export interface IDataListCardView extends IListCardView, IDataCardView {}
 
 export interface ICSCenterSceneView extends IViewBase {
-  isLive: boolean;
-  isConsult: boolean;
-  inquiryType: string;
+  sceneType: { SceneType: number };
 }
 
 export interface IParameterClearCardView extends IViewBase {

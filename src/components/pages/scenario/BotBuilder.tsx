@@ -375,7 +375,7 @@ export const Botbuilder = () => {
   return (
     <>
       <div
-        tabIndex={0}
+        tabIndex={-1}
         className="botBuilderMain"
         //onWheel={outterMouseWheelHandler}
         onMouseDown={handleCanvasClick}

@@ -398,9 +398,7 @@ export const nodeDefaultHelper = {
     const result: ICSCenterSceneView = {
       id: ID_GEN.generate(ID_TYPES.VIEW),
       typeName: VIEW_TYPES.CS_CENTER_SCENE_VIEW,
-      isConsult: true,
-      isLive: true,
-      inquiryType: '',
+      sceneType: { SceneType: 1 },
     };
     return result;
   },
