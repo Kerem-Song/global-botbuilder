@@ -16,8 +16,9 @@ i18next.use(LanguageDetector).init({
   },
   supportedLngs,
   detection: {
-    order: ['path', 'navigator'],
+    order: ['localStorage', 'path', 'navigator'],
     //order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+    lookupLocalStorage: 'i18nextLng',
   },
   resources: {
     ko,
