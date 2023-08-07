@@ -16,6 +16,7 @@ export const ListCardType: FC<IListCardTypeProps> = ({
   onClick,
   handleImgOnError,
 }) => {
+  const isSquareImage = item.image?.imageAspectRatio === 1;
   return (
     <div
       className="listCardContainer"
@@ -32,11 +33,7 @@ export const ListCardType: FC<IListCardTypeProps> = ({
         )}
         {item.image ? (
           <img
-            className={
-              item.image.imageAspectRatio === 0
-                ? 'listCardImg_rectangle'
-                : 'listCardImg_square'
-            }
+            className={isSquareImage ? 'listCardImg_square' : 'listCardImg_rectangle'}
             src={item.image?.imageUrl}
             alt="img"
             onError={(e) => {
@@ -79,13 +76,7 @@ export const ListCardType: FC<IListCardTypeProps> = ({
               );
             })}
             {item.image?.imageUrl && item.buttons.length > 0 ? (
-              <div
-                className={
-                  item.image?.imageAspectRatio === 0
-                    ? 'rectangleImageBtn'
-                    : 'squareImageBtn'
-                }
-              >
+              <div className={isSquareImage ? 'squareImageBtn' : 'rectangleImageBtn'}>
                 {item.buttons?.map((v, i) => {
                   return <TesterMessagesItemButton key={i} item={v} />;
                 })}

@@ -234,16 +234,10 @@
 
             .productContents {
               padding-top: rem(8);
-              &.productCarouselContents {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-              }
-              &.productCarouselRectangleImageContents {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-              }
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+
               .productDesc {
                 display: flex;
                 padding-bottom: rem(8);
