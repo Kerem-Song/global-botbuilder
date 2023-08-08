@@ -13,10 +13,10 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
 
   const isAdministrator = staffType === StaffType.Administrator && role === 0;
   const isManager = staffType === StaffType.Manager;
-  const isRoleValid = role !== undefined && role <= 114;
+  const isRoleInvalidSetting = role !== undefined && role <= 114;
 
   const handleOnClickAuth = async () => {
-    if (isManager || (!isAdministrator && isRoleValid)) {
+    if (isManager || (!isAdministrator && isRoleInvalidSetting)) {
       await error({
         title: tc(`NEW_BOT_CARD_AUTH_ERROR_TITLE`),
         description: (
@@ -37,12 +37,14 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
       bordered={false}
       onClick={handleOnClickAuth}
       className={classNames('new-chatbot', {
-        disabled: isManager || (!isAdministrator && isRoleValid),
+        disabled: isManager || (!isAdministrator && isRoleInvalidSetting),
       })}
     >
       <div className="title">
         <img
-          src={isManager || (!isAdministrator && isRoleValid) ? icAddDisable : icAdd}
+          src={
+            isManager || (!isAdministrator && isRoleInvalidSetting) ? icAddDisable : icAdd
+          }
           alt="add"
         />
         <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
@@ -53,7 +55,9 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
             d="M 7 0 L 7 14 M 0 7 L 14 7"
             strokeWidth={2}
             stroke={
-              isManager || (!isAdministrator && isRoleValid) ? '#929292' : '#6993FF'
+              isManager || (!isAdministrator && isRoleInvalidSetting)
+                ? '#929292'
+                : '#6993FF'
             }
             fill="none"
           />

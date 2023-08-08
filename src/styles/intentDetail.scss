@@ -127,6 +127,9 @@
           font-size: rem(16);
           line-height: rem(19.2);
           color: $primary500;
+          &.emptyUtterance {
+            color: $gray300;
+          }
         }
       }
       .icDelete {
