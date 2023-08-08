@@ -50,7 +50,7 @@
     "DEFAULT_LBL_BUTTON": "버튼",
     "DEFAULT_LBL_QUICKREPLY": "Quick Reply",
     "NEW_BOT_CARD_AUTH_ERROR_TITLE": "봇 생성 권한 없음",
-    "NEW_BOT_CARD_AUTH_ERROR_DESC": "봇 생성하기는 마스터 권한 이상만 가능합니다."
+    "NEW_BOT_CARD_AUTH_ERROR_DESC": "봇 생성하기는 마스터 권한 이상만 가능하며,\n설정 권한을 갖고 있어야 합니다."
   },
   "DASHBOARD": {
     "TITLE": "홈페이지",
