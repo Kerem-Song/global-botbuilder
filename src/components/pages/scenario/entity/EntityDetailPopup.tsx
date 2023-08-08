@@ -174,7 +174,6 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       overlayClassName="entityPopupOverlay"
       className="entityModal detail node-draggable-ignore"
       isOpen={isOpenEntityDetailPopup}
-      onRequestClose={handleResetEntryInfo}
       shouldCloseOnOverlayClick={false}
     >
       <div className="detail">
