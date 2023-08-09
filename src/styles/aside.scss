@@ -138,11 +138,6 @@ aside {
         align-items: center;
         border-radius: rem(6);
 
-        // img {
-        //   width: rem(40);
-        //   height: rem(40);
-        // }
-
         &::after {
           display: none;
         }
@@ -173,21 +168,16 @@ aside {
       border-radius: rem(4);
       background-color: $gray100;
 
-      &.selected {
-        // background-color: $grayBlack;
-      }
-      
       .botProfileImg {
         display: flex;
         align-items: center;
         border: rem(1) solid $gray200;
-        border-radius: rem(8);
         background-color: $grayWhite;
 
         img {
-          border-radius: rem(8);
+          border-radius: rem(6);
         }
-        
+
         &:has(.altImg) {
           padding: rem(8);
         }
@@ -297,24 +287,16 @@ aside {
         background-color: $primary100;
         color: $grayWhite;
       }
-
-      .desc {
-        padding-left: rem(16);
-        font-size: rem(16);
-      }
     }
 
     .partnerLnbBtn {
-      display: flex;
-      align-items: center;
       margin : {
         top: rem(12);
         bottom: rem(28)
       }
-      padding: rem(10);
+      padding: rem(12);
       height: rem(56);
-      border: rem(1) solid $gray200 ;
-      border-radius: rem(6);
+      border: rem(1) solid $gray200;
       background-color: $grayWhite;
 
       .desc {
@@ -333,9 +315,7 @@ aside {
       }
       
       &[data-sidebar='true'] {
-        justify-content: start;
-        text-align: center;
-        padding: rem(16);
+        // padding: rem(16);
 
         .partnersCenterImg {
           margin-right: rem(4);
@@ -380,17 +360,6 @@ aside {
 
   &[data-sidebar='true'] {
     margin: rem(20) rem(16);
-
-    li {
-      padding: rem(16);
-      height: rem(56);
-      border-radius: rem(4);
-
-      .desc {
-        padding-left: rem(16);
-        font-size: rem(16);
-      }
-    }
   }
 }
 
@@ -430,10 +399,9 @@ nav {
     }
 
     .desc {
-      padding-left: rem(5);
       height: rem(19);
       color: $gray500;
-      font-size: rem(13);
+      font-size: rem(16);
       font-weight: 500;
     }
   }
@@ -445,11 +413,11 @@ nav {
   box-shadow: rgba(0, 0, 0, 0.25) 4px 0 4px;
 
   .desc {
+    padding-left: rem(16);
     visibility: visible;
     opacity: 1;
     overflow: hidden;
     transition: opacity 0.3s linear;
-    color: $gray500;
   }
 
   .chatbotName {
