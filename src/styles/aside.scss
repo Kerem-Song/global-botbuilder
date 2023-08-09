@@ -134,7 +134,6 @@ aside {
 
       div {
         display: flex;
-        justify-content: center;
         align-items: center;
         border-radius: rem(6);
 
@@ -150,6 +149,7 @@ aside {
       }
 
       .headerName {
+        padding: 0 rem(8);
         background-color: $grayWhite;
       }
     }

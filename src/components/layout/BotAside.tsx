@@ -1,11 +1,4 @@
-import {
-  icBotProfile,
-  icLine,
-  icLnbHide,
-  icLnbShow,
-  icPartnersCenter,
-} from '@assets/index';
-import { Col, Row } from '@components';
+import { icBotProfile, icLine, icLnbHide, icLnbShow } from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient, useI18n, useRootState } from '@hooks';
@@ -94,8 +87,6 @@ export const BotAside = () => {
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
   });
-
-  console.log('@url', botInfo?.iconUrl);
 
   return (
     <aside className={css} ref={sidebarRef}>
