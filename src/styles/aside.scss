@@ -178,10 +178,16 @@ aside {
       }
       
       .botProfileImg {
+        display: flex;
+        align-items: center;
         border: rem(1) solid $gray200;
         border-radius: rem(8);
         background-color: $grayWhite;
 
+        img {
+          border-radius: rem(8);
+        }
+        
         &:has(.altImg) {
           padding: rem(8);
         }
