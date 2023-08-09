@@ -46,8 +46,6 @@ export const BotAside = () => {
     setPage(pageName);
   }, [location.pathname]);
 
-  console.log('role, staffType', role, staffType);
-
   const botList: IPopperSelectItem<{ action: (id: string) => void }>[] = [
     ...(data
       ? data.slice(0, 3).map((x) => {
@@ -125,7 +123,7 @@ export const BotAside = () => {
         <Popper
           className="lnbHeaderBotNamePopper"
           placement="right-start"
-          offset={[10, -10]}
+          offset={[0, -5]}
           popup
           popupList
           popperSelect={botList}
@@ -166,7 +164,7 @@ export const BotAside = () => {
                     key={item.id}
                     tooltip={ts(item.desc)}
                     placement="bottom-start"
-                    offset={[10, 0]}
+                    offset={[59, -43]}
                     disable={sidebarStatus}
                   >
                     <NavLink
