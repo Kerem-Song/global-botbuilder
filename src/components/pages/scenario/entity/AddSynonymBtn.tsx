@@ -111,12 +111,9 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
                 searchKeyword,
               )}
             </span>
-            <Button
-              shape="ghost"
-              className="synonymDeleteBtn"
-              onClick={() => handleDelete(i)}
-              icon={icPopupClose}
-            />
+            <button className="synonymDeleteBtn" onClick={() => handleDelete(i)}>
+              <img src={icPopupClose} alt="delete button"></img>
+            </button>
           </div>
         );
       })}

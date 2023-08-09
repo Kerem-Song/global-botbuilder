@@ -73,7 +73,11 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
       <Space direction="horizontal">
         <span className="title">
           {t('UTTERANCE')}{' '}
-          <span className="utteranceLength">
+          <span
+            className={classNames('utteranceLength', {
+              emptyUtterance: watch('items').length === 0 || !filterKeyword.length,
+            })}
+          >
             {filterKeyword ? filterKeyword.length : watch('items').length}
           </span>
         </span>

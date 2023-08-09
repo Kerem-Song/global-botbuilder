@@ -27,12 +27,9 @@ export const IntentInfo: FC<IIntentGroupInfoProps> = ({
   setIsActive,
   isOpenUtteranceDetailPopup,
 }) => {
-  const { i18n } = useI18n();
   const { t } = useI18n('IntentDetailPage');
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-
-  const language = i18n.language;
   const [totalScenarioList, setTotalScenarioList] = useState<IReactSelect[]>();
   const {
     control,
@@ -65,7 +62,7 @@ export const IntentInfo: FC<IIntentGroupInfoProps> = ({
 
       setTotalScenarioList(total);
     }
-  }, [language, isOpenUtteranceDetailPopup]);
+  }, [data, isOpenUtteranceDetailPopup]);
 
   useEffect(() => {
     if (nameField.value === '' && intentNameRef.current) {
