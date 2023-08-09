@@ -50,7 +50,7 @@ export const Aside = () => {
   return (
     <aside className={css} ref={sidebarRef}>
       <div className="mainMenuWrapper">
-        <div className="expand">
+        <div className="expand" data-sidebar={sidebarStatus}>
           <button
             className="lnbBtn"
             onClick={handleSidebar}
@@ -63,17 +63,12 @@ export const Aside = () => {
             )}
           </button>
         </div>
-        <div className="partnerLnbHeader" data-sidebar={sidebarStatus}>
-          <a href={`https://partnerscenter.lunacode.dev/${brandId}/dashboard`}>
-            {sidebarStatus ? (
-              <p className="headerName">{ts('PARTNERS_CENTER')}</p>
-            ) : (
-              <div>
-                <img src={icBrandNameSelected} alt="icChatbot" />
-              </div>
-            )}
-          </a>
-        </div>
+        <NavLink to={`/${i18n.language}/${brandId}/dashboard`}>
+          <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
+            <div className="chatbotBuilderImg"></div>
+            {sidebarStatus ? <span>Chatbot Builder</span> : null}
+          </div>
+        </NavLink>
       </div>
 
       <div className="subMenuWrapper">
@@ -99,6 +94,14 @@ export const Aside = () => {
                 </NavLink>
               );
             })}
+            <a href={`https://partnerscenter.lunacode.dev/${brandId}/dashboard`}>
+              <li className="partnerLnbBtn">
+                <span className="menuImg partnersCenterImg">
+                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
+                </span>
+                {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
+              </li>
+            </a>
           </ul>
         </nav>
       </div>

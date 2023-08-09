@@ -4,6 +4,7 @@ import icAddDisable from '@assets/icons/ic_add_disable.svg';
 import icApiRequest from '@assets/icons/ic_api_request.svg';
 import icBackActive from '@assets/icons/ic_back_active.svg';
 import icBackInactive from '@assets/icons/ic_back_inactive.svg';
+import icBotProfile from '@assets/icons/ic_bot_profile.svg';
 import icBrandName from '@assets/icons/ic_brand_name_default.svg';
 import icBrandNameSelected from '@assets/icons/ic_brand_name_selected.svg';
 import icBtnTemple from '@assets/icons/ic_btn_temple.svg';
@@ -27,6 +28,7 @@ import icCarouselNextInactive from '@assets/icons/ic_carousel_next_inactive.svg'
 import icCarouselPrevActive from '@assets/icons/ic_carousel_prev_active.svg';
 import icCarouselPrevInactive from '@assets/icons/ic_carousel_prev_inactive.svg';
 import icChatbot from '@assets/icons/ic_chatbot.svg';
+import icChatbotBuilder from '@assets/icons/ic_chatbot_builder.svg';
 import icCheck from '@assets/icons/ic_check.svg';
 import icClosed from '@assets/icons/ic_closed_default.svg';
 import icClosedHover from '@assets/icons/ic_closed_hover.svg';
@@ -84,6 +86,7 @@ import icNode from '@assets/icons/ic_node.svg';
 import icNodeBottom from '@assets/icons/ic_node_bottom.svg';
 import icOtherFlowRedirect from '@assets/icons/ic_other_flow_redirect.svg';
 import icOtherFlowRedirectHover from '@assets/icons/ic_other_flow_redirect_hover.svg';
+import icPartnersCenter from '@assets/icons/ic_partners_center.svg';
 import icPaste from '@assets/icons/ic_paste.svg';
 import icPen from '@assets/icons/ic_pen.svg';
 import icPenActive from '@assets/icons/ic_pen_active.svg';
@@ -161,6 +164,7 @@ export {
   icApiRequest,
   icBackActive,
   icBackInactive,
+  icBotProfile,
   icBrandName,
   icBrandNameSelected,
   icBtnTemple,
@@ -184,6 +188,7 @@ export {
   icCarouselPrevActive,
   icCarouselPrevInactive,
   icChatbot,
+  icChatbotBuilder,
   icCheck,
   icClosed,
   icClosedHover,
@@ -244,6 +249,7 @@ export {
   icOtherFlowRedirect,
   icOtherFlowRedirectHover,
   icParameterClear,
+  icPartnersCenter,
   icPaste,
   icPen,
   icPenActive,

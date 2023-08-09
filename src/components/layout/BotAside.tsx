@@ -1,4 +1,11 @@
-import { icChatbot, icLine, icLnbHide, icLnbShow } from '@assets/index';
+import {
+  icBotProfile,
+  icLine,
+  icLnbHide,
+  icLnbShow,
+  icPartnersCenter,
+} from '@assets/index';
+import { Col, Row } from '@components';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient, useI18n, useRootState } from '@hooks';
@@ -90,10 +97,12 @@ export const BotAside = () => {
     dispatch(setSidebarClose());
   });
 
+  console.log('@url', botInfo?.iconUrl);
+
   return (
     <aside className={css} ref={sidebarRef}>
       <div className="mainMenuWrapper">
-        <div className="expand">
+        <div className="expand" data-sidebar={sidebarStatus}>
           <button
             className="lnbBtn"
             onClick={handleSidebar}
@@ -108,23 +117,15 @@ export const BotAside = () => {
         </div>
 
         <NavLink to={`/${i18n.language}/${brandInfo.brandId}/dashboard`}>
-          <div className="brandName" data-sidebar={sidebarStatus}>
-            {sidebarStatus ? (
-              <p>
-                {brandInfo.brandName}{' '}
-                <span className="chatbotList">{ts(`CHATBOT_LIST`)}</span>
-              </p>
-            ) : (
-              <div className="brandNameWrapper">
-                <div className="brandNameImg" />
-              </div>
-            )}
+          <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
+            <div className="chatbotBuilderImg"></div>
+            {sidebarStatus ? <span>Chatbot Builder</span> : null}
           </div>
         </NavLink>
         <Popper
           className="lnbHeaderBotNamePopper"
           placement="right-start"
-          offset={[10, -10]}
+          offset={[20, -10]}
           showBullet
           popup
           popupList
@@ -135,13 +136,25 @@ export const BotAside = () => {
           selectedId={botId}
         >
           <div className="lnbHeader" data-sidebar={sidebarStatus}>
-            {sidebarStatus ? (
-              <p className="headerName"> {botInfo?.botName}</p>
-            ) : (
-              <div>
-                <img src={icChatbot} alt="icChatbot" />
-              </div>
-            )}
+            <div
+              className={classNames('headerName')}
+              role="presentation"
+              onClick={(e) => (e.currentTarget.className = 'headerName selected')}
+            >
+              <div className="botProfileImg">
+                {botInfo?.iconUrl ? (
+                  <img src={botInfo.iconUrl} alt="icBotProfile" />
+                ) : (
+                  <img src={icBotProfile} alt="icBotProfile" className="altImg" />
+                )}
+              </div>{' '}
+              {sidebarStatus ? (
+                <div>
+                  <p className="botName">{botInfo?.botName}</p>
+                  <p className="brandName">{brandInfo.brandName}</p>{' '}
+                </div>
+              ) : null}
+            </div>
           </div>
         </Popper>
         <nav className="mainNav" data-sidebar={sidebarStatus}>
@@ -182,7 +195,7 @@ export const BotAside = () => {
           </ul>
         </nav>
       </div>
-      <div className="subMenuWrapper">
+      <div className="subMenuWrapper" data-sidebar={sidebarStatus}>
         <nav className="subMenu">
           <ul>
             {menuModule.subMenu
@@ -215,6 +228,16 @@ export const BotAside = () => {
                   </NavLink>
                 );
               })}
+            <a
+              href={`https://partnerscenter.lunacode.dev/${brandInfo.brandId}/dashboard`}
+            >
+              <li className="partnerLnbBtn">
+                <span className="menuImg partnersCenterImg">
+                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
+                </span>
+                {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
+              </li>
+            </a>
           </ul>
         </nav>
       </div>

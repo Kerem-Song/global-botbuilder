@@ -2,7 +2,7 @@
 @use 'sass:color';
 
 $defaultSize: 16;
-$asideSize: 54;
+$asideSize: 72;
 $headerSize: 46;
 $background: #f7f7fa;
 
@@ -25,10 +25,12 @@ $gray200: #dcdcdc;
 $gray250: #b5b4b4;
 $gray300: #929292;
 $gray500: #636364;
+$gray600: #494949;
 $gray700: #323232;
+$gray800: #272727;
 $grayDim: rgba(0, 0, 0, 0.5);
 $grayBG: #f7f7fa;
-$grayAside: #282828;
+$grayAside: #FFF;
 $graySelected: #151515;
 $grayWhite: #ffffff;
 

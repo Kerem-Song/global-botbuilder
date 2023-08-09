@@ -11,28 +11,61 @@ aside {
 
   width: rem($asideSize);
   height: 100%;
-  color: $grayWhite;
+  color: $grayBlack;
   background-color: $grayAside;
   overflow: hidden;
+  border-right: rem(1) solid $gray200;
 
   .expand {
-    height: rem(44);
-    padding: rem(10) rem(15);
+    display: flex;
+    padding: {
+      top: rem(20);
+    };
+
+    &[data-sidebar='true'] {
+      justify-content: right;
+      padding-right: rem(16);
+
+      .lnbBtn {
+        margin: 0;
+      }
+    }
+
     .lnbBtn {
       margin: auto;
-      width: rem(24);
-      height: rem(24);
+      width: rem(28);
+      height: rem(28);
+      border: rem(1) solid $gray200;
+      border-radius: rem(8);
+      background-color: $grayWhite;
+      
+      img {
+        position: absolute;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 
-  .brandName {
-    text-align: center;
+  .chatbotBuilderTitle {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: rem(12);
+    padding: rem(16) rem(32);
+    font-size: rem(20);
+    font-weight: 700;
 
-    &:hover {
-      background-color: $grayBlack;
+    .chatbotBuilderImg {
+      width: rem(40);
+      height: rem(40);
+      border-radius: rem(6) ;
+      background-image: url('@assets/icons/ic_chatbot_builder.svg');
+      background-position: center;
+      background-repeat: no-repeat;
     }
-
+ 
     &[data-sidebar='false'] {
+      padding: rem(16);
       .brandNameWrapper {
         padding: rem(6);
       }
@@ -54,6 +87,7 @@ aside {
             height: rem(18);
           }
         }
+
         &.selected {
           &::after {
             content: url('@assets/icons/ic_brand_name_selected.svg');
@@ -68,17 +102,10 @@ aside {
     }
 
     &[data-sidebar='true'] {
-      padding: 0 rem(20);
-      margin-bottom: rem(8);
-      p {
-        padding: rem(16);
-        border: rem(1) solid $gray200;
-        border-radius: rem(4);
-      }
       .chatbotList {
         padding-left: rem(5);
         color: $primary200;
-        font-size: rem(14);
+        font-size: rem(16);
         font-weight: 700;
         line-height: rem(17);
       }
@@ -86,10 +113,15 @@ aside {
   }
 
   .lnbHeader {
-    margin-top: rem(3);
+    margin-top: rem(20);
+    padding: 0 rem(16);
+
+    img {
+      width: rem(40);
+      height: rem(40);
+    }
+
     &[data-sidebar='true'] {
-      height: rem(43);
-      padding: rem(12) rem(32);
       &:hover {
         a {
           color: $gray300;
@@ -98,35 +130,94 @@ aside {
     }
 
     &[data-sidebar='false'] {
-      padding: rem(3) rem(9) rem(6) rem(9);
-      height: rem(43);
+      padding: 0 rem(8);
+
       div {
-        line-height: 0.1;
-        padding: rem(8);
-        border-radius: rem(4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: rem(6);
+
+        // img {
+        //   width: rem(40);
+        //   height: rem(40);
+        // }
+
+        &::after {
+          display: none;
+        }
       }
+
       &:hover {
         div {
-          background-color: $graySelected;
+          background-color: $gray100;
         }
+      }
+
+      .headerName {
+        background-color: $grayWhite;
       }
     }
 
     .headerName {
-      color: $grayWhite;
+      display: flex;
+      align-items: center;
+      gap: rem(16);
+      padding: rem(16);
+      height: rem(72);
+      color: $grayBlack;
       position: relative;
-      padding-right: rem(12);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      border-radius: rem(4);
+      background-color: $gray100;
+
+      &.selected {
+        // background-color: $grayBlack;
+      }
+      
+      .botProfileImg {
+        border: rem(1) solid $gray200;
+        border-radius: rem(8);
+        background-color: $grayWhite;
+
+        &:has(.altImg) {
+          padding: rem(8);
+        }
+        
+        .altImg {
+          width: rem(24) !important;
+          height: rem(24) !important;
+        }
+      }
+
+      .botName {
+        font-size: rem(16);
+        font-weight: 500;
+      }
+
+      .brandName {
+        color: $gray300;
+        font-size: rem(13);
+        font-weight: 500;
+        text-align: start;
+      }
+
       &::after {
         display: inline-block;
         position: absolute;
-        top: rem(1);
-        right: 0;
-        content: url('@assets/icons/ic_show.svg');
+        top: 30%;
+        right: 10%;
+        content: url('@assets/icons/ic_botlist.svg');
         width: rem(12);
         height: rem(12);
+      }
+
+      &:hover {
+        &::after {
+          content: url('@assets/icons/ic_botlist_hover.svg');
+        }
       }
     }
   }
@@ -168,6 +259,7 @@ aside {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        
         &::after {
           display: inline-block;
           position: absolute;
@@ -182,14 +274,81 @@ aside {
   }
 
   .subMenuWrapper {
-    margin: 0 rem(9) rem(18) rem(9);
-    padding-top: rem(20);
-    border-top: 1px solid $gray500;
+    margin: 0 rem(8);
+
+    &[data-sidebar='true'] { 
+      margin: 0 rem(16);
+    }
+
+    li {
+      background-color: $gray100;
+      
+      &.selected {
+        background-color: $primary150;
+      }
+
+      &:hover {
+        background-color: $primary100;
+        color: $grayWhite;
+      }
+
+      .desc {
+        padding-left: rem(16);
+        font-size: rem(16);
+      }
+    }
+
+    .partnerLnbBtn {
+      display: flex;
+      align-items: center;
+      margin : {
+        top: rem(12);
+        bottom: rem(28)
+      }
+      padding: rem(10);
+      height: rem(56);
+      border: rem(1) solid $gray200 ;
+      border-radius: rem(6);
+      background-color: $grayWhite;
+
+      .desc {
+        padding-left: rem(8);
+        color: $primary500;
+      }
+
+      .partnersCenterImg {
+        width: rem(32);
+        height: rem(32);
+        background-color: $primary500;
+        border-radius: rem(6);
+        background-image: url('@assets/icons/ic_partners_center.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      
+      &[data-sidebar='true'] {
+        justify-content: start;
+        text-align: center;
+        padding: rem(16);
+
+        .partnersCenterImg {
+          margin-right: rem(4);
+        }
+        
+        a {
+          color: $grayBlack;
+        }
+
+        &:hover {
+          background-color: $primary100;
+        }
+      }
+    }
   }
 
   .chatbotName {
     padding-left: rem(12);
-    color: $grayWhite;
+    color: $grayBlack;
   }
 
   .lnbBtn {
@@ -201,17 +360,6 @@ aside {
     border: 0;
     border-radius: rem(4);
     background-color: $grayAside;
-    // background-image: url('@assets/icons/ic_lnb_show.svg');
-    // @include bg;
-
-    &:hover {
-      background-color: $graySelected;
-    }
-
-    &[data-sidebarstatus='false'] {
-      // background-image: url('@assets/icons/ic_lnb_hide.svg');
-      // @include bg;
-    }
   }
 
   .desc {
@@ -222,18 +370,19 @@ aside {
 }
 
 .mainNav {
-  margin: rem(32) rem(9);
+  margin: rem(20) rem(8);
 
   &[data-sidebar='true'] {
-    margin: rem(25) rem(20);
+    margin: rem(20) rem(16);
 
     li {
-      padding: rem(12) rem(16);
-      height: rem(40);
+      padding: rem(16);
+      height: rem(56);
       border-radius: rem(4);
 
       .desc {
-        padding-left: rem(8);
+        padding-left: rem(16);
+        font-size: rem(16);
       }
     }
   }
@@ -245,34 +394,41 @@ nav {
   }
 
   .selected {
-    background-color: $graySelected;
+    background-color: $primary100;
+
+    .desc {
+      color: $primary500;
+    }
+
+    &:hover {
+      background-color: $primary150;
+    }
   }
 
   li {
     display: flex;
     align-items: center;
-    padding: rem(9);
-    height: rem(36);
-    border-radius: rem(4);
+    padding: rem(16);
+    border-radius: rem(6);
+    
     &:hover {
-      background-color: #1f1f1f;
-      .desc {
-        color: $gray300;
-      }
+      background-color: $gray100;
     }
+
     .menuImg {
       line-height: 0.1;
       img {
-        height: rem(18);
-        width: rem(18);
+        height: rem(24);
+        width: rem(24);
       }
     }
 
     .desc {
-      font-weight: 500;
-      height: rem(15);
       padding-left: rem(5);
+      height: rem(19);
+      color: $gray500;
       font-size: rem(13);
+      font-weight: 500;
     }
   }
 }
@@ -287,22 +443,22 @@ nav {
     opacity: 1;
     overflow: hidden;
     transition: opacity 0.3s linear;
-    color: $grayWhite;
+    color: $gray500;
   }
 
   .chatbotName {
     transition: width 0.5s ease-in-out;
   }
 
-  .brandName {
+  .chatbotBuilderTitle {
     opacity: 1;
     overflow: hidden;
     transition: opacity 0.3s linear;
-    color: $grayWhite;
+    color: $grayBlack;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    p {
+    span {
       opacity: 1;
       overflow: hidden;
       text-overflow: ellipsis;
