@@ -151,13 +151,9 @@ export const Popper = <T extends object>({
     }
   }, [popperSelect]);
 
-  const selectedScenarios = useRootState(
-    (state) => state.botBuilderReducer.selectedScenario,
-  );
-
   useEffect(() => {
     setItems(popperItems);
-  }, [i18n.language, selectedScenarios]);
+  }, [i18n.language, popperItems]);
 
   return (
     <div ref={outsideClickRef}>

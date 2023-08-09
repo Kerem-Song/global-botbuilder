@@ -10,7 +10,7 @@ import {
   setScenarioPopupOpen,
 } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export interface IScenarioItemProps {
@@ -20,6 +20,11 @@ export interface IScenarioItemProps {
 export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
+  const [scenarioMenus, setScenarioMenus] = useState<
+    IPopperItem<{
+      action: ((item: IScenarioModel) => void) | null;
+    }>[]
+  >([]);
   const token = useRootState((state) => state.botInfoReducer.token);
   const {
     scenarioDeleteAsync,
@@ -156,34 +161,34 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
 
   const selectedScenario = classNames({ selected: selectedScenarios?.id === item.id });
 
-  const scenarioMenus: IPopperItem<{
-    action: ((item: IScenarioModel) => void) | null;
-  }>[] = [
-    {
-      id: `rename`,
-      name: t('RENAME'),
-      data: {
-        action: handleScenariRename,
+  useEffect(() => {
+    setScenarioMenus([
+      {
+        id: `rename`,
+        name: t('RENAME'),
+        data: {
+          action: handleScenariRename,
+        },
+        type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
       },
-      type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
-    },
-    {
-      id: `delete`,
-      name: t('DELETE'),
-      data: {
-        action: handleScenarioDelete,
+      {
+        id: `delete`,
+        name: t('DELETE'),
+        data: {
+          action: handleScenarioDelete,
+        },
+        type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
       },
-      type: selectedScenarios?.id !== item.id ? 'disable' : 'normal',
-    },
-    {
-      id: 'duplicate',
-      name: t(`DUPLICATION_SCEANRIO`),
-      data: {
-        action: handleDuplicateScenario,
+      {
+        id: 'duplicate',
+        name: t(`DUPLICATION_SCEANRIO`),
+        data: {
+          action: handleDuplicateScenario,
+        },
+        type: 'normal',
       },
-      type: 'normal',
-    },
-  ];
+    ]);
+  }, [selectedScenario]);
 
   return (
     <Card
