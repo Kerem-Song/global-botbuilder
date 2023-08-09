@@ -1,5 +1,5 @@
 import { Input } from '@components/data-entry';
-import { useOutsideClick, usePage, useRootState } from '@hooks';
+import { useOutsideClick, useRootState } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
@@ -38,6 +38,7 @@ export type ItemType =
   | 'children'
   | 'disable'
   | 'normal';
+
 export type ISelectType = 'button';
 export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   placement?: Placement;
@@ -59,7 +60,6 @@ export const Popper = <T extends object>({
   children,
   popup,
   popupList,
-  showBullet,
   popperItems,
   popperSelect,
   offset,
@@ -69,7 +69,6 @@ export const Popper = <T extends object>({
 }: IPopperProps<T>) => {
   const [selected, setSelected] = useState<string>();
   const [showPopper, setShowPopper] = useState<boolean>(false);
-
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
   const { i18n } = useTranslation();
@@ -225,7 +224,6 @@ export const Popper = <T extends object>({
           <PopperSelectItem
             key={item.id}
             item={item}
-            showBullet={showBullet}
             popupList={popupList}
             handleSelect={handleSelect}
             checked={item.id === selected}

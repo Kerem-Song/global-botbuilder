@@ -125,8 +125,7 @@ export const BotAside = () => {
         <Popper
           className="lnbHeaderBotNamePopper"
           placement="right-start"
-          offset={[20, -10]}
-          showBullet
+          offset={[10, -10]}
           popup
           popupList
           popperSelect={botList}
