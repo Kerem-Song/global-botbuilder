@@ -1,13 +1,10 @@
-import { Radio } from '@components/data-entry/Radio';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import { useRef } from 'react';
 
 import { IPopperSelectItem } from './Popper';
 
 export interface IPopperSelectListItem<T> extends IHasClassNameNStyle {
   item: IPopperSelectItem<T>;
-  showBullet?: boolean;
   popupList?: boolean;
   handleSelect?: (item: IPopperSelectItem<T>) => void;
   checked?: boolean;
@@ -16,20 +13,15 @@ export interface IPopperSelectListItem<T> extends IHasClassNameNStyle {
 export const PopperSelectItem = <T extends object>({
   className,
   item,
-  showBullet,
   popupList,
   handleSelect,
   checked,
 }: IPopperSelectListItem<T>) => {
-  const radioRef = useRef<HTMLInputElement>(null);
   const popperList = classNames(className, 'luna-chatbot-list', {
     'luna-popup-list': popupList,
   });
 
   const handleCheckChange = () => {
-    if (radioRef.current) {
-      radioRef.current.checked = true;
-    }
     handleSelect?.(item);
   };
 
@@ -48,20 +40,11 @@ export const PopperSelectItem = <T extends object>({
             role="presentation"
             onClick={() => handleCheckChange()}
           >
-            {showBullet && (
-              <Radio
-                ref={radioRef}
-                value={item.id}
-                checked={checked}
-                onChange={() => {
-                  console.log('radio');
-                }}
-              />
-            )}
             <div
-              className="items-name"
+              className={classNames('items-name', {
+                'checked-items-name': checked,
+              })}
               role="presentation"
-              style={checked ? { fontWeight: '900' } : { fontWeight: '400' }}
             >
               {item.name}
             </div>
