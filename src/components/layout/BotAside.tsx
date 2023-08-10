@@ -42,7 +42,7 @@ export const BotAside = () => {
   const { data } = getBotListQuery();
 
   useEffect(() => {
-    const pageName = location.pathname.split('/').slice(-1)[0];
+    const pageName = location.pathname.split('/').slice(4)[0];
     setPage(pageName);
   }, [location.pathname]);
 
@@ -80,7 +80,6 @@ export const BotAside = () => {
       type: 'button',
       data: {
         action: (id: string) => {
-          console.log(id);
           navigate(`/${i18n.language}/${brandInfo.brandId}/dashboard`);
           dispatch(setSesstionToken());
           dispatch(initBotBuilder());
