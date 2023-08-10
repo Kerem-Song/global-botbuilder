@@ -1,12 +1,8 @@
-import {
-  icBrandNameSelected,
-  icHelp,
-  icHelpSelected,
-  icLnbHide,
-  icLnbShow,
-} from '@assets/index';
+import { icChatbotBuilder, icLnbHide, icLnbShow, icPartnersCenter } from '@assets/index';
+import { Tooltip } from '@components';
 import { useI18n, useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
+import { menuModule } from '@modules/menuModule';
 import { setSidebarClose, setSidebarStatus } from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
 import { useCallback, useRef, useState } from 'react';
@@ -23,26 +19,9 @@ export const Aside = () => {
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
   const sidebarRef = useRef<HTMLElement>(null);
-  const getMenuItem = (
-    id: number,
-    url: string,
-    name: string,
-    icon: string,
-    selectedIcon: string,
-  ) => {
-    return {
-      id,
-      url: `/${i18n.language}/${url}`,
-      name,
-      icon,
-      selectedIcon,
-      alt: url.replace(/^./, url[0].toUpperCase()),
-      desc: ts(`${name.toUpperCase()}`),
-    };
-  };
-
-  const subMenu = [getMenuItem(1, 'help', 'help', icHelp, icHelpSelected)];
-
+  const partnersCenterUrl = `${
+    import.meta.env.VITE_PARTNERS_CENTER_URL
+  }/${brandId}/dashboard`;
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
   });
@@ -65,7 +44,9 @@ export const Aside = () => {
         </div>
         <NavLink to={`/${i18n.language}/${brandId}/dashboard`}>
           <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
-            <div className="chatbotBuilderImg"></div>
+            <div className="chatbotBuilderImg">
+              <img src={icChatbotBuilder} alt="icChatbotBuilder" />
+            </div>
             {sidebarStatus ? <span>Chatbot Builder</span> : null}
           </div>
         </NavLink>
@@ -74,34 +55,50 @@ export const Aside = () => {
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
-            {subMenu.map((item) => {
+            {menuModule.subMenu.map((item) => {
+              console.log('@item.desc', item.desc);
               return (
-                <NavLink
+                <Tooltip
                   key={item.id}
-                  to={`${item.url}`}
-                  onClick={() => setPage(item.url)}
+                  tooltip={ts(item.desc)}
+                  placement="bottom-start"
+                  offset={[59, -43]}
+                  disable={sidebarStatus}
                 >
-                  <li className={page === item.url ? 'selected' : ''}>
-                    <span className="menuImg">
-                      {page === item.url ? (
-                        <img src={item.selectedIcon} alt={item.alt} />
-                      ) : (
-                        <img src={item.icon} alt={item.alt} />
-                      )}
-                    </span>
-                    {sidebarStatus && <span className="desc">{item.desc}</span>}
-                  </li>
-                </NavLink>
+                  <NavLink
+                    key={item.id}
+                    to={`${item.url}`}
+                    onClick={() => setPage(item.url)}
+                  >
+                    <li className={page === item.url ? 'selected' : ''}>
+                      <span className="menuImg">
+                        {page === item.url ? (
+                          <img src={item.selectedIcon} alt={item.alt} />
+                        ) : (
+                          <img src={item.icon} alt={item.alt} />
+                        )}
+                      </span>
+                      {sidebarStatus && <span className="desc">{item.desc}</span>}
+                    </li>
+                  </NavLink>
+                </Tooltip>
               );
             })}
-            <a href={`https://partnerscenter.lunacode.dev/${brandId}/dashboard`}>
-              <li className="partnerLnbBtn">
-                <span className="menuImg partnersCenterImg">
-                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
-                </span>
-                {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
-              </li>
-            </a>
+            <Tooltip
+              tooltip={ts('PARTNERS_CENTER')}
+              placement="bottom-start"
+              offset={[59, -43]}
+              disable={sidebarStatus}
+            >
+              <a href={partnersCenterUrl}>
+                <li className="partnerLnbBtn">
+                  <span className="menuImg partnersCenterImg">
+                    <img src={icPartnersCenter} alt="icPartnersCenter" />
+                  </span>
+                  {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
+                </li>
+              </a>
+            </Tooltip>
           </ul>
         </nav>
       </div>

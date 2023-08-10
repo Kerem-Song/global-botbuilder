@@ -1,11 +1,11 @@
 import {
   icBotProfile,
+  icChatbotBuilder,
   icLine,
   icLnbHide,
   icLnbShow,
   icPartnersCenter,
 } from '@assets/index';
-import { Col, Row } from '@components';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient, useI18n, useRootState } from '@hooks';
@@ -38,11 +38,14 @@ export const BotAside = () => {
   const { getBotListQuery } = useBotClient();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
+  const partnersCenterUrl = `${import.meta.env.VITE_PARTNERS_CENTER_URL}/${
+    brandInfo.brandId
+  }/dashboard`;
 
   const { data } = getBotListQuery();
 
   useEffect(() => {
-    const pageName = location.pathname.split('/').slice(-1)[0];
+    const pageName = location.pathname.split('/').slice(4)[0];
     setPage(pageName);
   }, [location.pathname]);
 
@@ -80,7 +83,6 @@ export const BotAside = () => {
       type: 'button',
       data: {
         action: (id: string) => {
-          console.log(id);
           navigate(`/${i18n.language}/${brandInfo.brandId}/dashboard`);
           dispatch(setSesstionToken());
           dispatch(initBotBuilder());
@@ -94,8 +96,6 @@ export const BotAside = () => {
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
   });
-
-  console.log('@url', botInfo?.iconUrl);
 
   return (
     <aside className={css} ref={sidebarRef}>
@@ -116,7 +116,9 @@ export const BotAside = () => {
 
         <NavLink to={`/${i18n.language}/${brandInfo.brandId}/dashboard`}>
           <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
-            <div className="chatbotBuilderImg"></div>
+            <div className="chatbotBuilderImg">
+              <img src={icChatbotBuilder} alt="icChatbotBuilder" />
+            </div>
             {sidebarStatus ? <span>Chatbot Builder</span> : null}
           </div>
         </NavLink>
@@ -203,37 +205,50 @@ export const BotAside = () => {
               )
               .map((item) => {
                 return (
-                  <NavLink
+                  <Tooltip
                     key={item.id}
-                    to={`${item.url}`}
-                    onClick={() => {
-                      setPage(item.url);
-                      dispatch(setSidebarClose());
-                    }}
+                    tooltip={ts(item.desc)}
+                    placement="bottom-start"
+                    offset={[59, -43]}
+                    disable={sidebarStatus}
                   >
-                    <li className={page === item.url ? 'selected' : ''}>
-                      <span className="menuImg">
-                        {page === item.url ? (
-                          <img src={item.selectedIcon} alt={item.alt} />
-                        ) : (
-                          <img src={item.icon} alt={item.alt} />
-                        )}
-                      </span>
-                      {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
-                    </li>
-                  </NavLink>
+                    <NavLink
+                      key={item.id}
+                      to={`${item.url}`}
+                      onClick={() => {
+                        setPage(item.url);
+                        dispatch(setSidebarClose());
+                      }}
+                    >
+                      <li className={page === item.url ? 'selected' : ''}>
+                        <span className="menuImg">
+                          {page === item.url ? (
+                            <img src={item.selectedIcon} alt={item.alt} />
+                          ) : (
+                            <img src={item.icon} alt={item.alt} />
+                          )}
+                        </span>
+                        {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
+                      </li>
+                    </NavLink>
+                  </Tooltip>
                 );
               })}
-            <a
-              href={`https://partnerscenter.lunacode.dev/${brandInfo.brandId}/dashboard`}
+            <Tooltip
+              tooltip={ts('PARTNERS_CENTER')}
+              placement="bottom-start"
+              offset={[59, -43]}
+              disable={sidebarStatus}
             >
-              <li className="partnerLnbBtn">
-                <span className="menuImg partnersCenterImg">
-                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
-                </span>
-                {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
-              </li>
-            </a>
+              <a href={partnersCenterUrl}>
+                <li className="partnerLnbBtn">
+                  <span className="menuImg partnersCenterImg">
+                    <img src={icPartnersCenter} alt="icPartnersCenter" />
+                  </span>
+                  {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
+                </li>
+              </a>
+            </Tooltip>
           </ul>
         </nav>
       </div>
