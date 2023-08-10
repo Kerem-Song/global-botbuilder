@@ -44,8 +44,8 @@ export const ParameterSetNodeEdit = () => {
     <>
       <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
         {fields.map((item, i) => (
-          <>
-            <Space direction="vertical" key={item.id} gap={12}>
+          <div key={item.id}>
+            <Space direction="vertical" gap={12}>
               <Space direction="vertical" gap={8}>
                 <div>
                   <span className="subLabel">{t(`PARAMETER_SET_VARIABLE`)} </span>
@@ -103,7 +103,7 @@ export const ParameterSetNodeEdit = () => {
                 style={i === 0 ? { margin: '32px 0' } : { margin: '0 0 32px 0' }}
               />
             )}
-          </>
+          </div>
         ))}
 
         {fields.length < 10 && (

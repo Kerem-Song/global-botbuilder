@@ -66,8 +66,8 @@ export const QuicksEdit = () => {
     <Collapse label={t(`QUICK_REPLY_BUTTON_SETTING`)} useSwitch={false}>
       <Space direction="vertical" gap={12}>
         {fields.map((item, i) => (
-          <>
-            <Space direction="vertical" key={item.id} gap={12}>
+          <div key={item.id}>
+            <Space direction="vertical" gap={12}>
               <Space direction="vertical" gap={12}>
                 <FormItem
                   error={
@@ -171,7 +171,7 @@ export const QuicksEdit = () => {
               </Space>
             </Space>
             {fields.length !== i + 1 && <Divider style={{ margin: '20px 0' }} />}
-          </>
+          </div>
         ))}{' '}
         {fields.length < QUICK_MAX_COUNT && (
           <Button shape="ghost" className="addBtn" onClick={handleAddButton}>

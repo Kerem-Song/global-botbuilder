@@ -22,6 +22,7 @@ export const Aside = () => {
   const partnersCenterUrl = `${
     import.meta.env.VITE_PARTNERS_CENTER_URL
   }/${brandId}/dashboard`;
+
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
   });

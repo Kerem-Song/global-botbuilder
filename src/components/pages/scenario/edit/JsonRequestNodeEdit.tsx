@@ -315,7 +315,7 @@ export const JsonRequestNodeEdit = () => {
       </Collapse>
       <Collapse label={'Response Mapping'} useSwitch={false}>
         {resMappingField.map((res, i) => (
-          <>
+          <div key={res.id}>
             <Space direction="vertical" key={res.id} gap={12}>
               <FormItem error={errors.view?.responseMapping?.[i]?.key}>
                 <InputTextAreaWithTitleCounter
@@ -355,7 +355,7 @@ export const JsonRequestNodeEdit = () => {
             {resMappingField.length !== i + 1 && (
               <Divider style={{ margin: '0 0 32px 0' }} />
             )}
-          </>
+          </div>
         ))}
 
         <div className="apiFieldAddBtn m-b-12">
