@@ -38,6 +38,9 @@ export const BotAside = () => {
   const { getBotListQuery } = useBotClient();
   const handleSidebar = useCallback(() => dispatch(setSidebarStatus()), [dispatch]);
   const css = classNames({ 'aside-open': sidebarStatus });
+  const partnersCenterUrl = `${import.meta.env.VITE_PARTNERS_CENTER_URL}/${
+    brandInfo.brandId
+  }/dashboard`;
 
   const { data } = getBotListQuery();
 
@@ -202,37 +205,50 @@ export const BotAside = () => {
               )
               .map((item) => {
                 return (
-                  <NavLink
+                  <Tooltip
                     key={item.id}
-                    to={`${item.url}`}
-                    onClick={() => {
-                      setPage(item.url);
-                      dispatch(setSidebarClose());
-                    }}
+                    tooltip={ts(item.desc)}
+                    placement="bottom-start"
+                    offset={[59, -43]}
+                    disable={sidebarStatus}
                   >
-                    <li className={page === item.url ? 'selected' : ''}>
-                      <span className="menuImg">
-                        {page === item.url ? (
-                          <img src={item.selectedIcon} alt={item.alt} />
-                        ) : (
-                          <img src={item.icon} alt={item.alt} />
-                        )}
-                      </span>
-                      {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
-                    </li>
-                  </NavLink>
+                    <NavLink
+                      key={item.id}
+                      to={`${item.url}`}
+                      onClick={() => {
+                        setPage(item.url);
+                        dispatch(setSidebarClose());
+                      }}
+                    >
+                      <li className={page === item.url ? 'selected' : ''}>
+                        <span className="menuImg">
+                          {page === item.url ? (
+                            <img src={item.selectedIcon} alt={item.alt} />
+                          ) : (
+                            <img src={item.icon} alt={item.alt} />
+                          )}
+                        </span>
+                        {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
+                      </li>
+                    </NavLink>
+                  </Tooltip>
                 );
               })}
-            <a
-              href={`https://partnerscenter.lunacode.dev/${brandInfo.brandId}/dashboard`}
+            <Tooltip
+              tooltip={ts('PARTNERS_CENTER')}
+              placement="bottom-start"
+              offset={[59, -43]}
+              disable={sidebarStatus}
             >
-              <li className="partnerLnbBtn">
-                <span className="menuImg partnersCenterImg">
-                  <img src={icPartnersCenter} alt="icPartnersCenter" />
-                </span>
-                {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
-              </li>
-            </a>
+              <a href={partnersCenterUrl}>
+                <li className="partnerLnbBtn">
+                  <span className="menuImg partnersCenterImg">
+                    <img src={icPartnersCenter} alt="icPartnersCenter" />
+                  </span>
+                  {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
+                </li>
+              </a>
+            </Tooltip>
           </ul>
         </nav>
       </div>
