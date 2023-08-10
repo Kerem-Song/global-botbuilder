@@ -1,9 +1,10 @@
 import {
-  icBrandNameSelected,
+  icChatbotBuilder,
   icHelp,
   icHelpSelected,
   icLnbHide,
   icLnbShow,
+  icPartnersCenter,
 } from '@assets/index';
 import { useI18n, useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
@@ -65,7 +66,9 @@ export const Aside = () => {
         </div>
         <NavLink to={`/${i18n.language}/${brandId}/dashboard`}>
           <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
-            <div className="chatbotBuilderImg"></div>
+            <div className="chatbotBuilderImg">
+              <img src={icChatbotBuilder} alt="icChatbotBuilder" />
+            </div>
             {sidebarStatus ? <span>Chatbot Builder</span> : null}
           </div>
         </NavLink>
@@ -97,7 +100,7 @@ export const Aside = () => {
             <a href={`https://partnerscenter.lunacode.dev/${brandId}/dashboard`}>
               <li className="partnerLnbBtn">
                 <span className="menuImg partnersCenterImg">
-                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
+                  <img src={icPartnersCenter} alt="icPartnersCenter" />
                 </span>
                 {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
               </li>

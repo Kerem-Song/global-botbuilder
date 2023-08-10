@@ -1,4 +1,11 @@
-import { icBotProfile, icLine, icLnbHide, icLnbShow } from '@assets/index';
+import {
+  icBotProfile,
+  icChatbotBuilder,
+  icLine,
+  icLnbHide,
+  icLnbShow,
+  icPartnersCenter,
+} from '@assets/index';
 import { IPopperSelectItem, Popper } from '@components/navigation';
 import { Tooltip } from '@components/navigation/Tooltip';
 import { useBotClient, useI18n, useRootState } from '@hooks';
@@ -107,7 +114,9 @@ export const BotAside = () => {
 
         <NavLink to={`/${i18n.language}/${brandInfo.brandId}/dashboard`}>
           <div className="chatbotBuilderTitle" data-sidebar={sidebarStatus}>
-            <div className="chatbotBuilderImg"></div>
+            <div className="chatbotBuilderImg">
+              <img src={icChatbotBuilder} alt="icChatbotBuilder" />
+            </div>
             {sidebarStatus ? <span>Chatbot Builder</span> : null}
           </div>
         </NavLink>
@@ -220,7 +229,7 @@ export const BotAside = () => {
             >
               <li className="partnerLnbBtn">
                 <span className="menuImg partnersCenterImg">
-                  {/* <img src={icPartnersCenter} alt="icPartnersCenter"></img> */}
+                  <img src={icPartnersCenter} alt="icPartnersCenter" />
                 </span>
                 {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
               </li>

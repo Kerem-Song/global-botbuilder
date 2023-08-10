@@ -8,7 +8,6 @@ aside {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   width: rem($asideSize);
   height: 100%;
   color: $grayBlack;
@@ -56,12 +55,12 @@ aside {
     font-weight: 700;
 
     .chatbotBuilderImg {
-      width: rem(40);
-      height: rem(40);
       border-radius: rem(6) ;
-      background-image: url('@assets/icons/ic_chatbot_builder.svg');
-      background-position: center;
-      background-repeat: no-repeat;
+
+      img {
+        width: rem(40);
+        height: rem(40);
+      }
     }
  
     &[data-sidebar='false'] {
@@ -174,8 +173,6 @@ aside {
       border-radius: rem(4);
       background-color: $gray100;
 
-      
-
       .botName {
         font-size: rem(16);
         font-weight: 500;
@@ -212,6 +209,7 @@ aside {
       padding: rem(8) rem(12);
       border: 1px solid $gray500;
       border-radius: rem(4);
+
       &:hover {
         a {
           color: $gray300;
@@ -222,11 +220,13 @@ aside {
     &[data-sidebar='false'] {
       padding: rem(3) rem(9) rem(6) rem(9);
       height: rem(45);
+
       div {
         line-height: 0.1;
         padding: rem(8);
         border-radius: rem(4);
       }
+
       &:hover {
         div {
           background-color: $graySelected;
@@ -282,7 +282,7 @@ aside {
         top: rem(12);
         bottom: rem(28)
       }
-      padding: rem(12);
+      padding: rem(12) rem(11);
       height: rem(56);
       border: rem(1) solid $gray200;
       background-color: $grayWhite;
@@ -293,18 +293,17 @@ aside {
       }
 
       .partnersCenterImg {
-        width: rem(32);
-        height: rem(32);
         background-color: $primary500;
         border-radius: rem(6);
-        background-image: url('@assets/icons/ic_partners_center.svg');
-        background-repeat: no-repeat;
-        background-position: center;
+
+        img {
+          padding: rem(8);
+          width: rem(32);
+          height: rem(32);
+        }
       }
       
       &[data-sidebar='true'] {
-        // padding: rem(16);
-
         .partnersCenterImg {
           margin-right: rem(4);
         }
@@ -380,6 +379,7 @@ nav {
 
     .menuImg {
       line-height: 0.1;
+      
       img {
         height: rem(24);
         width: rem(24);
@@ -432,7 +432,6 @@ nav {
 .botProfileImg {
   display: flex;
   align-items: center;
-  
   border-radius: rem(6);
   background-color: $grayWhite;
 
@@ -442,7 +441,7 @@ nav {
 
   &:has(.altImg) {
     border: rem(1) solid $gray200;
-    padding: rem(8);
+    padding: rem(7);
   }
   
   .altImg {
