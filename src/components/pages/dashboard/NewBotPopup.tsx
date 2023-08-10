@@ -15,9 +15,8 @@ export const NewBotPopup: FC<{
   handleIsOpen: (value: boolean) => void;
 }> = ({ isOpen, handleIsOpen }) => {
   const { t, tc } = usePage();
-  const { confirm } = useSystemModal();
+  const { confirm, error } = useSystemModal();
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
-  const staffType = useRootState((state) => state.userInfoReducer.staffType);
   const { botSaveAsync } = useBotClient();
   const defaultValues: IBotInput = {
     brandId,
@@ -52,14 +51,24 @@ export const NewBotPopup: FC<{
   useCallbackPrompt(isOpen && isDirty);
 
   const handleSave = async (model: IBotInput) => {
-    const result = await botSaveAsync({ ...model, customErrorCode: [7654] });
+    const result = await botSaveAsync({ ...model, customErrorCode: [7654, 7659] });
     if (result === 7654) {
       setError('botName', {
         type: 'custom',
         message: t(`MSG_DUPLICATED_BOT_NAME`),
       });
+    } else if (result === 7659) {
+      error({
+        title: tc('NEW_BOT_CARD_AUTH_ERROR_TITLE'),
+        description: (
+          <span style={{ whiteSpace: 'pre-line' }}>
+            {tc('NEW_BOT_CARD_AUTH_ERROR_DESC')}
+          </span>
+        ),
+      });
     } else {
       handleIsOpen(false);
+      reset(defaultValues);
       lunaToast.success(t('NEW_BOT_OK_MESSAGE'));
     }
   };

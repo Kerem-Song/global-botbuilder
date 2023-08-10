@@ -1,32 +1,24 @@
 import { icAdd, icAddDisable } from '@assets';
 import { Card, Title } from '@components';
-import { usePage, useRootState, useSystemModal } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { StaffType } from '@models';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const role = useRootState((state) => state.userInfoReducer.role);
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
-  const { error } = useSystemModal();
 
   const isAdministrator = staffType === StaffType.Administrator && role === 0;
   const isManager = staffType === StaffType.Manager;
   const isRoleInvalidSetting = role !== undefined && role <= 114;
+  const isInvalidCreateNewChatBot =
+    isManager || (!isAdministrator && isRoleInvalidSetting);
 
   const handleOnClickAuth = async () => {
-    if (isManager || (!isAdministrator && isRoleInvalidSetting)) {
-      await error({
-        title: tc(`NEW_BOT_CARD_AUTH_ERROR_TITLE`),
-        description: (
-          <>
-            <span style={{ whiteSpace: 'pre-line' }}>
-              {tc(`NEW_BOT_CARD_AUTH_ERROR_DESC`)}
-            </span>
-          </>
-        ),
-      });
+    if (isInvalidCreateNewChatBot) {
+      return;
     } else {
       return onClick();
     }
@@ -36,33 +28,27 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
     <Card
       bordered={false}
       onClick={handleOnClickAuth}
-      className={classNames('new-chatbot', {
-        disabled: isManager || (!isAdministrator && isRoleInvalidSetting),
+      className={classNames('createNewChatBot', {
+        disabled: isInvalidCreateNewChatBot,
+        newChatbot: !isInvalidCreateNewChatBot,
       })}
     >
       <div className="title">
-        <img
-          src={
-            isManager || (!isAdministrator && isRoleInvalidSetting) ? icAddDisable : icAdd
-          }
-          alt="add"
-        />
+        <img src={isInvalidCreateNewChatBot ? icAddDisable : icAdd} alt="add" />
         <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
       </div>
-      <div className="title-hover">
-        <svg width={14} height={14}>
-          <path
-            d="M 7 0 L 7 14 M 0 7 L 14 7"
-            strokeWidth={2}
-            stroke={
-              isManager || (!isAdministrator && isRoleInvalidSetting)
-                ? '#929292'
-                : '#6993FF'
-            }
-            fill="none"
-          />
-        </svg>
-      </div>
+      {!isInvalidCreateNewChatBot && (
+        <div className="title-hover">
+          <svg width={14} height={14}>
+            <path
+              d="M 7 0 L 7 14 M 0 7 L 14 7"
+              strokeWidth={2}
+              stroke="#6993FF"
+              fill="none"
+            />
+          </svg>
+        </div>
+      )}
     </Card>
   );
 };

@@ -21,21 +21,26 @@
     }
   }
 
-  .new-chatbot {
+  .createNewChatBot {
     position: relative;
     height: rem(219);
-    cursor: pointer;
     border-radius: rem(12);
-    border: 1px dashed #6993ff;
     transition: all 0.3s ease-out;
+    cursor: pointer;
     .title {
       position: absolute;
       display: flex;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      color: $primary500;
       gap: rem(8);
+    }
+  }
+
+  .newChatbot {
+    border: 1px dashed #6993ff;
+    .title {
+      color: $primary500;
     }
     .title-hover {
       position: absolute;
@@ -53,17 +58,17 @@
         display: block;
       }
     }
+  }
 
-    &.disabled {
-      border-color: $gray250;
-
-      .title {
-        color: $gray250;
-      }
-
-      &:hover {
-        background-color: $gray150;
-      }
+  .disabled {
+    position: relative;
+    height: rem(219);
+    border: 1px dashed $gray250;
+    border-radius: rem(12);
+    background-color: $gray150;
+    cursor: not-allowed;
+    .title {
+      color: $gray250;
     }
   }
 
