@@ -135,11 +135,7 @@ export const BotAside = () => {
           selectedId={botId}
         >
           <div className="lnbHeader" data-sidebar={sidebarStatus}>
-            <div
-              className={classNames('headerName')}
-              role="presentation"
-              onClick={(e) => (e.currentTarget.className = 'headerName selected')}
-            >
+            <div className="headerName">
               <div className="botProfileImg">
                 {botInfo?.iconUrl ? (
                   <img src={botInfo.iconUrl} alt="icBotProfile" />
