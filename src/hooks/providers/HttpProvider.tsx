@@ -19,7 +19,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
   const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
-  const [cookies] = useCookies(['RT']);
+  const [cookies, setCookie] = useCookies(['RT']);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
   const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
@@ -51,6 +51,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
     async function (response) {
       if (response.data.newToken) {
         console.log('newToken', response.data);
+        setCookie('RT', response.data.newToken);
         dispatch(setToken({ refreshToken: response.data.newToken }));
         dispatch(
           updateRole({ staffType: response.data.staffType, role: response.data.role }),
