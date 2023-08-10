@@ -7,7 +7,6 @@ import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
 
@@ -21,7 +20,6 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const [cookies, setCookie] = useCookies(['RT']);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
-  const token = useRootState((state) => state.authReducer.refreshToken);
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     //withCredentials: true,
@@ -100,6 +98,15 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       /**
        * todo : 인증 실패 같은 공통 Exception 처리
        */
+      const requestData = err.response.config.data;
+      if (requestData) {
+        const requestObj = JSON.parse(requestData);
+        if (
+          requestObj?.customErrorCode?.includes(err.response.data.exception.errorCode)
+        ) {
+          return err.response;
+        }
+      }
       if (err.response.status === 403 || err.response.status === 401) {
         if (err.response.data.exception.errorCode === 7659) {
           if (err.response.data.exception.staffRole === '0') {
