@@ -168,25 +168,7 @@ aside {
       border-radius: rem(4);
       background-color: $gray100;
 
-      .botProfileImg {
-        display: flex;
-        align-items: center;
-        border: rem(1) solid $gray200;
-        background-color: $grayWhite;
-
-        img {
-          border-radius: rem(6);
-        }
-
-        &:has(.altImg) {
-          padding: rem(8);
-        }
-        
-        .altImg {
-          width: rem(24) !important;
-          height: rem(24) !important;
-        }
-      }
+      
 
       .botName {
         font-size: rem(16);
@@ -438,5 +420,27 @@ nav {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+.botProfileImg {
+  display: flex;
+  align-items: center;
+  
+  border-radius: rem(6);
+  background-color: $grayWhite;
+
+  img {
+    border-radius: rem(6);
+  }
+
+  &:has(.altImg) {
+    border: rem(1) solid $gray200;
+    padding: rem(8);
+  }
+  
+  .altImg {
+    width: rem(24) !important;
+    height: rem(24) !important;
   }
 }
