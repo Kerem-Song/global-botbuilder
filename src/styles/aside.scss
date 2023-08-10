@@ -148,6 +148,12 @@ aside {
         }
       }
 
+      &:has(.botProfileImg) {
+        div{
+          background-color: $grayWhite;
+        }
+      }
+
       .headerName {
         padding: 0 rem(8);
         background-color: $grayWhite;
