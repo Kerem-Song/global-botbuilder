@@ -79,7 +79,7 @@ export const Aside = () => {
                           <img src={item.icon} alt={item.alt} />
                         )}
                       </span>
-                      {sidebarStatus && <span className="desc">{item.desc}</span>}
+                      {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
                     </li>
                   </NavLink>
                 </Tooltip>

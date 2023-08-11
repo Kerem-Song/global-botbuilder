@@ -55,6 +55,7 @@ aside {
     font-weight: 700;
 
     .chatbotBuilderImg {
+      display: flex;
       border-radius: rem(6) ;
 
       img {
@@ -425,6 +426,10 @@ nav {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .chatbotBuilderImg {
+      display: flex;
     }
   }
 }
