@@ -59,11 +59,11 @@ export const ConnectChannel = () => {
       ),
     });
 
-    if (res) {
+    if (res && botSettingInfo) {
       const connectChannel = await botChannelActivateAsync({
         isActivate: !linkedState,
         isLive: isOpChannel,
-        botId: botSettingInfo!.id,
+        botId: botSettingInfo.id,
       });
 
       if (connectChannel?.data.isSuccess) {

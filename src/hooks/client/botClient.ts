@@ -9,6 +9,7 @@ import {
   ISearchBotReq,
 } from '@models';
 import {
+  IBotSetting,
   IImportFlowGroup,
   IResponseUpdateBotIcon,
   IUpdateBotActivate,
@@ -30,7 +31,6 @@ export const useBotClient = () => {
   const queryClient = useQueryClient();
   const http = useHttp();
   const dispatch = useDispatch();
-
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
 
   const getBotListQuery = () => {
@@ -111,54 +111,11 @@ export const useBotClient = () => {
     return '';
   });
 
-  const botExportMutate = useMutation(
-    async (args: { botId: string; botName: string }) => {
-      const res = await http.post('/bot/exportcurrentflowgroup', args, {
-        responseType: 'blob',
-      });
-
-      if (res) {
-        const blob = new Blob([res.data]);
-        saveAs(blob, `Lunatalk_${args.botName}_${args.botId}.json`);
-        return true;
-      }
-    },
-  );
-
-  const botImportMutate = useMutation(async (args: IImportFlowGroup) => {
-    const formData = new FormData();
-    formData.append('file', args.file);
-    formData.append('botId', args.botId);
-    const res = await http.post('/Bot/ImportFlowGroup', formData);
-    if (res) {
-      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      return res;
-    }
-  });
-
-  const botDeleteMutate = useMutation(async (args: { botId: string }) => {
-    const res = await http.post('/bot/deletebot', args);
-
-    if (res) {
-      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      return res;
-    }
-  });
-
-  const botRecoverMutate = useMutation(async (args: { botId: string }) => {
-    const res = await http.post('/bot/recoverbot', args);
-
-    if (res) {
-      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      return res;
-    }
-  });
-
   const botUpdateNameMutate = useMutation(async (args: ISaveBotReq) => {
-    const res = await http.post<ISaveBotReq, AxiosResponse<IResponseUpdateBotIcon>>(
-      '/bot/updatebotname',
-      args,
-    );
+    const res = await http.post<
+      ISaveBotReq,
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
+    >('/bot/updatebotname', args);
 
     const exception = res.data.exception as IException;
 
@@ -173,9 +130,25 @@ export const useBotClient = () => {
     return;
   });
 
-  const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
-    const res = await http.post('/bot/updatebotactivate', args);
+  const botImageUploadMutate = useMutation(async (args: IUpdateBotIcon) => {
+    const res = await http.post<
+      IUpdateBotIcon,
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
+    >('/bot/updateboticon', args);
 
+    if (res) {
+      if (res.data.isSuccess) {
+        queryClient.invalidateQueries(['bot-setting-info', args.botId]);
+      }
+      return res;
+    }
+  });
+
+  const botActivateMutate = useMutation(async (args: IUpdateBotActivate) => {
+    const res = await http.post<
+      IUpdateBotActivate,
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
+    >('/bot/updatebotactivate', args);
     const exception = res.data.exception as IException;
 
     if (exception) {
@@ -193,24 +166,59 @@ export const useBotClient = () => {
   const botChannelActivateMutate = useMutation(async (args: IUpdateChannelActivate) => {
     const res = await http.post<
       IUpdateChannelActivate,
-      AxiosResponse<IResponseUpdateBotIcon>
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
     >('/bot/updatechannelactivate', args);
+
     if (res) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });
 
-  const botImageUploadMutate = useMutation(async (args: IUpdateBotIcon) => {
-    const res = await http.post<IUpdateBotIcon, AxiosResponse<IResponseUpdateBotIcon>>(
-      '/bot/updateboticon',
-      args,
-    );
+  const botExportMutate = useMutation(async (args: IBotSetting) => {
+    const res = await http.post('/bot/exportcurrentflowgroup', args, {
+      responseType: 'blob',
+    });
 
     if (res) {
-      if (res.data.isSuccess) {
-        queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      }
+      const blob = new Blob([res.data]);
+      saveAs(blob, `Lunatalk_${args.botName}_${args.botId}.json`);
+      return true;
+    }
+  });
+
+  const botImportMutate = useMutation(async (args: IImportFlowGroup) => {
+    const formData = new FormData();
+    formData.append('file', args.file);
+    formData.append('botId', args.botId);
+    const res = await http.post('/Bot/ImportFlowGroup', formData);
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
+      return res;
+    }
+  });
+
+  const botDeleteMutate = useMutation(async (args: IBotSetting) => {
+    const res = await http.post<
+      IBotSetting,
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
+    >('/bot/deletebot', args);
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
+      return res;
+    }
+  });
+
+  const botRecoverMutate = useMutation(async (args: IBotSetting) => {
+    const res = await http.post<
+      IBotSetting,
+      AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
+    >('/bot/recoverbot', args);
+
+    if (res) {
+      queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
   });

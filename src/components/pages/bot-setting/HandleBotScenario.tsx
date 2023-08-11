@@ -31,9 +31,9 @@ export const HandleBotScenario = () => {
 
   const handleImportBotScenario = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const uploadFile = e.target.files![0];
+      const uploadFile = e.target.files && e.target.files[0];
       const SURPPORTED_FORMATS = ['application/json']; // json 확장자로 사용자 지정 파일 설정
-      if (SURPPORTED_FORMATS.includes(uploadFile.type)) {
+      if (uploadFile && SURPPORTED_FORMATS.includes(uploadFile.type)) {
         const res = await confirm({
           title: t('IMPORT_SCENARIO'),
           description: (
@@ -42,12 +42,12 @@ export const HandleBotScenario = () => {
             </p>
           ),
         });
-        if (res) {
-          botImportAsync({ file: uploadFile, botId: botSettingInfo!.id })
+        if (res && botSettingInfo && botId) {
+          botImportAsync({ file: uploadFile, botId: botSettingInfo.id })
             .then((res) => {
               console.log('botImportAsync data', res?.data);
               lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
-              refetchSessionToken(botId!);
+              refetchSessionToken(botId);
             })
             .catch((err) => {
               console.log('botImportAsync error', err);

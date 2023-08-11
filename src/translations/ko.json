@@ -571,7 +571,7 @@
     "CONNECT_CHANNEL_SUCCESS": "채널 연결 완료",
     "CONNECT_CHANNEL_SUCCESS_MESSAGE": "채널과 연결되었습니다.\n편집한 봇을 작동시키려면 '배포' 메뉴에서 채널 배포를 해주세요.",
     "DISCONNECT_CHANNEL": "연결 해제",
-    "DISCONNECT_CHANNEL_MESSAGE": "채널 연결을 해제하면 {{channel}} 채널에서 더 이상 챗봇이 동작하지 않습니다.\n채널 연결을 해제하시겠습니까?",
+    "DISCONNECT_CHANNEL_MESSAGE": "채널 연결을 해제하면 {{channel}} 채널에서\n더 이상 챗봇이 동작하지 않습니다.\n채널 연결을 해제하시겠습니까?",
     "DISCONNECT_CHANNEL_SUCCESS_MESSAGE": "채널 연결이 해제되었습니다.",
     "GO_TO_PARTNERS_CENTER": "파트너스 센터 가기",
     "NO_DELETE_BOT_ACCESS": "봇 삭제 권한 없음",

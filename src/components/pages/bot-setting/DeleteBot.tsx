@@ -50,8 +50,8 @@ export const DeleteBot = () => {
         title: t('RECOVER_BOT'),
         description: <p>{t('RECOVER_BOT_MESSAGE')}</p>,
       });
-      if (recoverConfirm) {
-        await botRecoverAsync({ botId: botSettingInfo!.id });
+      if (recoverConfirm && botSettingInfo) {
+        await botRecoverAsync({ botId: botSettingInfo.id });
         setActiveRecoverBtn(false);
       }
     }

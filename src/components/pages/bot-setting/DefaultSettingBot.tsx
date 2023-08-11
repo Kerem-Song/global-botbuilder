@@ -78,7 +78,7 @@ export const DefaultSettingBot = () => {
   const handleSaveBotName = async () => {
     const saveBotName = {
       botId: getValues('botId'),
-      botName: getValues('botName').trim(),
+      botName: getValues('botName')?.trim(),
     };
 
     const res = await botUpdateNameAsync({ ...saveBotName, customErrorCode: [7654] });

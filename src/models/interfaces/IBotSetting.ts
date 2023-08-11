@@ -4,18 +4,16 @@ import { IReq } from './req';
 
 export interface IBotSetting {
   botId: string;
-  botName: string;
+  botName?: string;
 }
 
 export interface IUpdateBotActivate extends IReq {
-  isActivate: boolean;
   botId: string;
+  isActivate: boolean;
 }
 
-export interface IUpdateChannelActivate {
-  isActivate: boolean;
+export interface IUpdateChannelActivate extends IUpdateBotActivate {
   isLive: boolean;
-  botId: string;
 }
 
 export interface IImportFlowGroup {
@@ -35,13 +33,6 @@ export interface IUpdateBotIcon {
 }
 
 export interface IResponseUpdateBotIcon {
-  exception: {
-    errorCode: number;
-    exceptionType: string;
-  };
-  isSuccess: boolean;
-  newToken: string;
   role: number;
   staffType: StaffType;
-  result: boolean;
 }
