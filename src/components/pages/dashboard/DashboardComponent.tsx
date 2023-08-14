@@ -2,6 +2,7 @@ import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
 import { useBotClient, useModalOpen, usePage } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
+import classNames from 'classnames';
 
 import { BotCard } from './BotCard';
 import { NewBotCard } from './NewBotCard';
@@ -48,7 +49,13 @@ export const DashboardComponent = () => {
       <p className="chatbot-wrap">
         <span className="my-chatbot">{t('MY_CHATBOT')}</span>
         &nbsp;
-        <span className="chatbot-count">{data?.length || 0}</span>
+        <span
+          className={classNames('chatbot-count', {
+            emptyBot: !data || data.length === 0,
+          })}
+        >
+          {data?.length || 0}
+        </span>
       </p>
       <Row gap={20}>
         {isFetching ? (

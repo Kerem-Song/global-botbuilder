@@ -17,7 +17,10 @@
     .chatbot-count {
       font-size: rem(16);
       font-weight: 700;
-      color: $gray300;
+      color: $primary700;
+      &.emptyBot {
+        color: $gray300;
+      }
     }
   }
 
