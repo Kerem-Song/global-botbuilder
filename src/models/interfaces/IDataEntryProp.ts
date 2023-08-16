@@ -3,7 +3,7 @@ export interface IDataEntryProp {
   disabled?: boolean;
   id?: string;
   name?: string;
-  value?: string | number;
+  value?: string;
   defaultValue?: string | number;
   isError?: boolean;
   required?: boolean;
