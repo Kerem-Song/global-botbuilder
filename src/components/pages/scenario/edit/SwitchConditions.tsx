@@ -69,7 +69,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 joinField.onChange(+e.target.value);
               }}
               ref={joinField.ref}
-              value={ConditionJoin.And}
+              value={String(ConditionJoin.And)}
             >
               <span>And</span>
             </Radio>
@@ -83,7 +83,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 joinField.onChange(+e.target.value);
               }}
               ref={joinField.ref}
-              value={ConditionJoin.Or}
+              value={String(ConditionJoin.Or)}
             >
               <span>Or</span>
             </Radio>
