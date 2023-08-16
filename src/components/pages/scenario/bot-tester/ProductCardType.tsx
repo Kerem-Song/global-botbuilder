@@ -52,12 +52,8 @@ export const ProductCardType: FC<IProductCardTypeProps> = ({
           <div className="productCardPrices">
             {item.price?.isShowDiscount && (
               <>
-                <div className="price">
-                  <p className="prevPrice">{item.price.retailDisplay}</p>
-                </div>
-                <div className="discount">
-                  <p className="discountAmount">{item.price.discountDisplay}</p>
-                </div>
+                <p className="prevPrice">{item.price.retailDisplay}</p>
+                <p className="discountAmount">{item.price.discountDisplay}</p>
               </>
             )}
             <div className="price">
