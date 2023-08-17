@@ -9,6 +9,7 @@ export * from './useNodeContextMenu';
 export * from './useNodeEditSave';
 export * from './useOutsideClick';
 export * from './usePage';
+export * from './usePanning';
 export * from './useRootState';
 export * from './useSystemModal';
 export * from './useUpdateLines';

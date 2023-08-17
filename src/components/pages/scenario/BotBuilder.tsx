@@ -10,16 +10,15 @@ import {
   useModalOpen,
   useNodeContextMenu,
   usePage,
+  usePanning,
   useRootState,
-  useScenarioClient,
 } from '@hooks';
 import { useScenarioBoardClient } from '@hooks/client/scenarioBoardClient';
 import { useAddArrow } from '@hooks/useAddArrow';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
-import { usePanning } from '@hooks/usePanning';
 import { useUpdateLines } from '@hooks/useUpdateLines';
-import { IArrow, INode, NODE_TYPES, NodeKind, NodeOption, TNodeTypes } from '@models';
+import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { CANVAS_LIMIT, ID_GEN, NODE_DRAG_FACTOR, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -34,9 +33,8 @@ import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
-import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Draggable, { DraggableEvent } from 'react-draggable';
+import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 

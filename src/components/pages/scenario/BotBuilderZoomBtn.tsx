@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
+import { SearchingNodeInput } from './SearchingNodeInput';
+
 export const BotBuilderZoomBtn = () => {
   const { t } = usePage();
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ export const BotBuilderZoomBtn = () => {
     useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
   const isHistoryViewer = useHistoryViewerMatch();
+  const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
+
   const handleZoomOut = () => {
     dispatch(zoomOut());
   };
@@ -91,6 +95,11 @@ export const BotBuilderZoomBtn = () => {
             />
           </Tooltip>
         </Col>
+        {import.meta.env.DEV && (
+          <Col className="searchingNodeInputWrapper">
+            <SearchingNodeInput nodes={nodes} />
+          </Col>
+        )}
       </Row>
     </Space>
   );
