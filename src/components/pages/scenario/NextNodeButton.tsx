@@ -1,5 +1,6 @@
 import { Button } from '@components';
 import { useRootState } from '@hooks';
+import { usePanning } from '@hooks/usePanning';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { NEXT_BUTTON_PREFIX, NODE_PREFIX } from '@modules';
 import { setGuideStartNode } from '@store/botbuilderSlice';
@@ -25,6 +26,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
   const isEditting = useRootState((state) => state.botBuilderReducer.isEditDrawerOpen);
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const { updateLine } = useUpdateLines();
+  const { dragPanning } = usePanning();
 
   const draggable = !isEditting || selected !== nodeId.replace(NODE_PREFIX, '');
   const StartDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -64,6 +66,8 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
       guide.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
     }
     updateLine(nodeId);
+
+    dragPanning(e);
   };
 
   return (

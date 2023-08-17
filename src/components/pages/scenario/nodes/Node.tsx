@@ -9,6 +9,7 @@ import {
   useRootState,
   useUpdateLines,
 } from '@hooks';
+import { usePanning } from '@hooks/usePanning';
 import { IArrow, INode, NodeOption } from '@models';
 import { NodeKind } from '@models/enum/NodeKind';
 import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
@@ -71,6 +72,9 @@ export const Node: FC<INodeProps> = ({
   const guideInfo = useRootState((state) => state.botBuilderReducer.guideInfo);
 
   const { updateLine } = useUpdateLines();
+
+  const { dragPanning } = usePanning();
+
   const wrapClass = classNames(className, 'luna-node', {
     'luna-node-bordered': bordered,
     'luna-node-hoverble': hoverable,
@@ -116,6 +120,7 @@ export const Node: FC<INodeProps> = ({
       }
       //updateLine(`${NODE_PREFIX}${id}`);
     }
+    dragPanning(e);
   };
 
   const popperMenu = getNodeMenu(typeName);
