@@ -99,11 +99,26 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
     }
   }, [hasIntentId?.data]);
 
-  const handleListBtn = () => {
+  const handleListBtn = async () => {
     if (isOpenUtteranceDetailPopup && handleClose && handleIsOpenUtterancePopup) {
-      handleClose();
-      handleIsOpenUtterancePopup(true);
-      removeUtteranceQueries();
+      if (!isActive) {
+        handleClose();
+        handleIsOpenUtterancePopup(true);
+        removeUtteranceQueries();
+      } else {
+        const result = await confirm({
+          title: tc('SAVE_CONFIRM_TITLE'),
+          description: (
+            <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
+          ),
+        });
+
+        if (result) {
+          handleClose();
+          handleIsOpenUtterancePopup(true);
+          removeUtteranceQueries();
+        }
+      }
     } else {
       navigate(`/${botId}/intent`);
       removeUtteranceQueries();
@@ -170,7 +185,6 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
     } else {
       lunaToast.success(tc('SAVE_MESSAGE'));
       setIsActive(false);
-
       return;
     }
   };
