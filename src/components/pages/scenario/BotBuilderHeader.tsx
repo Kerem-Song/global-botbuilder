@@ -402,11 +402,11 @@ export const BotBuilderHeader = () => {
             <Col className="btnWrapper">
               {buttonNodes
                 .filter((item) => {
-                  if (import.meta.env.PROD) {
-                    return item.value !== NODE_TYPES.CS_CENTER_SCENE_NODE;
-                  } else {
-                    return item;
-                  }
+                  // if (import.meta.env.PROD) {
+                  //   return item.value !== NODE_TYPES.CS_CENTER_SCENE_NODE;
+                  // } else {
+                  return item;
+                  // }
                 })
                 .map((item, i) => (
                   <Tooltip tooltip={item.nodeName} key={i}>
