@@ -241,7 +241,7 @@
     // 변수 탭
     .parameterTabWrapper {
       .settingEntityBtn {
-        padding: rem(10);
+        padding: rem(16) rem(12);
         button {
           width: 100%;
           border: 1px solid rgb(78, 132, 239);
@@ -251,6 +251,7 @@
       }
 
       .parameterWrapper {
+        border-top: 1px solid $gray200;
         padding: rem(12);
 
         .title {
@@ -278,7 +279,7 @@
               }
             }
             .parameterListItems {
-              max-height: calc(100vh - rem(250));
+              max-height: calc(100vh - rem(270));
               overflow-y: auto;
               .parameterItem {
                 width: 100%;
