@@ -105,7 +105,6 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
       setParameterInputError(t('DUPLICATE_VARIABLE_MESSAGE'));
     } else {
       lunaToast.success(tc('SAVE_MESSAGE'));
-      reset();
       handleClose();
     }
   };

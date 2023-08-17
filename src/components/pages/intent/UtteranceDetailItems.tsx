@@ -29,7 +29,6 @@ export const UtteranceDetailItems: FC<IUtteranceDetailItemsProps> = ({
 }) => {
   const { tc } = usePage();
   const { t } = useI18n('intentDetailPage');
-
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
   const { confirm } = useSystemModal();
   const { register, getValues, watch } = formMethods;
