@@ -6,7 +6,7 @@ import { lunaToast } from '@modules/lunaToast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { DeployingModal } from './DeployingModal';
+import { LoadingModal } from '../../modal/LoadingModal';
 
 export const DeployButtons = () => {
   const [activate, setActivate] = useState<boolean>();
@@ -94,7 +94,11 @@ export const DeployButtons = () => {
       >
         {t('DEPLOY_OPERATIONAL_CHANNEL')}
       </Button>
-      <DeployingModal isOpenDeployingModal={isDeployingBotIsLoading} isOp={isOp} />
+      <LoadingModal
+        isOpen={isDeployingBotIsLoading}
+        title={isOp ? 'DEPLOY_OPERATIONAL_CHANNEL' : 'DEPLOY_TEST_CHANNEL'}
+        desc={'DEPLOYING_MESSAGE'}
+      />
     </div>
   );
 };

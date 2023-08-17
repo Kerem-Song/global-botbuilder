@@ -30,6 +30,7 @@ import ReactLoading from 'react-loading';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
+import { LoadingModal } from '../../modal/LoadingModal';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 
 export const BotBuilderHeader = () => {
@@ -352,19 +353,6 @@ export const BotBuilderHeader = () => {
     return true;
   };
 
-  // useEffect(() => {
-  //   const builderMain = document.querySelector<HTMLDivElement>('.botBuilderMain');
-  //   if (scenarioSaving && builderMain) {
-  //     builderMain.style.opacity = '0.2';
-  //   }
-  //   return () => {
-  //     if (scenarioSaving && builderMain) {
-  //       builderMain.style.opacity = '1';
-  //     }
-  //     return;
-  //   };
-  // }, [scenarioSaving]);
-
   return (
     <>
       <div className="botBuilderHeader">
@@ -468,22 +456,11 @@ export const BotBuilderHeader = () => {
           <NodeEditDrawer />
         </form>
       </FormProvider>
-
-      <ReactModal
-        style={{ overlay: { display: 'flex' } }}
-        className="deployingModal"
+      <LoadingModal
         isOpen={scenarioSaving}
-      >
-        <div className="contents">
-          <ReactLoading type="spin" color="#4478FF" height={50} width={50} />
-          <div className="title">
-            <span>{t(`SCENARIO_SAVING_TITLE`)}</span>
-          </div>
-          <div className="text">
-            <p>{t(`SCENARIO_SAVING_DESC`)}</p>
-          </div>
-        </div>
-      </ReactModal>
+        title={`SCENARIO_SAVING_TITLE`}
+        desc={`SCENARIO_SAVING_DESC`}
+      />
     </>
   );
 };
