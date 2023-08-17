@@ -143,8 +143,8 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
 
   return (
     <ReactModal
-      style={{ overlay: { display: 'flex' } }}
-      className="parameterModal"
+      overlayClassName="parameterPopupOverlay"
+      className="parameterPopup"
       isOpen={isOpen}
       onRequestClose={handleClose}
     >
@@ -198,7 +198,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
             <Input {...register('defaultValue')} placeholder={t('INPUT_VARIABLE')} />
           </Col>
         </Row>
-        <Row justify="flex-end" className="parameterModalBtns">
+        <Row justify="flex-end" className="parameterPopupBtns">
           <Space>
             <Button className="min-w-100" onClick={handleClose}>
               {tc('CANCEL')}

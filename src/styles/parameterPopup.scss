@@ -1,4 +1,12 @@
-.parameterModal {
+.parameterPopupOverlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.parameterPopup {
   width: rem(600);
   height: fit-content;
   margin: auto;
@@ -12,7 +20,7 @@
   .parameterInfo {
     padding: rem(9) rem(20) rem(20) rem(20);
   }
-  .parameterModalBtns {
+  .parameterPopupBtns {
     padding: rem(0) rem(20) rem(20) rem(20);
   }
 }
