@@ -171,8 +171,8 @@ aside {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      border-radius: rem(4);
-      background-color: $gray100;
+      border-radius: rem(6);
+      background-color: $gray150;
 
       .botName {
         font-size: rem(16);
@@ -375,7 +375,7 @@ nav {
     border-radius: rem(6);
     
     &:hover {
-      background-color: $gray100;
+      background-color: $primary100;
     }
 
     .menuImg {
