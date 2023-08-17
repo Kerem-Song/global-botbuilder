@@ -1,3 +1,11 @@
+.entityPopupOverlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
 .entityModal {
   width: rem(1080);
   height: rem(652);
@@ -446,12 +454,4 @@
       }
     }
   }
-}
-
-.entityPopupOverlay {
-  display: flex;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
 }
