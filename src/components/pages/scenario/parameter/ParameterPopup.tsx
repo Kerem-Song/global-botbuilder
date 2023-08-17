@@ -15,7 +15,7 @@ import {
   PARAMETER_REGEX_NEXT_LETTER_AFTER_DOT,
 } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
@@ -42,6 +42,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
   const [totalParameterFormatList, setTotalParameterFormatList] =
     useState<IPararmeterFormatList[]>();
   const [parameterInputError, setParameterInputError] = useState<string>('');
+  const parameterNameRef = useRef<HTMLInputElement | null>(null);
   const reactSelectStyle = getReactSelectStyle<IPararmeterFormatList>({});
 
   const variableNameSchema = yup.object({
@@ -111,8 +112,15 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
 
   const handleClose = () => {
     handleIsOpen(false);
+    reset({ name: undefined });
     setParameterInputError('');
   };
+
+  useEffect(() => {
+    if (field.value === '' && parameterNameRef.current) {
+      parameterNameRef.current.focus();
+    }
+  }, [field.value]);
 
   useEffect(() => {
     if (parameterList?.id) {
@@ -146,7 +154,6 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
       overlayClassName="parameterPopupOverlay"
       className="parameterPopup"
       isOpen={isOpen}
-      onRequestClose={handleClose}
     >
       <div className="header">
         <Title level={4}>
@@ -165,7 +172,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
               showCount={parameterList && parameterList.name.length > 0 ? false : true}
               maxLength={50}
               placeholder={t('INPUT_VARIABLE_NAME_IN_ENGLISH')}
-              ref={field.ref}
+              ref={parameterNameRef}
               value={field.value || ''}
               onChange={handleParameterName}
               onBlur={field.onBlur}
