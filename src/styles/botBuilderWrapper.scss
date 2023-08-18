@@ -151,6 +151,24 @@
   }
 }
 
+.searchingNodeInputWrapper {
+  width: rem(250);
+
+  input {
+    height: rem(32);
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .botBuilderMain {
   padding-left: rem(12);
   height: 100%;

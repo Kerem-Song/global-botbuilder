@@ -385,7 +385,8 @@
     "SCENARIO_SAVING_TITLE": "시나리오 저장",
     "SCENARIO_SAVING_DESC": "시나리오 저장 중입니다. 잠시만 기다려주세요.",
     "LINE_STRAIGHT": "직선형",
-    "LINE_CURVE": "곡선형"
+    "LINE_CURVE": "곡선형",
+    "SEARCHING_NODE_INPUT_PLACEHOLDER": "검색할 노드 이름을 입력해주세요."
   },
   "INTENT": {
     "TITLE": "인텐트 관리",

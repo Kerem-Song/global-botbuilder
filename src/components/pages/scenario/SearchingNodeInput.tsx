@@ -1,9 +1,10 @@
 import { Autocomplete } from '@components/data-entry/Autocomplete';
-import { useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { INode } from '@models';
 import { useController, useForm } from 'react-hook-form';
 
 export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
+  const { t } = usePage();
   const { control, setValue } = useForm();
   const { field } = useController({ name: 'searchingNode', control });
 
@@ -14,7 +15,7 @@ export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
     <Autocomplete
       items={nodes}
       displayName="title"
-      placeholder={'input node name'}
+      placeholder={t(`SEARCHING_NODE_INPUT_PLACEHOLDER`)}
       defaultValue={nodes.find((x) => x.title === field.value)}
       onChangeValue={(value) => {
         setValue<string>('searchingNode', value?.title || '', { shouldDirty: true });
