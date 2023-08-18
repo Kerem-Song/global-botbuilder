@@ -14,6 +14,7 @@ import {
   icUtterance,
   icUtteranceSelected,
 } from '@assets';
+import { useRootState } from '@hooks';
 
 const getMenuItem = (
   id: number,
@@ -44,6 +45,8 @@ const menu = [
   getMenuItem(7, `setting`, 'setting', icSetting, icSettingSelected, 256),
 ];
 
-const subMenu = [getMenuItem(1, 'help', 'help', icHelp, icHelpSelected, 0)];
+const subMenu = [
+  getMenuItem(1, import.meta.env.VITE_HELP_URL, 'help', icHelp, icHelpSelected, 0),
+];
 
 export const menuModule = { menu, subMenu };

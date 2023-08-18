@@ -1,16 +1,15 @@
 import { Autocomplete } from '@components/data-entry/Autocomplete';
-import { usePage, usePanning, useRootState } from '@hooks';
+import { useRootState } from '@hooks';
 import { INode } from '@models';
 import { useController, useForm } from 'react-hook-form';
 
 export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
-  const { t } = usePage();
-
   const { control, setValue } = useForm();
   const { field } = useController({ name: 'searchingNode', control });
 
   const canvas = document.querySelector('.canvasWrapper') as HTMLDivElement;
   const scale = useRootState((state) => state.botBuilderReducer.scale);
+
   return (
     <Autocomplete
       items={nodes}

@@ -208,13 +208,15 @@ export const BotAside = () => {
                     offset={[59, -43]}
                     disable={sidebarStatus}
                   >
-                    <NavLink
+                    <a
+                      href={`${item.url}`}
                       key={item.id}
-                      to={`${item.url}`}
                       onClick={() => {
                         setPage(item.url);
                         dispatch(setSidebarClose());
                       }}
+                      target="_blank"
+                      rel="noreferrer"
                     >
                       <li className={page === item.url ? 'selected' : ''}>
                         <span className="menuImg">
@@ -226,7 +228,7 @@ export const BotAside = () => {
                         </span>
                         {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
                       </li>
-                    </NavLink>
+                    </a>
                   </Tooltip>
                 );
               })}
@@ -236,7 +238,7 @@ export const BotAside = () => {
               offset={[59, -43]}
               disable={sidebarStatus}
             >
-              <a href={partnersCenterUrl}>
+              <a href={partnersCenterUrl} target="_blank" rel="noreferrer">
                 <li className="partnerLnbBtn">
                   <span className="menuImg partnersCenterImg">
                     <img src={icPartnersCenter} alt="icPartnersCenter" />
