@@ -48,5 +48,5 @@ const menu = [
 const subMenu = [
   getMenuItem(1, import.meta.env.VITE_HELP_URL, 'help', icHelp, icHelpSelected, 0),
 ];
-console.log('@import.meta.env.VITE_HELP_URL', import.meta.env.VITE_HELP_URL);
+
 export const menuModule = { menu, subMenu };
