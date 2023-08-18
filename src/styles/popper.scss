@@ -121,7 +121,7 @@
 
 .lnbHeaderBotNamePopper {
   width: rem(220);
-  height: rem(192);
+  max-height: rem(192);
   padding: rem(12);
   .list-view-btn {
     height: rem(40);
