@@ -5,7 +5,7 @@ import { useController, useForm } from 'react-hook-form';
 
 export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
   const { t } = usePage();
-  const { control, setValue } = useForm();
+  const { control } = useForm();
   const { field } = useController({ name: 'searchingNode', control });
 
   const canvas = document.querySelector('.canvasWrapper') as HTMLDivElement;
@@ -18,8 +18,6 @@ export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
       placeholder={t(`SEARCHING_NODE_INPUT_PLACEHOLDER`)}
       defaultValue={nodes.find((x) => x.title === field.value)}
       onChangeValue={(value) => {
-        setValue<string>('searchingNode', value?.title || '', { shouldDirty: true });
-
         if (value) {
           canvas.style.left =
             -value.x + canvas.getBoundingClientRect().width / 2 - 200 / scale + 'px';
