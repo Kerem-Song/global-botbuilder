@@ -11,11 +11,11 @@ export interface IEntryRegistryProps {
   searchKeyword: string;
   formMethods: UseFormReturn<ISaveEntryGroup>;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
+  setIsEntriesDuplicateActive: Dispatch<SetStateAction<boolean>>;
   setIsSaveBtnActive: Dispatch<
     SetStateAction<{
       isActive: boolean;
-      isEntriesActive: boolean;
+      isEntriesDuplicateActive: boolean;
     }>
   >;
 }
@@ -24,7 +24,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
   searchKeyword,
   formMethods,
   setIsActive,
-  setIsEntriesActive,
+  setIsEntriesDuplicateActive,
   setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
@@ -94,7 +94,7 @@ export const EntriesRegistry: FC<IEntryRegistryProps> = ({
                       entriesRemove={remove}
                       searchKeyword={searchKeyword}
                       setIsActive={setIsActive}
-                      setIsEntriesActive={setIsEntriesActive}
+                      setIsEntriesDuplicateActive={setIsEntriesDuplicateActive}
                       setIsSaveBtnActive={setIsSaveBtnActive}
                       trigger={trigger}
                     />

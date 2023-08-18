@@ -12,11 +12,11 @@ export interface IAddSynonymBtnProps {
   representativeEntry?: string;
   synonym?: string[];
   setIsActive: (value: boolean) => void;
-  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
+  setIsEntriesDuplicateActive: Dispatch<SetStateAction<boolean>>;
   setIsSaveBtnActive: Dispatch<
     SetStateAction<{
       isActive: boolean;
-      isEntriesActive: boolean;
+      isEntriesDuplicateActive: boolean;
     }>
   >;
 }
@@ -27,7 +27,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
   synonym,
   representativeEntry,
   setIsActive,
-  setIsEntriesActive,
+  setIsEntriesDuplicateActive,
   setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
@@ -62,7 +62,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
     if (!value || !value.trim()) {
       setInputValue('');
       setInputVisible(false);
-      setIsEntriesActive(false);
+      setIsEntriesDuplicateActive(false);
       setIsActive(true);
       setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
       return;
@@ -73,14 +73,22 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         setIsActive(false);
-        setIsEntriesActive(true);
-        setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
+        setIsEntriesDuplicateActive(true);
+        setIsSaveBtnActive((prev) => ({
+          ...prev,
+          isActive: false,
+          isEntriesActive: true,
+        }));
       } else if (synonym?.find((x) => x.trim() === value.trim())) {
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         inputRef.current?.select();
         setIsActive(false);
-        setIsEntriesActive(true);
-        setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
+        setIsEntriesDuplicateActive(true);
+        setIsSaveBtnActive((prev) => ({
+          ...prev,
+          isActive: false,
+          isEntriesActive: true,
+        }));
       } else {
         append([value]);
         setInputValue('');
@@ -111,7 +119,11 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
                 searchKeyword,
               )}
             </span>
-            <button className="synonymDeleteBtn" onClick={() => handleDelete(i)}>
+            <button
+              className="synonymDeleteBtn"
+              type="button"
+              onClick={() => handleDelete(i)}
+            >
               <img src={icPopupClose} alt="delete button"></img>
             </button>
           </div>
@@ -128,7 +140,7 @@ export const AddSynonymBtn: FC<IAddSynonymBtnProps> = ({
           onBlur={() => handleInputConfirm(inputValue)}
           onClear={() => {
             setInputVisible(false);
-            setIsEntriesActive(false);
+            setIsEntriesDuplicateActive(false);
             setIsActive(true);
           }}
           onPressEnter={() => handleInputConfirm(inputValue)}

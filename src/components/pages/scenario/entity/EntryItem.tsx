@@ -22,11 +22,11 @@ export interface IEntityDetailItemProps {
   searchKeyword: string;
   entryGroup: FieldArrayWithId<ISaveEntryGroup, 'entries', 'id'>;
   setIsActive: (value: boolean) => void;
-  setIsEntriesActive: Dispatch<SetStateAction<boolean>>;
+  setIsEntriesDuplicateActive: Dispatch<SetStateAction<boolean>>;
   setIsSaveBtnActive: Dispatch<
     SetStateAction<{
       isActive: boolean;
-      isEntriesActive: boolean;
+      isEntriesDuplicateActive: boolean;
     }>
   >;
 }
@@ -38,7 +38,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
   searchKeyword,
   entryGroup,
   setIsActive,
-  setIsEntriesActive,
+  setIsEntriesDuplicateActive,
   setIsSaveBtnActive,
 }) => {
   const { t } = usePage();
@@ -82,16 +82,15 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
         entryNameRef.current?.select();
         lunaToast.error(t('DUPLICATE_MESSAGE'));
         setIsActive(false);
-        setIsEntriesActive(true);
+        setIsEntriesDuplicateActive(true);
         setIsSaveBtnActive((prev) => ({ ...prev, isEntriesActive: true }));
         setEditInputIndex(0);
         return;
       }
     }
-
-    setIsActive(true);
     setEditInputIndex(-1);
-    setIsEntriesActive(false);
+    setIsEntriesDuplicateActive(false);
+    setIsActive(true);
     setIsSaveBtnActive((prev) => ({ ...prev, isActive: true }));
     await trigger(`entries.${index}.representativeEntry`);
   };
@@ -167,7 +166,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
                     representativeEntry={field.value}
                     synonym={synonymField.value}
                     setIsActive={setIsActive}
-                    setIsEntriesActive={setIsEntriesActive}
+                    setIsEntriesDuplicateActive={setIsEntriesDuplicateActive}
                     setIsSaveBtnActive={setIsSaveBtnActive}
                   />
                 </div>

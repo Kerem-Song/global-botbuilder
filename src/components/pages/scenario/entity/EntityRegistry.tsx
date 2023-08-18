@@ -15,7 +15,7 @@ export interface IEntityRegistryProps {
   setIsSaveBtnActive: Dispatch<
     SetStateAction<{
       isActive: boolean;
-      isEntriesActive: boolean;
+      isEntriesDuplicateActive: boolean;
     }>
   >;
 }
@@ -68,7 +68,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
     if (nameField.value.length >= 0 && entityNameRef.current) {
       entityNameRef.current.focus();
     }
-  }, [field.value]);
+  }, [nameField.value]);
 
   return (
     <Card radius="normal" className="entityRegistryCard">

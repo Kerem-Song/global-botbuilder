@@ -38,13 +38,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   const [regexInputError, setRegexInputError] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [isEntriesActive, setIsEntriesActive] = useState<boolean>(false);
+  const [isEntriesDuplicateActive, setIsEntriesDuplicateActive] =
+    useState<boolean>(false);
   const [isSaveBtnActive, setIsSaveBtnActive] = useState({
     isActive: false,
-    isEntriesActive: false,
+    isEntriesDuplicateActive: false,
   });
 
-  usePrompt(isSaveBtnActive.isActive || isSaveBtnActive.isEntriesActive);
+  usePrompt(isSaveBtnActive.isActive || isSaveBtnActive.isEntriesDuplicateActive);
 
   const defaultValues: ISaveEntryGroup = {
     name: '',
@@ -95,7 +96,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       entryGroupid: entryGroupid,
     };
 
-    if (isActive || isEntriesActive) {
+    if (isActive) {
       const res = await entryGroupAsync({ ...saveEntry, customErrorCode: [7608] });
       if (res === 7608) {
         setEntryNameInputError(t('DUPLICATE_ENTRY_MESSAGE'));
@@ -103,14 +104,14 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
       } else {
         lunaToast.success(tc('SAVE_MESSAGE'));
         setIsActive(false);
-        setIsEntriesActive(false);
+        setIsEntriesDuplicateActive(false);
         return;
       }
     }
   };
 
   const handleListBtn = async () => {
-    if (!isActive && !isEntriesActive) {
+    if (!isActive && !isEntriesDuplicateActive) {
       handleResetEntryInfo();
       handleIsOpen(true);
       return;
@@ -128,7 +129,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
   };
 
   const handleClose = async () => {
-    if (!isActive && !isEntriesActive) {
+    if (!isActive && !isEntriesDuplicateActive) {
       handleResetEntryInfo();
       return;
     }
@@ -230,7 +231,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
                     formMethods={formMethods}
                     searchKeyword={searchKeyword}
                     setIsActive={setIsActive}
-                    setIsEntriesActive={setIsEntriesActive}
+                    setIsEntriesDuplicateActive={setIsEntriesDuplicateActive}
                     setIsSaveBtnActive={setIsSaveBtnActive}
                   />
                 )}
