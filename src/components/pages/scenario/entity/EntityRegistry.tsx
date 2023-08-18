@@ -1,7 +1,7 @@
 import { Card, Col, Input, Radio, Row, Space } from '@components';
 import { useEntityClient, usePage } from '@hooks';
 import { ISaveEntryGroup } from '@models';
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 import { useController, UseFormReturn } from 'react-hook-form';
 
 export interface IEntityRegistryProps {
@@ -41,6 +41,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
   const { field } = useController({ name: 'entries', control });
   const { field: isRegexField } = useController({ name: 'isRegex', control });
   const { field: nameField } = useController({ name: 'name', control });
+  const entityNameRef = useRef<HTMLInputElement | null>(null);
 
   const handleEntityName = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.indexOf(' ') > -1) {
@@ -63,6 +64,12 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (nameField.value.length >= 0 && entityNameRef.current) {
+      entityNameRef.current.focus();
+    }
+  }, [field.value]);
+
   return (
     <Card radius="normal" className="entityRegistryCard">
       <Space direction="vertical">
@@ -75,7 +82,7 @@ export const EntityRegistry: FC<IEntityRegistryProps> = ({
             <Input
               maxLength={45}
               showCount
-              ref={nameField.ref}
+              ref={entityNameRef}
               value={nameField.value}
               onChange={handleEntityName}
               isError={entryNameInputError || errors.name?.message ? true : false}
