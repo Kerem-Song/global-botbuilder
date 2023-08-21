@@ -25,6 +25,7 @@ import { lunaToast } from './lunaToast';
 const OVERFLOWLINK = 99999;
 
 const editableArrowNodeTypes: string[] = [
+  NODE_TYPES.TEXT_NODE,
   NODE_TYPES.INTENT_NODE,
   NODE_TYPES.ANSWER_NODE,
   NODE_TYPES.BASIC_CARD_NODE,
