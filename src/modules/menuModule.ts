@@ -41,7 +41,7 @@ const menu = [
   getMenuItem(2, `intent`, 'intent', icUtterance, icUtteranceSelected, 2),
   getMenuItem(4, `deployment`, 'deployment', icDeploy, icDeploySelected, 16),
   getMenuItem(5, `history`, 'history', icHistory, icHistorySelected, 32),
-  getMenuItem(6, `statistics`, 'statistics', icStatistics, icStatisticsSelected, 64),
+  // getMenuItem(6, `statistics`, 'statistics', icStatistics, icStatisticsSelected, 64),
   getMenuItem(7, `setting`, 'setting', icSetting, icSettingSelected, 256),
 ];
 
