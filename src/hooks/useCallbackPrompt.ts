@@ -26,7 +26,7 @@ export const useCallbackPrompt = (when: boolean) => {
         tc('SAVE_CONFIRM_MESSAGE'),
       );
       const result = await confirm({
-        title: tc('SAVE'),
+        title: tc('SAVE_CONFIRM_TITLE'),
         description: message,
       });
 
