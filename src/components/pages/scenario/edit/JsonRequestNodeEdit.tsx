@@ -182,7 +182,7 @@ export const JsonRequestNodeEdit = () => {
             required={true}
             {...register('view.url')}
             readOnly={isHistoryViewer}
-            maxLength={2055}
+            maxLength={2000}
           />
         </FormItem>
         <Divider style={{ margin: '32px 0' }} />

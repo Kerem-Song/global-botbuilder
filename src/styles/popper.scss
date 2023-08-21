@@ -78,6 +78,12 @@
     &:hover {
       background-color: $primary100;
     }
+
+    .items-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .luna-popup-list-focused {
     background-color: $primary100;
@@ -149,6 +155,19 @@
         color: $grayBlack;
         font-weight: 700;
       }
+    }
+  }
+}
+
+.nodeLinkPopUpMenuWrapper {
+  div:has(.luna-popup-list) {
+
+  }
+  .luna-popup-list {
+    width: 100%;
+
+    .items-name {
+      width: rem(168);
     }
   }
 }
