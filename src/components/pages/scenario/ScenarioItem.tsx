@@ -188,7 +188,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
         type: 'normal',
       },
     ]);
-  }, [selectedScenario]);
+  }, [selectedScenario, item]);
 
   return (
     <Card
