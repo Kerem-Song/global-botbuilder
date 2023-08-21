@@ -530,9 +530,15 @@
             }
           }
 
-          &.parameterClear {
-            max-height: rem(320);
-            overflow: hidden;
+          &.parameterClear {    
+            .dataCardDesc {
+              display: -webkit-box;
+              max-height: rem(320);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 19;
+            }
           }
         }
 

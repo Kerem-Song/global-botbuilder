@@ -121,6 +121,7 @@ export const useScenarioClient = () => {
         queryClient.invalidateQueries(['scenario', scenarioId]);
         queryClient.invalidateQueries(['variable-list', token]);
         queryClient.invalidateQueries(['variable-select-list', token]);
+        queryClient.invalidateQueries(['parameter-list', token]);
         dispatch(setUseMovingStartPoint(false));
         return res;
       } else {
