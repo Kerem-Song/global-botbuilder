@@ -126,6 +126,7 @@ export const useBotClient = () => {
     if (res.data.isSuccess) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       queryClient.invalidateQueries(['bot-list']);
+      queryClient.invalidateQueries(['bot-info', args.botId]);
     }
 
     return;
@@ -160,6 +161,7 @@ export const useBotClient = () => {
     if (res.data.isSuccess) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       queryClient.invalidateQueries(['bot-list']);
+      queryClient.invalidateQueries(['bot-info', args.botId]);
       return res;
     }
     return;
