@@ -42,7 +42,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     e.preventDefault();
     if (fields.length < CONDITION_LIMIT) {
       append({
-        op1: '',
+        op1: watch(`view.childrenViews.${nestedIndex}.items.${0}.op1`),
         operator: ConditionOperator.Is,
         op2: '',
       });
@@ -93,28 +93,32 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
       {fields.map((item, i) => (
         <div key={item.id}>
           <Space direction="vertical" className="m-b-12" gap={12}>
-            <div>
-              <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
-              <span className="required">*</span>
-            </div>
-            <Row justify="space-between">
-              <Col span={3}>
-                <p className="firstConditionIf">if</p>
-              </Col>
-              <Col span={21}>
-                <FormItem
-                  error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.op1}
-                >
-                  <VariableSelector
-                    placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
-                    control={control}
-                    path={`view.childrenViews.${nestedIndex}.items.${i}.op1`}
-                    maxLength={100}
-                  />
-                </FormItem>
-              </Col>
-            </Row>
-
+            {i === 0 && (
+              <>
+                {' '}
+                <div>
+                  <span>{t(`CONDITION_NODE_SET_CONDITION`)} </span>
+                  <span className="required">*</span>
+                </div>
+                <Row justify="space-between">
+                  <Col span={3}>
+                    <p className="firstConditionIf">if</p>
+                  </Col>
+                  <Col span={21}>
+                    <FormItem
+                      error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.op1}
+                    >
+                      <VariableSelector
+                        placeholder={t(`INPUT_VARIABLE_FIRST_CONDITION_PLACEHOLDER`)}
+                        control={control}
+                        path={`view.childrenViews.${nestedIndex}.items.${i}.op1`}
+                        maxLength={100}
+                      />
+                    </FormItem>
+                  </Col>
+                </Row>
+              </>
+            )}
             <FormItem
               error={errors.view?.childrenViews?.[nestedIndex]?.items?.[i]?.operator}
             >
