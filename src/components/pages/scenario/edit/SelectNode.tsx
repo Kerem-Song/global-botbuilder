@@ -1,8 +1,7 @@
 import { usePage, useRootState } from '@hooks';
-import { getReactSelectStyle, NODE_PREFIX } from '@modules';
+import { getReactSelectStyle, NODE_PREFIX, onMenuOpenScroller } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
-import { useEffect } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -25,7 +24,6 @@ export const SelectNode = ({
   const { t } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const reactSelectStyle = getReactSelectStyle({});
-
   const { control, resetField } = useFormContext();
   const { field } = useController({
     name: `${fieldName}`,
@@ -53,6 +51,7 @@ export const SelectNode = ({
   // useEffect(() => {
   //   resetField('view.nextNodeId');
   // }, [nodeId]);
+
   return (
     <Select
       className={classNames('react-selector', {
@@ -65,6 +64,7 @@ export const SelectNode = ({
       defaultValue={nodeList.find((item) => item.value === defaultValue)}
       value={nodeList.find((item) => item.value === field.value)}
       onChange={(options: any) => field.onChange(options?.value)}
+      onMenuOpen={onMenuOpenScroller}
     />
   );
 };

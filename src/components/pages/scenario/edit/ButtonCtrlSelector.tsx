@@ -1,6 +1,6 @@
 import { usePage } from '@hooks';
 import { ACTION_TYPES } from '@models/interfaces/res/IGetFlowRes';
-import { getReactSelectStyle } from '@modules';
+import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import { useController, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
@@ -36,6 +36,7 @@ export const ButtonCtrlSelector = ({ name, value }: IButtonCtrlSelectorProp) => 
         field.onChange(options?.value);
         setValue(value, '', { shouldDirty: true });
       }}
+      onMenuOpen={onMenuOpenScroller}
     />
   );
 };

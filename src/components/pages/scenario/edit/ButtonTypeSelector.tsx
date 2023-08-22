@@ -1,5 +1,5 @@
 import { usePage } from '@hooks';
-import { getReactSelectStyle } from '@modules';
+import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import { Dispatch, SetStateAction } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
@@ -53,6 +53,7 @@ export const ButtonTypeSelector = ({
         );
       }}
       minMenuHeight={500}
+      onMenuOpen={onMenuOpenScroller}
     />
   );
 };

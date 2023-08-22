@@ -1,6 +1,6 @@
 import { useI18n, usePage } from '@hooks';
 import { ConditionOperator, ConditionOperatorKeys } from '@models';
-import { getReactSelectStyle } from '@modules';
+import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -47,7 +47,7 @@ export const OperatorSelector = ({
       styles={reactSelectStyle}
       value={operatorOptions.find((item) => item.value === operatorField.value)}
       onChange={(options: any) => operatorField.onChange(options?.value)}
-      menuPortalTarget={document.body}
+      onMenuOpen={onMenuOpenScroller}
     />
   );
 };

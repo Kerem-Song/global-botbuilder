@@ -2,7 +2,7 @@ import { Collapse, Divider, FormItem, Space } from '@components';
 import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
-import { getReactSelectStyle } from '@modules';
+import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import classnames from 'classnames';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
@@ -60,6 +60,7 @@ export const RetryConditionNodeEdit = () => {
             value={countOptions.find((item) => item.value === field.value)}
             onChange={(options: any) => field.onChange(options?.value)}
             isSearchable={false}
+            onMenuOpen={onMenuOpenScroller}
           />
         </div>
         <div className="m-b-12">
