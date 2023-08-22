@@ -275,7 +275,7 @@ export const JsonRequestNodeEdit = () => {
             placeholder={t(`API_REQUEST_JSON_BODY_PLACEHOLDER`)}
             {...register('view.body')}
             readOnly={isHistoryViewer}
-            maxLength={65535}
+            maxLength={20000}
           />
         </FormItem>
         <Divider style={{ margin: '32px 0' }} />
