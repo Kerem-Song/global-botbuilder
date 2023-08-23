@@ -28,16 +28,7 @@ export const ManagementComponent = () => {
     if (!data) {
       return;
     }
-    setScenarioList(
-      data
-        .filter((x) => !x.isFallbackFlow && !x.isStartFlow)
-        .filter(
-          (x) =>
-            (!isActivated || x.activated) &&
-            (!searchKeyword ||
-              x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
-        ),
-    );
+    setScenarioList(data.filter((x) => !x.isFallbackFlow && !x.isStartFlow));
   }, [searchKeyword, isActivated, data]);
 
   useEffect(() => {
