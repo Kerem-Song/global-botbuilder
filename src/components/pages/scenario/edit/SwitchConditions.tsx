@@ -43,7 +43,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     if (fields.length < CONDITION_LIMIT) {
       append({
         op1: watch(`view.childrenViews.${nestedIndex}.items.${0}.op1`),
-        operator: ConditionOperator.Is,
+        operator: undefined,
         op2: '',
       });
     } else {
