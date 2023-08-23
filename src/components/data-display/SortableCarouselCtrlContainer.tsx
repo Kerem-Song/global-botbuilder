@@ -87,7 +87,7 @@ export const SoratbleCarouselCtrlContainer = ({
   }>[] = [
     {
       id: 'duplicate-carousel',
-      name: 'Duplication',
+      name: t(`DUPLICATION_SCEANRIO`),
       type: 'icon-front',
       icon: !isDisable ? icCardDuplication : icCardDuplicationDisabled,
       data: {
@@ -96,7 +96,7 @@ export const SoratbleCarouselCtrlContainer = ({
     },
     {
       id: 'delete-carosel',
-      name: 'Delete',
+      name: t(`DELETE`),
       type: 'icon-front',
       icon: icCardDelete,
       data: {
