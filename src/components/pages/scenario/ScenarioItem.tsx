@@ -48,8 +48,10 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
         flowId: item.id,
         activated: activated,
       });
-      if (res) {
-        lunaToast.success(tc('SAVE_MESSAGE'));
+      if (res?.data.result === true) {
+        lunaToast.success(t(`SCENARIO_ON_MESSAGE`));
+      } else {
+        lunaToast.success(t(`SCENARIO_OFF_MESSAGE`));
       }
     } else if (exception) {
       const result = await confirm({
