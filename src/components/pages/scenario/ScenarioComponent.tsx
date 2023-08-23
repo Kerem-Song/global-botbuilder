@@ -1,11 +1,9 @@
 import { useRootState } from '@hooks';
-import { useCallbackPrompt } from '@hooks/useCallbackPrompt';
 import { usePrompt } from '@hooks/usePrompt';
-import { initBotBuilder, setSelectedScenario } from '@store/botbuilderSlice';
+import { initBotBuilder } from '@store/botbuilderSlice';
 import { initNodes } from '@store/makingNode';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet, useParams } from 'react-router';
 import { ActionCreators } from 'redux-undo';
 
 import { Botbuilder } from './BotBuilder';

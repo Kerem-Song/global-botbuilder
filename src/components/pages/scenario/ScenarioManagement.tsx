@@ -82,6 +82,9 @@ export const ScenarioManagement: FC<{
                     selected: selectedScenarios?.id === item.id,
                   })}
                   onClick={() => {
+                    if (selectedScenarios?.id === item.id) {
+                      return;
+                    }
                     handleChangeSelectedScenario(item);
                   }}
                 >
