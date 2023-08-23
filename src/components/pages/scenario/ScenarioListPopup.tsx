@@ -160,7 +160,7 @@ export const ScenarioListPopup: FC<{
           <Col span={18}>
             <FormItem error={errors.scenarioName}>
               <Input
-                placeholder={t('SEARCH_SCEANRIO_INPUT_PLACEHOLDER')}
+                placeholder={t('INPUT_SCENARIO_NAME')}
                 {...register('scenarioName')}
                 maxLength={20}
                 showCount
