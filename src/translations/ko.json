@@ -203,6 +203,7 @@
     "SCENARIO_DELETE_LINK_MESSAGE": "{{scenario}}(와)과 연결된 시나리오가 있습니다.",
     "INPUT_SCENARIO_NAME": "시나리오 이름을 입력해 주세요.",
     "SCENARIO_OFF_TITLE": "시나리오 OFF",
+    "SCENARIO_OFF_MESSAGE": "시나리오가 OFF 되었습니다.",
     "SCENARIO_OFF_LINK_MESSAGE": "{{scenario}}(와)과 연결된 시나리오가 있습니다.",
     "PARAMETER_SET_LABEL": "파라미터",
     "PARAMETER_SET_VARIABLE": "입력 받을 메시지",
