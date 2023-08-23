@@ -531,9 +531,9 @@
           }
 
           &.parameterClear {    
-            .dataCardDesc {
+            .parameterClearVariables {
               display: -webkit-box;
-              max-height: rem(320);
+              max-height: rem(270);
               overflow: hidden;
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
