@@ -45,6 +45,7 @@ export const ButtonsEdit = ({
     watch,
     resetField,
     reset,
+    setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
 
@@ -86,8 +87,16 @@ export const ButtonsEdit = ({
   };
 
   useEffect(() => {
-    if (imageRatio === ImageAspectRatio.Square && fields.length === 3) {
-      handleDeleteButton(fields.length - 1);
+    if (imageRatio === ImageAspectRatio.Square) {
+      fields.length === 3 && handleDeleteButton(fields.length - 1);
+
+      if (isCarousel) {
+        watch(`view.childrenViews`)?.map((item, i) => {
+          if (item.buttons?.length === 3) {
+            setValue(`view.childrenViews.${i}.buttons`, item.buttons.slice(0, -1));
+          }
+        });
+      }
     }
   }, [imageRatio]);
 
