@@ -47,6 +47,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
 
   instance.interceptors.response.use(
     async function (response) {
+      console.log('@res data', response.data);
       if (response.data.newToken) {
         console.log('newToken', response.data);
         setCookie('RT', response.data.newToken);

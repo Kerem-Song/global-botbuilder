@@ -113,28 +113,30 @@ export const Collapse: FC<CollapseProps> = ({
     if (index !== undefined && childrenViewArr) {
       if (
         watch(`view.useImageCtrl`) === false &&
-        !watch(`view.childrenViews.${index}.imageCtrl.imageUrl`)
+        !watch(`view.childrenViews.${0}.imageCtrl.imageUrl`)
       ) {
         setValue(`view.useImageCtrl`, false);
+        console.log('@1', index, childrenViewArr);
       } else {
         setValue(`view.useImageCtrl`, true);
+        console.log('@2', index, childrenViewArr);
       }
     } else {
       if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-        // console.log('@3', index, childrenViewArr);
-        // console.log(
-        //   '@3 watch(`view.imageCtrl.imageUrl`)',
-        //   watch(`view.useImageCtrl`),
-        //   watch(`view.imageCtrl.imageUrl`),
-        // );
+        console.log('@3', index, childrenViewArr);
+        console.log(
+          '@3 watch(`view.imageCtrl.imageUrl`)',
+          watch(`view.useImageCtrl`),
+          watch(`view.imageCtrl.imageUrl`),
+        );
         setValue(`view.useImageCtrl`, false);
       } else {
-        // console.log('@4', index, childrenViewArr);
-        // console.log(
-        //   '@4 watch(`view.imageCtrl.imageUrl`)',
-        //   watch(`view.useImageCtrl`),
-        //   watch(`view.imageCtrl.imageUrl`),
-        // );
+        console.log('@4', index, childrenViewArr);
+        console.log(
+          '@4 watch(`view.imageCtrl.imageUrl`)',
+          watch(`view.useImageCtrl`),
+          watch(`view.imageCtrl.imageUrl`),
+        );
         setValue(`view.useImageCtrl`, true);
       }
     }
