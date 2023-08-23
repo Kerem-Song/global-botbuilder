@@ -33,7 +33,7 @@ export const TextNodeEdit = () => {
             required={true}
             showCount
             maxLength={1000}
-            placeholder="Input Text"
+            placeholder={t(`TEXT_INPUT_PLACEHOLDER`)}
             {...register('view.text')}
             textLength={watch(`view.text`)?.length || 0}
             readOnly={isHistoryViewer}

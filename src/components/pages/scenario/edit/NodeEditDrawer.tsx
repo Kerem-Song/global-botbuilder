@@ -136,7 +136,7 @@ export const NodeEditDrawer = () => {
               <InputWithTitleCounter
                 label={t(`CHAT_SCENARIO_NAME`)}
                 required={true}
-                placeholder="Input Chat Bubble name"
+                placeholder={t(`CHAT_BUBBLE_NAME_PLACEHOLDER`)}
                 disabled
                 readOnly
                 value={selectedScenario?.alias}
@@ -145,7 +145,7 @@ export const NodeEditDrawer = () => {
               <InputWithTitleCounter
                 label={t(`CHAT_BUBBLE_NAME`)}
                 required={true}
-                placeholder="Input Chat Bubble name"
+                placeholder={t(`CHAT_BUBBLE_NAME_PLACEHOLDER`)}
                 {...register('title')}
                 showCount
                 maxLength={100}
