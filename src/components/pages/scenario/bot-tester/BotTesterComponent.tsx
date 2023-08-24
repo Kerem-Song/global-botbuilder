@@ -179,6 +179,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
                       <TesterMessagesItem
                         item={item}
                         onClick={(debugMeta) => setDebugMeta(debugMeta)}
+                        handleRefresh={handleRefresh}
                       />
                     )}
                   </div>
