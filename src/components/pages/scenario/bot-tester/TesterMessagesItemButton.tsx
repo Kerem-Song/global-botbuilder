@@ -1,7 +1,9 @@
 import { useBotTesterClient } from '@hooks/client/botTesterClient';
 import { useRootState } from '@hooks/useRootState';
 import {
+  IBotTester,
   IHasClassNameNStyle,
+  IHasResult,
   IQuickRepliesContent,
   ISendMessage,
   ITesterButton,
@@ -52,7 +54,7 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    const res = await botTesterMutateAsync(sendLunaNodeLink);
+    const res = (await botTesterMutateAsync(sendLunaNodeLink)) as IHasResult<IBotTester>;
 
     if (res.isSuccess) {
       const updateTesterData = res.result?.messages || [];
@@ -86,7 +88,9 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    const res = await botTesterMutateAsync(sendActValueIsUttr);
+    const res = (await botTesterMutateAsync(
+      sendActValueIsUttr,
+    )) as IHasResult<IBotTester>;
 
     if (res.isSuccess) {
       const updateTesterData = res.result?.messages || [];
@@ -120,7 +124,7 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    const res = await botTesterMutateAsync(sendlblIsUttr);
+    const res = (await botTesterMutateAsync(sendlblIsUttr)) as IHasResult<IBotTester>;
 
     if (res.isSuccess) {
       const updateTesterData = res.result?.messages || [];
