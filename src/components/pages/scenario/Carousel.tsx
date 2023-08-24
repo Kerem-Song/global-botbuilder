@@ -140,9 +140,14 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
             );
           })}
           {!isHistoryViewer && (
-            <div style={{ width: '166px', flex: 'none' }}>
-              <div style={{ width: '190px' }}>
-                <Button block onClick={addCarousel} style={{ border: 'none' }}>
+            <div style={{ width: '166px', flex: 'none' }} tabIndex={-1}>
+              <div style={{ width: '190px' }} tabIndex={-1}>
+                <Button
+                  block
+                  onClick={addCarousel}
+                  style={{ border: 'none' }}
+                  tabIndex={-1}
+                >
                   {t(`ADD_CAHTBUBBLE_BTN`)}
                 </Button>
               </div>
