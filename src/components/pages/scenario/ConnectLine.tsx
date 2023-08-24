@@ -229,6 +229,7 @@ export const ConnectLine: FC<IConnectLineProps> = ({
             console.log('@#@#@#arrow drag start');
             e.dataTransfer.setData('id', startId);
             e.dataTransfer.setData('pointType', type);
+
             if (updateKey) {
               e.dataTransfer.setData('nodeId', updateKey ?? startId);
             }

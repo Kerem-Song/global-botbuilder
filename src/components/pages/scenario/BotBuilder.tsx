@@ -222,7 +222,11 @@ export const Botbuilder = () => {
     const isNodeBottom = e.dataTransfer.getData('isDraggedNodeBottom');
 
     if (!cardType) {
-      isNodeBottom === 'true' && setIsDraggedNodeBottom(true);
+      if (isNodeBottom === 'true') {
+        setIsDraggedNodeBottom(true);
+      } else {
+        setIsDraggedNodeBottom(false);
+      }
       handleIsOpen(true);
       setPopUpPosition({
         x: Math.round(e.clientX / scale) - canvasRect.left,
@@ -243,6 +247,7 @@ export const Botbuilder = () => {
 
       return;
     }
+
     setIsDraggedNodeBottom(false);
     const nodeName = e.dataTransfer.getData('nodeName') as string;
     const nodeView = nodeDefaultHelper.createDefaultView(cardType);

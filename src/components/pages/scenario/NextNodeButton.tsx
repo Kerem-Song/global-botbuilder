@@ -43,6 +43,7 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
     e.dataTransfer.setData('pointType', type);
     e.dataTransfer.setData('isNext', '1');
     e.dataTransfer.setData('isDraggedNodeBottom', 'false');
+
     dispatch(
       setGuideStartNode({
         startId: `${NEXT_BUTTON_PREFIX}${ctrlId}`,
