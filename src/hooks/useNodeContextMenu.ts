@@ -43,6 +43,7 @@ export const useNodeContextMenu = ({
     dispatch(setIsHandleCutCard(true));
     dispatch(setClipBoard(node));
     dispatch(removeItem(node.id));
+    dispatch(setSelected());
   };
 
   const handlePasteCard = ({ x, y }: { x: number; y: number }) => {
