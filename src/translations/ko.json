@@ -93,7 +93,10 @@
     "DEBUG_HEADER": "테스트 정보",
     "SCENARIO_NAME": "시나리오명",
     "CHATBUBBLE_NAME": "말풍선명",
-    "DISCOUNT": "할인"
+    "DISCOUNT": "할인",
+    "CS_CENTER_SCENE_TITLE": "상담원 연결",
+    "CS_CENTER_SCENE_DESC": "상담원 연결로 전환시 봇 테스트하기에서는 테스트 진행이 어렵습니다.\n상담 테스트는 파트너스센터에서 테스트 채널 연결 후 테스트 채널에서 확인해주세요.",
+    "RESTART_BOT_TESTER": "테스트 다시 시작"
   },
   "SCENARIO": {
     "TITLE": "시나리오",

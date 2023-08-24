@@ -120,6 +120,60 @@
         }
       }
 
+      .csCenterSceneWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: rem(16);
+
+        .csCenterSceneDivider {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: rem(13);
+          color: $gray500;
+          .divider {
+            min-width: rem(139);
+            max-width: rem(190);
+            border: 1px dashed $gray500;
+          }
+          .csCenterSceneTitle {
+            padding: 0 rem(5);
+            color: $gray500;
+          }
+        }
+
+        .csCenterScene {
+          width: rem(264);
+          min-height: rem(143);
+          display: flex;
+          flex-direction: column;
+          background-color: $grayWhite;
+          padding: rem(12);
+          border-radius: rem(16);
+          justify-content: space-between;
+          border: 1px solid $tester-bg;
+
+          .csCenterScenceDesc {
+            white-space: pre-line;
+          }
+          .csCenterButton {
+            width: rem(240);
+            padding: rem(9) rem(14);
+            border: none;
+            border-radius: rem(8);
+            background-color: #dbdee5;
+            color: $grayBlack;
+            cursor: pointer;
+            &:hover {
+              background-color: #75767a;
+            }
+          }
+          &:hover {
+            border: 1px solid $primary500;
+          }
+        }
+      }
+
       .productCardContainer {
         width: 100%;
         position: relative;

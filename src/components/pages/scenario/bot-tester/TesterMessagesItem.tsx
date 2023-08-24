@@ -15,6 +15,7 @@ import { TextCardType } from './TextCardType';
 export interface TesterProps {
   item: ITesterDataType;
   onClick: (debugMeta?: ITesterDebugMeta) => void;
+  handleRefresh: () => Promise<void>;
 }
 
 export const TesterMessagesItem = ({ item, onClick }: TesterProps) => {
