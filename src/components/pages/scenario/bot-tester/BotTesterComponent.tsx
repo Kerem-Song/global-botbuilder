@@ -2,6 +2,8 @@ import { Button, Input } from '@components';
 import { useI18n, useRootState } from '@hooks';
 import { useBotTesterClient } from '@hooks';
 import {
+  IBotTester,
+  IHasResult,
   IQuickRepliesContent,
   ISendMessage,
   ITesterDataType,
@@ -83,20 +85,28 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
 
     dispatch(setTesterData([newMessage]));
 
-    const res = await botTesterMutateAsync(sendMessage);
+    const result = await botTesterMutateAsync({
+      ...sendMessage,
+      customErrorCode: [7617],
+    });
 
-    if (res.isSuccess) {
-      const updateTesterData = res.result?.messages || [];
-      if (res.result?.quickReplies) {
-        const quickpRepliesContent: IQuickRepliesContent = {
-          quickReplies: res.result?.quickReplies,
-          type: TESTER_DATA_TYPES.quickReplies,
-        };
-        updateTesterData.push(quickpRepliesContent);
-        setText('');
-      }
-      dispatch(setTesterData(updateTesterData));
+    if (typeof result === 'number' && result === 7617) {
+      setText('');
+      return;
     }
+
+    const res = result as IHasResult<IBotTester>;
+    const { messages, quickReplies } = res.result;
+
+    const updateTesterData: ITesterDataType[] = messages || [];
+    if (quickReplies) {
+      const quickRepliesContent: IQuickRepliesContent = {
+        quickReplies,
+        type: TESTER_DATA_TYPES.quickReplies,
+      };
+      updateTesterData.push(quickRepliesContent);
+    }
+    dispatch(setTesterData(updateTesterData));
     setText('');
   };
 

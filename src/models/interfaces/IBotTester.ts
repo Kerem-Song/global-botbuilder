@@ -1,3 +1,5 @@
+import { IReq } from './req';
+
 export interface ITesterMeta {
   endGetBotRunnerUTC: string;
   endCreateResponseUTC: string;
@@ -70,7 +72,7 @@ export interface IBotTester {
 }
 
 // mutation
-export interface ISendMessage {
+export interface ISendMessage extends IReq {
   sessionToken?: string;
   lunaMessage: {
     id: string;
