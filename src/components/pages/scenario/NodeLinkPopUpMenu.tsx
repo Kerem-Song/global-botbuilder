@@ -103,6 +103,18 @@ export const NodeLinkPopUpMenu = ({
       nodeKind: NodeKind.CommandNode,
     },
     {
+      className: 'icParameterClear',
+      value: NODE_TYPES.PARAMETER_CLEAR_NODE,
+      nodeName: t(`CAPTION_PARAMETERCLEARNODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
+      className: 'icCS',
+      value: NODE_TYPES.CS_CENTER_SCENE_NODE,
+      nodeName: t(`CAPTION_CSCENTERSCENENODE`),
+      nodeKind: NodeKind.CommandNode,
+    },
+    {
       className: 'icJsonRequest',
       value: NODE_TYPES.JSON_REQUEST_NODE,
       nodeName: t(`NODE_LINK_POPUP_MENU_JSON_REQUEST_NODE`),
@@ -125,18 +137,6 @@ export const NodeLinkPopUpMenu = ({
       value: NODE_TYPES.DATA_PRODUCT_CARD_NODE,
       nodeName: t(`NODE_LINK_POPUP_MENU_DATA_PRODUCT_CARD_NODE`),
       nodeKind: NodeKind.InputNode,
-    },
-    {
-      className: 'icParameterClear',
-      value: NODE_TYPES.PARAMETER_CLEAR_NODE,
-      nodeName: t(`CAPTION_PARAMETERCLEARNODE`),
-      nodeKind: NodeKind.CommandNode,
-    },
-    {
-      className: 'icCS',
-      value: NODE_TYPES.CS_CENTER_SCENE_NODE,
-      nodeName: t(`CAPTION_CSCENTERSCENENODE`),
-      nodeKind: NodeKind.CommandNode,
     },
   ];
 
