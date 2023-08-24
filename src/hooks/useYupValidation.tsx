@@ -190,7 +190,7 @@ export const useYupValidation = () => {
         }
         return true;
       })
-      .max(99999999, t(`PRODUCT_NODE_SET_PRICE_MAXIMUM`, { max: 99999999 }))
+      .max(99999999.99, t(`PRODUCT_NODE_SET_PRICE_MAXIMUM`, { max: 99999999.99 }))
       .transform((value, originalValue) => {
         return Number.isNaN(originalValue) ? '' : Number(value);
       })
