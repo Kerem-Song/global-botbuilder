@@ -131,10 +131,10 @@ export const CarouselOrderPopup: FC<{
         ref={caroPopupRef}
       >
         <Row justify="space-between" align="center" className="titleWrapper">
-          <Col>
+          <Col span={22}>
             <p className="carouselTitle">{node.title}</p>
           </Col>
-          <Col>
+          <Col span={2}>
             <Button shape="ghost" onClick={handleClose} className="closeBtn">
               <img src={icClosed} alt="icClosed" />
             </Button>
