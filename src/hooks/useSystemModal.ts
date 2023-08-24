@@ -8,6 +8,7 @@ export interface IInfoModal {
   title: ReactNode;
   description?: ReactNode;
   afterFocusInput?: HTMLInputElement;
+  isReload?: boolean;
 }
 
 export const useSystemModal = () => {
@@ -39,7 +40,13 @@ export const useSystemModal = () => {
           description: args.description,
           confirmButton: tc('OK'),
           callbackFunc: () => {
-            resolve(true);
+            if (args.isReload === true) {
+              // 봇 생성시 설정 권한 해제되었을 때 페이지 새로고침 실행
+              window.location.reload();
+              resolve(true);
+            } else {
+              resolve(true);
+            }
           },
           closeFunc: () => {
             resolve(true);

@@ -1,4 +1,4 @@
-import { IHasResult } from '@models';
+import { IException, IHasResult } from '@models';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -18,7 +18,15 @@ export const useBotTesterClient = () => {
       sendMessage,
     );
 
-    return res.data;
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
+      return res.data;
+    }
   });
 
   const refreshBotTesterMutate = useMutation(
