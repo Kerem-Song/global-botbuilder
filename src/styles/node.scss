@@ -16,11 +16,14 @@
 
   &:hover {
     border: rem(2) solid $primary200;
+    padding: rem(11) rem(11) rem(23) rem(11);
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
   &-active {
     border: rem(2) solid $primary200;
+    padding: rem(11) rem(11) rem(23) rem(11);
+
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
@@ -29,6 +32,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border: rem(2) solid rgba(255, 73, 117, 0.5);
+    padding: rem(11) rem(11) rem(23) rem(11);
     box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.15);
   }
 
@@ -107,7 +111,7 @@
       &[data-icon='icQuickBtn'] {
         background-image: url('@assets/icons/ic_quick_btn.svg');
       }
-      
+
       &[data-icon='icCondition'] {
         background-image: url('@assets/icons/ic_condition.svg');
       }
@@ -486,8 +490,8 @@
           background-color: $gray100;
           border: rem(1) solid $gray200;
           border-radius: rem(8);
-          
-          p {         
+
+          p {
             span {
               white-space: nowrap;
               text-overflow: ellipsis;
@@ -526,11 +530,11 @@
               max-height: rem(18);
               overflow: hidden;
               text-overflow: ellipsis;
-              white-space: nowrap
+              white-space: nowrap;
             }
           }
 
-          &.parameterClear {    
+          &.parameterClear {
             .parameterClearVariables {
               display: -webkit-box;
               max-height: rem(270);
