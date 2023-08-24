@@ -65,6 +65,7 @@ export const NewBotPopup: FC<{
             {tc('NEW_BOT_CARD_AUTH_ERROR_DESC')}
           </span>
         ),
+        isReload: true,
       });
     } else {
       handleIsOpen(false);
