@@ -1,6 +1,6 @@
 import { icEmptyBot } from '@assets';
 import { Button, Card, Col, Input, Row, Skeleton } from '@components';
-import { useBotClient, useModalOpen, usePage } from '@hooks';
+import { useBotClient, useModalOpen, usePage, useRootState } from '@hooks';
 import { useInputState } from '@hooks/useInputState';
 import classNames from 'classnames';
 
@@ -12,6 +12,8 @@ export const DashboardComponent = () => {
   const { value: searchKeyword, onChange } = useInputState();
   const { isOpen, handleIsOpen } = useModalOpen();
   const { t } = usePage();
+  const role = useRootState((state) => state.userInfoReducer.role);
+  const staffType = useRootState((state) => state.userInfoReducer.staffType);
 
   const { getBotListQuery, botSaveAsync } = useBotClient();
   const { data, isFetching } = getBotListQuery();
@@ -34,6 +36,8 @@ export const DashboardComponent = () => {
 
     return false;
   };
+
+  console.log('staffType role', staffType, role);
 
   return (
     <div className="dashboard-wrap">

@@ -2,7 +2,7 @@ import { useI18n } from '@hooks';
 import { FC } from 'react';
 
 export interface ICsCenterSceneNodeTypeProps {
-  handleRefresh: () => Promise<void>;
+  handleRefresh?: () => Promise<void>;
 }
 
 export const CsCenterSceneNodeType: FC<ICsCenterSceneNodeTypeProps> = ({
@@ -14,9 +14,9 @@ export const CsCenterSceneNodeType: FC<ICsCenterSceneNodeTypeProps> = ({
   return (
     <div className="csCenterSceneWrapper">
       <div className="csCenterSceneDivider">
-        <div className="divider" />
+        <div className="halfDivider" />
         <span className="csCenterSceneTitle">{t('CS_CENTER_SCENE_TITLE')}</span>
-        <div className="divider" />
+        <div className="halfDivider" />
       </div>
       <div className="csCenterScene">
         <div className="csCenterScenceDesc">{t('CS_CENTER_SCENE_DESC')}</div>
@@ -25,7 +25,7 @@ export const CsCenterSceneNodeType: FC<ICsCenterSceneNodeTypeProps> = ({
         </button>
       </div>
       <div className="csCenterSceneDivider">
-        <div>--------------------------------------------------------------</div>
+        <div className="divider" />
       </div>
     </div>
   );

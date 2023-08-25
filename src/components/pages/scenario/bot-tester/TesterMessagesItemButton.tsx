@@ -35,26 +35,39 @@ export const TesterMessagesItemButton = ({
   const webLinkUrl = item.postback?.webLinkUrl;
   const dispatch = useDispatch();
 
-  const handleNodeUrl = async () => {
-    const replyNodeLink: ITesterDataType = {
-      value: item.label,
+  console.log('actionType', actionType);
+
+  const handleLinkWebUrl = () => {
+    const url = webLinkUrl?.startsWith('http') ? webLinkUrl : `https://${webLinkUrl}`;
+    window.open(url);
+  };
+
+  const handleButtonClick = async () => {
+    const testerDataType: ITesterDataType = {
+      value: actionType === 'actValueIsUttr' ? item.postback.actValueIsUttr : item.label,
       isMe: true,
       type: 'text',
     };
-    dispatch(setTesterData([replyNodeLink]));
 
-    const sendLunaNodeLink: ISendMessage = {
+    dispatch(setTesterData([testerDataType]));
+
+    const sendMessage: ISendMessage = {
       sessionToken: token,
       lunaMessage: {
-        id: 'lunaNodeLink',
+        id: actionType === 'lunaNodeRedirect' ? 'lunaNodeLink' : actionType,
         postback: item.postback,
-        lunaNode: {
-          value: lunaNodeLink,
+        [actionType === 'lunaNodeRedirect' ? 'lunaNode' : 'utterance']: {
+          value:
+            actionType === 'linkWebUrl'
+              ? item.postback.webLinkUrl
+              : actionType === 'lunaNodeRedirect'
+              ? lunaNodeLink
+              : item.label,
         },
       },
     };
 
-    const res = (await botTesterMutateAsync(sendLunaNodeLink)) as IHasResult<IBotTester>;
+    const res = (await botTesterMutateAsync(sendMessage)) as IHasResult<IBotTester>;
 
     if (res.isSuccess) {
       const updateTesterData = res.result?.messages || [];
@@ -69,155 +82,29 @@ export const TesterMessagesItemButton = ({
     }
   };
 
-  const handleActValueIsUttr = async () => {
-    const actValueIsUttr: ITesterDataType = {
-      value: item.postback.actValueIsUttr,
-      isMe: true,
-      type: 'text',
-    };
-    dispatch(setTesterData([actValueIsUttr]));
-
-    const sendActValueIsUttr: ISendMessage = {
-      sessionToken: token,
-      lunaMessage: {
-        id: 'actValueIsUttr',
-        utterance: {
-          value: item.postback.actValueIsUttr,
-        },
-        postback: item.postback,
-      },
-    };
-
-    const res = (await botTesterMutateAsync(
-      sendActValueIsUttr,
-    )) as IHasResult<IBotTester>;
-
-    if (res.isSuccess) {
-      const updateTesterData = res.result?.messages || [];
-      if (res.result?.quickReplies) {
-        const quickpRepliesContent: IQuickRepliesContent = {
-          quickReplies: res.result?.quickReplies,
-          type: TESTER_DATA_TYPES.quickReplies,
-        };
-        updateTesterData.push(quickpRepliesContent);
-      }
-      dispatch(setTesterData(updateTesterData));
-    }
-  };
-
-  const handlelblIsUttr = async () => {
-    const lblIsUttr: ITesterDataType = {
-      value: item.label,
-      isMe: true,
-      type: 'text',
-    };
-    dispatch(setTesterData([lblIsUttr]));
-
-    const sendlblIsUttr: ISendMessage = {
-      sessionToken: token,
-      lunaMessage: {
-        id: 'lblIsUttr',
-        utterance: {
-          value: item.label,
-        },
-        postback: item.postback,
-      },
-    };
-
-    const res = (await botTesterMutateAsync(sendlblIsUttr)) as IHasResult<IBotTester>;
-
-    if (res.isSuccess) {
-      const updateTesterData = res.result?.messages || [];
-      if (res.result?.quickReplies) {
-        const quickpRepliesContent: IQuickRepliesContent = {
-          quickReplies: res.result?.quickReplies,
-          type: TESTER_DATA_TYPES.quickReplies,
-        };
-        updateTesterData.push(quickpRepliesContent);
-      }
-      dispatch(setTesterData(updateTesterData));
-    }
-  };
-
-  const itemButton = classNames(className, 'luna-testerItem-btn', {
+  const buttonClassName = classNames(className, 'luna-testerItem-btn', {
     'luna-testerItem-quickReplyBtn': quickReply,
   });
 
-  if (actionType === 'linkWebUrl') {
-    return (
-      <button
-        className={itemButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          if (webLinkUrl?.startsWith('http')) {
-            window.open(webLinkUrl);
-          } else {
-            window.open(`https://${webLinkUrl}`);
-          }
-        }}
-      >
-        {quickReply ? (
-          item.label
-        ) : (
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            {item.label.substring(0, 30)}
-          </MultiClamp>
-        )}
-      </button>
-    );
-  } else if (actionType === 'actValueIsUttr') {
-    return (
-      <button
-        className={itemButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          handleActValueIsUttr();
-        }}
-      >
-        {quickReply ? (
-          item.label
-        ) : (
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            {item.label.substring(0, 30)}
-          </MultiClamp>
-        )}
-      </button>
-    );
-  } else if (actionType === 'lblIsUttr') {
-    return (
-      <button
-        className={itemButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          handlelblIsUttr();
-        }}
-      >
-        {quickReply ? (
-          item.label
-        ) : (
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            {item.label.substring(0, 30)}
-          </MultiClamp>
-        )}
-      </button>
-    );
-  } else {
-    return (
-      <button
-        className={itemButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          handleNodeUrl();
-        }}
-      >
-        {quickReply ? (
-          item.label
-        ) : (
-          <MultiClamp clamp={1} ellipsis={'...'}>
-            {item.label.substring(0, 30)}
-          </MultiClamp>
-        )}
-      </button>
-    );
-  }
+  return (
+    <button
+      className={buttonClassName}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (actionType === 'linkWebUrl') {
+          handleLinkWebUrl();
+        } else {
+          handleButtonClick();
+        }
+      }}
+    >
+      {quickReply ? (
+        item.label
+      ) : (
+        <MultiClamp clamp={1} ellipsis={'...'}>
+          {item.label.substring(0, 30)}
+        </MultiClamp>
+      )}
+    </button>
+  );
 };
