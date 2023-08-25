@@ -50,15 +50,15 @@ export const ProductCardNodeEdit = () => {
     setValue(`view.salePrice`, salePrice || 0, { shouldDirty: true });
   }, [salePrice]);
 
-  useEffect(() => {
-    if (!watch(`view.discountAmount`)) {
-      setValue(
-        `view.discountAmount`,
-        watch(`view.retailPrice`) - watch(`view.salePrice`) || 0,
-        { shouldDirty: true },
-      );
-    }
-  }, [salePrice]);
+  // useEffect(() => {
+  //   if (!watch(`view.discountAmount`)) {
+  //     setValue(
+  //       `view.discountAmount`,
+  //       watch(`view.retailPrice`) - watch(`view.salePrice`) || 0,
+  //       { shouldDirty: true },
+  //     );
+  //   }
+  // }, [salePrice]);
 
   return (
     <>

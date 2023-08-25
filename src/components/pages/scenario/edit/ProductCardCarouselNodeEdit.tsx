@@ -52,9 +52,9 @@ export const ProductCardCarouselNodeEdit = () => {
     trigger(`view.childrenViews.${index}.${price}`);
   };
 
-  // useEffect(() => {
-  //   resetField(`view.childrenViews.${index}.currencyUnit`, { keepDirty: true });
-  // }, [index]);
+  useEffect(() => {
+    resetField(`view.childrenViews.${index}.currencyUnit`, { keepDirty: true });
+  }, [index]);
 
   const salePrice =
     Number(watch(`view.childrenViews.${index}.retailPrice`)) -
@@ -62,23 +62,23 @@ export const ProductCardCarouselNodeEdit = () => {
       ? Number(watch(`view.childrenViews.${index}.discountAmount`))
       : 0);
 
-  useEffect(() => {
-    setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
-      shouldDirty: true,
-    });
-  }, [salePrice]);
+  // useEffect(() => {
+  //   setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
+  //     shouldDirty: true,
+  //   });
+  // }, [salePrice]);
 
-  useEffect(() => {
-    if (watch(`view.childrenViews`)?.length === index) {
-      return;
-    }
-    setValue(
-      `view.childrenViews.${index}.discountAmount`,
-      watch(`view.childrenViews.${index}.retailPrice`) -
-        watch(`view.childrenViews.${index}.salePrice`) || 0,
-      { shouldDirty: true },
-    );
-  }, [watch(`view.childrenViews.${index}.discountAmount`)]);
+  // useEffect(() => {
+  //   if (watch(`view.childrenViews`)?.length === index) {
+  //     return;
+  //   }
+  //   setValue(
+  //     `view.childrenViews.${index}.discountAmount`,
+  //     watch(`view.childrenViews.${index}.retailPrice`) -
+  //       watch(`view.childrenViews.${index}.salePrice`) || 0,
+  //     { shouldDirty: true },
+  //   );
+  // }, [watch(`view.childrenViews.${index}.discountAmount`)]);
 
   // useEffect(() => {
   //   if (!watch(`view.childrenViews.${index}.retailPrice`)) {
