@@ -452,7 +452,7 @@ export const BotBuilderHeader = () => {
         </div>
       </div>
       <FormProvider {...formMethods}>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()} className="nodeEditDrawerForm">
           <NodeEditDrawer />
         </form>
       </FormProvider>
