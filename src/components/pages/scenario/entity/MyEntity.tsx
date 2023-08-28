@@ -3,6 +3,7 @@ import { Button, Col, Input, Row, Title } from '@components';
 import { usePage, useRootState, useSystemModal } from '@hooks';
 import { useEntityClient } from '@hooks/client/entityClient';
 import { IDeleteEntryGroup, IPagingItems, IResponseEntryItems } from '@models';
+import { lunaToast } from '@modules/lunaToast';
 import { util } from '@modules/util';
 import { InfiniteData } from '@tanstack/react-query';
 import { FC, useEffect, useState } from 'react';
@@ -23,7 +24,7 @@ export const MyEntity: FC<IMyEntityProps> = ({
   handleIsOpenEntityDetailPopup,
   handleIsOpen,
 }) => {
-  const { t } = usePage();
+  const { t, tc } = usePage();
   const { changePageNumberQuery, entryGroupDeleteAsync } = useEntityClient();
   const { confirm } = useSystemModal();
   const token = useRootState((state) => state.botInfoReducer.token);
@@ -55,6 +56,7 @@ export const MyEntity: FC<IMyEntityProps> = ({
 
       if (res && res.isSuccess) {
         console.log('res', res);
+        lunaToast.success(tc('DELETE_MESSAGE'));
       }
     }
   };
