@@ -16,6 +16,7 @@ export const Switch = forwardRef<HTMLInputElement, ISwitchProps>((args, ref) => 
         role="switch"
         ref={ref}
         onClick={(e) => e.stopPropagation()}
+        checked={args.checked}
       />
     </label>
   );

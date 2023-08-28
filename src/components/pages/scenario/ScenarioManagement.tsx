@@ -56,7 +56,6 @@ export const ScenarioManagement: FC<{
       scenarioListRef.current.scrollHeight > scenarioListRef.current.clientHeight &&
         setIsOverflow(true);
     }
-
     return () => {
       setIsOverflow(false);
     };
@@ -66,7 +65,7 @@ export const ScenarioManagement: FC<{
     <div className="scenarioTabWrapper">
       <div className="openedScenarioOption">
         <p>{t(`ACTIVE_SCENARIOS_SWITCH`)}</p>
-        <Switch onChange={handleSwitch} />
+        <Switch checked={isActivated} onChange={handleSwitch} />
       </div>
 
       <div className="basicScenarioWrapper">
