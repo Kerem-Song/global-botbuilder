@@ -38,12 +38,15 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
   const token = useRootState((state) => state.botInfoReducer.token);
   const { parameterAsync, getParameterFormatsQuery } = useParameterClient();
   const { data: parameterFormats } = getParameterFormatsQuery();
-  const [parameterFormat, setParameterFormat] = useState<number>();
+  const [parameterFormat, setParameterFormat] = useState<number | null>();
   const [totalParameterFormatList, setTotalParameterFormatList] =
     useState<IPararmeterFormatList[]>();
   const [parameterInputError, setParameterInputError] = useState<string>('');
   const parameterNameRef = useRef<HTMLInputElement | null>(null);
   const reactSelectStyle = getReactSelectStyle<IPararmeterFormatList>({});
+  const formatList = parameterFormats?.result.map((x) => {
+    return { value: x.formatType, label: x.example };
+  });
 
   const variableNameSchema = yup.object({
     name: yup
@@ -95,7 +98,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
         id: parameterList?.id,
         name: variable.name,
         defaultValue: variable.defaultValue,
-        formatType: parameterFormat!,
+        formatType: parameterFormat,
       },
     };
 
@@ -122,25 +125,22 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
   }, [field.value]);
 
   useEffect(() => {
-    if (parameterList?.id) {
+    if (!parameterList?.id) {
+      reset({ name: '' });
+      setParameterFormat(null);
+    } else {
       const parameterValue = {
         id: parameterList.id,
         name: parameterList.name,
         defaultValue: parameterList.defaultValue,
-        formatType: parameterList.formatType!,
+        formatType: parameterList.formatType,
       };
       reset(parameterValue);
-      setParameterFormat(parameterList.formatType!);
-    } else if (isOpen) {
-      reset({ name: '' });
-      setParameterFormat(undefined);
+      setParameterFormat(parameterList.formatType);
     }
   }, [parameterList?.id, isOpen]);
 
   useEffect(() => {
-    const formatList = parameterFormats?.result.map((x) => {
-      return { value: x.formatType, label: x.example };
-    });
     const totalFormatList: IPararmeterFormatList[] = [
       { value: 0, label: t('VARIABLE_FORMAT_PLACEHOLDER') },
       ...(formatList ? formatList : []),
@@ -189,11 +189,9 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
               options={totalParameterFormatList}
               styles={reactSelectStyle}
               placeholder={t('VARIABLE_FORMAT_PLACEHOLDER')}
-              value={
-                totalParameterFormatList?.find((x) => x.value === parameterFormat) || null
-              }
+              value={formatList?.find((x) => x.value === parameterFormat) || null}
               onChange={(newOption) => {
-                setParameterFormat(newOption?.value);
+                setParameterFormat(newOption?.value || null);
               }}
             />
           </Col>

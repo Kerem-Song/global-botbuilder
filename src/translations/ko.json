@@ -119,7 +119,7 @@
     "VARIABLE_VALUE": "값",
     "MODIFY_VARIABLE": "변수 수정",
     "VARIABLE_FORMAT": "변수 포맷",
-    "VARIABLE_FORMAT_PLACEHOLDER": "변수 포맷을 선택해주세요.",
+    "VARIABLE_FORMAT_PLACEHOLDER": "-----선택해 주세요-----",
     "DELETE_VARIABLE": "변수 삭제",
     "DELETE_VARIABLE_MESSAGE": "삭제한 데이터는 복구할 수 없습니다.\n정말 삭제하시겠습니까?",
     "DELETE_USING_VARIABLE_MESSAGE": "현재 시나리오에서 사용하고 있는 변수입니다.\n사용 중인 변수는 삭제해도 시나리오 저장 시 재생성됩니다.\n정말 삭제하시겠습니까?",

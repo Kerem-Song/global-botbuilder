@@ -15,7 +15,7 @@ export interface IParameterList {
 export interface ISaveParameterData {
   name: string;
   defaultValue: string | null;
-  formatType: number;
+  formatType?: number | null;
   id?: string;
 }
 
@@ -45,7 +45,7 @@ export interface IGetParameterFormats {
 }
 
 export interface IPararmeterFormatList {
-  value: number;
+  value?: number | null;
   label: string;
 }
 
