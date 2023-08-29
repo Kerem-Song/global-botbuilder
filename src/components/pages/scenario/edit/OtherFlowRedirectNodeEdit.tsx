@@ -1,4 +1,5 @@
 import { FormItem, Input } from '@components/data-entry';
+import { Collapse } from '@components/general';
 import { Space } from '@components/layout';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
@@ -74,33 +75,29 @@ export const OtherFlowRedirectNodeEdit = () => {
   }, [data]);
 
   return (
-    <div className="node-item-wrap">
-      <div className="m-b-12">
-        <Space direction="vertical" gap={12}>
-          <div className="m-b-12">
-            <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE_SET`)} </span>
-            <span className="required">*</span>
-          </div>
-          {isHistoryViewer ? (
-            handleNodeHistoryViewer()
-          ) : (
-            <FormItem error={errors.nextNodeId}>
-              <Select
-                className="react-selector"
-                {...field}
-                options={scenarioList}
-                placeholder={t(`SET_OPTION_NULL`)}
-                styles={reactSelectStyle}
-                defaultValue={scenarioList.find(
-                  (item) => item.value === values.nextNodeId,
-                )}
-                value={scenarioList.find((item) => item.value === field.value)}
-                onChange={(options: any) => field.onChange(options?.value)}
-              />
-            </FormItem>
-          )}
-        </Space>
+    <Collapse label={t(`OTHER_FLOW_REDIRECT_NODE_SET`)} useSwitch={true}>
+      <div>
+        <div className="m-b-12">
+          <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE`)} </span>
+          <span className="required">*</span>
+        </div>
+        {isHistoryViewer ? (
+          handleNodeHistoryViewer()
+        ) : (
+          <FormItem error={errors.nextNodeId}>
+            <Select
+              className="react-selector"
+              {...field}
+              options={scenarioList}
+              placeholder={t(`SET_OPTION_NULL`)}
+              styles={reactSelectStyle}
+              defaultValue={scenarioList.find((item) => item.value === values.nextNodeId)}
+              value={scenarioList.find((item) => item.value === field.value)}
+              onChange={(options: any) => field.onChange(options?.value)}
+            />
+          </FormItem>
+        )}
       </div>
-    </div>
+    </Collapse>
   );
 };
