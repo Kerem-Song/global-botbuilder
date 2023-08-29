@@ -3,7 +3,11 @@ import { Tooltip } from '@components';
 import { useI18n, useRootState } from '@hooks';
 import { useOutsideClick } from '@hooks/useOutsideClick';
 import { menuModule } from '@modules/menuModule';
-import { setSidebarClose, setSidebarStatus } from '@store/sidebarStatusSlice';
+import {
+  setSidebarClose,
+  setSidebarPopstate,
+  setSidebarStatus,
+} from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,7 +16,6 @@ import { NavLink } from 'react-router-dom';
 export const Aside = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState<string>();
-
   const { i18n, ts } = useI18n();
   const sidebarStatus = useRootState((state) => state.sideBarStatusReducer.isOpen);
   const brandId = useRootState((state) => state.brandInfoReducer.brandId);
@@ -25,6 +28,11 @@ export const Aside = () => {
 
   useOutsideClick(sidebarRef, () => {
     dispatch(setSidebarClose());
+  });
+
+  window.addEventListener('popstate', () => {
+    const newSidebarStatus = false;
+    dispatch(setSidebarPopstate(newSidebarStatus));
   });
 
   return (
