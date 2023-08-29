@@ -60,7 +60,6 @@ export const Aside = () => {
           </div>
         </NavLink>
       </div>
-
       <div className="subMenuWrapper">
         <nav className="subMenu">
           <ul>
@@ -74,10 +73,13 @@ export const Aside = () => {
                   offset={[59, -43]}
                   disable={sidebarStatus}
                 >
-                  <NavLink
-                    key={item.id}
-                    to={`${item.url}`}
-                    onClick={() => setPage(item.url)}
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => {
+                      setPage(item.url);
+                    }}
                   >
                     <li className={page === item.url ? 'selected' : ''}>
                       <span className="menuImg">
@@ -89,7 +91,7 @@ export const Aside = () => {
                       </span>
                       {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
                     </li>
-                  </NavLink>
+                  </a>
                 </Tooltip>
               );
             })}
@@ -99,7 +101,7 @@ export const Aside = () => {
               offset={[59, -43]}
               disable={sidebarStatus}
             >
-              <a href={partnersCenterUrl} target='="_blank'>
+              <a href={partnersCenterUrl} target="_blank" rel="noreferrer">
                 <li className="partnerLnbBtn">
                   <span className="menuImg partnersCenterImg">
                     <img src={icPartnersCenter} alt="icPartnersCenter" />
