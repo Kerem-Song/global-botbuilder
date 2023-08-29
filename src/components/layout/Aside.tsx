@@ -99,7 +99,7 @@ export const Aside = () => {
               offset={[59, -43]}
               disable={sidebarStatus}
             >
-              <a href={partnersCenterUrl}>
+              <a href={partnersCenterUrl} target='="_blank'>
                 <li className="partnerLnbBtn">
                   <span className="menuImg partnersCenterImg">
                     <img src={icPartnersCenter} alt="icPartnersCenter" />
