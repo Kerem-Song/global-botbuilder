@@ -31,7 +31,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   handleClose,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, tc } = usePage();
+  const { navigate, setNavigateUrl, tc } = usePage();
   const { t } = useI18n('intentDetailPage');
   const { botId } = useParams();
   const {
@@ -45,7 +45,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   const token = useRootState((state) => state.botInfoReducer.token);
   const intentNameRef = useRef<HTMLInputElement | null>(null);
   const utteranceRef = useRef<HTMLInputElement>(null);
-  const { confirm, error } = useSystemModal();
+  const { info, confirm, error } = useSystemModal();
   const selectedScenarios = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -183,8 +183,12 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         });
       }
     } else {
+      //await info({ description: tc('SAVE_MESSAGE'), title: '' });
       lunaToast.success(tc('SAVE_MESSAGE'));
       setIsActive(false);
+      if (!itemData.intentId && !isOpenUtteranceDetailPopup) {
+        setNavigateUrl(`/${botId}/intent/detail/${res}`);
+      }
       return;
     }
   };

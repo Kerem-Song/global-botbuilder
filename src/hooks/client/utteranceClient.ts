@@ -141,7 +141,7 @@ export const useUtteranceClient = () => {
 
     if (res.data.isSuccess) {
       queryClient.removeQueries([UTTERNACE_LIST_KEY]);
-      return res.data;
+      return res.data.result;
     }
     return;
   });
