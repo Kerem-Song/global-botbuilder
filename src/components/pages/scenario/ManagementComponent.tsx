@@ -24,6 +24,12 @@ export const ManagementComponent = () => {
     setScenarioTab(value);
   };
 
+  const filteredScenarios = scenarioList?.filter(
+    (x) =>
+      (!isActivated || x.activated) &&
+      (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
+  );
+
   useEffect(() => {
     if (!data) {
       return;
@@ -48,7 +54,11 @@ export const ManagementComponent = () => {
       <div className="scenarioName">
         <p>
           {scenarioTab ? t('SCENARIO') : t('VARIABLE')}
-          {scenarioTab ? <span>{scenarioList?.length + 2}</span> : null}
+          {scenarioTab && !isActivated ? (
+            <span>{scenarioList?.length + 2}</span>
+          ) : (
+            <span>{filteredScenarios.length + 2}</span>
+          )}
         </p>
         <div className="scenarioNameTabs">
           <div
