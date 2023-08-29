@@ -1,4 +1,6 @@
+import { Role } from '@models';
+
 export interface IHandle {
   title: string;
-  role: number;
+  role: Role;
 }

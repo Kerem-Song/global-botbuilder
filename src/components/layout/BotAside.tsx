@@ -196,7 +196,6 @@ export const BotAside = () => {
               .filter(
                 (x) =>
                   staffType === StaffType.Administrator ||
-                  x.role === StaffType.Administrator ||
                   (role !== undefined && (x.role & role) === x.role),
               )
               .map((item) => {

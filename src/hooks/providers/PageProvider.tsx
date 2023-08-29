@@ -1,6 +1,6 @@
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
-import { StaffType } from '@models';
+import { Role, StaffType } from '@models';
 import { IHandle } from '@models/interfaces/IHandle';
 import { util } from '@modules/util';
 import { i18n } from 'i18next';
@@ -35,7 +35,7 @@ export const PageProvider: FC<IPageProps> = ({ pageName, isReadOnly, children })
   const matches = useMatches();
   const userInfo = useRootState((state) => state.userInfoReducer);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
-  const role = userInfo.role || StaffType.Administrator;
+  const role = userInfo.role || Role.None;
   const localeNavigate = (to: To, options?: NavigateOptions) => {
     if (typeof to === 'string') {
       navigate(`/${i18n.language}/${brandInfo.brandId}${to}`, options);

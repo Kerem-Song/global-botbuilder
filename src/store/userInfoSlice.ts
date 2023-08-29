@@ -1,4 +1,4 @@
-import { IBotModel, StaffType } from '@models';
+import { IBotModel, Role, StaffType } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IUserInfo {
@@ -6,7 +6,7 @@ export interface IUserInfo {
   loginId?: string;
   companyName?: string;
   staffType?: StaffType;
-  role?: number;
+  role?: Role;
 }
 
 const initialState: IUserInfo = {

@@ -115,13 +115,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
               title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
               description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
             }).then(() => {
-              console.log('logout');
-              dispatch(setToken({ refreshToken: 'logout' }));
-              const clientPrev = encodeURI(`${brandInfo.brandId}`);
-              console.log(clientPrev);
-              window.location.href = `${
-                import.meta.env.VITE_LOGIN_URL
-              }?clientPrev=${clientPrev}&clientType=${import.meta.env.VITE_CLIENT_TYPE}`;
+              document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
             });
           } else {
             error({
