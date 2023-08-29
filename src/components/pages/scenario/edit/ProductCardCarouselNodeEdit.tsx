@@ -197,29 +197,6 @@ export const ProductCardCarouselNodeEdit = () => {
                   <div className="m-b-12">
                     <Collapse label={t(`PRODUCT_NODE_INFO_SETTING`)} useSwitch={false}>
                       <Space direction="vertical" gap={12}>
-                        <FormItem
-                          error={
-                            errors.view &&
-                            errors.view.childrenViews &&
-                            errors.view.childrenViews[index]?.description
-                          }
-                        >
-                          <InputWithTitleCounter
-                            label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
-                            showCount={true}
-                            maxLength={40}
-                            required={true}
-                            {...register(`view.childrenViews.${index}.description`)}
-                            textLength={
-                              watch(`view.childrenViews.${index}.description`)?.length ||
-                              0
-                            }
-                            isLight={true}
-                            readOnly={isHistoryViewer}
-                            placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
-                          />
-                        </FormItem>
-
                         <Row justify="space-between" gap={4}>
                           <Col span={16} className="retailPrice">
                             <FormItem
@@ -265,7 +242,6 @@ export const ProductCardCarouselNodeEdit = () => {
                             </FormItem>
                           </Col>
                         </Row>
-
                         <FormItem
                           error={errors.view?.childrenViews?.[index]?.discountAmount}
                         >
@@ -283,6 +259,28 @@ export const ProductCardCarouselNodeEdit = () => {
                             maxLength={11}
                             isLight={true}
                             readOnly={isHistoryViewer}
+                          />
+                        </FormItem>
+                        <FormItem
+                          error={
+                            errors.view &&
+                            errors.view.childrenViews &&
+                            errors.view.childrenViews[index]?.description
+                          }
+                        >
+                          <InputWithTitleCounter
+                            label={t(`PRODUCT_NODE_SET_PRODUCT_NAME`)}
+                            showCount={true}
+                            maxLength={40}
+                            required={true}
+                            {...register(`view.childrenViews.${index}.description`)}
+                            textLength={
+                              watch(`view.childrenViews.${index}.description`)?.length ||
+                              0
+                            }
+                            isLight={true}
+                            readOnly={isHistoryViewer}
+                            placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                           />
                         </FormItem>
                         {/* <FormItem
