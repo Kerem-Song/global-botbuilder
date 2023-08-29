@@ -326,7 +326,7 @@ export const JsonRequestNodeEdit = () => {
                   {...register(`view.responseMapping.${i}.key`)}
                   readOnly={isHistoryViewer}
                   className="m-b-12"
-                  maxLength={50}
+                  maxLength={20000}
                   isLight={true}
                 />
               </FormItem>
