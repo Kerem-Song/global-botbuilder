@@ -4,6 +4,7 @@ import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { usePopper } from 'react-popper';
 
@@ -179,53 +180,56 @@ export const Popper = <T extends object>({
       >
         {children}
       </div>
-      <div
-        role="presentation"
-        className={popperContainer}
-        ref={popperElement}
-        style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
-        onMouseLeave={handleLazyHide}
-        onMouseEnter={handleMouseOver}
-        onMouseDown={(e) => {
-          // e.preventDefault();
-          e.stopPropagation();
-        }}
-        {...attributes.popper}
-      >
-        {popperItems?.some((item) => item.type === 'search') ? (
-          <>
-            <Input
-              placeholder="Input search text"
-              search
-              onSearch={(data) => {
-                onSearch(data as string);
-              }}
-              onChange={(e) => {
-                setUserInput(e.currentTarget.value);
-              }}
-              value={userInput || ''}
+      {ReactDOM.createPortal(
+        <div
+          role="presentation"
+          className={popperContainer}
+          ref={popperElement}
+          style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
+          onMouseLeave={handleLazyHide}
+          onMouseEnter={handleMouseOver}
+          onMouseDown={(e) => {
+            // e.preventDefault();
+            e.stopPropagation();
+          }}
+          {...attributes.popper}
+        >
+          {popperItems?.some((item) => item.type === 'search') ? (
+            <>
+              <Input
+                placeholder="Input search text"
+                search
+                onSearch={(data) => {
+                  onSearch(data as string);
+                }}
+                onChange={(e) => {
+                  setUserInput(e.currentTarget.value);
+                }}
+                value={userInput || ''}
+              />
+            </>
+          ) : null}
+          {items?.map((item: IPopperItem<T>) => (
+            <PopperListItem
+              key={item.id}
+              item={item}
+              popupList={popupList}
+              handleSelect={handleSelect}
+              className={classNames({ disable: item.type === 'disable' })}
             />
-          </>
-        ) : null}
-        {items?.map((item: IPopperItem<T>) => (
-          <PopperListItem
-            key={item.id}
-            item={item}
-            popupList={popupList}
-            handleSelect={handleSelect}
-            className={classNames({ disable: item.type === 'disable' })}
-          />
-        ))}
-        {popperSelect?.map((item: IPopperSelectItem<T>) => (
-          <PopperSelectItem
-            key={item.id}
-            item={item}
-            popupList={popupList}
-            handleSelect={handleSelect}
-            checked={item.id === selected}
-          />
-        ))}
-      </div>
+          ))}
+          {popperSelect?.map((item: IPopperSelectItem<T>) => (
+            <PopperSelectItem
+              key={item.id}
+              item={item}
+              popupList={popupList}
+              handleSelect={handleSelect}
+              checked={item.id === selected}
+            />
+          ))}
+        </div>,
+        document.querySelector('body')!,
+      )}
     </div>
   );
 };
