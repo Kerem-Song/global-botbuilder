@@ -35,8 +35,6 @@ export const TesterMessagesItemButton = ({
   const webLinkUrl = item.postback?.webLinkUrl;
   const dispatch = useDispatch();
 
-  console.log('actionType', actionType);
-
   const handleLinkWebUrl = () => {
     const url = webLinkUrl?.startsWith('http') ? webLinkUrl : `https://${webLinkUrl}`;
     window.open(url);
@@ -67,19 +65,27 @@ export const TesterMessagesItemButton = ({
       },
     };
 
-    const res = (await botTesterMutateAsync(sendMessage)) as IHasResult<IBotTester>;
+    const result = await botTesterMutateAsync({
+      ...sendMessage,
+      customErrorCode: [7617],
+    });
 
-    if (res.isSuccess) {
-      const updateTesterData = res.result?.messages || [];
-      if (res.result?.quickReplies) {
-        const quickpRepliesContent: IQuickRepliesContent = {
-          quickReplies: res.result?.quickReplies,
-          type: TESTER_DATA_TYPES.quickReplies,
-        };
-        updateTesterData.push(quickpRepliesContent);
-      }
-      dispatch(setTesterData(updateTesterData));
+    if (typeof result === 'number' && result === 7617) {
+      return;
     }
+
+    const res = result as IHasResult<IBotTester>;
+    const { messages, quickReplies } = res.result;
+
+    const updateTesterData: ITesterDataType[] = messages || [];
+    if (quickReplies) {
+      const quickRepliesContent: IQuickRepliesContent = {
+        quickReplies,
+        type: TESTER_DATA_TYPES.quickReplies,
+      };
+      updateTesterData.push(quickRepliesContent);
+    }
+    dispatch(setTesterData(updateTesterData));
   };
 
   const buttonClassName = classNames(className, 'luna-testerItem-btn', {
