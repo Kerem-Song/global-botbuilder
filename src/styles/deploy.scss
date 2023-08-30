@@ -82,6 +82,7 @@
             width: rem(187);
             height: rem(32);
             word-wrap: break-word;
+            word-break: break-all;
           }
           .status {
             min-width: rem(141);
@@ -107,6 +108,7 @@
             width: rem(187);
             text-align: left;
             word-wrap: break-word;
+            word-break: break-all;
             &.empty {
               height: fit-content;
             }
@@ -248,6 +250,7 @@
           width: calc(100% - rem(126));
           margin-left: rem(10);
           word-wrap: break-word;
+          word-break: break-all;
           .success {
             width: fit-content;
             padding: rem(2) rem(6);
