@@ -94,10 +94,10 @@ export interface ICheckDuplicateIntent {
 }
 
 export interface IResponseCheckDuplication {
-  result: null;
+  result: string;
   exception: IException;
   isSuccess: boolean;
-  newToken: null;
+  newToken: string;
 }
 
 export interface IResponseCheckUtteranceDuplication extends IResponse {

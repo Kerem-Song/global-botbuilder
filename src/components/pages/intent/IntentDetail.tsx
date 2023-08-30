@@ -22,6 +22,7 @@ export interface IIntentDetailProps {
   isOpenUtteranceDetailPopup?: boolean;
   handleIsOpenUtterancePopup?: (value: boolean) => void;
   handleClose?: () => void;
+  handleSetIntentId?: (intentId: string) => void;
 }
 
 export const IntentDetail: FC<IIntentDetailProps> = ({
@@ -29,6 +30,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
   handleClose,
+  handleSetIntentId,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, setNavigateUrl, tc } = usePage();
@@ -183,11 +185,16 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         });
       }
     } else {
-      //await info({ description: tc('SAVE_MESSAGE'), title: '' });
-      lunaToast.success(tc('SAVE_MESSAGE'));
       setIsActive(false);
-      if (!itemData.intentId && !isOpenUtteranceDetailPopup) {
-        setNavigateUrl(`/${botId}/intent/detail/${res}`);
+      if (!itemData.intentId) {
+        await info({ description: tc('SAVE_MESSAGE'), title: '' });
+        if (isOpenUtteranceDetailPopup) {
+          handleSetIntentId?.(res as string);
+        } else {
+          navigate(`/${botId}/intent/detail/${res}`);
+        }
+      } else {
+        lunaToast.success(tc('SAVE_MESSAGE'));
       }
       return;
     }

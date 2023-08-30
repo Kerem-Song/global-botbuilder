@@ -104,27 +104,24 @@ export const useUtteranceClient = () => {
   };
 
   const getIntentDetailQuery = (intentId?: string) => {
-    if (intentId) {
-      return useQuery<IHasResult<IIntentListItem>>(
-        ['intent-detail', token, intentId],
-        () =>
-          http
-            .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
-              'Builder/GetIntent',
-              {
-                sessionToken: token,
-                intentId,
-              },
-            )
-            .then((res) => res.data),
-        {
-          refetchOnWindowFocus: false,
-          refetchOnMount: true,
-          enabled: token !== undefined,
-        },
-      );
-    }
-    return null;
+    return useQuery<IHasResult<IIntentListItem>>(
+      ['intent-detail', token, intentId],
+      () =>
+        http
+          .post<IGetIntent, AxiosResponse<IHasResult<IIntentListItem>>>(
+            'Builder/GetIntent',
+            {
+              sessionToken: token,
+              intentId,
+            },
+          )
+          .then((res) => res.data),
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: true,
+        enabled: token !== undefined && intentId !== undefined,
+      },
+    );
   };
 
   const intentMutate = useMutation(async (intent: ISaveIntent) => {

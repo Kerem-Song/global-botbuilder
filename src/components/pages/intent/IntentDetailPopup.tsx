@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import ReactModal from 'react-modal';
 
 import { IntentDetail } from './IntentDetail';
@@ -16,6 +16,7 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
   handleIsOpenUtterancePopup,
   handleCloseUtteranceDetailPopup,
 }) => {
+  const [intentKey, setIntentKey] = useState<string | undefined>(intentId);
   const handleClose = () => {
     handleCloseUtteranceDetailPopup();
   };
@@ -29,10 +30,11 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
       shouldCloseOnOverlayClick={false}
     >
       <IntentDetail
-        intentId={intentId}
+        intentId={intentKey}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
         handleClose={handleClose}
+        handleSetIntentId={setIntentKey}
       />
     </ReactModal>
   );
