@@ -22,6 +22,7 @@ export const CTRL_TYPES = {
   BUTTON_CTRL: 'ButtonCtrl',
   QUICK_CTRL: 'QuickCtrl',
   LISTCARD_ITEM_CTRL: 'ListCardItemCtrl',
+  LISTCARD_TEMPLATE_ITEM_CTRL: 'ListCardTemplateItemCtrl',
 };
 
 export type CtrlTypes = ValueOf<typeof CTRL_TYPES>;
