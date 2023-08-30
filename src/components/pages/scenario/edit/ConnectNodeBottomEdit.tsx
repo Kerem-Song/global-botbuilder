@@ -17,7 +17,12 @@ export const ConnectNodeBottomEdit = ({ nodeId }: { nodeId?: string }) => {
         <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)}</span>
       </div>
       <FormItem error={errors.nextNodeId}>
-        <SelectNode fieldName={`nextNodeId`} nodeId={nodeId} error={errors.nextNodeId} />
+        <SelectNode
+          fieldName={`nextNodeId`}
+          nodeId={nodeId}
+          error={errors.nextNodeId}
+          isBottom
+        />
       </FormItem>
     </Collapse>
   );

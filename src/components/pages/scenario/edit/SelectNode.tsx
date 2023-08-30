@@ -2,6 +2,7 @@ import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX, onMenuOpenScroller } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
+import { FC } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -10,16 +11,20 @@ interface IReactSelect {
   label: string;
 }
 
-export const SelectNode = ({
-  fieldName,
-  defaultValue,
-  nodeId,
-  error,
-}: {
+export interface ISelectNodeProps {
   fieldName: string;
   defaultValue?: string;
   nodeId?: string;
   error?: FieldError;
+  isBottom?: boolean;
+}
+
+export const SelectNode: FC<ISelectNodeProps> = ({
+  fieldName,
+  defaultValue,
+  nodeId,
+  error,
+  isBottom,
 }) => {
   const { t } = usePage();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
@@ -38,7 +43,7 @@ export const SelectNode = ({
           `${NODE_PREFIX}${nodeId}`,
           `${NODE_PREFIX}${item.id}`,
           nodes,
-          fieldName !== 'nextNodeId' ? true : false,
+          !isBottom,
         ) === undefined,
     )
     .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
