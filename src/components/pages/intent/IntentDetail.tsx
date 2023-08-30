@@ -187,7 +187,10 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
     } else {
       setIsActive(false);
       if (!itemData.intentId) {
-        await info({ description: tc('SAVE_MESSAGE'), title: '' });
+        await info({
+          title: t('SAVE_NEW_INTENT'),
+          description: t('SAVE_NEW_INTENT_DESC'),
+        });
         if (isOpenUtteranceDetailPopup) {
           handleSetIntentId?.(res as string);
         } else {

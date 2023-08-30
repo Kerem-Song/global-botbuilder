@@ -215,7 +215,9 @@
     "SELECT_SCENARIO": "시나리오를 선택해주세요.",
     "TITLE": "인텐트 정보",
     "UTTERANCE": "발화",
-    "VALIDATION_REQUIRED": "필수 입력 항목 입니다."
+    "VALIDATION_REQUIRED": "필수 입력 항목 입니다.",
+    "SAVE_NEW_INTENT": "인텐트 생성 완료",
+    "SAVE_NEW_INTENT_DESC": "새 인텐트가 생성되었습니다."
   },
   "SCENARIO": {
     "ACTIVE_SCENARIOS_SWITCH": "활성 시나리오만 보기",
