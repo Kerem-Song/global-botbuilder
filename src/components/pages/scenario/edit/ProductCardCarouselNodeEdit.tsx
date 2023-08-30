@@ -62,11 +62,11 @@ export const ProductCardCarouselNodeEdit = () => {
       ? Number(watch(`view.childrenViews.${index}.discountAmount`))
       : 0);
 
-  // useEffect(() => {
-  //   setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
-  //     shouldDirty: true,
-  //   });
-  // }, [salePrice]);
+  useEffect(() => {
+    setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
+      shouldDirty: true,
+    });
+  }, [salePrice]);
 
   // useEffect(() => {
   //   if (watch(`view.childrenViews`)?.length === index) {
