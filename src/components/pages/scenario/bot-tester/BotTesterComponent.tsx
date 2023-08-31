@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
@@ -32,6 +32,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   const { t } = useI18n('botTest');
   const { botId } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
   const token = useRootState((state) => state.botInfoReducer.token);
   const botTesterData = useRootState((state) => state.botTesterReducer.messages);
   const botTesterRef = useRef<HTMLDivElement>(null);
@@ -146,6 +147,19 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      const isInScenarioMenu = location.pathname.includes(`/${botId}/scenario/`);
+      handleIsOpen(isInScenarioMenu);
+    } else {
+      handleIsOpen(false);
+    }
+  }, [location.pathname, isOpen]);
+
+  useEffect(() => {
+    handleIsOpen(false);
+  }, [botId]);
 
   return (
     <>

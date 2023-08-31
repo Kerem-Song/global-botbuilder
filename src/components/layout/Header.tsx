@@ -4,7 +4,7 @@ import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTes
 import { useI18n, useModalOpen, useRootState } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { setToken } from '@store/authSlice';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
@@ -94,10 +94,6 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
 
   const { isOpen, handleIsOpen } = useModalOpen();
-
-  useEffect(() => {
-    handleIsOpen(false);
-  }, [location]);
 
   return (
     <header>
