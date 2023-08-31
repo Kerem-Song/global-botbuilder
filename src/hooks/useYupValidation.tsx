@@ -266,6 +266,7 @@ export const useYupValidation = () => {
         name: yup
           .string()
           .trim()
+          .required(t(`VALIDATION_REQUIRED`))
           .matches(PARAMETER_REGEX_FIRST_LETTER, t('PARAMETER_VALIDATION_FIRST_LETTER'))
           .when('.', {
             is: (name: string) => name && !name.startsWith('.'),
@@ -280,8 +281,7 @@ export const useYupValidation = () => {
           .when('.', {
             is: (name: string) => name && name.startsWith('.'),
             then: yup.string().matches(PARAMETER_REGEX, t('PARAMETER_VALIDATION')),
-          })
-          .required(t(`VALIDATION_REQUIRED`)),
+          }),
         value: yup.string().trim().required(t(`VALIDATION_REQUIRED`)),
       }),
     ),
