@@ -409,6 +409,25 @@ export const arrowHelper = {
       return arrowHelper.tc('INVALIDATE_ARROW');
     }
 
+    // 카운트 노드에서 스위치 연결 불가
+    if (
+      isNext &&
+      startNode.type === NODE_TYPES.RETRY_CONDITION_NODE &&
+      endNode.type === NODE_TYPES.SWITCH_NODE
+    ) {
+      return arrowHelper.tc('INVALIDATE_ARROW');
+    }
+
+    // Answer 노드 및 Parameter set 노드에서 카운트 설정 불가
+    if (
+      isNext &&
+      (startNode.type === NODE_TYPES.ANSWER_NODE ||
+        startNode.type === NODE_TYPES.PARAMETER_SET_NODE) &&
+      endNode.type === NODE_TYPES.RETRY_CONDITION_NODE
+    ) {
+      return arrowHelper.tc('INVALIDATE_ARROW');
+    }
+
     const isPassChild =
       startNode.type === NODE_TYPES.ANSWER_NODE ||
       (startNode.nodeKind === NodeKind.InputNode && isNext);
