@@ -2,11 +2,12 @@ import { Collapse, FormItem } from '@components';
 import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IViewBase } from '@models/interfaces/res/IGetFlowRes';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { SelectNode } from './SelectNode';
 
-export const ConnectNodeBottomEdit = ({ nodeId }: { nodeId?: string }) => {
+export const ConnectNodeBottomEdit = React.memo(({ nodeId }: { nodeId?: string }) => {
   const { t } = usePage();
   const {
     formState: { errors },
@@ -26,4 +27,6 @@ export const ConnectNodeBottomEdit = ({ nodeId }: { nodeId?: string }) => {
       </FormItem>
     </Collapse>
   );
-};
+});
+
+ConnectNodeBottomEdit.displayName = 'ConnectNodeBottomEdit';
