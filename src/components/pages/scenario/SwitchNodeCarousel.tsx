@@ -105,7 +105,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   addCarousel(e);
                   setCurrent(length);
                 }}
-                disabled={current === CONDITIONS_LIMIT - 1}
+                disabled={current === CONDITIONS_LIMIT - 1 || isHistoryViewer}
                 data-button={'add'}
               />
             </Col>
@@ -116,7 +116,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   deleteCarousel(current);
                   setCurrent(current === 0 ? 0 : current - 1);
                 }}
-                disabled={length === 1}
+                disabled={length === 1 || isHistoryViewer}
                 data-button={'delete'}
               />
             </Col>

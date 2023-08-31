@@ -29,6 +29,8 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     control,
   });
 
+  const isHistoryViewer = useHistoryViewerMatch();
+
   const handleDeleteButton = (index: number) => {
     remove(index);
   };
@@ -138,12 +140,13 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 shape="ghost"
                 className="deleteBtn"
                 onClick={() => handleDeleteButton(i)}
+                disabled={isHistoryViewer}
               >
                 {t(`CONDITION_NODE_DELETE_CONDITION`)}
               </Button>
             ) : null}
 
-            {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && (
+            {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && !isHistoryViewer && (
               <div
                 className={classNames(`joinWrapper`, {
                   on: watch(`view.childrenViews.${nestedIndex}.join`) !== undefined,
