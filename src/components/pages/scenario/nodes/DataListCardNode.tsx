@@ -17,7 +17,7 @@ export const DataListCardNode: FC<IHasNode> = ({ node }) => {
       <div className="countConditionWrapper">
         <span className="dataCardDesc">
           <MultiClamp clamp={1} ellipsis={'...'}>
-            {`attribute: ${view.itemsRefName}`}
+            {`attribute: {{${view.itemsRefName ? view.itemsRefName : ' '}}}`}
           </MultiClamp>
         </span>
         <br />

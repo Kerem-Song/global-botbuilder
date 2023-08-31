@@ -18,7 +18,7 @@ export const DataBasicCardNode: FC<IHasNode> = ({ node }) => {
         <div className="dataCard">
           <span className="dataCardDesc">
             <MultiClamp clamp={1} ellipsis={'...'}>
-              {`attribute: ${view.itemsRefName}`}
+              {`attribute: {{${view.itemsRefName ? view.itemsRefName : ' '}}}`}
             </MultiClamp>
           </span>
           <br />
