@@ -261,6 +261,14 @@
     .botBuilderWrapper {
       width: 100%;
 
+      .botBuilderMain {
+        grid-row: 1/25;
+
+        .luna-space {
+          top: rem(40);
+        }
+      }
+
       .icNodeBottom {
         pointer-events: none;
       }
@@ -292,6 +300,10 @@
         cursor: text;
 
         .imgUpload {
+          pointer-events: none; 
+        }
+
+        .collapseHeader {
           pointer-events: none; 
         }
 
