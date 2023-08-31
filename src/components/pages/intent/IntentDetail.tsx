@@ -33,11 +33,11 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   handleSetIntentId,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const { navigate, setNavigateUrl, tc } = usePage();
+  const { navigate, tc } = usePage();
   const { t } = useI18n('intentDetailPage');
   const { botId } = useParams();
   const {
-    intentAsync,
+    intentSaveAsync,
     getIntentDetailQuery,
     intentDeleteAsync,
     checkIntentDuplicationAsync,
@@ -149,6 +149,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         lunaToast.success(tc('DELETE_MESSAGE'));
         if (isOpenUtteranceDetailPopup && handleClose) {
           handleClose();
+          handleIsOpenUtterancePopup?.(true);
         } else {
           navigate(`/${botId}/intent`);
         }
@@ -169,7 +170,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         : itemData.connectScenarioId || null,
     };
 
-    const res = await intentAsync({ ...saveIntent, customErrorCode: [7612] });
+    const res = await intentSaveAsync({ ...saveIntent, customErrorCode: [7612] });
 
     if (res === 7612) {
       const checkIntentDuplication = await checkIntentDuplicationAsync({
@@ -217,11 +218,11 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
       });
       if (res) {
         handleClose();
-        handleIsOpenUtterancePopup!(false);
+        handleIsOpenUtterancePopup?.(false);
       }
     } else {
       handleClose();
-      handleIsOpenUtterancePopup!(false);
+      handleIsOpenUtterancePopup?.(false);
     }
   };
 

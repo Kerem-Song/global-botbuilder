@@ -67,6 +67,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
           utteranceRef.current.select();
         }
         setIsEditing(false);
+        setIsActive(false);
         return;
       };
 
