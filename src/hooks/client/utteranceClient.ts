@@ -124,7 +124,7 @@ export const useUtteranceClient = () => {
     );
   };
 
-  const intentMutate = useMutation(async (intent: ISaveIntent) => {
+  const intentSaveMutate = useMutation(async (intent: ISaveIntent) => {
     const res = await http.post<ISaveIntent, AxiosResponse<IResponseCheckDuplication>>(
       'Builder/SaveIntent',
       intent,
@@ -207,7 +207,7 @@ export const useUtteranceClient = () => {
     changePageNumberQuery,
     removeUtteranceQueries,
     getIntentDetailQuery,
-    intentAsync: intentMutate.mutateAsync,
+    intentSaveAsync: intentSaveMutate.mutateAsync,
     intentDeleteAsync: intentDeleteMutate.mutateAsync,
     intentGetAsync: intentGetMutate.mutateAsync,
     checkIntentDuplicationAsync: checkIntentDuplicationMutate.mutateAsync,
