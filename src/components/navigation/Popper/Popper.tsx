@@ -115,7 +115,10 @@ export const Popper = <T extends object>({
   };
 
   const handleLazyHide = () => {
-    outsideClickRef.current?.removeAttribute('data-mouse-over');
+    if (className === 'onContextMenu' || className === 'otherFlowRedirectNodeList') {
+      return;
+    }
+
     setTimeout(() => {
       if (!outsideClickRef.current?.hasAttribute('data-mouse-over')) {
         setShowPopper(false);
@@ -172,6 +175,11 @@ export const Popper = <T extends object>({
         onMouseLeave={handleLazyHide}
         onMouseEnter={handleMouseOver}
         onContextMenu={(e) => {
+          // console.log('@??', e.currentTarget.parentNode === outsideClickRef.current);
+          // document.querySelectorAll<HTMLDivElement>('.onContextMenu').forEach((el) => {
+          //   el.style.visibility = 'hidden';
+          // });
+
           e.stopPropagation();
           if (className === 'onContextMenu') {
             handlePopper();

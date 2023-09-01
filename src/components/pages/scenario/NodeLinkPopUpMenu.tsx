@@ -375,7 +375,7 @@ export const NodeLinkPopUpMenu = ({
                 <div>
                   <Popper
                     placement="right-start"
-                    offset={[200, 20]}
+                    // offset={[200, 20]}
                     popperItems={scenarioList}
                     onChange={(m) => {
                       m.data?.action?.(m.name, m.data.firstNodeId, m.data.start);
@@ -383,6 +383,7 @@ export const NodeLinkPopUpMenu = ({
                     popup
                     popupList
                     disabled={isHistoryViewer}
+                    className="otherFlowRedirectNodeList"
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">
                       <Col>
