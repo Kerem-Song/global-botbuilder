@@ -100,7 +100,7 @@ export const Collapse: FC<CollapseProps> = ({
     if (isHistoryViewer) {
       console.log('@childrenViewArr', childrenViewArr);
       console.log('@getvalue', watch(`view.imageCtrl`));
-      if (childrenViewArr && childrenViewArr[0].imageCtrl.imageUrl) {
+      if (childrenViewArr && childrenViewArr[0].imageCtrl?.imageUrl) {
         console.log('@5', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
         setValue(`view.useImageCtrl`, true);
       } else if (watch(`view.imageCtrl.imageUrl`)) {
