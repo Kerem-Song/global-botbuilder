@@ -85,6 +85,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     };
 
     dispatch(setTesterData([newMessage]));
+    setText('');
 
     const result = await botTesterMutateAsync({
       ...sendMessage,
@@ -92,6 +93,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
     });
 
     if (typeof result === 'number' && result === 7617) {
+      console.log('result', result);
       setText('');
       return;
     }
@@ -108,7 +110,6 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
       updateTesterData.push(quickRepliesContent);
     }
     dispatch(setTesterData(updateTesterData));
-    setText('');
   };
 
   const openTestInfo = () => {
@@ -139,6 +140,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
         if (botTesterRef.current) {
           botTesterRef.current.blur();
           handleIsOpen(false);
+          setText('');
         }
       }
     };
@@ -154,11 +156,13 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
       handleIsOpen(isInScenarioMenu);
     } else {
       handleIsOpen(false);
+      setText('');
     }
   }, [location.pathname, isOpen]);
 
   useEffect(() => {
     handleIsOpen(false);
+    setText('');
   }, [botId]);
 
   return (
