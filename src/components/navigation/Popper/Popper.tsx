@@ -1,5 +1,5 @@
 import { Input } from '@components/data-entry';
-import { useOutsideClick, useRootState } from '@hooks';
+import { useOutsideClick, usePage, useRootState } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
@@ -73,6 +73,7 @@ export const Popper = <T extends object>({
   const referenceElement = useRef<HTMLDivElement>(null);
   const popperElement = useRef<HTMLDivElement>(null);
   const { i18n } = useTranslation();
+  const { t } = useTranslation('scenario'.toUpperCase());
   const { styles, attributes, update } = usePopper(
     referenceElement.current,
     popperElement.current,
@@ -205,7 +206,7 @@ export const Popper = <T extends object>({
           {popperItems?.some((item) => item.type === 'search') ? (
             <>
               <Input
-                placeholder="Input search text"
+                placeholder={t(`INPUT_SEARCH_WORD`)}
                 search
                 onSearch={(data) => {
                   onSearch(data as string);
