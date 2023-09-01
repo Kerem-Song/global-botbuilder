@@ -115,6 +115,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                         control={control}
                         path={`view.childrenViews.${nestedIndex}.items.${i}.op1`}
                         maxLength={100}
+                        readOnly={isHistoryViewer}
                       />
                     </FormItem>
                   </Col>
@@ -132,6 +133,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 control={control}
                 path={`view.childrenViews.${nestedIndex}.items.${i}.op2`}
                 maxLength={100}
+                readOnly={isHistoryViewer}
               />
             </FormItem>
 
