@@ -119,7 +119,7 @@ export const Popper = <T extends object>({
     if (className === 'onContextMenu' || className === 'otherFlowRedirectNodeList') {
       return;
     }
-
+    outsideClickRef.current?.removeAttribute('data-mouse-over');
     setTimeout(() => {
       if (!outsideClickRef.current?.hasAttribute('data-mouse-over')) {
         setShowPopper(false);
