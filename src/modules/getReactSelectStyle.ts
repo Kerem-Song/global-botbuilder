@@ -78,6 +78,20 @@ export const getReactSelectStyle = <T>({
     menuList: (provided) => ({
       ...provided,
       padding: '8px',
+      '::-webkit-scrollbar': {
+        width: '8px',
+        height: '8px',
+        backgroundColor: 'rgba(208, 221, 255, 0.2)',
+      },
+      '::-webkit-scrollbar-thumb': {
+        height: '30%',
+        backgroundColor: 'rgba(208, 221, 255, 0)',
+        borderRadius: '18px',
+        transition: '2s ease-out',
+      },
+      ':hover::-webkit-scrollbar-thumb ': {
+        backgroundColor: 'rgba(208, 221, 255, 0.8)',
+      },
     }),
     menuPortal: (provided) => ({
       ...provided,

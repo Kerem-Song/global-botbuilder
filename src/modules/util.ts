@@ -54,7 +54,11 @@ export const util = {
     await navigator.clipboard.writeText(text || '');
   },
   pad: (n: number) => {
-    return n < 10 ? `0${n.toString()}` : n.toString();
+    if (n < 0) {
+      return `-${n.toString().slice(1).padStart(2, '0')}`;
+    } else {
+      return n < 10 ? `0${n.toString()}` : n.toString();
+    }
   },
   // toLocaleDateTimeStringFromUtc: (date: Date) => {
   //   const newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
