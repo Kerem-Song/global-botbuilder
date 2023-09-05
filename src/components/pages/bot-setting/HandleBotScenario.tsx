@@ -2,7 +2,7 @@ import { Button, Card, Space } from '@components';
 import { useBotClient, usePage, useRootState, useSystemModal } from '@hooks';
 import { useSessionTokenClient } from '@hooks/client/sessionTokenClient';
 import { lunaToast } from '@modules/lunaToast';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 
 export const HandleBotScenario = () => {
@@ -15,6 +15,7 @@ export const HandleBotScenario = () => {
     (state) => state.botSettingInfoReducer.botSettingInfo,
   );
   const inputRef = useRef<HTMLInputElement>(null);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (botId) {
@@ -29,50 +30,50 @@ export const HandleBotScenario = () => {
     await botExportAsync({ botId: botSettingInfo.id, botName: botSettingInfo.botName });
   };
 
-  const handleImportBotScenario = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const uploadFile = e.target.files && e.target.files[0];
-      const SURPPORTED_FORMATS = ['application/json']; // json 확장자로 사용자 지정 파일 설정
-      if (uploadFile && SURPPORTED_FORMATS.includes(uploadFile.type)) {
-        const res = await confirm({
-          title: t('IMPORT_SCENARIO'),
-          description: (
-            <p style={{ whiteSpace: 'pre-wrap' }}>
-              {t('CONFIRM_IMPORT_SCENARIO_MESSAGE')}
-            </p>
-          ),
-        });
-        if (res && botSettingInfo && botId) {
-          botImportAsync({ file: uploadFile, botId: botSettingInfo.id })
-            .then((res) => {
-              console.log('botImportAsync data', res?.data);
-              lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
-              refetchSessionToken(botId);
-            })
-            .catch((err) => {
-              console.log('botImportAsync error', err);
-            });
-        }
-      } else {
-        await info({
-          title: t('DISABLED_IMPORT_SCENARIO'),
-          description: (
-            <p style={{ whiteSpace: 'pre-wrap' }}>
-              {t('DISABLED_IMPORT_SCENARIO_MESSAGE')}
-            </p>
-          ),
-        });
+  const handleImportBotScenario = async (file: File) => {
+    const SUPPORTED_FORMATS = ['application/json']; // json 확장자로 사용자 지정 파일 설정
+    if (SUPPORTED_FORMATS.includes(file.type)) {
+      const res = await confirm({
+        title: t('IMPORT_SCENARIO'),
+        description: (
+          <p style={{ whiteSpace: 'pre-wrap' }}>{t('CONFIRM_IMPORT_SCENARIO_MESSAGE')}</p>
+        ),
+      });
+      if (res && botSettingInfo && botId) {
+        botImportAsync({ file, botId: botSettingInfo.id })
+          .then((res) => {
+            console.log('botImportAsync data', res?.data);
+            refetchSessionToken(botId);
+            lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
+          })
+          .catch((err) => {
+            console.log('botImportAsync error', err);
+          });
       }
-    },
-    [botSettingInfo],
-  );
+    } else {
+      await info({
+        title: t('DISABLED_IMPORT_SCENARIO'),
+        description: (
+          <p style={{ whiteSpace: 'pre-wrap' }}>
+            {t('DISABLED_IMPORT_SCENARIO_MESSAGE')}
+          </p>
+        ),
+      });
+    }
+  };
 
   const handleImportBtnClick = useCallback(() => {
-    if (!inputRef.current) {
-      return;
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      inputRef.current.click();
     }
-    inputRef.current.click();
   }, [inputRef]);
+
+  useEffect(() => {
+    if (uploadFile) {
+      handleImportBotScenario(uploadFile);
+    }
+  }, [uploadFile]);
 
   return (
     <Card className="settingCardWrap" radius="normal">
@@ -91,9 +92,10 @@ export const HandleBotScenario = () => {
             </Button>
             <input
               type="file"
+              accept="application/json"
               className="fileInput"
               ref={inputRef}
-              onChange={handleImportBotScenario}
+              onChange={(e) => setUploadFile(e.target.files && e.target.files[0])}
             />
             <Button type="lineBlue" onClick={handleImportBtnClick}>
               {t('IMPORT')}
