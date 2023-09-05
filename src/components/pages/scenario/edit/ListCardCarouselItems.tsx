@@ -18,7 +18,6 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
     register,
     watch,
     control,
-    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardCarouselView>>();
 

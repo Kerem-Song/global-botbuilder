@@ -12,6 +12,7 @@ export const ConnectNodeBottomEdit = React.memo(({ nodeId }: { nodeId?: string }
   const {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IViewBase>>();
+
   return (
     <Collapse label={t(`SET_CONNECT_NODE_BOTTOM`)} useSwitch={false}>
       <div className="m-b-8">

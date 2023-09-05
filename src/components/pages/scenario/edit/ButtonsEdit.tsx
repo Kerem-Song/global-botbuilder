@@ -44,7 +44,6 @@ export const ButtonsEdit = ({
     control,
     watch,
     resetField,
-    reset,
     setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();

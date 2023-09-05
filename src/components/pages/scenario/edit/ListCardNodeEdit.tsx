@@ -49,9 +49,9 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
-  // useEffect(() => {
-  //   resetField('view.items', { keepDirty: false, keepError: true });
-  // }, [watch('id')]);
+  useEffect(() => {
+    resetField('view.items', { keepDirty: true, keepError: true });
+  }, [watch('id')]);
 
   return (
     <>

@@ -23,6 +23,7 @@ export const ListCardCarouselNodeEdit = () => {
     watch,
     control,
     trigger,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardCarouselView>>();
   const values = getValues();
@@ -43,6 +44,14 @@ export const ListCardCarouselNodeEdit = () => {
   //   }
   // }, [index]);
 
+  useEffect(() => {
+    for (const i in watch(`view.childrenViews`)) {
+      resetField(`view.childrenViews.${Number(i)}.items`, {
+        keepDirty: true,
+        keepError: true,
+      });
+    }
+  }, [watch('id')]);
   return (
     <>
       {watch(`view.childrenViews.${index}.id`) &&

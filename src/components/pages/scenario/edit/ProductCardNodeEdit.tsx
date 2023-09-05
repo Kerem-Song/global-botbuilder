@@ -47,7 +47,7 @@ export const ProductCardNodeEdit = () => {
     (watch(`view.discountAmount`) ? Number(watch(`view.discountAmount`)) : 0);
 
   useEffect(() => {
-    setValue(`view.salePrice`, salePrice || 0, { shouldDirty: true });
+    setValue(`view.salePrice`, salePrice || 0, { shouldDirty: false });
   }, [salePrice]);
 
   // useEffect(() => {

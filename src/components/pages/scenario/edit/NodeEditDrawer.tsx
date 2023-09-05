@@ -8,7 +8,6 @@ import { NODE_PREFIX } from '@modules';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
-import { useDispatch } from 'react-redux';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
@@ -17,7 +16,6 @@ export const NodeEditDrawer = () => {
   console.log('^^^^ NodeEditDrawer');
   const { t } = usePage();
   const [showAnnotation, setShowAnnotation] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selectedScenario = useRootState(
@@ -28,7 +26,6 @@ export const NodeEditDrawer = () => {
   );
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
-  console.log(carouselIndexObj);
 
   const selectedNode = nodes.find((x) => x.id === selected);
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
@@ -46,6 +43,7 @@ export const NodeEditDrawer = () => {
     trigger,
     watch,
     setError,
+
     formState: { errors, isValid },
   } = formMethods;
 
@@ -71,7 +69,6 @@ export const NodeEditDrawer = () => {
       }
 
       reset(model);
-      const filtered = nodes.filter((node) => node.title === selectedNode.title);
 
       if (invalidateNodes[selectedNode.id]) {
         trigger();

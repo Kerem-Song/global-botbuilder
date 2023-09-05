@@ -27,10 +27,10 @@ export const useNodeEditSave = () => {
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
   const viewId = watch('view.id');
 
-  useEffect(() => {
-    reset();
-    trigger();
-  }, [viewId]);
+  // useEffect(() => {
+  //   reset();
+  //   trigger();
+  // }, [viewId]);
 
   const handleSave = () => {
     console.log('handleSave');
@@ -49,9 +49,7 @@ export const useNodeEditSave = () => {
   };
 
   useEffect(() => {
-    console.log('@@@@useEffect');
     return () => {
-      console.log('@@@@useEffect callback');
       if (selectedNode && index === undefined && !isHistoryViewer) {
         handleSave();
       }

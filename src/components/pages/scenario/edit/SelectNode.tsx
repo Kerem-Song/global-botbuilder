@@ -2,7 +2,7 @@ import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX, onMenuOpenScroller } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -48,9 +48,9 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
       }));
     const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
 
-    // useEffect(() => {
-    //   resetField('view.nextNodeId');
-    // }, [nodeId]);
+    useEffect(() => {
+      resetField(`${fieldName}`, { keepDirty: true, keepError: true });
+    }, [nodeId]);
 
     return (
       <Select

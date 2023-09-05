@@ -124,7 +124,7 @@ export const Popper = <T extends object>({
       if (!outsideClickRef.current?.hasAttribute('data-mouse-over')) {
         setShowPopper(false);
       }
-    }, 1000);
+    }, 200);
   };
 
   const popperContainer = classNames(className, 'luna-chatbot-container', {
