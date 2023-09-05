@@ -49,6 +49,7 @@ export const NodeEditDrawer = () => {
 
   useEffect(() => {
     if (selectedNode) {
+      console.log('selectedNode', selectedNode.id);
       const model: INodeEditModel = {
         id: selectedNode.id,
         type: selectedNode.type,
@@ -73,9 +74,11 @@ export const NodeEditDrawer = () => {
       if (invalidateNodes[selectedNode.id]) {
         trigger();
       }
-    } else {
-      reset({ id: '', title: '' });
     }
+
+    return () => {
+      reset({ id: '', title: '' });
+    };
   }, [selectedNode?.id, index]);
 
   const editItem = () => {
