@@ -76,7 +76,7 @@ export const NodeEditDrawer = () => {
     } else {
       reset({ id: '', title: '' });
     }
-  }, [selectedNode, index]);
+  }, [selectedNode?.id, index]);
 
   const editItem = () => {
     if (!isEditDrawerOpen) {
@@ -95,7 +95,7 @@ export const NodeEditDrawer = () => {
       return <></>;
     }
 
-    return <EditElement />;
+    return <EditElement key={selectedNode?.id} />;
   };
 
   const handleAnnotation = (e: KeyboardEvent) => {

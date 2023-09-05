@@ -134,6 +134,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
         }
         inputRef.current = current;
       }}
+      onMouseDown={(e) => e.stopPropagation()}
       onChange={handleOnChange}
       onBlur={handleOnBlur}
       aria-invalid={isError}
