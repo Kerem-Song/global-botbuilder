@@ -53,23 +53,6 @@ export const JsonRequestNodeEdit = () => {
 
   const { field: method } = useController({ name: 'view.method', control });
 
-  const {
-    fields: resMappingField,
-    append: resMappingAppend,
-    remove: resMappingRemove,
-  } = useFieldArray({
-    name: `view.responseMapping`,
-    control,
-  });
-
-  const handleAddResMappingButton = () => {
-    resMappingAppend({ key: '', value: '' });
-  };
-
-  const handleDeleteResMappingButton = (index: number) => {
-    resMappingRemove(index);
-  };
-
   const { checkDataApiTest } = dataApiTestClient();
   const { data: res, isFetching, refetch, isRefetching } = checkDataApiTest(view);
 
@@ -98,12 +81,6 @@ export const JsonRequestNodeEdit = () => {
         setLoading(false);
       });
   };
-
-  // useEffect(() => {
-  //   resetField('view.apiRes', { keepDirty: false });
-  //   resetField('view.queryStrings', { keepDirty: false });
-  //   resetField('view.responseMapping', { keepDirty: false });
-  // }, [watch('view.id')]);
 
   return (
     <div key={values.id}>

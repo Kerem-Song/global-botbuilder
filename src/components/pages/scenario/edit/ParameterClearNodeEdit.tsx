@@ -25,10 +25,9 @@ export const ParameterClearNodeEdit = () => {
     setValue,
     control,
     watch,
-    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterClearCardView>>();
-  const values = getValues();
+
   const isHistoryViewer = useHistoryViewerMatch();
 
   const {

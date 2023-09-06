@@ -15,7 +15,6 @@ export const DataListCardItems = () => {
   const isHistoryViewer = useHistoryViewerMatch();
   const {
     register,
-    watch,
     control,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IDataListCardView>>();
@@ -38,13 +37,6 @@ export const DataListCardItems = () => {
   const handleDeleteListButton = (index: number) => {
     remove(index);
   };
-
-  // useEffect(() => {
-  //   resetField(`view.items`, {
-  //     keepDirty: false,
-  //     keepError: true,
-  //   });
-  // }, [watch('id')]);
 
   return (
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>

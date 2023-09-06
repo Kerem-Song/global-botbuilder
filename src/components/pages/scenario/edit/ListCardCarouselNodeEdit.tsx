@@ -34,15 +34,6 @@ export const ListCardCarouselNodeEdit = () => {
     control,
   });
 
-  // useEffect(() => {
-  //   for (const i in watch(`view.childrenViews`)) {
-  //     resetField(`view.childrenViews.${Number(i)}.items`, {
-  //       keepDirty: true,
-  //       keepError: true,
-  //     });
-  //   }
-  // }, [watch('id')]);
-
   return (
     <div key={values.id}>
       {watch(`view.childrenViews.${index}.id`) &&

@@ -39,13 +39,6 @@ export const ListCardItems = () => {
     remove(index);
   };
 
-  // useEffect(() => {
-  //   resetField(`view.items`, {
-  //     keepDirty: false,
-  //     keepError: true,
-  //   });
-  // }, [watch('id')]);
-
   return (
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
       {fields.map((item, j) => (

@@ -19,34 +19,11 @@ export const ListCardNodeEdit = () => {
   const {
     register,
     getValues,
-    control,
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardView>>();
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
-  const { fields, append, remove } = useFieldArray({
-    name: `view.items`,
-    control,
-  });
-
-  const handleAddListButton = () => {
-    // e.preventDefault();
-    if (fields.length < 5) {
-      append(nodeDefaultHelper.createDefaultListCardItem(fields.length));
-    } else {
-      //modal alert
-      console.log('5개까지 가능');
-    }
-  };
-
-  const handleDeleteListButton = (index: number) => {
-    remove(index);
-  };
-
-  // useEffect(() => {
-  //   resetField('view.items', { keepDirty: true, keepError: true });
-  // }, [watch('id')]);
 
   return (
     <div key={values.id}>

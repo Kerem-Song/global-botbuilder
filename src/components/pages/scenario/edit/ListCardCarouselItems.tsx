@@ -46,13 +46,6 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
     remove(index);
   };
 
-  // useEffect(() => {
-  //   resetField(`view.childrenViews.${nestedIndex}.items`, {
-  //     keepDirty: false,
-  //     keepError: true,
-  //   });
-  // }, [watch('id')]);
-
   return (
     <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
       {fields.map((item, j) => (

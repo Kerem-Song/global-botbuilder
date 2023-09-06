@@ -24,7 +24,7 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
     const { t } = usePage();
     const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
     const reactSelectStyle = getReactSelectStyle({});
-    const { control, resetField } = useFormContext();
+    const { control } = useFormContext();
     const { field } = useController({
       name: `${fieldName}`,
       control,
