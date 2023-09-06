@@ -530,6 +530,7 @@
     "BOT_PROFILE": "챗봇 프로필",
     "CANCEL_DELETION": "삭제 취소",
     "CANCEL_EXPIRE_MESSAGE": "에 봇이 삭제될 예정입니다.",
+    "CANCEL_BOT_DELETION_BEFORE_BOT_ACTIVE": "봇이 {{expireTime}}에 삭제될 예정입니다.\n봇을 활성화하려면 먼저 삭제를 취소해주세요.",
     "CONFIRM_CONNECT_CHANNEL_MESSAGE": "채널과 연결할까요?",
     "CONFIRM_IMPORT_SCENARIO_MESSAGE": "다른 봇을 가져오기 하면 현재 설정된 봇은 덮어씌워지며,\n기존 데이터를 원복할 수 없습니다.\n정말 선택한 파일을 덮어씌우시겠습니까?",
     "CONNECT": "연결하기",

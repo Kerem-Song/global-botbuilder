@@ -1,3 +1,4 @@
+import { usePage, useSystemModal } from '@hooks';
 import { FC, useState } from 'react';
 import ReactModal from 'react-modal';
 
@@ -16,9 +17,25 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
   handleIsOpenUtterancePopup,
   handleCloseUtteranceDetailPopup,
 }) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
   const [intentKey, setIntentKey] = useState<string | undefined>(intentId);
-  const handleClose = () => {
-    handleCloseUtteranceDetailPopup();
+  const { confirm } = useSystemModal();
+  const { tc } = usePage();
+
+  const handleClose = async () => {
+    if (isActive) {
+      const result = await confirm({
+        title: tc('SAVE_CONFIRM_TITLE'),
+        description: (
+          <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
+        ),
+      });
+      if (result) {
+        handleCloseUtteranceDetailPopup();
+      }
+    } else {
+      handleCloseUtteranceDetailPopup();
+    }
   };
 
   return (
@@ -30,9 +47,12 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
       shouldCloseOnOverlayClick={false}
     >
       <IntentDetail
+        isActive={isActive}
+        setIsActive={setIsActive}
         intentId={intentKey}
         isOpenUtteranceDetailPopup={isOpenUtteranceDetailPopup}
         handleIsOpenUtterancePopup={handleIsOpenUtterancePopup}
+        handleCloseUtteranceDetailPopup={handleCloseUtteranceDetailPopup}
         handleClose={handleClose}
         handleSetIntentId={setIntentKey}
       />

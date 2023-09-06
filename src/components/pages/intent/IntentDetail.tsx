@@ -7,7 +7,7 @@ import { usePrompt } from '@hooks/usePrompt';
 import { IDeleteIntent, ISaveIntent, IUtteranceItem, IUtteranceModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import classNames from 'classnames';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import * as yup from 'yup';
@@ -18,21 +18,26 @@ import { IntentInfo } from './IntentInfo';
 import { UtteranceDetailItems } from './UtteranceDetailItems';
 
 export interface IIntentDetailProps {
+  isActive: boolean;
+  setIsActive: Dispatch<SetStateAction<boolean>>;
   intentId?: string;
   isOpenUtteranceDetailPopup?: boolean;
   handleIsOpenUtterancePopup?: (value: boolean) => void;
   handleClose?: () => void;
   handleSetIntentId?: (intentId: string) => void;
+  handleCloseUtteranceDetailPopup?: () => void;
 }
 
 export const IntentDetail: FC<IIntentDetailProps> = ({
+  isActive,
+  setIsActive,
   intentId,
   isOpenUtteranceDetailPopup,
   handleIsOpenUtterancePopup,
   handleClose,
   handleSetIntentId,
+  handleCloseUtteranceDetailPopup,
 }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
   const { navigate, tc } = usePage();
   const { t } = useI18n('intentDetailPage');
   const { botId } = useParams();
@@ -103,28 +108,23 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
 
   const handleListBtn = async () => {
     if (isOpenUtteranceDetailPopup && handleClose && handleIsOpenUtterancePopup) {
-      if (!isActive) {
-        handleClose();
-        handleIsOpenUtterancePopup(true);
-        removeUtteranceQueries();
-      } else {
+      if (isActive) {
         const result = await confirm({
           title: tc('SAVE_CONFIRM_TITLE'),
           description: (
             <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
           ),
         });
-
-        if (result) {
-          handleClose();
-          handleIsOpenUtterancePopup(true);
-          removeUtteranceQueries();
+        if (!result) {
+          return;
         }
       }
+      handleIsOpenUtterancePopup(true);
     } else {
       navigate(`/${botId}/intent`);
-      removeUtteranceQueries();
     }
+    handleCloseUtteranceDetailPopup?.();
+    removeUtteranceQueries();
   };
 
   const handleDeleteIntentBtn = async () => {
