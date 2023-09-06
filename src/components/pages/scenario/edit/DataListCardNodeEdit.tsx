@@ -9,6 +9,7 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
 import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
+import { DataListCardItems } from './DataListCardItems';
 import { ImageFileUploader } from './ImageFileUploader';
 import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
@@ -160,110 +161,8 @@ export const DataListCardNodeEdit = () => {
           </FormItem>
         )}
       </Collapse>
-      <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
-        {fields.map((item, i) => (
-          <div key={item.id}>
-            <div className="m-b-12">
-              <Space direction="vertical" gap={12}>
-                <span className="label">
-                  <FormItem error={errors.view?.items?.[i]?.title}>
-                    {/* <InputWithTitleCounter
-                      label={t(`TITLE_INPUT`)}
-                      required={true}
-                      isLight={true}
-                      {...register(`view.items.${i}.title`)}
-                      readOnly={isHistoryViewer}
-                    /> */}
-                    <InputTextAreaWithTitleCounter
-                      {...register(`view.items.${i}.title`)}
-                      label={t(`ENTER_TITLE`)}
-                      required={true}
-                      placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-                      readOnly={isHistoryViewer}
-                      isLight={true}
-                      maxRows={2.125}
-                      minRows={2.125}
-                    />
-                  </FormItem>
-                </span>
-              </Space>
-            </div>
-            <div className="m-b-12">
-              <Space direction="vertical" gap={12}>
-                <span className="label">
-                  {/* <InputWithTitleCounter
-                    label={t(`CONTENT_INPUT`)}
-                    isLight={true}
-                    {...register(`view.items.${i}.description`)}
-                    readOnly={isHistoryViewer}
-                  /> */}
-                  <InputTextAreaWithTitleCounter
-                    {...register(`view.items.${i}.description`)}
-                    label={t(`ENTER_CONTENT`)}
-                    placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-                    isLight={true}
-                    readOnly={isHistoryViewer}
-                    maxRows={2.125}
-                    minRows={2.125}
-                  />
-                </span>
-              </Space>
-            </div>
-            <div className="m-b-8">
-              <span className="subLabel">
-                {t(`IMAGE_UPLOAD_LABEL`)}/{t(`IMAGE_DIRECT_INPUT`)}{' '}
-              </span>
-              <span className="required">*</span>
-            </div>
-            <div className="m-b-12">
-              <Space direction="vertical" gap={12}>
-                <FormItem error={errors.view?.items?.[i]?.imageUrl}>
-                  <>
-                    <Row align="center" gap={12} style={{ margin: 0 }}>
-                      <Col span={5} className="itemProfileImg">
-                        <ImageFileUploader
-                          imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
-                          listItemIndex={i}
-                          isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
-                        />
-                      </Col>
-                      <Col span={19}>
-                        <p>{t(`RECOMMENDED_SIZE`)}</p>
-                        <p>400 x 400 </p>
-                      </Col>
-                    </Row>
-                    <ImageInput
-                      imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}
-                      listItemIndex={i}
-                      registerName={`view.items.${i}.imageUrl`}
-                      placeholder={t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)}
-                      isValid={errors.view?.items?.[i]?.imageUrl ? false : true}
-                      isSmall={true}
-                    />
-                  </>
-                </FormItem>
-              </Space>
-            </div>
-            {i > 1 && (
-              <Button
-                shape="ghost"
-                className="deleteBtn"
-                onClick={() => handleDeleteListButton(i)}
-              >
-                {t(`DELETE_A_LIST`)}
-              </Button>
-            )}
-            {fields.length !== i + 1 && <Divider style={{ margin: '32px 0' }} />}
-          </div>
-        ))}
-        <div>
-          {fields.length < 5 ? (
-            <Button shape="ghost" className="addBtn list" onClick={handleAddListButton}>
-              <span>+ {t(`ADD_A_NEW_LIST`)}</span>
-            </Button>
-          ) : null}
-        </div>
-      </Collapse>
+
+      <DataListCardItems />
 
       <Collapse label={t(`BUTTON_SETTING`)} useSwitch={false}>
         {values.view && values.view.buttons && (
