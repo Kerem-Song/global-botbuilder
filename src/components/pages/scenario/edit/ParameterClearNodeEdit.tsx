@@ -27,7 +27,7 @@ export const ParameterClearNodeEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterClearCardView>>();
-
+  const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
 
   const {
@@ -84,7 +84,7 @@ export const ParameterClearNodeEdit = () => {
   };
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`PARAMETER_CLEAR_NODE_SET`)} useSwitch={false}>
         <p className="m-b-20">{t(`PARAMETER_CLEAR_NODE_SET`)}</p>
         <FormItem error={errors.view?.isAll}>
@@ -178,6 +178,6 @@ export const ParameterClearNodeEdit = () => {
           />
         </FormItem>
       </Collapse>
-    </>
+    </div>
   );
 };

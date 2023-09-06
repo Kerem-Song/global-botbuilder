@@ -50,7 +50,7 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
 
     return (
       <Select
-        key={`${nodeId}-select-node`}
+        key={`${nodeId}-select-node-${fieldName}`}
         className={classNames('react-selector', {
           'luna-input-error': error,
         })}

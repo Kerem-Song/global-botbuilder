@@ -40,65 +40,67 @@ export const RetryConditionNodeEdit = () => {
   const values = getValues();
 
   return (
-    <>
-      <Collapse label={t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION`)} useSwitch={false}>
-        <div className="m-b-12">
-          <span className="subLabel">
-            {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_COUNT`)}{' '}
-          </span>
-          <span className="required">*</span>
-        </div>
-        <div className={classnames('input m-b-12', {})}>
-          <Select
-            key={`${values.id}-retry-condition-count`}
-            className="react-selector"
-            {...field}
-            options={countOptions}
-            placeholder={t(`SET_OPTION_NULL`)}
-            styles={reactSelectStyle}
-            defaultValue={countOptions[0]}
-            value={countOptions.find((item) => item.value === field.value)}
-            onChange={(options: any) => field.onChange(options?.value)}
-            isSearchable={false}
-            onMenuOpen={onMenuOpenScroller}
-          />
-        </div>
-        <div className="m-b-12">
-          <Space direction="vertical" gap={12}>
-            <div>
-              <span className="label">
-                {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_TRUE_THEN_NEXT_MESSAGE`)}{' '}
-              </span>
-              <span className="required">*</span>
-            </div>
-            <FormItem error={errors.view?.trueThenNextNodeId}>
-              <SelectNode
-                fieldName={'view.trueThenNextNodeId'}
-                nodeId={getValues().id}
-                error={errors.view?.trueThenNextNodeId}
-              />
-            </FormItem>
-          </Space>
-        </div>
-        <Divider style={{ margin: '32px 0' }} />
-        <div className="m-b-12">
-          <Space direction="vertical" gap={12}>
-            <div>
-              <span>
-                {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_FALSE_THEN_NEXT_MESSAGE`)}
-              </span>
-              <span className="required">*</span>
-            </div>
-            <FormItem error={errors.view?.falseThenNextNodeId}>
-              <SelectNode
-                fieldName={'view.falseThenNextNodeId'}
-                nodeId={getValues().id}
-                error={errors.view?.falseThenNextNodeId}
-              />
-            </FormItem>
-          </Space>
-        </div>
-      </Collapse>
-    </>
+    <Collapse
+      label={t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION`)}
+      useSwitch={false}
+      key={values.id}
+    >
+      <div className="m-b-12">
+        <span className="subLabel">
+          {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_COUNT`)}{' '}
+        </span>
+        <span className="required">*</span>
+      </div>
+      <div className={classnames('input m-b-12', {})}>
+        <Select
+          key={`${values.id}-retry-condition-count`}
+          className="react-selector"
+          {...field}
+          options={countOptions}
+          placeholder={t(`SET_OPTION_NULL`)}
+          styles={reactSelectStyle}
+          defaultValue={countOptions[0]}
+          value={countOptions.find((item) => item.value === field.value)}
+          onChange={(options: any) => field.onChange(options?.value)}
+          isSearchable={false}
+          onMenuOpen={onMenuOpenScroller}
+        />
+      </div>
+      <div className="m-b-12">
+        <Space direction="vertical" gap={12}>
+          <div>
+            <span className="label">
+              {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_TRUE_THEN_NEXT_MESSAGE`)}{' '}
+            </span>
+            <span className="required">*</span>
+          </div>
+          <FormItem error={errors.view?.trueThenNextNodeId}>
+            <SelectNode
+              fieldName={'view.trueThenNextNodeId'}
+              nodeId={getValues().id}
+              error={errors.view?.trueThenNextNodeId}
+            />
+          </FormItem>
+        </Space>
+      </div>
+      <Divider style={{ margin: '32px 0' }} />
+      <div className="m-b-12">
+        <Space direction="vertical" gap={12}>
+          <div>
+            <span>
+              {t(`RETRY_CONDITION_NODE_SET_RETRY_CONDITION_FALSE_THEN_NEXT_MESSAGE`)}
+            </span>
+            <span className="required">*</span>
+          </div>
+          <FormItem error={errors.view?.falseThenNextNodeId}>
+            <SelectNode
+              fieldName={'view.falseThenNextNodeId'}
+              nodeId={getValues().id}
+              error={errors.view?.falseThenNextNodeId}
+            />
+          </FormItem>
+        </Space>
+      </div>
+    </Collapse>
   );
 };
