@@ -1,10 +1,10 @@
 import { icUser } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
-import { useI18n, useModalOpen, useRootState } from '@hooks';
+import { useI18n, useRootState } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { setToken } from '@store/authSlice';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   const matches = useMatches();
   const { i18n, ts, tc, t } = useI18n('botTest');
   const navigate = useNavigate();
+  const [isTesterOpen, setIsTesterOpen] = useState(false);
 
   const languageMenus = [
     {
@@ -89,8 +90,6 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
 
-  const { isOpen, handleIsOpen } = useModalOpen();
-
   return (
     <header>
       <div className="headerWapper">
@@ -100,7 +99,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
         </div>
         <div className="rightNav">
           {isBotPage && (
-            <Button type="primary" small onClick={() => handleIsOpen(true)}>
+            <Button type="primary" small onClick={() => setIsTesterOpen(true)}>
               {t('BOT_TESTER')}
             </Button>
           )}
@@ -132,7 +131,10 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
               {userInfo.loginUserName}
             </Button>
           </Popper>
-          <BotTesterComponent isOpen={isOpen} handleIsOpen={handleIsOpen} />
+          <BotTesterComponent
+            isTesterOpen={isTesterOpen}
+            setIsTesterOpen={setIsTesterOpen}
+          />
         </div>
       </div>
     </header>

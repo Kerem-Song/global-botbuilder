@@ -11,7 +11,14 @@ import {
 } from '@models';
 import { initMessages, setTesterData } from '@store/botTesterSlice';
 import classNames from 'classnames';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -20,11 +27,14 @@ import { TesterMessagesItem } from './TesterMessagesItem';
 import { TestInfoModal } from './TestInfoModal';
 
 export interface IBotTesterProps {
-  isOpen: boolean;
-  handleIsOpen: (value: boolean) => void;
+  isTesterOpen: boolean;
+  setIsTesterOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) => {
+export const BotTesterComponent = ({
+  isTesterOpen,
+  setIsTesterOpen,
+}: IBotTesterProps) => {
   const [text, setText] = useState<string>('');
   const [isOpenTestInfo, setIsOpenTestInfo] = useState<boolean>(false);
   const [debugMeta, setDebugMeta] = useState<ITesterDebugMeta>();
@@ -57,7 +67,7 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
 
   const handleClose = () => {
     setText('');
-    handleIsOpen(false);
+    setIsTesterOpen(false);
   };
 
   const handleText = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -124,21 +134,21 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   }, [botId]);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isTesterOpen) {
       setTimeout(() => {
         if (scrollRef.current) {
           scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
         }
       }, 10);
     }
-  }, [isOpen, botTesterData]);
+  }, [isTesterOpen, botTesterData]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (botTesterRef.current) {
           botTesterRef.current.blur();
-          handleIsOpen(false);
+          setIsTesterOpen(false);
           setText('');
         }
       }
@@ -150,23 +160,27 @@ export const BotTesterComponent = ({ isOpen, handleIsOpen }: IBotTesterProps) =>
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      const isInScenarioMenu = location.pathname.includes(`/${botId}/scenario/`);
-      handleIsOpen(isInScenarioMenu);
-    } else {
-      handleIsOpen(false);
+    const isInScenarioMenu = location.pathname.includes(`/${botId}/scenario/`);
+    if (!isInScenarioMenu) {
       setText('');
+      setIsTesterOpen(false);
     }
-  }, [location.pathname, isOpen]);
+    return () => {
+      if (!isInScenarioMenu) {
+        setText('');
+        setIsTesterOpen(false);
+      }
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
-    handleIsOpen(false);
     setText('');
+    setIsTesterOpen(false);
   }, [botId]);
 
   return (
     <>
-      {isOpen && (
+      {isTesterOpen && (
         <Draggable handle=".botTesterHeader" onDrag={undefined} bounds="#layout">
           <div
             className={classNames('botTester', {
