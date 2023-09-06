@@ -246,7 +246,8 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
               </Button>
             </div>
             <span className="headerTitle">
-              {selectedScenarios?.alias} {t('INTENT')}
+              {selectedScenarios?.alias}{' '}
+              {hasIntentId.data?.result.intentId ? t('INTENT_DETAIL') : t('INTENT')}
             </span>
           </div>
           <Button

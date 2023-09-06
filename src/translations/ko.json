@@ -204,6 +204,7 @@
     "ENTER_UTTERANCE": "엔터를 눌러 발화 키워드를 입력해주세요.",
     "INPUT_INTENT_NAME": "인텐트명을 입력해주세요.",
     "INTENT": "인텐트 관리_등록",
+    "INTENT_DETAIL": "인텐트 관리_상세",
     "INTENT_LIST": "목록",
     "INTENT_NAME": "인텐트명",
     "LIST": "목록으로",
