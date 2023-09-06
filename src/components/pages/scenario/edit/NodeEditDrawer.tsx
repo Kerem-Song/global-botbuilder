@@ -5,9 +5,11 @@ import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { NODE_PREFIX } from '@modules';
+import { setIsDirty } from '@store/makingNode';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Drawer from 'react-modern-drawer';
+import { useDispatch } from 'react-redux';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
@@ -15,6 +17,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 export const NodeEditDrawer = () => {
   const { t } = usePage();
   const [showAnnotation, setShowAnnotation] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const isHistoryViewer = useHistoryViewerMatch();
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selectedScenario = useRootState(
@@ -41,7 +44,7 @@ export const NodeEditDrawer = () => {
     getValues,
     trigger,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = formMethods;
 
   useEffect(() => {
@@ -76,6 +79,12 @@ export const NodeEditDrawer = () => {
       reset({ id: '', title: '' });
     };
   }, [selectedNode, index]);
+
+  useEffect(() => {
+    if (isDirty) {
+      dispatch(setIsDirty(true));
+    }
+  }, [isDirty]);
 
   const editItem = () => {
     if (!isEditDrawerOpen) {

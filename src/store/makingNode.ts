@@ -281,6 +281,9 @@ export const makingNodeSlice = createSlice({
       const { nodes } = action.payload;
       state.nodes = state.nodes.concat(nodes);
     },
+    setIsDirty: (state, action: PayloadAction<boolean>) => {
+      state.changed = action.payload;
+    },
   },
 });
 
@@ -294,5 +297,6 @@ export const {
   initNodes,
   updateButtonOrder,
   updateListItemOrder,
+  setIsDirty,
 } = makingNodeSlice.actions;
 export default makingNodeSlice.reducer;

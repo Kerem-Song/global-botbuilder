@@ -19,7 +19,7 @@ export const BasicCardNodeEdit = () => {
     register,
     getValues,
     watch,
-    formState: { errors, isDirty, dirtyFields },
+    formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
