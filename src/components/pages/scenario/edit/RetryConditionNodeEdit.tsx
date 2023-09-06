@@ -4,7 +4,6 @@ import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import classnames from 'classnames';
-import { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 

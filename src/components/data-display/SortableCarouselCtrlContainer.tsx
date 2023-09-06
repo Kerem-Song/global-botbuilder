@@ -19,7 +19,7 @@ import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SortableCarouselCtrlItem } from './SortableCarouselCtrlItem';
 import { SoratbleGrid } from './SortableGrid';

@@ -11,7 +11,7 @@ import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { ID_GEN, ID_TYPES, NODE_PREFIX } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
-import { addArrow, appendNode } from '@store/makingNode';
+import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';

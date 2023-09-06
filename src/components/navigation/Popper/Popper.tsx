@@ -1,5 +1,5 @@
 import { Input } from '@components/data-entry';
-import { useOutsideClick, usePage, useRootState } from '@hooks';
+import { useOutsideClick } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';

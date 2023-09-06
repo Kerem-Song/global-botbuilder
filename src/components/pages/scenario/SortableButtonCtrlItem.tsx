@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { CTRL_TYPES, IButtonCtrl } from '@models/interfaces/res/IGetFlowRes';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 interface ISortableButtonCtrlItemProps extends IButtonCtrl {
   nodeId: string;

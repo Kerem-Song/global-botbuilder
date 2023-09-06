@@ -4,12 +4,8 @@ import { usePage, useRootState, useScenarioClient } from '@hooks';
 import { IException, IScenarioModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
-import {
-  setPopupType,
-  setScenarioListItem,
-  setScenarioPopupOpen,
-} from '@store/scenarioListPopupSlice';
-import React, { FC, useEffect } from 'react';
+import { setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';

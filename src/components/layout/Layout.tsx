@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Navigate, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 export const Layout = () => {
   const dispatch = useDispatch();

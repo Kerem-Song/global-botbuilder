@@ -1,4 +1,3 @@
-import { Divider, Title } from '@components';
 import { Button } from '@components/general/Button';
 import { Col } from '@components/layout/Col';
 import { Tooltip } from '@components/navigation/Tooltip';
@@ -26,8 +25,6 @@ import {
 } from '@store/otherFlowScenarioPopupSlice';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import ReactLoading from 'react-loading';
-import ReactModal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
 import { LoadingModal } from '../../modal/LoadingModal';

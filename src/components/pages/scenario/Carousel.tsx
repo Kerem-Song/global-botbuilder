@@ -9,7 +9,6 @@ import { Col, Row } from '@components/layout';
 import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
-import { t } from 'i18next';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 export interface CarouselProps {

@@ -1,6 +1,5 @@
 import { Button, Input } from '@components';
-import { useI18n, useRootState } from '@hooks';
-import { useBotTesterClient } from '@hooks';
+import { useBotTesterClient, useI18n, useRootState } from '@hooks';
 import {
   IBotTester,
   IHasResult,

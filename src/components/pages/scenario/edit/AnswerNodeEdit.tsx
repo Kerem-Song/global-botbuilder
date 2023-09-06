@@ -1,7 +1,7 @@
 import { Collapse, FormItem } from '@components';
 import { useNodeEditSave, usePage } from '@hooks';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
-import { IGNodeEditModel, VariableKind } from '@models';
+import { IGNodeEditModel } from '@models';
 import { IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import classnames from 'classnames';
