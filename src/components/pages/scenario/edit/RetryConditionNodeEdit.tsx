@@ -4,6 +4,7 @@ import { IGNodeEditModel } from '@models';
 import { IRetryConditionView } from '@models/interfaces/res/IGetFlowRes';
 import { getReactSelectStyle, onMenuOpenScroller } from '@modules';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -38,7 +39,6 @@ export const RetryConditionNodeEdit = () => {
   });
 
   const values = getValues();
-  console.log('value.view in RetryConditionNodeEdit', values.view);
 
   return (
     <>
@@ -51,6 +51,7 @@ export const RetryConditionNodeEdit = () => {
         </div>
         <div className={classnames('input m-b-12', {})}>
           <Select
+            key={`${values.id}-retry-condition-count`}
             className="react-selector"
             {...field}
             options={countOptions}

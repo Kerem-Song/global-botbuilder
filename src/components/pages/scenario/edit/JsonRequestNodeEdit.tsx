@@ -19,7 +19,7 @@ import {
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import ReactLoading from 'react-loading';
 
@@ -40,10 +40,9 @@ export const JsonRequestNodeEdit = () => {
     setValue,
     control,
     resetField,
-    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
-  console.log('@json req view', getValues().view);
+
   const [loading, setLoading] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
   const values = getValues().view!;
@@ -102,14 +101,7 @@ export const JsonRequestNodeEdit = () => {
   };
 
   const { checkDataApiTest } = dataApiTestClient();
-  const {
-    data: res,
-    error,
-    isError,
-    isFetching,
-    refetch,
-    isRefetching,
-  } = checkDataApiTest(values);
+  const { data: res, isFetching, refetch, isRefetching } = checkDataApiTest(values);
 
   const handleApiValidation = () => {
     setLoading(true);
@@ -137,14 +129,14 @@ export const JsonRequestNodeEdit = () => {
       });
   };
 
-  useEffect(() => {
-    resetField('view.apiRes', { keepDirty: false });
-    resetField('view.queryStrings', { keepDirty: false });
-    resetField('view.responseMapping', { keepDirty: false });
-  }, [watch('view.id')]);
+  // useEffect(() => {
+  //   resetField('view.apiRes', { keepDirty: false });
+  //   resetField('view.queryStrings', { keepDirty: false });
+  //   resetField('view.responseMapping', { keepDirty: false });
+  // }, [watch('view.id')]);
 
   return (
-    <>
+    <div key={getValues().id}>
       <Collapse label={t(`API_REQUEST_BASIC_SETTING`)} useSwitch={false}>
         <p className="m-b-12">
           Method <span className="required">*</span>
@@ -376,6 +368,6 @@ export const JsonRequestNodeEdit = () => {
           </FormItem>
         </>
       </Collapse>
-    </>
+    </div>
   );
 };

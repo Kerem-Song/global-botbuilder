@@ -68,7 +68,6 @@ export const ImageFileUploader = ({
 
       await imageUploadAsync({ formData })
         .then((res) => {
-          console.log('res.data image', res?.data);
           setValue(imageUrl, res?.data.result, {
             shouldDirty: true,
             shouldValidate: true,

@@ -65,10 +65,8 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
       type: 'button',
       data: {
         action: () => {
-          console.log('logout');
           dispatch(setToken({ refreshToken: 'logout' }));
           const clientPrev = encodeURI(`${brandInfo.brandId}`);
-          console.log(clientPrev);
           window.location.href = `${
             import.meta.env.VITE_LOGIN_URL
           }?clientPrev=${clientPrev}&clientType=${import.meta.env.VITE_CLIENT_TYPE}`;
@@ -76,8 +74,6 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
       },
     },
   ];
-
-  console.log('!@!@', location.pathname);
 
   const changeLanguageHandler = (lang: string) => {
     i18n.changeLanguage(lang, () => {
@@ -127,7 +123,6 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
             offset={[0, 5]}
             popperItems={userInfoMenus}
             onChange={(e) => {
-              console.log(e);
               if (e.data?.action) {
                 e.data.action();
               }

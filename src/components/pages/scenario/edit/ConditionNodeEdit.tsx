@@ -26,7 +26,6 @@ export const ConditionNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IConditionView>>();
   const values = getValues();
-  console.log('value.view in condition node edit', values.view);
 
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
@@ -56,7 +55,6 @@ export const ConditionNodeEdit = () => {
   const handleAddConditionButton = (
     e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
   ) => {
-    console.log('handle add condition btn');
     e.preventDefault();
     if (fields.length < 5) {
       append({

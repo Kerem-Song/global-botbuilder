@@ -97,7 +97,6 @@ export const ScenarioListPopup: FC<{
           });
         }
       }
-      console.log('@res', res);
 
       if (res?.data && res.data.isSuccess && !filtered) {
         dispatch(setScenarioPopupOpen(false));

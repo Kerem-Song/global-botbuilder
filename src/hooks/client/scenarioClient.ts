@@ -132,7 +132,7 @@ export const useScenarioClient = () => {
 
   const scenarioSortMutate = useMutation(async (scenarioList: IScenarioModel[]) => {
     const payload: Record<string, number> = {};
-    console.log(scenarioList);
+
     scenarioList.map((s, i) => {
       payload[s.id] = i;
     });

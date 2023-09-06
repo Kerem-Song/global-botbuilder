@@ -25,17 +25,11 @@ export const ParameterClearNodeEdit = () => {
     setValue,
     control,
     watch,
-    reset,
+    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterClearCardView>>();
-
-  const isHistoryViewer = useHistoryViewerMatch();
-  const { field } = useController({
-    name: `nextNodeId`,
-    control,
-  });
-
   const values = getValues();
+  const isHistoryViewer = useHistoryViewerMatch();
 
   const {
     fields: parametersFields,
@@ -57,8 +51,6 @@ export const ParameterClearNodeEdit = () => {
   const handleDeleteVariableButton = (index: number) => {
     remove(index);
   };
-
-  console.log('@values in reset variable edit:', values);
 
   useEffect(() => {
     if (data) {
@@ -130,7 +122,7 @@ export const ParameterClearNodeEdit = () => {
             </Col>
           </Row>
         </FormItem>
-        {parametersFields?.length > 0 && (
+        {watch('view.isAll') === false && parametersFields?.length > 0 && (
           <>
             <div className="m-b-15">
               <p className="m-b-12">{t(`PARAMETER_CLEAR_NODE_SELECT_VARIABLES`)}</p>

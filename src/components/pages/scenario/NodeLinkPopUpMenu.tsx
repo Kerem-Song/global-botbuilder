@@ -224,8 +224,7 @@ export const NodeLinkPopUpMenu = ({
   };
 
   const startNode = nodes.find((x) => x.id === guideStart?.nodeId?.substring(5));
-  console.log('guideStart?.nodeId', guideStart?.nodeId?.substring(5));
-  console.log('startNode Type', startNode?.type);
+
   const filterdBtnList = cardTypeValue
     .filter((item) => {
       if (import.meta.env.PROD) {
@@ -301,7 +300,6 @@ export const NodeLinkPopUpMenu = ({
     firstNodeId: string,
     guide?: GuideInfo,
   ) => {
-    console.log(firstNodeId);
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = t(`CAPTION_OTHERFLOWREDIRECTNODE`);
 

@@ -13,9 +13,10 @@ export const IntentNodeEdit = () => {
     getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IIntentView>>();
+  const values = getValues();
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`SET_NEXT_NODE_LABEL`)} useSwitch={false}>
         <div className="m-b-12">
           <span className="subLabel">{t(`SET_CONNECT_NEXT_NODE`)} </span>
@@ -26,6 +27,6 @@ export const IntentNodeEdit = () => {
           <SelectNode fieldName={'nextNodeId'} nodeId={getValues().id} />
         </FormItem>
       </Collapse>
-    </>
+    </div>
   );
 };

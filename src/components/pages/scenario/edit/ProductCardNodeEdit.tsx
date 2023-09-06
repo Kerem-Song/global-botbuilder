@@ -1,4 +1,4 @@
-import { Col, Collapse, FormItem, Input, Row, Space } from '@components';
+import { Col, Collapse, FormItem, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -28,7 +28,6 @@ export const ProductCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
-  console.log('value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
 
   const checkPriceRegex = (
@@ -61,7 +60,7 @@ export const ProductCardNodeEdit = () => {
   // }, [salePrice]);
 
   return (
-    <>
+    <div key={values.id}>
       <div className="node-item-wrap collapse">
         <Collapse label={t(`IMAGE_SETTING`)} useSwitch={false}>
           <FormItem error={errors.view?.imageCtrl?.imageUrl}>
@@ -154,7 +153,6 @@ export const ProductCardNodeEdit = () => {
                 </Col>
                 <Col className="productSelectorWrapper" span={8}>
                   <FormItem error={errors.view?.currencyUnit}>
-                    {/* <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" /> */}
                     <InputWithTitleCounter
                       className={classNames({
                         'luna-input-error': errors.view?.currencyUnit,
@@ -196,19 +194,7 @@ export const ProductCardNodeEdit = () => {
                   placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                 />
               </FormItem>
-              {/* <FormItem error={errors.view && errors.view.salePrice}>
-                <InputWithTitleCounter
-                  label={t(`PRODUCT_NODE_SALE_PRICE`)}
-                  {...register(`view.salePrice`, {
-                    setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                      checkPriceRegex(e, 'salePrice'),
-                  })}
-                  maxLength={11}
-                  isLight={true}
-                  readOnly={isHistoryViewer}
-                />
-              </FormItem> */}
+
               <input
                 type="hidden"
                 {...register(`view.salePrice`, {
@@ -233,6 +219,6 @@ export const ProductCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };

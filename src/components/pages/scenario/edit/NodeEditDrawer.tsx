@@ -13,7 +13,6 @@ import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
-  console.log('^^^^ NodeEditDrawer');
   const { t } = usePage();
   const [showAnnotation, setShowAnnotation] = useState<boolean>(false);
   const isHistoryViewer = useHistoryViewerMatch();
@@ -42,9 +41,7 @@ export const NodeEditDrawer = () => {
     getValues,
     trigger,
     watch,
-    setError,
-
-    formState: { errors, isValid },
+    formState: { errors },
   } = formMethods;
 
   useEffect(() => {
@@ -73,10 +70,12 @@ export const NodeEditDrawer = () => {
       if (invalidateNodes[selectedNode.id]) {
         trigger();
       }
-    } else {
-      reset({ id: '', title: '' });
     }
-  }, [selectedNode?.id, index]);
+
+    return () => {
+      reset({ id: '', title: '' });
+    };
+  }, [selectedNode, index]);
 
   const editItem = () => {
     if (!isEditDrawerOpen) {
@@ -112,7 +111,6 @@ export const NodeEditDrawer = () => {
     };
   }, [showAnnotation]);
 
-  console.log('errors in edit drawer', errors);
   return (
     <Drawer
       className="botBuilderDrawer"

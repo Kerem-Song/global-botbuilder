@@ -3,7 +3,7 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -19,15 +19,11 @@ export const ListCardCarouselNodeEdit = () => {
   const {
     register,
     getValues,
-    setValue,
     watch,
     control,
-    trigger,
-    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardCarouselView>>();
   const values = getValues();
-  console.log('list card node edit value.view', values.view);
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
@@ -39,21 +35,16 @@ export const ListCardCarouselNodeEdit = () => {
   });
 
   // useEffect(() => {
-  //   if (watch(`view.childrenViews.${index ? index : 0}.imageCtrl.imageUrl`) !== '') {
-  //     setValue(`view.useImageCtrl`, true);
+  //   for (const i in watch(`view.childrenViews`)) {
+  //     resetField(`view.childrenViews.${Number(i)}.items`, {
+  //       keepDirty: true,
+  //       keepError: true,
+  //     });
   //   }
-  // }, [index]);
+  // }, [watch('id')]);
 
-  useEffect(() => {
-    for (const i in watch(`view.childrenViews`)) {
-      resetField(`view.childrenViews.${Number(i)}.items`, {
-        keepDirty: true,
-        keepError: true,
-      });
-    }
-  }, [watch('id')]);
   return (
-    <>
+    <div key={values.id}>
       {watch(`view.childrenViews.${index}.id`) &&
         childrenViewsField.map(
           (childrenView, i) =>
@@ -125,6 +116,6 @@ export const ListCardCarouselNodeEdit = () => {
               </div>
             ),
         )}
-    </>
+    </div>
   );
 };

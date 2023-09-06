@@ -1,6 +1,5 @@
 import { FormItem, Input } from '@components/data-entry';
 import { Collapse } from '@components/general';
-import { Space } from '@components/layout';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
@@ -57,11 +56,7 @@ export const OtherFlowRedirectNodeEdit = () => {
     }
   };
 
-  console.log('values in other flow redirect node edit:', values);
-  console.log('data in ofr', data);
-
   useEffect(() => {
-    console.log('###########################', data);
     if (data) {
       setScenarioList([
         ...scenarioList.concat(
@@ -75,7 +70,7 @@ export const OtherFlowRedirectNodeEdit = () => {
   }, [data]);
 
   return (
-    <Collapse label={t(`OTHER_FLOW_REDIRECT_NODE_SET`)} useSwitch={true}>
+    <Collapse label={t(`OTHER_FLOW_REDIRECT_NODE_SET`)} useSwitch={true} key={values.id}>
       <div>
         <div className="m-b-12">
           <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE`)} </span>

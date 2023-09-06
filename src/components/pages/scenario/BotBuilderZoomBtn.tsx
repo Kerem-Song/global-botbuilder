@@ -43,9 +43,6 @@ export const BotBuilderZoomBtn = () => {
     dispatch(setIsBeziderMode(isBezierMode ?? false));
   }, [isBezierMode]);
 
-  console.log('past', past);
-  console.log('future', future);
-
   return (
     <Space>
       <Row className="botBuilderCanvasBtn">

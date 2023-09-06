@@ -31,7 +31,6 @@ export const Layout = () => {
       dispatch(setBrandId(brandId));
     }
   }, [brandId]);
-  console.log(brandId, cookies.BRAND);
 
   if (!cookies.RT) {
     const clientPrev = encodeURI(`${brandId}|${location.pathname}`);

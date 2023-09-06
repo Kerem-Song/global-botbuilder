@@ -13,7 +13,6 @@ import { useHttp } from '../useHttp';
 const SCENARIO_LIST = 'scenario-list';
 
 export const useScenarioListClient = (scenarioId?: string) => {
-  console.log('@@@@useScenarioListClient', scenarioId);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const http = useHttp();
@@ -48,7 +47,7 @@ export const useScenarioListClient = (scenarioId?: string) => {
 
             // 기본 시나리오 세팅
             dispatch(setBasicScenarios(basicScenarios));
-            console.log('!@!@', scenarioId);
+
             dispatch(initSelectedScenario({ scenarios, scenarioId }));
 
             const restScenarios = scenarios

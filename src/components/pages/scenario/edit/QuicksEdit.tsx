@@ -1,5 +1,5 @@
 import { Button, Divider, Input, Space } from '@components';
-import { FormItem, InputTextarea } from '@components/data-entry';
+import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
 import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
@@ -31,7 +31,6 @@ export const QuicksEdit = () => {
   });
 
   const handleAddButton = () => {
-    console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < QUICK_MAX_COUNT) {
       const buttonNameRegex = new RegExp(tc(`DEFAULT_LBL_QUICKREPLY`));

@@ -48,7 +48,7 @@ export const makingNodeSlice = createSlice({
     },
     appendNode: (state, action: PayloadAction<INode>) => {
       const node = action.payload;
-      console.log(node);
+
       state.nodes = [...state.nodes, node];
       state.changed = true;
     },
@@ -280,7 +280,6 @@ export const makingNodeSlice = createSlice({
     setTempCard: (state, action: PayloadAction<IBuilderInfo>) => {
       const { nodes } = action.payload;
       state.nodes = state.nodes.concat(nodes);
-      console.log('test arr in making card slice', state.nodes);
     },
   },
 });

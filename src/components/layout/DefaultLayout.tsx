@@ -7,7 +7,6 @@ import { Aside } from './Aside';
 import { Header } from './Header';
 
 export const DefaultLayout = () => {
-  console.log('DefaultLayout');
   const brandName = useRootState((state) => state.brandInfoReducer.brandName);
   return (
     <>

@@ -32,7 +32,6 @@ export const DataListCardNodeEdit = () => {
     Number(watch('view.count')) || 1,
   );
   const values = getValues();
-  console.log('list card node edit value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
@@ -44,8 +43,6 @@ export const DataListCardNodeEdit = () => {
   });
 
   const handleAddListButton = () => {
-    console.log('handle add list btn');
-
     if (fields.length < 5) {
       append(nodeDefaultHelper.createDefaultListCardItem(fields.length));
     }
@@ -72,7 +69,7 @@ export const DataListCardNodeEdit = () => {
   }, [watch(`view.count`)]);
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
@@ -280,6 +277,6 @@ export const DataListCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };

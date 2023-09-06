@@ -29,7 +29,6 @@ export const DeleteBot = () => {
       });
       if (result && !botSettingInfo.activated) {
         await botDeleteAsync({ botId: botSettingInfo.id }).then((res) => {
-          console.log(res?.data);
           setActiveRecoverBtn(true);
         });
       }

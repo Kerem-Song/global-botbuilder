@@ -64,7 +64,6 @@ export const Aside = () => {
         <nav className="subMenu">
           <ul>
             {menuModule.subMenu.map((item) => {
-              console.log('@item.desc', item.desc);
               return (
                 <Tooltip
                   key={item.id}

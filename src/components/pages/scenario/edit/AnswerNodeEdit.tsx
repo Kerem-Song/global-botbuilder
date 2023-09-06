@@ -28,21 +28,10 @@ export const AnswerNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IAnswerView>>();
   const use = watch('view.useUtteranceParam');
-
+  const values = getValues();
   const {
     getVariableSelectListQuery: { data },
   } = useVariableSelectClient();
-
-  const parameters: IParameterSelect[] = data
-    ? data
-        .filter((x) => x.kind === VariableKind.Parameter)
-        .map((v) => {
-          return {
-            label: v.name,
-            value: v.usingName,
-          };
-        })
-    : [];
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -58,13 +47,14 @@ export const AnswerNodeEdit = () => {
         }
       }
     });
+
     return () => {
       subscription.unsubscribe();
     };
   }, [watch]);
-  console.log('answer node edit view', getValues().view);
+
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t('USER_ANSWER')} useSwitch={true} field={'useUtteranceParam'}>
         <div className="m-b-12">
           <span className="subLabel">{t('VARIABLE_SETTING')} </span>
@@ -100,6 +90,6 @@ export const AnswerNodeEdit = () => {
         </div>
       </Collapse>
       <QuicksEdit />
-    </>
+    </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Button, Col, Divider, FormItem, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, usePage } from '@hooks';
-import { ConditionJoin, ConditionOperator, IGNodeEditModel } from '@models';
+import { ConditionJoin, IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
@@ -14,7 +14,6 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
 
   const {
     watch,
-    setValue,
     control,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
@@ -38,10 +37,10 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   const handleAddConditionButton = (
     e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
   ) => {
-    console.log('handle add condition btn');
     const join = watch(`view.childrenViews.${nestedIndex}.join`);
 
     e.preventDefault();
+
     if (fields.length < CONDITION_LIMIT) {
       append({
         op1: watch(`view.childrenViews.${nestedIndex}.items.${0}.op1`),
@@ -53,6 +52,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
       console.log('5개까지 가능');
     }
   };
+
   return (
     <>
       <div className="m-b-15">

@@ -33,7 +33,7 @@ export const ScenarioSelector = ({ children }: any) => {
     );
     setScenarioList(filtered);
     setUserInput(input);
-    console.log('input', input);
+
     if (!scenarioData) {
       setScenarioList(data);
     }

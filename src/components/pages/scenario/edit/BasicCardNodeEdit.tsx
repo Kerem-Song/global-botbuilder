@@ -2,7 +2,7 @@ import { Collapse, FormItem, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -18,18 +18,14 @@ export const BasicCardNodeEdit = () => {
   const {
     register,
     getValues,
-    setValue,
-    control,
     watch,
     formState: { errors, isDirty, dirtyFields },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
   const isHistoryViewer = useHistoryViewerMatch();
 
-  console.log('values in basiccard node edit', values.view, isDirty, dirtyFields);
-
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`IMAGE_SETTING`)} useSwitch={true} field={'useImageCtrl'}>
         {(watch(`view.useImageCtrl`) || watch(`view.imageCtrl.imageUrl`)) && (
           <FormItem error={errors.view?.imageCtrl?.imageUrl}>
@@ -45,14 +41,6 @@ export const BasicCardNodeEdit = () => {
 
       <Collapse label={t(`BASIC_NODE_TEXT_SETTING`)} useSwitch={false}>
         <Space direction="vertical" gap={12}>
-          {/* <span className="subLabel">{t(`TITLE_INPUT`)}</span> */}
-          {/* <div className="textareaWrapper">
-            <p className={classNames('textareaLabel', 'light')}>{t(`TITLE_INPUT`)}</p>
-            <span className="textCounter">
-              {watch('view.title')?.length || 0}
-              {`/20`}
-            </span>
-          </div> */}
           <FormItem error={errors.view && errors.view.title}>
             <InputWithTitleCounter
               label={t(`TITLE_INPUT`)}
@@ -93,6 +81,6 @@ export const BasicCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Button, Divider, FormItem, Input, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
@@ -7,7 +7,6 @@ import {
   IButtonEditViewBase,
 } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -31,7 +30,7 @@ export const ButtonsEdit = ({
   useCounter: boolean;
   isDataApi?: boolean;
 }) => {
-  const { t, tc } = usePage();
+  const { t } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
     { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
@@ -43,7 +42,6 @@ export const ButtonsEdit = ({
     register,
     control,
     watch,
-    resetField,
     setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
@@ -103,19 +101,18 @@ export const ButtonsEdit = ({
   const selected = useRootState((state) => state.botBuilderReducer.selected);
   const selectedNode = nodes.find((x) => x.id === selected);
 
-  useEffect(() => {
-    resetField(
-      index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
-      { keepDirty: true, keepError: true },
-    );
-  }, [nodeId]);
+  // useEffect(() => {
+  //   resetField(
+  //     index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
+  //     { keepDirty: true, keepError: true },
+  //   );
+  // }, [nodeId]);
 
   return (
     <>
       {fields.map((item, i) => (
         <Space direction="vertical" key={item.id}>
           <Space direction="vertical" gap={12}>
-            {/* <span className="subLabel">{t(`BUTTON_NAME`)}</span> */}
             <FormItem
               error={
                 index === undefined

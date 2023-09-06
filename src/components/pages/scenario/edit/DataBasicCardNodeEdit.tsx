@@ -9,7 +9,6 @@ import { ButtonsEdit } from './ButtonsEdit';
 import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { ImageSettings } from './ImageSettings';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
-import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 
 export const DataBasicCardNodeEdit = () => {
@@ -51,7 +50,7 @@ export const DataBasicCardNodeEdit = () => {
   }, [watch(`view.count`)]);
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
@@ -186,6 +185,6 @@ export const DataBasicCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, FormItem, Input, Radio, Row, Space } from '@components';
+import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import {
   IGNodeEditModel,
@@ -72,8 +72,6 @@ export const DataProductCardNodeEdit = () => {
     }
   };
 
-  console.log('values in basiccard node edit', values.view);
-
   useEffect(() => {
     if (watch(`view.count`)) {
       setCarouselNum(watch(`view.count`));
@@ -81,7 +79,7 @@ export const DataProductCardNodeEdit = () => {
   }, [watch(`view.count`)]);
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`VARIABLE_SETTING`)} useSwitch={false}>
         <p className="m-b-12">{t(`DATA_BASIC_CARD_NODE_VARIABLE_INPUT_LABEL`)}</p>
         <FormItem error={errors.view?.itemsRefName}>
@@ -251,7 +249,6 @@ export const DataProductCardNodeEdit = () => {
                 </Col>
                 <Col className="productSelectorWrapper" span={8}>
                   <FormItem error={errors.view?.currencyUnit}>
-                    {/* <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" /> */}
                     <InputWithTitleCounter
                       className={classNames({
                         'luna-input-error': errors.view?.currencyUnit,
@@ -266,28 +263,7 @@ export const DataProductCardNodeEdit = () => {
                   </FormItem>
                 </Col>
               </Row>
-              {/* <div className="dataRetailPriceWrapper">
-                <div className="dataRetailPrice">
-                  <FormItem error={errors.view?.retailPriceParam}>
-                    <InputWithTitleCounter
-                      className={classNames({
-                        'luna-input-error': errors.view?.retailPriceParam,
-                      })}
-                      label={t(`PRODUCT_NODE_PRICE`)}
-                      required={true}
-                      {...register(`view.retailPriceParam`)}
-                      isLight={true}
-                      readOnly={isHistoryViewer}
-                      placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
-                    />
-                  </FormItem>
-                </div>
-                <div className="dataCurrencyUnit">
-                  <FormItem error={errors.view?.currencyUnit}>
-                    <Input {...register(`view.currencyUnit`)} placeholder="ex.USD" />
-                  </FormItem>
-                </div>
-              </div> */}
+
               <FormItem error={errors.view && errors.view.discountAmountParam}>
                 <InputWithTitleCounter
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
@@ -333,6 +309,6 @@ export const DataProductCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };

@@ -22,8 +22,6 @@ export const SwitchNodeEdit = () => {
   } = useFormContext<IGNodeEditModel<ISwitchView>>();
   const values = getValues();
 
-  console.log('value.view in condition node edit', values.view);
-
   const { fields, append, remove } = useFieldArray({
     name: `view.childrenViews`,
     control,
@@ -34,7 +32,6 @@ export const SwitchNodeEdit = () => {
   };
 
   const handleAddConditionButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('handle add condition btn');
     const join = watch(`view.childrenViews.0.join`);
 
     e.preventDefault();
@@ -47,7 +44,7 @@ export const SwitchNodeEdit = () => {
   };
 
   return (
-    <>
+    <div key={values.id}>
       {values.view && (
         <SwitchNodeCarousel
           conditionsId={values.view.id}
@@ -94,6 +91,6 @@ export const SwitchNodeEdit = () => {
           </Space>
         </div>
       </div>
-    </>
+    </div>
   );
 };

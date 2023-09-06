@@ -174,7 +174,7 @@ export const useNodeContextMenu = ({
     const result = nodeMenu.filter(
       (x) => x.data && (x.data.kind & menuKinds) === x.data.kind,
     );
-    // console.log(typeName, result);
+
     return result;
   };
   return {

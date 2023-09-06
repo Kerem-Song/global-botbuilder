@@ -1,4 +1,4 @@
-import { Col, Collapse, FormItem, Input, Row, Space } from '@components';
+import { Col, Collapse, FormItem, Row, Space } from '@components';
 import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
@@ -29,7 +29,6 @@ export const ProductCardCarouselNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardCarouselView>>();
   const values = getValues();
-  console.log('value.view', values.view);
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
@@ -64,7 +63,7 @@ export const ProductCardCarouselNodeEdit = () => {
 
   useEffect(() => {
     setValue(`view.childrenViews.${index}.salePrice`, salePrice || 0, {
-      shouldDirty: true,
+      shouldDirty: false,
     });
   }, [salePrice]);
 
@@ -87,7 +86,7 @@ export const ProductCardCarouselNodeEdit = () => {
   // }, [watch(`view.childrenViews.${index}.retailPrice`)]);
 
   return (
-    <>
+    <div key={values.id}>
       {watch(`view.childrenViews.${index}.id`) &&
         childrenViewsField.map(
           (childrenView, i) =>
@@ -283,25 +282,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                           />
                         </FormItem>
-                        {/* <FormItem
-                          error={errors.view?.childrenViews?.[index]?.discountAmount}
-                        >
-                          <InputWithTitleCounter
-                            label={t(`PRODUCT_NODE_SALE_PRICE`)}
-                            {...register(
-                              `view.childrenViews.${index}.salePrice`,
 
-                              {
-                                setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
-                                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                                  checkPriceRegex(e, index, 'salePrice'),
-                              },
-                            )}
-                            maxLength={11}
-                            isLight={true}
-                            readOnly={isHistoryViewer}
-                          />
-                        </FormItem> */}
                         <input
                           type="hidden"
                           {...register(
@@ -336,6 +317,6 @@ export const ProductCardCarouselNodeEdit = () => {
               </div>
             ),
         )}
-    </>
+    </div>
   );
 };

@@ -3,7 +3,6 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ParameterSelector } from './ParameterSelector';
@@ -19,14 +18,13 @@ export const ParameterSetNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterSetView>>();
   const isHistoryViewer = useHistoryViewerMatch();
+  const values = getValues();
   const { fields, append, remove } = useFieldArray({
     name: 'view.parameters',
     control,
   });
-  console.log('get value param', getValues());
 
   const handleAddButton = () => {
-    console.log('handle add condition btn');
     // e.preventDefault();
     if (fields.length < 10) {
       append(nodeDefaultHelper.createDefaultParameterSetParams());
@@ -41,7 +39,7 @@ export const ParameterSetNodeEdit = () => {
   };
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`PARAMETER_SET_LABEL`)} useSwitch={false}>
         {fields.map((item, i) => (
           <div key={item.id}>
@@ -130,6 +128,6 @@ export const ParameterSetNodeEdit = () => {
           />
         </FormItem>
       </Collapse>
-    </>
+    </div>
   );
 };

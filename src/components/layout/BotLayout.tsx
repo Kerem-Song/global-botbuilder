@@ -12,7 +12,6 @@ import { BotAside } from './BotAside';
 import { Header } from './Header';
 
 export const BotLayout = () => {
-  console.log('BotLayout');
   const { botId } = useParams();
   const botName = useRootState((state) => state.botInfoReducer.botInfo?.botName);
   const dispatch = useDispatch();

@@ -34,9 +34,6 @@ export const NextNodeButton: FC<NextNodeButtonProps> = ({
       return;
     }
 
-    //const img = new Image();
-    console.log(ctrlId);
-    console.log('nodeId', nodeId);
     e.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
     e.dataTransfer.setData('id', `${NEXT_BUTTON_PREFIX}${ctrlId}`);
     e.dataTransfer.setData('nodeId', nodeId);

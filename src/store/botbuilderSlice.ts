@@ -44,7 +44,6 @@ export const botbuilderSlice = createSlice({
   initialState,
   reducers: {
     initBotBuilder: (state) => {
-      console.log('initBotBuilder');
       state.scale = 1.0;
       state.selectedScenario = undefined;
       state.selected = undefined;
@@ -63,7 +62,6 @@ export const botbuilderSlice = createSlice({
       }>,
     ) => {
       const { scenarios, scenarioId } = action.payload;
-      console.log('initSelectedScenario', scenarioId);
 
       if (state.selectedScenario) {
         if (scenarios.find((x) => x.id === state.selectedScenario?.id)) {
@@ -86,8 +84,6 @@ export const botbuilderSlice = createSlice({
       state.carouselIndex = {};
     },
     setSelectedScenario: (state, action: PayloadAction<IScenarioModel | undefined>) => {
-      console.log('setSelectedScenario', action.payload);
-
       state.selectedScenario = action.payload;
       state.selected = undefined;
       state.isEditDrawerOpen = false;
@@ -99,7 +95,7 @@ export const botbuilderSlice = createSlice({
         state.scale + transformOptions.scaleFactor,
         transformOptions.maxScale,
       );
-      console.log(scale);
+
       state.scale = scale;
     },
     zoomOut: (state) => {
@@ -107,7 +103,7 @@ export const botbuilderSlice = createSlice({
         state.scale - transformOptions.scaleFactor,
         transformOptions.minScale,
       );
-      console.log(scale);
+
       state.scale = scale;
     },
     setSelected: (state, action: PayloadAction<string | IArrow | undefined>) => {
@@ -126,7 +122,6 @@ export const botbuilderSlice = createSlice({
       }
     },
     setGuideStartNode: (state, action: PayloadAction<GuideInfo | undefined>) => {
-      console.log('setGuideStartNode', action.payload);
       state.guideInfo = action.payload;
       if (action.payload) {
         state.savedGuideInfo = action.payload;

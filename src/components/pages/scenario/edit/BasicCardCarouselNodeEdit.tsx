@@ -3,7 +3,7 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -19,15 +19,11 @@ export const BasicCardCarousleNodeEdit = () => {
   const {
     register,
     getValues,
-    setValue,
     watch,
     control,
-    trigger,
-    reset,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardCarouselView>>();
   const values = getValues();
-  console.log('basic card carousel node edit values', values);
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
@@ -45,7 +41,7 @@ export const BasicCardCarousleNodeEdit = () => {
   // }, [index]);
 
   return (
-    <>
+    <div key={values.id}>
       {watch(`view.childrenViews.${index}.id`) &&
         childrenViewsField.map(
           (childrenView, i) =>
@@ -133,6 +129,6 @@ export const BasicCardCarousleNodeEdit = () => {
               </div>
             ),
         )}
-    </>
+    </div>
   );
 };

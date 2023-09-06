@@ -33,7 +33,6 @@ export const useNodeEditSave = () => {
   // }, [viewId]);
 
   const handleSave = () => {
-    console.log('handleSave');
     const model = getValues();
     trigger().then((isValid) => {
       dispatch(setInvalidateNode({ id: model.id, isValid }));
@@ -44,6 +43,7 @@ export const useNodeEditSave = () => {
 
     if (Object.entries(dirtyFields).length > 0) {
       dispatch(editNode(model));
+
       reset({ id: '', title: '' });
     }
   };

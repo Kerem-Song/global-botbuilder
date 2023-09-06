@@ -60,7 +60,6 @@ export const OtherFlowScenariosPopup = () => {
     firstNodeId: string,
     guide?: GuideInfo,
   ) => {
-    console.log(firstNodeId);
     const nodeType = NODE_TYPES.OTHER_FLOW_REDIRECT_NODE;
     const nodeName = t(`CAPTION_OTHERFLOWREDIRECTNODE`);
 

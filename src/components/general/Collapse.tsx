@@ -98,15 +98,15 @@ export const Collapse: FC<CollapseProps> = ({
     const childrenViewArr = watch(`view.childrenViews`);
 
     if (isHistoryViewer) {
-      console.log('@childrenViewArr', childrenViewArr);
-      console.log('@getvalue', watch(`view.imageCtrl`));
+      // console.log('@childrenViewArr', childrenViewArr);
+      // console.log('@getvalue', watch(`view.imageCtrl`));
       if (childrenViewArr && childrenViewArr[0].imageCtrl?.imageUrl) {
-        console.log('@5', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
+        // console.log('@5', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
         setValue(`view.useImageCtrl`, true);
       } else if (watch(`view.imageCtrl.imageUrl`)) {
         setValue(`view.useImageCtrl`, true);
       } else {
-        console.log('@6', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
+        // console.log('@6', watch(`view.useImageCtrl`), watch(`view.imageCtrl.imageUrl`));
         setValue(`view.useImageCtrl`, false);
       }
       return;
@@ -118,27 +118,27 @@ export const Collapse: FC<CollapseProps> = ({
         !watch(`view.childrenViews.${0}.imageCtrl.imageUrl`)
       ) {
         setValue(`view.useImageCtrl`, false);
-        console.log('@1', index, childrenViewArr);
+        // console.log('@1', index, childrenViewArr);
       } else {
         setValue(`view.useImageCtrl`, true);
-        console.log('@2', index, childrenViewArr);
+        // console.log('@2', index, childrenViewArr);
       }
     } else {
       if (watch(`view.useImageCtrl`) === false && !watch(`view.imageCtrl.imageUrl`)) {
-        console.log('@3', index, childrenViewArr);
-        console.log(
-          '@3 watch(`view.imageCtrl.imageUrl`)',
-          watch(`view.useImageCtrl`),
-          watch(`view.imageCtrl.imageUrl`),
-        );
+        // console.log('@3', index, childrenViewArr);
+        // console.log(
+        //   '@3 watch(`view.imageCtrl.imageUrl`)',
+        //   watch(`view.useImageCtrl`),
+        //   watch(`view.imageCtrl.imageUrl`),
+        // );
         setValue(`view.useImageCtrl`, false);
       } else {
-        console.log('@4', index, childrenViewArr);
-        console.log(
-          '@4 watch(`view.imageCtrl.imageUrl`)',
-          watch(`view.useImageCtrl`),
-          watch(`view.imageCtrl.imageUrl`),
-        );
+        // console.log('@4', index, childrenViewArr);
+        // console.log(
+        //   '@4 watch(`view.imageCtrl.imageUrl`)',
+        //   watch(`view.useImageCtrl`),
+        //   watch(`view.imageCtrl.imageUrl`),
+        // );
         setValue(`view.useImageCtrl`, true);
       }
     }
@@ -163,13 +163,6 @@ export const Collapse: FC<CollapseProps> = ({
                   {
                     onChange: (e) => {
                       if (!e.target.checked && field !== 'useUtteranceParam') {
-                        // setValue(
-                        //   index !== undefined
-                        //     ? `view.childrenViews.${index}.imageCtrl.imageUrl`
-                        //     : `view.imageCtrl.imageUrl`,
-                        //   '',
-                        // );
-                        console.log('onchange~~~~~~~~~~~~~~~~');
                         setValue(`view.imageCtrl.imageUrl`, '', {
                           shouldDirty: true,
                         });

@@ -3,7 +3,6 @@ import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
-import { bool } from 'yup';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
 
@@ -27,12 +26,7 @@ export const ImageInput = ({
   isValid,
   isSmall,
 }: IImageCtrlIdPathProps) => {
-  const { t } = usePage();
-  const {
-    setValue,
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { setValue, register } = useFormContext();
 
   const isHistoryViewer = useHistoryViewerMatch();
   const token = useRootState((state) => state.botInfoReducer.token);

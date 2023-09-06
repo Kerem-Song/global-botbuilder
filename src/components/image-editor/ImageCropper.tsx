@@ -77,7 +77,6 @@ export const ImageEditorComponent = () => {
 
   const handleToggleAspectClick = () => {
     if (aspect) {
-      console.log('aspect', aspect);
       setAspect(undefined);
     } else if (imgRef.current) {
       const { width, height } = imgRef.current;

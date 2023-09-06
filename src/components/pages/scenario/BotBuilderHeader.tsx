@@ -175,7 +175,7 @@ export const BotBuilderHeader = () => {
     const model = formMethods.getValues();
     if (isEditDrawOpen) {
       const isValid = await formMethods.trigger();
-      console.log(isValid);
+
       dispatch(setInvalidateNode({ id: model.id, isValid }));
       await appDispatch(editNodeAsync(model));
 

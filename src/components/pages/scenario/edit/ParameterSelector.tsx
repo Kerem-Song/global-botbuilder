@@ -2,7 +2,6 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
-import { ChangeEvent } from 'react';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IParameterSelectorProps<T extends object> {
@@ -30,7 +29,6 @@ export const ParameterSelector = <T extends object>({
   const { field } = useController({ name: path, control });
   const parameters: IVariable[] =
     data?.filter((v) => v.kind === VariableKind.Parameter) || [];
-  console.log('field.value', field.value);
 
   const handleCreate = (value: string | undefined, byUsingName = false) => {
     if (!value) {

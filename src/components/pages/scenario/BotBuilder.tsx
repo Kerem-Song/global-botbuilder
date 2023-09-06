@@ -443,7 +443,6 @@ export const Botbuilder = () => {
                 dragPanning(e as React.DragEvent<HTMLDivElement>);
               }}
               onStop={(e) => {
-                console.log('onStop');
                 handleUpdateNodePosition(i, item);
                 e.stopPropagation();
               }}
@@ -459,7 +458,6 @@ export const Botbuilder = () => {
                   zIndex: selected === item.id ? 4 : 2,
                 }}
                 ref={(el) => (nodeRef.current[i] = el)}
-                // onContextMenu={(e) => e.preventDefault()}
               >
                 <Node
                   typeName={item.type}

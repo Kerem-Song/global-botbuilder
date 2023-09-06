@@ -3,7 +3,7 @@ import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ButtonsEdit } from './ButtonsEdit';
@@ -20,22 +20,19 @@ export const ListCardNodeEdit = () => {
   const {
     register,
     getValues,
-    setValue,
     control,
     watch,
-    resetField,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IListCardView>>();
   const values = getValues();
-  console.log('list card node edit value.view', values.view);
   const isHistoryViewer = useHistoryViewerMatch();
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
     control,
+    keyName: `${values.id}-items`,
   });
 
   const handleAddListButton = () => {
-    console.log('handle add list btn');
     // e.preventDefault();
     if (fields.length < 5) {
       append(nodeDefaultHelper.createDefaultListCardItem(fields.length));
@@ -49,12 +46,12 @@ export const ListCardNodeEdit = () => {
     remove(index);
   };
 
-  useEffect(() => {
-    resetField('view.items', { keepDirty: true, keepError: true });
-  }, [watch('id')]);
+  // useEffect(() => {
+  //   resetField('view.items', { keepDirty: true, keepError: true });
+  // }, [watch('id')]);
 
   return (
-    <>
+    <div key={values.id}>
       <Collapse label={t(`LIST_NODE_HEAD_TITLE_SETTING`)} useSwitch={false}>
         <FormItem error={errors.view?.header}>
           <InputWithTitleCounter
@@ -86,7 +83,7 @@ export const ListCardNodeEdit = () => {
           </FormItem>
         )}
       </Collapse>
-      <Collapse label={t(`LIST_SETTING`)} useSwitch={false}>
+      <Collapse label={t(`LIST_SETTING`)} useSwitch={false} key={`${values.id}-itemss`}>
         {fields.map((item, i) => (
           <div key={item.id} className="listFieldsWrapper">
             <div className="m-b-12">
@@ -191,6 +188,6 @@ export const ListCardNodeEdit = () => {
       </Collapse>
 
       <ConnectNodeBottomEdit nodeId={values.id} />
-    </>
+    </div>
   );
 };
