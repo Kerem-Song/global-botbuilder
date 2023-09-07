@@ -498,6 +498,11 @@ export const Botbuilder = () => {
                     backgroundColor: '#ffffff',
                     transform: `scale(${1 / scale})`,
                   }}
+                  onMouseLeave={() => {
+                    setTimeout(() => {
+                      setClicked(false);
+                    }, 200);
+                  }}
                 >
                   {canvasContextMenu.map((item, i) => (
                     <div
