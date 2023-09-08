@@ -2,7 +2,7 @@ import { StaffType } from '@models';
 
 import { IReq } from './req';
 
-export interface IBotSetting {
+export interface IBotSetting extends IReq {
   botId: string;
   botName?: string;
 }
@@ -12,11 +12,11 @@ export interface IUpdateBotActivate extends IReq {
   isActivate: boolean;
 }
 
-export interface IUpdateChannelActivate extends IUpdateBotActivate {
+export interface IUpdateChannelActivate extends IUpdateBotActivate, IReq {
   isLive: boolean;
 }
 
-export interface IImportFlowGroup {
+export interface IImportFlowGroup extends IReq {
   botId: string;
   file: File;
 }
