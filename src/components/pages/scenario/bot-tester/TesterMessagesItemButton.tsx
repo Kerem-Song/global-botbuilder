@@ -60,6 +60,8 @@ export const TesterMessagesItemButton = ({
               ? item.postback.webLinkUrl
               : actionType === 'lunaNodeRedirect'
               ? lunaNodeLink
+              : actionType === 'actValueIsUttr'
+              ? item.postback.actValueIsUttr
               : item.label,
         },
       },
@@ -67,12 +69,12 @@ export const TesterMessagesItemButton = ({
 
     const result = await botTesterMutateAsync({
       ...sendMessage,
-      customErrorCode: [7617],
+      // customErrorCode: [7617],
     });
 
-    if (typeof result === 'number' && result === 7617) {
-      return;
-    }
+    // if (typeof result === 'number' && result === 7617) {
+    //   return;
+    // }
 
     const res = result as IHasResult<IBotTester>;
     const { messages, quickReplies } = res.result;

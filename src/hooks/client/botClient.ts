@@ -173,7 +173,13 @@ export const useBotClient = () => {
       AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
     >('/bot/updatechannelactivate', args);
 
-    if (res) {
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
@@ -195,11 +201,18 @@ export const useBotClient = () => {
     const formData = new FormData();
     formData.append('file', args.file);
     formData.append('botId', args.botId);
+
     const res = await http.post('/Bot/ImportFlowGroup', formData);
 
-    if (res) {
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
-      return res;
+      return res.data;
     }
   });
 
@@ -209,7 +222,13 @@ export const useBotClient = () => {
       AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
     >('/bot/deletebot', args);
 
-    if (res) {
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
@@ -221,7 +240,13 @@ export const useBotClient = () => {
       AxiosResponse<IHasResult<IResponseUpdateBotIcon>>
     >('/bot/recoverbot', args);
 
-    if (res) {
+    const exception = res.data.exception as IException;
+
+    if (exception) {
+      return exception.errorCode;
+    }
+
+    if (res.data.isSuccess) {
       queryClient.invalidateQueries(['bot-setting-info', args.botId]);
       return res;
     }
