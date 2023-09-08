@@ -107,7 +107,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   }, [hasIntentId?.data]);
 
   const handleListBtn = async () => {
-    if (isOpenUtteranceDetailPopup && handleClose && handleIsOpenUtterancePopup) {
+    if (isOpenUtteranceDetailPopup) {
       if (isActive) {
         const result = await confirm({
           title: tc('SAVE_CONFIRM_TITLE'),
@@ -119,7 +119,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
           return;
         }
       }
-      handleIsOpenUtterancePopup(true);
+      handleIsOpenUtterancePopup?.(true);
     } else {
       navigate(`/${botId}/intent`);
     }
@@ -128,31 +128,39 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   };
 
   const handleDeleteIntentBtn = async () => {
-    if (isActive) {
-      setIsActive(false);
-    }
-
-    const result = await confirm({
+    const deleteIntentConfirm = await confirm({
       title: t('DELETE_INTENT'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
-    if (result) {
-      const deleteIntent: IDeleteIntent = {
-        sessionToken: token,
-        intentId: intentId,
-      };
+    const deleteIntent: IDeleteIntent = {
+      sessionToken: token,
+      intentId: intentId,
+    };
 
-      const res = await intentDeleteAsync(deleteIntent);
-
-      if (res && res.isSuccess) {
+    const handleIntentDelete = async () => {
+      const deletionResult = await intentDeleteAsync(deleteIntent);
+      if (deletionResult && deletionResult.isSuccess) {
         lunaToast.success(tc('DELETE_MESSAGE'));
-        if (isOpenUtteranceDetailPopup && handleClose) {
-          handleClose();
+        handleCloseUtteranceDetailPopup?.();
+        if (isOpenUtteranceDetailPopup) {
           handleIsOpenUtterancePopup?.(true);
         } else {
           navigate(`/${botId}/intent`);
         }
+      }
+    };
+
+    if (isActive) {
+      setIsActive(false);
+      if (deleteIntentConfirm) {
+        handleIntentDelete();
+      } else {
+        setIsActive(true);
+      }
+    } else {
+      if (deleteIntentConfirm) {
+        handleIntentDelete();
       }
     }
   };
@@ -187,6 +195,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
       }
     } else {
       setIsActive(false);
+
       if (!itemData.intentId) {
         await info({
           title: t('SAVE_NEW_INTENT'),
@@ -205,10 +214,6 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   };
 
   const handleCloseDetailPopup = async () => {
-    if (!handleClose) {
-      return;
-    }
-
     if (isActive) {
       const res = await confirm({
         title: tc('SAVE_CONFIRM_TITLE'),
@@ -217,11 +222,11 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         ),
       });
       if (res) {
-        handleClose();
+        handleClose?.();
         handleIsOpenUtterancePopup?.(false);
       }
     } else {
-      handleClose();
+      handleClose?.();
       handleIsOpenUtterancePopup?.(false);
     }
   };
