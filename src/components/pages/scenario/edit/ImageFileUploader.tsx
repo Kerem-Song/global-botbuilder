@@ -114,7 +114,7 @@ export const ImageFileUploader = ({
   const handleImgOnError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.onerror = null;
     e.currentTarget.src = icImgNotFound;
-    e.currentTarget.className = 'imgNotFound';
+    // e.currentTarget.className = 'imgNotFound';
     setError(imageUrl, { type: 'custom', message: t(`IMAGE_NOT_FOUND`) });
   };
 
@@ -153,14 +153,14 @@ export const ImageFileUploader = ({
                     onError={(e) => {
                       handleImgOnError(e);
                     }}
-                    onLoad={(e) => {
-                      if (
-                        !Object.keys(errors).length &&
-                        e.currentTarget.className === 'imgNotFound'
-                      ) {
-                        e.currentTarget.className = '';
-                      }
-                    }}
+                    // onLoad={(e) => {
+                    //   if (
+                    //     !Object.keys(errors).length &&
+                    //     e.currentTarget.className === 'imgNotFound'
+                    //   ) {
+                    //     e.currentTarget.className = '';
+                    //   }
+                    // }}
                   />
                 </>
               ) : (
@@ -171,14 +171,14 @@ export const ImageFileUploader = ({
                     onError={(e) => {
                       handleImgOnError(e);
                     }}
-                    onLoad={(e) => {
-                      if (
-                        !Object.keys(errors).length &&
-                        e.currentTarget.className === 'imgNotFound'
-                      ) {
-                        e.currentTarget.className = '';
-                      }
-                    }}
+                    // onLoad={(e) => {
+                    //   if (
+                    //     !Object.keys(errors).length &&
+                    //     e.currentTarget.className === 'imgNotFound'
+                    //   ) {
+                    //     e.currentTarget.className = '';
+                    //   }
+                    // }}
                   />
                 </>
               )
