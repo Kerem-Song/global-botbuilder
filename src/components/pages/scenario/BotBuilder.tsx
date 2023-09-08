@@ -54,7 +54,7 @@ export const Botbuilder = () => {
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
   const nodeRef: React.MutableRefObject<(HTMLDivElement | null)[]> = useRef([]);
-
+  const contextRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [popUpPosition, setPopUpPosition] = useState<{ x: number; y: number }>({
     x: 0,
@@ -373,9 +373,34 @@ export const Botbuilder = () => {
     }
   };
 
+  const handleMouseOver = () => {
+    console.log('@mouse over');
+    contextRef.current?.setAttribute('context-mouse-over', 'true');
+  };
+
+  const handleLazyHide = () => {
+    console.log('@mouse lazy');
+    contextRef.current?.removeAttribute('context-mouse-over');
+    setTimeout(() => {
+      if (!contextRef.current?.hasAttribute('context-mouse-over')) {
+        setClicked(false);
+      }
+    }, 200);
+  };
+
   useEffect(() => {
     setTempNodeNames([]);
   }, [nodes]);
+
+  useEffect(() => {
+    if (clicked) {
+      setTimeout(() => {
+        if (contextRef.current?.getAttribute('context-mouse-over') !== 'true') {
+          setClicked(false);
+        }
+      }, 2000);
+    }
+  }, [clicked]);
 
   return (
     <>
@@ -486,37 +511,39 @@ export const Botbuilder = () => {
                 />
               )}
           {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
-          {isHistoryViewer
-            ? null
-            : clicked && (
-                <div
-                  className="luna-popup-container luna-chatbot-container"
-                  style={{
-                    top: points.y,
-                    left: points.x,
-                    position: 'absolute',
-                    backgroundColor: '#ffffff',
-                    transform: `scale(${1 / scale})`,
-                  }}
-                  onMouseLeave={() => {
-                    setTimeout(() => {
-                      setClicked(false);
-                    }, 200);
-                  }}
-                >
-                  {canvasContextMenu.map((item, i) => (
-                    <div
-                      key={i}
-                      className="luna-chatbot-list luna-popup-list"
-                      role="presentation"
-                      onClick={item.data?.action}
-                    >
-                      <img src={item.icon} alt="icon" />
-                      <p className="items-name">{item.name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
+          {isHistoryViewer ? null : (
+            <div
+              onMouseLeave={handleLazyHide}
+              onMouseEnter={handleMouseOver}
+              ref={contextRef}
+            >
+              <div
+                className="luna-popup-container luna-chatbot-container"
+                style={{
+                  top: points.y,
+                  left: points.x,
+                  position: 'absolute',
+                  backgroundColor: '#ffffff',
+                  transform: `scale(${1 / scale})`,
+                  visibility: clicked ? 'visible' : 'hidden',
+                }}
+                onMouseLeave={handleLazyHide}
+                onMouseEnter={handleMouseOver}
+              >
+                {canvasContextMenu.map((item, i) => (
+                  <div
+                    key={i}
+                    className="luna-chatbot-list luna-popup-list"
+                    role="presentation"
+                    onClick={item.data?.action}
+                  >
+                    <img src={item.icon} alt="icon" />
+                    <p className="items-name">{item.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
