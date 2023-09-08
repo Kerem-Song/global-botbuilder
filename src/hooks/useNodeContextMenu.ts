@@ -59,13 +59,17 @@ export const useNodeContextMenu = ({
       if (filtered) {
         const regex = /[^0-9]/g;
         const results =
-          filtered?.map((x) => {
-            return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
-          }) || [];
+          filtered
+            ?.map((x) => {
+              return Number(x.title?.replace(clone.title!, '').replace(regex, ''));
+            })
+            .sort((a: number, b: number) => {
+              return a - b;
+            }) || [];
 
         for (const i of results) {
           if (!results.includes(i + 1)) {
-            index = Number(i + 1);
+            index += Number(i);
             break;
           }
         }
