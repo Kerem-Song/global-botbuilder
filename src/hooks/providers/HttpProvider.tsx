@@ -68,11 +68,22 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
           }
           const requestData = response.config.data;
           if (requestData) {
-            const requestObj = JSON.parse(requestData);
-            if (
-              requestObj?.customErrorCode?.includes(response.data.exception.errorCode)
-            ) {
-              return response;
+            if (typeof requestData === 'string') {
+              const requestObj = JSON.parse(requestData);
+              if (
+                requestObj?.customErrorCode?.includes(response.data.exception.errorCode)
+              ) {
+                return response;
+              }
+            } else {
+              // form 데이터
+              const formData: FormData = requestData;
+              const customErrorCode = formData.get('customErrorCode');
+              if (
+                String(response.data.exception.errorCode) === customErrorCode?.valueOf()
+              ) {
+                return response;
+              }
             }
           }
         }
@@ -100,13 +111,25 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
        */
       const requestData = err.response.config.data;
       if (requestData) {
-        const requestObj = JSON.parse(requestData);
-        if (
-          requestObj?.customErrorCode?.includes(err.response.data.exception.errorCode)
-        ) {
-          return err.response;
+        if (typeof requestData === 'string') {
+          const requestObj = JSON.parse(requestData);
+          if (
+            requestObj?.customErrorCode?.includes(err.response.data.exception.errorCode)
+          ) {
+            return err.response;
+          }
+        } else {
+          // form 데이터
+          const formData: FormData = requestData;
+          const customErrorCode = formData.get('customErrorCode');
+          if (
+            String(err.response.data.exception.errorCode) === customErrorCode?.valueOf()
+          ) {
+            return err.response;
+          }
         }
       }
+
       if (err.response.status === 403 || err.response.status === 401) {
         if (err.response.data.exception.errorCode === 7659) {
           if (err.response.data.exception.staffRole === '0') {
