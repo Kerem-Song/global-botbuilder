@@ -39,7 +39,12 @@ export const QuicksEdit = () => {
 
       if (filtered) {
         const regex = /[^0-9]/g;
-        const results = filtered?.map((x) => Number(x.label?.replace(regex, ''))) || [];
+        const results =
+          filtered
+            ?.map((x) => Number(x.label?.replace(regex, '')))
+            .sort((a: number, b: number) => {
+              return a - b;
+            }) || [];
         const max = Math.max(...results);
 
         for (let i = 1; i <= max + 1; i++) {

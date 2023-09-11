@@ -273,7 +273,12 @@ export const BotBuilderHeader = () => {
 
     if (filtered || tempNodeNames) {
       const regex = /[^0-9]/g;
-      const results = filtered?.map((x) => Number(x.title?.replace(regex, ''))) || [];
+      const results =
+        filtered
+          ?.map((x) => Number(x.title?.replace(regex, '')))
+          .sort((a: number, b: number) => {
+            return a - b;
+          }) || [];
       const max = Math.max(...results, ...tempNodeNames);
 
       for (let i = 1; i <= max + 1; i++) {

@@ -33,22 +33,34 @@ export const HandleBotScenario = () => {
   const handleImportBotScenario = async (file: File) => {
     const SUPPORTED_FORMATS = ['application/json']; // json 확장자로 사용자 지정 파일 설정
     if (SUPPORTED_FORMATS.includes(file.type)) {
-      const res = await confirm({
+      const importScenarioConfirm = await confirm({
         title: t('IMPORT_SCENARIO'),
         description: (
           <p style={{ whiteSpace: 'pre-wrap' }}>{t('CONFIRM_IMPORT_SCENARIO_MESSAGE')}</p>
         ),
       });
-      if (res && botSettingInfo && botId) {
-        botImportAsync({ file, botId: botSettingInfo.id })
-          .then((res) => {
-            console.log('botImportAsync data', res?.data);
-            refetchSessionToken(botId);
-            lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
-          })
-          .catch((err) => {
-            console.log('botImportAsync error', err);
+
+      if (importScenarioConfirm && botSettingInfo && botId) {
+        const importScenario = {
+          file,
+          botId: botSettingInfo.id,
+        };
+
+        const res = await botImportAsync({ ...importScenario, customErrorCode: [7800] });
+
+        if (res === 7800) {
+          await info({
+            title: t('DISABLED_IMPORT_SCENARIO'),
+            description: (
+              <p style={{ whiteSpace: 'pre-line' }}>
+                {t('DISABLED_IMPORT_SCENARIO_MESSAGE')}
+              </p>
+            ),
           });
+        } else {
+          refetchSessionToken(botId);
+          lunaToast.success(t('IMPORT_SCENARIO_SUCCESS'));
+        }
       }
     } else {
       await info({
