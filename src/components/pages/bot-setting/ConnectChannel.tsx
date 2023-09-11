@@ -41,7 +41,7 @@ export const ConnectChannel = () => {
       return;
     }
 
-    const res = await confirm({
+    const connectChannelConfirm = await confirm({
       title: linkedState ? t('DISCONNECT_CHANNEL') : t('CONNECT_CHANNEL'),
       description: (
         <>
@@ -59,16 +59,32 @@ export const ConnectChannel = () => {
       ),
     });
 
-    if (res && botSettingInfo) {
-      const connectChannel = await botChannelActivateAsync({
+    if (connectChannelConfirm && botSettingInfo) {
+      const botChannelActivate = {
         isActivate: !linkedState,
         isLive: isOpChannel,
         botId: botSettingInfo.id,
+      };
+
+      const res = await botChannelActivateAsync({
+        ...botChannelActivate,
+        // customErrorCode: [7647],
       });
 
-      if (connectChannel?.data.isSuccess) {
-        setLinkedState(!linkedState);
+      // 추후 설정 에러 처리할 때 필요한 코드
+      // if (res === 7647) {
+      //   info({
+      //     title: t('DISABLED_CHANGE_BOT_SETTING'),
+      //     description: (
+      //       <p style={{ whiteSpace: 'pre-line' }}>
+      //         {t('DISABLED_CHANGE_BOT_SETTING_MESSAGE')}
+      //       </p>
+      //     ),
+      //   });
+      // }
 
+      if (res) {
+        setLinkedState(!linkedState);
         if (!linkedState) {
           await info({
             title: t('CONNECT_CHANNEL_SUCCESS'),
