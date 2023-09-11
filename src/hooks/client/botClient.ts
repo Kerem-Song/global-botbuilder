@@ -201,12 +201,14 @@ export const useBotClient = () => {
     const formData = new FormData();
     formData.append('file', args.file);
     formData.append('botId', args.botId);
+    formData.append('customErrorCode', '7800');
 
     const res = await http.post('/Bot/ImportFlowGroup', formData);
 
     const exception = res.data.exception as IException;
 
     if (exception) {
+      console.log('@@@exception', exception);
       return exception.errorCode;
     }
 
