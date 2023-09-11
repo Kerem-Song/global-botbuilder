@@ -29,12 +29,12 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   const handleAddUtternace = async () => {
     if (!utteranceWord || !utteranceWord.trim()) return;
 
-    const checkUtteranceDuplication = await checkUtteranceDuplicationAsync({
+    const res = await checkUtteranceDuplicationAsync({
       text: utteranceWord,
       customErrorCode: [7000],
     });
 
-    if (Array.isArray(checkUtteranceDuplication)) {
+    if (Array.isArray(res)) {
       const isDuplicateUtterance = getValues('items')
         .map((x) => x.text?.toLowerCase())
         .includes(utteranceWord.toLowerCase());
@@ -66,12 +66,11 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         if (utteranceRef.current) {
           utteranceRef.current.select();
         }
-        setIsEditing(false);
         setIsActive(false);
         return;
       };
 
-      if (checkUtteranceDuplication.length === 0) {
+      if (res.length === 0) {
         if (isDuplicateUtterance) {
           handleAddUtteranceError(getValues('name'));
           return;
@@ -79,16 +78,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
           handleAddUtteranceSuccess();
         }
       } else {
-        const isDuplicateUtteranceInSameIntent =
-          getValues('items')
-            .map((x) => x.text?.toLowerCase())
-            ?.includes(checkUtteranceDuplication[0].utterance.toLocaleLowerCase()) ===
-            false && getValues('name') === checkUtteranceDuplication[0].intentName;
-        if (isDuplicateUtteranceInSameIntent) {
-          handleAddUtteranceSuccess();
-        } else {
-          handleAddUtteranceError(checkUtteranceDuplication[0].intentName);
-        }
+        handleAddUtteranceError(res[0].intentName);
       }
     }
   };
