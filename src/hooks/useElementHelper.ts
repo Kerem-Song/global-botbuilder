@@ -194,12 +194,23 @@ export const useElementHelper = (
         const point2 = {
           x: point1.x,
           y: isDirectionUp
-            ? er.bottom + minLine > snr.top && !isBezierMode
+            ? isBezierMode
+              ? endPoint.y + Math.round((startPoint.y - endPoint.y) / 2)
+              : er.bottom + minLine > snr.top
               ? lineOffset
               : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
-            : snr.bottom + minLine > er.top && !isBezierMode
+            : isBezierMode
+            ? startPoint.y + Math.round((endPoint.y - startPoint.y) / 2)
+            : snr.bottom + minLine > er.top
             ? svgRect.height - lineOffset
             : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
+          // y: isDirectionUp
+          //   ? er.bottom + minLine > snr.top && !isBezierMode
+          //     ? lineOffset
+          //     : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
+          //   : snr.bottom + minLine > er.top && !isBezierMode
+          //   ? svgRect.height - lineOffset
+          //   : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
         };
 
         const point3 = {
