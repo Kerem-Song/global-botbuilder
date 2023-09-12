@@ -57,7 +57,8 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       }
       if (!response.data.isSuccess) {
         if (response.data.exception) {
-          if (response.data.exception.errorCode === 7653) {
+          if (response.data.exception.errorCode === 7401) {
+            // 7401 -> 해당 봇 메뉴에 대한 권한은 있으나, 봇이 존재하지 않을 경우
             error({
               title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
               description: tc(`HTTP_PROVIDER_DELETE_BOT_ERROR_DESC`),
@@ -66,6 +67,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
             });
             return Promise.reject(new Error(response.data.exception.message));
           }
+
           const requestData = response.config.data;
           if (requestData) {
             if (typeof requestData === 'string') {
@@ -131,36 +133,25 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       }
 
       if (err.response.status === 403 || err.response.status === 401) {
-        if (err.response.data.exception.errorCode === 7659) {
-          if (err.response.data.exception.staffRole === '0') {
-            error({
-              title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
-              description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
-            }).then(() => {
-              document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
-            });
-          } else {
-            error({
-              title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
-              description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
-            }).then(() => {
-              document.location.href = urlToDashbaord;
-            });
-          }
+        // 403 -> 봇 메뉴에 대한 권한이 하나도 없을 경우
+        if (err.response.data.exception.staffRole === '0') {
+          error({
+            title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+            description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
+          }).then(() => {
+            document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
+          });
         } else {
-          document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
+          error({
+            title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
+            description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
+          }).then(() => {
+            document.location.href = urlToDashbaord;
+          });
         }
+      } else {
+        document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
       }
-
-      if (err.response.data.exception && err.response.data.exception.errorCode === 7656) {
-        error({
-          title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
-          description: tc(`HTTP_PROVIDER_NO_BOT_ERROR_DESC`),
-        }).then(() => {
-          document.location.href = urlToDashbaord;
-        });
-      }
-      return Promise.reject(err);
     },
   );
 
