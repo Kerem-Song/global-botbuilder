@@ -1,3 +1,390 @@
+const lineSettings = {
+  disableAlpha: '0.4',
+  minLine: 30,
+  outSize: { width: 50, height: 50 },
+  arcSize: 20,
+} as const;
+
+const designSettings = {
+  nextArrowSize: { width: 6, height: 12, hw: 3, hh: 6 },
+  ArrowSize: { width: 12, height: 6, hw: 6, hh: 3 },
+  nextNodeSize: { width: 32, height: 24, hw: 16, hh: 12 },
+  nodeHW: 109,
+} as const;
+
+interface IPoint {
+  x: number;
+  y: number;
+}
+
+interface IRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+interface IOffsetRect {
+  x: number;
+  y: number;
+  bottom: number;
+  right: number;
+  width: number;
+  height: number;
+}
+
+const pointEqual = (p1: IPoint, p2: IPoint): boolean => {
+  return p1.x === p2.x && p1.y === p2.y;
+};
+
+const getOffsetRect = (rect: DOMRect, offset: IPoint): IOffsetRect => {
+  return {
+    x: rect.x - offset.x,
+    y: rect.y - offset.y,
+    bottom: rect.bottom - offset.y,
+    right: rect.right - offset.x,
+    width: rect.width,
+    height: rect.height,
+  };
+};
+
+const setArrowTransform = (
+  style: CSSStyleDeclaration,
+  point: IPoint,
+  start: HTMLDivElement | null,
+  end: HTMLDivElement | null,
+) => {
+  if (!end) {
+    style.opacity = '0';
+  } else {
+    style.opacity = start ? '1' : lineSettings.disableAlpha;
+    const translate = `translate(${point.x}px, ${point.y}px)`;
+    style.transform = translate;
+  }
+};
+
+const initPath = (element: SVGPathElement, end: HTMLDivElement | null) => {
+  if (!end) {
+    element.setAttribute('d', '');
+  }
+  element.style.opacity = '0';
+};
+
+interface ICalcHelper {
+  getArrowPoint: (eor: IOffsetRect) => IPoint;
+  getDragElPoint: (svgRect: IRect, point: IPoint) => IPoint;
+  getStartPoint: (args: {
+    start: HTMLDivElement | null;
+    sor: IOffsetRect;
+    snor: IOffsetRect;
+  }) => IPoint;
+  getEndPoint: (point: IPoint) => IPoint;
+  getDeletePoint: (sp: IPoint, ep: IPoint) => IPoint;
+  getPoint1: (sp: IPoint, ep: IPoint) => IPoint;
+  getPoint2: (p1: IPoint, ep: IPoint) => IPoint;
+  getPoint3: (p2: IPoint, ep: IPoint) => IPoint;
+  getPoint4: (p3: IPoint, ep: IPoint) => IPoint;
+  getLine1: (p1: IPoint, p2: IPoint) => string;
+  getLine2: (p1: IPoint, p2: IPoint, p3: IPoint) => string;
+  getLine3: (p2: IPoint, p3: IPoint, p4: IPoint) => string;
+  getLine4: (p3: IPoint, p4: IPoint) => string;
+  getBezier: (
+    sp: IPoint,
+    p1: IPoint,
+    p2: IPoint,
+    p3: IPoint,
+    p4: IPoint,
+    ep: IPoint,
+  ) => string;
+}
+
+const calcHelper: ICalcHelper = {
+  getArrowPoint: (eor: IOffsetRect) => {
+    return {
+      x: eor.x + Math.round(eor.width / 2) - designSettings.ArrowSize.hw,
+      y: eor.y - designSettings.ArrowSize.height,
+    };
+  },
+  getDragElPoint: (svgRect: IRect, point: IPoint) => {
+    return {
+      x: svgRect.x + point.x - 4,
+      y: svgRect.y + point.y - 8,
+    };
+  },
+  getStartPoint: ({
+    start,
+    sor,
+    snor,
+  }: {
+    start: HTMLDivElement | null;
+    sor: IOffsetRect;
+    snor: IOffsetRect;
+  }): IPoint => {
+    return {
+      x: sor.x + designSettings.nodeHW,
+      y: sor.bottom,
+    };
+  },
+  getEndPoint: (point: IPoint) => {
+    return {
+      x: point.x + designSettings.ArrowSize.hw,
+      y: point.y,
+    };
+  },
+  getDeletePoint: (sp: IPoint, ep: IPoint) => {
+    return {
+      x: sp.x + Math.round((ep.x - sp.x) / 2) - 8,
+      y: sp.y + Math.round((ep.y - sp.y) / 2) - 8,
+    };
+  },
+  getPoint1: (sp: IPoint, ep: IPoint) => {
+    if (sp.y + lineSettings.minLine > ep.y) {
+      return {
+        x: sp.x,
+        y: sp.y + lineSettings.minLine,
+      };
+    } else {
+      const y = Math.min(sp.y, ep.y) + Math.round(Math.abs(sp.y - ep.y) / 2);
+      return {
+        x: sp.x,
+        y,
+      };
+    }
+  },
+  getPoint2: (p1: IPoint, ep: IPoint) => {
+    if (p1.y > ep.y) {
+      const x = Math.min(p1.x, ep.x) + Math.round(Math.abs(p1.x - ep.x) / 2);
+      return {
+        x: x,
+        y: p1.y,
+      };
+    } else {
+      return {
+        x: ep.x,
+        y: p1.y,
+      };
+    }
+  },
+  getPoint3: (p2: IPoint, ep: IPoint) => {
+    if (p2.y > ep.y) {
+      return { x: p2.x, y: ep.y - lineSettings.minLine };
+    } else {
+      return p2;
+    }
+  },
+  getPoint4: (p3: IPoint, ep: IPoint) => {
+    return { x: ep.x, y: Math.max(p3.y, ep.y - lineSettings.minLine) };
+  },
+  getLine1: (p1: IPoint, p2: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p1.x - p2.x) / 2),
+    );
+
+    const directionFactor = p1.x > p2.x ? -1 : 1;
+
+    return `L ${p1.x} ${p1.y - calcArcSize} Q ${p1.x},${p1.y} ${
+      p1.x + calcArcSize * directionFactor
+    },${p1.y}`;
+  },
+  getLine2: (p1: IPoint, p2: IPoint, p3: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p1.x - p2.x) / 2),
+    );
+
+    const directionFactor = p1.x > p2.x ? -1 : 1;
+    const directionFactor2 = pointEqual(p2, p3) ? -1 : 1;
+
+    return `L ${p2.x - calcArcSize * directionFactor} ${p2.y} Q ${p2.x},${p2.y} ${p2.x},${
+      p2.y - calcArcSize * directionFactor2
+    }`;
+  },
+  getLine3: (p2: IPoint, p3: IPoint, p4: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p3.x - p4.x) / 2),
+    );
+
+    const directionFactor = p2.y > p3.y ? -1 : 1;
+    const directionFactor2 = p3.x > p4.x ? -1 : 1;
+
+    return `L ${p3.x} ${p3.y - calcArcSize * directionFactor} Q ${p3.x},${p3.y} ${
+      p3.x + calcArcSize * directionFactor2
+    },${p3.y}`;
+  },
+  getLine4: (p3: IPoint, p4: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p3.x - p4.x) / 2),
+    );
+
+    const directionFactor = p3.x > p4.x ? -1 : 1;
+
+    return `L ${p4.x - calcArcSize * directionFactor} ${p4.y} Q ${p4.x},${p4.y} ${p4.x},${
+      p4.y + calcArcSize
+    }`;
+  },
+  getBezier: (sp: IPoint, p1: IPoint, p2: IPoint, p3: IPoint, p4: IPoint, ep: IPoint) => {
+    if (pointEqual(p2, p3)) {
+      return `M ${sp.x} ${sp.y} C ${p1.x},${p1.y} ${p2.x},${p2.y} ${ep.x},${ep.y}`;
+    } else {
+      const bezierC = {
+        x: p2.x,
+        y: p3.y + Math.round((p2.y - p3.y) / 2),
+      };
+      return `M ${sp.x} ${sp.y} C ${p1.x},${p1.y} ${p2.x},${p2.y} ${bezierC.x},${bezierC.y} C ${p3.x},${p3.y} ${p4.x},${p4.y} ${ep.x},${ep.y}`;
+    }
+  },
+};
+
+const nextCalcHelper: ICalcHelper = {
+  getArrowPoint: (eor: IOffsetRect) => {
+    return {
+      x: eor.x - designSettings.nextArrowSize.width,
+      y: eor.y + designSettings.nextArrowSize.hh,
+    };
+  },
+  getDragElPoint: (svgRect: IRect, point: IPoint) => {
+    return {
+      x: svgRect.x + point.x - 8,
+      y: svgRect.y + point.y - 4,
+    };
+  },
+  getStartPoint: ({
+    start,
+    sor,
+    snor,
+  }: {
+    start: HTMLDivElement | null;
+    sor: IOffsetRect;
+    snor: IOffsetRect;
+  }): IPoint => {
+    if (start) {
+      return {
+        x: snor.right,
+        y: sor.y + designSettings.nextNodeSize.hh,
+      };
+    } else {
+      return {
+        x: snor.right,
+        y: snor.y + Math.round(snor.height / 2),
+      };
+    }
+  },
+  getEndPoint: (point: IPoint) => {
+    return {
+      x: point.x + designSettings.nextArrowSize.hw,
+      y: point.y + designSettings.nextArrowSize.hh,
+    };
+  },
+  getDeletePoint: (sp: IPoint, ep: IPoint) => {
+    return {
+      x: sp.x + Math.round((ep.x - sp.x) / 2) - 8,
+      y: sp.y + Math.round((ep.y - sp.y) / 2) - 8,
+    };
+  },
+  getPoint1: (sp: IPoint, ep: IPoint) => {
+    if (sp.x + lineSettings.minLine > ep.x) {
+      return {
+        x: sp.x + lineSettings.minLine,
+        y: sp.y,
+      };
+    } else {
+      const x = Math.min(sp.x, ep.x) + Math.round(Math.abs(sp.x - ep.x) / 2);
+      return {
+        x,
+        y: sp.y,
+      };
+    }
+  },
+  getPoint2: (p1: IPoint, ep: IPoint) => {
+    if (p1.x > ep.x) {
+      const y = Math.min(p1.y, ep.y) + Math.round(Math.abs(p1.y - ep.y) / 2);
+      return {
+        x: p1.x,
+        y: y,
+      };
+    } else {
+      return {
+        x: p1.x,
+        y: ep.y,
+      };
+    }
+  },
+  getPoint3: (p2: IPoint, ep: IPoint) => {
+    if (p2.x > ep.x) {
+      return { x: ep.x - lineSettings.minLine, y: p2.y };
+    } else {
+      return p2;
+    }
+  },
+  getPoint4: (p3: IPoint, ep: IPoint) => {
+    return { x: Math.max(p3.x, ep.x - lineSettings.minLine), y: ep.y };
+  },
+  getLine1: (p1: IPoint, p2: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p1.y - p2.y) / 2),
+    );
+
+    const directionFactor = p1.y > p2.y ? -1 : 1;
+
+    return `L ${p1.x - calcArcSize} ${p1.y} Q ${p1.x},${p1.y} ${p1.x},${
+      p1.y + calcArcSize * directionFactor
+    }`;
+  },
+  getLine2: (p1: IPoint, p2: IPoint, p3: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p1.y - p2.y) / 2),
+    );
+
+    const directionFactor = p1.y > p2.y ? -1 : 1;
+    const directionFactor2 = pointEqual(p2, p3) ? -1 : 1;
+
+    return `L ${p2.x} ${p2.y - calcArcSize * directionFactor} Q ${p2.x},${p2.y} ${
+      p2.x - calcArcSize * directionFactor2
+    },${p2.y}`;
+  },
+  getLine3: (p2: IPoint, p3: IPoint, p4: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p3.y - p4.y) / 2),
+    );
+
+    const directionFactor = p2.x > p3.x ? -1 : 1;
+    const directionFactor2 = p3.y > p4.y ? -1 : 1;
+
+    return `L ${p3.x - calcArcSize * directionFactor} ${p3.y} Q ${p3.x},${p3.y} ${p3.x},${
+      p3.y + calcArcSize * directionFactor2
+    }`;
+  },
+  getLine4: (p3: IPoint, p4: IPoint) => {
+    const calcArcSize = Math.min(
+      lineSettings.arcSize,
+      Math.round(Math.abs(p3.y - p4.y) / 2),
+    );
+
+    const directionFactor = p3.y > p4.y ? -1 : 1;
+
+    return `L ${p4.x} ${p4.y - calcArcSize * directionFactor} Q ${p4.x},${p4.y} ${
+      p4.x + calcArcSize
+    },${p4.y}`;
+  },
+  getBezier: (sp: IPoint, p1: IPoint, p2: IPoint, p3: IPoint, p4: IPoint, ep: IPoint) => {
+    if (pointEqual(p2, p3)) {
+      return `M ${sp.x} ${sp.y} C ${p1.x},${p1.y} ${p2.x},${p2.y} ${ep.x},${ep.y}`;
+    } else {
+      const bezierC = {
+        x: p3.x + Math.round((p2.x - p3.x) / 2),
+        y: p2.y,
+      };
+      return `M ${sp.x} ${sp.y} C ${p1.x},${p1.y} ${p2.x},${p2.y} ${bezierC.x},${bezierC.y} C ${p3.x},${p3.y} ${p4.x},${p4.y} ${ep.x},${ep.y}`;
+    }
+  },
+};
+
 export const useElementHelper = (
   canvas: HTMLDivElement | null,
   startId: string,
@@ -6,6 +393,7 @@ export const useElementHelper = (
   isBezierMode?: boolean,
 ) => {
   const isNextNode = startNode !== null;
+  const helper: ICalcHelper = isNextNode ? nextCalcHelper : calcHelper;
   const start = document.querySelector<HTMLDivElement>(`#${startId}`);
 
   const cr = canvas?.getBoundingClientRect() || new DOMRect();
@@ -13,59 +401,27 @@ export const useElementHelper = (
   const sr = start?.getBoundingClientRect() || snr;
   const er = end?.getBoundingClientRect() || new DOMRect();
 
-  const disableAlpha = '0.4';
-  const lineOffset = 15;
-  const minLine = 50;
-  const arrowSize = isNextNode ? { width: 6, height: 12 } : { width: 12, height: 6 };
-  const outSize = { width: 50, height: 50 };
-  const arcSize = 20;
-
-  const ahw = Math.round(arrowSize.width / 2);
-  const ahh = Math.round(arrowSize.height / 2);
-
-  const shw = Math.round(sr.width / 2);
-
-  const ehw = Math.round(er.width / 2);
-  const ehh = Math.round(er.height / 2);
-
-  const minX = Math.min(
-    isNextNode ? snr.left : sr.left,
-    isNextNode ? snr.left + 216 : sr.right,
-    er.left,
-    er.right,
-  );
-  const maxX = Math.max(
-    isNextNode ? snr.left : sr.left,
-    isNextNode ? snr.left + 216 : sr.right,
-    er.left,
-    er.right,
-  );
-  const minY = Math.min(sr.top, sr.bottom, er.top, er.bottom);
-  const maxY = Math.max(sr.top, sr.bottom, er.top, er.bottom, snr.bottom);
+  const minX = Math.min(isNextNode ? snr.left : sr.left, er.left);
+  const maxX = Math.max(isNextNode ? snr.right : sr.right, er.right);
+  const minY = Math.min(sr.top, er.top);
+  const maxY = Math.max(sr.bottom, er.bottom, snr.bottom);
 
   const svgRect = {
-    x: minX - cr.x - outSize.width,
-    y: minY - cr.y - outSize.height,
-    width: Math.max(maxX - minX) + outSize.width * 2,
-    height: maxY - minY + outSize.height * 2,
+    x: minX - cr.x - lineSettings.outSize.width,
+    y: minY - cr.y - lineSettings.outSize.height,
+    width: maxX - minX + lineSettings.outSize.width * 2,
+    height: maxY - minY + lineSettings.outSize.height * 2,
   };
 
   const offset = { x: cr.x + svgRect.x, y: cr.y + svgRect.y };
 
-  const arrowPoint = {
-    // x: isNextNode ? er.x - offset.x - arrowSize.width : er.x + ehw - offset.x - ahw,
-    // y: isNextNode
-    //   ? er.y - offset.y + ehh
-    //   : sr.y < er.y
-    //   ? er.y - sr.y + outSize.height - arrowSize.height
-    //   : outSize.height - arrowSize.height,
-    x: isNextNode ? er.x - offset.x - arrowSize.width : er.x + ehw - offset.x - ahw,
-    y: isNextNode
-      ? er.y - offset.y + ahh
-      : sr.y < er.y
-      ? er.y - sr.y + outSize.height - arrowSize.height
-      : outSize.height - arrowSize.height,
-  };
+  const snor = getOffsetRect(snr, offset);
+  const sor = getOffsetRect(sr, offset);
+  const eor = getOffsetRect(er, offset);
+
+  const arrowPoint = helper.getArrowPoint(eor);
+
+  const dragElPoint: IPoint = helper.getDragElPoint(svgRect, arrowPoint);
 
   const setSvgStyle = (element: SVGSVGElement | null) => {
     if (element) {
@@ -81,35 +437,11 @@ export const useElementHelper = (
     dragEl: HTMLDivElement | null,
   ) => {
     if (element) {
-      if (!end) {
-        element.style.opacity = '0';
-      } else if (!start) {
-        element.style.opacity = disableAlpha;
-        const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
-        element.style.transform = translate;
-      } else {
-        element.style.opacity = '1';
-        const translate = `translate(${arrowPoint.x}px, ${arrowPoint.y}px)`;
-        element.style.transform = translate;
-      }
+      setArrowTransform(element.style, arrowPoint, start, end);
     }
 
     if (dragEl) {
-      if (!end) {
-        dragEl.style.opacity = '0';
-      } else if (!start) {
-        dragEl.style.opacity = disableAlpha;
-        const translate = `translate(${
-          svgRect.x + arrowPoint.x - (isNextNode ? 8 : 4)
-        }px, ${svgRect.y + arrowPoint.y - (isNextNode ? 4 : 8)}px)`;
-        dragEl.style.transform = translate;
-      } else {
-        dragEl.style.opacity = '1';
-        const translate = `translate(${
-          svgRect.x + arrowPoint.x - (isNextNode ? 8 : 4)
-        }px, ${svgRect.y + arrowPoint.y - (isNextNode ? 4 : 8)}px)`;
-        dragEl.style.transform = translate;
-      }
+      setArrowTransform(dragEl.style, dragElPoint, start, end);
     }
   };
 
@@ -119,289 +451,45 @@ export const useElementHelper = (
     deleteElement: SVGGeometryElement | null,
   ) => {
     if (element) {
-      if (!end) {
-        element.setAttribute('d', '');
-      }
-      element.style.opacity = '0';
+      initPath(element, end);
     }
 
     if (mouseElement) {
-      if (!end) {
-        mouseElement.setAttribute('d', '');
-      }
-      mouseElement.style.opacity = '0';
+      initPath(mouseElement, end);
     }
 
     if (!end) {
       return;
     }
 
-    if (!start) {
-      console.log(snr);
-    }
+    const startPoint = helper.getStartPoint({ start, snor, sor });
+    const endPoint = helper.getEndPoint(arrowPoint);
+    const deletePoint = helper.getDeletePoint(startPoint, endPoint);
 
-    const startPoint = isNextNode
-      ? start
-        ? {
-            x: snr.right - offset.x + sr.width / 2,
-            y: sr.bottom - offset.y + 8,
-          }
-        : {
-            x: snr.right - offset.x,
-            y: snr.top + Math.round(snr.height / 2) - offset.y,
-          }
-      : {
-          x: sr.x - offset.x + shw,
-          y: sr.bottom - offset.y + 8,
-        };
+    const point1 = helper.getPoint1(startPoint, endPoint);
+    const point2 = helper.getPoint2(point1, endPoint);
+    const point3 = helper.getPoint3(point2, endPoint);
+    const point4 = helper.getPoint4(point3, endPoint);
 
-    const endPoint = isNextNode
-      ? {
-          x: arrowPoint.x + ahw,
-          y: arrowPoint.y + ahh,
-        }
-      : {
-          x: arrowPoint.x + ahw,
-          y: arrowPoint.y,
-        };
-    let line1 = '';
-    let line2 = '';
-    let line3 = '';
-    let line4 = '';
-
-    let bezier = '';
-
-    const deletePoint = {
-      x: startPoint.x + Math.round((endPoint.x - startPoint.x) / 2) - 8,
-      y: startPoint.y + Math.round((endPoint.y - startPoint.y) / 2) - 8,
-    };
-
-    if (isNextNode) {
-      if (startPoint.x + minLine > endPoint.x) {
-        const isDirectionUp = startPoint.y > endPoint.y;
-        let directionFactor = isDirectionUp ? -1 : 1;
-        const point1 = {
-          x: isDirectionUp
-            ? er.bottom + minLine > snr.top && !isBezierMode
-              ? svgRect.width - lineOffset
-              : Math.min(startPoint.x + minLine, svgRect.width - lineOffset)
-            : snr.bottom + minLine > er.top && !isBezierMode
-            ? svgRect.width - lineOffset
-            : Math.min(startPoint.x + minLine, svgRect.width - lineOffset),
-          y: startPoint.y,
-        };
-
-        const point2 = {
-          x: point1.x,
-          y: isDirectionUp
-            ? isBezierMode
-              ? endPoint.y + Math.round((startPoint.y - endPoint.y) / 2)
-              : er.bottom + minLine > snr.top
-              ? lineOffset
-              : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
-            : isBezierMode
-            ? startPoint.y + Math.round((endPoint.y - startPoint.y) / 2)
-            : snr.bottom + minLine > er.top
-            ? svgRect.height - lineOffset
-            : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
-          // y: isDirectionUp
-          //   ? er.bottom + minLine > snr.top && !isBezierMode
-          //     ? lineOffset
-          //     : er.bottom + Math.round((snr.top - er.bottom) / 2) - offset.y
-          //   : snr.bottom + minLine > er.top && !isBezierMode
-          //   ? svgRect.height - lineOffset
-          //   : snr.bottom + Math.round((er.top - snr.bottom) / 2) - offset.y,
-        };
-
-        const point3 = {
-          x: Math.max(endPoint.x - minLine, lineOffset),
-          y: point2.y,
-        };
-
-        const point4 = {
-          x: point3.x,
-          y: endPoint.y,
-        };
-
-        line1 = `L ${point1.x - arcSize} ${point1.y} Q ${point1.x},${point1.y} ${
-          point1.x
-        },${point1.y + arcSize * directionFactor}`;
-        line2 = `L ${point2.x} ${point2.y - arcSize * directionFactor} Q ${point2.x},${
-          point2.y
-        } ${point2.x - arcSize},${point2.y}`;
-
-        directionFactor = point3.y > point4.y ? 1 : -1;
-
-        line3 = `L ${point3.x + arcSize} ${point3.y} Q ${point3.x},${point3.y} ${
-          point3.x
-        },${point3.y - arcSize * directionFactor}`;
-        line4 = `L ${point4.x} ${point4.y + arcSize * directionFactor} Q ${point4.x},${
-          point4.y
-        } ${point4.x + arcSize},${point4.y}`;
-
-        deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
-        deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
-
-        const bezierC = {
-          x: Math.round((point2.x + point3.x) / 2),
-          y: point3.y,
-        };
-
-        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
-          point2.x - startPoint.x
-        },${point2.y - startPoint.y} ${bezierC.x - startPoint.x},${
-          bezierC.y - startPoint.y
-        } c ${point3.x - bezierC.x},${point3.y - bezierC.y} ${point4.x - bezierC.x},${
-          point4.y - bezierC.y
-        } ${endPoint.x - bezierC.x},${endPoint.y - bezierC.y}`;
-      } else if (Math.abs(startPoint.y - endPoint.y) > 10) {
-        const x =
-          Math.min(startPoint.x, endPoint.x) +
-          Math.round(Math.abs(startPoint.x - endPoint.x) / 2);
-        const point1 = {
-          x,
-          y: startPoint.y,
-        };
-
-        const point2 = {
-          x,
-          y: endPoint.y,
-        };
-
-        const computeArcSize = Math.min(
-          Math.round(Math.abs(startPoint.y - endPoint.y) / 2),
-          arcSize,
-        );
-
-        line1 = `L ${point1.x - computeArcSize} ${point1.y} Q ${point1.x},${point1.y} ${
-          point1.x
-        },${point1.y + (startPoint.y < endPoint.y ? computeArcSize : -computeArcSize)}`;
-        line2 = `L ${point2.x} ${
-          point2.y + (startPoint.y < endPoint.y ? -computeArcSize : computeArcSize)
-        } Q ${point2.x},${point2.y} ${point2.x + computeArcSize},${point2.y}`;
-
-        deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
-        deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
-
-        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
-          point2.x - startPoint.x
-        },${point2.y - startPoint.y} ${endPoint.x - startPoint.x},${
-          endPoint.y - startPoint.y
-        }`;
-      }
-    } else {
-      if (startPoint.y + minLine > endPoint.y) {
-        const isDirectionLeft = startPoint.x > endPoint.x;
-        let directionFactor = isDirectionLeft ? -1 : 1;
-        const point1 = {
-          x: startPoint.x,
-          y: isDirectionLeft
-            ? er.right + minLine > sr.left && !isBezierMode
-              ? svgRect.height - lineOffset
-              : Math.min(startPoint.y + minLine, svgRect.height - lineOffset)
-            : sr.right + minLine > er.left && !isBezierMode
-            ? svgRect.height - lineOffset
-            : Math.min(startPoint.y + minLine, svgRect.height - lineOffset),
-        };
-
-        const point2 = {
-          x: isDirectionLeft
-            ? er.right + minLine > sr.left && !isBezierMode
-              ? lineOffset
-              : er.right + Math.round((sr.left - er.right) / 2) - offset.x
-            : sr.right + minLine > er.left && !isBezierMode
-            ? svgRect.width - lineOffset
-            : sr.right + Math.round((er.left - sr.right) / 2) - offset.x,
-          y: point1.y,
-        };
-
-        const point3 = {
-          x: point2.x,
-          y: Math.max(endPoint.y - minLine, lineOffset),
-        };
-
-        const point4 = {
-          x: endPoint.x,
-          y: point3.y,
-        };
-
-        line1 = `L ${point1.x} ${point1.y - arcSize} Q ${point1.x},${point1.y} ${
-          point1.x + arcSize * directionFactor
-        },${point1.y}`;
-        line2 = `L ${point2.x - arcSize * directionFactor} ${point2.y} Q ${point2.x},${
-          point2.y
-        } ${point2.x},${point2.y - arcSize}`;
-
-        directionFactor = point3.x > point4.x ? 1 : -1;
-
-        line3 = `L ${point3.x} ${point3.y + arcSize} Q ${point3.x},${point3.y} ${
-          point3.x - arcSize * directionFactor
-        },${point3.y}`;
-        line4 = `L ${point4.x + arcSize * directionFactor} ${point4.y} Q ${point4.x},${
-          point4.y
-        } ${point4.x},${point4.y + arcSize}`;
-
-        deletePoint.x = point2.x + (point3.x - point2.x) / 2 - 8;
-        deletePoint.y = point2.y + (point3.y - point2.y) / 2 - 8;
-
-        const bezierC = {
-          x: point3.x,
-          y: Math.round((point2.y + point3.y) / 2),
-        };
-
-        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
-          point2.x - startPoint.x
-        },${point2.y - startPoint.y} ${bezierC.x - startPoint.x},${
-          bezierC.y - startPoint.y
-        } c ${point3.x - bezierC.x},${point3.y - bezierC.y} ${point4.x - bezierC.x},${
-          point4.y - bezierC.y
-        } ${endPoint.x - bezierC.x},${endPoint.y - bezierC.y}`;
-      } else if (Math.abs(startPoint.x - endPoint.x) > 10) {
-        const y =
-          Math.min(startPoint.y, endPoint.y) +
-          Math.round(Math.abs(startPoint.y - endPoint.y) / 2);
-        const point1 = {
-          x: startPoint.x,
-          y,
-        };
-
-        const point2 = {
-          x: endPoint.x,
-          y,
-        };
-
-        const computeArcSize = Math.min(
-          Math.round(Math.abs(startPoint.x - endPoint.x) / 2),
-          arcSize,
-        );
-
-        line1 = `L ${point1.x} ${point1.y - computeArcSize} Q ${point1.x},${point1.y} ${
-          point1.x + (startPoint.x < endPoint.x ? computeArcSize : -computeArcSize)
-        },${point1.y}`;
-        line2 = `L ${
-          point2.x + (startPoint.x < endPoint.x ? -computeArcSize : computeArcSize)
-        } ${point2.y} Q ${point2.x},${point2.y} ${point2.x},${point2.y + computeArcSize}`;
-
-        deletePoint.x = point1.x + (point2.x - point1.x) / 2 - 8;
-        deletePoint.y = point1.y + (point2.y - point1.y) / 2 - 8;
-
-        bezier = `c ${point1.x - startPoint.x},${point1.y - startPoint.y} ${
-          point2.x - startPoint.x
-        },${point2.y - startPoint.y} ${endPoint.x - startPoint.x},${
-          endPoint.y - startPoint.y
-        }`;
-      }
-    }
+    const line1 = helper.getLine1(point1, point2);
+    const line2 = helper.getLine2(point1, point2, point3);
+    const line3 = pointEqual(point2, point3)
+      ? ''
+      : helper.getLine3(point2, point3, point4);
+    const line4 = pointEqual(point2, point3) ? '' : helper.getLine4(point3, point4);
 
     if (element) {
       if (start) {
         element.style.opacity = '1';
       } else {
-        element.style.opacity = disableAlpha;
+        element.style.opacity = lineSettings.disableAlpha;
       }
 
-      if (isBezierMode && bezier !== '') {
-        element.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
+      if (isBezierMode) {
+        element.setAttribute(
+          'd',
+          helper.getBezier(startPoint, point1, point2, point3, point4, endPoint),
+        );
       } else {
         element.setAttribute(
           'd',
@@ -414,11 +502,14 @@ export const useElementHelper = (
       if (start) {
         mouseElement.style.opacity = '1';
       } else {
-        mouseElement.style.opacity = disableAlpha;
+        mouseElement.style.opacity = lineSettings.disableAlpha;
       }
 
-      if (isBezierMode && bezier !== '') {
-        mouseElement.setAttribute('d', `M ${startPoint.x} ${startPoint.y} ${bezier}`);
+      if (isBezierMode) {
+        mouseElement.setAttribute(
+          'd',
+          helper.getBezier(startPoint, point1, point2, point3, point4, endPoint),
+        );
       } else {
         mouseElement.setAttribute(
           'd',

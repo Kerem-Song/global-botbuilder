@@ -547,10 +547,10 @@
         }
 
         .nextNodeDrag {
-          width: rem(5);
-          height: rem(5);
+          width: rem(32);
+          height: rem(24);
           position: absolute;
-          right: rem(10);
+          right: rem(-16);
           transform: translate(0, -50%);
         }
 
@@ -637,8 +637,8 @@
       }
 
       .nextNodeDrag {
-        width: rem(5);
-        height: rem(5);
+        width: rem(32);
+        height: rem(24);
       }
 
       .nextNode {
@@ -678,10 +678,10 @@
     .command-node {
       width: rem(190);
       .nextNodeDrag {
-        width: rem(5);
-        height: rem(5);
+        width: rem(32);
+        height: rem(24);
         position: absolute;
-        right: rem(10);
+        right: rem(-16);
         top: 50%;
         transform: translate(0, -50%);
       }
