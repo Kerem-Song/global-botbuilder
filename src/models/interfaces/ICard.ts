@@ -1,5 +1,6 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { NodeKind } from '@models/enum/NodeKind';
+import { ValueOf } from '@models/types/ValueOf';
 
 import { IScenarioModel } from './IScenarioModel';
 export interface IThumbnailType {
@@ -35,8 +36,6 @@ export const CARD_TYPES = {
   CONDITION: 'Condition',
   RETRY_CONDITION: 'RetryCondition',
 } as const;
-
-export type ValueOf<T> = T[keyof T];
 
 export type TCardsValues = ValueOf<typeof CARD_TYPES>;
 

@@ -1,4 +1,5 @@
 import { IArrow, INode, IScenarioModel } from '@models';
+import { basicScenarioTypes } from '@models/types/BasicScenarioType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const transformOptions = {
@@ -69,11 +70,19 @@ export const botbuilderSlice = createSlice({
         }
       }
 
-      if (scenarioId && scenarioId !== 'start') {
-        const found = scenarios.find((x) => x.id === scenarioId);
-        if (found) {
-          state.selectedScenario = found;
-          return;
+      if (scenarioId && scenarioId !== basicScenarioTypes.start) {
+        if (scenarioId === basicScenarioTypes.fallback) {
+          const found = scenarios.find((x) => x.isFallbackFlow);
+          if (found) {
+            state.selectedScenario = found;
+            return;
+          }
+        } else {
+          const found = scenarios.find((x) => x.id === scenarioId);
+          if (found) {
+            state.selectedScenario = found;
+            return;
+          }
         }
       }
 

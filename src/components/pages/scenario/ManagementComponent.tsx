@@ -1,6 +1,7 @@
 import { usePage } from '@hooks';
 import { useScenarioListClient } from '@hooks/client/scenarioListClient';
 import { IScenarioModel } from '@models';
+import { basicScenarioTypes } from '@models/types/BasicScenarioType';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -39,9 +40,9 @@ export const ManagementComponent = () => {
 
   useEffect(() => {
     if (data && scenarioId) {
-      if (scenarioId === 'start') {
+      if (scenarioId === basicScenarioTypes.start) {
         dispatch(setSelectedScenario(data.find((x) => x.isStartFlow)));
-      } else if (scenarioId === 'fallback') {
+      } else if (scenarioId === basicScenarioTypes.fallback) {
         dispatch(setSelectedScenario(data.find((x) => x.isFallbackFlow)));
       } else {
         dispatch(setSelectedScenario(data.find((x) => x.id === scenarioId)));
