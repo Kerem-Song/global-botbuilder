@@ -4,14 +4,15 @@ import { IScenarioModel } from '@models';
 import { basicScenarioTypes } from '@models/types/BasicScenarioType';
 import { setSelectedScenario } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { ParameterComponent } from './parameter/ParameterComponent';
 import { ScenarioManagement } from './ScenarioManagement';
 
-export const ManagementComponent = () => {
+export const ManagementComponent = React.memo(() => {
   const { t } = usePage();
   const dispatch = useDispatch();
   const { scenarioId } = useParams();
@@ -25,11 +26,13 @@ export const ManagementComponent = () => {
     setScenarioTab(value);
   };
 
-  const filteredScenarios = scenarioList?.filter(
-    (x) =>
-      (!isActivated || x.activated) &&
-      (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
-  );
+  const filteredScenarios = useMemo(() => {
+    return scenarioList?.filter(
+      (x) =>
+        (!isActivated || x.activated) &&
+        (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
+    );
+  }, [scenarioList, isActivated, searchKeyword]);
 
   useEffect(() => {
     if (!data) {
@@ -87,4 +90,6 @@ export const ManagementComponent = () => {
       )}
     </div>
   );
-};
+});
+
+ManagementComponent.displayName = 'ManagementComponent';

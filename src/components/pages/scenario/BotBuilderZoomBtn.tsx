@@ -7,12 +7,13 @@ import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setIsBeziderMode, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import { SearchingNodeInput } from './SearchingNodeInput';
 
-export const BotBuilderZoomBtn = () => {
+export const BotBuilderZoomBtn = React.memo(() => {
   const { t } = usePage();
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
@@ -100,4 +101,6 @@ export const BotBuilderZoomBtn = () => {
       </Row>
     </Space>
   );
-};
+});
+
+BotBuilderZoomBtn.displayName = 'BotBuilderZoomBtn';

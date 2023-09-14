@@ -9,11 +9,12 @@ import {
   setSidebarStatus,
 } from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
+import React from 'react';
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-export const Aside = () => {
+export const Aside = React.memo(() => {
   const dispatch = useDispatch();
   const [page, setPage] = useState<string>();
   const { i18n, ts } = useI18n();
@@ -114,4 +115,6 @@ export const Aside = () => {
       </div>
     </aside>
   );
-};
+});
+
+Aside.displayName = 'Aside';
