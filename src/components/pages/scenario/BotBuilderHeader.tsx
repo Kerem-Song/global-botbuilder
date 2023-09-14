@@ -30,7 +30,7 @@ import { useDispatch } from 'react-redux';
 import { LoadingModal } from '../../modal/LoadingModal';
 import { NodeEditDrawer } from './edit/NodeEditDrawer';
 
-export const BotBuilderHeaderComponent = () => {
+export const BotBuilderHeader = () => {
   const { t, tc } = usePage();
 
   const singleNodes = [
@@ -407,7 +407,7 @@ export const BotBuilderHeaderComponent = () => {
   }, []);
 
   const memoizedApiNodes = useMemo(() => {
-    return carousleNodes.map((item, i) => (
+    return apiNodes.map((item, i) => (
       <Tooltip tooltip={item.nodeName} key={i}>
         <Button
           className={`${item.nodeName} icon ${item.className}`}
@@ -494,4 +494,4 @@ export const BotBuilderHeaderComponent = () => {
   );
 };
 
-export const BotBuilderHeader = React.memo(BotBuilderHeaderComponent);
+// export const BotBuilderHeader = React.memo(BotBuilderHeaderComponent);

@@ -6,12 +6,13 @@ import { useSelectedScenarioChange } from '@hooks/useSelectedScenarioChange';
 import { IScenarioModel } from '@models';
 import { setPopupType, setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
 import classNames from 'classnames';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 
 import { ScenarioListPopup } from './ScenarioListPopup';
-export const ScenarioManagement: FC<{
+export const ScenarioManagementComponent: FC<{
   scenarios?: IScenarioModel[];
   searchKeyword: string;
   isActivated: boolean;
@@ -39,11 +40,13 @@ export const ScenarioManagement: FC<{
     (state) => state.botBuilderReducer.selectedScenario,
   );
 
-  const filteredScenarios = scenarios?.filter(
-    (x) =>
-      (!isActivated || x.activated) &&
-      (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
-  );
+  const filteredScenarios = useMemo(() => {
+    return scenarios?.filter(
+      (x) =>
+        (!isActivated || x.activated) &&
+        (!searchKeyword || x.alias.toLowerCase().includes(searchKeyword.toLowerCase())),
+    );
+  }, [scenarios, isActivated, searchKeyword]);
 
   useEffect(() => {
     return () => {
@@ -154,3 +157,5 @@ export const ScenarioManagement: FC<{
     </div>
   );
 };
+
+export const ScenarioManagement = React.memo(ScenarioManagementComponent);

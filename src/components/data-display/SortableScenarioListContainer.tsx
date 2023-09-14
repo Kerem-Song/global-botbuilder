@@ -17,6 +17,7 @@ import {
 import { useScenarioClient } from '@hooks';
 import { IScenarioModel } from '@models';
 import { useEffect, useState } from 'react';
+import React from 'react';
 
 import { SortableScenarioListItem } from './SortableScenarioListItem';
 
@@ -25,7 +26,7 @@ interface ISortableContainer {
   disabled?: boolean;
 }
 
-export const SortableScenarioListContainer = ({
+export const SortableScenarioListContainerComponent = ({
   scenarioList,
   disabled,
 }: ISortableContainer) => {
@@ -82,3 +83,7 @@ export const SortableScenarioListContainer = ({
     </DndContext>
   );
 };
+
+export const SortableScenarioListContainer = React.memo(
+  SortableScenarioListContainerComponent,
+);
