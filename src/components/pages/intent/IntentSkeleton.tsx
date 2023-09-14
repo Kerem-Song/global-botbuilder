@@ -28,7 +28,7 @@ export const IntentSkeleton: FC<IIntentSkeletonProps> = ({ isOpenUtterancePopup 
               style={{ lineHeight: 2 }}
             />
           </td>
-          {showScenarioList ? (
+          {showScenarioList && (
             <td role="presentation" className="intentList connectScenarios">
               <ReactLoadingSkeleton
                 count={1}
@@ -38,7 +38,7 @@ export const IntentSkeleton: FC<IIntentSkeletonProps> = ({ isOpenUtterancePopup 
                 style={{ lineHeight: 2 }}
               />
             </td>
-          ) : null}
+          )}
           <td
             role="presentation"
             className={classNames('intentList intentItemsSkeleton', {

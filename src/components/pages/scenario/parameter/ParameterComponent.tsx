@@ -32,12 +32,12 @@ export const ParameterComponent = () => {
       </p>
     );
 
-    const result = await confirm({
+    const deleteParameterConfirm = await confirm({
       title: t('DELETE_VARIABLE'),
       description: confirmDesc,
     });
 
-    if (result) {
+    if (deleteParameterConfirm) {
       const deleteParameter: IDeleteParameter = {
         sessionToken: token!,
         parameterId: deleteParameterId,

@@ -41,24 +41,24 @@ export const IntentPopup: FC<IIntentPopupProps> = ({
   }, 500);
 
   const handleClose = () => {
-    handleIsOpenUtterancePopup(false);
-    removeUtteranceQueries();
     setSearchData({
       sort: 1,
       scenarios: selectedScenarios && selectedScenarios.id,
       searchWord: undefined,
     });
+    handleIsOpenUtterancePopup(false);
+    removeUtteranceQueries();
   };
 
   const handleDetailPopupOpen = (intentId?: string) => {
-    handleIsOpenUtterancePopup(false);
-    handleIsOpenUtteranceDetailPopup(intentId);
-    removeUtteranceQueries();
     setSearchData({
       sort: 1,
       scenarios: selectedScenarios && selectedScenarios.id,
       searchWord: undefined,
     });
+    handleIsOpenUtterancePopup(false);
+    removeUtteranceQueries();
+    handleIsOpenUtteranceDetailPopup(intentId);
   };
 
   return (

@@ -15,7 +15,6 @@ export const IntentListHeader: FC<IIntentListHeaderProps> = ({
   const { utterancdId, botId } = useParams();
   const { navigate } = usePage();
   const { t } = useI18n('intent');
-
   const showScenarioList = isOpenUtterancePopup === false;
 
   const goToDetail = () => {
@@ -41,9 +40,9 @@ export const IntentListHeader: FC<IIntentListHeaderProps> = ({
           {t('INTENT')}
           <button className="addBtn" onClick={goToDetail} />
         </th>
-        {showScenarioList ? (
+        {showScenarioList && (
           <th className="intentList connectScenarios">{t('CONNECT_SCENARIOS')}</th>
-        ) : null}
+        )}
         <th
           className={classNames('intentList utterance', {
             hiddenScenarioListUtterance: !showScenarioList,

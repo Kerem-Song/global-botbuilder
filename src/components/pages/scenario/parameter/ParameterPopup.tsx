@@ -1,6 +1,6 @@
 import { Button, Col, Divider, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useI18n, usePage, useRootState } from '@hooks';
+import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
 import { useParameterClient } from '@hooks/client/parameterClient';
 import {
   IParameterList,
@@ -48,7 +48,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
     return { value: x.formatType, label: x.example };
   });
 
-  const variableNameSchema = yup.object({
+  const parameterNameSchema = yup.object({
     name: yup
       .string()
       .trim()
@@ -78,7 +78,7 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
     formState: { errors },
   } = useForm<ISaveParameterData>({
     defaultValues: {},
-    resolver: yupResolver(variableNameSchema),
+    resolver: yupResolver(parameterNameSchema),
   });
 
   const { field } = useController({ name: 'name', control });
@@ -91,13 +91,19 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
     setParameterInputError('');
   };
 
-  const handleSave = async (variable: ISaveParameterData) => {
+  const handleClose = () => {
+    handleIsOpen(false);
+    reset({ name: undefined });
+    setParameterInputError('');
+  };
+
+  const handleSave = async (parameter: ISaveParameterData) => {
     const saveParameter: ISaveParameter = {
       sessionToken: token!,
       data: {
         id: parameterList?.id,
-        name: variable.name,
-        defaultValue: variable.defaultValue,
+        name: parameter.name,
+        defaultValue: parameter.defaultValue,
         formatType: parameterFormat,
       },
     };
@@ -110,12 +116,6 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
       lunaToast.success(tc('SAVE_MESSAGE'));
       handleClose();
     }
-  };
-
-  const handleClose = () => {
-    handleIsOpen(false);
-    reset({ name: undefined });
-    setParameterInputError('');
   };
 
   useEffect(() => {
@@ -153,6 +153,8 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
       overlayClassName="parameterPopupOverlay"
       className="parameterPopup"
       isOpen={isOpen}
+      // onRequestClose={handleClose}
+      shouldCloseOnOverlayClick={false}
     >
       <div className="header">
         <Title level={4}>
@@ -160,7 +162,15 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
         </Title>
       </div>
       <Divider />
-      <form onSubmit={handleSubmit(handleSave)}>
+      <form
+        role="presentation"
+        onSubmit={handleSubmit(handleSave)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+        }}
+      >
         <Row align="center" className="parameterInfo">
           <Col span={6}>
             {t('VARIABLE_NAME')}

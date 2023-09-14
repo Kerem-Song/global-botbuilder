@@ -57,12 +57,12 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
   };
 
   const openDeleteModal = async (intentId: string) => {
-    const result = await confirm({
+    const deleteIntentConfirm = await confirm({
       title: t('DELETE_INTENT'),
       description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
-    if (result) {
+    if (deleteIntentConfirm) {
       const deleteIntent: IDeleteIntent = {
         sessionToken: token,
         intentId: intentId,
@@ -71,7 +71,6 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
       const res = await intentDeleteAsync(deleteIntent);
 
       if (res && res.isSuccess) {
-        console.log(res);
         lunaToast.success(tc('DELETE_MESSAGE'));
       }
     }
