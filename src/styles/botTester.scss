@@ -272,16 +272,19 @@
                 color: $gray300;
                 font-weight: 500;
                 text-decoration-line: line-through;
+                word-break: break-all;
               }
               .currentPrice {
                 font-size: rem(16);
                 margin-bottom: rem(6);
                 font-weight: 500;
+                word-break: break-all;
               }
               .discountAmount {
                 font-size: rem(14);
                 line-height: rem(17);
                 font-weight: 400;
+                word-break: break-all;
                 color: #ff0000;
               }
             }
