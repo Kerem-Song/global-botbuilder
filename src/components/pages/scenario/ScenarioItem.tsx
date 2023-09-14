@@ -17,7 +17,7 @@ export interface IScenarioItemProps {
   item: IScenarioModel;
 }
 
-export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
+export const ScenarioItem: FC<IScenarioItemProps> = React.memo(({ item }) => {
   const { t, tc } = usePage();
   const { confirm } = useSystemModal();
   const [scenarioMenus, setScenarioMenus] = useState<
@@ -236,4 +236,6 @@ export const ScenarioItem: FC<IScenarioItemProps> = ({ item }) => {
       </Row>
     </Card>
   );
-};
+});
+
+ScenarioItem.displayName = 'ScenarioItem';

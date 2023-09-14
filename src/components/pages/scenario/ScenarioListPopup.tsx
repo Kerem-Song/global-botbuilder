@@ -5,6 +5,7 @@ import { IException, IScenarioModel } from '@models';
 import { BOTNAME_REGEX } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
 import { setScenarioPopupOpen } from '@store/scenarioListPopupSlice';
+import React from 'react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactModal from 'react-modal';
@@ -20,7 +21,7 @@ interface IScenarioListInput {
 export const ScenarioListPopup: FC<{
   isOpen: boolean;
   scenarios?: IScenarioModel[];
-}> = ({ isOpen, scenarios }) => {
+}> = React.memo(({ isOpen, scenarios }) => {
   const { t, tc } = usePage();
   const dispatch = useDispatch();
   const { scenarioCreateAsync, scenarioRenameAsync, scenarioDuplicateMutateAsync } =
@@ -177,4 +178,6 @@ export const ScenarioListPopup: FC<{
       </form>
     </ReactModal>
   );
-};
+});
+
+ScenarioListPopup.displayName = 'ScenarioListPopup';
