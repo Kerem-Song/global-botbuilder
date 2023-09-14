@@ -22,8 +22,6 @@ export const DeployComponent = () => {
   });
   const offset = new Date().getTimezoneOffset() * -1;
 
-  console.log('offset', offset);
-
   useEffect(() => {
     if (data) {
       setTotalPages(data?.result.totalPage);

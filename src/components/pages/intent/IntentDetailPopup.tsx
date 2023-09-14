@@ -24,13 +24,13 @@ export const IntentDetailPopup: FC<IIntentDetailPopupProps> = ({
 
   const handleClose = async () => {
     if (isActive) {
-      const result = await confirm({
+      const closePopupConfirm = await confirm({
         title: tc('SAVE_CONFIRM_TITLE'),
         description: (
           <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         ),
       });
-      if (result) {
+      if (closePopupConfirm) {
         handleCloseUtteranceDetailPopup();
       }
     } else {

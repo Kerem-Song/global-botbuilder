@@ -97,7 +97,6 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         connectScenarioName: hasIntentId.data.result.flowName,
       };
       reset(resetValue);
-
       prepend(
         hasIntentId.data.result.utterances?.map<IUtteranceItem>((x) => {
           return { text: x.text, id: x.id };
@@ -109,13 +108,13 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   const handleListBtn = async () => {
     if (isOpenUtteranceDetailPopup) {
       if (isActive) {
-        const result = await confirm({
+        const saveConfirm = await confirm({
           title: tc('SAVE_CONFIRM_TITLE'),
           description: (
             <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
           ),
         });
-        if (!result) {
+        if (!saveConfirm) {
           return;
         }
       }
@@ -239,7 +238,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
 
   return (
     <>
-      {isOpenUtteranceDetailPopup ? (
+      {isOpenUtteranceDetailPopup && (
         <div
           className="intentDetailPopupHeader"
           onContextMenu={(e) => e.stopPropagation()}
@@ -262,8 +261,8 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
             icon={icPopupClose}
           />
         </div>
-      ) : null}
-      {isOpenUtteranceDetailPopup ? <Divider /> : null}
+      )}
+      {isOpenUtteranceDetailPopup && <Divider />}
       <div
         className={classNames('intentDetailWrap', {
           intentDetailPopupWrap: isOpenUtteranceDetailPopup,

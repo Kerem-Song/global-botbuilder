@@ -96,7 +96,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         <Row>
           <Col flex="auto">
             <Input
-              maxLength={2500}
+              maxLength={700}
               showCount
               ref={utteranceRef}
               value={utteranceWord}
