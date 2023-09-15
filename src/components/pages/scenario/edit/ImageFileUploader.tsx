@@ -3,7 +3,7 @@ import { imageUploadClient, usePage, useRootState, useSystemModal } from '@hooks
 import { IImageCtrlIdPathProps, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { ID_TYPES } from '@modules';
 import classnames from 'classnames';
-import { SyntheticEvent, useEffect } from 'react';
+import { SyntheticEvent, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
@@ -29,22 +29,34 @@ export const ImageFileUploader = ({
 
   const token = useRootState((state) => state.botInfoReducer.token);
 
-  const {
-    imageCtrl: imgCtrl,
-    imageCtrlPath,
-    imageFilePath,
-    imageUrl,
-    htmlForId,
-    imgPath,
-  } = handleImageCtrlIdPath({
-    imageCtrl,
-    index,
-    listItemIndex,
-  });
+  const memoizedHandleCtrlIdPath = useMemo(() => {
+    const {
+      imageCtrl: imgCtrl,
+      imageCtrlPath,
+      imageFilePath,
+      imageUrl,
+      htmlForId,
+      imgPath,
+    } = handleImageCtrlIdPath({
+      imageCtrl,
+      index,
+      listItemIndex,
+    });
+    return {
+      imgCtrl,
+      imageCtrlPath,
+      imageFilePath,
+      imageUrl,
+      htmlForId,
+      imgPath,
+    };
+  }, [imageCtrl, index, listItemIndex]);
 
   const builderImageSrc = `${
     import.meta.env.VITE_API_BASE_URL
-  }/builderimage/forbuilder?origin=${getValues(imageUrl)}&sessionToken=${token}`;
+  }/builderimage/forbuilder?origin=${getValues(
+    memoizedHandleCtrlIdPath.imageUrl,
+  )}&sessionToken=${token}`;
 
   const handleImageCtrlId = () => {
     switch (imageCtrl) {
@@ -53,32 +65,35 @@ export const ImageFileUploader = ({
         return ID_TYPES.PROFILE;
 
       case IMAGE_CTRL_TYPES.IMAGE_CTRL:
-        return imgCtrl?.id;
+        return memoizedHandleCtrlIdPath.imgCtrl?.id;
       default:
-        return imgCtrl?.id;
+        return memoizedHandleCtrlIdPath.imgCtrl?.id;
     }
   };
 
   const handleUploadImage = async () => {
-    if (token && getValues(imageFilePath).length > 0) {
+    if (token && getValues(memoizedHandleCtrlIdPath.imageFilePath).length > 0) {
       const formData = new FormData();
-      formData.append('File', getValues(imageFilePath)[0]);
+      formData.append('File', getValues(memoizedHandleCtrlIdPath.imageFilePath)[0]);
       formData.append('SessionToken', token);
       formData.append('CtrlId', handleImageCtrlId());
 
       await imageUploadAsync({ formData })
         .then((res) => {
-          setValue(imageUrl, res?.data.result, {
+          setValue(memoizedHandleCtrlIdPath.imageUrl, res?.data.result, {
             shouldDirty: true,
             shouldValidate: true,
           });
-          setValue(imageFilePath, null, { shouldDirty: true });
-          setValue(imgPath, null, { shouldDirty: true });
+          setValue(memoizedHandleCtrlIdPath.imageFilePath, null, { shouldDirty: true });
+          setValue(memoizedHandleCtrlIdPath.imgPath, null, { shouldDirty: true });
         })
         .catch((err) => {
-          setValue(imageUrl, null, { shouldDirty: true, shouldValidate: true });
-          setValue(imageFilePath, null, { shouldDirty: true });
-          setValue(imgPath, null, { shouldDirty: true });
+          setValue(memoizedHandleCtrlIdPath.imageUrl, null, {
+            shouldDirty: true,
+            shouldValidate: true,
+          });
+          setValue(memoizedHandleCtrlIdPath.imageFilePath, null, { shouldDirty: true });
+          setValue(memoizedHandleCtrlIdPath.imgPath, null, { shouldDirty: true });
           //modal 띄우기?
           console.log('upload 실패', err);
         });
@@ -107,7 +122,9 @@ export const ImageFileUploader = ({
 
         return;
       }
-      setValue(imageFilePath, e.target.files, { shouldDirty: true });
+      setValue(memoizedHandleCtrlIdPath.imageFilePath, e.target.files, {
+        shouldDirty: true,
+      });
     }
   };
 
@@ -117,17 +134,17 @@ export const ImageFileUploader = ({
   };
 
   useEffect(() => {
-    if (token && !!getValues(imageFilePath)) {
+    if (token && !!getValues(memoizedHandleCtrlIdPath.imageFilePath)) {
       handleUploadImage();
     }
-  }, [watch(imageFilePath)]);
+  }, [watch(memoizedHandleCtrlIdPath.imageFilePath)]);
 
   return (
     <>
       <label
-        htmlFor={htmlForId}
+        htmlFor={memoizedHandleCtrlIdPath.htmlForId}
         className={classnames('imgUploadLabel', {
-          skeleton: !getValues(imageUrl),
+          skeleton: !getValues(memoizedHandleCtrlIdPath.imageUrl),
         })}
       >
         <div
@@ -142,11 +159,11 @@ export const ImageFileUploader = ({
           })}
         >
           <div className={classnames('imgUploadSkeleton')}>
-            {watch(imageUrl) ? (
-              watch(imgPath) ? (
+            {watch(memoizedHandleCtrlIdPath.imageUrl) ? (
+              watch(memoizedHandleCtrlIdPath.imgPath) ? (
                 <>
                   <img
-                    src={watch(imgPath)}
+                    src={watch(memoizedHandleCtrlIdPath.imgPath)}
                     alt="templateImage"
                     onError={(e) => {
                       handleImgOnError(e);
@@ -199,7 +216,7 @@ export const ImageFileUploader = ({
 
             <input
               type="file"
-              id={htmlForId}
+              id={memoizedHandleCtrlIdPath.htmlForId}
               accept="image/png, image/jpeg, image/jpg"
               className="file-name-input"
               onChange={handleChangeFile}

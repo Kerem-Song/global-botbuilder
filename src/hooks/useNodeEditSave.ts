@@ -27,10 +27,10 @@ export const useNodeEditSave = () => {
   const index = carouselIndexObj[`${NODE_PREFIX}${selectedNode?.id}`];
   const viewId = watch('view.id');
 
-  // useEffect(() => {
-  //   reset();
-  //   trigger();
-  // }, [viewId]);
+  useEffect(() => {
+    // reset();
+    trigger();
+  }, [viewId]);
 
   const handleSave = () => {
     const model = getValues();

@@ -8,6 +8,7 @@ export const handleImageCtrlIdPath = ({
 }: IImageCtrlIdPathProps) => {
   const { getValues } = useFormContext();
   const values = getValues();
+  console.log('@handle image ctrl id Path', imageCtrl, index, listItemIndex);
 
   switch (imageCtrl) {
     case IMAGE_CTRL_TYPES.IMAGE_CTRL:

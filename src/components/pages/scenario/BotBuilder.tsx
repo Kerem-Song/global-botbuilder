@@ -379,12 +379,10 @@ export const Botbuilder = () => {
   };
 
   const handleMouseOver = () => {
-    console.log('@mouse over');
     contextRef.current?.setAttribute('context-mouse-over', 'true');
   };
 
   const handleLazyHide = () => {
-    console.log('@mouse lazy');
     contextRef.current?.removeAttribute('context-mouse-over');
     setTimeout(() => {
       if (!contextRef.current?.hasAttribute('context-mouse-over')) {

@@ -370,7 +370,7 @@ export const BotBuilderHeader = () => {
         />
       </Tooltip>
     ));
-  }, []);
+  }, [singleNodes]);
 
   const memoizedCarouselNodes = useMemo(() => {
     return carousleNodes.map((item, i) => (
@@ -387,7 +387,7 @@ export const BotBuilderHeader = () => {
         />
       </Tooltip>
     ));
-  }, []);
+  }, [carousleNodes]);
 
   const memoizedFunctionNodes = useMemo(() => {
     return functionNodes.map((item, i) => (
@@ -404,7 +404,7 @@ export const BotBuilderHeader = () => {
         />
       </Tooltip>
     ));
-  }, []);
+  }, [functionNodes]);
 
   const memoizedApiNodes = useMemo(() => {
     return apiNodes.map((item, i) => (
@@ -421,7 +421,7 @@ export const BotBuilderHeader = () => {
         />
       </Tooltip>
     ));
-  }, []);
+  }, [apiNodes]);
 
   return (
     <>

@@ -2,7 +2,7 @@ import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX, onMenuOpenScroller } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -30,23 +30,48 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
       control,
     });
 
-    const nodeList: IReactSelect[] = [...nodes]
-      .filter((item) => item.id !== nodeId)
-      .filter(
-        (item) =>
-          arrowHelper.validateArrows(
-            `${NODE_PREFIX}${nodeId}`,
-            `${NODE_PREFIX}${item.id}`,
-            nodes,
-            !isBottom,
-          ) === undefined,
-      )
-      .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
-      .map((item) => ({
-        value: item.id,
-        label: item.title || '',
-      }));
-    const selectorOptions = [{ value: null, label: t(`SET_OPTION_NULL`) }, ...nodeList];
+    // const nodeList: IReactSelect[] = [...nodes]
+    //   .filter((item) => item.id !== nodeId)
+    //   .filter(
+    //     (item) =>
+    //       arrowHelper.validateArrows(
+    //         `${NODE_PREFIX}${nodeId}`,
+    //         `${NODE_PREFIX}${item.id}`,
+    //         nodes,
+    //         !isBottom,
+    //       ) === undefined,
+    //   )
+    //   .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
+    //   .map((item) => ({
+    //     value: item.id,
+    //     label: item.title || '',
+    //   }));
+
+    const memoizedNodeList = useMemo(() => {
+      const nodeList: IReactSelect[] = [...nodes]
+        .filter((item) => item.id !== nodeId)
+        .filter(
+          (item) =>
+            arrowHelper.validateArrows(
+              `${NODE_PREFIX}${nodeId}`,
+              `${NODE_PREFIX}${item.id}`,
+              nodes,
+              !isBottom,
+            ) === undefined,
+        )
+        .sort((a, b) => ((a.title || '') > (b.title || '') ? 1 : -1))
+        .map((item) => ({
+          value: item.id,
+          label: item.title || '',
+        }));
+
+      return nodeList;
+    }, [nodes]);
+
+    const selectorOptions = [
+      { value: null, label: t(`SET_OPTION_NULL`) },
+      ...memoizedNodeList,
+    ];
 
     return (
       <Select
@@ -58,8 +83,8 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
         options={selectorOptions}
         placeholder={t(`SET_OPTION_NULL`)}
         styles={reactSelectStyle}
-        defaultValue={nodeList.find((item) => item.value === defaultValue)}
-        value={nodeList.find((item) => item.value === field.value)}
+        defaultValue={memoizedNodeList.find((item) => item.value === defaultValue)}
+        value={memoizedNodeList.find((item) => item.value === field.value)}
         onChange={(options: any) => field.onChange(options?.value)}
         onMenuOpen={onMenuOpenScroller}
       />

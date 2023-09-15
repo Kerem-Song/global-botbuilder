@@ -7,6 +7,7 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -32,9 +33,16 @@ export interface InputTextareaProps extends IHasClassNameNStyle {
 export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(
   (args, ref) => {
     const { style, isError, showCount, readOnly, ...inputProps } = args;
-    const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      args.onChange?.(e);
-    };
+    // const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //   args.onChange?.(e);
+    // };
+    console.log('@Input Text area');
+    const handleTextArea = useCallback(
+      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        return args.onChange?.(e);
+      },
+      [args],
+    );
 
     const resultClassName = classNames('textInput', args.className);
     return (
