@@ -1,5 +1,5 @@
 import { Col, Row } from '@components/layout';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { CONDITIONS_LIMIT } from '@modules';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
     transition: 'none',
   });
 
-  const { t } = usePage();
+  const { isReadOnly } = usePage();
 
   const length = children.length;
   const dispatch = useDispatch();
@@ -35,7 +35,6 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
   );
   const result = { ...storeCarouselIndex };
   const storeIndex = result[conditionsId];
-  const isHistoryViewer = useHistoryViewerMatch();
 
   useEffect(() => {
     if (!storeIndex) {
@@ -60,7 +59,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
     }
 
     if (
-      isHistoryViewer &&
+      isReadOnly &&
       current >= Math.min(current + 1, children.length - 1, CONDITIONS_LIMIT - 1)
     ) {
       return true;
@@ -105,7 +104,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   addCarousel(e);
                   setCurrent(length);
                 }}
-                disabled={current === CONDITIONS_LIMIT - 1 || isHistoryViewer}
+                disabled={current === CONDITIONS_LIMIT - 1 || isReadOnly}
                 data-button={'add'}
               />
             </Col>
@@ -116,7 +115,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
                   deleteCarousel(current);
                   setCurrent(current === 0 ? 0 : current - 1);
                 }}
-                disabled={length === 1 || isHistoryViewer}
+                disabled={length === 1 || isReadOnly}
                 data-button={'delete'}
               />
             </Col>
@@ -165,7 +164,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
               >
                 {i === current
                   ? c
-                  : !isHistoryViewer && <div style={{ width: `${switchWidth}px` }}></div>}
+                  : !isReadOnly && <div style={{ width: `${switchWidth}px` }}></div>}
               </div>
             );
           })}

@@ -1,11 +1,11 @@
 import { Button, Col, Input, Row } from '@components';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export const JsonRequestNodeHeaders = () => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const { register, control } = useFormContext<IGNodeEditModel<IJsonRequestView>>();
 
   const {
@@ -16,8 +16,6 @@ export const JsonRequestNodeHeaders = () => {
     name: `view.headers`,
     control,
   });
-
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleAddHeadersButton = () => {
     headersAppend({ key: '', value: '' });
@@ -40,7 +38,7 @@ export const JsonRequestNodeHeaders = () => {
                 <Input
                   placeholder="Key"
                   {...register(`view.headers.${i}.key`)}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   maxLength={50}
                 />
               </Col>
@@ -48,7 +46,7 @@ export const JsonRequestNodeHeaders = () => {
                 <Input
                   placeholder="Value"
                   {...register(`view.headers.${i}.value`)}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   maxLength={2000}
                 />
               </Col>

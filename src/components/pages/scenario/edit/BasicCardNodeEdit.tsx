@@ -1,5 +1,5 @@
 import { Collapse, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -22,7 +22,6 @@ export const BasicCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IBasicCardView>>();
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
 
   return (
     <div key={values.id}>
@@ -50,7 +49,7 @@ export const BasicCardNodeEdit = () => {
               {...register('view.title')}
               placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
               textLength={watch('view.title')?.length || 0}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
             />
           </FormItem>
 
@@ -64,7 +63,7 @@ export const BasicCardNodeEdit = () => {
               placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
               textLength={watch('view.description')?.length || 0}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
             />
           </FormItem>
         </Space>

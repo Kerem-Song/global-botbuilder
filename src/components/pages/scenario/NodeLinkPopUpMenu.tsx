@@ -2,7 +2,7 @@ import { Input } from '@components/data-entry';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
 import { ItemType, Popper } from '@components/navigation';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { useAddArrow } from '@hooks/useAddArrow';
 import { useOutsideClick } from '@hooks/useOutsideClick';
@@ -27,7 +27,7 @@ export const NodeLinkPopUpMenu = ({
   isDraggedNodeBottom,
   handleIsOpen,
 }: INodeLinkPopUpMenuProps) => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
 
   const cardTypeValue = [
     {
@@ -165,7 +165,7 @@ export const NodeLinkPopUpMenu = ({
 
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -390,7 +390,7 @@ export const NodeLinkPopUpMenu = ({
                     }}
                     popup
                     popupList
-                    disabled={isHistoryViewer}
+                    disabled={isReadOnly}
                     className="otherFlowRedirectNodeList"
                   >
                     <Row justify="flex-start" align="center" gap={8} className="btnRow">

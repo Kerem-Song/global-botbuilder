@@ -1,7 +1,7 @@
 import { Button, Collapse } from '@components';
 import { FormItem, Radio } from '@components/data-entry';
 import { Col, Row } from '@components/layout';
-import { useHistoryViewerMatch, useNodeEditSave, usePage, useSystemModal } from '@hooks';
+import { useNodeEditSave, usePage, useSystemModal } from '@hooks';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect } from '@models';
 import { IParameterClearCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -13,7 +13,7 @@ import { SelectNode } from './SelectNode';
 
 export const ParameterClearNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [scenarioList, setScenarioList] = useState<IReactSelect[]>([
     { value: '', label: t(`SET_OPTION_NULL`) },
   ]);
@@ -28,7 +28,6 @@ export const ParameterClearNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterClearCardView>>();
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const {
     fields: parametersFields,
@@ -134,7 +133,7 @@ export const ParameterClearNodeEdit = () => {
                           placeholder={t(`INPUT_VARIABLE_PLACEHOLDER`)}
                           control={control}
                           path={`view.parameters.${i}.name`}
-                          readOnly={isHistoryViewer}
+                          readOnly={isReadOnly}
                           maxLength={125}
                           isDisabled={watch('view.isAll') === true}
                         />

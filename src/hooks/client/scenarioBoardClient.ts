@@ -1,4 +1,4 @@
-import { useHistoryViewerMatch } from '@hooks';
+import { usePage } from '@hooks';
 import { useRootState } from '@hooks/useRootState';
 import { IGetFlowRes } from '@models/interfaces/res/IGetFlowRes';
 import { initNodes } from '@store/makingNode';
@@ -9,7 +9,7 @@ import { ActionCreators } from 'redux-undo';
 import { useHttp } from '../useHttp';
 
 export const useScenarioBoardClient = () => {
-  const isHistoryViewer = useHistoryViewerMatch();
+  const { isReadOnly } = usePage();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const http = useHttp();
@@ -40,7 +40,7 @@ export const useScenarioBoardClient = () => {
       {
         refetchOnWindowFocus: false,
         refetchOnMount: true,
-        enabled: token !== undefined && !isHistoryViewer,
+        enabled: token !== undefined && !isReadOnly,
       },
     );
   };

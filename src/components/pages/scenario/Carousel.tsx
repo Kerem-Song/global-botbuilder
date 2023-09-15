@@ -6,7 +6,7 @@ import {
 } from '@assets';
 import { Button } from '@components/general';
 import { Col, Row } from '@components/layout';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setCarouselIndex } from '@store/botbuilderSlice';
 import { FC, ReactNode, useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
     transition: 'none',
   });
 
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const { updateLine } = useUpdateLines();
 
   const length = children.length + (addCarousel ? 1 : 0);
@@ -35,7 +35,6 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
   );
   const result = { ...storeCarouselIndex };
   const storeIndex = result[nodeId];
-  const isHistoryViewer = useHistoryViewerMatch();
 
   useEffect(() => {
     if (!storeIndex) {
@@ -56,7 +55,7 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
       return true;
     }
 
-    if (isHistoryViewer && current >= Math.min(current + 1, children.length - 1, 9)) {
+    if (isReadOnly && current >= Math.min(current + 1, children.length - 1, 9)) {
       return true;
     }
 
@@ -134,11 +133,11 @@ export const Carousel: FC<CarouselProps> = ({ nodeId, children, addCarousel }) =
               >
                 {i === current
                   ? c
-                  : !isHistoryViewer && <div style={{ width: '190px' }}></div>}
+                  : !isReadOnly && <div style={{ width: '190px' }}></div>}
               </div>
             );
           })}
-          {!isHistoryViewer && (
+          {!isReadOnly && (
             <div style={{ width: '166px', flex: 'none' }} tabIndex={-1}>
               <div style={{ width: '190px' }} tabIndex={-1}>
                 <Button

@@ -1,5 +1,5 @@
 import { FormItem } from '@components';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
 import { IAnswerView, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
@@ -15,10 +15,10 @@ import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const NodeEditDrawer = () => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [showAnnotation, setShowAnnotation] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
@@ -154,7 +154,7 @@ export const NodeEditDrawer = () => {
                 showCount
                 maxLength={100}
                 textLength={watch('title')?.length || 0}
-                readOnly={isHistoryViewer}
+                readOnly={isReadOnly}
               />
             )}
           </FormItem>

@@ -1,5 +1,5 @@
 import { Col, Collapse, FormItem, Row, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
+import { useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
@@ -16,7 +16,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ProductCardCarouselNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -32,7 +32,6 @@ export const ProductCardCarouselNodeEdit = () => {
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { fields: childrenViewsField } = useFieldArray({
     name: `view.childrenViews`,
@@ -185,7 +184,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               0
                             }
                             placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
-                            readOnly={isHistoryViewer}
+                            readOnly={isReadOnly}
                           />
                         </FormItem>
                       </Space>
@@ -217,7 +216,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 })}
                                 maxLength={11}
                                 isLight={true}
-                                readOnly={isHistoryViewer}
+                                readOnly={isReadOnly}
                               />
                             </FormItem>
                           </Col>
@@ -235,7 +234,7 @@ export const ProductCardCarouselNodeEdit = () => {
                                 {...register(`view.childrenViews.${index}.currencyUnit`)}
                                 placeholder="ex.USD"
                                 isLight={true}
-                                readOnly={isHistoryViewer}
+                                readOnly={isReadOnly}
                                 maxLength={155}
                               />
                             </FormItem>
@@ -257,7 +256,7 @@ export const ProductCardCarouselNodeEdit = () => {
                             )}
                             maxLength={11}
                             isLight={true}
-                            readOnly={isHistoryViewer}
+                            readOnly={isReadOnly}
                           />
                         </FormItem>
                         <FormItem
@@ -278,7 +277,7 @@ export const ProductCardCarouselNodeEdit = () => {
                               0
                             }
                             isLight={true}
-                            readOnly={isHistoryViewer}
+                            readOnly={isReadOnly}
                             placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                           />
                         </FormItem>

@@ -1,5 +1,5 @@
 import { FormItem } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { ITextView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 export const TextNodeEdit = () => {
   useNodeEditSave();
 
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
 
   const {
     register,
@@ -19,7 +19,7 @@ export const TextNodeEdit = () => {
     getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<ITextView>>();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const values = getValues();
 
   return (
@@ -36,7 +36,7 @@ export const TextNodeEdit = () => {
             placeholder={t(`TEXT_INPUT_PLACEHOLDER`)}
             {...register('view.text')}
             textLength={watch(`view.text`)?.length || 0}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
           />
         </FormItem>
       </div>

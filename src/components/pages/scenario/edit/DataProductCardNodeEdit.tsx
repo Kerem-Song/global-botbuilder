@@ -1,5 +1,5 @@
 import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import {
   IGNodeEditModel,
   IMAGE_CTRL_TYPES,
@@ -24,7 +24,7 @@ import { ParameterSelector } from './ParameterSelector';
 
 export const DataProductCardNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -38,7 +38,7 @@ export const DataProductCardNodeEdit = () => {
     Number(watch('view.count')) || 1,
   );
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const reactSelectStyle = getReactSelectStyle({});
 
   const { field: carouselPrintOutField } = useController({
@@ -87,7 +87,7 @@ export const DataProductCardNodeEdit = () => {
             control={control}
             path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
           />
         </FormItem>
       </Collapse>
@@ -100,7 +100,7 @@ export const DataProductCardNodeEdit = () => {
               className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
-              disabled={carouselNum <= 1 || isHistoryViewer}
+              disabled={carouselNum <= 1 || isReadOnly}
             />
           </Col>
           <Col span={3}>
@@ -111,7 +111,7 @@ export const DataProductCardNodeEdit = () => {
               className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
-              disabled={carouselNum >= 10 || isHistoryViewer}
+              disabled={carouselNum >= 10 || isReadOnly}
             />
           </Col>
         </div>
@@ -199,7 +199,7 @@ export const DataProductCardNodeEdit = () => {
                   required={true}
                   placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   maxRows={17}
                   minRows={2.125}
                   isError={errors.view?.profileName ? true : false}
@@ -242,7 +242,7 @@ export const DataProductCardNodeEdit = () => {
                       required={true}
                       {...register(`view.retailPriceParam`)}
                       isLight={true}
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                       placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                     />
                   </FormItem>
@@ -257,7 +257,7 @@ export const DataProductCardNodeEdit = () => {
                       required={true}
                       {...register(`view.currencyUnit`)}
                       isLight={true}
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                       placeholder={'ex.USD'}
                     />
                   </FormItem>
@@ -269,7 +269,7 @@ export const DataProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_DISCOUNT`)}
                   {...register(`view.discountAmountParam`)}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                 />
               </FormItem>
@@ -278,7 +278,7 @@ export const DataProductCardNodeEdit = () => {
                   label={t(`PRODUCT_NODE_SALE_PRICE`)}
                   {...register(`view.salePriceParam`)}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   placeholder={t(`DATA_PRODUCT_CARD_PRICE_PLACEHOLDER`)}
                 />
               </FormItem>
@@ -288,7 +288,7 @@ export const DataProductCardNodeEdit = () => {
                   required={true}
                   {...register(`view.description`)}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                 />
               </FormItem>

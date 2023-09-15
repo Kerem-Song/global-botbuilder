@@ -1,5 +1,5 @@
 import { Button, Col, Collapse, FormItem, Radio, Row, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IDataBasicCardView } from '@models/interfaces/res/IGetFlowRes';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ import { ParameterSelector } from './ParameterSelector';
 
 export const DataBasicCardNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -27,7 +27,7 @@ export const DataBasicCardNodeEdit = () => {
     Number(watch('view.count')) || 1,
   );
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const { field: carouselPrintOutField } = useController({
     name: 'view.isShuffle',
     control,
@@ -58,7 +58,7 @@ export const DataBasicCardNodeEdit = () => {
             control={control}
             path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
             error={errors.view?.itemsRefName}
           />
         </FormItem>
@@ -72,7 +72,7 @@ export const DataBasicCardNodeEdit = () => {
               className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
-              disabled={carouselNum <= 1 || isHistoryViewer}
+              disabled={carouselNum <= 1 || isReadOnly}
             />
           </Col>
           <Col span={3}>
@@ -83,7 +83,7 @@ export const DataBasicCardNodeEdit = () => {
               className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
-              disabled={carouselNum >= 10 || isHistoryViewer}
+              disabled={carouselNum >= 10 || isReadOnly}
             />
           </Col>
         </Row>
@@ -138,12 +138,12 @@ export const DataBasicCardNodeEdit = () => {
               isLight={true}
               {...register('view.title')}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
             /> */}
             <InputTextAreaWithTitleCounter
               {...register('view.title')}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
               isLight={true}
               label={t(`ENTER_TITLE`)}
               maxRows={2.125}
@@ -158,12 +158,12 @@ export const DataBasicCardNodeEdit = () => {
               isLight={true}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
               {...register('view.description')}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
             /> */}
             <InputTextAreaWithTitleCounter
               {...register('view.description')}
               placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-              readOnly={isHistoryViewer}
+              readOnly={isReadOnly}
               isLight={true}
               label={t(`ENTER_CONTENT`)}
               maxRows={17}

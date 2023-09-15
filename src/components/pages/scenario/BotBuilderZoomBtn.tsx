@@ -2,19 +2,17 @@ import { Tooltip } from '@components';
 import { Button } from '@components/general/Button';
 import { Col, Row, Space } from '@components/layout';
 import { usePage, useRootState } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { setIsBeziderMode, zoomIn, zoomOut } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { useEffect } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import { SearchingNodeInput } from './SearchingNodeInput';
 
 export const BotBuilderZoomBtn = React.memo(() => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const dispatch = useDispatch();
   const { updateLineAll } = useUpdateLines();
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -22,7 +20,7 @@ export const BotBuilderZoomBtn = React.memo(() => {
   const future =
     useRootState((state) => state.makingNodeSliceReducer.future).length !== 0;
   const isBezierMode = useRootState((state) => state.botBuilderReducer.isBezierMode);
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
 
   const handleZoomOut = () => {
@@ -52,7 +50,7 @@ export const BotBuilderZoomBtn = React.memo(() => {
           <span>{Math.round(scale * 100)}</span>
           <Button small shape="ghost" className="plusZoomBtn" onClick={handleZoomIn} />
         </Col>
-        {!isHistoryViewer && (
+        {!isReadOnly && (
           <Col className="operationBtn">
             <Button
               small

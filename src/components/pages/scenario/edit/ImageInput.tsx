@@ -1,5 +1,5 @@
 import { InputTextarea } from '@components';
-import { useHistoryViewerMatch, useRootState } from '@hooks';
+import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
@@ -28,9 +28,9 @@ export const ImageInput = React.memo(
     isValid,
     isSmall,
   }: IImageCtrlIdPathProps) => {
+    const { isReadOnly } = usePage();
     const { setValue, register } = useFormContext();
 
-    const isHistoryViewer = useHistoryViewerMatch();
     const token = useRootState((state) => state.botInfoReducer.token);
 
     const memoizedHandleCtrlIdPath = useMemo(() => {
@@ -65,7 +65,7 @@ export const ImageInput = React.memo(
         <InputTextarea
           {...register(registerName)}
           placeholder={placeholder}
-          readOnly={isHistoryViewer}
+          readOnly={isReadOnly}
           onBlur={handleImgOnBlur}
           maxRows={isSmall ? 1 : 2.125}
           minRows={isSmall ? 1 : 2.125}

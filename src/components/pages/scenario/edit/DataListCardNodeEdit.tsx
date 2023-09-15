@@ -1,5 +1,5 @@
-import { Button, Col, Collapse, Divider, FormItem, Radio, Row, Space } from '@components';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { Button, Col, Collapse, FormItem, Radio, Row } from '@components';
+import { usePage } from '@hooks';
 import { useNodeEditSave } from '@hooks/useNodeEditSave';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
@@ -10,16 +10,13 @@ import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 import { ButtonsEdit } from './ButtonsEdit';
 import { ConnectNodeBottomEdit } from './ConnectNodeBottomEdit';
 import { DataListCardItems } from './DataListCardItems';
-import { ImageFileUploader } from './ImageFileUploader';
-import { ImageInput } from './ImageInput';
 import { ImageSettings } from './ImageSettings';
-import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 
 export const DataListCardNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -33,7 +30,7 @@ export const DataListCardNodeEdit = () => {
     Number(watch('view.count')) || 1,
   );
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const { fields, append, remove } = useFieldArray({
     name: `view.items`,
     control,
@@ -78,7 +75,7 @@ export const DataListCardNodeEdit = () => {
             control={control}
             path={`view.itemsRefName`}
             placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
           />
         </FormItem>
       </Collapse>
@@ -91,7 +88,7 @@ export const DataListCardNodeEdit = () => {
               className="counterBtn negative"
               shape="ghost"
               onClick={() => handleCarouselNum(false)}
-              disabled={carouselNum <= 1 || isHistoryViewer}
+              disabled={carouselNum <= 1 || isReadOnly}
             />
           </Col>
           <Col span={3}>
@@ -102,7 +99,7 @@ export const DataListCardNodeEdit = () => {
               className="counterBtn positive"
               shape="ghost"
               onClick={() => handleCarouselNum(true)}
-              disabled={carouselNum >= 10 || isHistoryViewer}
+              disabled={carouselNum >= 10 || isReadOnly}
             />
           </Col>
         </Row>
@@ -139,7 +136,7 @@ export const DataListCardNodeEdit = () => {
             label={t(`LIST_NODE_HEAD_TITLE_SETTING`)}
             required={true}
             {...register('view.header')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
             placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
           />
         </FormItem>

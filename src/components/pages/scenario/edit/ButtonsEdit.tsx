@@ -1,5 +1,5 @@
 import { Button, Divider, FormItem, Input, Space } from '@components';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, ImageAspectRatio } from '@models';
 import {
   ACTION_TYPES,
@@ -30,7 +30,7 @@ export const ButtonsEdit = ({
   useCounter: boolean;
   isDataApi?: boolean;
 }) => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const selectOptions = [
     { value: ACTION_TYPES.LUNA_NODE_REDIRECT, label: t(`SET_CONNECT_NEXT_NODE`) },
     { value: ACTION_TYPES.URL, label: t(`SET_URL_CONNECT`) },
@@ -45,8 +45,6 @@ export const ButtonsEdit = ({
     setValue,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IButtonEditViewBase>>();
-
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { fields, append, remove } = useFieldArray({
     name: index === undefined ? 'view.buttons' : `view.childrenViews.${index}.buttons`,
@@ -144,7 +142,7 @@ export const ButtonsEdit = ({
                     ? t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)
                     : t(`BUTTON_NAME_PLACEHOLDER`)
                 }
-                readOnly={isHistoryViewer}
+                readOnly={isReadOnly}
               />
             </FormItem>
             <Space direction="vertical" gap={8}>
@@ -263,7 +261,7 @@ export const ButtonsEdit = ({
                             )?.length || 0
                           : undefined
                       }
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                     />
                   </FormItem>
                 </>

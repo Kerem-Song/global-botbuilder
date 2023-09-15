@@ -1,5 +1,5 @@
 import { Button, Col, Divider, FormItem, Radio, Row, Space } from '@components';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { ConditionJoin, IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -10,7 +10,7 @@ import { VariableSelector } from './VariableSelector';
 
 export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
   const CONDITION_LIMIT = 5;
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
 
   const {
     watch,
@@ -27,8 +27,6 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     name: `view.childrenViews.${nestedIndex}.join`,
     control,
   });
-
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleDeleteButton = (index: number) => {
     remove(index);
@@ -115,7 +113,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                         control={control}
                         path={`view.childrenViews.${nestedIndex}.items.${i}.op1`}
                         maxLength={100}
-                        readOnly={isHistoryViewer}
+                        readOnly={isReadOnly}
                       />
                     </FormItem>
                   </Col>
@@ -133,7 +131,7 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 control={control}
                 path={`view.childrenViews.${nestedIndex}.items.${i}.op2`}
                 maxLength={100}
-                readOnly={isHistoryViewer}
+                readOnly={isReadOnly}
               />
             </FormItem>
 
@@ -142,13 +140,13 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
                 shape="ghost"
                 className="deleteBtn"
                 onClick={() => handleDeleteButton(i)}
-                disabled={isHistoryViewer}
+                disabled={isReadOnly}
               >
                 {t(`CONDITION_NODE_DELETE_CONDITION`)}
               </Button>
             ) : null}
 
-            {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && !isHistoryViewer && (
+            {i < CONDITION_LIMIT - 1 && i + 1 === fields.length && !isReadOnly && (
               <div
                 className={classNames(`joinWrapper`, {
                   on: watch(`view.childrenViews.${nestedIndex}.join`) !== undefined,

@@ -1,5 +1,5 @@
 import { Collapse, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
+import { useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IBasicCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
@@ -14,7 +14,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const BasicCardCarousleNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -27,7 +27,6 @@ export const BasicCardCarousleNodeEdit = () => {
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { fields: childrenViewsField } = useFieldArray({
     name: `view.childrenViews`,
@@ -89,7 +88,7 @@ export const BasicCardCarousleNodeEdit = () => {
                         textLength={
                           watch(`view.childrenViews.${index}.title`)?.length || 0
                         }
-                        readOnly={isHistoryViewer}
+                        readOnly={isReadOnly}
                       />
                     </FormItem>
 
@@ -105,7 +104,7 @@ export const BasicCardCarousleNodeEdit = () => {
                         textLength={
                           watch(`view.childrenViews.${index}.description`)?.length || 0
                         }
-                        readOnly={isHistoryViewer}
+                        readOnly={isReadOnly}
                       />
                     </FormItem>
                   </Space>

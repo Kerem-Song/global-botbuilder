@@ -1,4 +1,4 @@
-import { useHistoryViewerMatch, usePage, useScenarioClient } from '@hooks';
+import { usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IScenarioModel, NodeOption } from '@models';
@@ -7,17 +7,16 @@ import { FC } from 'react';
 import { useParams } from 'react-router';
 
 export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const { botId, historyId } = useParams();
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const scenario: IScenarioModel[] | undefined = data?.filter(
     (item) => item.firstNodeId === node.nextNodeId,
   );
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleNodeHistoryViewer = () => {
-    if (isHistoryViewer) {
+    if (isReadOnly) {
       const { getFlowSnapShot } = useHistoryClient();
       const { data: historyData } = getFlowSnapShot({
         botId: botId!,
@@ -40,7 +39,7 @@ export const OtherFlowRedirectNode: FC<IHasNode> = ({ node }) => {
 
   return (
     <div className="command-node">
-      {isHistoryViewer ? (
+      {isReadOnly ? (
         handleNodeHistoryViewer()
       ) : scenario && scenario.length ? (
         scenario.map((item, i) => <div key={item.id}>{item.alias}</div>)

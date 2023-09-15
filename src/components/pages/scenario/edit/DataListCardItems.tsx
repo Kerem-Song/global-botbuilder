@@ -1,6 +1,6 @@
 import { Button, Col, Collapse, Divider, Row, Space } from '@components';
 import { FormItem } from '@components/data-entry';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { IDataListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -11,8 +11,8 @@ import { ImageInput } from './ImageInput';
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 
 export const DataListCardItems = () => {
-  const { t } = usePage();
-  const isHistoryViewer = useHistoryViewerMatch();
+  const { t, isReadOnly } = usePage();
+
   const {
     register,
     control,
@@ -51,7 +51,7 @@ export const DataListCardItems = () => {
                     label={t(`ENTER_TITLE`)}
                     required={true}
                     placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                    readOnly={isReadOnly}
                     isLight={true}
                     maxRows={2.125}
                     minRows={2.125}
@@ -68,7 +68,7 @@ export const DataListCardItems = () => {
                   label={t(`ENTER_CONTENT`)}
                   placeholder={t(`DATA_CARD_NODE_INPUT_PLACEHOLDER`)}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   maxRows={2.125}
                   minRows={2.125}
                 />

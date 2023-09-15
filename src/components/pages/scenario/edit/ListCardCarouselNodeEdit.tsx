@@ -1,5 +1,5 @@
 import { Collapse, FormItem } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage, useRootState } from '@hooks';
+import { useNodeEditSave, usePage, useRootState } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { NODE_PREFIX } from '@modules';
@@ -14,7 +14,7 @@ import { ListCardCarouselItems } from './ListCardCarouselItems';
 
 export const ListCardCarouselNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -27,7 +27,6 @@ export const ListCardCarouselNodeEdit = () => {
 
   const carouselIndexObj = useRootState((state) => state.botBuilderReducer.carouselIndex);
   const index = carouselIndexObj[`${NODE_PREFIX}${values.id}`];
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { fields: childrenViewsField } = useFieldArray({
     name: `view.childrenViews`,
@@ -54,7 +53,7 @@ export const ListCardCarouselNodeEdit = () => {
                         watch(`view.childrenViews.${index}.header`)?.length || 0
                       }
                       placeholder={t(`LIST_NODE_HEAD_TITLE_INPUT_PLACEHOLDER`)}
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                     />
                   </FormItem>
                 </Collapse>

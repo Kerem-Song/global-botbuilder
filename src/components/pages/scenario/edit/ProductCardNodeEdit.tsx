@@ -1,5 +1,5 @@
 import { Col, Collapse, FormItem, Row, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
 import { IProductCardView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
@@ -15,7 +15,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ProductCardNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [imageRatio, setImageRatio] = useState<ImageAspectRatio>();
   const {
     register,
@@ -28,7 +28,6 @@ export const ProductCardNodeEdit = () => {
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IProductCardView>>();
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const checkPriceRegex = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -120,7 +119,7 @@ export const ProductCardNodeEdit = () => {
                   {...register(`view.profileName`)}
                   textLength={watch(`view.profileName`)?.length || 0}
                   placeholder={t(`PRODUCT_NODE_BRAND_NAME_PLACEHOLDER`)}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </FormItem>
             </Space>
@@ -147,7 +146,7 @@ export const ProductCardNodeEdit = () => {
                       })}
                       maxLength={11}
                       isLight={true}
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                     />
                   </FormItem>
                 </Col>
@@ -161,7 +160,7 @@ export const ProductCardNodeEdit = () => {
                       required={true}
                       {...register(`view.currencyUnit`)}
                       isLight={true}
-                      readOnly={isHistoryViewer}
+                      readOnly={isReadOnly}
                       placeholder={'ex.USD'}
                       maxLength={155}
                     />
@@ -178,7 +177,7 @@ export const ProductCardNodeEdit = () => {
                   })}
                   maxLength={11}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </FormItem>
               <FormItem error={errors.view && errors.view.description}>
@@ -190,7 +189,7 @@ export const ProductCardNodeEdit = () => {
                   {...register(`view.description`)}
                   textLength={watch(`view.description`)?.length || 0}
                   isLight={true}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   placeholder={t(`PRODUCT_NODE_SET_PRODUCT_NAME_PLACEHOLDER`)}
                 />
               </FormItem>

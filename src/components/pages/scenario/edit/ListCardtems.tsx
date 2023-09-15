@@ -1,6 +1,6 @@
 import { Button, Col, Collapse, Divider, Row, Space } from '@components';
 import { FormItem } from '@components/data-entry';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { IListCardView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -11,8 +11,8 @@ import { ImageInput } from './ImageInput';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ListCardItems = () => {
-  const { t } = usePage();
-  const isHistoryViewer = useHistoryViewerMatch();
+  const { t, isReadOnly } = usePage();
+
   const {
     register,
     watch,
@@ -56,7 +56,7 @@ export const ListCardItems = () => {
                     {...register(`view.items.${j}.title`)}
                     textLength={watch(`view.items.${j}.title`)?.length || 0}
                     placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                    readOnly={isReadOnly}
                   />
                 </FormItem>
               </span>
@@ -73,7 +73,7 @@ export const ListCardItems = () => {
                   {...register(`view.items.${j}.description`)}
                   textLength={watch(`view.items.${j}.description`)?.length || 0}
                   placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </span>
             </Space>

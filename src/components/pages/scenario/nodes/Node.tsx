@@ -2,7 +2,6 @@ import { icNodeBottom } from '@assets';
 import { Button, Popper } from '@components';
 import { CarouselOrderPopup } from '@components/pages/scenario/edit/CarousleOrderPopup';
 import {
-  useHistoryViewerMatch,
   useModalOpen,
   useNodeContextMenu,
   usePage,
@@ -58,7 +57,7 @@ export const Node: FC<INodeProps> = ({
 }) => {
   const { isOpen, handleIsOpen } = useModalOpen();
 
-  const { tc } = usePage();
+  const { isReadOnly } = usePage();
   const dispatch = useDispatch();
   const arrows = useRootState((state) => state.makingNodeSliceReducer.present.arrows);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
@@ -85,7 +84,6 @@ export const Node: FC<INodeProps> = ({
 
   const titleClass = classNames('luna-node-head');
   const bodyClass = classNames('luna-node-body');
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { isOpen: isOpenUtterancePopup, handleIsOpen: handleIsOpenUtterancePopup } =
     useModalOpen();
@@ -140,11 +138,11 @@ export const Node: FC<INodeProps> = ({
   };
 
   const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Delete' && !isHistoryViewer) {
+    if (e.key === 'Delete' && !isReadOnly) {
       deleteCard(node);
-    } else if (e.code === 'KeyC' && e.ctrlKey && !isHistoryViewer) {
+    } else if (e.code === 'KeyC' && e.ctrlKey && !isReadOnly) {
       handleDuplicationCard(node);
-    } else if (e.code === 'KeyX' && e.ctrlKey && !isHistoryViewer) {
+    } else if (e.code === 'KeyX' && e.ctrlKey && !isReadOnly) {
       handleCutCard(node);
       dispatch(setEditDrawerToggle(false));
     }
@@ -156,7 +154,7 @@ export const Node: FC<INodeProps> = ({
     const canvasRect = canvas?.getBoundingClientRect();
     const viewRect = view?.getBoundingClientRect();
 
-    if (e.code === 'KeyV' && e.ctrlKey && !isHistoryViewer) {
+    if (e.code === 'KeyV' && e.ctrlKey && !isReadOnly) {
       handlePasteCard({
         x:
           canvasRect && viewRect
@@ -201,7 +199,7 @@ export const Node: FC<INodeProps> = ({
         onChange={(m) => {
           m.data?.action?.(node);
         }}
-        disabled={isHistoryViewer || node.option === NodeOption.Fallback}
+        disabled={isReadOnly || node.option === NodeOption.Fallback}
       >
         <div
           tabIndex={0}
@@ -270,7 +268,7 @@ export const Node: FC<INodeProps> = ({
                 onChange={(m) => {
                   m.data?.action?.(node);
                 }}
-                disabled={isHistoryViewer}
+                disabled={isReadOnly}
               >
                 <Button shape="ghost" small onClick={(e) => handleZIndex(e)}>
                   <i className="fa-solid fa-ellipsis-vertical" />

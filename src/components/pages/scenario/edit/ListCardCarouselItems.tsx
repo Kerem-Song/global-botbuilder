@@ -1,6 +1,6 @@
 import { Button, Col, Collapse, Divider, Row, Space } from '@components';
 import { FormItem } from '@components/data-entry';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel, IMAGE_CTRL_TYPES } from '@models';
 import { CTRL_TYPES, IListCardCarouselView } from '@models/interfaces/res/IGetFlowRes';
 import { ID_GEN, ID_TYPES } from '@modules';
@@ -11,8 +11,8 @@ import { ImageInput } from './ImageInput';
 import { InputWithTitleCounter } from './InputWithTitleCounter';
 
 export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) => {
-  const { t } = usePage();
-  const isHistoryViewer = useHistoryViewerMatch();
+  const { t, isReadOnly } = usePage();
+
   const {
     register,
     watch,
@@ -68,7 +68,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                         ?.length || 0
                     }
                     placeholder={t(`TITLE_INPUT_PLACEHOLDER`)}
-                    readOnly={isHistoryViewer}
+                    readOnly={isReadOnly}
                   />
                 </FormItem>
               </span>
@@ -90,7 +90,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                       ?.length || 0
                   }
                   placeholder={t(`CONTENT_INPUT_PLACEHOLDER`)}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </span>
             </Space>

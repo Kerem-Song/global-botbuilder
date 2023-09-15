@@ -4,23 +4,16 @@ import {
   Collapse,
   Divider,
   FormItem,
-  Input,
   InputTextarea,
   Radio,
   Row,
-  Space,
 } from '@components';
-import {
-  dataApiTestClient,
-  useHistoryViewerMatch,
-  useNodeEditSave,
-  usePage,
-} from '@hooks';
+import { dataApiTestClient, useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useController, useFieldArray, useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import ReactLoading from 'react-loading';
 
 import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
@@ -28,13 +21,12 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { JsonRequestNodeHeaders } from './JsonRequestNodeHeaders';
 import { JsonRequestNodeQueryString } from './JsonRequestNodeQueryString';
 import { JsonRequestNodeResponseMapping } from './JsonRequestNodeResponseMapping';
-import { ParameterSelector } from './ParameterSelector';
 import { SelectNode } from './SelectNode';
 
 export const JsonRequestNodeEdit = () => {
   useNodeEditSave();
 
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
 
   const {
     register,
@@ -48,7 +40,7 @@ export const JsonRequestNodeEdit = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const values = getValues();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const view = getValues().view!;
 
   const { field: method } = useController({ name: 'view.method', control });
@@ -118,7 +110,7 @@ export const JsonRequestNodeEdit = () => {
             placeholder={t(`API_REQUEST_URL_PLACEHOLDER`)}
             required={true}
             {...register('view.url')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
             maxLength={2000}
           />
         </FormItem>
@@ -139,7 +131,7 @@ export const JsonRequestNodeEdit = () => {
             label={t(`API_REQUEST_JSON_BODY_LABEL`)}
             placeholder={t(`API_REQUEST_JSON_BODY_PLACEHOLDER`)}
             {...register('view.body')}
-            readOnly={isHistoryViewer}
+            readOnly={isReadOnly}
             maxLength={20000}
           />
         </FormItem>

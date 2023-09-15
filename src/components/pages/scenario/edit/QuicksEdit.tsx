@@ -2,7 +2,6 @@ import { Button, Divider, Input, Space } from '@components';
 import { FormItem } from '@components/data-entry';
 import { Collapse } from '@components/general/Collapse';
 import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IGNodeEditModel } from '@models';
 import { ACTION_TYPES, IAnswerView } from '@models/interfaces/res/IGetFlowRes';
 import { QUICK_MAX_COUNT } from '@modules';
@@ -15,7 +14,7 @@ import { InputWithTitleCounter } from './InputWithTitleCounter';
 import { SelectNode } from './SelectNode';
 
 export const QuicksEdit = () => {
-  const { t, tc } = usePage();
+  const { t, tc, isReadOnly } = usePage();
   const {
     register,
     getValues,
@@ -23,7 +22,7 @@ export const QuicksEdit = () => {
     watch,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IAnswerView>>();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const values = getValues();
   const { fields, append, remove } = useFieldArray({
     name: 'view.quicks',
@@ -87,7 +86,7 @@ export const QuicksEdit = () => {
                     isLight={true}
                     {...register(`view.quicks.${i}.label`)}
                     textLength={watch(`view.quicks.${i}.label`)?.length || 0}
-                    readOnly={isHistoryViewer}
+                    readOnly={isReadOnly}
                   />
                 </FormItem>
                 <Space direction="vertical" gap={8}>
@@ -130,7 +129,7 @@ export const QuicksEdit = () => {
                       >
                         <Input
                           {...register(`view.quicks.${i}.actionValue`)}
-                          readOnly={isHistoryViewer}
+                          readOnly={isReadOnly}
                           placeholder={t(`SET_URL_PLACEHOLDER`)}
                           maxLength={1055}
                         />
@@ -156,7 +155,7 @@ export const QuicksEdit = () => {
                         placeholder={t(`SET_MESSAGE_PLACEHOLDER`)}
                         {...register(`view.quicks.${i}.actionValue`)}
                         textLength={watch(`view.quicks.${i}.actionValue`)?.length || 0}
-                        readOnly={isHistoryViewer}
+                        readOnly={isReadOnly}
                       />
                     </FormItem>
                   )}

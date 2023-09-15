@@ -1,6 +1,6 @@
 import { FormItem, Input } from '@components/data-entry';
 import { Collapse } from '@components/general';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { useNodeEditSave, usePage } from '@hooks';
 import { useHistoryClient } from '@hooks/client/historyClient';
 import { useScenarioSelectClient } from '@hooks/client/scenarioSelectClient';
 import { IGNodeEditModel, IReactSelect, NodeOption } from '@models';
@@ -13,9 +13,9 @@ import Select from 'react-select';
 
 export const OtherFlowRedirectNodeEdit = () => {
   useNodeEditSave();
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const { botId, historyId } = useParams();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const [scenarioList, setScenarioList] = useState<IReactSelect[]>([
     { value: '', label: t(`SET_OPTION_NULL`) },
   ]);
@@ -35,7 +35,7 @@ export const OtherFlowRedirectNodeEdit = () => {
   const values = getValues();
 
   const handleNodeHistoryViewer = () => {
-    if (isHistoryViewer) {
+    if (isReadOnly) {
       const { getFlowSnapShot } = useHistoryClient();
       const { data: historyData } = getFlowSnapShot({
         botId: botId!,
@@ -76,7 +76,7 @@ export const OtherFlowRedirectNodeEdit = () => {
           <span className="subLabel">{t(`OTHER_FLOW_REDIRECT_NODE`)} </span>
           <span className="required">*</span>
         </div>
-        {isHistoryViewer ? (
+        {isReadOnly ? (
           handleNodeHistoryViewer()
         ) : (
           <FormItem error={errors.nextNodeId}>

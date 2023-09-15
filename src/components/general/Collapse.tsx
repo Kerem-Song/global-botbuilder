@@ -1,6 +1,6 @@
 import { icCollapseClose, icCollapseOpen } from '@assets';
 import { Button, Col, Divider, Row, Switch } from '@components';
-import { useHistoryViewerMatch, usePage, useSystemModal } from '@hooks';
+import { usePage, useSystemModal } from '@hooks';
 import { IGNodeEditModel, IHasChildren, IHasClassNameNStyle } from '@models';
 import {
   IHasImageCtrlViewBase,
@@ -22,7 +22,7 @@ export const Collapse: FC<CollapseProps> = ({
   field,
   children,
 }) => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const { register, setValue, watch, getValues, control } =
     useFormContext<IGNodeEditModel<IHasImageCtrlViewBase | IHasUtteranceViewBase>>();
@@ -30,7 +30,6 @@ export const Collapse: FC<CollapseProps> = ({
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-  const isHistoryViewer = useHistoryViewerMatch();
 
   // console.log(
   //   'field in collapse',
@@ -96,7 +95,7 @@ export const Collapse: FC<CollapseProps> = ({
     }
     const childrenViewArr = watch(`view.childrenViews`);
 
-    if (isHistoryViewer) {
+    if (isReadOnly) {
       // console.log('@childrenViewArr', childrenViewArr);
       // console.log('@getvalue', watch(`view.imageCtrl`));
       if (childrenViewArr && childrenViewArr[0].imageCtrl?.imageUrl) {

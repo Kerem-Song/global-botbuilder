@@ -15,7 +15,6 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { usePage } from '@hooks';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IChildrenViewEnum, IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeHelper } from '@modules';
 import { lunaToast } from '@modules/lunaToast';
@@ -35,7 +34,7 @@ export const SoratbleCarouselCtrlContainer = ({
   carouselNode,
   setCarouselNode,
 }: ISortableContainer) => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const [isDisable, setIsDisable] = useState<boolean>(false);
 
   const sensors = useSensors(
@@ -48,7 +47,6 @@ export const SoratbleCarouselCtrlContainer = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -170,7 +168,7 @@ export const SoratbleCarouselCtrlContainer = ({
                   }
                 }}
                 key={i}
-                disabled={isHistoryViewer}
+                disabled={isReadOnly}
               >
                 <div
                   onContextMenu={(e) => {

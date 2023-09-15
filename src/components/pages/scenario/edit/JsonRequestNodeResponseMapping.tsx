@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IJsonRequestView } from '@models/interfaces/res/IGetFlowRes';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { InputTextAreaWithTitleCounter } from './InputTextareaWithTitleCounter';
 import { ParameterSelector } from './ParameterSelector';
 
 export const JsonRequestNodeResponseMapping = () => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const {
     register,
     control,
@@ -23,8 +23,6 @@ export const JsonRequestNodeResponseMapping = () => {
     name: `view.responseMapping`,
     control,
   });
-
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const handleAddResMappingButton = () => {
     resMappingAppend({ key: '', value: '' });
@@ -46,7 +44,7 @@ export const JsonRequestNodeResponseMapping = () => {
                   `API_REQUEST_RESPONSE_MAPPING_JSON_PATH_INPUT_PLACEHOLDER`,
                 )}
                 {...register(`view.responseMapping.${i}.key`)}
-                readOnly={isHistoryViewer}
+                readOnly={isReadOnly}
                 className="m-b-12"
                 maxLength={20000}
                 isLight={true}
@@ -61,7 +59,7 @@ export const JsonRequestNodeResponseMapping = () => {
                   control={control}
                   path={`view.responseMapping.${i}.value`}
                   placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                   maxLength={50}
                 />
               </FormItem>

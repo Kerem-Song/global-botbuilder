@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, usePage } from '@hooks';
+import { usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
@@ -9,13 +9,13 @@ import { ParameterSelector } from './ParameterSelector';
 import { VariableSelector } from './VariableSelector';
 
 export const ParameterSetNodeField = () => {
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
   const {
     control,
     getValues,
     formState: { errors },
   } = useFormContext<IGNodeEditModel<IParameterSetView>>();
-  const isHistoryViewer = useHistoryViewerMatch();
+
   const values = getValues();
   const { fields, append, remove } = useFieldArray({
     name: 'view.parameters',
@@ -56,7 +56,7 @@ export const ParameterSetNodeField = () => {
                   path={`view.parameters.${i}.name`}
                   placeholder={t('PARAMETER_SET_VARIABLE_PLACEHOLDER')}
                   maxLength={50}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </FormItem>
             </Space>
@@ -77,7 +77,7 @@ export const ParameterSetNodeField = () => {
                   control={control}
                   path={`view.parameters.${i}.value`}
                   maxLength={2000}
-                  readOnly={isHistoryViewer}
+                  readOnly={isReadOnly}
                 />
               </FormItem>
             </Space>

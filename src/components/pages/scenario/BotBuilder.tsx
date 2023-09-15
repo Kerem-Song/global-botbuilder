@@ -16,7 +16,6 @@ import {
 import { useScenarioBoardClient } from '@hooks/client/scenarioBoardClient';
 import { useAddArrow } from '@hooks/useAddArrow';
 import { useContextMenu } from '@hooks/useContextMenu';
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { useUpdateLines } from '@hooks/useUpdateLines';
 import { IArrow, INode, NODE_TYPES, NodeKind, TNodeTypes } from '@models';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
@@ -49,7 +48,7 @@ export const Botbuilder = () => {
   const dispatch = useDispatch();
   const { updateLine } = useUpdateLines();
 
-  const { t } = usePage();
+  const { t, isReadOnly } = usePage();
 
   const botbuilderRef = useRef<HTMLDivElement | null>(null);
   const canvasRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -78,11 +77,10 @@ export const Botbuilder = () => {
   const clipBoard = useRootState((state) => state.botBuilderReducer.clipBoard);
   const { addArrowHandler } = useAddArrow();
   const { panning, dragPanning } = usePanning();
-  const isHistoryViewer = useHistoryViewerMatch();
 
   const { getScenario } = useScenarioBoardClient();
   getScenario(selectedScenario?.id);
-  // if (!isHistoryViewer) {
+  // if (!isReadOnly) {
 
   // }
 
@@ -140,7 +138,7 @@ export const Botbuilder = () => {
     if (canvasRef.current) {
       if (
         (startNode && startNode.id !== selected && !isStartNode && useMovingStart) ||
-        (startNode && isHistoryViewer)
+        (startNode && isReadOnly)
       ) {
         canvasRef.current.style.left = -startNode.x + 'px';
         canvasRef.current.style.top = -startNode.y + 'px';
@@ -369,10 +367,10 @@ export const Botbuilder = () => {
   };
 
   const handleUndoRedoKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isHistoryViewer) {
+    if (e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isReadOnly) {
       updateLineAll();
       dispatch(ActionCreators.redo());
-    } else if (!e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isHistoryViewer) {
+    } else if (!e.shiftKey && e.code === 'KeyZ' && e.ctrlKey && !isReadOnly) {
       updateLineAll();
       dispatch(ActionCreators.undo());
     }
@@ -504,7 +502,7 @@ export const Botbuilder = () => {
             </Draggable>
           ))}
           <LineContainer />
-          {isHistoryViewer
+          {isReadOnly
             ? null
             : isOpen && (
                 <NodeLinkPopUpMenu
@@ -514,7 +512,7 @@ export const Botbuilder = () => {
                 />
               )}
           {otherFlowPopupIsOpen && <OtherFlowScenariosPopup />}
-          {isHistoryViewer ? null : (
+          {isReadOnly ? null : (
             <div
               onMouseLeave={handleLazyHide}
               onMouseEnter={handleMouseOver}
