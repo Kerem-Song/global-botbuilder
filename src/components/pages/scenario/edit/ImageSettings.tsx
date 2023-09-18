@@ -1,7 +1,6 @@
 import { Col, Radio, Row, Space } from '@components';
 import { usePage, useSystemModal } from '@hooks';
 import { IImageSetting, IMAGE_CTRL_TYPES, ImageAspectRatio } from '@models';
-import { useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { handleImageCtrlIdPath } from './handleImageCtrlIdPath';
@@ -21,14 +20,11 @@ export const ImageSettings = ({
   const { confirm } = useSystemModal();
   const { setValue, watch, control } = useFormContext();
 
-  const memoizedHandleCtrlIdPath = useMemo(() => {
-    const { imageUrl, imageCtrlPath } = handleImageCtrlIdPath({
-      imageCtrl,
-      index,
-      listItemIndex,
-    });
-    return { imageUrl, imageCtrlPath };
-  }, [imageCtrl, index, listItemIndex]);
+  const { imageCtrlPath, imageUrl } = handleImageCtrlIdPath({
+    imageCtrl,
+    index,
+    listItemIndex,
+  });
 
   const setImageAspectRatioModal = async (ratio: ImageAspectRatio) => {
     const handleDesc = () => {
@@ -78,13 +74,9 @@ export const ImageSettings = ({
             );
           }
         } else {
-          setValue(
-            memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`,
-            ImageAspectRatio.Rectangle,
-            {
-              shouldDirty: true,
-            },
-          );
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+            shouldDirty: true,
+          });
         }
       }
       if (ratio === ImageAspectRatio.Square) {
@@ -100,33 +92,21 @@ export const ImageSettings = ({
             );
           }
         } else {
-          setValue(
-            memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`,
-            ImageAspectRatio.Square,
-            {
-              shouldDirty: true,
-            },
-          );
+          setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square, {
+            shouldDirty: true,
+          });
         }
       }
     } else {
       if (ratio === ImageAspectRatio.Rectangle) {
-        setValue(
-          memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`,
-          ImageAspectRatio.Square,
-          {
-            shouldDirty: true,
-          },
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Square, {
+          shouldDirty: true,
+        });
         setImageRatio(ImageAspectRatio.Rectangle);
       } else {
-        setValue(
-          memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`,
-          ImageAspectRatio.Rectangle,
-          {
-            shouldDirty: true,
-          },
-        );
+        setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+          shouldDirty: true,
+        });
         setImageRatio(ImageAspectRatio.Square);
       }
     }
@@ -143,21 +123,16 @@ export const ImageSettings = ({
             <Radio
               name="aspectRatio"
               checked={
-                watch(memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`) ===
-                ImageAspectRatio.Rectangle
+                watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Rectangle
               }
               onChange={(e) => {
                 if (imageCtrl !== IMAGE_CTRL_TYPES.IMAGE_CTRL) {
                   setImageAspectRatioModal(ImageAspectRatio.Rectangle);
                 } else {
                   setImageRatio(ImageAspectRatio.Rectangle);
-                  setValue(
-                    memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`,
-                    ImageAspectRatio.Rectangle,
-                    {
-                      shouldDirty: true,
-                    },
-                  );
+                  setValue(imageCtrlPath + `.aspectRatio`, ImageAspectRatio.Rectangle, {
+                    shouldDirty: true,
+                  });
                 }
                 aspectRatio.onChange(e);
               }}
@@ -169,10 +144,7 @@ export const ImageSettings = ({
           <Col span={12} className="radioContainer">
             <Radio
               name="aspectRatio"
-              checked={
-                watch(memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`) ===
-                ImageAspectRatio.Square
-              }
+              checked={watch(imageCtrlPath + `.aspectRatio`) === ImageAspectRatio.Square}
               onChange={(e) => {
                 setImageAspectRatioModal(ImageAspectRatio.Square);
                 aspectRatio.onChange(e);
@@ -193,7 +165,7 @@ export const ImageSettings = ({
           imageCtrl={imageCtrl}
           index={index}
           listItemIndex={listItemIndex}
-          imageRatio={watch(memoizedHandleCtrlIdPath.imageCtrlPath + `.aspectRatio`)}
+          imageRatio={watch(imageCtrlPath + `.aspectRatio`)}
           isValid={isValid}
         />
       </Space>
@@ -201,7 +173,7 @@ export const ImageSettings = ({
         imageCtrl={imageCtrl}
         index={index}
         listItemIndex={listItemIndex}
-        registerName={memoizedHandleCtrlIdPath.imageUrl}
+        registerName={imageUrl}
         placeholder={
           isDataCard
             ? t(`DATA_CARD_NODE_IMAGE_INPUT_PLACEHOLDER`)

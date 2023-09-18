@@ -32,29 +32,25 @@ export const ImageInput = React.memo(
     const { setValue, register } = useFormContext();
 
     const token = useRootState((state) => state.botInfoReducer.token);
-
-    const memoizedHandleCtrlIdPath = useMemo(() => {
-      const { imageUrl, imgPath } = handleImageCtrlIdPath({
-        imageCtrl,
-        index,
-        listItemIndex,
-      });
-      return { imageUrl, imgPath };
-    }, [imageCtrl, index, listItemIndex]);
+    const { imageUrl, imgPath } = handleImageCtrlIdPath({
+      imageCtrl,
+      index,
+      listItemIndex,
+    });
 
     const handleImgOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
       if (!e.target.value) {
-        setValue(memoizedHandleCtrlIdPath.imgPath, '', { shouldDirty: true });
-        setValue(memoizedHandleCtrlIdPath.imageUrl, '', { shouldDirty: true });
+        setValue(imgPath, '', { shouldDirty: true });
+        setValue(imageUrl, '', { shouldDirty: true });
       } else {
         setValue(
-          memoizedHandleCtrlIdPath.imgPath,
+          imgPath,
           `${
             import.meta.env.VITE_API_BASE_URL
           }/builderimage/forbuilder?origin=${e.target.value.trim()}&sessionToken=${token}`,
           { shouldDirty: true },
         );
-        setValue(memoizedHandleCtrlIdPath.imageUrl, e.target.value.trim(), {
+        setValue(imageUrl, e.target.value.trim(), {
           shouldDirty: true,
         });
       }
