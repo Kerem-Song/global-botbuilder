@@ -1,5 +1,5 @@
 import { InputTextarea } from '@components';
-import { useHistoryViewerMatch, usePage, useRootState } from '@hooks';
+import { usePage, useRootState } from '@hooks';
 import { ImageAspectRatio, TImageTypes } from '@models';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';

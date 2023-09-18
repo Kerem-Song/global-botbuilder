@@ -1,11 +1,16 @@
 import { icUser } from '@assets';
 import { Button, IPopperItem, Popper } from '@components';
 import { BotTesterComponent } from '@components/pages/scenario/bot-tester/BotTesterComponent';
-import { useI18n, useRootState } from '@hooks';
+import { useI18n, useRootState, useSystemModal } from '@hooks';
 import { IHandle } from '@models/interfaces/IHandle';
 import { setToken } from '@store/authSlice';
-import { FC, useState } from 'react';
+import { setIsDirty } from '@store/makingNode';
+import { createElement, FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import {
+  unstable_Blocker as Blocker,
+  unstable_useBlocker as useBlocker,
+} from 'react-router';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
@@ -18,7 +23,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   const { i18n, ts, tc, t } = useI18n('botTest');
   const navigate = useNavigate();
   const [isTesterOpen, setIsTesterOpen] = useState(false);
-
+  const { confirm } = useSystemModal();
   const languageMenus = [
     {
       id: `ko`,
@@ -43,6 +48,8 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   ];
   const userInfo = useRootState((state) => state.userInfoReducer);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
+  const isDirty = useRootState((state) => state.makingNodeSliceReducer.present.changed);
+
   const userInfoMenus: IPopperItem<{ action: () => void }>[] = [
     {
       id: 'info',
@@ -89,6 +96,42 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
   const handle = matches.find((m) => m.pathname === location.pathname)?.handle as IHandle;
   const pageName = ts(handle.title) || location.pathname.split('/').slice(-1)[0];
   const langSelect = languageMenus.find((item) => item.id && item.id === language);
+  const changeLanguage = async (lang: string) => {
+    if (isDirty) {
+      const message = createElement(
+        'span',
+        { style: { whiteSpace: 'pre-line' } },
+        tc('SAVE_CONFIRM_MESSAGE'),
+      );
+      const result = await confirm({
+        title: tc('SAVE_CONFIRM_TITLE'),
+        description: message,
+      });
+
+      if (result) {
+        i18n
+          .changeLanguage(lang, () => {
+            const paths = location.pathname.split('/');
+            paths[1] = lang;
+
+            dispatch(setIsDirty(false));
+          })
+          .then(() => {
+            dispatch(setIsDirty(true));
+          });
+      } else {
+        const prevLang = i18n.language;
+
+        i18n.changeLanguage(prevLang);
+      }
+    } else {
+      changeLanguageHandler(lang);
+    }
+  };
+
+  useEffect(() => {
+    changeLanguageHandler(language);
+  }, [language]);
 
   return (
     <header>
@@ -110,7 +153,7 @@ export const Header: FC<{ isBotPage?: boolean; name: string }> = ({
             popup
             popupList
             onChange={(e) => {
-              changeLanguageHandler(e.id);
+              changeLanguage(e.id);
             }}
             selectedId={language}
           >

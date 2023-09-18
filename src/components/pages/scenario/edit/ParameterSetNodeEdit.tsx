@@ -1,14 +1,11 @@
-import { Button, Collapse, Divider, FormItem, Space } from '@components';
-import { useHistoryViewerMatch, useNodeEditSave, usePage } from '@hooks';
+import { Collapse, FormItem } from '@components';
+import { useNodeEditSave, usePage } from '@hooks';
 import { IGNodeEditModel } from '@models';
 import { IParameterSetView } from '@models/interfaces/res/IGetFlowRes';
-import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-import { ParameterSelector } from './ParameterSelector';
 import { ParameterSetNodeField } from './ParameterSetNodeField';
 import { SelectNode } from './SelectNode';
-import { VariableSelector } from './VariableSelector';
 
 export const ParameterSetNodeEdit = () => {
   useNodeEditSave();
