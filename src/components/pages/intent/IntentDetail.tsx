@@ -308,6 +308,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
             formMethods={formMethods}
             prepend={prepend}
             setIsActive={setIsActive}
+            intentId={intentId}
           />
           <UtteranceDetailItems
             utteranceRef={utteranceRef}
