@@ -143,7 +143,6 @@ export const BotBuilderHeader = () => {
   const isEditDrawOpen = useRootState(
     (state) => state.botBuilderReducer.isEditDrawerOpen,
   );
-  const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const cardNum = nodes.length;
   const [tempNodeNames, setTempNodeNames] = useState<number[]>([]);
@@ -310,8 +309,6 @@ export const BotBuilderHeader = () => {
     dispatch(appendNode(addNode));
   };
 
-  const [isTutorial, setIsTutorial] = useState<boolean>(true);
-
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('cardType', e.currentTarget.value);
 
@@ -430,15 +427,15 @@ export const BotBuilderHeader = () => {
           {t(`CHAT_BUBBLE`)} <span className="cardNum">{cardNum}</span>
         </span>
         <div className="makingBtnWrapper">
-          <div className="makingBtn" data-tutorial={isTutorial}>
+          <div className="makingBtn">
             <span className="btnCategory">{t(`SINGLE`)}</span>
             <Col className="btnWrapper">{memoizedSingleNodes}</Col>
           </div>
-          <div className="makingBtn" data-tutorial={isTutorial}>
+          <div className="makingBtn">
             <span className="btnCategory">{t(`CAROUSEL`)}</span>
             <Col className="btnWrapper">{memoizedCarouselNodes}</Col>
           </div>
-          <div className="makingBtn" data-tutorial={isTutorial}>
+          <div className="makingBtn">
             <span className="btnCategory">{t(`FUNCTION`)}</span>
             <Col className="btnWrapper">
               {memoizedFunctionNodes}
@@ -464,7 +461,7 @@ export const BotBuilderHeader = () => {
                 ))} */}
             </Col>
           </div>
-          <div className="makingBtn" data-tutorial={isTutorial}>
+          <div className="makingBtn">
             <span className="btnCategory">API</span>
             <Col className="btnWrapper">{memoizedApiNodes}</Col>
           </div>
@@ -493,5 +490,3 @@ export const BotBuilderHeader = () => {
     </>
   );
 };
-
-// export const BotBuilderHeader = React.memo(BotBuilderHeaderComponent);
