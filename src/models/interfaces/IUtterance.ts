@@ -78,7 +78,7 @@ export interface IScenarioData {
 
 export interface ICheckUtterance extends IReq {
   sessionToken: string;
-  utteranceId?: string;
+  intentId?: string;
   text: string;
 }
 

@@ -11,6 +11,7 @@ export interface IAddUtteranceProps {
   setIsActive: Dispatch<SetStateAction<boolean>>;
   prepend: UseFieldArrayPrepend<IUtteranceModel, 'items'>;
   utteranceRef: RefObject<HTMLInputElement>;
+  intentId: string | undefined;
 }
 
 export const AddUtterance: FC<IAddUtteranceProps> = ({
@@ -18,6 +19,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
   prepend,
   setIsActive,
   utteranceRef,
+  intentId,
 }) => {
   const { t } = useI18n('intentDetailPage');
   const { error } = useSystemModal();
@@ -31,6 +33,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
 
     const res = await checkUtteranceDuplicationAsync({
       text: utteranceWord,
+      intentId: intentId,
       customErrorCode: [7000],
     });
 
