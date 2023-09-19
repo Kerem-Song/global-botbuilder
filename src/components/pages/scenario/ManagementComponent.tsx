@@ -58,7 +58,7 @@ export const ManagementComponent = React.memo(() => {
       <div className="scenarioName">
         <p>
           {scenarioTab ? t('SCENARIO') : t('VARIABLE')}
-          {scenarioTab && !isActivated ? (
+          {!scenarioTab ? null : !isActivated ? (
             <span>{scenarioList?.length + 2}</span>
           ) : (
             <span>{filteredScenarios.length + 2}</span>
