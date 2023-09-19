@@ -53,6 +53,7 @@ export interface IPopperProps<T> extends IHasChildren, IHasClassNameNStyle {
   logoutBtn?: boolean;
   offset?: [number, number];
   disabled?: boolean;
+  positions?: { x: number; y: number };
 }
 
 export const Popper = <T extends object>({
@@ -67,6 +68,7 @@ export const Popper = <T extends object>({
   disabled,
   onChange,
   selectedId,
+  positions,
 }: IPopperProps<T>) => {
   const [selected, setSelected] = useState<string>();
   const [showPopper, setShowPopper] = useState<boolean>(false);
@@ -189,7 +191,35 @@ export const Popper = <T extends object>({
           role="presentation"
           className={popperContainer}
           ref={popperElement}
-          style={{ ...styles.popper, visibility: showPopper ? 'visible' : 'hidden' }}
+          style={{
+            ...styles.popper,
+            visibility: showPopper ? 'visible' : 'hidden',
+            transform:
+              (positions && className === 'onContextMenu') ||
+              (positions && className === 'contextMenuBtn')
+                ? `translate(${positions.x}px, ${positions.y}px)`
+                : styles.popper.transform,
+            top:
+              (positions && className === 'onContextMenu') ||
+              (positions && className === 'contextMenuBtn')
+                ? 0
+                : styles.popper.top,
+            left:
+              (positions && className === 'onContextMenu') ||
+              (positions && className === 'contextMenuBtn')
+                ? 0
+                : styles.popper.left,
+            right:
+              (positions && className === 'onContextMenu') ||
+              (positions && className === 'contextMenuBtn')
+                ? 'auto'
+                : styles.popper.right,
+            bottom:
+              (positions && className === 'onContextMenu') ||
+              (positions && className === 'contextMenuBtn')
+                ? 'auto'
+                : styles.popper.bottom,
+          }}
           onMouseLeave={handleLazyHide}
           onMouseEnter={handleMouseOver}
           onMouseDown={(e) => {

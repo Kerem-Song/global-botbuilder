@@ -15,7 +15,7 @@ import { IHasChildrenView } from '@models/interfaces/res/IGetFlowRes';
 import { nodeFactory } from '@models/nodeFactory/NodeFactory';
 import { setEditDrawerToggle, setGuideStartNode } from '@store/botbuilderSlice';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import MultiClamp from 'react-multi-clamp';
 import { useDispatch } from 'react-redux';
 
@@ -174,6 +174,9 @@ export const Node: FC<INodeProps> = ({
     if (selectedNode?.parentElement?.parentElement?.parentElement) {
       selectedNode.parentElement.parentElement.parentElement.style.zIndex = '3';
     }
+    const x = e.clientX;
+    const y = e.clientY;
+    setPopperPositions({ x, y });
   };
 
   useEffect(() => {
@@ -186,6 +189,38 @@ export const Node: FC<INodeProps> = ({
   }, [clipBoard]);
 
   const nodeIcon = nodeFactory.getFactory(node.type)?.getNodeImgIconUrl();
+
+  const nodeRef = useRef<HTMLDivElement | null>(null);
+  const [popperPositions, setPopperPositions] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const handlePopperPosition = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      console.log('@event', e.clientX, e.clientY);
+
+      const x = e.clientX;
+      const y = e.clientY;
+      setPopperPositions({ x, y });
+    },
+    [popperPositions],
+  );
+
+  useEffect(() => {
+    if (nodeRef.current) {
+      nodeRef.current.addEventListener('contextmenu', (e: any) =>
+        handlePopperPosition(e),
+      );
+    }
+    return () => {
+      if (nodeRef.current) {
+        nodeRef.current?.removeEventListener('contextmenu', (e: any) => {
+          handlePopperPosition(e);
+          setPopperPositions({ x: 0, y: 0 });
+        });
+      }
+    };
+  }, [scale]);
 
   return (
     <>
@@ -200,8 +235,10 @@ export const Node: FC<INodeProps> = ({
           m.data?.action?.(node);
         }}
         disabled={isReadOnly || node.option === NodeOption.Fallback}
+        positions={{ x: popperPositions.x, y: popperPositions.y }}
       >
         <div
+          ref={nodeRef}
           tabIndex={0}
           onKeyDown={keyEvent}
           onDragStart={(e) => {
@@ -269,6 +306,8 @@ export const Node: FC<INodeProps> = ({
                   m.data?.action?.(node);
                 }}
                 disabled={isReadOnly}
+                className="contextMenuBtn"
+                positions={{ x: popperPositions.x, y: popperPositions.y }}
               >
                 <Button shape="ghost" small onClick={(e) => handleZIndex(e)}>
                   <i className="fa-solid fa-ellipsis-vertical" />
