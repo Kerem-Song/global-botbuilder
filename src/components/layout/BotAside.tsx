@@ -98,100 +98,6 @@ export const BotAside = React.memo(() => {
     dispatch(setSidebarClose());
   });
 
-  const memoizedMenu = useMemo(() => {
-    return menuModule.menu
-      .filter((x) => util.checkRole(x.role, staffType, role))
-      .map((item) => {
-        return (
-          <Tooltip
-            key={item.id}
-            tooltip={ts(item.desc)}
-            placement="bottom-start"
-            offset={[59, -43]}
-            disable={sidebarStatus}
-          >
-            <NavLink
-              to={`${item.url}`}
-              onClick={() => {
-                setPage(item.name);
-                dispatch(setSidebarClose());
-              }}
-            >
-              <li className={page === item.name ? 'selected' : ''}>
-                <span className="menuImg">
-                  {page === item.name ? (
-                    <img src={item.selectedIcon} alt={item.alt} />
-                  ) : (
-                    <img src={item.icon} alt={item.alt} />
-                  )}
-                </span>
-                {<span className="desc">{ts(item.desc)}</span>}
-              </li>
-            </NavLink>
-          </Tooltip>
-        );
-      });
-  }, [staffType, role, sidebarStatus]);
-
-  const memoizedSubMenu = useMemo(() => {
-    return menuModule.subMenu
-      .filter(
-        (x) =>
-          staffType === StaffType.Administrator ||
-          (role !== undefined && (x.role & role) === x.role),
-      )
-      .map((item, i) => {
-        return (
-          <div key={i}>
-            <Tooltip
-              key={item.id}
-              tooltip={ts(item.desc)}
-              placement="bottom-start"
-              offset={[59, -43]}
-              disable={sidebarStatus}
-            >
-              <a
-                href={`${item.url}`}
-                key={item.id}
-                onClick={() => {
-                  setPage(item.url);
-                  dispatch(setSidebarClose());
-                }}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className={page === item.url ? 'selected' : ''}>
-                  <span className="menuImg">
-                    {page === item.url ? (
-                      <img src={item.selectedIcon} alt={item.alt} />
-                    ) : (
-                      <img src={item.icon} alt={item.alt} />
-                    )}
-                  </span>
-                  {sidebarStatus && <span className="desc">{ts(item.desc)}</span>}
-                </li>
-              </a>
-            </Tooltip>
-            <Tooltip
-              tooltip={ts('PARTNERS_CENTER')}
-              placement="bottom-start"
-              offset={[59, -43]}
-              disable={sidebarStatus}
-            >
-              <a href={partnersCenterUrl} target="_blank" rel="noreferrer">
-                <li className="partnerLnbBtn">
-                  <span className="menuImg partnersCenterImg">
-                    <img src={icPartnersCenter} alt="icPartnersCenter" />
-                  </span>
-                  {sidebarStatus && <span className="desc">{ts('PARTNERS_CENTER')}</span>}
-                </li>
-              </a>
-            </Tooltip>
-          </div>
-        );
-      });
-  }, [menuModule.subMenu, staffType, role, sidebarStatus]);
-
   return (
     <aside className={css} ref={sidebarRef}>
       <div className="mainMenuWrapper">
@@ -249,8 +155,8 @@ export const BotAside = React.memo(() => {
         </Popper>
         <nav className="mainNav" data-sidebar={sidebarStatus}>
           <ul>
-            {memoizedMenu}
-            {/* {menuModule.menu
+            {/* {memoizedMenu} */}
+            {menuModule.menu
               .filter((x) => util.checkRole(x.role, staffType, role))
               .map((item) => {
                 return (
@@ -281,15 +187,15 @@ export const BotAside = React.memo(() => {
                     </NavLink>
                   </Tooltip>
                 );
-              })} */}
+              })}
           </ul>
         </nav>
       </div>
       <div className="subMenuWrapper" data-sidebar={sidebarStatus}>
         <nav className="subMenu">
           <ul>
-            {memoizedSubMenu}
-            {/*             
+            {/* {memoizedSubMenu} */}
+
             {menuModule.subMenu
               .filter(
                 (x) =>
@@ -328,7 +234,7 @@ export const BotAside = React.memo(() => {
                     </a>
                   </Tooltip>
                 );
-              })} 
+              })}
             <Tooltip
               tooltip={ts('PARTNERS_CENTER')}
               placement="bottom-start"
@@ -344,7 +250,6 @@ export const BotAside = React.memo(() => {
                 </li>
               </a>
             </Tooltip>
-            */}
           </ul>
         </nav>
       </div>
