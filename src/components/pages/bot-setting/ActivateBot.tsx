@@ -63,7 +63,7 @@ export const ActivateBot = () => {
     const res = await confirm({
       title: t('DEACTIVATE_BOT'),
       description: (
-        <p style={{ whiteSpace: 'pre-wrap' }}>{t('DEACTIVATE_BOT_MESSAGE')}</p>
+        <p style={{ whiteSpace: 'pre-line' }}>{t('DEACTIVATE_BOT_MESSAGE')}</p>
       ),
     });
 

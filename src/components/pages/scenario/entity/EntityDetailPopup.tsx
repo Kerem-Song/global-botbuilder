@@ -119,7 +119,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 
     const result = await confirm({
       title: t('SAVE_ENTITY'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
+      description: <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
 
     if (result) {
@@ -136,7 +136,7 @@ export const EntityDetailPopup: FC<IEntityDetailProps> = ({
 
     const result = await confirm({
       title: t('SAVE_ENTITY'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
+      description: <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>,
     });
 
     if (result) {

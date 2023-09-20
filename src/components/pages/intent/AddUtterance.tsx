@@ -46,7 +46,7 @@ export const AddUtterance: FC<IAddUtteranceProps> = ({
         error({
           title: t('DUPLICATE_UTTERANCE'),
           description: (
-            <div style={{ whiteSpace: 'pre-wrap' }}>
+            <div style={{ whiteSpace: 'pre-line' }}>
               <span>{t('DUPLICATE_UTTERANCE_MESSAGE')}</span>
               <span style={{ color: 'red' }}>{items}</span>
             </div>

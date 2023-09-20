@@ -36,7 +36,7 @@ export const HandleBotScenario = () => {
       const importScenarioConfirm = await confirm({
         title: t('IMPORT_SCENARIO'),
         description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{t('CONFIRM_IMPORT_SCENARIO_MESSAGE')}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>{t('CONFIRM_IMPORT_SCENARIO_MESSAGE')}</p>
         ),
       });
 
@@ -66,7 +66,7 @@ export const HandleBotScenario = () => {
       await info({
         title: t('DISABLED_IMPORT_SCENARIO'),
         description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>
+          <p style={{ whiteSpace: 'pre-line' }}>
             {t('DISABLED_IMPORT_SCENARIO_MESSAGE')}
           </p>
         ),

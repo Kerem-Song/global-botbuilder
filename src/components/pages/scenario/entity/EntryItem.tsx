@@ -65,7 +65,7 @@ export const EntryItem: FC<IEntityDetailItemProps> = ({
     const result = await confirm({
       title: t('DELETE_ENTRY_GROUP'),
       description: (
-        <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_ENTRY_GROUP_MESSAGE')}</p>
+        <p style={{ whiteSpace: 'pre-line' }}>{t('DELETE_ENTRY_GROUP_MESSAGE')}</p>
       ),
     });
 

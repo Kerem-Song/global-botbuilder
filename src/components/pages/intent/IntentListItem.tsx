@@ -59,7 +59,7 @@ export const IntentListItem: FC<IIntentListItemProps> = ({
   const openDeleteModal = async (intentId: string) => {
     const deleteIntentConfirm = await confirm({
       title: t('DELETE_INTENT'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
+      description: <p style={{ whiteSpace: 'pre-line' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
     if (deleteIntentConfirm) {

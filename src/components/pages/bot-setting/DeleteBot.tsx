@@ -25,7 +25,7 @@ export const DeleteBot = () => {
         : t('DELETE_BOT_CONFIRM_MESSAGE');
       const result = await confirm({
         title,
-        description: <p style={{ whiteSpace: 'pre-wrap' }}>{message}</p>,
+        description: <p style={{ whiteSpace: 'pre-line' }}>{message}</p>,
       });
       if (result && !botSettingInfo.activated) {
         await botDeleteAsync({ botId: botSettingInfo.id }).then((res) => {

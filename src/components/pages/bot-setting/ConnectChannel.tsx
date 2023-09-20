@@ -33,7 +33,7 @@ export const ConnectChannel = () => {
       await info({
         title: t('DISABLED_CONNECT_TEST_CHANNEL'),
         description: (
-          <div style={{ whiteSpace: 'pre-wrap' }}>
+          <div style={{ whiteSpace: 'pre-line' }}>
             <span>{t('DISABLED_CONNECT_TEST_CHANNEL_INFO')}</span>
           </div>
         ),
@@ -48,7 +48,7 @@ export const ConnectChannel = () => {
           <span className="connectChannel">
             {isOpChannel ? opChannelName : testChannelName}
           </span>
-          <span style={{ whiteSpace: 'pre-wrap' }}>
+          <span style={{ whiteSpace: 'pre-line' }}>
             {linkedState
               ? t('DISCONNECT_CHANNEL_MESSAGE', {
                   channel: isOpChannel ? opChannelName : testChannelName,
@@ -89,7 +89,7 @@ export const ConnectChannel = () => {
           await info({
             title: t('CONNECT_CHANNEL_SUCCESS'),
             description: (
-              <div style={{ whiteSpace: 'pre-wrap' }}>
+              <div style={{ whiteSpace: 'pre-line' }}>
                 <span className="connectChannel">
                   {isOpChannel ? opChannelName : testChannelName}
                 </span>

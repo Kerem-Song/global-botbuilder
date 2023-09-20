@@ -129,7 +129,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
   const handleDeleteIntentBtn = async () => {
     const deleteIntentConfirm = await confirm({
       title: t('DELETE_INTENT'),
-      description: <p style={{ whiteSpace: 'pre-wrap' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
+      description: <p style={{ whiteSpace: 'pre-line' }}>{t('DELETE_INTENT_MESSAGE')}</p>,
     });
 
     const deleteIntent: IDeleteIntent = {
@@ -217,7 +217,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
       const res = await confirm({
         title: tc('SAVE_CONFIRM_TITLE'),
         description: (
-          <p style={{ whiteSpace: 'pre-wrap' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>{tc('SAVE_CONFIRM_MESSAGE')}</p>
         ),
       });
       if (res) {

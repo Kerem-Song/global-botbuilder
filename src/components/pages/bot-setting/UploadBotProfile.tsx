@@ -98,7 +98,7 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
       await error({
         title: t('VALIDATION_UPLOAD_FILE_SIZE_TITLE'),
         description: (
-          <span style={{ whiteSpace: 'pre-wrap' }}>
+          <span style={{ whiteSpace: 'pre-line' }}>
             {t('VALIDATION_UPLOAD_FILE_SIZE')}
           </span>
         ),
