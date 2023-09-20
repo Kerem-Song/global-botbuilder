@@ -3,7 +3,7 @@ import { useOutsideClick } from '@hooks';
 import { IHasChildren, IHasClassNameNStyle } from '@models/interfaces';
 import { Placement } from '@popperjs/core';
 import classNames from 'classnames';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { usePopper } from 'react-popper';
@@ -85,6 +85,36 @@ export const Popper = <T extends object>({
       strategy: 'fixed',
     },
   );
+
+  const popperStyle: CSSProperties = {
+    ...styles.popper,
+    visibility: showPopper ? 'visible' : 'hidden',
+    transform:
+      (positions && className === 'onContextMenu') ||
+      (positions && className === 'contextMenuBtn')
+        ? `translate(${positions.x}px, ${positions.y}px)`
+        : styles.popper.transform,
+    top:
+      (positions && className === 'onContextMenu') ||
+      (positions && className === 'contextMenuBtn')
+        ? 0
+        : styles.popper.top,
+    left:
+      (positions && className === 'onContextMenu') ||
+      (positions && className === 'contextMenuBtn')
+        ? 0
+        : styles.popper.left,
+    right:
+      (positions && className === 'onContextMenu') ||
+      (positions && className === 'contextMenuBtn')
+        ? 'auto'
+        : styles.popper.right,
+    bottom:
+      (positions && className === 'onContextMenu') ||
+      (positions && className === 'contextMenuBtn')
+        ? 'auto'
+        : styles.popper.bottom,
+  };
 
   const handleSelect = (item: IPopperItem<T> | IPopperSelectItem<T>) => {
     setShowPopper(false);
@@ -191,35 +221,36 @@ export const Popper = <T extends object>({
           role="presentation"
           className={popperContainer}
           ref={popperElement}
-          style={{
-            ...styles.popper,
-            visibility: showPopper ? 'visible' : 'hidden',
-            transform:
-              (positions && className === 'onContextMenu') ||
-              (positions && className === 'contextMenuBtn')
-                ? `translate(${positions.x}px, ${positions.y}px)`
-                : styles.popper.transform,
-            top:
-              (positions && className === 'onContextMenu') ||
-              (positions && className === 'contextMenuBtn')
-                ? 0
-                : styles.popper.top,
-            left:
-              (positions && className === 'onContextMenu') ||
-              (positions && className === 'contextMenuBtn')
-                ? 0
-                : styles.popper.left,
-            right:
-              (positions && className === 'onContextMenu') ||
-              (positions && className === 'contextMenuBtn')
-                ? 'auto'
-                : styles.popper.right,
-            bottom:
-              (positions && className === 'onContextMenu') ||
-              (positions && className === 'contextMenuBtn')
-                ? 'auto'
-                : styles.popper.bottom,
-          }}
+          // style={{
+          //   ...styles.popper,
+          //   visibility: showPopper ? 'visible' : 'hidden',
+          //   transform:
+          //     (positions && className === 'onContextMenu') ||
+          //     (positions && className === 'contextMenuBtn')
+          //       ? `translate(${positions.x}px, ${positions.y}px)`
+          //       : styles.popper.transform,
+          //   top:
+          //     (positions && className === 'onContextMenu') ||
+          //     (positions && className === 'contextMenuBtn')
+          //       ? 0
+          //       : styles.popper.top,
+          //   left:
+          //     (positions && className === 'onContextMenu') ||
+          //     (positions && className === 'contextMenuBtn')
+          //       ? 0
+          //       : styles.popper.left,
+          //   right:
+          //     (positions && className === 'onContextMenu') ||
+          //     (positions && className === 'contextMenuBtn')
+          //       ? 'auto'
+          //       : styles.popper.right,
+          //   bottom:
+          //     (positions && className === 'onContextMenu') ||
+          //     (positions && className === 'contextMenuBtn')
+          //       ? 'auto'
+          //       : styles.popper.bottom,
+          // }}
+          style={popperStyle}
           onMouseLeave={handleLazyHide}
           onMouseEnter={handleMouseOver}
           onMouseDown={(e) => {
