@@ -23,7 +23,7 @@ import {
   setIsClickHeaderBtn,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -137,6 +137,7 @@ export const BotBuilderHeader = () => {
 
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const changed = useRootState((state) => state.makingNodeSliceReducer.present.changed);
+  const scale = useRootState((state) => state.botBuilderReducer.scale);
   const selectedScenario = useRootState(
     (state) => state.botBuilderReducer.selectedScenario,
   );
@@ -253,11 +254,15 @@ export const BotBuilderHeader = () => {
         setOtherFlowPopupPosition({
           x:
             canvasRect && viewRect
-              ? Math.round(viewRect.width / 2 - 108 * 2 + (viewRect.x - canvasRect.x))
+              ? Math.round(
+                  viewRect.width / scale / 2 - 108 * 2 + (viewRect.x - canvasRect.x),
+                )
               : 0,
           y:
             canvasRect && viewRect
-              ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+              ? Math.round(
+                  viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y),
+                )
               : 0,
         }),
       );
@@ -299,11 +304,11 @@ export const BotBuilderHeader = () => {
       seq: 0,
       x:
         canvasRect && viewRect
-          ? Math.round(viewRect.width / 2 - 108 + (viewRect.x - canvasRect.x))
+          ? Math.round(viewRect.width / scale / 2 - 108 + (viewRect.x - canvasRect.x))
           : 0,
       y:
         canvasRect && viewRect
-          ? Math.round(viewRect.height / 2 - 130 + (viewRect.y - canvasRect.y))
+          ? Math.round(viewRect.height / scale / 2 - 130 + (viewRect.y - canvasRect.y))
           : 0,
     };
     dispatch(appendNode(addNode));
