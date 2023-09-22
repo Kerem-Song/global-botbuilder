@@ -1,6 +1,6 @@
 import { Button, Col, Divider, Input, Row, Space, Title } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useI18n, usePage, useRootState, useSystemModal } from '@hooks';
+import { useI18n, usePage, useRootState } from '@hooks';
 import { useParameterClient } from '@hooks/client/parameterClient';
 import {
   IParameterList,
@@ -119,12 +119,6 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
   };
 
   useEffect(() => {
-    if (field.value === '' && parameterNameRef.current) {
-      parameterNameRef.current.focus();
-    }
-  }, [field.value]);
-
-  useEffect(() => {
     if (!parameterList?.id) {
       reset({ name: '' });
       setParameterFormat(null);
@@ -154,6 +148,11 @@ export const ParameterPopup: FC<VariablePopupProps> = ({
       className="parameterPopup"
       isOpen={isOpen}
       // onRequestClose={handleClose}
+      onAfterOpen={() => {
+        if (parameterNameRef.current) {
+          parameterNameRef.current.focus();
+        }
+      }}
       shouldCloseOnOverlayClick={false}
     >
       <div className="header">
