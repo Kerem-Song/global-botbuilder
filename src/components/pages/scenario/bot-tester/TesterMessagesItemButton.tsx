@@ -53,7 +53,6 @@ export const TesterMessagesItemButton = ({
       sessionToken: token,
       lunaMessage: {
         id: actionType === 'lunaNodeRedirect' ? 'lunaNodeLink' : actionType,
-        postback: item.postback,
         [actionType === 'lunaNodeRedirect' ? 'lunaNode' : 'utterance']: {
           value:
             actionType === 'linkWebUrl'
@@ -63,6 +62,7 @@ export const TesterMessagesItemButton = ({
               : actionType === 'actValueIsUttr'
               ? item.postback.actValueIsUttr
               : item.label,
+          params: item.postback,
         },
       },
     };
