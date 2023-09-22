@@ -298,15 +298,13 @@ aside {
 
       .desc {
         padding-left: rem(8);
-        color: $primary500;
+        color: $gray500;
       }
 
       .partnersCenterImg {
-        background-color: $primary500;
         border-radius: rem(6);
 
         img {
-          padding: rem(8);
           width: rem(32);
           height: rem(32);
         }
