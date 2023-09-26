@@ -4,6 +4,7 @@ import { IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import { CONDITIONS_LIMIT } from '@modules';
 import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
+import { useCallback } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { SwitchNodeCarousel } from '../SwitchNodeCarousel';
@@ -27,21 +28,27 @@ export const SwitchNodeEdit = () => {
     control,
   });
 
-  const handleDeleteButton = (index: number) => {
-    remove(index);
-  };
+  const handleDeleteButton = useCallback(
+    (index: number) => {
+      remove(index);
+    },
+    [fields],
+  );
 
-  const handleAddConditionButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const join = watch(`view.childrenViews.0.join`);
+  const handleAddConditionButton = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const join = watch(`view.childrenViews.0.join`);
 
-    e.preventDefault();
-    if (fields.length < CONDITIONS_LIMIT) {
-      append(nodeDefaultHelper.createDefaultConditions(join));
-    } else {
-      //modal alert
-      console.log('13개까지 가능');
-    }
-  };
+      e.preventDefault();
+      if (fields.length < CONDITIONS_LIMIT) {
+        append(nodeDefaultHelper.createDefaultConditions(join));
+      } else {
+        //modal alert
+        console.log('13개까지 가능');
+      }
+    },
+    [fields],
+  );
 
   return (
     <div key={values.id}>

@@ -3,6 +3,7 @@ import { usePage } from '@hooks';
 import { ConditionJoin, IGNodeEditModel } from '@models';
 import { ISwitchView } from '@models/interfaces/res/IGetFlowRes';
 import classNames from 'classnames';
+import { useCallback } from 'react';
 import { useController, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { OperatorSelector } from './OperatorSelector';
@@ -28,28 +29,32 @@ export const SwitchConditions = ({ nestedIndex }: { nestedIndex: number }) => {
     control,
   });
 
-  const handleDeleteButton = (index: number) => {
-    remove(index);
-  };
+  const handleDeleteButton = useCallback(
+    (index: number) => {
+      remove(index);
+    },
+    [fields],
+  );
 
-  const handleAddConditionButton = (
-    e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>,
-  ) => {
-    const join = watch(`view.childrenViews.${nestedIndex}.join`);
+  const handleAddConditionButton = useCallback(
+    (e: React.MouseEvent<HTMLLabelElement | HTMLButtonElement>) => {
+      const join = watch(`view.childrenViews.${nestedIndex}.join`);
 
-    e.preventDefault();
+      e.preventDefault();
 
-    if (fields.length < CONDITION_LIMIT) {
-      append({
-        op1: watch(`view.childrenViews.${nestedIndex}.items.${0}.op1`),
-        operator: undefined,
-        op2: '',
-      });
-    } else {
-      //modal alert
-      console.log('5개까지 가능');
-    }
-  };
+      if (fields.length < CONDITION_LIMIT) {
+        append({
+          op1: watch(`view.childrenViews.${nestedIndex}.items.${0}.op1`),
+          operator: undefined,
+          op2: '',
+        });
+      } else {
+        //modal alert
+        console.log('5개까지 가능');
+      }
+    },
+    [fields],
+  );
 
   return (
     <>
