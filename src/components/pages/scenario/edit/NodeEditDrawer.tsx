@@ -1,4 +1,4 @@
-import { FormItem } from '@components';
+import { FormItem, Input } from '@components';
 import { usePage, useRootState } from '@hooks';
 import { NODE_TYPES } from '@models';
 import { INodeEditModel } from '@models/interfaces/INodeEditModel';
@@ -137,14 +137,19 @@ export const NodeEditDrawer = () => {
         <div className="node-item-wrap">
           <FormItem error={errors.title}>
             {selectedNode?.type === NODE_TYPES.INTENT_NODE ? (
-              <InputWithTitleCounter
-                label={t(`CHAT_SCENARIO_NAME`)}
-                required={true}
-                placeholder={t(`CHAT_BUBBLE_NAME_PLACEHOLDER`)}
-                disabled
-                readOnly
-                value={selectedScenario?.alias}
-              />
+              <>
+                <div className="textareaWrapper">
+                  <p className="textareaLabel">
+                    {t(`CHAT_SCENARIO_NAME`)}
+                    <span className="required"> *</span>
+                  </p>
+                </div>
+                <Input
+                  placeholder={t(`CHAT_BUBBLE_NAME_PLACEHOLDER`)}
+                  disabled
+                  value={selectedScenario?.alias}
+                />
+              </>
             ) : (
               <InputWithTitleCounter
                 label={t(`CHAT_BUBBLE_NAME`)}
