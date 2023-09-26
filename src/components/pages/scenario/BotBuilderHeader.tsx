@@ -405,20 +405,6 @@ export const BotBuilderHeader = () => {
           <div className="makingBtn">
             <span className="btnCategory">{t(`FUNCTION`)}</span>
             <Col className="btnWrapper">
-              {functionNodes.map((item, i) => (
-                <Tooltip tooltip={item.nodeName} key={i}>
-                  <Button
-                    className={`${item.nodeName} icon ${item.className}`}
-                    onDragStart={(e) => handleDragStart(e)}
-                    onClick={(e) => {
-                      handleMakingChatbubbleClick(e);
-                    }}
-                    draggable={true}
-                    value={item.value}
-                    data={item.nodeName}
-                  />
-                </Tooltip>
-              ))}
               {functionNodes
                 .filter((item) => {
                   // if (import.meta.env.PROD) {
