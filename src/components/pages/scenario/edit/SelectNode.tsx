@@ -2,7 +2,7 @@ import { usePage, useRootState } from '@hooks';
 import { getReactSelectStyle, NODE_PREFIX, onMenuOpenScroller } from '@modules';
 import { arrowHelper } from '@modules/arrowHelper';
 import classNames from 'classnames';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useDeferredValue, useMemo } from 'react';
 import { FieldError, useController, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -22,6 +22,7 @@ export interface ISelectNodeProps {
 export const SelectNode: FC<ISelectNodeProps> = React.memo(
   ({ fieldName, defaultValue, nodeId, error, isBottom }) => {
     const { t } = usePage();
+
     const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
     const reactSelectStyle = getReactSelectStyle({});
     const { control } = useFormContext();
@@ -46,16 +47,16 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
     //     value: item.id,
     //     label: item.title || '',
     //   }));
-
+    const deferredNodeList = useDeferredValue(nodes);
     const memoizedNodeList = useMemo(() => {
-      const nodeList: IReactSelect[] = [...nodes]
+      const nodeList: IReactSelect[] = [...deferredNodeList]
         .filter((item) => item.id !== nodeId)
         .filter(
           (item) =>
             arrowHelper.validateArrows(
               `${NODE_PREFIX}${nodeId}`,
               `${NODE_PREFIX}${item.id}`,
-              nodes,
+              deferredNodeList,
               !isBottom,
             ) === undefined,
         )
@@ -66,7 +67,7 @@ export const SelectNode: FC<ISelectNodeProps> = React.memo(
         }));
 
       return nodeList;
-    }, [nodes]);
+    }, [deferredNodeList]);
 
     const selectorOptions = [
       { value: null, label: t(`SET_OPTION_NULL`) },

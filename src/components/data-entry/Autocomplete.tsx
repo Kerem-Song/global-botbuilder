@@ -4,6 +4,7 @@ import {
   ChangeEvent,
   KeyboardEvent,
   ReactNode,
+  useDeferredValue,
   useEffect,
   useRef,
   useState,
@@ -87,7 +88,8 @@ export const Autocomplete = <T extends object>(args: AutocompleteProps<T>) => {
     );
   };
 
-  const filteredList = items?.filter((x) => {
+  const deferredItems = useDeferredValue(items);
+  const filteredList = deferredItems?.filter((x) => {
     if (!search) {
       return true;
     }

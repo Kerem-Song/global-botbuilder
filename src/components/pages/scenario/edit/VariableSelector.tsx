@@ -2,6 +2,7 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
 import { VariableKind } from '@models';
 import { IVariable } from '@models/interfaces/IVariable';
+import { useDeferredValue } from 'react';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
 export interface IVariableSelectorProps<T extends object> {
@@ -26,7 +27,8 @@ export const VariableSelector = <T extends object>({
   } = useVariableSelectClient();
   const { setValue } = useFormContext();
   const { field } = useController({ name: path, control });
-  const variables = data || [];
+  const deferredData = useDeferredValue(data);
+  const variables = deferredData || [];
 
   const handleCreate = (value: string | undefined) => {
     if (!value) {

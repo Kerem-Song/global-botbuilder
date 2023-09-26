@@ -2,11 +2,10 @@ import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { usePage, useRootState } from '@hooks';
 import { INode } from '@models';
 import { useController, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
   const { t } = usePage();
-  const dispatch = useDispatch();
+
   const { control } = useForm();
   const { field } = useController({ name: 'searchingNode', control });
 
