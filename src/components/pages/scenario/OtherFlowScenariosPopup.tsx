@@ -14,7 +14,7 @@ import {
   otherFlowScenariosPopupStatus,
   setIsClickHeaderBtn,
 } from '@store/otherFlowScenarioPopupSlice';
-import { useEffect, useRef, useState } from 'react';
+import { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 export const OtherFlowScenariosPopup = () => {
@@ -26,7 +26,7 @@ export const OtherFlowScenariosPopup = () => {
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
   const { t } = usePage();
-
+  const deferredData = useDeferredValue(data);
   const nodes = useRootState((state) => state.makingNodeSliceReducer.present.nodes);
   const { addArrowHandler } = useAddArrow();
   const popUpPosition = useRootState(
@@ -125,9 +125,9 @@ export const OtherFlowScenariosPopup = () => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (deferredData) {
       setScenarioList(
-        data?.map((item) => ({
+        deferredData?.map((item) => ({
           id: item.id,
           name: item.alias,
           type: 'search' as ItemType,
@@ -139,7 +139,7 @@ export const OtherFlowScenariosPopup = () => {
         })),
       );
     }
-  }, [data]);
+  }, [deferredData]);
 
   const [items, setItems] = useState(scenarioList);
   const [userInput, setUserInput] = useState<string | null>('');
@@ -160,7 +160,7 @@ export const OtherFlowScenariosPopup = () => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (deferredData) {
       setItems(scenarioList);
     }
   }, [scenarioList]);
