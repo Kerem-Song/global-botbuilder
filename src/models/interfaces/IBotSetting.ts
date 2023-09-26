@@ -3,7 +3,7 @@ import { StaffType } from '@models';
 import { IReq } from './req';
 
 export interface IBotSetting extends IReq {
-  botId: string;
+  botId?: string;
   botName?: string;
 }
 
