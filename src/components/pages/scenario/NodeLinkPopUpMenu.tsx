@@ -13,7 +13,7 @@ import { nodeDefaultHelper } from '@modules/nodeDefaultHelper';
 import { GuideInfo } from '@store/botbuilderSlice';
 import { appendNode } from '@store/makingNode';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface INodeLinkPopUpMenuProps {
@@ -165,7 +165,7 @@ export const NodeLinkPopUpMenu = ({
 
   const { getScenarioList } = useScenarioSelectClient();
   const { data } = getScenarioList();
-
+  const deferredData = useDeferredValue(data);
   const scale = useRootState((state) => state.botBuilderReducer.scale);
 
   const handleMakingChatbubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -284,9 +284,9 @@ export const NodeLinkPopUpMenu = ({
   }, []);
 
   useEffect(() => {
-    if (data && guideStart) {
+    if (deferredData && guideStart) {
       setScenarioList(
-        data?.map((item) => ({
+        deferredData?.map((item) => ({
           id: item.id,
           name: item.alias,
           type: 'search' as ItemType,
@@ -298,7 +298,7 @@ export const NodeLinkPopUpMenu = ({
         })),
       );
     }
-  }, [data, guideStart]);
+  }, [deferredData, guideStart]);
 
   const handleMakingOtherFlow = async (
     name: string,
