@@ -1,16 +1,6 @@
-import { useHistoryViewerMatch } from '@hooks/useHistoryViewerMatch';
 import { IHasClassNameNStyle } from '@models';
 import classNames from 'classnames';
-import React, {
-  ChangeEvent,
-  FocusEvent,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FocusEvent, forwardRef, useCallback } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 export interface InputTextareaProps extends IHasClassNameNStyle {
@@ -36,7 +26,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
     // const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     //   args.onChange?.(e);
     // };
-    console.log('@Input Text area');
+
     const handleTextArea = useCallback(
       (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         return args.onChange?.(e);
