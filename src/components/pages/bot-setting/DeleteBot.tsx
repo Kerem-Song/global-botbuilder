@@ -36,7 +36,7 @@ export const DeleteBot = () => {
         ),
       });
       if (deletedBotConfirm) {
-        const result = await botDeleteAsync({ botId: botSettingInfo!.id });
+        const result = await botDeleteAsync({ botId: botSettingInfo?.id });
         if (result) {
           setActiveRecoverBtn(true);
         }
