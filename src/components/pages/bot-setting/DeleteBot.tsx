@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export const DeleteBot = () => {
   const { t } = usePage();
-  const { confirm } = useSystemModal();
+  const { confirm, info } = useSystemModal();
   const { botDeleteAsync, botRecoverAsync } = useBotClient();
   const botSettingInfo = useRootState(
     (state) => state.botSettingInfoReducer.botSettingInfo,
@@ -18,19 +18,28 @@ export const DeleteBot = () => {
   const [activeRecoverBtn, setActiveRecoverBtn] = useState<boolean>(false);
 
   const checkActivatedBot = async () => {
-    if (botSettingInfo) {
-      const title = botSettingInfo.activated ? t('DISABLED_DELETE_BOT') : t('DELETE_BOT');
-      const message = botSettingInfo.activated
-        ? t('DISABLED_DELETE_BOT_MESSAGE')
-        : t('DELETE_BOT_CONFIRM_MESSAGE');
-      const result = await confirm({
-        title,
-        description: <p style={{ whiteSpace: 'pre-line' }}>{message}</p>,
+    if (botSettingInfo?.activated) {
+      const disabledDeleteBotInfo = await info({
+        title: t('DISABLED_DELETE_BOT'),
+        description: (
+          <p style={{ whiteSpace: 'pre-line' }}>{t('DISABLED_DELETE_BOT_MESSAGE')}</p>
+        ),
       });
-      if (result && !botSettingInfo.activated) {
-        await botDeleteAsync({ botId: botSettingInfo.id }).then((res) => {
+      if (disabledDeleteBotInfo) {
+        return;
+      }
+    } else {
+      const deletedBotConfirm = await confirm({
+        title: t('DELETE_BOT'),
+        description: (
+          <p style={{ whiteSpace: 'pre-line' }}>{t('DELETE_BOT_CONFIRM_MESSAGE')}</p>
+        ),
+      });
+      if (deletedBotConfirm) {
+        const result = await botDeleteAsync({ botId: botSettingInfo!.id });
+        if (result) {
           setActiveRecoverBtn(true);
-        });
+        }
       }
     }
   };
