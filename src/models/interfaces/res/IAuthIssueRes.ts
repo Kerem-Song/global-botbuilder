@@ -2,11 +2,11 @@ import { StaffType } from '@models';
 
 export interface IAuthIssueRes {
   token: string;
-  loginUserName: string;
-  loginId: string;
+  accountName: string;
+  accountEmail: string;
   brandName: string;
   brandId: string;
   companyName: string;
   staffType: StaffType;
-  role: number;
+  permission: number;
 }

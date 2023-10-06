@@ -5,7 +5,6 @@ import { setToken } from '@store/authSlice';
 import { updateRole } from '@store/userInfoSlice';
 import axios, { AxiosInstance } from 'axios';
 import { createContext, FC } from 'react';
-import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 
 import { IHasChildren } from '../../models/interfaces/IHasChildren';
@@ -18,11 +17,11 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const { error } = useSystemModal();
   const { i18n, tc } = useI18n();
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(['RT']);
   const brandInfo = useRootState((state) => state.brandInfoReducer);
+  const { refreshToken } = useRootState((state) => state.authReducer);
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    //withCredentials: true,
+    withCredentials: true,
   });
   console.log('import.meta. env', import.meta.env);
   const urlToDashbaord = `/${i18n.language}/${brandInfo.brandId}/dashboard`;
@@ -36,7 +35,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
         config.headers = {};
       }
 
-      config.headers.Authorization = cookies.RT;
+      config.headers.Authorization = refreshToken;
       return config;
     },
 
@@ -49,7 +48,6 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
     async function (response) {
       if (response.data.newToken) {
         console.log('newToken', response.data);
-        setCookie('RT', response.data.newToken);
         dispatch(setToken({ refreshToken: response.data.newToken }));
         dispatch(
           updateRole({ staffType: response.data.staffType, role: response.data.role }),
@@ -111,7 +109,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       /**
        * todo : 인증 실패 같은 공통 Exception 처리
        */
-      const requestData = err.response.config.data;
+      const requestData = err.response?.config?.data;
       if (requestData) {
         if (typeof requestData === 'string') {
           const requestObj = JSON.parse(requestData);
@@ -132,7 +130,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
         }
       }
 
-      if (err.response.status === 403 || err.response.status === 401) {
+      if (err.response && (err.response.status === 403 || err.response.status === 401)) {
         // 403 -> 봇 메뉴에 대한 권한이 하나도 없을 경우
         if (err.response.data.exception.staffRole === '0') {
           error({
