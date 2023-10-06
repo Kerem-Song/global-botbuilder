@@ -94,7 +94,7 @@ export const SwitchNodeCarousel: FC<SwitchNodeCarouselProps> = ({
         <Row
           justify="space-between"
           align="center"
-          className="carouselBtnWrapper node-item-wrap"
+          className="carouselBtnWrapper node-item-wrap switchCarouselBtnWrapper"
         >
           <Row justify="center" align="center" gap={4}>
             <Col>

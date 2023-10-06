@@ -4,7 +4,8 @@
   gap: rem(8);
 }
 
-.carouselBtnWrapper {
+.switchCarouselBtnWrapper {
+  padding-bottom: rem(12) !important;
   border-bottom: rem(1) solid $gray150;
 }
 
