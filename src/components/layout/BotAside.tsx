@@ -1,6 +1,7 @@
 import {
   icBotProfile,
   icChatbotBuilder,
+  icImgNotFound,
   icLine,
   icLnbHide,
   icLnbShow,
@@ -17,7 +18,7 @@ import { initBotBuilder } from '@store/botbuilderSlice';
 import { setSesstionToken } from '@store/botInfoSlice';
 import { setSidebarClose, setSidebarStatus } from '@store/sidebarStatusSlice';
 import classNames from 'classnames';
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -42,6 +43,11 @@ export const BotAside = React.memo(() => {
   const partnersCenterUrl = `${import.meta.env.VITE_PARTNERS_CENTER_URL}/${
     brandInfo.brandId
   }/dashboard`;
+
+  const handleImgOnError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = icImgNotFound;
+  };
 
   const { data } = getBotListQuery();
 
@@ -139,7 +145,11 @@ export const BotAside = React.memo(() => {
             <div className="headerName">
               <div className="botProfileImg">
                 {botInfo?.iconUrl ? (
-                  <img src={botInfo.iconUrl} alt="icBotProfile" />
+                  <img
+                    src={botInfo.iconUrl}
+                    alt="icBotProfile"
+                    onError={(e) => handleImgOnError(e)}
+                  />
                 ) : (
                   <img src={icBotProfile} alt="icBotProfile" className="altImg" />
                 )}
