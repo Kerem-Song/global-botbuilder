@@ -269,9 +269,13 @@ export const NodeLinkPopUpMenu = ({
     noResult: !filterdBtnList.length,
   });
 
-  useOutsideClick(nodeLinkPopUpMenuRef, () => {
-    handleIsOpen(false);
-  });
+  useOutsideClick(
+    nodeLinkPopUpMenuRef,
+    () => {
+      handleIsOpen(false);
+    },
+    true,
+  );
 
   useEffect(() => {
     if (!nodeLinkPopUpMenuRef.current) {
@@ -281,7 +285,7 @@ export const NodeLinkPopUpMenu = ({
       nodeLinkPopUpMenuRef.current.style.top = `${popUpPosition.y}px`;
       nodeLinkPopUpMenuRef.current.style.transform = `scale(${1 / scale})`;
     }
-  }, []);
+  }, [nodeLinkPopUpMenuRef]);
 
   useEffect(() => {
     if (data && guideStart) {

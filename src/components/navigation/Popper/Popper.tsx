@@ -137,11 +137,15 @@ export const Popper = <T extends object>({
   };
 
   const outsideClickRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(outsideClickRef, () => {
-    if (showPopper) {
-      handlePopper();
-    }
-  });
+  useOutsideClick(
+    outsideClickRef,
+    () => {
+      if (showPopper) {
+        handlePopper();
+      }
+    },
+    className === 'otherFlowRedirectNodeList',
+  );
 
   const handleMouseOver = () => {
     outsideClickRef.current?.setAttribute('data-mouse-over', 'true');
@@ -221,35 +225,6 @@ export const Popper = <T extends object>({
           role="presentation"
           className={popperContainer}
           ref={popperElement}
-          // style={{
-          //   ...styles.popper,
-          //   visibility: showPopper ? 'visible' : 'hidden',
-          //   transform:
-          //     (positions && className === 'onContextMenu') ||
-          //     (positions && className === 'contextMenuBtn')
-          //       ? `translate(${positions.x}px, ${positions.y}px)`
-          //       : styles.popper.transform,
-          //   top:
-          //     (positions && className === 'onContextMenu') ||
-          //     (positions && className === 'contextMenuBtn')
-          //       ? 0
-          //       : styles.popper.top,
-          //   left:
-          //     (positions && className === 'onContextMenu') ||
-          //     (positions && className === 'contextMenuBtn')
-          //       ? 0
-          //       : styles.popper.left,
-          //   right:
-          //     (positions && className === 'onContextMenu') ||
-          //     (positions && className === 'contextMenuBtn')
-          //       ? 'auto'
-          //       : styles.popper.right,
-          //   bottom:
-          //     (positions && className === 'onContextMenu') ||
-          //     (positions && className === 'contextMenuBtn')
-          //       ? 'auto'
-          //       : styles.popper.bottom,
-          // }}
           style={popperStyle}
           onMouseLeave={handleLazyHide}
           onMouseEnter={handleMouseOver}
@@ -262,6 +237,7 @@ export const Popper = <T extends object>({
           {popperItems?.some((item) => item.type === 'search') ? (
             <>
               <Input
+                id={'scenarioListPopupInput'}
                 placeholder={t(`INPUT_SEARCH_WORD`)}
                 search
                 onSearch={(data) => {
