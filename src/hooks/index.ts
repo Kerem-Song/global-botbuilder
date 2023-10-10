@@ -1,7 +1,6 @@
 export * from './client';
 export * from './providers';
 export * from './useElementHelper';
-export * from './useHistoryViewerMatch';
 export * from './useHttp';
 export * from './useI18n';
 export * from './useModalOpen';

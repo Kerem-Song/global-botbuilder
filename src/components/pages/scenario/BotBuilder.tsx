@@ -32,16 +32,22 @@ import {
   otherFlowScenariosPopupStatus,
   setOtherFlowPopupPosition,
 } from '@store/otherFlowScenarioPopupSlice';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import ReactLoadingSkeleton from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import { BotBuilderZoomBtn } from './BotBuilderZoomBtn';
-import { LineContainer } from './LineContainer';
+// import { LineContainer } from './LineContainer';
 import { NodeLinkPopUpMenu } from './NodeLinkPopUpMenu';
 import { Node } from './nodes';
 import { OtherFlowScenariosPopup } from './OtherFlowScenariosPopup';
+
+const LineContainer = lazy(() =>
+  import('./LineContainer').then(({ LineContainer }) => ({ default: LineContainer })),
+);
+
 let dirtySelect: string | undefined;
 
 export const Botbuilder = () => {
@@ -501,7 +507,13 @@ export const Botbuilder = () => {
               </div>
             </Draggable>
           ))}
-          <LineContainer />
+          <Suspense
+            fallback={
+              <ReactLoadingSkeleton width={1} height={1} baseColor="rgba(0,0,0,0.06)" />
+            }
+          >
+            <LineContainer />
+          </Suspense>
           {isReadOnly
             ? null
             : isOpen && (
