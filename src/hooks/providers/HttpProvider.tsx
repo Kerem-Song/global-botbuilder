@@ -1,6 +1,8 @@
+import { useErrorExecuter } from '@hooks/useErrorExecuter';
 import useI18n from '@hooks/useI18n';
 import { useRootState } from '@hooks/useRootState';
 import { useSystemModal } from '@hooks/useSystemModal';
+import { errorCodes, ErrorType, ErrorValueType } from '@models/types/errorCodes';
 import { setToken } from '@store/authSlice';
 import { updateRole } from '@store/userInfoSlice';
 import axios, { AxiosInstance } from 'axios';
@@ -19,6 +21,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const brandInfo = useRootState((state) => state.brandInfoReducer);
   const { refreshToken } = useRootState((state) => state.authReducer);
+  const errorExecuter = useErrorExecuter();
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
@@ -34,7 +37,6 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       if (!config.headers) {
         config.headers = {};
       }
-
       config.headers.Authorization = refreshToken;
       return config;
     },
@@ -106,6 +108,10 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
       return response;
     },
     function (err) {
+      if (!err.response) {
+        document.location.href = import.meta.env.VITE_LOGIN_URL;
+        return Promise.reject(err);
+      }
       /**
        * todo : 인증 실패 같은 공통 Exception 처리
        */
@@ -130,16 +136,27 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
         }
       }
 
-      if (err.response && (err.response.status === 403 || err.response.status === 401)) {
-        // 403 -> 봇 메뉴에 대한 권한이 하나도 없을 경우
-        if (err.response.data.exception.staffRole === '0') {
-          error({
-            title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
-            description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
-          }).then(() => {
-            document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
-          });
-        } else {
+      if (err.response?.data?.exception?.errorCode) {
+        const errorCode: ErrorType = err.response.data.exception.errorCode;
+        const errorType: ErrorValueType = errorCodes[errorCode];
+        const executer = errorExecuter[errorType];
+        if (executer) {
+          executer.callback?.();
+          return Promise.reject(err);
+        }
+      }
+
+      if (err.response) {
+        if (err.response.status === 401) {
+          // 인증 오류
+          /**
+           * todo: return url 처리
+           */
+          document.location.href = import.meta.env.VITE_LOGIN_URL;
+        }
+
+        if (err.response.status === 403) {
+          // 권한 오류
           error({
             title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
             description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
@@ -147,9 +164,29 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
             document.location.href = urlToDashbaord;
           });
         }
-      } else {
-        document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
       }
+
+      return Promise.reject(err);
+      // if (err.response && (err.response.status === 403 || err.response.status === 401)) {
+      //   // 403 -> 봇 메뉴에 대한 권한이 하나도 없을 경우
+      //   if (err.response.data.exception.staffRole === '0') {
+      //     error({
+      //       title: tc(`HTTP_PROVIDER_NO_BOT_ERROR_TITLE`),
+      //       description: tc(`HTTP_PROVIDER_BOT_BUILDER_ERROR_DESC`),
+      //     }).then(() => {
+      //       document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
+      //     });
+      //   } else {
+      //     error({
+      //       title: tc(`PAGE_PROVIDER_AUTH_ERROR_TITLE`),
+      //       description: tc(`PAGE_PROVIDER_AUTH_ERROR_DESC`),
+      //     }).then(() => {
+      //       document.location.href = urlToDashbaord;
+      //     });
+      //   }
+      // } else {
+      //   document.location.href = import.meta.env.VITE_PARTNERS_CENTER_URL;
+      // }
     },
   );
 
