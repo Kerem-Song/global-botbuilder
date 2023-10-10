@@ -19,24 +19,26 @@ export const useAuthClient = () => {
       args,
     );
 
-    const parsed: IAuthIssueRes = {
-      ...aesHelper.decode(res.data.result),
-      token: res.data.result,
-    };
+    if (res) {
+      const parsed: IAuthIssueRes = {
+        ...aesHelper.decode(res.data.result),
+        token: res.data.result,
+      };
 
-    dispath(setToken({ refreshToken: parsed.token }));
-    dispath(setBrandInfo({ brandId: parsed.brandId, brandName: parsed.brandName }));
-    dispath(
-      setUserInfo({
-        loginId: parsed.accountEmail,
-        loginUserName: parsed.accountName,
-        companyName: parsed.companyName,
-        role: parsed.permission,
-        staffType: parsed.staffType,
-      }),
-    );
+      dispath(setToken({ refreshToken: parsed.token }));
+      dispath(setBrandInfo({ brandId: parsed.brandId, brandName: parsed.brandName }));
+      dispath(
+        setUserInfo({
+          loginId: parsed.accountEmail,
+          loginUserName: parsed.accountName,
+          companyName: parsed.companyName,
+          role: parsed.permission,
+          staffType: parsed.staffType,
+        }),
+      );
 
-    return parsed;
+      return parsed;
+    }
   });
   return { IssueTokenAsync: IssueTokenMutate.mutateAsync };
 };

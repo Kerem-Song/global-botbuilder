@@ -21,8 +21,9 @@ export const AuthPage = () => {
       return;
     }
     const res = await IssueTokenAsync({ brandId });
-
-    setNavigateUrl(`/${i18n.language}/${res.brandId}`);
+    if (res) {
+      setNavigateUrl(`/${i18n.language}/${res.brandId}`);
+    }
   };
 
   useEffect(() => {

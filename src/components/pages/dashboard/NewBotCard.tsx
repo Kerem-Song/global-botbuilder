@@ -1,7 +1,8 @@
 import { icAdd, icAddDisable } from '@assets';
 import { Card, Title } from '@components';
 import { usePage, useRootState } from '@hooks';
-import { StaffType } from '@models';
+import { Role, StaffType } from '@models';
+import { util } from '@modules';
 import classNames from 'classnames';
 import { FC } from 'react';
 
@@ -10,18 +11,13 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
   const role = useRootState((state) => state.userInfoReducer.role);
   const staffType = useRootState((state) => state.userInfoReducer.staffType);
 
-  const isAdministrator = staffType === StaffType.Administrator && role === 0;
-  const isManager = staffType === StaffType.Manager;
-  const isRoleInvalidSetting = role !== undefined && role <= 114;
-  const isInvalidCreateNewChatBot =
-    isManager || (!isAdministrator && isRoleInvalidSetting);
+  const isValidCreateNewChatBot = util.checkRole(Role.Setting, staffType, role);
 
   const handleOnClickAuth = async () => {
-    if (isInvalidCreateNewChatBot) {
+    if (!isValidCreateNewChatBot) {
       return;
-    } else {
-      return onClick();
     }
+    return onClick();
   };
 
   return (
@@ -29,15 +25,15 @@ export const NewBotCard: FC<{ onClick: () => void }> = ({ onClick }) => {
       bordered={false}
       onClick={handleOnClickAuth}
       className={classNames('createNewChatBot', {
-        disabled: isInvalidCreateNewChatBot,
-        newChatbot: !isInvalidCreateNewChatBot,
+        disabled: !isValidCreateNewChatBot,
+        newChatbot: isValidCreateNewChatBot,
       })}
     >
       <div className="title">
-        <img src={isInvalidCreateNewChatBot ? icAddDisable : icAdd} alt="add" />
+        <img src={isValidCreateNewChatBot ? icAdd : icAddDisable} alt="add" />
         <Title level={3}>{t('NEW_BOT_TITLE')}</Title>
       </div>
-      {!isInvalidCreateNewChatBot && (
+      {isValidCreateNewChatBot && (
         <div className="title-hover">
           <svg width={14} height={14}>
             <path
