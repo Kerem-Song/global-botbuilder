@@ -126,7 +126,7 @@ export const ProductCardCarouselNodeEdit = () => {
                           error={errors.view?.childrenViews?.[index]?.profileIconUrl}
                         >
                           <>
-                            <Row align="center" gap={12} style={{ margin: 0 }}>
+                            <Row align="center" gap={12} className="itemProfileWrapper">
                               <Col span={5} className="itemProfileImg">
                                 <ImageFileUploader
                                   imageCtrl={

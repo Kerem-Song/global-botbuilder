@@ -107,7 +107,7 @@ export const ListCardCarouselItems = ({ nestedIndex }: { nestedIndex: number }) 
                 error={errors.view?.childrenViews?.[nestedIndex]?.items?.[j]?.imageUrl}
               >
                 <>
-                  <Row align="center" gap={12} style={{ margin: 0 }}>
+                  <Row align="center" gap={12} className="itemProfileWrapper">
                     <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_CAROUSEL_ITEM_IMAGE_CTRL}

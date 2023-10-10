@@ -88,7 +88,7 @@ export const ListCardItems = () => {
             <Space direction="vertical" gap={12}>
               <FormItem error={errors.view?.items?.[j]?.imageUrl}>
                 <>
-                  <Row align="center" gap={12} style={{ margin: 0 }}>
+                  <Row align="center" gap={12} className="itemProfileWrapper">
                     <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.LIST_ITEM_IMAGE_CTRL}

@@ -423,6 +423,10 @@
         padding: 0 !important;
       }
 
+      .itemProfileWrapper {
+        margin: 0 0 rem(8) 0 !important;
+      }
+
       .imgUploadLabel {
         display: flex;
         justify-content: center;
@@ -521,7 +525,7 @@
           &.small {
             width: rem(64);
             height: rem(64);
-            margin-bottom: rem(8);
+            // margin-bottom: rem(8);
 
             .imgUploadSkeleton {
               height: 100%;

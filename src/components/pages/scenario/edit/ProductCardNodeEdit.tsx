@@ -84,7 +84,7 @@ export const ProductCardNodeEdit = () => {
             <Space direction="vertical" gap={12}>
               <FormItem error={errors.view?.profileIconUrl}>
                 <>
-                  <Row align="center" gap={12} style={{ margin: 0 }}>
+                  <Row align="center" gap={12} className="itemProfileWrapper">
                     <Col span={5} className="itemProfileImg">
                       <ImageFileUploader
                         imageCtrl={IMAGE_CTRL_TYPES.PRODUCT_PROFILE_ICON_URL}
