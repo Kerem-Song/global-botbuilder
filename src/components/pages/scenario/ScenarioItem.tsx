@@ -18,7 +18,7 @@ export interface IScenarioItemProps {
 }
 
 export const ScenarioItem: FC<IScenarioItemProps> = React.memo(({ item }) => {
-  const { t, tc } = usePage();
+  const { t, tc, i18n } = usePage();
   const { confirm } = useSystemModal();
   const [scenarioMenus, setScenarioMenus] = useState<
     IPopperItem<{
@@ -190,7 +190,7 @@ export const ScenarioItem: FC<IScenarioItemProps> = React.memo(({ item }) => {
         type: 'normal',
       },
     ]);
-  }, [selectedScenario, item]);
+  }, [selectedScenario, item, i18n.language]);
 
   return (
     <Card
