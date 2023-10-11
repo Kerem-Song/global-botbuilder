@@ -142,7 +142,7 @@ export const HttpProvider: FC<IHasChildren> = ({ children }) => {
         const executer = errorExecuter[errorType];
         if (executer) {
           executer.callback?.();
-          return Promise.reject(err);
+          return err.response;
         }
       }
 
