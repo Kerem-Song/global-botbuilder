@@ -203,7 +203,7 @@ export const IntentDetail: FC<IIntentDetailProps> = ({
         if (isOpenUtteranceDetailPopup) {
           handleSetIntentId?.(res as string);
         } else {
-          navigate(`/${botId}/intent/detail/${res}`);
+          navigate(`/${botId}/intent/detail/${res}`, { replace: true });
         }
       } else {
         lunaToast.success(tc('SAVE_MESSAGE'));
