@@ -16,6 +16,11 @@ export const useErrorExecuter = () => {
         });
       },
     },
+    ALREADY_EXIST_FLOW_NAME: {},
+    DUPLICATE_FLOW_ALIAS: {},
+    DUPLICATE_NODE_ID: {},
+    FLOW_DELETE: {},
+    INVALIDATE_DATA: {},
   };
   return errorExecuter;
 };
