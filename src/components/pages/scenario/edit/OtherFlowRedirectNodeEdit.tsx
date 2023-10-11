@@ -67,6 +67,11 @@ export const OtherFlowRedirectNodeEdit = () => {
         ),
       ]);
     }
+
+    // 메모리 관리
+    return () => {
+      setScenarioList([]);
+    };
   }, [data]);
 
   return (

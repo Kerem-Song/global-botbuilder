@@ -17,7 +17,6 @@ export const SearchingNodeInput = ({ nodes }: { nodes: INode[] }) => {
       items={nodes}
       displayName="title"
       placeholder={t(`SEARCHING_NODE_INPUT_PLACEHOLDER`)}
-      defaultValue={nodes.find((x) => x.title === field.value)}
       onChangeValue={(value) => {
         if (value) {
           canvas.style.left =

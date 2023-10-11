@@ -302,6 +302,11 @@ export const NodeLinkPopUpMenu = ({
         })),
       );
     }
+
+    // 메모리 관리
+    return () => {
+      setScenarioList([]);
+    };
   }, [deferredData, guideStart]);
 
   const handleMakingOtherFlow = async (

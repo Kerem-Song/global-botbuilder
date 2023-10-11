@@ -193,6 +193,11 @@ export const Popper = <T extends object>({
 
   useEffect(() => {
     setItems(popperItems);
+
+    // 메모리 관리
+    return () => {
+      setItems([]);
+    };
   }, [i18n.language, popperItems]);
 
   return (

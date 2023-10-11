@@ -61,6 +61,11 @@ export const ParameterClearNodeEdit = () => {
         ),
       ]);
     }
+
+    // 메모리 관리
+    return () => {
+      setScenarioList([]);
+    };
   }, [data]);
 
   const handleResetRadio = async (e: React.ChangeEvent<HTMLInputElement>) => {

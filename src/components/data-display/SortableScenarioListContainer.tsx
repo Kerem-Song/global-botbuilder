@@ -32,6 +32,11 @@ export const SortableScenarioListContainer = React.memo(
     const { scenarioSortAsync } = useScenarioClient();
     useEffect(() => {
       setList(scenarioList);
+
+      // 메모리 관리
+      return () => {
+        setList([]);
+      };
     }, [scenarioList]);
 
     const sensors = useSensors(

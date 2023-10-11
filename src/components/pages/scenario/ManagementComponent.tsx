@@ -39,6 +39,11 @@ export const ManagementComponent = React.memo(() => {
       return;
     }
     setScenarioList(data.filter((x) => !x.isFallbackFlow && !x.isStartFlow));
+
+    // 메모리 관리
+    return () => {
+      setScenarioList([]);
+    };
   }, [searchKeyword, isActivated, data]);
 
   useEffect(() => {

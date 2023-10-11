@@ -139,6 +139,11 @@ export const OtherFlowScenariosPopup = () => {
         })),
       );
     }
+
+    // 메모리 관리
+    return () => {
+      setScenarioList([]);
+    };
   }, [deferredData]);
 
   const [items, setItems] = useState(scenarioList);
@@ -163,6 +168,11 @@ export const OtherFlowScenariosPopup = () => {
     if (deferredData) {
       setItems(scenarioList);
     }
+
+    // 메모리 관리
+    return () => {
+      setItems([]);
+    };
   }, [scenarioList]);
 
   useEffect(() => {
