@@ -43,7 +43,8 @@ export const useNodeEditSave = () => {
     if (Object.entries(dirtyFields).length > 0) {
       dispatch(editNode(model));
 
-      reset({ id: '', title: '' });
+      // reset({ id: '', title: '' });
+      reset(model);
     }
   };
 
