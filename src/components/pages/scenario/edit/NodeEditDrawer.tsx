@@ -78,7 +78,7 @@ export const NodeEditDrawer = () => {
     return () => {
       reset({ id: '', title: '' });
     };
-  }, [selectedNode, index]);
+  }, [selectedNode?.id, index]);
 
   useEffect(() => {
     if (isDirty) {

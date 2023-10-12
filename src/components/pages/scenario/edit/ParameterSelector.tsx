@@ -1,7 +1,6 @@
 import { Autocomplete } from '@components/data-entry/Autocomplete';
 import { useVariableSelectClient } from '@hooks/client/variableSelectClient';
-import { VariableKind } from '@models';
-import { IVariable } from '@models/interfaces/IVariable';
+import { IVariable, VariableKind } from '@models';
 import { useDeferredValue } from 'react';
 import { Control, Path, useController, useFormContext } from 'react-hook-form';
 
