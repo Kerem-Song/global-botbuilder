@@ -142,6 +142,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((args, ref) => {
       readOnly={readOnly}
       title={inputRef.current?.value}
       autoComplete="off"
+      name={inputClassName}
     />
   );
   if (isWrapping) {
