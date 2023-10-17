@@ -68,7 +68,6 @@ export const UploadBotProfile: FC<IUploadBotProfileProps> = ({
         .catch((err) => {
           setValue('iconUrl', null);
           setIconImage(null);
-          console.log('upload 실패', err);
         });
     } else {
       console.log('upload 파일이 없음');
